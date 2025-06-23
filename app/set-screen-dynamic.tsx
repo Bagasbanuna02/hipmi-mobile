@@ -1,13 +1,13 @@
-import { styles } from "@/constants/styles";
+import { globalStyles } from "@/constants/global-styles";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
-import { View, Text } from "react-native";
+import { Text, View } from "react-native";
 
 export default function Details() {
   const router = useRouter();
   const params = useLocalSearchParams();
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       <Stack.Screen
         options={{
           title: params.name as string,

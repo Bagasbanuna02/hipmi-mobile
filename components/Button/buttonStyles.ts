@@ -1,5 +1,6 @@
 // components/Button/buttonStyles.js
 
+import { MainColor } from "@/constants/color-palet";
 import { StyleSheet } from "react-native";
 
 export default function buttonStyles({
@@ -24,7 +25,7 @@ export default function buttonStyles({
       fontWeight: "600",
     },
     disabled: {
-      opacity: 0.5,
+      backgroundColor: MainColor.disabled,
     },
   });
 }

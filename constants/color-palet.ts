@@ -8,6 +8,7 @@ export const MainColor = {
   orange: "#FF7043",
   green: "#4CAF4F",
   login: "#EDEBEBFF",
+  disabled: "#606360",
 };
 
 export const AccentColor = {

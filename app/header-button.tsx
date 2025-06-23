@@ -1,12 +1,12 @@
+import { globalStyles } from "@/constants/global-styles";
 import { Stack } from "expo-router";
-import { Button, Text, Image } from "react-native";
 import { useState } from "react";
-import { styles } from "@/constants/styles";
+import { Button, Image, Text } from "react-native";
 
 function LogoTitle(props: { children?: React.ReactNode }) {
   return (
     <Image
-      style={styles.image}
+      style={globalStyles.image}
       source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
     />
   );
