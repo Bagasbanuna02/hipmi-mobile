@@ -1,0 +1,46 @@
+// components/Button/Button.tsx
+
+import React from "react";
+import { Text, TouchableOpacity } from "react-native";
+import buttonStyles from "./buttonStyles";
+
+// Definisi props dengan TypeScript
+interface ButtonProps {
+  onPress: () => void;
+  title?: string;
+  backgroundColor?: string;
+  textColor?: string;
+  radius?: number;
+  disabled?: boolean;
+  iconLeft?: React.ReactNode;
+}
+
+const ButtonCustom: React.FC<ButtonProps> = ({
+  onPress,
+  title = "Button",
+  backgroundColor = "#007AFF",
+  textColor = "#FFFFFF",
+  radius = 8,
+  disabled = false,
+  iconLeft,
+}) => {
+  const styles = buttonStyles({
+    backgroundColor,
+    textColor,
+    borderRadius: radius,
+  });
+
+  return (
+    <TouchableOpacity
+      style={[styles.button, disabled && styles.disabled]}
+      onPress={onPress}
+      disabled={disabled}
+    >
+      {/* Render icon jika tersedia */}
+      {iconLeft && iconLeft}
+      <Text style={styles.buttonText}>{title}</Text>
+    </TouchableOpacity>
+  );
+};
+
+export default ButtonCustom;
