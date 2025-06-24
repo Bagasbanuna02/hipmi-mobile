@@ -16,7 +16,7 @@ export const globalStyles = StyleSheet.create({
   authContainer: {
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 50,
+    // marginBottom: 50,
   },
   authTitle: {
     fontSize: 27,

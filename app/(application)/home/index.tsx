@@ -1,21 +1,19 @@
 import { Text, View } from "react-native";
-import { useNavigation } from "expo-router";
 import { useEffect } from "react";
+import { useNavigation } from "expo-router";
 
-export default function Background() {
+export default function Home() {
   const navigation = useNavigation();
 
   useEffect(() => {
     navigation.setOptions({
-      headerShown: true,
-      headerTitle: "Home",
-    
+      headerShown: false,
     });
   }, [navigation]);
 
   return (
     <View>
-      <Text>Background</Text>
+      <Text>Home</Text>
     </View>
   );
 }

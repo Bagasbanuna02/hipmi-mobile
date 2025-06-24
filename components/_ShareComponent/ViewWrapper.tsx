@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { globalStyles } from "@/constants/global-styles";
 import { ImageBackground, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -11,7 +12,7 @@ const ViewWrapper = ({ children }: ViewWrapperProps) => {
 
   return (
     <SafeAreaView
-      edges={[]}
+      edges={["top", "bottom"]}
       style={{
         flex: 1,
         // paddingTop: StatusBar.currentHeight,
@@ -19,7 +20,7 @@ const ViewWrapper = ({ children }: ViewWrapperProps) => {
     >
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <ImageBackground
-          source={assetBackground}
+          source={require("../../assets/images/main-background.png")}
           resizeMode="cover"
           style={globalStyles.imageBackground}
         >

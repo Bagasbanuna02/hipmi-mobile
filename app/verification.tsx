@@ -3,23 +3,15 @@ import Spacing from "@/components/_ShareComponent/Spacing";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { MainColor } from "@/constants/color-palet";
 import { globalStyles } from "@/constants/global-styles";
-import { useNavigation, useRouter } from "expo-router";
-import { useEffect } from "react";
+import { useRouter } from "expo-router"
+
 import { Text, View } from "react-native";
 import { OtpInput } from "react-native-otp-entry";
 
 export default function Validasi() {
   const router = useRouter();
-  const navigation = useNavigation();
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerShown: false,
-    });
-  }, [navigation]);
-
   return (
-    <ViewWrapper>
+    <ViewWrapper> 
       <View
         style={{
           flex: 1,
@@ -59,6 +51,7 @@ export default function Validasi() {
               <Text style={{ ...globalStyles.textLabel }}>Kirim Ulang</Text>
             </Text>
           </View>
+          <Spacing height={30} />
         </View>
 
         <ButtonCustom
@@ -66,7 +59,7 @@ export default function Validasi() {
           backgroundColor={MainColor.yellow}
           textColor={MainColor.black}
           radius={10}
-          onPress={() => router.push("/")}
+          onPress={() => router.push("/register")}
         />
       </View>
     </ViewWrapper>
