@@ -1,28 +1,41 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
-import { Entypo } from "@expo/vector-icons";
-import { Tabs } from "expo-router";
+import { AccentColor, MainColor } from "@/constants/color-palet";
+import { Ionicons } from "@expo/vector-icons";
+import { Stack } from "expo-router";
 
 export default function ApplicationLayout() {
   return (
     <>
-      <Tabs>
-        <Tabs.Screen name="index" options={{ href: null }} />
-        <Tabs.Screen
-          name="home/index"
+      <Stack
+        screenOptions={{
+          headerStyle: { backgroundColor: MainColor.darkblue },
+          headerTitleStyle: { color: MainColor.yellow, fontWeight: "bold" },
+          headerTitleAlign: "center",
+          contentStyle: {
+            borderBottomColor: AccentColor.blue,
+            borderBottomWidth: 2,
+          },
+          headerLargeStyle: {
+            backgroundColor: MainColor.darkblue,
+          },
+          headerShadowVisible: false,
+        }}
+      >
+        <Stack.Screen
+          name="(tabs)"
           options={{
-            title: "Home",
-            tabBarIcon: () => <Entypo name="home" size={24} color="black" />,
+            headerShown:  false,
+            // title: "iii",
+            // headerLeft: () => (
+            //   <Ionicons name="search" size={20} color={MainColor.white} />
+            // ),
+            // headerRight: () => (
+            //   <Ionicons name="notifications" size={20} color={MainColor.white} />
+            // ),
           }}
         />
-        <Tabs.Screen
-          name="katalog/index"
-          options={{
-            title: "Katalog",
-            tabBarIcon: () => <Entypo name="book" size={24} color="black" />,
-          }}
-        />
-      </Tabs>
+        {/* <Stack.Screen name="forum/index"  options={{ title: "Forum",  }} /> */}
+      </Stack>
     </>
   );
 }

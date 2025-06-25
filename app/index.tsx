@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Spacing from "@/components/_ShareComponent/Spacing";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import ButtonCustom from "@/components/Button/ButtonCustom";
 import { MainColor } from "@/constants/color-palet";
 import { globalStyles } from "@/constants/global-styles";
-import { useRouter } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import { useState } from "react";
 import { Text, View } from "react-native";
 import PhoneInput, { ICountry } from "react-native-international-phone-number";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function Login() {
   const router = useRouter();
@@ -30,6 +32,7 @@ export default function Login() {
   }
 
   return (
+    
     <ViewWrapper>
       <View
         style={{

@@ -7,6 +7,13 @@ export const globalStyles = StyleSheet.create({
     paddingInline: 30,
     paddingBlock: 20,
   },
+  mainContainer: {
+    flex: 1,
+    paddingInline: 25,
+    paddingBlock: 10,
+    backgroundColor: MainColor.darkblue,
+  },
+
   imageBackground: {
     height: "100%",
     width: "100%",

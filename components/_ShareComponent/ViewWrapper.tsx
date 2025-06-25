@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { MainColor } from "@/constants/color-palet";
 import { globalStyles } from "@/constants/global-styles";
 import { ImageBackground, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -12,13 +13,14 @@ const ViewWrapper = ({ children }: ViewWrapperProps) => {
 
   return (
     <SafeAreaView
-      edges={["top", "bottom"]}
+      edges={[]}
       style={{
         flex: 1,
         // paddingTop: StatusBar.currentHeight,
       }}
+      
     >
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }} >
         <ImageBackground
           source={require("../../assets/images/main-background.png")}
           resizeMode="cover"

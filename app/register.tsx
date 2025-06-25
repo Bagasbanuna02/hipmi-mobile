@@ -39,7 +39,10 @@ export default function Register() {
             backgroundColor={MainColor.yellow}
             textColor={MainColor.black}
             radius={10}
-            onPress={() => router.push("/(application)")}
+            onPress={() => (
+              console.log("Success register"),
+              router.push("/(application)/home")
+            )}
           />
           {/* <Spacing height={10} />
           <ButtonCustom
