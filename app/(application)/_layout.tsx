@@ -20,18 +20,12 @@ export default function ApplicationLayout() {
         }}
       >
         <Stack.Screen
-          name="(tabs)"
+          name="(home-tabs)"
           options={{
-            headerShown: false,
-            // title: "iii",
-            // headerLeft: () => (
-            //   <Ionicons name="search" size={20} color={MainColor.white} />
-            // ),
-            // headerRight: () => (
-            //   <Ionicons name="notifications" size={20} color={MainColor.white} />
-            // ),
+           headerShown: false,
           }}
         />
+
         <Stack.Screen
           name="event/index"
           options={{
@@ -46,22 +40,6 @@ export default function ApplicationLayout() {
             ),
           }}
         />
-        {/* <Stack.Screen
-          name="home"
-          options={{
-            title: "HIPMI",
-            headerLeft: () => (
-              <Ionicons name="search" size={20} color={MainColor.yellow} />
-            ),
-            headerRight: () => (
-              <Ionicons
-                name="notifications"
-                size={20}
-                color={MainColor.yellow}
-              />
-            ),
-          }}
-        /> */}
       </Stack>
     </>
   );

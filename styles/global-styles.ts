@@ -45,6 +45,15 @@ export const Styles = StyleSheet.create({
     fontWeight: "normal",
   },
 
+  // Stack Header Style
+  headerStyle: {
+    backgroundColor: MainColor.darkblue,
+  },
+  headerTitleStyle: {
+    color: MainColor.yellow,
+    fontWeight: "bold",
+  },
+
   // HOME
   homeContainer: {
     flex: 1,
