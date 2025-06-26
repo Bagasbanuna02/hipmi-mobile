@@ -1,35 +1,43 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { MainColor } from "@/constants/color-palet";
-import { globalStyles } from "@/constants/global-styles";
+import { Styles } from "@/constants/global-styles";
 import { ImageBackground, ScrollView, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 interface ViewWrapperProps {
   children: React.ReactNode;
+  withBackground?: boolean;
 }
 
-const ViewWrapper = ({ children }: ViewWrapperProps) => {
+const ViewWrapper = ({
+  children,
+  withBackground = false,
+}: ViewWrapperProps) => {
+
   const assetBackground = require("../../assets/images/main-background.png");
 
   return (
-    <SafeAreaView
-      edges={[]}
-      style={{
-        flex: 1,
-        // paddingTop: StatusBar.currentHeight,
-      }}
-      
-    >
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }} >
-        <ImageBackground
-          source={require("../../assets/images/main-background.png")}
-          resizeMode="cover"
-          style={globalStyles.imageBackground}
-        >
-          <View style={globalStyles.container}>{children}</View>
-        </ImageBackground>
-      </ScrollView>
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <SafeAreaView
+        edges={[]}
+        style={{
+          flex: 1,
+          // paddingTop: StatusBar.currentHeight,
+        }}
+      >
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          {withBackground ? (
+            <ImageBackground
+              source={assetBackground}
+              resizeMode="cover"
+              style={Styles.imageBackground}
+            >
+              <View style={Styles.containerWithBackground}>{children}</View>
+            </ImageBackground>
+          ) : (
+            <View style={Styles.container}>{children}</View>
+          )}
+        </ScrollView>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 

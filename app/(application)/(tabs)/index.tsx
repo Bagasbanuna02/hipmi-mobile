@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import HomeView from "@/components/Home/HomeView";
 import { MainColor } from "@/constants/color-palet";
-import { Ionicons } from "@expo/vector-icons";
-import { Stack, useNavigation, useRouter } from "expo-router";
-import { useEffect } from "react";
+import { Stack } from "expo-router";
+import React from "react";
+import { View } from "react-native";
 
 export default function Tabs() {
   // const router = useRouter();
@@ -16,7 +15,25 @@ export default function Tabs() {
 
   return (
     <>
-      <HomeView />
+      <View>
+        <Stack.Screen
+          options={{
+            title: "My home",
+            headerStyle: { backgroundColor: MainColor.darkblue },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            
+            // headerTitle: (props) => <LogoTitle {...props} />,
+          }}
+          />
+          <HomeView />
+        {/* <Text>Home Screen</Text>
+        <Link href={{ pathname: "/(application)/(tabs)/forum" }}>
+          Go to Details
+        </Link> */}
+      </View>
     </>
   );
 }

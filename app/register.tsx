@@ -1,36 +1,29 @@
-import { Text, View } from "react-native";
-import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
-import { globalStyles } from "@/constants/global-styles";
+import ButtonCustom from "@/components/_ShareComponent/Button/ButtonCustom";
 import Spacing from "@/components/_ShareComponent/Spacing";
-import { EvilIcons } from "@expo/vector-icons";
+import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
+import { TextInputCustom } from "@/components/_ShareComponent/TextInput/TextInputCustom";
 import { MainColor } from "@/constants/color-palet";
-import { TextInputCustom } from "@/components/TextInput/TextInputCustom";
-import ButtonCustom from "@/components/Button/ButtonCustom";
-import { useRouter } from "expo-router";
+import { Styles } from "@/constants/global-styles";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import { Text, View } from "react-native";
 
 export default function Register() {
-  const router = useRouter();
   return (
-    <ViewWrapper>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          height: "100%",
-        }}
-      >
+    <ViewWrapper withBackground>
+      <View style={Styles.authContainer}>
         <View>
-          <View style={globalStyles.authContainer}>
-            <Text style={globalStyles.authTitle}>REGISTRASI</Text>
-            <Spacing height={30} />
-            <EvilIcons name="user" size={100} color={MainColor.yellow} />
-            <Spacing height={30} />
+          <View style={Styles.authContainerTitle}>
+            <Text style={Styles.authTitle}>REGISTRASI</Text>
+            <Spacing />
+            <MaterialCommunityIcons name="account" size={100} color={MainColor.yellow} />
+            <Spacing />
 
-            <Text style={globalStyles.textLabel}>
+            <Text style={Styles.textLabel}>
               Anda akan terdaftar dengan nomor
             </Text>
-            <Text style={globalStyles.textLabel}>+6282xxxxxxxxx</Text>
-            <Spacing height={30} />
+            <Text style={Styles.textLabel}>+6282xxxxxxxxx</Text>
+            <Spacing />
           </View>
           <TextInputCustom placeholder="Masukkan username" />
 
@@ -41,16 +34,19 @@ export default function Register() {
             radius={10}
             onPress={() => (
               console.log("Success register"),
-              router.push("/(application)/home")
+              router.push("/(application)/(tabs)")
             )}
           />
-          {/* <Spacing height={10} />
-          <ButtonCustom
-            title="Katalog"
+          <Spacing />
+          {/* <ButtonCustom
+            title="Home"
             backgroundColor={MainColor.yellow}
             textColor={MainColor.black}
             radius={10}
-            onPress={() => router.push("/(application)/(katalog)")}
+            onPress={() => {
+              console.log("Home clicked");
+              router.push("/(application)/home");
+            }}
           /> */}
         </View>
       </View>

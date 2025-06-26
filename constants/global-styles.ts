@@ -1,29 +1,31 @@
 import { StyleSheet } from "react-native";
 import { MainColor } from "./color-palet";
 
-export const globalStyles = StyleSheet.create({
+export const Styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingInline: 30,
-    paddingBlock: 20,
-  },
-  mainContainer: {
     flex: 1,
     paddingInline: 25,
     paddingBlock: 10,
     backgroundColor: MainColor.darkblue,
   },
-
+  containerWithBackground: {
+    flex: 1,
+    paddingInline: 25,
+    paddingBlock: 10,
+  },
   imageBackground: {
     height: "100%",
     width: "100%",
   },
-
+  
   // AUTHENTICATION
   authContainer: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  authContainerTitle: {
     justifyContent: "center",
     alignItems: "center",
-    // marginBottom: 50,
   },
   authTitle: {
     fontSize: 27,
@@ -35,9 +37,19 @@ export const globalStyles = StyleSheet.create({
     color: MainColor.yellow,
     fontWeight: "bold",
   },
+  
+  // TEXT & LABEL
   textLabel: {
-    fontSize: 16,
+    fontSize: 14,
     color: MainColor.white,
     fontWeight: "normal",
+  },
+
+  // HOME
+  homeContainer: {
+    flex: 1,
+    paddingInline: 25,
+    paddingBlock: 10,
+    backgroundColor: MainColor.darkblue,
   },
 });

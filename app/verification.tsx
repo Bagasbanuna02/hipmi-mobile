@@ -1,30 +1,23 @@
-import ButtonCustom from "@/components/Button/ButtonCustom";
+import ButtonCustom from "@/components/_ShareComponent/Button/ButtonCustom";
 import Spacing from "@/components/_ShareComponent/Spacing";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { MainColor } from "@/constants/color-palet";
-import { globalStyles } from "@/constants/global-styles";
-import { useRouter } from "expo-router"
-
+import { Styles } from "@/constants/global-styles";
+import { useRouter } from "expo-router";
 import { Text, View } from "react-native";
 import { OtpInput } from "react-native-otp-entry";
 
 export default function Validasi() {
   const router = useRouter();
   return (
-    <ViewWrapper> 
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          height: "100%",
-        }}
-      >
+    <ViewWrapper withBackground>
+      <View style={Styles.authContainer}>
         <View>
-          <View style={globalStyles.authContainer}>
-            <Text style={globalStyles.authTitle}>Verifikasi KOde OTP</Text>
+          <View style={Styles.authContainerTitle}>
+            <Text style={Styles.authTitle}>Verifikasi KOde OTP</Text>
             <Spacing height={30} />
-            <Text style={globalStyles.textLabel}>Masukan 4 digit kode otp</Text>
-            <Text style={globalStyles.textLabel}>
+            <Text style={Styles.textLabel}>Masukan 4 digit kode otp</Text>
+            <Text style={Styles.textLabel}>
               Yang di kirim ke +6282xxxxxxxxx
             </Text>
             <Spacing height={30} />
@@ -46,9 +39,9 @@ export default function Validasi() {
               }}
             />
             <Spacing height={30} />
-            <Text style={globalStyles.textLabel}>
+            <Text style={Styles.textLabel}>
               Tidak menerima kode ?{" "}
-              <Text style={{ ...globalStyles.textLabel }}>Kirim Ulang</Text>
+              <Text style={Styles.textLabel}>Kirim Ulang</Text>
             </Text>
           </View>
           <Spacing height={30} />

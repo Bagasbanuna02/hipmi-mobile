@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { AccentColor, MainColor } from "@/constants/color-palet";
 import { Ionicons } from "@expo/vector-icons";
-import { Stack } from "expo-router";
+import { router, Stack } from "expo-router";
 
 export default function ApplicationLayout() {
   return (
@@ -18,13 +17,12 @@ export default function ApplicationLayout() {
           headerLargeStyle: {
             backgroundColor: MainColor.darkblue,
           },
-          headerShadowVisible: false,
         }}
       >
         <Stack.Screen
           name="(tabs)"
           options={{
-            headerShown:  false,
+            headerShown: false,
             // title: "iii",
             // headerLeft: () => (
             //   <Ionicons name="search" size={20} color={MainColor.white} />
@@ -34,7 +32,36 @@ export default function ApplicationLayout() {
             // ),
           }}
         />
-        {/* <Stack.Screen name="forum/index"  options={{ title: "Forum",  }} /> */}
+        <Stack.Screen
+          name="event/index"
+          options={{
+            title: "Event",
+            headerLeft: () => (
+              <Ionicons
+                name="arrow-back"
+                size={20}
+                color={MainColor.yellow}
+                onPress={() => router.back()}
+              />
+            ),
+          }}
+        />
+        {/* <Stack.Screen
+          name="home"
+          options={{
+            title: "HIPMI",
+            headerLeft: () => (
+              <Ionicons name="search" size={20} color={MainColor.yellow} />
+            ),
+            headerRight: () => (
+              <Ionicons
+                name="notifications"
+                size={20}
+                color={MainColor.yellow}
+              />
+            ),
+          }}
+        /> */}
       </Stack>
     </>
   );

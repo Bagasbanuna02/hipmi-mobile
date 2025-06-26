@@ -1,33 +1,18 @@
 import Spacing from "@/components/_ShareComponent/Spacing";
-import { MainColor } from "@/constants/color-palet";
-import { globalStyles } from "@/constants/global-styles";
+import { Styles } from "@/constants/global-styles";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import { useNavigation } from "expo-router";
-import { useEffect } from "react";
+import { router } from "expo-router";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import DynamicTruncatedText from "../_ShareComponent/TruncatedText";
 import { stylesHome } from "./homeViewStyle";
 
 export default function HomeView() {
-  const navigation = useNavigation();
-  useEffect(() => {
-    navigation.setOptions({
-      title: "HIPMI",
-      headerLeft: () => (
-        <Ionicons name="search" size={20} color={MainColor.white} />
-      ),
-      headerRight: () => (
-        <Ionicons name="notifications" size={20} color={MainColor.white} />
-      ),
-    });
-  }, [navigation]);
-
   return (
     <>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View style={globalStyles.mainContainer}>
+        <View style={Styles.homeContainer}>
           <Spacing height={20} />
           <View
             style={{
@@ -54,7 +39,10 @@ export default function HomeView() {
 
           {/* Grid Section */}
           <View style={stylesHome.gridContainer}>
-            <TouchableOpacity style={stylesHome.gridItem}>
+            <TouchableOpacity
+              style={stylesHome.gridItem}
+              onPress={() => router.push("/(application)/event")}
+            >
               <Ionicons name="analytics" size={48} color="white" />
               <Text style={stylesHome.gridLabel}>Event</Text>
             </TouchableOpacity>

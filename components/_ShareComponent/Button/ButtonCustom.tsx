@@ -35,6 +35,7 @@ const ButtonCustom: React.FC<ButtonProps> = ({
       style={[styles.button, disabled && styles.disabled]}
       onPress={onPress}
       disabled={disabled}
+      activeOpacity={0.8}
     >
       {/* Render icon jika tersedia */}
       {iconLeft && iconLeft}

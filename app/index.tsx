@@ -1,14 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+ 
+import ButtonCustom from "@/components/_ShareComponent/Button/ButtonCustom";
 import Spacing from "@/components/_ShareComponent/Spacing";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
-import ButtonCustom from "@/components/Button/ButtonCustom";
 import { MainColor } from "@/constants/color-palet";
-import { globalStyles } from "@/constants/global-styles";
-import { Stack, useRouter } from "expo-router";
+import { Styles } from "@/constants/global-styles";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Text, View } from "react-native";
 import PhoneInput, { ICountry } from "react-native-international-phone-number";
-import { MaterialIcons } from "@expo/vector-icons";
 
 export default function Login() {
   const router = useRouter();
@@ -32,20 +31,13 @@ export default function Login() {
   }
 
   return (
-    
-    <ViewWrapper>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          height: "100%",
-        }}
-      >
+    <ViewWrapper withBackground>
+      <View style={Styles.authContainer}>
         <View>
-          <View style={globalStyles.authContainer}>
-            <Text style={globalStyles.authSubTitle}>WELCOME TO</Text>
+          <View style={Styles.authContainerTitle}>
+            <Text style={Styles.authSubTitle}>WELCOME TO</Text>
             <Spacing height={5} />
-            <Text style={globalStyles.authTitle}>HIPMI BADUNG APPS</Text>
+            <Text style={Styles.authTitle}>HIPMI BADUNG APPS</Text>
             <Spacing height={5} />
           </View>
           <Spacing height={50} />
@@ -63,16 +55,6 @@ export default function Login() {
             powered by muku.id
           </Text>
         </View>
-
-        {/* Input dengan prefix teks */}
-        {/* <TextInputCustom
-          label="Nomor Telepon"
-          placeholder="Masukkan nomor"
-          value={phone}
-          onChangeText={setPhone}
-          iconLeft="+62"
-          keyboardType="phone-pad"
-        /> */}
 
         <PhoneInput
           value={inputValue}
