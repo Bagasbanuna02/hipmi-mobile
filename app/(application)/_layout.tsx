@@ -20,16 +20,77 @@ export default function ApplicationLayout() {
         }}
       >
         <Stack.Screen
-          name="(home-tabs)"
+          name="home"
           options={{
-           headerShown: false,
+            title: "HIPMI",
+            headerLeft: () => (
+              <Ionicons
+                name="search"
+                size={20}
+                color={MainColor.yellow}
+                onPress={() => router.back()}
+              />
+            ),
+            headerRight: () => (
+              <Ionicons
+                name="notifications"
+                size={20}
+                color={MainColor.yellow}
+                onPress={() => router.back()}
+              />
+            ),
           }}
         />
 
         <Stack.Screen
-          name="event/index"
+          name="forum/index"
           options={{
-            title: "Event",
+            title: "Forum",
+            headerLeft: () => (
+              <Ionicons
+                name="arrow-back"
+                size={20}
+                color={MainColor.yellow}
+                onPress={() => router.back()}
+              />
+            ),
+          }}
+        />
+
+        <Stack.Screen
+          name="maps/index"
+          options={{
+            title: "Maps",
+            headerLeft: () => (
+              <Ionicons
+                name="arrow-back"
+                size={20}
+                color={MainColor.yellow}
+                onPress={() => router.back()}
+              />
+            ),
+          }}
+        />
+
+        <Stack.Screen
+          name="market-place/index"
+          options={{
+            title: "Market Place",
+            headerLeft: () => (
+              <Ionicons
+                name="arrow-back"
+                size={20}
+                color={MainColor.yellow}
+                onPress={() => router.back()}
+              />
+            ),
+          }}
+        />
+
+        <Stack.Screen
+          name="profile/index"
+          options={{
+            title: "Profile",
             headerLeft: () => (
               <Ionicons
                 name="arrow-back"

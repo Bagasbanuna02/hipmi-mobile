@@ -5,19 +5,23 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 interface ViewWrapperProps {
   children: React.ReactNode;
   withBackground?: boolean;
+  tabBarComponent?: React.ReactNode;
 }
 
 const ViewWrapper = ({
   children,
   withBackground = false,
+  tabBarComponent,
 }: ViewWrapperProps) => {
-
   const assetBackground = require("../../assets/images/main-background.png");
 
   return (
     <SafeAreaProvider>
       <SafeAreaView
-        edges={[]}
+        edges={[
+          "bottom",
+          // "top",
+        ]}
         style={{
           flex: 1,
           // paddingTop: StatusBar.currentHeight,
@@ -36,6 +40,7 @@ const ViewWrapper = ({
             <View style={Styles.container}>{children}</View>
           )}
         </ScrollView>
+        {tabBarComponent}
       </SafeAreaView>
     </SafeAreaProvider>
   );

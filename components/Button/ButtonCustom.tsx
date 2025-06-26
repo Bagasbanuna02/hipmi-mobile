@@ -5,6 +5,7 @@ import { Text, TouchableOpacity } from "react-native";
 import buttonStyles from "./buttonStyles";
 
 // Definisi props dengan TypeScript
+
 interface ButtonProps {
   onPress: () => void;
   title?: string;
@@ -15,6 +16,17 @@ interface ButtonProps {
   iconLeft?: React.ReactNode;
 }
 
+/**
+ * Props untuk ButtonCustom
+ * @param onPress: () => void
+ * @param title?: string
+ * @param backgroundColor?: string
+ * @param textColor?: string
+ * @param radius?: number
+ * @param disabled?: boolean
+ * @param iconLeft?: React.ReactNode
+ * @example iconLeft={<Icon name="arrow-right" size={20} color={MainColor.black}/>
+ */
 const ButtonCustom: React.FC<ButtonProps> = ({
   onPress,
   title = "Button",

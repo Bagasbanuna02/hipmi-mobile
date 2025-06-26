@@ -40,7 +40,7 @@ export default function RegisterView() {
               radius={10}
               onPress={() => (
                 console.log("Success register"),
-                router.push("/(application)/(home-tabs)")
+                router.push("/(application)/home")
               )}
             />
             <Spacing />
