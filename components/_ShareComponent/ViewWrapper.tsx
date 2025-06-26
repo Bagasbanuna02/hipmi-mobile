@@ -1,4 +1,4 @@
-import { Styles } from "@/constants/global-styles";
+import { Styles } from "@/styles/global-styles";
 import { ImageBackground, ScrollView, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 

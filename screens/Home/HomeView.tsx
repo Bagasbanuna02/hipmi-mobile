@@ -1,11 +1,11 @@
 import Spacing from "@/components/_ShareComponent/Spacing";
-import { Styles } from "@/constants/global-styles";
+import { Styles } from "@/styles/global-styles";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import DynamicTruncatedText from "../_ShareComponent/TruncatedText";
+import DynamicTruncatedText from "@/components/_ShareComponent/TruncatedText";
 import { stylesHome } from "./homeViewStyle";
 
 export default function HomeView() {

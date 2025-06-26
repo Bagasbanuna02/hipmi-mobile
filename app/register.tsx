@@ -1,55 +1,9 @@
-import ButtonCustom from "@/components/_ShareComponent/Button/ButtonCustom";
-import Spacing from "@/components/_ShareComponent/Spacing";
-import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
-import { TextInputCustom } from "@/components/_ShareComponent/TextInput/TextInputCustom";
-import { MainColor } from "@/constants/color-palet";
-import { Styles } from "@/constants/global-styles";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { router } from "expo-router";
-import { Text, View } from "react-native";
+import RegisterView from "@/screens/Authentication/RegisterView";
 
 export default function Register() {
   return (
-    <ViewWrapper withBackground>
-      <View style={Styles.authContainer}>
-        <View>
-          <View style={Styles.authContainerTitle}>
-            <Text style={Styles.authTitle}>REGISTRASI</Text>
-            <Spacing />
-            <MaterialCommunityIcons name="account" size={100} color={MainColor.yellow} />
-            <Spacing />
-
-            <Text style={Styles.textLabel}>
-              Anda akan terdaftar dengan nomor
-            </Text>
-            <Text style={Styles.textLabel}>+6282xxxxxxxxx</Text>
-            <Spacing />
-          </View>
-          <TextInputCustom placeholder="Masukkan username" />
-
-          <ButtonCustom
-            title="Daftar"
-            backgroundColor={MainColor.yellow}
-            textColor={MainColor.black}
-            radius={10}
-            onPress={() => (
-              console.log("Success register"),
-              router.push("/(application)/(tabs)")
-            )}
-          />
-          <Spacing />
-          {/* <ButtonCustom
-            title="Home"
-            backgroundColor={MainColor.yellow}
-            textColor={MainColor.black}
-            radius={10}
-            onPress={() => {
-              console.log("Home clicked");
-              router.push("/(application)/home");
-            }}
-          /> */}
-        </View>
-      </View>
-    </ViewWrapper>
+    <>
+      <RegisterView />
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import HomeView from "@/components/Home/HomeView";
+import HomeView from "@/screens/Home/HomeView";
 import { MainColor } from "@/constants/color-palet";
 import { Stack } from "expo-router";
 import React from "react";
