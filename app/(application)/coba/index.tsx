@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 import {
   View,
@@ -86,7 +85,7 @@ const CustomTabNavigator = () => {
       activeIcon: "notifications",
       label: "Forum",
       component: NotificationScreen,
-      path: "/(application)/(home-tabs)/forum",
+      path: "/forum",
     },
     {
       id: "profile",
@@ -94,7 +93,7 @@ const CustomTabNavigator = () => {
       activeIcon: "person",
       label: "Katalog",
       component: ProfileScreen,
-      path: "/(application)/(home-tabs)/katalog",
+      path: "/profile",
     },
   ];
 
@@ -102,7 +101,7 @@ const CustomTabNavigator = () => {
   // Function untuk handle tab press
   const handleTabPress = (tabId: string) => {
     setActiveTab(tabId);
-    // setShowHome(false); // Hide home when any tab is pressed
+    setShowHome(false); // Hide home when any tab is pressed
   };
   
   // Determine which component to show
@@ -110,8 +109,9 @@ const CustomTabNavigator = () => {
     if (showHome || activeTab === "home") {
       return HomeScreen;
     }
-    const selectedTab = tabs.find((tab) => tab.id === activeTab);
-    return selectedTab ? selectedTab.component : HomeScreen;
+    // const selectedTab = tabs.find((tab) => tab.id === activeTab);
+    // return selectedTab ? selectedTab.component : HomeScreen;
+    return HomeScreen
   };
 
   const ActiveComponent = getActiveComponent();
@@ -135,7 +135,7 @@ const CustomTabNavigator = () => {
               label={e.label}
               isActive={activeTab === e.id && !showHome}
               onPress={() => {
-                // handleTabPress(e.id);
+                handleTabPress(e.id);
                 router.push(e.path as any);
               }}
             />

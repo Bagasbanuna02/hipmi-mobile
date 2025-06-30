@@ -8,7 +8,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Text, View } from "react-native";
 
-
 export default function RegisterView() {
   return (
     <>
@@ -44,16 +43,16 @@ export default function RegisterView() {
               )}
             />
             <Spacing />
-            {/* <ButtonCustom
-            title="Home"
-            backgroundColor={MainColor.yellow}
-            textColor={MainColor.black}
-            radius={10}
-            onPress={() => {
-              console.log("Home clicked");
-              router.push("/(application)/home");
-            }}
-          /> */}
+            <ButtonCustom
+              title="Coba"
+              backgroundColor={MainColor.yellow}
+              textColor={MainColor.black}
+              radius={10}
+              onPress={() => {
+                console.log("Home clicked");
+                router.push("/(application)/coba");
+              }}
+            />
           </View>
         </View>
       </ViewWrapper>
