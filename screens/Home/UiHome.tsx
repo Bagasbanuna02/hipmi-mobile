@@ -3,8 +3,8 @@ import Spacing from "@/components/_ShareComponent/Spacing";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { AccentColor, MainColor } from "@/constants/color-palet";
 import { Ionicons } from "@expo/vector-icons";
-import { Href, router } from "expo-router";
-import React from "react";
+import { Href, router, useNavigation } from "expo-router";
+import React, { useEffect } from "react";
 import {
   Dimensions,
   StyleSheet,
@@ -44,7 +44,7 @@ export default function NewHomeView() {
       icon: "cart-outline",
       activeIcon: "cart",
       label: "Marketplace",
-      path: "/market-place",
+      path: "/marketplace",
       isActive: false,
       disabled: true,
     },
@@ -85,6 +85,30 @@ export default function NewHomeView() {
       {isActive && <View style={styles.activeIndicator} />}
     </TouchableOpacity>
   );
+
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.setOptions({
+      // headerTitle: "HIPMI",
+      // headerLeft: () => (
+      //   <Ionicons
+      //     name="search"
+      //     size={18}
+      //     color={MainColor.white}
+      //     onPress={() => router.push("/(application)/user-search")}
+      //   />
+      // ),
+      // headerRight: () => (
+      //   <Ionicons
+      //     name="notifications"
+      //     size={18}
+      //     color={MainColor.white}
+      //     onPress={() => router.push("/(application)/notifications")}
+      //   />
+      // ),
+    });
+  }, [navigation]);
 
   return (
     <>

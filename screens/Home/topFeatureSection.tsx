@@ -28,7 +28,7 @@ export default function Home_FeatureSection() {
         </TouchableOpacity>
       </View>
 
-      <View style={stylesHome.gridContainer}>
+      {/* <View style={stylesHome.gridContainer}>
         <TouchableOpacity
           style={stylesHome.gridItem}
           onPress={() => router.push("/(application)/event")}
@@ -48,7 +48,7 @@ export default function Home_FeatureSection() {
           <Ionicons name="heart" size={48} color="white" />
           <Text style={stylesHome.gridLabel}>Crowdfunding</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </>
   );
 }

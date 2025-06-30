@@ -28,7 +28,7 @@ export default function ApplicationLayout() {
                 name="search"
                 size={20}
                 color={MainColor.yellow}
-                onPress={() => router.back()}
+                onPress={() => router.push("/(application)/user-search")}
               />
             ),
             headerRight: () => (
@@ -36,7 +36,7 @@ export default function ApplicationLayout() {
                 name="notifications"
                 size={20}
                 color={MainColor.yellow}
-                onPress={() => router.back()}
+                onPress={() => router.push("/(application)/notifications")}
               />
             ),
           }}
@@ -73,7 +73,7 @@ export default function ApplicationLayout() {
         />
 
         <Stack.Screen
-          name="market-place/index"
+          name="marketplace/index"
           options={{
             title: "Market Place",
             headerLeft: () => (
@@ -91,6 +91,51 @@ export default function ApplicationLayout() {
           name="profile/index"
           options={{
             title: "Profile",
+            headerLeft: () => (
+              <Ionicons
+                name="arrow-back"
+                size={20}
+                color={MainColor.yellow}
+                onPress={() => router.back()}
+              />
+            ),
+          }}
+        />
+
+        <Stack.Screen
+          name="event/index"
+          options={{
+            title: "Event",
+            headerLeft: () => (
+              <Ionicons
+                name="arrow-back"
+                size={20}
+                color={MainColor.yellow}
+                onPress={() => router.back()}
+              />
+            ),
+          }}
+        />
+
+        <Stack.Screen
+          name="user-search/index"
+          options={{
+            title: "Pencarian Pengguna",
+            headerLeft: () => (
+              <Ionicons
+                name="arrow-back"
+                size={20}
+                color={MainColor.yellow}
+                onPress={() => router.back()}
+              />
+            ),
+          }}
+        />
+
+        <Stack.Screen
+          name="notifications/index"
+          options={{
+            title: "Notifikasi",
             headerLeft: () => (
               <Ionicons
                 name="arrow-back"
