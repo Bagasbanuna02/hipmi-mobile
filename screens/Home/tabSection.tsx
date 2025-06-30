@@ -1,16 +1,11 @@
-import { ITabs } from "@/components/_Interface/types";
+import { ICustomTab, ITabs } from "@/components/_Interface/types";
 import { Styles } from "@/styles/global-styles";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
-interface ICustomTab {
-  icon: string;
-  label: string;
-  isActive: boolean;
-  onPress: () => void;
-}
+
 const CustomTab = ({ icon, label, isActive, onPress }: ICustomTab) => (
   <TouchableOpacity
     style={[Styles.tabItem, isActive && Styles.activeTab]}

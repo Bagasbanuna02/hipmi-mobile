@@ -1,9 +1,9 @@
-import NewHomeView from "@/screens/Home/UiHome";
+import UiHome from "@/screens/Home/UiHome";
 
 export default function Application() {
   return (
     <>
-      <NewHomeView />
+      <UiHome />
     </>
   );
 }

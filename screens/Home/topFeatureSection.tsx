@@ -9,7 +9,7 @@ export default function Home_FeatureSection() {
       <View style={stylesHome.gridContainer}>
         <TouchableOpacity
           style={stylesHome.gridItem}
-          onPress={() => router.push("/(application)/event")}
+          onPress={() => router.push("/(application)/event/(tabs)")}
         >
           <Ionicons name="analytics" size={48} color="white" />
           <Text style={stylesHome.gridLabel}>Event</Text>

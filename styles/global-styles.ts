@@ -49,7 +49,7 @@ export const Styles = StyleSheet.create({
 
   // Stack Header Style
   headerStyle: {
-    backgroundColor: MainColor.darkblue,
+    backgroundColor: AccentColor.darkblue,
   },
   headerTitleStyle: {
     color: MainColor.yellow,

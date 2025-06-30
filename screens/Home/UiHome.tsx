@@ -9,7 +9,7 @@ import TabSection from "./tabSection";
 import { tabsHome } from "./tabsList";
 import Home_FeatureSection from "./topFeatureSection";
 
-export default function NewHomeView() {
+export default function UiHome() {
   const navigation = useNavigation();
 
   useEffect(() => {

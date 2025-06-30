@@ -1,6 +1,13 @@
 import { Href } from "expo-router";
 
-export { ITabs };
+export { ICustomTab, ITabs };
+
+interface ICustomTab {
+  icon: string;
+  label: string;
+  isActive: boolean;
+  onPress: () => void;
+}
 
 interface ITabs {
   id: string;
@@ -9,5 +16,5 @@ interface ITabs {
   label: string;
   path: Href;
   isActive: boolean;
-  disabled: boolean;
+  disabled?: boolean;
 }

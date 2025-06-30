@@ -1,4 +1,5 @@
 import { AccentColor, MainColor } from "@/constants/color-palet";
+import { Styles } from "@/styles/global-styles";
 import { Ionicons } from "@expo/vector-icons";
 import { router, Stack } from "expo-router";
 
@@ -7,16 +8,16 @@ export default function ApplicationLayout() {
     <>
       <Stack
         screenOptions={{
-          headerStyle: { backgroundColor: MainColor.darkblue },
-          headerTitleStyle: { color: MainColor.yellow, fontWeight: "bold" },
+          headerStyle: Styles.headerStyle,
+          headerTitleStyle: Styles.headerTitleStyle,
           headerTitleAlign: "center",
           contentStyle: {
             borderBottomColor: AccentColor.blue,
             borderBottomWidth: 2,
           },
-          headerLargeStyle: {
-            backgroundColor: MainColor.darkblue,
-          },
+          // headerLargeStyle: {
+          //   backgroundColor: MainColor.darkblue,
+          // },
         }}
       >
         <Stack.Screen
@@ -102,10 +103,26 @@ export default function ApplicationLayout() {
           }}
         />
 
+        {/* Event */}
         <Stack.Screen
-          name="event/index"
+          name="event/(tabs)"
           options={{
             title: "Event",
+            headerLeft: () => (
+              <Ionicons
+                name="arrow-back"
+                size={20}
+                color={MainColor.yellow}
+                onPress={() => router.push("/(application)/home")}
+              />
+            ),
+          }}
+        />
+
+        <Stack.Screen
+          name="event/detail/[id]"
+          options={{
+            title: "Detail",
             headerLeft: () => (
               <Ionicons
                 name="arrow-back"
@@ -117,6 +134,7 @@ export default function ApplicationLayout() {
           }}
         />
 
+        {/* User Search */}
         <Stack.Screen
           name="user-search/index"
           options={{
@@ -132,6 +150,7 @@ export default function ApplicationLayout() {
           }}
         />
 
+        {/* Notification */}
         <Stack.Screen
           name="notifications/index"
           options={{
