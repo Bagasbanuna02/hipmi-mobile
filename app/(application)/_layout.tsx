@@ -88,7 +88,8 @@ export default function ApplicationLayout() {
           }}
         />
 
-        <Stack.Screen
+        {/* Profile */}
+        {/* <Stack.Screen
           name="profile/index"
           options={{
             title: "Profile",
@@ -101,7 +102,22 @@ export default function ApplicationLayout() {
               />
             ),
           }}
-        />
+        /> */}
+
+        {/* <Stack.Screen
+          name="profile/[id]"
+          options={{
+            title: "Profile",
+            headerLeft: () => (
+              <Ionicons
+                name="arrow-back"
+                size={20}
+                color={MainColor.yellow}
+                onPress={() => router.back()}
+              />
+            ),
+          }}
+        /> */}
 
         {/* Event */}
         <Stack.Screen

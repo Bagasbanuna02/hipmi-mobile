@@ -1,3 +1,4 @@
+import "react-native-gesture-handler";
 import { MainColor } from "@/constants/color-palet";
 import { Stack } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
