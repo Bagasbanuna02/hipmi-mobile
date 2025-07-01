@@ -1,6 +1,6 @@
 import { Href } from "expo-router";
 
-export { ICustomTab, ITabs };
+export { ICustomTab, ITabs, IMenuDrawerItem };
 
 interface ICustomTab {
   icon: string;
@@ -17,4 +17,11 @@ interface ITabs {
   path: Href;
   isActive: boolean;
   disabled?: boolean;
+}
+
+interface IMenuDrawerItem {
+  icon: string;
+  label: string;
+  path?: string;
+  color?: string;
 }
