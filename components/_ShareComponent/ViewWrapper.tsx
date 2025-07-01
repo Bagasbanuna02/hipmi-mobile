@@ -1,6 +1,7 @@
+import { MainColor } from "@/constants/color-palet";
 import { Styles } from "@/styles/global-styles";
 import { ImageBackground, ScrollView, View } from "react-native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface ViewWrapperProps {
   children: React.ReactNode;
@@ -16,7 +17,7 @@ const ViewWrapper = ({
   const assetBackground = require("../../assets/images/main-background.png");
 
   return (
-    <SafeAreaProvider>
+    <>
       <SafeAreaView
         edges={[
           "bottom",
@@ -25,6 +26,7 @@ const ViewWrapper = ({
         style={{
           flex: 1,
           // paddingTop: StatusBar.currentHeight,
+          backgroundColor: MainColor.darkblue,
         }}
       >
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -42,7 +44,36 @@ const ViewWrapper = ({
         </ScrollView>
         {tabBarComponent}
       </SafeAreaView>
-    </SafeAreaProvider>
+    </>
+    
+    // <SafeAreaProvider>
+    //   <SafeAreaView
+    //     edges={[
+    //       "bottom",
+    //       // "top",
+    //     ]}
+    //     style={{
+    //       flex: 1,
+    //       // paddingTop: StatusBar.currentHeight,
+    //       backgroundColor: MainColor.darkblue,
+    //     }}
+    //   >
+    //     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+    //       {withBackground ? (
+    //         <ImageBackground
+    //           source={assetBackground}
+    //           resizeMode="cover"
+    //           style={Styles.imageBackground}
+    //         >
+    //           <View style={Styles.containerWithBackground}>{children}</View>
+    //         </ImageBackground>
+    //       ) : (
+    //         <View style={Styles.container}>{children}</View>
+    //       )}
+    //     </ScrollView>
+    //     {tabBarComponent}
+    //   </SafeAreaView>
+    // </SafeAreaProvider>
   );
 };
 

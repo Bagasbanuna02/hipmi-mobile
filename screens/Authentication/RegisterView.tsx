@@ -42,7 +42,7 @@ export default function RegisterView() {
                 router.push("/(application)/home")
               )}
             />
-            <Spacing />
+            {/* <Spacing />
             <ButtonCustom
               title="Coba"
               backgroundColor={MainColor.yellow}
@@ -52,7 +52,7 @@ export default function RegisterView() {
                 console.log("Home clicked");
                 router.push("/(application)/coba");
               }}
-            />
+            /> */}
           </View>
         </View>
       </ViewWrapper>
