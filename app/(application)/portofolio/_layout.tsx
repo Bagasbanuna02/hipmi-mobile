@@ -1,5 +1,5 @@
 
-import BackButton from "@/components/_ShareComponent/BackButton";
+import BackButton from "@/components/Button/BackButton";
 import { Styles } from "@/styles/global-styles";
 import { Stack } from "expo-router";
 

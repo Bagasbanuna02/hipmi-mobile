@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
-import buttonStyles from "./buttonStyles";
+import buttonStyles from "./buttonCustomStyles";
 
 // Definisi props dengan TypeScript
 

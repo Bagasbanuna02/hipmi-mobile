@@ -1,7 +1,7 @@
 import { IMenuDrawerItem } from "@/components/_Interface/types";
-import BackButton from "@/components/_ShareComponent/BackButton";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import AlertCustom from "@/components/Alert/AlertCustom";
+import BackButton from "@/components/Button/BackButton";
 import DrawerCustom from "@/components/Drawer/DrawerCustom";
 import { MainColor } from "@/constants/color-palet";
 import { DRAWER_HEIGHT } from "@/constants/constans-value";
@@ -124,6 +124,7 @@ export default function Profile() {
         <Profile_MenuDrawerSection
           drawerItems={drawerItems}
           setShowLogoutAlert={setShowLogoutAlert}
+          setIsDrawerOpen={setIsDrawerOpen}
         />
       </DrawerCustom>
 

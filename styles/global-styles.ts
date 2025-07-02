@@ -1,18 +1,19 @@
 import { Dimensions, StyleSheet } from "react-native";
 import { AccentColor, MainColor } from "../constants/color-palet";
+import { TEXT_SIZE_MEDIUM } from "@/constants/constans-value";
 
 const { width } = Dimensions.get("window");
 
 export const Styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingInline: 25,
+    paddingInline: 20,
     paddingBlock: 10,
     backgroundColor: MainColor.darkblue,
   },
   containerWithBackground: {
     flex: 1,
-    paddingInline: 25,
+    paddingInline: 20,
     paddingBlock: 10,
   },
   imageBackground: {
@@ -42,7 +43,7 @@ export const Styles = StyleSheet.create({
 
   // TEXT & LABEL
   textLabel: {
-    fontSize: 14,
+    fontSize: TEXT_SIZE_MEDIUM,
     color: MainColor.white,
     fontWeight: "normal",
   },

@@ -1,4 +1,4 @@
-import BackButton from "@/components/_ShareComponent/BackButton";
+import BackButton from "@/components/Button/BackButton";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { Styles } from "@/styles/global-styles";
 import { Stack, useLocalSearchParams } from "expo-router";
