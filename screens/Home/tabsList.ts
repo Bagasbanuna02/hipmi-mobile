@@ -33,7 +33,7 @@ export  const tabsHome: ITabs[] = [
     icon: "person-outline",
     activeIcon: "person",
     label: "Profile",
-    path: "/profile/coba-id",
+    path: "/profile/id-percoban-123456",
     isActive: true,
     disabled: false,
   },

@@ -58,7 +58,9 @@ DrawerCustomProps) {
       <View
         style={styles.overlay}
         pointerEvents="auto"
-        onTouchStart={closeDrawer}
+        onTouchStart={() => {
+          setTimeout(closeDrawer, 0);
+        }}
       />
 
       {/* Custom Bottom Drawer */}

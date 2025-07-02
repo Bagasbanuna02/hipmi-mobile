@@ -89,35 +89,20 @@ export default function ApplicationLayout() {
         />
 
         {/* Profile */}
-        {/* <Stack.Screen
-          name="profile/index"
+        <Stack.Screen
+          name="profile"
           options={{
-            title: "Profile",
-            headerLeft: () => (
-              <Ionicons
-                name="arrow-back"
-                size={20}
-                color={MainColor.yellow}
-                onPress={() => router.back()}
-              />
-            ),
+            headerShown: false,
           }}
-        /> */}
+        />
 
-        {/* <Stack.Screen
-          name="profile/[id]"
+        {/* Portofolio */}
+        <Stack.Screen
+          name="portofolio"
           options={{
-            title: "Profile",
-            headerLeft: () => (
-              <Ionicons
-                name="arrow-back"
-                size={20}
-                color={MainColor.yellow}
-                onPress={() => router.back()}
-              />
-            ),
+            headerShown: false,
           }}
-        /> */}
+        />
 
         {/* Event */}
         <Stack.Screen

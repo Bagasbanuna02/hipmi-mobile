@@ -1,5 +1,5 @@
-
 import { IMenuDrawerItem } from "@/components/_Interface/types";
+import BackButton from "@/components/_ShareComponent/BackButton";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import AlertCustom from "@/components/Alert/AlertCustom";
 import DrawerCustom from "@/components/Drawer/DrawerCustom";
@@ -10,7 +10,7 @@ import { Styles } from "@/styles/global-styles";
 import { Ionicons } from "@expo/vector-icons";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import React, { useRef, useState } from "react";
-import { Animated, Text, TouchableOpacity } from "react-native";
+import { Animated, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 
 export default function Profile() {
   const { id } = useLocalSearchParams();
@@ -21,22 +21,22 @@ export default function Profile() {
     {
       icon: "create",
       label: "Edit profile",
-      path: "/(application)/profile/edit",
+      path: `/(application)/profile/${id}/edit`,
     },
     {
       icon: "camera",
       label: "Ubah foto profile",
-      path: `/(application)/profile/update-photo/${id}`,
+      path: `/(application)/profile/${id}/update-photo`,
     },
     {
       icon: "image",
       label: "Ubah latar belakang",
-      path: `/(application)/profile/update-background/${id}`,
+      path: `/(application)/profile/${id}/update-background`,
     },
     {
       icon: "add-circle",
       label: "Tambah portofolio",
-      path: `/(application)/portofolio/create/${id}`,
+      path: `/(application)/portofolio/${id}/create`,
     },
     // {
     //   icon: "settings",
@@ -81,14 +81,7 @@ export default function Profile() {
         <Stack.Screen
           options={{
             title: "Profile",
-            headerLeft: () => (
-              <Ionicons
-                name="arrow-back"
-                size={20}
-                color={MainColor.yellow}
-                onPress={() => router.back()}
-              />
-            ),
+            headerLeft: () => <BackButton />,
             headerRight: () => (
               <TouchableOpacity onPress={openDrawer}>
                 <Ionicons
@@ -98,9 +91,25 @@ export default function Profile() {
                 />
               </TouchableOpacity>
             ),
+            headerStyle: Styles.headerStyle,
+            headerTitleStyle: Styles.headerTitleStyle,
           }}
         />
         <Text style={Styles.textLabel}>Profile {id}</Text>
+        <TouchableHighlight
+          onPress={() => router.push(`/(application)/portofolio/${id}`)}
+        >
+          <View
+            style={{
+              backgroundColor: MainColor.white,
+              padding: 10,
+              borderRadius: 10,
+              marginTop: 10,
+            }}
+          >
+            <Text>Portofolio</Text>
+          </View>
+        </TouchableHighlight>
       </ViewWrapper>
 
       {/* Drawer Komponen Eksternal */}

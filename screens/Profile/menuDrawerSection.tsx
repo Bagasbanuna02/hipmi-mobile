@@ -14,6 +14,7 @@ export default function Profile_MenuDrawerSection({
     //   console.log("Logout clicked");
       setShowLogoutAlert(true);
     } else {
+      console.log("PATH >> ",item.path);
       router.push(item.path as any);
     }
   };
