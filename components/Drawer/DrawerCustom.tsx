@@ -1,9 +1,10 @@
 import React, { useRef } from "react";
 import {
-    Animated,
-    PanResponder,
-    StyleSheet,
-    View
+  Animated,
+  PanResponder,
+  StyleSheet,
+  View,
+  InteractionManager,
 } from "react-native";
 
 import { AccentColor, MainColor } from "@/constants/color-palet";
@@ -39,7 +40,9 @@ DrawerCustomProps) {
       },
       onPanResponderRelease: (_, gestureState) => {
         if (gestureState.dy > 200) {
-          closeDrawer();
+          InteractionManager.runAfterInteractions(() => {
+            closeDrawer();
+          });
         } else {
           Animated.spring(drawerAnim, {
             toValue: 0,
@@ -59,7 +62,9 @@ DrawerCustomProps) {
         style={styles.overlay}
         pointerEvents="auto"
         onTouchStart={() => {
-          setTimeout(closeDrawer, 0);
+          InteractionManager.runAfterInteractions(() => {
+            closeDrawer();
+          });
         }}
       />
 

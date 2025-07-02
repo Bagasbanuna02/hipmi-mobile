@@ -10,7 +10,7 @@ import { Styles } from "@/styles/global-styles";
 import { Ionicons } from "@expo/vector-icons";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import React, { useRef, useState } from "react";
-import { Animated, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
+import { Animated, InteractionManager, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 
 export default function Profile() {
   const { id } = useLocalSearchParams();
@@ -64,7 +64,9 @@ export default function Profile() {
       duration: 300,
       useNativeDriver: true,
     }).start(() => {
-      setIsDrawerOpen(false); // baru ganti state setelah animasi selesai
+      InteractionManager.runAfterInteractions(() => {
+        setIsDrawerOpen(false); // baru ganti state setelah animasi selesai
+      });
     });
   };
 
