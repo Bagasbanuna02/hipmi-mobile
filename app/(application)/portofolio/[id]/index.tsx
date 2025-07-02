@@ -1,6 +1,6 @@
 import BackButton from "@/components/Button/BackButton";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
-import { Styles } from "@/styles/global-styles";
+import { GStyles } from "@/styles/global-styles";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { Text } from "react-native";
 
@@ -22,11 +22,11 @@ export default function Portofolio() {
         //       />
         //     </TouchableOpacity>
         //   ),
-          headerStyle: Styles.headerStyle,
-          headerTitleStyle: Styles.headerTitleStyle,
+          headerStyle: GStyles.headerStyle,
+          headerTitleStyle: GStyles.headerTitleStyle,
         }}
       />
-      <Text style={Styles.textLabel}>Portofolio {id}</Text>
+      <Text style={GStyles.textLabel}>Portofolio {id}</Text>
     </ViewWrapper>
   );
 }

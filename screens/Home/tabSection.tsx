@@ -1,5 +1,5 @@
 import { ICustomTab, ITabs } from "@/components/_Interface/types";
-import { Styles } from "@/styles/global-styles";
+import { GStyles } from "@/styles/global-styles";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
@@ -8,12 +8,12 @@ import { Text, TouchableOpacity, View } from "react-native";
 
 const CustomTab = ({ icon, label, isActive, onPress }: ICustomTab) => (
   <TouchableOpacity
-    style={[Styles.tabItem, isActive && Styles.activeTab]}
+    style={[GStyles.tabItem, isActive && GStyles.activeTab]}
     onPress={onPress}
     activeOpacity={0.7}
   >
     <View
-      style={[Styles.iconContainer, isActive && Styles.activeIconContainer]}
+      style={[GStyles.iconContainer, isActive && GStyles.activeIconContainer]}
     >
       <Ionicons
         name={icon as any}
@@ -21,7 +21,7 @@ const CustomTab = ({ icon, label, isActive, onPress }: ICustomTab) => (
         color={isActive ? "#fff" : "#666"}
       />
     </View>
-    <Text style={[Styles.tabLabel, isActive && Styles.activeTabLabel]}>
+    <Text style={[GStyles.tabLabel, isActive && GStyles.activeTabLabel]}>
       {label}
     </Text>
   </TouchableOpacity>
@@ -30,8 +30,8 @@ const CustomTab = ({ icon, label, isActive, onPress }: ICustomTab) => (
 export default function TabSection({ tabs }: { tabs: ITabs[] }) {
   return (
     <>
-      <View style={Styles.tabBar}>
-        <View style={Styles.tabContainer}>
+      <View style={GStyles.tabBar}>
+        <View style={GStyles.tabContainer}>
           {tabs.map((e) => (
             <CustomTab
               key={e.id}

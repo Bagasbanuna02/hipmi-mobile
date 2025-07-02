@@ -1,18 +1,18 @@
 import Spacing from "@/components/_ShareComponent/Spacing";
-import { Styles } from "@/styles/global-styles";
+import DynamicTruncatedText from "@/components/_ShareComponent/TruncatedText";
+import { GStyles } from "@/styles/global-styles";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import DynamicTruncatedText from "@/components/_ShareComponent/TruncatedText";
 import { stylesHome } from "./homeViewStyle";
 
 export default function HomeView() {
   return (
     <>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View style={Styles.homeContainer}>
+        <View style={GStyles.homeContainer}>
           <Spacing height={20} />
           <View
             style={{

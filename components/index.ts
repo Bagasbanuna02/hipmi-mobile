@@ -10,6 +10,8 @@ import MenuDrawerDynamicGrid from "./Drawer/MenuDrawerDynamicGird";
 import ViewWrapper from "./_ShareComponent/ViewWrapper";
 import TruncatedText from "./_ShareComponent/TruncatedText";
 import Spacing from "./_ShareComponent/Spacing";
+// Text
+import TextCustom from "./Text/TextCustom";
 // TextInput
 import { TextInputCustom } from "./TextInput/TextInputCustom";
 
@@ -25,6 +27,8 @@ export {
   Spacing,
   TruncatedText,
   ViewWrapper,
+  // Text
+  TextCustom,
   // TextInput
   TextInputCustom,
 };

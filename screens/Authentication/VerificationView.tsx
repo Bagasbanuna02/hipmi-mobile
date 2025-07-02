@@ -2,7 +2,7 @@ import Spacing from "@/components/_ShareComponent/Spacing";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import ButtonCustom from "@/components/Button/ButtonCustom";
 import { MainColor } from "@/constants/color-palet";
-import { Styles } from "@/styles/global-styles";
+import { GStyles } from "@/styles/global-styles";
 import { router } from "expo-router";
 import { Text, View } from "react-native";
 import { OtpInput } from "react-native-otp-entry";
@@ -11,13 +11,13 @@ export default function VerificationView() {
   return (
     <>
       <ViewWrapper withBackground>
-        <View style={Styles.authContainer}>
+        <View style={GStyles.authContainer}>
           <View>
-            <View style={Styles.authContainerTitle}>
-              <Text style={Styles.authTitle}>Verifikasi KOde OTP</Text>
+            <View style={GStyles.authContainerTitle}>
+              <Text style={GStyles.authTitle}>Verifikasi KOde OTP</Text>
               <Spacing height={30} />
-              <Text style={Styles.textLabel}>Masukan 4 digit kode otp</Text>
-              <Text style={Styles.textLabel}>
+              <Text style={GStyles.textLabel}>Masukan 4 digit kode otp</Text>
+              <Text style={GStyles.textLabel}>
                 Yang di kirim ke +6282xxxxxxxxx
               </Text>
               <Spacing height={30} />
@@ -39,9 +39,9 @@ export default function VerificationView() {
                 }}
               />
               <Spacing height={30} />
-              <Text style={Styles.textLabel}>
+              <Text style={GStyles.textLabel}>
                 Tidak menerima kode ?{" "}
-                <Text style={Styles.textLabel}>Kirim Ulang</Text>
+                <Text style={GStyles.textLabel}>Kirim Ulang</Text>
               </Text>
             </View>
             <Spacing height={30} />

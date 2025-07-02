@@ -1,5 +1,5 @@
 import { MainColor } from "@/constants/color-palet";
-import { Styles } from "@/styles/global-styles";
+import { GStyles } from "@/styles/global-styles";
 import { ImageBackground, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -34,12 +34,12 @@ const ViewWrapper = ({
             <ImageBackground
               source={assetBackground}
               resizeMode="cover"
-              style={Styles.imageBackground}
+              style={GStyles.imageBackground}
             >
-              <View style={Styles.containerWithBackground}>{children}</View>
+              <View style={GStyles.containerWithBackground}>{children}</View>
             </ImageBackground>
           ) : (
-            <View style={Styles.container}>{children}</View>
+            <View style={GStyles.container}>{children}</View>
           )}
         </ScrollView>
         {tabBarComponent}

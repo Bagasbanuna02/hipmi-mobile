@@ -1,6 +1,6 @@
 
 import BackButton from "@/components/Button/BackButton";
-import { Styles } from "@/styles/global-styles";
+import { GStyles } from "@/styles/global-styles";
 import { Stack } from "expo-router";
 
 export default function PortofolioLayout() {
@@ -8,8 +8,8 @@ export default function PortofolioLayout() {
     <>
       <Stack
         screenOptions={{
-          headerStyle: Styles.headerStyle,
-          headerTitleStyle: Styles.headerTitleStyle,
+          headerStyle: GStyles.headerStyle,
+          headerTitleStyle: GStyles.headerTitleStyle,
           headerTitleAlign: "center",
           headerBackButtonDisplayMode: "minimal",
           headerLeft: () => <BackButton />,

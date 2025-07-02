@@ -3,7 +3,7 @@ import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import ButtonCustom from "@/components/Button/ButtonCustom";
 import { TextInputCustom } from "@/components/TextInput/TextInputCustom";
 import { MainColor } from "@/constants/color-palet";
-import { Styles } from "@/styles/global-styles";
+import { GStyles } from "@/styles/global-styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Text, View } from "react-native";
@@ -12,10 +12,10 @@ export default function RegisterView() {
   return (
     <>
       <ViewWrapper withBackground>
-        <View style={Styles.authContainer}>
+        <View style={GStyles.authContainer}>
           <View>
-            <View style={Styles.authContainerTitle}>
-              <Text style={Styles.authTitle}>REGISTRASI</Text>
+            <View style={GStyles.authContainerTitle}>
+              <Text style={GStyles.authTitle}>REGISTRASI</Text>
               <Spacing />
               <MaterialCommunityIcons
                 name="account"
@@ -24,10 +24,10 @@ export default function RegisterView() {
               />
               <Spacing />
 
-              <Text style={Styles.textLabel}>
+              <Text style={GStyles.textLabel}>
                 Anda akan terdaftar dengan nomor
               </Text>
-              <Text style={Styles.textLabel}>+6282xxxxxxxxx</Text>
+              <Text style={GStyles.textLabel}>+6282xxxxxxxxx</Text>
               <Spacing />
             </View>
             <TextInputCustom placeholder="Masukkan username" />

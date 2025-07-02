@@ -1,10 +1,10 @@
+import { TEXT_SIZE_MEDIUM } from "@/constants/constans-value";
 import { Dimensions, StyleSheet } from "react-native";
 import { AccentColor, MainColor } from "../constants/color-palet";
-import { TEXT_SIZE_MEDIUM } from "@/constants/constans-value";
 
 const { width } = Dimensions.get("window");
 
-export const Styles = StyleSheet.create({
+export const GStyles = StyleSheet.create({
   container: {
     flex: 1,
     paddingInline: 20,

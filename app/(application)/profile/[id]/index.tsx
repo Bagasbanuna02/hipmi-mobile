@@ -6,11 +6,12 @@ import DrawerCustom from "@/components/Drawer/DrawerCustom";
 import { MainColor } from "@/constants/color-palet";
 import { DRAWER_HEIGHT } from "@/constants/constans-value";
 import Profile_MenuDrawerSection from "@/screens/Profile/menuDrawerSection";
-import { Styles } from "@/styles/global-styles";
+import ProfilSection from "@/screens/Profile/profilSection";
+import { GStyles } from "@/styles/global-styles";
 import { Ionicons } from "@expo/vector-icons";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import React, { useRef, useState } from "react";
-import { Animated, InteractionManager, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
+import { Animated, InteractionManager, TouchableOpacity } from "react-native";
 
 export default function Profile() {
   const { id } = useLocalSearchParams();
@@ -93,25 +94,12 @@ export default function Profile() {
                 />
               </TouchableOpacity>
             ),
-            headerStyle: Styles.headerStyle,
-            headerTitleStyle: Styles.headerTitleStyle,
+            headerStyle: GStyles.headerStyle,
+            headerTitleStyle: GStyles.headerTitleStyle,
           }}
         />
-        <Text style={Styles.textLabel}>Profile {id}</Text>
-        <TouchableHighlight
-          onPress={() => router.push(`/(application)/portofolio/${id}`)}
-        >
-          <View
-            style={{
-              backgroundColor: MainColor.white,
-              padding: 10,
-              borderRadius: 10,
-              marginTop: 10,
-            }}
-          >
-            <Text>Portofolio</Text>
-          </View>
-        </TouchableHighlight>
+        <ProfilSection />
+       
       </ViewWrapper>
 
       {/* Drawer Komponen Eksternal */}

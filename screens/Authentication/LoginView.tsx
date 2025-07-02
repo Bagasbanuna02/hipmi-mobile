@@ -1,12 +1,12 @@
+import ButtonCustom from "@/components/Button/ButtonCustom";
+import Spacing from "@/components/_ShareComponent/Spacing";
+import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { MainColor } from "@/constants/color-palet";
-import { Styles } from "@/styles/global-styles";
+import { GStyles } from "@/styles/global-styles";
 import { router } from "expo-router";
 import { useState } from "react";
 import { Text, View } from "react-native";
 import PhoneInput, { ICountry } from "react-native-international-phone-number";
-import ButtonCustom from "@/components/Button/ButtonCustom";
-import Spacing from "@/components/_ShareComponent/Spacing";
-import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 
 
 export default function LoginView() {
@@ -25,17 +25,17 @@ export default function LoginView() {
     const callingCode = selectedCountry?.callingCode.replace(/^\+/, "") || "";
     const fixNumber = callingCode + inputValue;
     console.log(fixNumber);
-    router.push("/verification");
+    router.navigate("/(application)/profile/1");
   }
 
   return (
     <ViewWrapper withBackground>
-      <View style={Styles.authContainer}>
+      <View style={GStyles.authContainer}>
         <View>
-          <View style={Styles.authContainerTitle}>
-            <Text style={Styles.authSubTitle}>WELCOME TO</Text>
+          <View style={GStyles.authContainerTitle}>
+            <Text style={GStyles.authSubTitle}>WELCOME TO</Text>
             <Spacing height={5} />
-            <Text style={Styles.authTitle}>HIPMI BADUNG APPS</Text>
+            <Text style={GStyles.authTitle}>HIPMI BADUNG APPS</Text>
             <Spacing height={5} />
           </View>
           <Spacing height={50} />

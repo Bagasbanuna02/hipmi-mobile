@@ -1,6 +1,6 @@
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { AccentColor, MainColor } from "@/constants/color-palet";
-import { Styles } from "@/styles/global-styles";
+import { GStyles } from "@/styles/global-styles";
 import { router } from "expo-router";
 import { Text, TouchableHighlight, View } from "react-native";
 
@@ -17,7 +17,7 @@ export default function Event() {
             borderWidth: 1,
           }}
         >
-          <Text style={Styles.textLabel}>Event</Text>
+          <Text style={GStyles.textLabel}>Event</Text>
         </View>
       </TouchableHighlight>
     </ViewWrapper>

@@ -1,5 +1,5 @@
 import { AccentColor, MainColor } from "@/constants/color-palet";
-import { Styles } from "@/styles/global-styles";
+import { GStyles } from "@/styles/global-styles";
 import { Ionicons } from "@expo/vector-icons";
 import { router, Stack } from "expo-router";
 
@@ -8,8 +8,8 @@ export default function ApplicationLayout() {
     <>
       <Stack
         screenOptions={{
-          headerStyle: Styles.headerStyle,
-          headerTitleStyle: Styles.headerTitleStyle,
+          headerStyle: GStyles.headerStyle,
+          headerTitleStyle: GStyles.headerTitleStyle,
           headerTitleAlign: "center",
           contentStyle: {
             borderBottomColor: AccentColor.blue,
