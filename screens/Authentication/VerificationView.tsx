@@ -8,6 +8,10 @@ import { Text, View } from "react-native";
 import { OtpInput } from "react-native-otp-entry";
 
 export default function VerificationView() {
+  const handleVerification = () => {
+    console.log("Verification clicked");
+    router.push("/register");
+  };
   return (
     <>
       <ViewWrapper withBackground>
@@ -48,12 +52,12 @@ export default function VerificationView() {
           </View>
 
           <ButtonCustom
-            title="Verifikasi"
             backgroundColor={MainColor.yellow}
             textColor={MainColor.black}
-            radius={10}
-            onPress={() => router.push("/register")}
-          />
+            onPress={() => handleVerification()}
+          >
+            Verifikasi
+          </ButtonCustom>
         </View>
       </ViewWrapper>
     </>

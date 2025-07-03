@@ -23,8 +23,13 @@ export default function LoginView() {
   function handleLogin() {
     const callingCode = selectedCountry?.callingCode.replace(/^\+/, "") || "";
     const fixNumber = callingCode + inputValue;
-    console.log(fixNumber);
-    const id = fixNumber.replace(/\D/g, "");
+    // console.log("fixNumber", fixNumber); 
+    // router.navigate("/verification");
+
+    const randomAlfabet = Math.random().toString(36).substring(2, 8);
+    const randomNumber = Math.floor(Math.random() * 1000000);
+    const id = randomAlfabet + randomNumber + fixNumber;
+    console.log("user id :", id);
 
     router.navigate(`/(application)/profile/${id}`);
     // router.navigate("/(application)/home");
@@ -67,13 +72,7 @@ export default function LoginView() {
 
         <Spacing height={20} />
 
-        <ButtonCustom
-          title="Login"
-          backgroundColor={MainColor.yellow}
-          textColor={MainColor.black}
-          radius={10}
-          onPress={handleLogin}
-        />
+        <ButtonCustom onPress={handleLogin}>Login</ButtonCustom>
       </View>
     </ViewWrapper>
   );

@@ -6,7 +6,8 @@ import {
   TextInputCustom,
   ViewWrapper,
 } from "@/components";
-import { useLocalSearchParams } from "expo-router";
+import { MainColor } from "@/constants/color-palet";
+import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { Text } from "react-native";
 
@@ -21,10 +22,10 @@ export default function ProfileEdit() {
     <ViewWrapper
       bottomBarComponent={
         <ButtonCustom
-          radius={30}
           disabled={!nama || !email || !alamat}
           onPress={() => {
             console.log("data >>", nama, email, alamat);
+            // router.back();
           }}
         >
           Simpan

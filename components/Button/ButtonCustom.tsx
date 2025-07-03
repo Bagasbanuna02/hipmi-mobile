@@ -3,9 +3,14 @@
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 import buttonStyles from "./buttonCustomStyles";
-import { RADIUS_BUTTON } from "@/constants/constans-value";
+import { radiusMap } from "@/constants/radius-value";
+import { MainColor } from "@/constants/color-palet";
 
-// Definisi props dengan TypeScript
+// Import radiusMap
+
+
+// Definisi type untuk radius
+type RadiusType = keyof typeof radiusMap | number;
 
 interface ButtonProps {
   children?: React.ReactNode;
@@ -13,36 +18,28 @@ interface ButtonProps {
   title?: string;
   backgroundColor?: string;
   textColor?: string;
-  radius?: number;
+  radius?: RadiusType; // ← bisa string enum atau number
   disabled?: boolean;
   iconLeft?: React.ReactNode;
 }
 
-/**
- * Props untuk ButtonCustom
- * @param onPress: () => void
- * @param title?: string
- * @param backgroundColor?: string
- * @param textColor?: string
- * @param radius?: number
- * @param disabled?: boolean
- * @param iconLeft?: React.ReactNode
- * @example iconLeft={<Icon name="arrow-right" size={20} color={MainColor.black}/>
- */
 const ButtonCustom: React.FC<ButtonProps> = ({
   children,
   onPress,
   title = "Button",
-  backgroundColor = "#007AFF",
-  textColor = "#FFFFFF",
-  radius = 8,
+  backgroundColor = MainColor.yellow,
+  textColor = MainColor.black,
+  radius = "full", // default md
   disabled = false,
   iconLeft,
 }) => {
+  const borderRadius =
+    typeof radius === "number" ? radius : radiusMap[radius ?? "md"]; // fallback ke 'md'
+
   const styles = buttonStyles({
     backgroundColor,
     textColor,
-    borderRadius: RADIUS_BUTTON || radius,
+    borderRadius,
   });
 
   return (
@@ -54,7 +51,7 @@ const ButtonCustom: React.FC<ButtonProps> = ({
     >
       {/* Render icon jika tersedia */}
       {iconLeft && iconLeft}
-      <Text style={styles.buttonText}>{children}</Text>
+      <Text style={styles.buttonText}>{children || title}</Text>
     </TouchableOpacity>
   );
 };

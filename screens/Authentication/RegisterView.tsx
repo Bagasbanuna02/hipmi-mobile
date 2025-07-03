@@ -7,8 +7,14 @@ import { GStyles } from "@/styles/global-styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Text, View } from "react-native";
+import { useState } from "react";
 
 export default function RegisterView() {
+  const [username, setUsername] = useState("Bagas Banuna");
+  const handleRegister = () => {
+    console.log("Success register", username);
+    router.push("/(application)/home");
+  };
   return (
     <>
       <ViewWrapper withBackground>
@@ -30,24 +36,18 @@ export default function RegisterView() {
               <Text style={GStyles.textLabel}>+6282xxxxxxxxx</Text>
               <Spacing />
             </View>
-            <TextInputCustom placeholder="Masukkan username" />
-
-            <ButtonCustom
-              title="Daftar"
-              backgroundColor={MainColor.yellow}
-              textColor={MainColor.black}
-              radius={10}
-              onPress={() => (
-                console.log("Success register"),
-                router.push("/(application)/home")
-              )}
+            <TextInputCustom
+              placeholder="Masukkan username"
+              value={username}
+              onChangeText={(text) => setUsername(text)}
             />
+
+            <ButtonCustom onPress={handleRegister}>Daftar</ButtonCustom>
             {/* <Spacing />
             <ButtonCustom
               title="Coba"
               backgroundColor={MainColor.yellow}
               textColor={MainColor.black}
-              radius={10}
               onPress={() => {
                 console.log("Home clicked");
                 router.push("/(application)/coba");
