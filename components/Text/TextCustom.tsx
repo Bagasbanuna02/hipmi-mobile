@@ -5,7 +5,10 @@ import {
   TEXT_SIZE_SMALL,
 } from "@/constants/constans-value";
 import React from "react";
-import { StyleProp, Text as RNText, TextStyle, StyleSheet } from "react-native";
+import { Text as RNText, StyleProp, StyleSheet, TextStyle } from "react-native";
+
+// Tambahkan type TextAlignProps agar lebih type-safe
+type TextAlign = "left" | "center" | "right";
 
 interface TextCustomProps {
   children: string;
@@ -13,7 +16,9 @@ interface TextCustomProps {
   bold?: boolean;
   semiBold?: boolean;
   size?: "default" | "large" | "small";
-  color?: "default" | "primary" | "secondary";
+  color?: "default" | "yellow" | "red";
+  align?: TextAlign; // Prop untuk alignment
+  truncate?: boolean | number;
 }
 
 const TextCustom: React.FC<TextCustomProps> = ({
@@ -23,6 +28,8 @@ const TextCustom: React.FC<TextCustomProps> = ({
   semiBold = false,
   size = "default",
   color = "default",
+  align = "left", // Default alignment
+  truncate = false,
 }) => {
   const getStyle = () => {
     let selectedStyles = [];
@@ -39,8 +46,13 @@ const TextCustom: React.FC<TextCustomProps> = ({
     else if (size === "small") selectedStyles.push(styles.small);
 
     // Color
-    if (color === "primary") selectedStyles.push(styles.primaryColor);
-    else if (color === "secondary") selectedStyles.push(styles.secondaryColor);
+    if (color === "yellow") selectedStyles.push(styles.yellow);
+    else if (color === "red") selectedStyles.push(styles.red);
+
+    // Alignment
+    if (align) {
+      selectedStyles.push({ textAlign: align });
+    }
 
     // Override with passed style
     if (style) selectedStyles.push(style);
@@ -48,16 +60,26 @@ const TextCustom: React.FC<TextCustomProps> = ({
     return selectedStyles;
   };
 
-  return <RNText style={getStyle()}>{children}</RNText>;
+  return (
+    <RNText
+      numberOfLines={
+        typeof truncate === "number" ? truncate : truncate ? 1 : undefined
+      }
+      ellipsizeMode="tail"
+      style={getStyle()}
+    >
+      {children}
+    </RNText>
+  );
 };
 
 export default TextCustom;
 
 export const styles = StyleSheet.create({
   default: {
-    // fontFamily: "Poppins-Regular", // Ganti dengan font yang kamu gunakan
     fontSize: TEXT_SIZE_MEDIUM,
     color: MainColor.white,
+    fontFamily: "Poppins-Regular",
   },
   bold: {
     fontFamily: "Poppins-Bold",
@@ -73,10 +95,10 @@ export const styles = StyleSheet.create({
   small: {
     fontSize: TEXT_SIZE_SMALL,
   },
-  primaryColor: {
-    color: "#007AFF", // Warna utama aplikasi kamu
+  yellow: {
+    color: MainColor.yellow,
   },
-  secondaryColor: {
-    color: "#666",
+  red: {
+    color: MainColor.red,
   },
 });

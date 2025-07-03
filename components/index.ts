@@ -8,12 +8,15 @@ import DrawerCustom from "./Drawer/DrawerCustom";
 import MenuDrawerDynamicGrid from "./Drawer/MenuDrawerDynamicGird";
 // ShareComponent
 import ViewWrapper from "./_ShareComponent/ViewWrapper";
-import TruncatedText from "./_ShareComponent/TruncatedText";
 import Spacing from "./_ShareComponent/Spacing";
 // Text
 import TextCustom from "./Text/TextCustom";
 // TextInput
 import { TextInputCustom } from "./TextInput/TextInputCustom";
+// Grid
+import Grid from "./Grid/GridCustom";
+// Box
+import BaseBox from "./Box/BaseBox";
 
 export {
   AlertCustom,
@@ -25,10 +28,13 @@ export {
   MenuDrawerDynamicGrid,
   // ShareComponent
   Spacing,
-  TruncatedText,
   ViewWrapper,
   // Text
   TextCustom,
   // TextInput
   TextInputCustom,
+  // Grid
+  Grid,
+  // Box
+  BaseBox,
 };

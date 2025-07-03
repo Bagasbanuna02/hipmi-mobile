@@ -25,7 +25,9 @@ export default function LoginView() {
     const callingCode = selectedCountry?.callingCode.replace(/^\+/, "") || "";
     const fixNumber = callingCode + inputValue;
     console.log(fixNumber);
-    router.navigate("/(application)/profile/1");
+    // router.navigate("/(application)/profile/1");
+    router.navigate("/(application)/home");
+
   }
 
   return (

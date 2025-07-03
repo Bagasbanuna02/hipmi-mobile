@@ -1,6 +1,7 @@
+import { TextCustom } from "@/components";
 import Spacing from "@/components/_ShareComponent/Spacing";
-import DynamicTruncatedText from "@/components/_ShareComponent/TruncatedText";
-import { Text, View } from "react-native";
+import React from "react";
+import { View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { stylesHome } from "./homeViewStyle";
 
@@ -10,7 +11,10 @@ export default function Home_BottomFeatureSection() {
       <View style={stylesHome.jobVacancyContainer}>
         <View style={stylesHome.jobVacancyHeader}>
           <Icon name="briefcase" size={24} color="white" />
-          <Text style={stylesHome.jobVacancyTitle}>Job Vacancy</Text>
+          <Spacing width={10}/>
+          <TextCustom bold size="large">
+            Job Vacancy
+          </TextCustom>
         </View>
 
         <View style={stylesHome.vacancyList}>
@@ -18,19 +22,13 @@ export default function Home_BottomFeatureSection() {
           <View style={stylesHome.vacancyItem}>
             {/* <Icon name="user" size={20} color="#FFD700" /> */}
             <View style={stylesHome.vacancyDetails}>
-              <DynamicTruncatedText
-                text="Bagas_banuna"
-                fontSize={14}
-                fontFamily="System"
-                style={stylesHome.vacancyName}
-              />
+              <TextCustom bold color="yellow" truncate size="large">
+                Bagas_banuna
+              </TextCustom>
               <Spacing height={5} />
-              <DynamicTruncatedText
-                text="Dicari perawat kucing"
-                fontSize={12}
-                fontFamily="System"
-                style={stylesHome.vacancyDescription}
-              />
+              <TextCustom truncate={2}>
+                Dicari perawat kucing dan perawat anjing
+              </TextCustom>
             </View>
           </View>
 
@@ -38,19 +36,13 @@ export default function Home_BottomFeatureSection() {
           <View style={stylesHome.vacancyItem}>
             {/* <Icon name="user" size={20} color="#FFD700" /> */}
             <View style={stylesHome.vacancyDetails}>
-              <DynamicTruncatedText
-                text="fibramarcell"
-                fontSize={14}
-                fontFamily="System"
-                style={stylesHome.vacancyName}
-              />
+              <TextCustom bold color="yellow" truncate size="large">
+                fibramarcell
+              </TextCustom>
               <Spacing height={5} />
-              <DynamicTruncatedText
-                text="Di Butuhkan Seorang..."
-                fontSize={12}
-                fontFamily="System"
-                style={stylesHome.vacancyDescription}
-              />
+              <TextCustom truncate={2}>
+                Di Butuhkan Seorang Programer dan Designer
+              </TextCustom>
             </View>
           </View>
         </View>
