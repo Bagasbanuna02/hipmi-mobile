@@ -7,12 +7,14 @@ interface ViewWrapperProps {
   children: React.ReactNode;
   withBackground?: boolean;
   tabBarComponent?: React.ReactNode;
+  bottomBarComponent?: React.ReactNode;
 }
 
 const ViewWrapper = ({
   children,
   withBackground = false,
   tabBarComponent,
+  bottomBarComponent,
 }: ViewWrapperProps) => {
   const assetBackground = require("../../assets/images/main-background.png");
 
@@ -42,10 +44,17 @@ const ViewWrapper = ({
             <View style={GStyles.container}>{children}</View>
           )}
         </ScrollView>
-        {tabBarComponent}
+        {tabBarComponent ? tabBarComponent : null}
+        {bottomBarComponent ? (
+          <View style={GStyles.bottomBar}>
+            <View style={GStyles.bottomBarContainer}>
+              {bottomBarComponent}
+            </View>
+          </View>
+        ) : null}
       </SafeAreaView>
     </>
-    
+
     // <SafeAreaProvider>
     //   <SafeAreaView
     //     edges={[

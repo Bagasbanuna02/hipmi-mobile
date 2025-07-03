@@ -19,6 +19,8 @@ import Grid from "./Grid/GridCustom";
 import BaseBox from "./Box/BaseBox";
 // Avatar
 import AvatarCustom from "./Avatar/AvatarCustom"
+// Stack
+import StackCustom from "./Stack/StackCustom";
 
 export {
   AlertCustom,
@@ -41,4 +43,6 @@ export {
   BaseBox,
   // Avatar
   AvatarCustom,
+  // Stack
+  StackCustom,
 };

@@ -3,11 +3,13 @@
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 import buttonStyles from "./buttonCustomStyles";
+import { RADIUS_BUTTON } from "@/constants/constans-value";
 
 // Definisi props dengan TypeScript
 
 interface ButtonProps {
-  onPress: () => void;
+  children?: React.ReactNode;
+  onPress?: () => void;
   title?: string;
   backgroundColor?: string;
   textColor?: string;
@@ -28,6 +30,7 @@ interface ButtonProps {
  * @example iconLeft={<Icon name="arrow-right" size={20} color={MainColor.black}/>
  */
 const ButtonCustom: React.FC<ButtonProps> = ({
+  children,
   onPress,
   title = "Button",
   backgroundColor = "#007AFF",
@@ -39,7 +42,7 @@ const ButtonCustom: React.FC<ButtonProps> = ({
   const styles = buttonStyles({
     backgroundColor,
     textColor,
-    borderRadius: radius,
+    borderRadius: RADIUS_BUTTON || radius,
   });
 
   return (
@@ -51,7 +54,7 @@ const ButtonCustom: React.FC<ButtonProps> = ({
     >
       {/* Render icon jika tersedia */}
       {iconLeft && iconLeft}
-      <Text style={styles.buttonText}>{title}</Text>
+      <Text style={styles.buttonText}>{children}</Text>
     </TouchableOpacity>
   );
 };

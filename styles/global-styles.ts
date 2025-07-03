@@ -135,4 +135,24 @@ export const GStyles = StyleSheet.create({
     backgroundColor: "#007AFF",
   },
   // =============== TAB =============== //
+
+  // =============== BOTTOM BAR =============== //
+  bottomBar: {
+    backgroundColor: MainColor.darkblue,
+    borderTopColor: AccentColor.blue,
+    borderTopWidth: 1,
+    // shadowColor: AccentColor.blue,
+    // shadowOffset: {
+    //   width: 0,
+    //   height: -1,
+    // },
+    // shadowOpacity: 0.9,
+    // shadowRadius: 5,
+    // elevation: 5,
+  },
+  bottomBarContainer: {
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+  },
+  // =============== BOTTOM BAR =============== //
 });

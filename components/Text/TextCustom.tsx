@@ -11,7 +11,7 @@ import { Text as RNText, StyleProp, StyleSheet, TextStyle } from "react-native";
 type TextAlign = "left" | "center" | "right";
 
 interface TextCustomProps {
-  children: string;
+  children: string | React.ReactNode;
   style?: StyleProp<TextStyle>;
   bold?: boolean;
   semiBold?: boolean;
