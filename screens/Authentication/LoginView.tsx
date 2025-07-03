@@ -8,7 +8,6 @@ import { useState } from "react";
 import { Text, View } from "react-native";
 import PhoneInput, { ICountry } from "react-native-international-phone-number";
 
-
 export default function LoginView() {
   const [selectedCountry, setSelectedCountry] = useState<null | ICountry>(null);
   const [inputValue, setInputValue] = useState<string>("");
@@ -25,9 +24,10 @@ export default function LoginView() {
     const callingCode = selectedCountry?.callingCode.replace(/^\+/, "") || "";
     const fixNumber = callingCode + inputValue;
     console.log(fixNumber);
-    // router.navigate("/(application)/profile/1");
-    router.navigate("/(application)/home");
+    const id = fixNumber.replace(/\D/g, "");
 
+    router.navigate(`/(application)/profile/${id}`);
+    // router.navigate("/(application)/home");
   }
 
   return (

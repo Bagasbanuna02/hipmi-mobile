@@ -1,7 +1,6 @@
-import { MainColor } from "@/constants/color-palet";
+import { BackButton } from "@/components";
 import { GStyles } from "@/styles/global-styles";
-import { Ionicons } from "@expo/vector-icons";
-import { router, Stack } from "expo-router";
+import { Stack } from "expo-router";
 
 export default function ProfileLayout() {
   return (
@@ -12,14 +11,7 @@ export default function ProfileLayout() {
           headerTitleStyle: GStyles.headerTitleStyle,
           headerTitleAlign: "center",
           headerBackButtonDisplayMode: "minimal",
-          headerLeft: () => (
-            <Ionicons
-              name="arrow-back"
-              size={20}
-              color={MainColor.yellow}
-              onPress={() => router.back()}
-            />
-          ),
+          headerLeft: () => <BackButton />,
         }}
       >
         {/* <Stack.Screen name="[id]/index" options={{ headerShown: false }} /> */}
