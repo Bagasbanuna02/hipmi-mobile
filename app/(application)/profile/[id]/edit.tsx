@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   ButtonCustom,
+  SelectCustom,
   StackCustom,
   TextCustom,
   TextInputCustom,
@@ -9,7 +10,7 @@ import {
 import { MainColor } from "@/constants/color-palet";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
-import { Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 
 export default function ProfileEdit() {
   const { id } = useLocalSearchParams();
@@ -18,14 +19,28 @@ export default function ProfileEdit() {
   const [email, setEmail] = useState("bagasbanuna@gmail.com");
   const [alamat, setAlamat] = useState("Bandar Lampung");
 
+  const [selectedValue, setSelectedValue] = useState<string | number>("");
+
+  const options = [
+    { label: "React", value: "react" },
+    { label: "Vue", value: "vue" },
+    { label: "Angular", value: "angular" },
+    { label: "Svelte", value: "svelte" },
+    { label: "Next.js", value: "nextjs" },
+    { label: "Nuxt.js", value: "nuxtjs" },
+    { label: "Remix", value: "remix" },
+    { label: "Sapper", value: "sapper" },
+    { label: "SvelteKit", value: "sveltekit" },
+  ];
+
   return (
     <ViewWrapper
       bottomBarComponent={
         <ButtonCustom
-          disabled={!nama || !email || !alamat}
+          disabled={!nama || !email || !alamat || !selectedValue}
           onPress={() => {
-            console.log("data >>", nama, email, alamat);
-            // router.back();
+            console.log("data >>", nama, email, alamat, selectedValue);
+            router.back();
           }}
         >
           Simpan
@@ -33,6 +48,17 @@ export default function ProfileEdit() {
       }
     >
       <StackCustom gap={"xs"}>
+        <SelectCustom
+          label="Framework"
+          placeholder="Pilih framework favoritmu"
+          data={options}
+          value={selectedValue}
+          onChange={setSelectedValue}
+        />
+        {/* {selectedValue && (
+        <Text style={styles.result}>Terpilih: {selectedValue}</Text>
+      )} */}
+
         <TextInputCustom
           label="Nama"
           placeholder="Nama"
@@ -64,3 +90,16 @@ export default function ProfileEdit() {
     </ViewWrapper>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 20,
+  },
+  result: {
+    marginTop: 20,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+});

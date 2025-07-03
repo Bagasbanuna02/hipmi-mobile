@@ -29,7 +29,7 @@ export default function VerificationView() {
                 numberOfDigits={4}
                 theme={{
                   pinCodeContainerStyle: {
-                    backgroundColor: MainColor.login,
+                    backgroundColor: MainColor.text_input,
                     borderRadius: 10,
                     borderWidth: 1,
                     borderColor: MainColor.yellow,

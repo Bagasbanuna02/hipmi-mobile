@@ -7,7 +7,8 @@ export const MainColor = {
   red: "#FF4B4C",
   orange: "#FF7043",
   green: "#4CAF4F",
-  login: "#EDEBEBFF",
+  text_input: "#EDEBEBFF",
+  placeholder: "#999",
   disabled: "#606360",
 };
 

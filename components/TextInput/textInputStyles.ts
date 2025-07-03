@@ -34,7 +34,7 @@ export const textInputStyles = StyleSheet.create({
     alignItems: "center",
     borderWidth: 1,
     borderColor: AccentColor.white,
-    backgroundColor: MainColor.login,
+    backgroundColor: MainColor.white,
     paddingHorizontal: 12,
     height: 50,
   },

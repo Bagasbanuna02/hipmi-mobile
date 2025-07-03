@@ -19,6 +19,12 @@ interface DrawerCustomProps {
   //   openLogoutAlert: () => void;
 }
 
+
+/**
+ * 
+ * @param drawerAnim 
+ * @example   const drawerAnim = useRef(new Animated.Value(DRAWER_HEIGHT)).current; // mulai di luar bawah layar
+ */
 export default function DrawerCustom({
   children,
   height,

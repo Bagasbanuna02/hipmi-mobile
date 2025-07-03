@@ -21,6 +21,8 @@ import BaseBox from "./Box/BaseBox";
 import AvatarCustom from "./Avatar/AvatarCustom"
 // Stack
 import StackCustom from "./Stack/StackCustom";
+// Select
+import SelectCustom from "./Select/SelectCustom";
 
 export {
   AlertCustom,
@@ -45,4 +47,6 @@ export {
   AvatarCustom,
   // Stack
   StackCustom,
+  // Select
+  SelectCustom,
 };
