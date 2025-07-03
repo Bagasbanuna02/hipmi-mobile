@@ -17,6 +17,8 @@ import { TextInputCustom } from "./TextInput/TextInputCustom";
 import Grid from "./Grid/GridCustom";
 // Box
 import BaseBox from "./Box/BaseBox";
+// Avatar
+import AvatarCustom from "./Avatar/AvatarCustom"
 
 export {
   AlertCustom,
@@ -37,4 +39,6 @@ export {
   Grid,
   // Box
   BaseBox,
+  // Avatar
+  AvatarCustom,
 };
