@@ -1,7 +1,8 @@
 import { MainColor } from "@/constants/color-palet";
+import DUMMY_IMAGE from "@/constants/dummy-image-value";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 
-type Size = "base" | "sm" | "md" | "lg";
+type Size = "base" | "sm" | "md" | "lg" | "xl";
 
 interface AvatarCustomProps {
   source?: ImageSourcePropType;
@@ -13,10 +14,11 @@ const sizeMap = {
   sm: 60,
   md: 80,
   lg: 100,
+  xl: 120,
 };
 
 export default function AvatarCustom({
-  source = require("@/assets/images/dummy/dummy-avatar.png"),
+  source = DUMMY_IMAGE.avatar,
   size = "base",
 }: AvatarCustomProps) {
   const dimension = sizeMap[size];

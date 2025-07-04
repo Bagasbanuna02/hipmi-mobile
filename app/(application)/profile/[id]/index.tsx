@@ -45,6 +45,11 @@ export default function Profile() {
     //   path: `/(application)/profile/dashboard-admin`,
     // },
     { icon: "log-out", label: "Keluar", color: "red", path: "" },
+    {
+      icon: "create-outline",
+      label: "Create profile",
+      path: `/(application)/profile/${id}/create`,
+    },
   ];
 
   // Animasi menggunakan translateY (lebih kompatibel)

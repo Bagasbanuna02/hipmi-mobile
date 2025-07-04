@@ -1,5 +1,3 @@
-// components/TextInputCustom.tsx
-
 import Ionicons from "@expo/vector-icons/Ionicons";
 import React, { useState } from "react";
 import {
@@ -32,15 +30,18 @@ export const TextInputCustom = ({
   iconRight,
   label,
   required = false,
-  error = "",
+  error: externalError = "",
   secureTextEntry = false,
   fontColor = "#000",
   disabled = false,
   borderRadius = 8,
   style,
+  keyboardType,
+  onChangeText,
   ...rest
 }: Props) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [internalError, setInternalError] = useState("");
 
   // Helper untuk render ikon
   const renderIcon = (icon: IconType) => {
@@ -50,6 +51,23 @@ export const TextInputCustom = ({
     ) : (
       icon
     );
+  };
+
+  // Validasi email jika keyboardType = email-address
+  const handleTextChange = (text: string) => {
+    if (keyboardType === "email-address") {
+      const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text);
+      if (!isValid) {
+        setInternalError("Masukkan email yang valid");
+      } else {
+        setInternalError("");
+      }
+    }
+
+    // Panggil onChangeText eksternal jika ada
+    if (onChangeText) {
+      onChangeText(text);
+    }
   };
 
   return (
@@ -65,7 +83,7 @@ export const TextInputCustom = ({
           textInputStyles.inputContainer,
           disabled && textInputStyles.disabled,
           { borderRadius },
-          error ? textInputStyles.errorBorder : null,
+          externalError || internalError ? textInputStyles.errorBorder : null,
           style,
         ]}
       >
@@ -76,6 +94,8 @@ export const TextInputCustom = ({
           style={[textInputStyles.input, { color: fontColor }]}
           editable={!disabled}
           secureTextEntry={secureTextEntry && !isPasswordVisible}
+          keyboardType={keyboardType}
+          onChangeText={handleTextChange}
           {...rest}
         />
         {secureTextEntry && (
@@ -94,7 +114,12 @@ export const TextInputCustom = ({
           <View style={textInputStyles.icon}>{renderIcon(iconRight)}</View>
         )}
       </View>
-      {error ? <Text style={textInputStyles.errorMessage}>{error}</Text> : null}
+      {/* Prioritaskan error eksternal */}
+      {externalError || internalError ? (
+        <Text style={textInputStyles.errorMessage}>
+          {externalError || internalError}
+        </Text>
+      ) : null}
     </View>
   );
 };

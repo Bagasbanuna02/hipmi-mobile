@@ -24,6 +24,10 @@ export default function ProfileLayout() {
           name="[id]/update-background"
           options={{ title: "Update Latar Belakang" }}
         />
+        <Stack.Screen
+          name="[id]/create"
+          options={{ title: "Buat Profile" }}
+        />
       </Stack>
     </>
   );

@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   alertButton: {
     flex: 1,
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 50,
     marginHorizontal: 5,
     alignItems: "center",
   },

@@ -47,42 +47,11 @@ const ViewWrapper = ({
         {tabBarComponent ? tabBarComponent : null}
         {bottomBarComponent ? (
           <View style={GStyles.bottomBar}>
-            <View style={GStyles.bottomBarContainer}>
-              {bottomBarComponent}
-            </View>
+            <View style={GStyles.bottomBarContainer}>{bottomBarComponent}</View>
           </View>
         ) : null}
       </SafeAreaView>
     </>
-
-    // <SafeAreaProvider>
-    //   <SafeAreaView
-    //     edges={[
-    //       "bottom",
-    //       // "top",
-    //     ]}
-    //     style={{
-    //       flex: 1,
-    //       // paddingTop: StatusBar.currentHeight,
-    //       backgroundColor: MainColor.darkblue,
-    //     }}
-    //   >
-    //     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-    //       {withBackground ? (
-    //         <ImageBackground
-    //           source={assetBackground}
-    //           resizeMode="cover"
-    //           style={Styles.imageBackground}
-    //         >
-    //           <View style={Styles.containerWithBackground}>{children}</View>
-    //         </ImageBackground>
-    //       ) : (
-    //         <View style={Styles.container}>{children}</View>
-    //       )}
-    //     </ScrollView>
-    //     {tabBarComponent}
-    //   </SafeAreaView>
-    // </SafeAreaProvider>
   );
 };
 

@@ -22,6 +22,7 @@ type SelectProps = {
   placeholder?: string;
   data: SelectItem[];
   value?: string | number | null;
+  required?: boolean; // <-- new prop
   onChange: (value: string | number) => void;
 };
 
@@ -30,16 +31,27 @@ const SelectCustom: React.FC<SelectProps> = ({
   placeholder = "Pilih opsi",
   data,
   value,
+  required = false, // <-- default false
   onChange,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const selectedItem = data.find((item) => item.value === value);
 
+  const hasError = required && value === null; // <-- check if empty and required
+
   return (
     <View style={styles.container}>
-      {label && <Text style={styles.label}>{label}</Text>}
-      <Pressable style={styles.input} onPress={() => setModalVisible(true)}>
+      {label && (
+        <Text style={styles.label}>
+          {label}
+          {required && <Text style={styles.requiredIndicator}> *</Text>}
+        </Text>
+      )}
+      <Pressable
+        style={[styles.input, hasError ? styles.inputError : null]} // <-- add error style
+        onPress={() => setModalVisible(true)}
+      >
         <Text style={selectedItem ? styles.text : styles.placeholder}>
           {selectedItem?.label || placeholder}
         </Text>
@@ -70,6 +82,11 @@ const SelectCustom: React.FC<SelectProps> = ({
           </View>
         </TouchableOpacity>
       </Modal>
+
+      {/* Optional Error Message */}
+      {hasError && (
+        <Text style={styles.errorMessage}>Harap pilih salah satu</Text>
+      )}
     </View>
   );
 };
@@ -86,6 +103,10 @@ const styles = StyleSheet.create({
     color: MainColor.white,
     fontWeight: "500",
   },
+  requiredIndicator: {
+    color: "red",
+    fontWeight: "bold",
+  },
   input: {
     borderWidth: 1,
     borderColor: "#ccc",
@@ -94,6 +115,9 @@ const styles = StyleSheet.create({
     minHeight: 48,
     justifyContent: "center",
     backgroundColor: MainColor.white,
+  },
+  inputError: {
+    borderColor: "red",
   },
   text: {
     fontSize: TEXT_SIZE_MEDIUM,
@@ -119,5 +143,10 @@ const styles = StyleSheet.create({
     padding: 16,
     borderBottomWidth: 1,
     borderBottomColor: "#eee",
+  },
+  errorMessage: {
+    marginTop: 4,
+    fontSize: 12,
+    color: "red",
   },
 });

@@ -18,7 +18,7 @@ import Grid from "./Grid/GridCustom";
 // Box
 import BaseBox from "./Box/BaseBox";
 // Avatar
-import AvatarCustom from "./Avatar/AvatarCustom"
+import AvatarCustom from "./Image/AvatarCustom"
 // Stack
 import StackCustom from "./Stack/StackCustom";
 // Select

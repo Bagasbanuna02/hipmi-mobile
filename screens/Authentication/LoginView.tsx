@@ -28,10 +28,10 @@ export default function LoginView() {
     const randomAlfabet = Math.random().toString(36).substring(2, 8);
     const randomNumber = Math.floor(Math.random() * 1000000);
     const id = randomAlfabet + randomNumber + fixNumber;
-    console.log("user id :", id);
+    console.log("login user id :", id);
     
-    // router.navigate("/verification");
-    router.navigate(`/(application)/profile/${id}`);
+    router.navigate("/verification");
+    // router.navigate(`/(application)/profile/${id}`);
     // router.navigate("/(application)/home");
     // router.navigate(`/(application)/profile/${id}/edit`);
 

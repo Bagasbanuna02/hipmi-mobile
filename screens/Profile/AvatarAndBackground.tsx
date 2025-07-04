@@ -1,12 +1,13 @@
 import { AvatarCustom } from "@/components";
 import { AccentColor } from "@/constants/color-palet";
+import DUMMY_IMAGE from "@/constants/dummy-image-value";
 import { View, ImageBackground, StyleSheet } from "react-native";
 
 const AvatarAndBackground = () => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("@/assets/images/logo-hipmi.png")}
+        source={DUMMY_IMAGE.background}
         style={styles.backgroundImage}
         resizeMode="contain"
       />
@@ -15,7 +16,7 @@ const AvatarAndBackground = () => {
       {/* Avatar yang sedikit keluar */}
       <View style={styles.avatarOverlap}>
         <AvatarCustom
-          source={require("@/assets/images/react-logo.png")}
+          source={DUMMY_IMAGE.avatar}
           size="lg"
         />
       </View>
