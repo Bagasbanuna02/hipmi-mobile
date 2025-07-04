@@ -1,7 +1,7 @@
 // components/Button/Button.tsx
 
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { StyleProp, Text, TouchableOpacity, ViewStyle } from "react-native";
 import buttonStyles from "./buttonCustomStyles";
 import { radiusMap } from "@/constants/radius-value";
 import { MainColor } from "@/constants/color-palet";
@@ -21,6 +21,7 @@ interface ButtonProps {
   radius?: RadiusType; // ← bisa string enum atau number
   disabled?: boolean;
   iconLeft?: React.ReactNode;
+  style?: StyleProp<ViewStyle>;
 }
 
 const ButtonCustom: React.FC<ButtonProps> = ({
@@ -32,6 +33,7 @@ const ButtonCustom: React.FC<ButtonProps> = ({
   radius = "full", // default md
   disabled = false,
   iconLeft,
+  style,
 }) => {
   const borderRadius =
     typeof radius === "number" ? radius : radiusMap[radius ?? "md"]; // fallback ke 'md'
@@ -44,7 +46,7 @@ const ButtonCustom: React.FC<ButtonProps> = ({
 
   return (
     <TouchableOpacity
-      style={[styles.button, disabled && styles.disabled]}
+      style={[styles.button, disabled && styles.disabled, style]}
       onPress={onPress}
       disabled={disabled}
       activeOpacity={0.8}

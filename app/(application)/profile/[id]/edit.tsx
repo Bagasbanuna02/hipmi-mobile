@@ -3,23 +3,22 @@ import {
   ButtonCustom,
   SelectCustom,
   StackCustom,
-  TextCustom,
   TextInputCustom,
   ViewWrapper,
 } from "@/components";
-import { MainColor } from "@/constants/color-palet";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 
 export default function ProfileEdit() {
   const { id } = useLocalSearchParams();
 
-  const [nama, setNama] = useState("Bagas Banuna");
-  const [email, setEmail] = useState("bagasbanuna@gmail.com");
-  const [alamat, setAlamat] = useState("Bandar Lampung");
-
-  const [selectedValue, setSelectedValue] = useState<string | number>("");
+  const [data, setData] = useState({
+    nama: "Bagas Banuna",
+    email: "bagasbanuna@gmail.com",
+    alamat: "Jember",
+    selectedValue: "",
+  });
 
   const options = [
     { label: "React", value: "react" },
@@ -33,15 +32,24 @@ export default function ProfileEdit() {
     { label: "SvelteKit", value: "sveltekit" },
   ];
 
+  const handleSave = () => {
+    console.log({
+      nama: data.nama,
+      email: data.email,
+      alamat: data.alamat,
+      selectedValue: data.selectedValue,
+    });
+    router.back();
+  };
+
   return (
     <ViewWrapper
       bottomBarComponent={
         <ButtonCustom
-          disabled={!nama || !email || !alamat || !selectedValue}
-          onPress={() => {
-            console.log("data >>", nama, email, alamat, selectedValue);
-            router.back();
-          }}
+          disabled={
+            !data.nama || !data.email || !data.alamat || !data.selectedValue
+          }
+          onPress={handleSave}
         >
           Simpan
         </ButtonCustom>
@@ -52,37 +60,36 @@ export default function ProfileEdit() {
           label="Framework"
           placeholder="Pilih framework favoritmu"
           data={options}
-          value={selectedValue}
-          onChange={setSelectedValue}
+          value={data.selectedValue}
+          onChange={(value) => {
+            setData({ ...(data as any), selectedValue: value });
+          }}
         />
-        {/* {selectedValue && (
-        <Text style={styles.result}>Terpilih: {selectedValue}</Text>
-      )} */}
 
         <TextInputCustom
           label="Nama"
           placeholder="Nama"
-          value={nama}
+          value={data.nama}
           onChangeText={(text) => {
-            setNama(text);
+            setData({ ...data, nama: text });
           }}
           required
         />
         <TextInputCustom
           label="Email"
           placeholder="Email"
-          value={email}
+          value={data.email}
           onChangeText={(text) => {
-            setEmail(text);
+            setData({ ...data, email: text });
           }}
           required
         />
         <TextInputCustom
           label="Alamat"
           placeholder="Alamat"
-          value={alamat}
+          value={data.alamat}
           onChangeText={(text) => {
-            setAlamat(text);
+            setData({ ...data, alamat: text });
           }}
           required
         />

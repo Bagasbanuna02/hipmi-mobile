@@ -155,4 +155,10 @@ export const GStyles = StyleSheet.create({
     paddingVertical: 10,
   },
   // =============== BOTTOM BAR =============== //
+
+  // =============== BUTTON =============== //
+  buttonCentered50Percent: {
+    width: "50%",
+    alignSelf: "center",
+  },
 });
