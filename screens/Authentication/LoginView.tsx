@@ -30,8 +30,8 @@ export default function LoginView() {
     const id = randomAlfabet + randomNumber + fixNumber;
     console.log("user id :", id);
     
-    router.navigate("/verification");
-    // router.navigate(`/(application)/profile/${id}`);
+    // router.navigate("/verification");
+    router.navigate(`/(application)/profile/${id}`);
     // router.navigate("/(application)/home");
     // router.navigate(`/(application)/profile/${id}/edit`);
 

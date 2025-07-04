@@ -9,11 +9,14 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { CameraType, CameraView, useCameraPermissions } from "expo-camera";
 import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useRef, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
-export default function TakePictureProfile() {
+export default function TakePicture() {
+  const { id } = useLocalSearchParams();
+//   console.log("Take Picture ID >>", id);
+
   const [permission, requestPermission] = useCameraPermissions();
   const ref = useRef<CameraView>(null);
   const [uri, setUri] = useState<string | null>(null);
@@ -68,10 +71,10 @@ export default function TakePictureProfile() {
           <ButtonCustom onPress={() => setUri(null)} title="Foto ulang" />
           <ButtonCustom
             onPress={() => {
-              console.log("Update foto");
+              console.log("Upload picture >>", id);
               router.back();
             }}
-            title="Update Foto"
+            title="Upload Foto"
           />
         </StackCustom>
       </View>

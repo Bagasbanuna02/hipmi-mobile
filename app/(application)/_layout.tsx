@@ -166,6 +166,22 @@ export default function ApplicationLayout() {
             ),
           }}
         />
+
+        {/* Take Picture */}
+        <Stack.Screen
+          name="take-picture/[id]/index"
+          options={{
+            title: "Ambil Gambar",
+            headerLeft: () => (
+              <Ionicons
+                name="arrow-back"
+                size={20}
+                color={MainColor.yellow}
+                onPress={() => router.back()}
+              />
+            ),
+          }}
+        />
       </Stack>
     </>
   );

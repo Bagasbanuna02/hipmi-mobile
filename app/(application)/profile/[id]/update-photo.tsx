@@ -12,7 +12,7 @@ export default function UpdatePhotoProfile() {
       bottomBarComponent={
         <ButtonCustom
           onPress={() => {
-            console.log("Simpan foto");
+            console.log("Simpan foto profile >>", id);
             router.back();
           }}
         >
@@ -31,9 +31,10 @@ export default function UpdatePhotoProfile() {
       </BaseBox>
 
       <ButtonUpload
+        title="Update"
         onPress={() => {
-          console.log("ID >>", id);
-          router.navigate("/(application)/profile/[id]/take-picture");
+          console.log("Update photo >>", id);
+          router.navigate(`/(application)/take-picture/${id}`);
         }}
       />
     </ViewWrapper>

@@ -24,14 +24,6 @@ export default function ProfileLayout() {
           name="[id]/update-background"
           options={{ title: "Update Latar Belakang" }}
         />
-        <Stack.Screen
-          name="[id]/take-picture"
-          options={{ title: "Ambil Foto" }}
-        />
-        <Stack.Screen
-          name="[id]/take-picture2"
-          options={{ title: "Ambil Foto 2" }}
-        />
       </Stack>
     </>
   );

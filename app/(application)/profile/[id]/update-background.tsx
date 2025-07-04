@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { BaseBox, ButtonCustom } from "@/components";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import ButtonUpload from "@/components/Button/ButtonUpload";
@@ -13,7 +12,7 @@ export default function UpdateBackgroundProfile() {
       bottomBarComponent={
         <ButtonCustom
           onPress={() => {
-            console.log("Simpan foto");
+            console.log("Simpan foto background >>", id);
             router.back();
           }}
         >
@@ -32,8 +31,9 @@ export default function UpdateBackgroundProfile() {
       </BaseBox>
 
       <ButtonUpload
+        title="Update"
         onPress={() =>
-          router.navigate("/(application)/profile/[id]/take-picture")
+          router.navigate(`/(application)/take-picture/${id}`)
         }
       />
     </ViewWrapper>
