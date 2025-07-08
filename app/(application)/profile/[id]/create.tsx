@@ -1,19 +1,18 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   AvatarCustom,
   ButtonCustom,
+  SelectCustom,
   Spacing,
   StackCustom,
-  SelectCustom,
   TextInputCustom,
   ViewWrapper,
 } from "@/components";
 import InformationBox from "@/components/Box/InformationBox";
 import ButtonUpload from "@/components/Button/ButtonUpload";
 import LandscapeFrameUploaded from "@/components/Image/LandscapeFrameUploaded";
-import { View } from "react-native";
+import { GStyles } from "@/styles/global-styles";
 import { useState } from "react";
-import { router } from "expo-router";
+import { View } from "react-native";
 
 export default function CreateProfile() {
   const [data, setData] = useState({
@@ -28,17 +27,21 @@ export default function CreateProfile() {
     // router.back();
   };
 
-  return (
-    <ViewWrapper
-      bottomBarComponent={
+  const footerComponent = (
+    <View style={GStyles.bottomBar}>
+      <View style={GStyles.bottomBarContainer}>
         <ButtonCustom
           onPress={handlerSave}
           disabled={!data.name || !data.email || !data.address || !data.gender}
         >
           Simpan
         </ButtonCustom>
-      }
-    >
+      </View>
+    </View>
+  );
+
+  return (
+    <ViewWrapper footerComponent={footerComponent}>
       <StackCustom>
         <InformationBox text="Upload foto profile anda." />
         <View style={{ alignItems: "center" }}>
@@ -90,7 +93,14 @@ export default function CreateProfile() {
           required
           onChange={(value) => setData({ ...(data as any), gender: value })}
         />
-        <Spacing height={100} />
+        <TextInputCustom
+          required
+          label="Alamat"
+          placeholder="Masukkan alamat"
+          value={data.address}
+          onChangeText={(text) => setData({ ...data, address: text })}
+        />
+        {/* <Spacing /> */}
       </StackCustom>
     </ViewWrapper>
   );

@@ -23,18 +23,17 @@ export default function LoginView() {
   function handleLogin() {
     const callingCode = selectedCountry?.callingCode.replace(/^\+/, "") || "";
     const fixNumber = callingCode + inputValue;
-    // console.log("fixNumber", fixNumber); 
-    
+    // console.log("fixNumber", fixNumber);
+
     const randomAlfabet = Math.random().toString(36).substring(2, 8);
     const randomNumber = Math.floor(Math.random() * 1000000);
     const id = randomAlfabet + randomNumber + fixNumber;
     console.log("login user id :", id);
-    
+
     router.navigate("/verification");
     // router.navigate(`/(application)/profile/${id}`);
     // router.navigate("/(application)/home");
     // router.navigate(`/(application)/profile/${id}/edit`);
-
   }
 
   return (

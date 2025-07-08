@@ -19,7 +19,7 @@ export default function UiHome() {
 
   return (
     <>
-      <ViewWrapper tabBarComponent={<TabSection tabs={tabsHome} />}>
+      <ViewWrapper footerComponent={<TabSection tabs={tabsHome} />}>
         {/* Content Image */}
         <Home_ImageSection />
         <Spacing height={10} />
