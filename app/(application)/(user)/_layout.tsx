@@ -95,6 +95,14 @@ export default function UserLayout() {
             headerLeft: () => <BackButton />,
           }}
         />
+
+        {/* Portofolio */}
+        <Stack.Screen
+          name="portofolio"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
     </>
   );

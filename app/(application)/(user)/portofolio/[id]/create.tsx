@@ -1,11 +1,11 @@
-import { Text, View } from "react-native";
+import { TextCustom, ViewWrapper } from "@/components";
 import { useLocalSearchParams } from "expo-router";
 
 export default function PortofolioCreate() {
     const { id } = useLocalSearchParams();
     return (
-        <View>
-            <Text>Portofolio Create {id}</Text>
-        </View> 
+        <ViewWrapper>
+            <TextCustom>Portofolio Create {id}</TextCustom>
+        </ViewWrapper> 
     );
 }

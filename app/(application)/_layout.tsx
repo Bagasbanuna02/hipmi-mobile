@@ -17,13 +17,7 @@ export default function ApplicationLayout() {
           }}
         />
 
-        {/* Portofolio */}
-        <Stack.Screen
-          name="portofolio"
-          options={{
-            headerShown: false,
-          }}
-        />
+        
 
         {/* Take Picture */}
         <Stack.Screen
