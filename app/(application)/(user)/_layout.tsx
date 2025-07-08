@@ -68,6 +68,33 @@ export default function UserLayout() {
             headerLeft: () => <LeftButtonCustom />,
           }}
         />
+
+        {/* Forum */}
+        <Stack.Screen
+          name="forum/index"
+          options={{
+            title: "Forum",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
+        {/* Maps */}
+        <Stack.Screen
+          name="maps/index"
+          options={{
+            title: "Maps",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
+        {/* Marketplace */}
+        <Stack.Screen
+          name="marketplace/index"
+          options={{
+            title: "Market Place",
+            headerLeft: () => <BackButton />,
+          }}
+        />
       </Stack>
     </>
   );

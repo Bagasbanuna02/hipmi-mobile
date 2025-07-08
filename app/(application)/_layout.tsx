@@ -1,4 +1,3 @@
-import { BackButton } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { HeaderStyles } from "@/styles/header-styles";
 import { Ionicons } from "@expo/vector-icons";
@@ -9,37 +8,6 @@ export default function ApplicationLayout() {
     <>
       <Stack screenOptions={HeaderStyles}>
         <Stack.Screen name="(user)" options={{ headerShown: false }} />
-
-        <Stack.Screen
-          name="forum/index"
-          options={{
-            title: "Forum",
-            headerLeft: () => <BackButton />,
-          }}
-        />
-
-        <Stack.Screen
-          name="maps/index"
-          options={{
-            title: "Maps",
-            headerLeft: () => <BackButton />,
-          }}
-        />
-
-        <Stack.Screen
-          name="marketplace/index"
-          options={{
-            title: "Market Place",
-            headerLeft: () => (
-              <Ionicons
-                name="arrow-back"
-                size={20}
-                color={MainColor.yellow}
-                onPress={() => router.back()}
-              />
-            ),
-          }}
-        />
 
         {/* Profile */}
         <Stack.Screen
