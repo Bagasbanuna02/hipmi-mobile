@@ -15,6 +15,7 @@ export default function RootLayout() {
           }}
         >
           <Stack.Screen name="index" options={{ title: "" }} />
+          <Stack.Screen name="+not-found" options={{ title: "" }} />
           <Stack.Screen
             name="verification"
             options={{ title: "", headerBackVisible: false }}

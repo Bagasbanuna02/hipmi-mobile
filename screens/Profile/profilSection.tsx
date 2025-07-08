@@ -3,7 +3,7 @@ import { BaseBox, Grid, Spacing, TextCustom } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 import AvatarAndBackground from "./AvatarAndBackground";
 
@@ -85,7 +85,10 @@ export default function ProfilSection() {
             <BaseBox
               key={index}
               style={{ backgroundColor: MainColor.darkblue }}
-              onPress={() => console.log("pressed")}
+              onPress={() => {
+                console.log("press to Portofolio");
+                router.push(`/portofolio/${id}`);
+              }}
             >
               <Grid>
                 <Grid.Col

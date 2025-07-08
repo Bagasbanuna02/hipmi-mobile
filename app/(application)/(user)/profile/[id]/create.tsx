@@ -11,10 +11,12 @@ import InformationBox from "@/components/Box/InformationBox";
 import ButtonUpload from "@/components/Button/ButtonUpload";
 import LandscapeFrameUploaded from "@/components/Image/LandscapeFrameUploaded";
 import { GStyles } from "@/styles/global-styles";
+import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { View } from "react-native";
 
 export default function CreateProfile() {
+  const { id } = useLocalSearchParams();
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -24,7 +26,7 @@ export default function CreateProfile() {
 
   const handlerSave = () => {
     console.log("data create profile >>", data);
-    // router.back();
+    router.back();
   };
 
   const footerComponent = (
@@ -32,7 +34,7 @@ export default function CreateProfile() {
       <View style={GStyles.bottomBarContainer}>
         <ButtonCustom
           onPress={handlerSave}
-          disabled={!data.name || !data.email || !data.address || !data.gender}
+          // disabled={!data.name || !data.email || !data.address || !data.gender}
         >
           Simpan
         </ButtonCustom>
@@ -47,7 +49,9 @@ export default function CreateProfile() {
         <View style={{ alignItems: "center" }}>
           <AvatarCustom size="xl" />
           <Spacing />
-          <ButtonUpload onPress={() => console.log("pressed")} />
+          <ButtonUpload
+            onPress={() => router.navigate(`/take-picture/${id}`)}
+          />
         </View>
 
         <Spacing />
@@ -56,7 +60,9 @@ export default function CreateProfile() {
           <InformationBox text="Upload foto latar belakang anda." />
           <LandscapeFrameUploaded />
           <Spacing />
-          <ButtonUpload onPress={() => console.log("pressed")} />
+          <ButtonUpload
+            onPress={() => router.navigate(`/take-picture/${id}`)}
+          />
         </View>
 
         <Spacing />
