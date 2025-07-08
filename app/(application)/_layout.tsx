@@ -9,16 +9,6 @@ export default function ApplicationLayout() {
       <Stack screenOptions={HeaderStyles}>
         <Stack.Screen name="(user)" options={{ headerShown: false }} />
 
-        {/* Profile */}
-        <Stack.Screen
-          name="profile"
-          options={{
-            headerShown: false,
-          }}
-        />
-
-        
-
         {/* Take Picture */}
         <Stack.Screen
           name="take-picture/[id]/index"

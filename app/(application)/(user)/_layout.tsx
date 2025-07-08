@@ -32,6 +32,22 @@ export default function UserLayout() {
           }}
         />
 
+        {/* Profile */}
+        <Stack.Screen
+          name="profile"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        {/* Portofolio */}
+        <Stack.Screen
+          name="portofolio"
+          options={{
+            headerShown: false,
+          }}
+        />
+        
         {/* User Search */}
         <Stack.Screen
           name="user-search/index"
@@ -93,14 +109,6 @@ export default function UserLayout() {
           options={{
             title: "Market Place",
             headerLeft: () => <BackButton />,
-          }}
-        />
-
-        {/* Portofolio */}
-        <Stack.Screen
-          name="portofolio"
-          options={{
-            headerShown: false,
           }}
         />
       </Stack>
