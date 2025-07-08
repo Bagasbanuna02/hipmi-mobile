@@ -1,5 +1,5 @@
 // import { ITabs } from "@/components/_Interface/types";
-import Spacing from "@/components/_ShareComponent/Spacing";
+import { StackCustom } from "@/components";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { useNavigation } from "expo-router";
 import React, { useEffect } from "react";
@@ -16,21 +16,16 @@ export default function UiHome() {
     navigation.setOptions({});
   }, [navigation]);
 
-
   return (
     <>
       <ViewWrapper footerComponent={<TabSection tabs={tabsHome} />}>
-        {/* Content Image */}
-        <Home_ImageSection />
-        <Spacing height={10} />
+        <StackCustom>
+          <Home_ImageSection />
 
-        {/* Grid Section */}
-        <Home_FeatureSection />
-        <Spacing height={10} />
+          <Home_FeatureSection />
 
-        {/* Job Vacancy Section */}
-        <Home_BottomFeatureSection />
-        <Spacing height={20} />
+          <Home_BottomFeatureSection />
+        </StackCustom>
       </ViewWrapper>
     </>
   );

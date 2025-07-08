@@ -28,7 +28,7 @@ const ViewWrapper = ({
     <>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
+        style={{ flex: 1, backgroundColor: MainColor.darkblue }}
       >
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
@@ -57,7 +57,6 @@ const ViewWrapper = ({
           <SafeAreaView
             edges={["bottom"]}
             style={{
-              flex: 1,
               backgroundColor: MainColor.darkblue,
             }}
           >

@@ -1,0 +1,54 @@
+import { BackButton } from "@/components";
+import { MainColor } from "@/constants/color-palet";
+import { HeaderStyles } from "@/styles/header-styles";
+import { Ionicons } from "@expo/vector-icons";
+import { router, Stack } from "expo-router";
+
+export default function UserLayout() {
+  return (
+    <>
+      <Stack screenOptions={HeaderStyles}>
+        <Stack.Screen
+          name="home"
+          options={{
+            title: "HIPMI",
+            headerLeft: () => (
+              <Ionicons
+                name="search"
+                size={20}
+                color={MainColor.yellow}
+                onPress={() => router.push("/user-search")}
+              />
+            ),
+            headerRight: () => (
+              <Ionicons
+                name="notifications"
+                size={20}
+                color={MainColor.yellow}
+                onPress={() => router.push("/notifications")}
+              />
+            ),
+          }}
+        />
+
+        {/* User Search */}
+        <Stack.Screen
+          name="user-search/index"
+          options={{
+            title: "Pencarian Pengguna",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
+        {/* Notification */}
+        <Stack.Screen
+          name="notifications/index"
+          options={{
+            title: "Notifikasi",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+      </Stack>
+    </>
+  );
+}

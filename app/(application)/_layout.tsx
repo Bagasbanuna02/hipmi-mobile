@@ -1,47 +1,13 @@
-import { AccentColor, MainColor } from "@/constants/color-palet";
-import { GStyles } from "@/styles/global-styles";
+import { MainColor } from "@/constants/color-palet";
+import { HeaderStyles } from "@/styles/header-styles";
 import { Ionicons } from "@expo/vector-icons";
 import { router, Stack } from "expo-router";
 
 export default function ApplicationLayout() {
   return (
     <>
-      <Stack
-        screenOptions={{
-          headerStyle: GStyles.headerStyle,
-          headerTitleStyle: GStyles.headerTitleStyle,
-          headerTitleAlign: "center",
-          contentStyle: {
-            borderBottomColor: AccentColor.blue,
-            borderBottomWidth: 2,
-          },
-          // headerLargeStyle: {
-          //   backgroundColor: MainColor.darkblue,
-          // },
-        }}
-      >
-        <Stack.Screen
-          name="home"
-          options={{
-            title: "HIPMI",
-            headerLeft: () => (
-              <Ionicons
-                name="search"
-                size={20}
-                color={MainColor.yellow}
-                onPress={() => router.push("/(application)/user-search")}
-              />
-            ),
-            headerRight: () => (
-              <Ionicons
-                name="notifications"
-                size={20}
-                color={MainColor.yellow}
-                onPress={() => router.push("/(application)/notifications")}
-              />
-            ),
-          }}
-        />
+      <Stack screenOptions={HeaderStyles}>
+        <Stack.Screen name="(user)" options={{ headerShown: false }} />
 
         <Stack.Screen
           name="forum/index"
@@ -105,7 +71,7 @@ export default function ApplicationLayout() {
         />
 
         {/* Event */}
-        <Stack.Screen
+        {/* <Stack.Screen
           name="event/(tabs)"
           options={{
             title: "Event",
@@ -118,44 +84,12 @@ export default function ApplicationLayout() {
               />
             ),
           }}
-        />
+        /> */}
 
         <Stack.Screen
           name="event/detail/[id]"
           options={{
             title: "Detail",
-            headerLeft: () => (
-              <Ionicons
-                name="arrow-back"
-                size={20}
-                color={MainColor.yellow}
-                onPress={() => router.back()}
-              />
-            ),
-          }}
-        />
-
-        {/* User Search */}
-        <Stack.Screen
-          name="user-search/index"
-          options={{
-            title: "Pencarian Pengguna",
-            headerLeft: () => (
-              <Ionicons
-                name="arrow-back"
-                size={20}
-                color={MainColor.yellow}
-                onPress={() => router.back()}
-              />
-            ),
-          }}
-        />
-
-        {/* Notification */}
-        <Stack.Screen
-          name="notifications/index"
-          options={{
-            title: "Notifikasi",
             headerLeft: () => (
               <Ionicons
                 name="arrow-back"

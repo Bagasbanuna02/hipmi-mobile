@@ -13,7 +13,7 @@ export default function RegisterView() {
   const [username, setUsername] = useState("Bagas Banuna");
   const handleRegister = () => {
     console.log("Success register", username);
-    router.push("/(application)/home");
+    router.push("/(application)/(user)/home");
   };
   return (
     <>
