@@ -1,4 +1,4 @@
-import BackButton from "@/components/Button/BackButton";
+import LeftButtonCustom from "@/components/Button/BackButton";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { GStyles } from "@/styles/global-styles";
 import { Stack, useLocalSearchParams } from "expo-router";
@@ -12,7 +12,7 @@ export default function Portofolio() {
       <Stack.Screen
         options={{
           title: "Portofolio",
-          headerLeft: () => <BackButton />,
+          headerLeft: () => <LeftButtonCustom />,
         //   headerRight: () => (
         //     <TouchableOpacity onPress={openDrawer}>
         //       <Ionicons

@@ -1,7 +1,7 @@
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import AlertCustom from "@/components/Alert/AlertCustom";
-import BackButton from "@/components/Button/BackButton";
+import LeftButtonCustom from "@/components/Button/BackButton";
 import DrawerCustom from "@/components/Drawer/DrawerCustom";
 import { MainColor } from "@/constants/color-palet";
 import { DRAWER_HEIGHT } from "@/constants/constans-value";
@@ -89,7 +89,7 @@ export default function Profile() {
         <Stack.Screen
           options={{
             title: "Profile",
-            headerLeft: () => <BackButton />,
+            headerLeft: () => <LeftButtonCustom />,
             headerRight: () => (
               <TouchableOpacity onPress={openDrawer}>
                 <Ionicons

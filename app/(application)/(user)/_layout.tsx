@@ -1,4 +1,5 @@
 import { BackButton } from "@/components";
+import LeftButtonCustom from "@/components/Button/BackButton";
 import { MainColor } from "@/constants/color-palet";
 import { HeaderStyles } from "@/styles/header-styles";
 import { Ionicons } from "@expo/vector-icons";
@@ -46,6 +47,25 @@ export default function UserLayout() {
           options={{
             title: "Notifikasi",
             headerLeft: () => <BackButton />,
+          }}
+        />
+
+        {/* Event */}
+        <Stack.Screen
+          name="event/(tabs)"
+          options={{
+            title: "Event",
+            headerLeft: () => (
+              <LeftButtonCustom path="/(application)/(user)/home" />
+            ),
+          }}
+        />
+
+        <Stack.Screen
+          name="event/detail/[id]"
+          options={{
+            title: "Event Detail",
+            headerLeft: () => <LeftButtonCustom />,
           }}
         />
       </Stack>
