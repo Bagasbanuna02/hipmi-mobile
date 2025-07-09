@@ -115,9 +115,15 @@ export default function ProfilSection() {
             </BaseBox>
           ))}
         </View>
+
+        <TextCustom
+          bold
+          align="right"
+          onPress={() => router.push(`/portofolio/${id}/list`)}
+        >
+          Lihat semua
+        </TextCustom>
       </BaseBox>
     </>
   );
 }
-
-

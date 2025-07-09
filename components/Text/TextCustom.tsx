@@ -5,7 +5,7 @@ import {
   TEXT_SIZE_SMALL,
 } from "@/constants/constans-value";
 import React from "react";
-import { Text as RNText, StyleProp, StyleSheet, TextStyle } from "react-native";
+import { Text as RNText, StyleProp, StyleSheet, TextStyle, TouchableOpacity } from "react-native";
 
 // Tambahkan type TextAlignProps agar lebih type-safe
 type TextAlign = "left" | "center" | "right";
@@ -19,6 +19,7 @@ interface TextCustomProps {
   color?: "default" | "yellow" | "red";
   align?: TextAlign; // Prop untuk alignment
   truncate?: boolean | number;
+  onPress?: () => void;
 }
 
 const TextCustom: React.FC<TextCustomProps> = ({
@@ -30,6 +31,7 @@ const TextCustom: React.FC<TextCustomProps> = ({
   color = "default",
   align = "left", // Default alignment
   truncate = false,
+  onPress,
 }) => {
   const getStyle = () => {
     let selectedStyles = [];
@@ -61,15 +63,29 @@ const TextCustom: React.FC<TextCustomProps> = ({
   };
 
   return (
-    <RNText
-      numberOfLines={
-        typeof truncate === "number" ? truncate : truncate ? 1 : undefined
-      }
-      ellipsizeMode="tail"
-      style={getStyle()}
-    >
-      {children}
-    </RNText>
+    onPress ? (
+      <TouchableOpacity onPress={onPress}>
+        <RNText
+          numberOfLines={
+            typeof truncate === "number" ? truncate : truncate ? 1 : undefined
+          }
+          ellipsizeMode="tail"
+          style={getStyle()}
+        >
+          {children}
+        </RNText>
+      </TouchableOpacity>
+    ) : (
+      <RNText
+        numberOfLines={
+          typeof truncate === "number" ? truncate : truncate ? 1 : undefined
+        }
+        ellipsizeMode="tail"
+        style={getStyle()}
+      >
+        {children}
+      </RNText>
+    )
   );
 };
 

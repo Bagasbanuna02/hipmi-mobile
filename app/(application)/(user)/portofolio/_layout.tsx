@@ -1,6 +1,5 @@
-
 import LeftButtonCustom from "@/components/Button/BackButton";
-import { GStyles } from "@/styles/global-styles";
+import { HeaderStyles } from "@/styles/header-styles";
 import { Stack } from "expo-router";
 
 export default function PortofolioLayout() {
@@ -8,10 +7,7 @@ export default function PortofolioLayout() {
     <>
       <Stack
         screenOptions={{
-          headerStyle: GStyles.headerStyle,
-          headerTitleStyle: GStyles.headerTitleStyle,
-          headerTitleAlign: "center",
-          headerBackButtonDisplayMode: "minimal",
+          ...HeaderStyles,
           headerLeft: () => <LeftButtonCustom />,
         }}
       >
@@ -20,7 +16,10 @@ export default function PortofolioLayout() {
           name="[id]/create"
           options={{ title: "Tambah Portofolio" }}
         />
-        
+        <Stack.Screen
+          name="[id]/list"
+          options={{ title: "Daftar Portofolio" }}
+        />
       </Stack>
     </>
   );
