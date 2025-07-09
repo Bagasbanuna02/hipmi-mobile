@@ -8,7 +8,7 @@ export default function EventLayout() {
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: MainColor.yellow,
-        tabBarInactiveTintColor: MainColor.white,
+        tabBarInactiveTintColor: MainColor.white_gray,
         tabBarStyle: {
           backgroundColor: MainColor.darkblue,
         },

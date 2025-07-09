@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // components/Stack.tsx
 
 import React from "react";
@@ -18,7 +19,7 @@ const StackCustom: React.FC<StackProps> = ({
   children,
   align = "stretch",
   justify = "flex-start",
-  gap = "md",
+  gap = "xs",
   direction = "column",
   style,
 }) => {
@@ -57,10 +58,10 @@ const convertToSpacing = (value: GapSizeType): number => {
   return sizes[value] || 16; // default md
 };
 
-const styles = StyleSheet.create({
-  stack: {
-    flex: 1,
-  },
-});
+// const styles = StyleSheet.create({
+//   stack: {
+//     flex: 1,
+//   },
+// });
 
 export default StackCustom;

@@ -30,8 +30,8 @@ export default function LoginView() {
     const id = randomAlfabet + randomNumber + fixNumber;
     console.log("login user id :", id);
 
-    router.navigate("/verification");
-    // router.navigate(`/(application)/profile/${id}`);
+    // router.navigate("/verification");
+    router.navigate(`/(application)/(user)/profile/${id}`);
     // router.navigate("/(application)/home");
     // router.navigate(`/(application)/profile/${id}/edit`);
   }
@@ -55,7 +55,7 @@ export default function LoginView() {
               fontSize: 10,
               fontWeight: "thin",
               fontStyle: "italic",
-              color: MainColor.white,
+              color: MainColor.white_gray,
             }}
           >
             powered by muku.id

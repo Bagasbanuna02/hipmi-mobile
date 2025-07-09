@@ -23,6 +23,7 @@ type Props = {
   disabled?: boolean;
   borderRadius?: number;
   style?: StyleProp<ViewStyle>;
+  maxLength?: number;
 } & Omit<React.ComponentProps<typeof RNTextInput>, "style">;
 
 export const TextInputCustom = ({
@@ -38,6 +39,7 @@ export const TextInputCustom = ({
   style,
   keyboardType,
   onChangeText,
+  maxLength,
   ...rest
 }: Props) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -96,6 +98,7 @@ export const TextInputCustom = ({
           secureTextEntry={secureTextEntry && !isPasswordVisible}
           keyboardType={keyboardType}
           onChangeText={handleTextChange}
+          maxLength={maxLength}
           {...rest}
         />
         {secureTextEntry && (

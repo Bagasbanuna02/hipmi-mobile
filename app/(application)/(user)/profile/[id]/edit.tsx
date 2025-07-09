@@ -6,6 +6,7 @@ import {
   TextInputCustom,
   ViewWrapper,
 } from "@/components";
+import BoxButtonOnFooter from "@/components/Box/BoxButtonOnFooter";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
@@ -44,15 +45,17 @@ export default function ProfileEdit() {
 
   return (
     <ViewWrapper
-      bottomBarComponent={
-        <ButtonCustom
-          disabled={
-            !data.nama || !data.email || !data.alamat || !data.selectedValue
-          }
-          onPress={handleSave}
-        >
-          Simpan
-        </ButtonCustom>
+      footerComponent={
+        <BoxButtonOnFooter>
+          <ButtonCustom
+            // disabled={
+            //   !data.nama || !data.email || !data.alamat || !data.selectedValue
+            // }
+            onPress={handleSave}
+          >
+            Simpan
+          </ButtonCustom>
+        </BoxButtonOnFooter>
       }
     >
       <StackCustom gap={"xs"}>

@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   overlappingAvatar: {
     borderWidth: 2,
     borderColor: "#fff",
-    backgroundColor: MainColor.white,
+    backgroundColor: MainColor.white_gray,
     // shadowColor: "#000",
     // shadowOffset: { width: 0, height: 2 },
     // shadowOpacity: 0.2,

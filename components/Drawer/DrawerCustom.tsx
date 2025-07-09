@@ -1,10 +1,10 @@
 import React, { useRef } from "react";
 import {
-  Animated,
-  PanResponder,
-  StyleSheet,
-  View,
-  InteractionManager,
+    Animated,
+    InteractionManager,
+    PanResponder,
+    StyleSheet,
+    View,
 } from "react-native";
 
 import { AccentColor, MainColor } from "@/constants/color-palet";
@@ -86,7 +86,7 @@ DrawerCustomProps) {
         {...panResponder.panHandlers}
       >
         <View
-          style={[styles.headerBar, { backgroundColor: MainColor.white }]}
+          style={[styles.headerBar, { backgroundColor: MainColor.white_gray }]}
         />
 
         {children}
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   headerBar: {
     width: 40,
     height: 5,
-    backgroundColor: MainColor.white,
+    backgroundColor: MainColor.white_gray,
     borderRadius: 5,
     alignSelf: "center",
     marginVertical: 10,

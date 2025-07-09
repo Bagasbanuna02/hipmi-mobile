@@ -3,13 +3,13 @@ import { MainColor } from "@/constants/color-palet";
 import { TEXT_SIZE_MEDIUM } from "@/constants/constans-value";
 import React, { useState } from "react";
 import {
-  View,
-  Text,
-  Pressable,
-  Modal,
   FlatList,
+  Modal,
+  Pressable,
   StyleSheet,
+  Text,
   TouchableOpacity,
+  View,
 } from "react-native";
 
 type SelectItem = {
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: TEXT_SIZE_MEDIUM,
     marginBottom: 4,
-    color: MainColor.white,
+    color: MainColor.white_gray,
     fontWeight: "500",
   },
   requiredIndicator: {
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: MainColor.white_gray,
     padding: 12,
     borderRadius: 8,
     minHeight: 48,

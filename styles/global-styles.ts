@@ -44,7 +44,7 @@ export const GStyles = StyleSheet.create({
   // TEXT & LABEL
   textLabel: {
     fontSize: TEXT_SIZE_MEDIUM,
-    color: MainColor.white,
+    color: MainColor.white_gray,
     fontWeight: "normal",
   },
 
@@ -123,7 +123,7 @@ export const GStyles = StyleSheet.create({
     fontWeight: "500",
   },
   activeTabLabel: {
-    color: MainColor.white,
+    color: MainColor.white_gray,
     fontWeight: "600",
   },
   activeIndicator: {

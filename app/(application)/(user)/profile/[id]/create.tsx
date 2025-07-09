@@ -7,10 +7,10 @@ import {
   TextInputCustom,
   ViewWrapper,
 } from "@/components";
+import BoxButtonOnFooter from "@/components/Box/BoxButtonOnFooter";
 import InformationBox from "@/components/Box/InformationBox";
 import ButtonUpload from "@/components/Button/ButtonUpload";
 import LandscapeFrameUploaded from "@/components/Image/LandscapeFrameUploaded";
-import { GStyles } from "@/styles/global-styles";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { View } from "react-native";
@@ -30,16 +30,14 @@ export default function CreateProfile() {
   };
 
   const footerComponent = (
-    <View style={GStyles.bottomBar}>
-      <View style={GStyles.bottomBarContainer}>
-        <ButtonCustom
-          onPress={handlerSave}
-          // disabled={!data.name || !data.email || !data.address || !data.gender}
-        >
-          Simpan
-        </ButtonCustom>
-      </View>
-    </View>
+    <BoxButtonOnFooter>
+      <ButtonCustom
+        onPress={handlerSave}
+        // disabled={!data.name || !data.email || !data.address || !data.gender}
+      >
+        Simpan
+      </ButtonCustom>
+    </BoxButtonOnFooter>
   );
 
   return (

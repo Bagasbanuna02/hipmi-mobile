@@ -95,12 +95,12 @@ const styles = StyleSheet.create({
     fontSize: TEXT_SIZE_LARGE,
     fontWeight: "bold",
     marginBottom: 20,
-    color: MainColor.white,
+    color: MainColor.white_gray,
   },
   alertMessage: {
     textAlign: "center",
     marginBottom: 20,
-    color: MainColor.white,
+    color: MainColor.white_gray,
   },
   alertButtons: {
     flexDirection: "row",

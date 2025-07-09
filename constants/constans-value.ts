@@ -6,6 +6,7 @@ export {
   ICON_SIZE_MEDIUM,
   DRAWER_HEIGHT,
   RADIUS_BUTTON,
+  ICON_SIZE_BUTTON,
 };
 
 const TEXT_SIZE_SMALL = 12;
@@ -15,3 +16,4 @@ const ICON_SIZE_SMALL = 20;
 const ICON_SIZE_MEDIUM = 24;
 const DRAWER_HEIGHT = 500; // tinggi drawer5
 const RADIUS_BUTTON = 50
+const ICON_SIZE_BUTTON = 18

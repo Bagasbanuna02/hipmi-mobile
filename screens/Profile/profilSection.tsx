@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { BaseBox, Grid, Spacing, TextCustom } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";

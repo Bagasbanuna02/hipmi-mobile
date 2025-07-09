@@ -109,5 +109,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "flex-start",
+    marginInline: 0.1
   },
 });

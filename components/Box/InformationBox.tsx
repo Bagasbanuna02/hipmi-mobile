@@ -16,7 +16,7 @@ export default function InformationBox({ text }: { text: string }) {
             <Ionicons
               name="information-circle-outline"
               size={24}
-              color={MainColor.white}
+              color={MainColor.white_gray}
             />
           </Grid.Col>
           <Grid.Col span={10} style={{ justifyContent: "center" }}>

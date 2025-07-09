@@ -2,7 +2,9 @@
 import AlertCustom from "./Alert/AlertCustom";
 // Button
 import LeftButtonCustom from "./Button/BackButton";
+import ButtonCenteredOnly from "./Button/ButtonCenteredOnly";
 import ButtonCustom from "./Button/ButtonCustom";
+import ButtonUpload from "./Button/ButtonUpload";
 // Drawer
 import DrawerCustom from "./Drawer/DrawerCustom";
 import MenuDrawerDynamicGrid from "./Drawer/MenuDrawerDynamicGird";
@@ -13,6 +15,8 @@ import ViewWrapper from "./_ShareComponent/ViewWrapper";
 import TextCustom from "./Text/TextCustom";
 // TextInput
 import { TextInputCustom } from "./TextInput/TextInputCustom";
+// TextArea
+import TextAreaCustom from "./TextArea/TextAreaCustom";
 // Grid
 import Grid from "./Grid/GridCustom";
 // Box
@@ -31,7 +35,7 @@ export {
   // Button
   LeftButtonCustom as BackButton,
   // Box
-  BaseBox, ButtonCustom,
+  BaseBox, ButtonCenteredOnly, ButtonCustom, ButtonUpload,
   // Drawer
   DrawerCustom,
   // Grid
@@ -42,9 +46,13 @@ export {
   Spacing,
   // Stack
   StackCustom,
+  // TextArea
+  TextAreaCustom,
   // Text
   TextCustom,
   // TextInput
-  TextInputCustom, ViewWrapper
+  TextInputCustom,
+  // ViewWrapper
+  ViewWrapper
 };
 

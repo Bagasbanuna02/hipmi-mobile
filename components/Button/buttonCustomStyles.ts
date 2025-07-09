@@ -1,6 +1,7 @@
 // components/Button/buttonStyles.js
 
 import { MainColor } from "@/constants/color-palet";
+import { TEXT_SIZE_MEDIUM } from "@/constants/constans-value";
 import { StyleSheet } from "react-native";
 
 export default function buttonStyles({
@@ -21,7 +22,7 @@ export default function buttonStyles({
     },
     buttonText: {
       color: textColor,
-      fontSize: 16,
+      fontSize: TEXT_SIZE_MEDIUM,
       fontWeight: "600",
     },
     disabled: {

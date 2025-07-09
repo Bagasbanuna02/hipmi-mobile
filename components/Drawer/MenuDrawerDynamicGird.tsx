@@ -1,7 +1,7 @@
 import { AccentColor, MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_MEDIUM, TEXT_SIZE_SMALL } from "@/constants/constans-value";
 import { Ionicons } from "@expo/vector-icons";
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const MenuDrawerDynamicGrid = ({ data, columns = 3, onPressItem }: any) => {
   const numColumns = columns;
@@ -18,7 +18,7 @@ const MenuDrawerDynamicGrid = ({ data, columns = 3, onPressItem }: any) => {
             <Ionicons
               name={item.icon}
               size={ICON_SIZE_MEDIUM}
-              color={item.color || MainColor.white}
+              color={item.color || MainColor.white_gray}
             />
           </View>
           <Text style={styles.label}>{item.label}</Text>
@@ -52,6 +52,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: TEXT_SIZE_SMALL,
     textAlign: "center",
-    color: MainColor.white,
+    color: MainColor.white_gray,
   },
 });
