@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import {
-  TextInput as RNTextInput,
-  StyleProp,
-  Text,
-  View,
-  ViewStyle,
+    TextInput as RNTextInput,
+    StyleProp,
+    Text,
+    View,
+    ViewStyle,
 } from "react-native";
-
-import { textInputStyles } from "../TextInput/textInputStyles";
+import { GStyles } from "@/styles/global-styles";
 
 type IconType = React.ReactNode | string;
 
@@ -71,31 +70,31 @@ const TextAreaCustom: React.FC<TextAreaCustomProps> = ({
   const renderIcon = (icon: IconType) => {
     if (!icon) return null;
     return typeof icon === "string" ? (
-      <Text style={textInputStyles.iconText}>{icon}</Text>
+      <Text style={GStyles.iconTextInput}>{icon}</Text>
     ) : (
       icon
     );
   };
 
   return (
-    <View style={textInputStyles.container}>
+    <View style={GStyles.containerAreaInput}>
       {label && (
-        <Text style={textInputStyles.label}>
+        <Text style={GStyles.labelInput}>
           {label}
-          {required && <Text style={textInputStyles.required}> *</Text>}
+          {required && <Text style={GStyles.requiredInput}> *</Text>}
         </Text>
       )}
       <View
         style={[
-          textInputStyles.inputContainer,
-          disabled && textInputStyles.disabled,
-          hasError ? textInputStyles.errorBorder : {},
+          GStyles.inputContainerInput,
+          disabled && GStyles.disabledInput,
+          hasError ? GStyles.errorBorderInput : {},
           { borderRadius },
           style,
         ]}
       >
         {iconLeft && (
-          <View style={textInputStyles.icon}>{renderIcon(iconLeft)}</View>
+          <View style={GStyles.iconInput}>{renderIcon(iconLeft)}</View>
         )}
 
         <RNTextInput
@@ -103,8 +102,8 @@ const TextAreaCustom: React.FC<TextAreaCustomProps> = ({
           multiline
           numberOfLines={numberOfLines}
           style={[
-            textInputStyles.input,
-            textInputStyles.textArea,
+            GStyles.inputInput,
+            GStyles.textAreaInput,
             { color: fontColor },
           ]}
           editable={!disabled}
@@ -114,7 +113,7 @@ const TextAreaCustom: React.FC<TextAreaCustomProps> = ({
         />
 
         {iconRight && (
-          <View style={textInputStyles.icon}>{renderIcon(iconRight)}</View>
+          <View style={GStyles.iconInput}>{renderIcon(iconRight)}</View>
         )}
       </View>
 
@@ -128,11 +127,11 @@ const TextAreaCustom: React.FC<TextAreaCustomProps> = ({
         }}
       >
         {hasError ? (
-          <Text style={textInputStyles.errorMessage}>{error}</Text>
+          <Text style={GStyles.errorMessageInput}>{error}</Text>
         ) : null}
 
         {showCount && maxLength ? (
-          <Text style={textInputStyles.inputLength}>
+          <Text style={GStyles.inputMaxLength}>
             {(value as string)?.length || 0}/{maxLength}
           </Text>
         ) : null}

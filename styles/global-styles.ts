@@ -1,4 +1,4 @@
-import { TEXT_SIZE_MEDIUM } from "@/constants/constans-value";
+import { TEXT_SIZE_LARGE, TEXT_SIZE_MEDIUM, TEXT_SIZE_SMALL } from "@/constants/constans-value";
 import { Dimensions, StyleSheet } from "react-native";
 import { AccentColor, MainColor } from "../constants/color-palet";
 
@@ -141,14 +141,6 @@ export const GStyles = StyleSheet.create({
     backgroundColor: MainColor.darkblue,
     borderTopColor: AccentColor.blue,
     borderTopWidth: 1,
-    // shadowColor: AccentColor.blue,
-    // shadowOffset: {
-    //   width: 0,
-    //   height: -1,
-    // },
-    // shadowOpacity: 0.9,
-    // shadowRadius: 5,
-    // elevation: 5,
   },
   bottomBarContainer: {
     paddingHorizontal: 15,
@@ -160,5 +152,86 @@ export const GStyles = StyleSheet.create({
   buttonCentered50Percent: {
     width: "50%",
     alignSelf: "center",
+  },
+  // =============== BUTTON =============== //
+
+  // =============== TEXT INPUT =============== //
+  // Container utama input (View luar)
+  containerAreaInput: {
+    marginBottom: 16,
+  },
+
+  // Label di atas input
+  labelInput: {
+    fontSize: TEXT_SIZE_MEDIUM,
+    marginBottom: 6,
+    fontWeight: "500",
+    color: MainColor.white_gray,
+  },
+
+  // Tanda bintang merah untuk required
+  requiredInput: {
+    color: "red",
+  },
+
+  // Pesan error di bawah input
+  errorMessageInput: {
+    marginTop: 4,
+    fontSize: TEXT_SIZE_SMALL,
+    color: MainColor.red,
+  },
+
+  // Input Length
+  inputMaxLength: {
+    fontSize: TEXT_SIZE_SMALL,
+    color: MainColor.white_gray,
+  },
+
+  // Wrapper input (View pembungkus TextInput)
+  inputContainerInput: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: MainColor.white_gray,
+    backgroundColor: MainColor.white,
+    paddingHorizontal: 10,
+    height: 50,
+  },
+
+  // Style saat disabled
+  disabledInput: {
+    backgroundColor: "#f9f9f9",
+    borderColor: "#e0e0e0",
+  },
+
+  // Input utama (TextInput)
+  inputInput: {
+    flex: 1,
+    fontSize: TEXT_SIZE_MEDIUM,
+    paddingVertical: 0,
+  },
+
+  // Ikon di kiri/kanan
+  iconInput: {
+    marginHorizontal: 4,
+    justifyContent: "center",
+  },
+
+  // Teks ikon jika berupa string
+  iconTextInput: {
+    fontSize: TEXT_SIZE_LARGE,
+    color: "#000",
+  },
+
+  // Border merah jika ada error
+  errorBorderInput: {
+    borderColor: "red",
+  },
+
+  // Untuk TextArea tambahan
+  textAreaInput: {
+    textAlignVertical: "top",
+    padding: 5,
+    height: undefined, // biar multiline bebas tinggi
   },
 });

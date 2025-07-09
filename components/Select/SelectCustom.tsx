@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   option: {
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: "#eee",
+    borderBottomColor: MainColor.white_gray,
   },
   errorMessage: {
     marginTop: 4,

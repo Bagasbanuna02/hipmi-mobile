@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-  ButtonCustom,
-  Grid,
-  SelectCustom,
-  Spacing,
-  StackCustom,
-  TextAreaCustom,
-  TextCustom,
-  TextInputCustom,
-  ViewWrapper,
+    ButtonCustom,
+    Grid,
+    SelectCustom,
+    Spacing,
+    StackCustom,
+    TextAreaCustom,
+    TextCustom,
+    TextInputCustom,
+    ViewWrapper,
 } from "@/components";
 import BoxButtonOnFooter from "@/components/Box/BoxButtonOnFooter";
 import InformationBox from "@/components/Box/InformationBox";
@@ -100,11 +100,7 @@ export default function PortofolioCreate() {
           Tambah Pilihan
         </ButtonCenteredOnly>
         <Spacing />
-        <TextInputCustom
-          required
-          label="Alamat Bisnis"
-          placeholder="Masukkan alamat bisnis"
-        />
+
         <View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <TextCustom semiBold style={{ color: MainColor.white_gray }}>
@@ -123,6 +119,13 @@ export default function PortofolioCreate() {
           />
         </View>
         <Spacing />
+
+        <TextInputCustom
+          required
+          label="Alamat Bisnis"
+          placeholder="Masukkan alamat bisnis"
+        />
+
         <TextAreaCustom
           label="Deskripsi Bisnis"
           placeholder="Masukkan deskripsi bisnis"

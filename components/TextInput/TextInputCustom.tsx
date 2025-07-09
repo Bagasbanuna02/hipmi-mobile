@@ -1,3 +1,4 @@
+import { GStyles } from "@/styles/global-styles";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import React, { useState } from "react";
 import {
@@ -8,7 +9,7 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import { textInputStyles } from "./textInputStyles";
+
 
 type IconType = React.ReactNode | string;
 
@@ -49,7 +50,7 @@ export const TextInputCustom = ({
   const renderIcon = (icon: IconType) => {
     if (!icon) return null;
     return typeof icon === "string" ? (
-      <Text style={textInputStyles.iconText}>{icon}</Text>
+      <Text style={GStyles.iconTextInput}>{icon}</Text>
     ) : (
       icon
     );
@@ -73,27 +74,27 @@ export const TextInputCustom = ({
   };
 
   return (
-    <View style={textInputStyles.container}>
+    <View style={GStyles.containerAreaInput}>
       {label && (
-        <Text style={textInputStyles.label}>
+        <Text style={GStyles.labelInput}>
           {label}
-          {required && <Text style={textInputStyles.required}> *</Text>}
+          {required && <Text style={GStyles.requiredInput}> *</Text>}
         </Text>
       )}
       <View
         style={[
-          textInputStyles.inputContainer,
-          disabled && textInputStyles.disabled,
+          GStyles.inputContainerInput,
+          disabled && GStyles.disabledInput,
           { borderRadius },
-          externalError || internalError ? textInputStyles.errorBorder : null,
+          externalError || internalError ? GStyles.errorBorderInput : null,
           style,
         ]}
       >
         {iconLeft && (
-          <View style={textInputStyles.icon}>{renderIcon(iconLeft)}</View>
+          <View style={GStyles.iconInput}>{renderIcon(iconLeft)}</View>
         )}
         <RNTextInput
-          style={[textInputStyles.input, { color: fontColor }]}
+          style={[GStyles.inputInput, { color: fontColor }]}
           editable={!disabled}
           secureTextEntry={secureTextEntry && !isPasswordVisible}
           keyboardType={keyboardType}
@@ -104,7 +105,7 @@ export const TextInputCustom = ({
         {secureTextEntry && (
           <TouchableOpacity
             onPress={() => setIsPasswordVisible((prev) => !prev)}
-            style={textInputStyles.icon}
+            style={GStyles.iconInput}
           >
             <Ionicons
               name={isPasswordVisible ? "eye-off" : "eye"}
@@ -114,12 +115,12 @@ export const TextInputCustom = ({
           </TouchableOpacity>
         )}
         {iconRight && (
-          <View style={textInputStyles.icon}>{renderIcon(iconRight)}</View>
+          <View style={GStyles.iconInput}>{renderIcon(iconRight)}</View>
         )}
       </View>
       {/* Prioritaskan error eksternal */}
       {externalError || internalError ? (
-        <Text style={textInputStyles.errorMessage}>
+        <Text style={GStyles.errorMessageInput}>
           {externalError || internalError}
         </Text>
       ) : null}
