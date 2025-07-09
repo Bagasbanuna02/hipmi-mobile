@@ -50,7 +50,7 @@ export const TextInputCustom = ({
   const renderIcon = (icon: IconType) => {
     if (!icon) return null;
     return typeof icon === "string" ? (
-      <Text style={GStyles.iconTextInput}>{icon}</Text>
+      <Text style={GStyles.inputIconText}>{icon}</Text>
     ) : (
       icon
     );
@@ -74,27 +74,27 @@ export const TextInputCustom = ({
   };
 
   return (
-    <View style={GStyles.containerAreaInput}>
+    <View style={GStyles.inputContainerArea}>
       {label && (
-        <Text style={GStyles.labelInput}>
+        <Text style={GStyles.inputLabel}>
           {label}
-          {required && <Text style={GStyles.requiredInput}> *</Text>}
+          {required && <Text style={GStyles.inputRequired}> *</Text>}
         </Text>
       )}
       <View
         style={[
           GStyles.inputContainerInput,
-          disabled && GStyles.disabledInput,
+          disabled && GStyles.inputDisabled,
           { borderRadius },
-          externalError || internalError ? GStyles.errorBorderInput : null,
+          externalError || internalError ? GStyles.inputErrorBorder : null,
           style,
         ]}
       >
         {iconLeft && (
-          <View style={GStyles.iconInput}>{renderIcon(iconLeft)}</View>
+          <View style={GStyles.inputIcon}>{renderIcon(iconLeft)}</View>
         )}
         <RNTextInput
-          style={[GStyles.inputInput, { color: fontColor }]}
+          style={[GStyles.inputText, { color: fontColor }]}
           editable={!disabled}
           secureTextEntry={secureTextEntry && !isPasswordVisible}
           keyboardType={keyboardType}
@@ -105,7 +105,7 @@ export const TextInputCustom = ({
         {secureTextEntry && (
           <TouchableOpacity
             onPress={() => setIsPasswordVisible((prev) => !prev)}
-            style={GStyles.iconInput}
+            style={GStyles.inputIcon}
           >
             <Ionicons
               name={isPasswordVisible ? "eye-off" : "eye"}
@@ -115,12 +115,12 @@ export const TextInputCustom = ({
           </TouchableOpacity>
         )}
         {iconRight && (
-          <View style={GStyles.iconInput}>{renderIcon(iconRight)}</View>
+          <View style={GStyles.inputIcon}>{renderIcon(iconRight)}</View>
         )}
       </View>
       {/* Prioritaskan error eksternal */}
       {externalError || internalError ? (
-        <Text style={GStyles.errorMessageInput}>
+        <Text style={GStyles.inputErrorMessage}>
           {externalError || internalError}
         </Text>
       ) : null}

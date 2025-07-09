@@ -155,27 +155,27 @@ export const GStyles = StyleSheet.create({
   },
   // =============== BUTTON =============== //
 
-  // =============== TEXT INPUT =============== //
+  // =============== TEXT INPUT , TEXT AREA , SELECT =============== //
   // Container utama input (View luar)
-  containerAreaInput: {
+  inputContainerArea: {
     marginBottom: 16,
   },
 
   // Label di atas input
-  labelInput: {
+  inputLabel: {
     fontSize: TEXT_SIZE_MEDIUM,
-    marginBottom: 6,
+    marginBottom: 4,
     fontWeight: "500",
     color: MainColor.white_gray,
   },
 
   // Tanda bintang merah untuk required
-  requiredInput: {
+  inputRequired: {
     color: "red",
   },
 
   // Pesan error di bawah input
-  errorMessageInput: {
+  inputErrorMessage: {
     marginTop: 4,
     fontSize: TEXT_SIZE_SMALL,
     color: MainColor.red,
@@ -189,49 +189,78 @@ export const GStyles = StyleSheet.create({
 
   // Wrapper input (View pembungkus TextInput)
   inputContainerInput: {
-    flexDirection: "row",
-    alignItems: "center",
     borderWidth: 1,
     borderColor: MainColor.white_gray,
     backgroundColor: MainColor.white,
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 10,
     height: 50,
   },
 
   // Style saat disabled
-  disabledInput: {
+  inputDisabled: {
     backgroundColor: "#f9f9f9",
     borderColor: "#e0e0e0",
   },
 
   // Input utama (TextInput)
-  inputInput: {
+  inputText: {
     flex: 1,
     fontSize: TEXT_SIZE_MEDIUM,
     paddingVertical: 0,
   },
 
   // Ikon di kiri/kanan
-  iconInput: {
+  inputIcon: {
     marginHorizontal: 4,
     justifyContent: "center",
   },
 
   // Teks ikon jika berupa string
-  iconTextInput: {
+  inputIconText: {
     fontSize: TEXT_SIZE_LARGE,
     color: "#000",
   },
 
   // Border merah jika ada error
-  errorBorderInput: {
+  inputErrorBorder: {
     borderColor: "red",
+    borderWidth: 1,
   },
 
-  // Untuk TextArea tambahan
+  // Placeholder input
+  inputPlaceholder: {
+    fontSize: TEXT_SIZE_MEDIUM,
+    color: MainColor.placeholder,
+  },
+
+  //  TextArea untuk tambahan
   textAreaInput: {
     textAlignVertical: "top",
     padding: 5,
     height: undefined, // biar multiline bebas tinggi
   },
+
+  // Select
+  selectModalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.3)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  selectModalContent: {
+    width: "80%",
+    maxHeight: 300,
+    backgroundColor: "white",
+    borderRadius: 8,
+    overflow: "hidden",
+  },
+  selectOption: {
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: MainColor.white_gray,
+  },
+
+  // =============== TEXT INPUT , TEXT AREA , SELECT =============== //
 });

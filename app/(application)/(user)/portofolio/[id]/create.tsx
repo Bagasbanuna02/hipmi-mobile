@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-    ButtonCustom,
-    Grid,
-    SelectCustom,
-    Spacing,
-    StackCustom,
-    TextAreaCustom,
-    TextCustom,
-    TextInputCustom,
-    ViewWrapper,
+  ButtonCustom,
+  Grid,
+  SelectCustom,
+  Spacing,
+  StackCustom,
+  TextAreaCustom,
+  TextCustom,
+  TextInputCustom,
+  ViewWrapper,
 } from "@/components";
 import BoxButtonOnFooter from "@/components/Box/BoxButtonOnFooter";
 import InformationBox from "@/components/Box/InformationBox";
@@ -71,9 +71,12 @@ export default function PortofolioCreate() {
             label: item.name,
             value: item.id,
           }))}
-          value=""
-          onChange={(value) => console.log(value)}
+          value={data.bidang_usaha}
+          onChange={(value) => {
+            setData({ ...(data as any), bidang_usaha: value });
+          }}
         />
+
         <Grid>
           <Grid.Col span={10}>
             <SelectCustom
@@ -83,8 +86,10 @@ export default function PortofolioCreate() {
                 label: item.name,
                 value: item.id,
               }))}
-              value=""
-              onChange={(value) => console.log(value)}
+              value={data.sub_bidang_usaha}
+              onChange={(value) => {
+                setData({ ...(data as any), sub_bidang_usaha: value });
+              }}
             />
           </Grid.Col>
           <Grid.Col
@@ -96,6 +101,7 @@ export default function PortofolioCreate() {
             </TouchableOpacity>
           </Grid.Col>
         </Grid>
+        
         <ButtonCenteredOnly onPress={() => console.log("add")}>
           Tambah Pilihan
         </ButtonCenteredOnly>

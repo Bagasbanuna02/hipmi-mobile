@@ -1,15 +1,13 @@
 // components/Select.tsx
-import { MainColor } from "@/constants/color-palet";
-import { TEXT_SIZE_MEDIUM } from "@/constants/constans-value";
+import { GStyles } from "@/styles/global-styles";
 import React, { useState } from "react";
 import {
   FlatList,
   Modal,
   Pressable,
-  StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 
 type SelectItem = {
@@ -24,6 +22,7 @@ type SelectProps = {
   value?: string | number | null;
   required?: boolean; // <-- new prop
   onChange: (value: string | number) => void;
+  borderRadius?: number;
 };
 
 const SelectCustom: React.FC<SelectProps> = ({
@@ -33,6 +32,7 @@ const SelectCustom: React.FC<SelectProps> = ({
   value,
   required = false, // <-- default false
   onChange,
+  borderRadius = 8,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -41,35 +41,41 @@ const SelectCustom: React.FC<SelectProps> = ({
   const hasError = required && value === null; // <-- check if empty and required
 
   return (
-    <View style={styles.container}>
+    <View style={GStyles.inputContainerArea}>
       {label && (
-        <Text style={styles.label}>
+        <Text style={GStyles.inputLabel}>
           {label}
-          {required && <Text style={styles.requiredIndicator}> *</Text>}
+          {required && <Text style={GStyles.inputRequired}> *</Text>}
         </Text>
       )}
       <Pressable
-        style={[styles.input, hasError ? styles.inputError : null]} // <-- add error style
+        style={[
+          { borderRadius },
+          GStyles.inputContainerInput,
+          hasError ? GStyles.inputErrorBorder : null,
+        ]} // <-- add error style
         onPress={() => setModalVisible(true)}
       >
-        <Text style={selectedItem ? styles.text : styles.placeholder}>
+        <Text
+          style={selectedItem ? GStyles.inputText : GStyles.inputPlaceholder}
+        >
           {selectedItem?.label || placeholder}
         </Text>
       </Pressable>
 
       <Modal visible={modalVisible} transparent animationType="fade">
         <TouchableOpacity
-          style={styles.modalOverlay}
+          style={GStyles.selectModalOverlay}
           activeOpacity={1}
           onPressOut={() => setModalVisible(false)}
         >
-          <View style={styles.modalContent}>
+          <View style={GStyles.selectModalContent}>
             <FlatList
               data={data}
               keyExtractor={(item) => String(item.value)}
               renderItem={({ item }) => (
                 <TouchableOpacity
-                  style={styles.option}
+                  style={GStyles.selectOption}
                   onPress={() => {
                     onChange(item.value);
                     setModalVisible(false);
@@ -85,68 +91,10 @@ const SelectCustom: React.FC<SelectProps> = ({
 
       {/* Optional Error Message */}
       {hasError && (
-        <Text style={styles.errorMessage}>Harap pilih salah satu</Text>
+        <Text style={GStyles.inputErrorMessage}>Harap pilih salah satu</Text>
       )}
     </View>
   );
 };
 
 export default SelectCustom;
-
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: 16,
-  },
-  label: {
-    fontSize: TEXT_SIZE_MEDIUM,
-    marginBottom: 4,
-    color: MainColor.white_gray,
-    fontWeight: "500",
-  },
-  requiredIndicator: {
-    color: "red",
-    fontWeight: "bold",
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: MainColor.white_gray,
-    padding: 12,
-    borderRadius: 8,
-    minHeight: 48,
-    justifyContent: "center",
-    backgroundColor: MainColor.white,
-  },
-  inputError: {
-    borderColor: "red",
-  },
-  text: {
-    fontSize: TEXT_SIZE_MEDIUM,
-  },
-  placeholder: {
-    fontSize: TEXT_SIZE_MEDIUM,
-    color: MainColor.placeholder,
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.3)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalContent: {
-    width: "80%",
-    maxHeight: 300,
-    backgroundColor: "white",
-    borderRadius: 8,
-    overflow: "hidden",
-  },
-  option: {
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: MainColor.white_gray,
-  },
-  errorMessage: {
-    marginTop: 4,
-    fontSize: 12,
-    color: "red",
-  },
-});
