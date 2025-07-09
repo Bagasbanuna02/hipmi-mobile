@@ -1,10 +1,15 @@
-import { TEXT_SIZE_LARGE, TEXT_SIZE_MEDIUM, TEXT_SIZE_SMALL } from "@/constants/constans-value";
+import {
+  TEXT_SIZE_LARGE,
+  TEXT_SIZE_MEDIUM,
+  TEXT_SIZE_SMALL,
+} from "@/constants/constans-value";
 import { Dimensions, StyleSheet } from "react-native";
 import { AccentColor, MainColor } from "../constants/color-palet";
 
 const { width } = Dimensions.get("window");
 
 export const GStyles = StyleSheet.create({
+  // =============== Main Styles =============== //
   container: {
     flex: 1,
     paddingInline: 20,
@@ -20,8 +25,25 @@ export const GStyles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
+  // Style saat disabled
+  disabledBox: {
+    backgroundColor: MainColor.disabled,
+    borderColor: AccentColor.disabledBorder,
+  },
 
-  // AUTHENTICATION
+  inputDisabled: {
+    backgroundColor: "#f0f0f0",
+    borderColor: "#ddd",
+  },
+  inputTextDisabled: {
+    color: "#777",
+  },
+  inputPlaceholderDisabled: {
+    color: "#444",
+  },
+  // =============== Main Styles =============== //
+
+  // =============== AUTHENTICATION =============== //
   authContainer: {
     flex: 1,
     justifyContent: "center",
@@ -40,15 +62,17 @@ export const GStyles = StyleSheet.create({
     color: MainColor.yellow,
     fontWeight: "bold",
   },
+  // =============== AUTHENTICATION =============== //
 
-  // TEXT & LABEL
+  // =============== TEXT & LABEL =============== //
   textLabel: {
     fontSize: TEXT_SIZE_MEDIUM,
     color: MainColor.white_gray,
     fontWeight: "normal",
   },
+  // =============== TEXT & LABEL =============== //
 
-  // Stack Header Style
+  // =============== STACK HEADER =============== //
   headerStyle: {
     backgroundColor: AccentColor.darkblue,
   },
@@ -56,14 +80,16 @@ export const GStyles = StyleSheet.create({
     color: MainColor.yellow,
     fontWeight: "bold",
   },
+  // =============== STACK HEADER =============== //
 
-  // HOME
+  // =============== HOME =============== //
   homeContainer: {
     flex: 1,
     paddingInline: 25,
     paddingBlock: 10,
     backgroundColor: MainColor.darkblue,
   },
+  // =============== HOME =============== //
 
   // =============== TAB =============== //
   tabBar: {
@@ -149,6 +175,7 @@ export const GStyles = StyleSheet.create({
   // =============== BOTTOM BAR =============== //
 
   // =============== BUTTON =============== //
+
   buttonCentered50Percent: {
     width: "50%",
     alignSelf: "center",
@@ -196,12 +223,6 @@ export const GStyles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 10,
     height: 50,
-  },
-
-  // Style saat disabled
-  inputDisabled: {
-    backgroundColor: "#f9f9f9",
-    borderColor: "#e0e0e0",
   },
 
   // Input utama (TextInput)

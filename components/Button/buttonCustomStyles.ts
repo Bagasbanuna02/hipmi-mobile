@@ -4,24 +4,18 @@ import { MainColor } from "@/constants/color-palet";
 import { TEXT_SIZE_MEDIUM } from "@/constants/constans-value";
 import { StyleSheet } from "react-native";
 
-export default function buttonStyles({
-  backgroundColor = "#007AFF",
-  textColor = "#FFFFFF",
-  borderRadius = 8,
-}) {
-  return StyleSheet.create({
+export const stylesButton = StyleSheet.create({
     button: {
-      backgroundColor,
+      backgroundColor: MainColor.yellow,
       paddingVertical: 12,
       paddingHorizontal: 20,
-      borderRadius,
       flexDirection: "row", // 👈 Tambahkan baris ini
       alignItems: "center",
       justifyContent: "center",
       gap: 8,
     },
     buttonText: {
-      color: textColor,
+      color: MainColor.black,
       fontSize: TEXT_SIZE_MEDIUM,
       fontWeight: "600",
     },
@@ -29,4 +23,3 @@ export default function buttonStyles({
       backgroundColor: MainColor.disabled,
     },
   });
-}

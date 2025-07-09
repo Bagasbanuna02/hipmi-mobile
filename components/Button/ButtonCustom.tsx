@@ -2,12 +2,11 @@
 
 import React from "react";
 import { StyleProp, Text, TouchableOpacity, ViewStyle } from "react-native";
-import buttonStyles from "./buttonCustomStyles";
 import { radiusMap } from "@/constants/radius-value";
 import { MainColor } from "@/constants/color-palet";
+import { stylesButton } from "./buttonCustomStyles";
 
 // Import radiusMap
-
 
 // Definisi type untuk radius
 type RadiusType = keyof typeof radiusMap | number;
@@ -30,30 +29,29 @@ const ButtonCustom: React.FC<ButtonProps> = ({
   title = "Button",
   backgroundColor = MainColor.yellow,
   textColor = MainColor.black,
-  radius = "full", // default md
+  radius = 50, // default md
   disabled = false,
   iconLeft,
   style,
 }) => {
-  const borderRadius =
-    typeof radius === "number" ? radius : radiusMap[radius ?? "md"]; // fallback ke 'md'
-
-  const styles = buttonStyles({
-    backgroundColor,
-    textColor,
-    borderRadius,
-  });
-
   return (
     <TouchableOpacity
-      style={[styles.button, disabled && styles.disabled, style]}
+      style={[
+        stylesButton.button,
+        disabled && stylesButton.disabled,
+        style,
+        { borderRadius: radius },
+        { backgroundColor },
+      ]}
       onPress={onPress}
       disabled={disabled}
       activeOpacity={0.8}
     >
       {/* Render icon jika tersedia */}
       {iconLeft && iconLeft}
-      <Text style={styles.buttonText}>{children || title}</Text>
+      <Text style={[stylesButton.buttonText, { color: textColor }]}>
+        {children || title}
+      </Text>
     </TouchableOpacity>
   );
 };

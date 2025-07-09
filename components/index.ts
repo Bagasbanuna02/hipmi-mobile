@@ -4,7 +4,6 @@ import AlertCustom from "./Alert/AlertCustom";
 import LeftButtonCustom from "./Button/BackButton";
 import ButtonCenteredOnly from "./Button/ButtonCenteredOnly";
 import ButtonCustom from "./Button/ButtonCustom";
-import ButtonUpload from "./Button/ButtonUpload";
 // Drawer
 import DrawerCustom from "./Drawer/DrawerCustom";
 import MenuDrawerDynamicGrid from "./Drawer/MenuDrawerDynamicGird";
@@ -38,12 +37,11 @@ export {
   AvatarCustom,
   LandscapeFrameUploaded,
   // Button
+  ButtonCustom,
   LeftButtonCustom as BackButton,
+  ButtonCenteredOnly,
   // Box
   BaseBox,
-  ButtonCenteredOnly,
-  ButtonCustom,
-  ButtonUpload,
   BoxButtonOnFooter,
   InformationBox,
   // Drawer

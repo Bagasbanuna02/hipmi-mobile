@@ -1,24 +1,23 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-    BoxButtonOnFooter,
-    ButtonCenteredOnly,
-    ButtonCustom,
-    Grid,
-    InformationBox,
-    LandscapeFrameUploaded,
-    SelectCustom,
-    Spacing,
-    StackCustom,
-    TextAreaCustom,
-    TextCustom,
-    TextInputCustom,
-    ViewWrapper,
+  BoxButtonOnFooter,
+  ButtonCenteredOnly,
+  ButtonCustom,
+  Grid,
+  InformationBox,
+  LandscapeFrameUploaded,
+  SelectCustom,
+  Spacing,
+  StackCustom,
+  TextAreaCustom,
+  TextCustom,
+  TextInputCustom,
+  ViewWrapper,
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import dummyMasterBidangBisnis from "@/lib/dummy-data/master-bidang-bisnis";
 import dummyMasterSubBidangBisnis from "@/lib/dummy-data/master-sub-bidang-bisnis";
 import { Ionicons } from "@expo/vector-icons";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import PhoneInput, { ICountry } from "react-native-international-phone-number";
@@ -60,11 +59,13 @@ export default function PortofolioCreate() {
       <StackCustom>
         <InformationBox text="Lengkapi data bisnis anda." />
         <TextInputCustom
+          // disabled
           required
           label="Nama Bisnis"
           placeholder="Masukkan nama bisnis"
         />
         <SelectCustom
+          // disabled
           label="Bidang Usaha"
           required
           data={dummyMasterBidangBisnis.map((item) => ({
@@ -80,6 +81,7 @@ export default function PortofolioCreate() {
         <Grid>
           <Grid.Col span={10}>
             <SelectCustom
+              // disabled
               label="Sub Bidang Usaha"
               required
               data={dummyMasterSubBidangBisnis.map((item) => ({
@@ -145,12 +147,22 @@ export default function PortofolioCreate() {
           maxLength={100}
         />
         <Spacing />
+
+        {/* Logo */}
         <InformationBox text="Upload logo bisnis anda untuk di tampilaka pada portofolio." />
         <LandscapeFrameUploaded />
-        <ButtonCenteredOnly icon="upload" onPress={() => console.log("upload")}>
+        <ButtonCenteredOnly
+          icon="upload"
+          onPress={() => {
+            console.log("Upload logo >>", id);
+            router.navigate(`/(application)/take-picture/${id}`);
+          }}
+        >
           Upload
         </ButtonCenteredOnly>
         <Spacing height={40} />
+
+        {/* Social Media */}
         <InformationBox text="Isi hanya pada sosial media yang anda miliki." />
         <TextInputCustom
           label="Tiktok"

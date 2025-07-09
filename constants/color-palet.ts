@@ -3,24 +3,27 @@ export const MainColor = {
   darkblue: "#001D3D",
   soft_darkblue: "#0e3763",
   yellow: "#E1B525",
-  white_gray: "#D4D0D0",
   red: "#FF4B4C",
   orange: "#FF7043",
   green: "#4CAF4F",
+  white_gray: "#D4D0D0",
   text_input: "#EDEBEBFF",
-  placeholder: "#999",
-  disabled: "#606360",
+  placeholder: "#888",
   white: "#ffffff",
+  // disabled color
+  disabled: "#777",
 };
 
 export const AccentColor = {
-  blackgray: "#333533FF",
+  blackgray: "#aaa",
   darkblue: "#002E59",
   blue: "#00447D",
   softblue: "#007CBA",
   skyblue: "#00BFFF",
   yellow: "#F8A824",
   white: "#FEFFFE",
+  // disable color
+  disabledBorder: "#aaa",
 };
 
 export const AdminColor = {

@@ -7,7 +7,7 @@ import {
   Pressable,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 
 type SelectItem = {
@@ -21,6 +21,7 @@ type SelectProps = {
   data: SelectItem[];
   value?: string | number | null;
   required?: boolean; // <-- new prop
+  disabled?: boolean; // <-- tambahkan prop disabled
   onChange: (value: string | number) => void;
   borderRadius?: number;
 };
@@ -31,6 +32,7 @@ const SelectCustom: React.FC<SelectProps> = ({
   data,
   value,
   required = false, // <-- default false
+  disabled = false, // <-- default false
   onChange,
   borderRadius = 8,
 }) => {
@@ -51,13 +53,22 @@ const SelectCustom: React.FC<SelectProps> = ({
       <Pressable
         style={[
           { borderRadius },
-          GStyles.inputContainerInput,
           hasError ? GStyles.inputErrorBorder : null,
+          GStyles.inputContainerInput,
+          disabled && GStyles.disabledBox,
         ]} // <-- add error style
-        onPress={() => setModalVisible(true)}
+        onPress={() => !disabled && setModalVisible(true)}
       >
         <Text
-          style={selectedItem ? GStyles.inputText : GStyles.inputPlaceholder}
+          style={
+            selectedItem
+              ? disabled
+                ? GStyles.inputTextDisabled
+                : GStyles.inputText
+              : disabled
+              ? GStyles.inputPlaceholderDisabled
+              : GStyles.inputPlaceholder
+          }
         >
           {selectedItem?.label || placeholder}
         </Text>

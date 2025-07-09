@@ -1,25 +1,31 @@
-import { BaseBox, ButtonCustom } from "@/components";
+import {
+  BaseBox,
+  BoxButtonOnFooter,
+  ButtonCenteredOnly,
+  ButtonCustom,
+} from "@/components";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
-import ButtonUpload from "@/components/Button/ButtonUpload";
 import DUMMY_IMAGE from "@/constants/dummy-image-value";
 import { router, useLocalSearchParams } from "expo-router";
 import { Image } from "react-native";
 
 export default function UpdateBackgroundProfile() {
   const { id } = useLocalSearchParams();
+  const buttonFooter = (
+    <BoxButtonOnFooter>
+      <ButtonCustom
+        onPress={() => {
+          console.log("Simpan foto background >>", id);
+          router.back();
+        }}
+      >
+        Simpan
+      </ButtonCustom>
+    </BoxButtonOnFooter>
+  );
+
   return (
-    <ViewWrapper
-      bottomBarComponent={
-        <ButtonCustom
-          onPress={() => {
-            console.log("Simpan foto background >>", id);
-            router.back();
-          }}
-        >
-          Simpan
-        </ButtonCustom>
-      }
-    >
+    <ViewWrapper footerComponent={buttonFooter}>
       <BaseBox
         style={{ alignItems: "center", justifyContent: "center", height: 250 }}
       >
@@ -30,12 +36,12 @@ export default function UpdateBackgroundProfile() {
         />
       </BaseBox>
 
-      <ButtonUpload
-        title="Update"
-        onPress={() =>
-          router.navigate(`/(application)/take-picture/${id}`)
-        }
-      />
+      <ButtonCenteredOnly
+        icon="upload"
+        onPress={() => router.navigate(`/(application)/take-picture/${id}`)}
+      >
+        Update
+      </ButtonCenteredOnly>
     </ViewWrapper>
   );
 }

@@ -10,7 +10,6 @@ import {
   ViewStyle,
 } from "react-native";
 
-
 type IconType = React.ReactNode | string;
 
 type Props = {
@@ -83,18 +82,27 @@ const TextInputCustom = ({
       )}
       <View
         style={[
-          GStyles.inputContainerInput,
-          disabled && GStyles.inputDisabled,
+          style,
           { borderRadius },
           externalError || internalError ? GStyles.inputErrorBorder : null,
-          style,
+          GStyles.inputContainerInput,
+          disabled && GStyles.disabledBox,
         ]}
       >
         {iconLeft && (
           <View style={GStyles.inputIcon}>{renderIcon(iconLeft)}</View>
         )}
         <RNTextInput
-          style={[GStyles.inputText, { color: fontColor }]}
+          style={[
+            GStyles.inputText,
+            { color: fontColor },
+            disabled
+              ? GStyles.inputTextDisabled // <-- custom style untuk text saat disabled
+              : GStyles.inputText,
+            disabled
+              ? GStyles.inputPlaceholderDisabled // <-- placeholder saat disabled
+              : GStyles.inputPlaceholder,
+          ]}
           editable={!disabled}
           secureTextEntry={secureTextEntry && !isPasswordVisible}
           keyboardType={keyboardType}

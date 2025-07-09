@@ -1,5 +1,6 @@
 import {
   AvatarCustom,
+  ButtonCenteredOnly,
   ButtonCustom,
   SelectCustom,
   Spacing,
@@ -9,7 +10,6 @@ import {
 } from "@/components";
 import BoxButtonOnFooter from "@/components/Box/BoxButtonOnFooter";
 import InformationBox from "@/components/Box/InformationBox";
-import ButtonUpload from "@/components/Button/ButtonUpload";
 import LandscapeFrameUploaded from "@/components/Image/LandscapeFrameUploaded";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
@@ -47,9 +47,12 @@ export default function CreateProfile() {
         <View style={{ alignItems: "center" }}>
           <AvatarCustom size="xl" />
           <Spacing />
-          <ButtonUpload
+          <ButtonCenteredOnly
+            icon="upload"
             onPress={() => router.navigate(`/take-picture/${id}`)}
-          />
+          >
+            Upload
+          </ButtonCenteredOnly>
         </View>
 
         <Spacing />
@@ -58,9 +61,12 @@ export default function CreateProfile() {
           <InformationBox text="Upload foto latar belakang anda." />
           <LandscapeFrameUploaded />
           <Spacing />
-          <ButtonUpload
+          <ButtonCenteredOnly
+            icon="upload"
             onPress={() => router.navigate(`/take-picture/${id}`)}
-          />
+          >
+            Upload
+          </ButtonCenteredOnly>
         </View>
 
         <Spacing />

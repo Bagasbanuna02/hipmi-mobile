@@ -87,7 +87,7 @@ const TextAreaCustom: React.FC<TextAreaCustomProps> = ({
       <View
         style={[
           GStyles.inputContainerInput,
-          disabled && GStyles.inputDisabled,
+          disabled && GStyles.disabledBox,
           hasError ? GStyles.inputErrorBorder : {},
           { borderRadius },
           style,
