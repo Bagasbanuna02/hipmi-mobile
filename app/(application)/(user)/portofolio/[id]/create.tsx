@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-  ButtonCustom,
-  Grid,
-  SelectCustom,
-  Spacing,
-  StackCustom,
-  TextAreaCustom,
-  TextCustom,
-  TextInputCustom,
-  ViewWrapper,
+    BoxButtonOnFooter,
+    ButtonCenteredOnly,
+    ButtonCustom,
+    Grid,
+    InformationBox,
+    LandscapeFrameUploaded,
+    SelectCustom,
+    Spacing,
+    StackCustom,
+    TextAreaCustom,
+    TextCustom,
+    TextInputCustom,
+    ViewWrapper,
 } from "@/components";
-import BoxButtonOnFooter from "@/components/Box/BoxButtonOnFooter";
-import InformationBox from "@/components/Box/InformationBox";
-import ButtonCenteredOnly from "@/components/Button/ButtonCenteredOnly";
-import LandscapeFrameUploaded from "@/components/Image/LandscapeFrameUploaded";
 import { MainColor } from "@/constants/color-palet";
 import dummyMasterBidangBisnis from "@/lib/dummy-data/master-bidang-bisnis";
 import dummyMasterSubBidangBisnis from "@/lib/dummy-data/master-sub-bidang-bisnis";
@@ -101,7 +101,7 @@ export default function PortofolioCreate() {
             </TouchableOpacity>
           </Grid.Col>
         </Grid>
-        
+
         <ButtonCenteredOnly onPress={() => console.log("add")}>
           Tambah Pilihan
         </ButtonCenteredOnly>

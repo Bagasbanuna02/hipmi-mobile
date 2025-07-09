@@ -27,7 +27,7 @@ type Props = {
   maxLength?: number;
 } & Omit<React.ComponentProps<typeof RNTextInput>, "style">;
 
-export const TextInputCustom = ({
+const TextInputCustom = ({
   iconLeft,
   iconRight,
   label,
@@ -127,3 +127,5 @@ export const TextInputCustom = ({
     </View>
   );
 };
+
+export default TextInputCustom;

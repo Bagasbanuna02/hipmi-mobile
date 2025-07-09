@@ -14,32 +14,43 @@ import ViewWrapper from "./_ShareComponent/ViewWrapper";
 // Text
 import TextCustom from "./Text/TextCustom";
 // TextInput
-import { TextInputCustom } from "./TextInput/TextInputCustom";
+import TextInputCustom from "./TextInput/TextInputCustom";
 // TextArea
 import TextAreaCustom from "./TextArea/TextAreaCustom";
 // Grid
 import Grid from "./Grid/GridCustom";
 // Box
 import BaseBox from "./Box/BaseBox";
-// Avatar
-import AvatarCustom from "./Image/AvatarCustom";
+import BoxButtonOnFooter from "./Box/BoxButtonOnFooter";
+import InformationBox from "./Box/InformationBox";
+
 // Stack
 import StackCustom from "./Stack/StackCustom";
 // Select
 import SelectCustom from "./Select/SelectCustom";
+// Image
+import AvatarCustom from "./Image/AvatarCustom";
+import LandscapeFrameUploaded from "./Image/LandscapeFrameUploaded";
 
 export {
   AlertCustom,
-  // Avatar
+  // Image
   AvatarCustom,
+  LandscapeFrameUploaded,
   // Button
   LeftButtonCustom as BackButton,
   // Box
-  BaseBox, ButtonCenteredOnly, ButtonCustom, ButtonUpload,
+  BaseBox,
+  ButtonCenteredOnly,
+  ButtonCustom,
+  ButtonUpload,
+  BoxButtonOnFooter,
+  InformationBox,
   // Drawer
   DrawerCustom,
   // Grid
-  Grid, MenuDrawerDynamicGrid,
+  Grid,
+  MenuDrawerDynamicGrid,
   // Select
   SelectCustom,
   // ShareComponent
@@ -53,6 +64,5 @@ export {
   // TextInput
   TextInputCustom,
   // ViewWrapper
-  ViewWrapper
+  ViewWrapper,
 };
-
