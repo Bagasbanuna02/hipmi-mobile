@@ -1,10 +1,10 @@
-import { IMenuDrawerItem } from "@/components/_Interface/types";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import AlertCustom from "@/components/Alert/AlertCustom";
 import LeftButtonCustom from "@/components/Button/BackButton";
 import DrawerCustom from "@/components/Drawer/DrawerCustom";
 import { MainColor } from "@/constants/color-palet";
 import { DRAWER_HEIGHT } from "@/constants/constans-value";
+import { drawerItems } from "@/screens/Profile/ListPage";
 import Profile_MenuDrawerSection from "@/screens/Profile/MenuDrawerSection";
 import ProfilSection from "@/screens/Profile/ProfilSection";
 import { GStyles } from "@/styles/global-styles";
@@ -17,40 +17,6 @@ export default function Profile() {
   const { id } = useLocalSearchParams();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [showLogoutAlert, setShowLogoutAlert] = useState(false);
-
-  const drawerItems: IMenuDrawerItem[] = [
-    {
-      icon: "create",
-      label: "Edit profile",
-      path: `/(application)/profile/${id}/edit`,
-    },
-    {
-      icon: "camera",
-      label: "Ubah foto profile",
-      path: `/(application)/profile/${id}/update-photo`,
-    },
-    {
-      icon: "image",
-      label: "Ubah latar belakang",
-      path: `/(application)/profile/${id}/update-background`,
-    },
-    {
-      icon: "add-circle",
-      label: "Tambah portofolio",
-      path: `/(application)/portofolio/${id}/create`,
-    },
-    // {
-    //   icon: "settings",
-    //   label: "Dashboard Admin",
-    //   path: `/(application)/profile/dashboard-admin`,
-    // },
-    { icon: "log-out", label: "Keluar", color: "red", path: "" },
-    {
-      icon: "create-outline",
-      label: "Create profile",
-      path: `/(application)/profile/${id}/create`,
-    },
-  ];
 
   // Animasi menggunakan translateY (lebih kompatibel)
   const drawerAnim = useRef(new Animated.Value(DRAWER_HEIGHT)).current; // mulai di luar bawah layar
@@ -104,7 +70,6 @@ export default function Profile() {
           }}
         />
         <ProfilSection />
-       
       </ViewWrapper>
 
       {/* Drawer Komponen Eksternal */}
@@ -115,7 +80,7 @@ export default function Profile() {
         closeDrawer={closeDrawer}
       >
         <Profile_MenuDrawerSection
-          drawerItems={drawerItems}
+          drawerItems={drawerItems({ id: id as string })}
           setShowLogoutAlert={setShowLogoutAlert}
           setIsDrawerOpen={setIsDrawerOpen}
         />

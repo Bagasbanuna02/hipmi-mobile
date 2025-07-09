@@ -44,7 +44,8 @@ export default function PortofolioCreate() {
   }
 
   function handleSave() {
-    console.log("save");
+    console.log("Selanjutnya");
+    router.replace(`/maps/create`);
   }
 
   const buttonSave = (
@@ -56,16 +57,15 @@ export default function PortofolioCreate() {
   return (
     <ViewWrapper footerComponent={buttonSave}>
       {/* <TextCustom>Portofolio Create {id}</TextCustom> */}
-      <StackCustom>
+      <StackCustom gap={"xs"}>
         <InformationBox text="Lengkapi data bisnis anda." />
         <TextInputCustom
-          // disabled
           required
           label="Nama Bisnis"
           placeholder="Masukkan nama bisnis"
+
         />
         <SelectCustom
-          // disabled
           label="Bidang Usaha"
           required
           data={dummyMasterBidangBisnis.map((item) => ({

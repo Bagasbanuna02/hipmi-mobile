@@ -89,19 +89,14 @@ const TextInputCustom = ({
           disabled && GStyles.disabledBox,
         ]}
       >
-        {iconLeft && (
+        {/* {iconLeft && (
           <View style={GStyles.inputIcon}>{renderIcon(iconLeft)}</View>
-        )}
+        )} */}
         <RNTextInput
           style={[
             GStyles.inputText,
             { color: fontColor },
-            disabled
-              ? GStyles.inputTextDisabled // <-- custom style untuk text saat disabled
-              : GStyles.inputText,
-            disabled
-              ? GStyles.inputPlaceholderDisabled // <-- placeholder saat disabled
-              : GStyles.inputPlaceholder,
+            disabled && GStyles.inputPlaceholderDisabled, // <-- placeholder saat disabled
           ]}
           editable={!disabled}
           secureTextEntry={secureTextEntry && !isPasswordVisible}

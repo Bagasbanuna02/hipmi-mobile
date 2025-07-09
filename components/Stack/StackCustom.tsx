@@ -19,7 +19,7 @@ const StackCustom: React.FC<StackProps> = ({
   children,
   align = "stretch",
   justify = "flex-start",
-  gap = "xs",
+  gap = "md",
   direction = "column",
   style,
 }) => {

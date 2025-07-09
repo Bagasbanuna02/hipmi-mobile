@@ -102,6 +102,13 @@ export default function UserLayout() {
             headerLeft: () => <BackButton />,
           }}
         />
+        <Stack.Screen
+          name="maps/create"
+          options={{
+            title: "Tambah Maps",
+            headerLeft: () => <BackButton />,
+          }}
+        />
 
         {/* Marketplace */}
         <Stack.Screen

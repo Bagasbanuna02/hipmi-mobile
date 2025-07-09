@@ -67,7 +67,7 @@ export default function TakePicture() {
         />
         <Spacing />
 
-        <StackCustom>
+        <StackCustom >
           <ButtonCustom onPress={() => setUri(null)} title="Foto ulang" />
           <ButtonCustom
             onPress={() => {

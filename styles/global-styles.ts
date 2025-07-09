@@ -79,6 +79,7 @@ export const GStyles = StyleSheet.create({
   headerTitleStyle: {
     color: MainColor.yellow,
     fontWeight: "bold",
+    fontSize: TEXT_SIZE_LARGE,
   },
   // =============== STACK HEADER =============== //
 
