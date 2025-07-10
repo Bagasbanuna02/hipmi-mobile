@@ -20,7 +20,7 @@ interface ITabs {
 }
 
 interface IMenuDrawerItem {
-  icon: string;
+  icon: React.ReactNode;
   label: string;
   path?: string;
   color?: string;

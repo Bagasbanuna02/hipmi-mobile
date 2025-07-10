@@ -1,27 +1,37 @@
 import { AccentColor, MainColor } from "@/constants/color-palet";
-import { ICON_SIZE_MEDIUM, TEXT_SIZE_SMALL } from "@/constants/constans-value";
-import { Ionicons } from "@expo/vector-icons";
+import { TEXT_SIZE_SMALL } from "@/constants/constans-value";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { IMenuDrawerItem } from "../_Interface/types";
 
 const MenuDrawerDynamicGrid = ({ data, columns = 3, onPressItem }: any) => {
   const numColumns = columns;
 
   return (
     <View style={styles.container}>
-      {data.map((item: any, index: any) => (
+      {data.map((item: IMenuDrawerItem, index: any) => (
         <TouchableOpacity
           key={index}
           style={[styles.itemContainer, { flexBasis: `${100 / numColumns}%` }]}
           onPress={() => onPressItem?.(item)}
         >
-          <View style={styles.iconContainer}>
-            <Ionicons
+          <View
+            style={[
+              styles.iconContainer,
+              { backgroundColor: item.color || AccentColor.blue },
+            ]}
+          >
+            {item.icon}
+            {/* <Ionicons
               name={item.icon}
               size={ICON_SIZE_MEDIUM}
               color={item.color || MainColor.white_gray}
-            />
+            /> */}
           </View>
-          <Text style={styles.label}>{item.label}</Text>
+          <Text
+            style={[styles.label, { color: item.color || AccentColor.white }]}
+          >
+            {item.label}
+          </Text>
         </TouchableOpacity>
       ))}
     </View>

@@ -21,7 +21,7 @@ export default function MapsCustomPin() {
       <ButtonCustom
         onPress={() => {
           console.log(`Simpan maps ${id}`);
-          router.replace(`/portofolio/${id}`);
+          router.back();
         }}
       >
         Simpan
