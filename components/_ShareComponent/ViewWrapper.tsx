@@ -16,6 +16,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 interface ViewWrapperProps {
   children: React.ReactNode;
   withBackground?: boolean;
+  headerComponent?: React.ReactNode;
   footerComponent?: React.ReactNode;
   style?: StyleProp<ViewStyle>;
 }
@@ -23,6 +24,7 @@ interface ViewWrapperProps {
 const ViewWrapper = ({
   children,
   withBackground = false,
+  headerComponent,
   footerComponent,
   style,
 }: ViewWrapperProps) => {
@@ -34,6 +36,11 @@ const ViewWrapper = ({
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1, backgroundColor: MainColor.darkblue }}
       >
+        {/* Header Sticky */}
+        {headerComponent && (
+          <View style={GStyles.stickyHeader}>{headerComponent}</View>
+        )}
+
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
           keyboardShouldPersistTaps="handled"

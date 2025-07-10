@@ -25,6 +25,20 @@ export const GStyles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
+  stickyHeader: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 10,
+    backgroundColor: MainColor.darkblue,
+    paddingTop: 16,
+    paddingInline: 16,
+    // padding: 16,
+    // paddingTop: 8,
+    // paddingBottom: 8,
+  },
+
   // Style saat disabled
   disabledBox: {
     backgroundColor: MainColor.disabled,

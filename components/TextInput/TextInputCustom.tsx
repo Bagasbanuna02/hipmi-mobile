@@ -89,9 +89,9 @@ const TextInputCustom = ({
           disabled && GStyles.disabledBox,
         ]}
       >
-        {/* {iconLeft && (
+        {iconLeft && (
           <View style={GStyles.inputIcon}>{renderIcon(iconLeft)}</View>
-        )} */}
+        )}
         <RNTextInput
           style={[
             GStyles.inputText,
