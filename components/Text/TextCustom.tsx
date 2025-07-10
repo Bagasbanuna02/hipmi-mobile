@@ -5,7 +5,13 @@ import {
   TEXT_SIZE_SMALL,
 } from "@/constants/constans-value";
 import React from "react";
-import { Text as RNText, StyleProp, StyleSheet, TextStyle, TouchableOpacity } from "react-native";
+import {
+  Text as RNText,
+  StyleProp,
+  StyleSheet,
+  TextStyle,
+  TouchableOpacity,
+} from "react-native";
 
 // Tambahkan type TextAlignProps agar lebih type-safe
 type TextAlign = "left" | "center" | "right";
@@ -62,20 +68,8 @@ const TextCustom: React.FC<TextCustomProps> = ({
     return selectedStyles;
   };
 
-  return (
-    onPress ? (
-      <TouchableOpacity onPress={onPress}>
-        <RNText
-          numberOfLines={
-            typeof truncate === "number" ? truncate : truncate ? 1 : undefined
-          }
-          ellipsizeMode="tail"
-          style={getStyle()}
-        >
-          {children}
-        </RNText>
-      </TouchableOpacity>
-    ) : (
+  return onPress ? (
+    <TouchableOpacity onPress={onPress}>
       <RNText
         numberOfLines={
           typeof truncate === "number" ? truncate : truncate ? 1 : undefined
@@ -85,7 +79,17 @@ const TextCustom: React.FC<TextCustomProps> = ({
       >
         {children}
       </RNText>
-    )
+    </TouchableOpacity>
+  ) : (
+    <RNText
+      numberOfLines={
+        typeof truncate === "number" ? truncate : truncate ? 1 : undefined
+      }
+      ellipsizeMode="tail"
+      style={getStyle()}
+    >
+      {children}
+    </RNText>
   );
 };
 
@@ -96,6 +100,7 @@ export const styles = StyleSheet.create({
     fontSize: TEXT_SIZE_MEDIUM,
     color: MainColor.white,
     fontFamily: "Poppins-Regular",
+    lineHeight: 20,
   },
   bold: {
     fontFamily: "Poppins-Bold",
