@@ -1,6 +1,6 @@
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 
-export const drawerItems = ({ id }: { id: string }): IMenuDrawerItem[] => [
+export const drawerItemsProfile = ({ id }: { id: string }): IMenuDrawerItem[] => [
   {
     icon: "create",
     label: "Edit profile",

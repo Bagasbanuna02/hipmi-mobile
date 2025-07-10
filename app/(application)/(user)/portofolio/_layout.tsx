@@ -20,6 +20,12 @@ export default function PortofolioLayout() {
           name="[id]/list"
           options={{ title: "Daftar Portofolio" }}
         />
+        <Stack.Screen name="[id]/edit" options={{ title: "Edit Portofolio" }} />
+        <Stack.Screen name="[id]/edit-logo" options={{ title: "Edit Logo " }} />
+        <Stack.Screen
+          name="[id]/edit-social-media"
+          options={{ title: "Edit Social Media" }}
+        />
       </Stack>
     </>
   );

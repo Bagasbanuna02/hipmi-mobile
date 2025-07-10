@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Animated,
   PanResponder,
@@ -14,7 +14,7 @@ interface DrawerCustomProps {
   children?: React.ReactNode;
   height?: number;
   isVisible: boolean;
-  drawerAnim: Animated.Value;
+  drawerAnim?: Animated.Value;
   closeDrawer: () => void;
   //   openLogoutAlert: () => void;
 }
@@ -33,6 +33,26 @@ export default function DrawerCustom({
   closeDrawer,
 }: //   openLogoutAlert,
 DrawerCustomProps) {
+  const drawerAnima = useRef(
+    new Animated.Value(height || DRAWER_HEIGHT)
+  ).current;
+  // Efek untuk handle open/close drawer
+  useEffect(() => {
+    if (isVisible) {
+      Animated.timing(drawerAnima, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      Animated.timing(drawerAnima, {
+        toValue: height || DRAWER_HEIGHT,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [isVisible, drawerAnim, height, closeDrawer, drawerAnima]);
+
   const panResponder = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: (_, gestureState) => {
@@ -41,7 +61,7 @@ DrawerCustomProps) {
       onPanResponderMove: (_, gestureState) => {
         const offset = gestureState.dy;
         if (offset >= 0 && offset <= DRAWER_HEIGHT) {
-          drawerAnim.setValue(offset);
+          drawerAnima.setValue(offset);
         }
       },
       onPanResponderRelease: (_, gestureState) => {
@@ -50,7 +70,7 @@ DrawerCustomProps) {
             closeDrawer();
           });
         } else {
-          Animated.spring(drawerAnim, {
+          Animated.spring(drawerAnima, {
             toValue: 0,
             useNativeDriver: true,
           }).start();
@@ -80,7 +100,7 @@ DrawerCustomProps) {
           styles.drawer,
           {
             height: height || DRAWER_HEIGHT,
-            transform: [{ translateY: drawerAnim }],
+            transform: [{ translateY: drawerAnima }],
           },
         ]}
         {...panResponder.panHandlers}

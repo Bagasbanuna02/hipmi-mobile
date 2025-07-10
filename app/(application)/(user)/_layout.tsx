@@ -32,7 +32,7 @@ export default function UserLayout() {
           }}
         />
 
-        {/* Profile */}
+        {/* ========== Profile Section ========= */}
         <Stack.Screen
           name="profile"
           options={{
@@ -40,15 +40,15 @@ export default function UserLayout() {
           }}
         />
 
-        {/* Portofolio */}
+        {/* ========== Portofolio Section ========= */}
         <Stack.Screen
           name="portofolio"
           options={{
             headerShown: false,
           }}
         />
-        
-        {/* User Search */}
+
+        {/* ========== User Search Section ========= */}
         <Stack.Screen
           name="user-search/index"
           options={{
@@ -57,7 +57,7 @@ export default function UserLayout() {
           }}
         />
 
-        {/* Notification */}
+        {/* ========== Notification Section ========= */}
         <Stack.Screen
           name="notifications/index"
           options={{
@@ -66,7 +66,7 @@ export default function UserLayout() {
           }}
         />
 
-        {/* Event */}
+        {/* ========== Event Section ========= */}
         <Stack.Screen
           name="event/(tabs)"
           options={{
@@ -85,7 +85,7 @@ export default function UserLayout() {
           }}
         />
 
-        {/* Forum */}
+        {/* ========== Forum Section ========= */}
         <Stack.Screen
           name="forum/index"
           options={{
@@ -94,7 +94,7 @@ export default function UserLayout() {
           }}
         />
 
-        {/* Maps */}
+        {/* ========== Maps Section ========= */}
         <Stack.Screen
           name="maps/index"
           options={{
@@ -109,8 +109,22 @@ export default function UserLayout() {
             headerLeft: () => <BackButton />,
           }}
         />
+        <Stack.Screen
+          name="maps/[id]/edit"
+          options={{
+            title: "Edit Maps",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="maps/[id]/custom-pin"
+          options={{
+            title: "Custom Pin Maps",
+            headerLeft: () => <BackButton />,
+          }}
+        />
 
-        {/* Marketplace */}
+        {/* ========== Marketplace Section ========= */}
         <Stack.Screen
           name="marketplace/index"
           options={{
