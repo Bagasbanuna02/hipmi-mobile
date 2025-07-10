@@ -18,7 +18,7 @@ export default function MapsCreate() {
     <BoxButtonOnFooter>
       <ButtonCustom
         onPress={() => {
-          console.log("Simpan");
+          console.log(`Simpan maps ${id}`);
           router.replace(`/portofolio/${id}`);
         }}
       >

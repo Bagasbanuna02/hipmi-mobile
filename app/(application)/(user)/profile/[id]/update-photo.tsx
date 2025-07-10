@@ -1,13 +1,12 @@
 import {
+  AvatarCustom,
   BaseBox,
   BoxButtonOnFooter,
   ButtonCenteredOnly,
   ButtonCustom,
 } from "@/components";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
-import DUMMY_IMAGE from "@/constants/dummy-image-value";
 import { router, useLocalSearchParams } from "expo-router";
-import { Image } from "react-native";
 
 export default function UpdatePhotoProfile() {
   const { id } = useLocalSearchParams();
@@ -28,11 +27,7 @@ export default function UpdatePhotoProfile() {
       <BaseBox
         style={{ alignItems: "center", justifyContent: "center", height: 250 }}
       >
-        <Image
-          source={DUMMY_IMAGE.avatar}
-          resizeMode="cover"
-          style={{ width: 200, height: 200 }}
-        />
+        <AvatarCustom size="xl" />
       </BaseBox>
 
       <ButtonCenteredOnly

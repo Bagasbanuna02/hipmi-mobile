@@ -38,10 +38,11 @@ const ButtonCustom: React.FC<ButtonProps> = ({
     <TouchableOpacity
       style={[
         stylesButton.button,
-        disabled && stylesButton.disabled,
-        style,
         { borderRadius: radius },
-        { backgroundColor },
+        disabled
+          ? [stylesButton.disabled, { backgroundColor: MainColor.disabled }]
+          : { backgroundColor },
+        style,
       ]}
       onPress={onPress}
       disabled={disabled}
