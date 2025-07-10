@@ -43,7 +43,7 @@ export default function ProfilSection() {
   return (
     <>
       <BaseBox>
-        <AvatarAndBackground />
+        <AvatarAndBackground backgroundId="test-background-id" imageId="test-image-id" />
         <Spacing height={50} />
 
         <View style={{ alignItems: "center" }}>

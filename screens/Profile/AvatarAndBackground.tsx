@@ -1,24 +1,45 @@
-import { AvatarCustom } from "@/components";
+import { AvatarCustom, ClickableCustom } from "@/components";
 import { AccentColor } from "@/constants/color-palet";
 import DUMMY_IMAGE from "@/constants/dummy-image-value";
-import { View, ImageBackground, StyleSheet } from "react-native";
+import { router } from "expo-router";
+import { ImageBackground, StyleSheet, View } from "react-native";
 
-const AvatarAndBackground = () => {
+const AvatarAndBackground = ({
+  backgroundId,
+  imageId,
+}: {
+  backgroundId: string;
+  imageId: string;
+}) => {
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={DUMMY_IMAGE.background}
-        style={styles.backgroundImage}
-        resizeMode="contain"
-      />
       {/* Background Image */}
+      <ClickableCustom
+        onPress={() => {
+          router.navigate(
+            `/(application)/(image)/preview-image/${backgroundId}`
+          );
+        }}
+      >
+        <ImageBackground
+          source={DUMMY_IMAGE.background}
+          style={styles.backgroundImage}
+          resizeMode="cover"
+        />
+      </ClickableCustom>
 
       {/* Avatar yang sedikit keluar */}
+
       <View style={styles.avatarOverlap}>
-        <AvatarCustom
-          source={DUMMY_IMAGE.avatar}
-          size="lg"
-        />
+        <ClickableCustom
+          onPress={() => {
+            router.navigate(
+              `/(application)/(image)/preview-image/${imageId}`
+            );
+          }}
+        >
+          <AvatarCustom source={DUMMY_IMAGE.avatar} size="lg" />
+        </ClickableCustom>
       </View>
     </View>
   );

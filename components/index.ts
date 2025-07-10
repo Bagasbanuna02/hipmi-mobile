@@ -33,16 +33,22 @@ import LandscapeFrameUploaded from "./Image/LandscapeFrameUploaded";
 import DividerCustom from "./Divider/DividerCustom";
 // Map
 import MapCustom from "./Map/MapCustom";
+// Center
+import CenterCustom from "./Center/CenterCustom";
+// Clickable
+import ClickableCustom from "./Clickable/ClickableCustom";
 
 export {
   AlertCustom,
   // Image
   AvatarCustom,
-  LeftButtonCustom as BackButton,
+  LandscapeFrameUploaded,
   // Box
   BaseBox,
   BoxButtonOnFooter,
   ButtonCenteredOnly,
+  InformationBox,
+  LeftButtonCustom as BackButton,
   // Button
   ButtonCustom,
   // Drawer
@@ -50,8 +56,6 @@ export {
   MenuDrawerDynamicGrid,
   // Grid
   Grid,
-  InformationBox,
-  LandscapeFrameUploaded,
   // Map
   MapCustom,
   // Select
@@ -70,4 +74,8 @@ export {
   ViewWrapper,
   // Divider
   DividerCustom,
+  // Center
+  CenterCustom,
+  // Clickable
+  ClickableCustom,
 };

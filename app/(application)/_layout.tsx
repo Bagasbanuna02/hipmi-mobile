@@ -1,7 +1,6 @@
-import { MainColor } from "@/constants/color-palet";
+import { BackButton } from "@/components";
 import { HeaderStyles } from "@/styles/header-styles";
-import { Ionicons } from "@expo/vector-icons";
-import { router, Stack } from "expo-router";
+import { Stack } from "expo-router";
 
 export default function ApplicationLayout() {
   return (
@@ -11,17 +10,19 @@ export default function ApplicationLayout() {
 
         {/* Take Picture */}
         <Stack.Screen
-          name="take-picture/[id]/index"
+          name="(image)/take-picture/[id]/index"
           options={{
             title: "Ambil Gambar",
-            headerLeft: () => (
-              <Ionicons
-                name="arrow-back"
-                size={20}
-                color={MainColor.yellow}
-                onPress={() => router.back()}
-              />
-            ),
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
+        {/* Preview Image */}
+        <Stack.Screen
+          name="(image)/preview-image/[id]/index"
+          options={{
+            title: "Preview Gambar",
+            headerLeft: () => <BackButton />,
           }}
         />
       </Stack>

@@ -1,6 +1,8 @@
 import {
   AvatarCustom,
   BaseBox,
+  CenterCustom,
+  ClickableCustom,
   Grid,
   StackCustom,
   TextCustom,
@@ -9,7 +11,7 @@ import DividerCustom from "@/components/Divider/DividerCustom";
 import { AccentColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 
 export default function Portofolio_Data() {
@@ -88,9 +90,26 @@ export default function Portofolio_Data() {
             </Grid.Col>
           </Grid>
 
-          <View style={{ alignItems: "center" }}>
+          {/* <ClickableCustom
+            style={{ backgroundColor: "blue" }}
+            onPress={() => {
+              router.navigate(`/(application)/(image)/preview-image/${id}`);
+            }}
+          >
             <AvatarCustom size="xl" />
-          </View>
+          </ClickableCustom> */}
+
+          <ClickableCustom
+            style={{}}
+            onPress={() => {
+              router.navigate(`/(application)/(image)/preview-image/${id}`);
+            }}
+          >
+            <CenterCustom>
+              <AvatarCustom size="xl" />
+            </CenterCustom>
+          </ClickableCustom>
+
           {/* <Spacing height={10}/> */}
 
           <View>
