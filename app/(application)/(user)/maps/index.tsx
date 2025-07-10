@@ -1,9 +1,9 @@
-import { TextCustom, ViewWrapper } from "@/components";
+import { MapCustom, ViewWrapper } from "@/components";
 
 export default function Maps() {
-    return (
-        <ViewWrapper>
-            <TextCustom>Maps</TextCustom>
-        </ViewWrapper>
-    )
+  return (
+    <ViewWrapper style={{ paddingInline: 0, paddingBlock: 0 }}>
+      <MapCustom height={"100%"} />
+    </ViewWrapper>
+  );
 }

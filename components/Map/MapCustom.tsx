@@ -1,7 +1,7 @@
 // components/MapComponent.js
 
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { DimensionValue, StyleSheet, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
 interface MapComponentProps {
@@ -9,7 +9,7 @@ interface MapComponentProps {
   longitude?: number;
   latitudeDelta?: number;
   longitudeDelta?: number;
-  height?: number;
+  height?: DimensionValue;
 }
 
 const MapCustom = ({

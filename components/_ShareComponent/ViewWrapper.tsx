@@ -8,6 +8,8 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   View,
+  StyleProp,
+  ViewStyle,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -15,12 +17,14 @@ interface ViewWrapperProps {
   children: React.ReactNode;
   withBackground?: boolean;
   footerComponent?: React.ReactNode;
+  style?: StyleProp<ViewStyle>;
 }
 
 const ViewWrapper = ({
   children,
   withBackground = false,
   footerComponent,
+  style,
 }: ViewWrapperProps) => {
   const assetBackground = require("../../assets/images/main-background.png");
 
@@ -40,14 +44,14 @@ const ViewWrapper = ({
                 <ImageBackground
                   source={assetBackground}
                   resizeMode="cover"
-                  style={GStyles.imageBackground}
+                  style={[GStyles.imageBackground]}
                 >
-                  <View style={GStyles.containerWithBackground}>
+                  <View style={[GStyles.containerWithBackground, style]}>
                     {children}
                   </View>
                 </ImageBackground>
               ) : (
-                <View style={GStyles.container}>{children}</View>
+                <View style={[GStyles.container, style]}>{children}</View>
               )}
             </View>
           </TouchableWithoutFeedback>
