@@ -38,6 +38,7 @@
     "react-native": "0.79.5",
     "react-native-gesture-handler": "~2.24.0",
     "react-native-international-phone-number": "^0.9.3",
+    "react-native-maps": "1.20.1",
     "react-native-otp-entry": "^1.8.5",
     "react-native-reanimated": "~3.17.4",
     "react-native-safe-area-context": "5.4.0",

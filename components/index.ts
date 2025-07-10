@@ -22,7 +22,6 @@ import Grid from "./Grid/GridCustom";
 import BaseBox from "./Box/BaseBox";
 import BoxButtonOnFooter from "./Box/BoxButtonOnFooter";
 import InformationBox from "./Box/InformationBox";
-
 // Stack
 import StackCustom from "./Stack/StackCustom";
 // Select
@@ -30,25 +29,31 @@ import SelectCustom from "./Select/SelectCustom";
 // Image
 import AvatarCustom from "./Image/AvatarCustom";
 import LandscapeFrameUploaded from "./Image/LandscapeFrameUploaded";
+// Divider
+import DividerCustom from "./Divider/DividerCustom";
+// Map
+import MapCustom from "./Map/MapCustom";
 
 export {
   AlertCustom,
   // Image
   AvatarCustom,
-  LandscapeFrameUploaded,
-  // Button
-  ButtonCustom,
   LeftButtonCustom as BackButton,
-  ButtonCenteredOnly,
   // Box
   BaseBox,
   BoxButtonOnFooter,
-  InformationBox,
+  ButtonCenteredOnly,
+  // Button
+  ButtonCustom,
   // Drawer
   DrawerCustom,
+  MenuDrawerDynamicGrid,
   // Grid
   Grid,
-  MenuDrawerDynamicGrid,
+  InformationBox,
+  LandscapeFrameUploaded,
+  // Map
+  MapCustom,
   // Select
   SelectCustom,
   // ShareComponent
@@ -63,4 +68,6 @@ export {
   TextInputCustom,
   // ViewWrapper
   ViewWrapper,
+  // Divider
+  DividerCustom,
 };

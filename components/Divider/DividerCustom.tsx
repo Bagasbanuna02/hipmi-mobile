@@ -1,11 +1,11 @@
 import React from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
   StyleProp,
-  ViewStyle,
+  StyleSheet,
+  Text,
   TextStyle,
+  View,
+  ViewStyle,
 } from "react-native";
 
 // Define types for props
@@ -26,7 +26,7 @@ interface DividerProps {
   style?: StyleProp<ViewStyle>;
 }
 
-const Divider: React.FC<DividerProps> = ({
+const DividerCustom: React.FC<DividerProps> = ({
   orientation = "horizontal",
   color = "#DADADA",
   size = "xs",
@@ -183,4 +183,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Divider;
+export default DividerCustom;

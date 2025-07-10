@@ -2,7 +2,6 @@ import { BaseBox, Grid, StackCustom, TextCustom } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import { Ionicons } from "@expo/vector-icons";
-import { View } from "react-native";
 
 export default function Portofolio_SocialMediaSection() {
   const listData = [

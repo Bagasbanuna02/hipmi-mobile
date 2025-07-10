@@ -1,10 +1,13 @@
-import { BaseBox, TextCustom } from "@/components";
+import { BaseBox, MapCustom, StackCustom, TextCustom } from "@/components";
 
 export default function Portofolio_BusinessLocation() {
   return (
     <>
       <BaseBox>
-        <TextCustom bold>Lokasi Bisnis</TextCustom>
+        <StackCustom>
+          <TextCustom bold>Lokasi Bisnis</TextCustom>
+          <MapCustom />
+        </StackCustom>
       </BaseBox>
     </>
   );
