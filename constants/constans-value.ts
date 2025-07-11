@@ -7,13 +7,31 @@ export {
   DRAWER_HEIGHT,
   RADIUS_BUTTON,
   ICON_SIZE_BUTTON,
+  PADDING_EXTRA_SMALL,
+  PADDING_SMALL,
+  PADDING_MEDIUM,
+  PADDING_LARGE,
 };
 
+// Text Size
 const TEXT_SIZE_SMALL = 12;
 const TEXT_SIZE_MEDIUM = 14;
 const TEXT_SIZE_LARGE = 16;
+
+// Icon Size
+const ICON_SIZE_BUTTON = 18
 const ICON_SIZE_SMALL = 20;
 const ICON_SIZE_MEDIUM = 24;
+
+// Drawer Height
 const DRAWER_HEIGHT = 500; // tinggi drawer5
+
+// Radius Button
 const RADIUS_BUTTON = 50
-const ICON_SIZE_BUTTON = 18
+
+// Padding
+const PADDING_EXTRA_SMALL = 10
+const PADDING_SMALL = 12
+const PADDING_MEDIUM = 16
+const PADDING_LARGE = 20
+

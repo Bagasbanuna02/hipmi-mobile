@@ -24,6 +24,7 @@ type Props = {
   borderRadius?: number;
   style?: StyleProp<ViewStyle>;
   maxLength?: number;
+  containerStyle?: StyleProp<ViewStyle>;
 } & Omit<React.ComponentProps<typeof RNTextInput>, "style">;
 
 const TextInputCustom = ({
@@ -40,6 +41,7 @@ const TextInputCustom = ({
   keyboardType,
   onChangeText,
   maxLength,
+  containerStyle,
   ...rest
 }: Props) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -73,7 +75,7 @@ const TextInputCustom = ({
   };
 
   return (
-    <View style={GStyles.inputContainerArea}>
+    <View style={[GStyles.inputContainerArea, containerStyle]}>
       {label && (
         <Text style={GStyles.inputLabel}>
           {label}

@@ -7,7 +7,7 @@ import { StyleSheet } from "react-native";
 export const stylesButton = StyleSheet.create({
     button: {
       backgroundColor: MainColor.yellow,
-      paddingVertical: 12,
+      paddingVertical: 10,
       paddingHorizontal: 20,
       flexDirection: "row", // 👈 Tambahkan baris ini
       alignItems: "center",

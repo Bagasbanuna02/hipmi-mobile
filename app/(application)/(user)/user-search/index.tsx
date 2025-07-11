@@ -52,6 +52,7 @@ export default function UserSearch() {
             }
             placeholder="Cari Pengguna"
             borderRadius={50}
+            containerStyle={{ marginBottom: 0 }}
           />
         }
       >

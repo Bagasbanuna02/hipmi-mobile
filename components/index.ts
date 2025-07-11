@@ -37,6 +37,8 @@ import MapCustom from "./Map/MapCustom";
 import CenterCustom from "./Center/CenterCustom";
 // Clickable
 import ClickableCustom from "./Clickable/ClickableCustom";
+// Scroll
+import ScrollableCustom from "./Scroll/ScrollCustom";
 
 export {
   AlertCustom,
@@ -78,4 +80,6 @@ export {
   CenterCustom,
   // Clickable
   ClickableCustom,
+  // Scroll
+  ScrollableCustom,
 };
