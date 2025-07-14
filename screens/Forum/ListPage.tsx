@@ -16,7 +16,7 @@ const drawerItemsForumBeranda = ({
       <Feather name="edit" size={ICON_SIZE_SMALL} color={MainColor.white} />
     ),
     label: "Edit posting",
-    path: `/forumku/${id}`,
+    path: `/forum/${id}/edit`,
   },
   {
     icon:

@@ -1,4 +1,9 @@
-export const listDataDummyForum = [
+export {
+  listDummyDiscussionForum,
+  listDummyCommentarForum,
+}
+
+const listDummyDiscussionForum = [
   {
     name: "Bagas",
     status: "Open",
@@ -48,5 +53,52 @@ export const listDataDummyForum = [
     deskripsi:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae inventore iure pariatur, libero omnis excepturi. Ullam ad officiis deleniti quos esse odit nesciunt, ipsam adipisci cumque aliquam corporis culpa fugit?",
     jumlahBalas: 2,
+  },
+];
+
+ const listDummyCommentarForum = [
+  {
+    name: "Bagas",
+    status: "Delete",
+    date: "14/07/2025",
+    deskripsi:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae inventore iure pariatur, libero omnis excepturi. Ullam ad officiis deleniti quos esse odit nesciunt, ipsam adipisci cumque aliquam corporis culpa fugit?",
+  },
+  {
+    name: "Banuna",
+    status: "Report",
+    date: "14/07/2025",
+    deskripsi:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae inventore iure pariatur, libero omnis excepturi. Ullam ad officiis deleniti quos esse odit nesciunt, ipsam adipisci cumque aliquam corporis culpa fugit?",
+  },
+  {
+    name: "Nusantara",
+    status: "Delete",
+    date: "14/07/2025",
+    deskripsi:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae inventore iure pariatur, libero omnis excepturi. Ullam ad officiis deleniti quos esse odit nesciunt, ipsam adipisci cumque aliquam corporis culpa fugit?",
+  },
+
+  {
+    name: "Nabillah",
+    status: "Report",
+    date: "14/07/2025",
+    deskripsi:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae inventore iure pariatur, libero omnis excepturi. Ullam ad officiis deleniti quos esse odit nesciunt, ipsam adipisci cumque aliquam corporis culpa fugit?",
+  },
+
+  {
+    name: "Riyusa",
+    status: "Report",
+    date: "14/07/2025",
+    deskripsi:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae inventore iure pariatur, libero omnis excepturi. Ullam ad officiis deleniti quos esse odit nesciunt, ipsam adipisci cumque aliquam corporis culpa fugit?",
+  },
+  {
+    name: "Nita",
+    status: "Delete",
+    date: "14/07/2025",
+    deskripsi:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae inventore iure pariatur, libero omnis excepturi. Ullam ad officiis deleniti quos esse odit nesciunt, ipsam adipisci cumque aliquam corporis culpa fugit?",
   },
 ];

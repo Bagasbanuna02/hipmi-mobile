@@ -94,10 +94,24 @@ export default function UserLayout() {
           }}
         />
         <Stack.Screen
+          name="forum/[id]/edit"
+          options={{
+            title: "Edit Diskusi",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
           name="forum/[id]/forumku"
           options={{
             title: "Forumku",
             headerLeft: () => <BackButton icon={'close'} />,
+          }}
+        />
+        <Stack.Screen
+          name="forum/[id]/index"
+          options={{
+            title: "Detail",
+            headerLeft: () => <BackButton />,
           }}
         />
 

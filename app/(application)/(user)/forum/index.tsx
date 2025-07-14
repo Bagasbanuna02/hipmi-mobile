@@ -9,8 +9,8 @@ import {
 import FloatingButton from "@/components/Button/FloatingButton";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
-import Forum_BerandaSection from "@/screens/Forum/BerandaSection";
-import { listDataDummyForum } from "@/screens/Forum/list-data-dummy";
+import Forum_BoxDetailSection from "@/screens/Forum/DiscussionBoxSection";
+import { listDummyDiscussionForum } from "@/screens/Forum/list-data-dummy";
 import Forum_MenuDrawerBerandaSection from "@/screens/Forum/MenuDrawerSection.tsx/MenuBeranda";
 import { Ionicons } from "@expo/vector-icons";
 import { router, Stack } from "expo-router";
@@ -56,12 +56,14 @@ export default function Forum() {
           />
         }
       >
-        {listDataDummyForum.map((e, i) => (
-          <Forum_BerandaSection
+        {listDummyDiscussionForum.map((e, i) => (
+          <Forum_BoxDetailSection
             key={i}
             data={e}
             setOpenDrawer={setOpenDrawer}
             setStatus={setStatus}
+            isTruncate={true}
+            href={`/forum/${id}`}
           />
         ))}
       </ViewWrapper>

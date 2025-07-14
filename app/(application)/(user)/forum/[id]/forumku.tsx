@@ -10,8 +10,8 @@ import {
   ViewWrapper,
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
-import Forum_BerandaSection from "@/screens/Forum/BerandaSection";
-import { listDataDummyForum } from "@/screens/Forum/list-data-dummy";
+import Forum_BoxDetailSection from "@/screens/Forum/DiscussionBoxSection";
+import { listDataDummyCommentarForum } from "@/screens/Forum/list-data-dummy";
 import Forum_MenuDrawerBerandaSection from "@/screens/Forum/MenuDrawerSection.tsx/MenuBeranda";
 import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
@@ -47,8 +47,8 @@ export default function Forumku() {
               </ButtonCustom>
             </Grid.Col>
           </Grid>
-          {listDataDummyForum.map((e, i) => (
-            <Forum_BerandaSection
+          {listDataDummyCommentarForum.map((e, i) => (
+            <Forum_BoxDetailSection
               key={i}
               data={e}
               setOpenDrawer={setOpenDrawer}

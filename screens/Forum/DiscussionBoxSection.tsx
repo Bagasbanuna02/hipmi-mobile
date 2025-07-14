@@ -9,17 +9,37 @@ import {
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import { Entypo, Ionicons } from "@expo/vector-icons";
+import { Href, router } from "expo-router";
 import { View } from "react-native";
 
-export default function Forum_BerandaSection({
+export default function Forum_BoxDetailSection({
   data,
+  isTruncate,
   setOpenDrawer,
   setStatus,
+  href,
 }: {
   data: any;
+  isTruncate?: boolean;
   setOpenDrawer: (value: boolean) => void;
   setStatus: (value: string) => void;
+  href?: Href;
 }) {
+  const deskripsiView = (
+    <View
+      style={{
+        backgroundColor: MainColor.soft_darkblue,
+        padding: 8,
+        borderRadius: 8,
+      }}
+    >
+      {isTruncate ? (
+        <TextCustom truncate={2}>{data.deskripsi}</TextCustom>
+      ) : (
+        <TextCustom>{data.deskripsi}</TextCustom>
+      )}
+    </View>
+  );
 
   return (
     <>
@@ -66,16 +86,15 @@ export default function Forum_BerandaSection({
             </Grid.Col>
           </Grid>
 
-          <View
-            style={{
-              backgroundColor: MainColor.soft_darkblue,
-              padding: 8,
-              borderRadius: 8,
-            }}
-          >
-            <TextCustom truncate={2}>{data.deskripsi}</TextCustom>
-          </View>
-          <Spacing />
+          {href ? (
+            <ClickableCustom onPress={() => router.push(href as any)}>
+              {deskripsiView}
+            </ClickableCustom>
+          ) : (
+            deskripsiView
+          )}
+
+          <Spacing height={10} />
 
           <Grid>
             <Grid.Col span={6}>
