@@ -24,6 +24,7 @@ type BaseProps = {
   maxRows?: number;
   showCount?: boolean;
   maxLength?: number;
+  height?: number;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -44,12 +45,13 @@ const TextAreaCustom: React.FC<TextAreaCustomProps> = ({
   disabled = false,
   borderRadius = 8,
   autosize = false,
-  minRows = 3,
+  minRows = 4,
   maxRows = 6,
   showCount = false,
   maxLength,
   value,
   onChangeText,
+  height = 100,
   style,
   ...rest
 }) => {
@@ -90,6 +92,7 @@ const TextAreaCustom: React.FC<TextAreaCustomProps> = ({
           disabled && GStyles.disabledBox,
           hasError ? GStyles.inputErrorBorder : {},
           { borderRadius },
+          { height },
           style,
         ]}
       >

@@ -18,6 +18,7 @@ interface ViewWrapperProps {
   withBackground?: boolean;
   headerComponent?: React.ReactNode;
   footerComponent?: React.ReactNode;
+  floatingButton?: React.ReactNode;
   style?: StyleProp<ViewStyle>;
 }
 
@@ -26,6 +27,7 @@ const ViewWrapper = ({
   withBackground = false,
   headerComponent,
   footerComponent,
+  floatingButton,
   style,
 }: ViewWrapperProps) => {
   const assetBackground = require("../../assets/images/main-background.png");
@@ -79,43 +81,12 @@ const ViewWrapper = ({
             style={{ backgroundColor: MainColor.darkblue }}
           />
         )}
+
+        {/* Floating Component (misal: FAB) */}
+        {floatingButton && (
+          <View style={GStyles.floatingContainer}>{floatingButton}</View>
+        )}
       </KeyboardAvoidingView>
-
-      {/* <SafeAreaView
-        edges={["bottom"]}
-        style={{ flex: 1, backgroundColor: MainColor.soft_darkblue }}
-      >
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-          style={{ flex: 1 }}
-        >
-          <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-            {withBackground ? (
-              <ImageBackground
-                source={assetBackground}
-                resizeMode="cover"
-                style={GStyles.imageBackground}
-              >
-                <View style={GStyles.containerWithBackground}>{children}</View>
-              </ImageBackground>
-            ) : (
-              <View style={GStyles.container}>{children}</View>
-            )}
-          </ScrollView>
-
-          {footerComponent ? (
-            <SafeAreaView
-              edges={["bottom"]}
-              style={{
-                // flex: 1,
-                backgroundColor: MainColor.darkblue,
-              }}
-            >
-              {footerComponent}
-            </SafeAreaView>
-          ) : null}
-        </KeyboardAvoidingView>
-      </SafeAreaView> */}
     </>
   );
 };

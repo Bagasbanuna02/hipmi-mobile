@@ -22,7 +22,7 @@ interface TextCustomProps {
   bold?: boolean;
   semiBold?: boolean;
   size?: "default" | "large" | "small";
-  color?: "default" | "yellow" | "red" | "gray";
+  color?: "default" | "yellow" | "red" | "gray" | "green";
   align?: TextAlign; // Prop untuk alignment
   truncate?: boolean | number;
   onPress?: () => void;
@@ -57,6 +57,7 @@ const TextCustom: React.FC<TextCustomProps> = ({
     if (color === "yellow") selectedStyles.push(styles.yellow);
     else if (color === "red") selectedStyles.push(styles.red);
     else if (color === "gray") selectedStyles.push(styles.gray);
+    else if (color === "green") selectedStyles.push(styles.green);
 
     // Alignment
     if (align) {
@@ -125,5 +126,8 @@ export const styles = StyleSheet.create({
   },
   gray: {
     color: MainColor.placeholder,
+  },
+  green: {
+    color: MainColor.green,
   },
 });

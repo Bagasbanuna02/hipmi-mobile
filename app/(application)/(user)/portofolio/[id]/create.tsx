@@ -155,7 +155,7 @@ export default function PortofolioCreate() {
           icon="upload"
           onPress={() => {
             console.log("Upload logo >>", id);
-            router.navigate(`/(application)/take-picture/${id}`);
+            router.navigate(`/(application)/(image)/take-picture/${id}`);
           }}
         >
           Upload

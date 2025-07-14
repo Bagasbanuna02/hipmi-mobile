@@ -1,4 +1,5 @@
 import { AccentColor } from "@/constants/color-palet";
+import { PADDING_EXTRA_SMALL, PADDING_MEDIUM, PADDING_SMALL } from "@/constants/constans-value";
 import { StyleProp, TouchableHighlight, View, ViewStyle } from "react-native";
 
 interface BaseBoxProps {
@@ -8,14 +9,16 @@ interface BaseBoxProps {
   marginBottom?: number;
   padding?: number;
   paddingInline?: number;
+  paddingBlock?: number;
 }
 
 export default function BaseBox({
   children,
   style,
   onPress,
-  marginBottom = 16,
-  padding = 12,
+  marginBottom = PADDING_MEDIUM,
+  paddingBlock = PADDING_EXTRA_SMALL,
+  paddingInline = PADDING_SMALL,
 }: BaseBoxProps) {
   return (
     <>
@@ -29,7 +32,8 @@ export default function BaseBox({
               borderWidth: 1,
               borderRadius: 10,
               marginBottom,
-              padding,
+              paddingBlock,
+              paddingInline,
             },
             style,
           ]}
@@ -46,7 +50,8 @@ export default function BaseBox({
               borderWidth: 1,
               borderRadius: 10,
               marginBottom,
-              padding,
+              paddingBlock,
+              paddingInline,
             },
             style,
           ]}

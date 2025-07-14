@@ -87,9 +87,9 @@ export default function UserLayout() {
 
         {/* ========== Forum Section ========= */}
         <Stack.Screen
-          name="forum/index"
+          name="forum/create"
           options={{
-            title: "Forum",
+            title: "Tambah Diskusi",
             headerLeft: () => <BackButton />,
           }}
         />

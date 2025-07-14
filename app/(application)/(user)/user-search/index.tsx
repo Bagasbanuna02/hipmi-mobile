@@ -61,7 +61,7 @@ export default function UserSearch() {
             return (
               <Grid key={index}>
                 <Grid.Col span={2}>
-                  <AvatarCustom />
+                  <AvatarCustom href={`/profile/${index}`}/>  
                 </Grid.Col>
                 <Grid.Col span={9}>
                   <TextCustom size="large">Nama user {index}</TextCustom>

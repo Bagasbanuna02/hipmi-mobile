@@ -42,6 +42,12 @@ export const GStyles = StyleSheet.create({
     // paddingTop: 8,
     // paddingBottom: 8,
   },
+  floatingContainer: {
+    position: "absolute",
+    bottom: 80,
+    right: 20,
+    zIndex: 8,
+  },
 
   // Style saat disabled
   disabledBox: {
