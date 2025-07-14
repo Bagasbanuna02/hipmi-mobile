@@ -93,6 +93,13 @@ export default function UserLayout() {
             headerLeft: () => <BackButton />,
           }}
         />
+        <Stack.Screen
+          name="forum/[id]/forumku"
+          options={{
+            title: "Forumku",
+            headerLeft: () => <BackButton icon={'close'} />,
+          }}
+        />
 
         {/* ========== Maps Section ========= */}
         <Stack.Screen

@@ -5,6 +5,7 @@ import { StyleProp, Text, TouchableOpacity, ViewStyle } from "react-native";
 import { radiusMap } from "@/constants/radius-value";
 import { MainColor } from "@/constants/color-palet";
 import { stylesButton } from "./buttonCustomStyles";
+import { Href, router } from "expo-router";
 
 // Import radiusMap
 
@@ -13,6 +14,7 @@ type RadiusType = keyof typeof radiusMap | number;
 
 interface ButtonProps {
   children?: React.ReactNode;
+  href?: Href;
   onPress?: () => void;
   title?: string;
   backgroundColor?: string;
@@ -25,6 +27,7 @@ interface ButtonProps {
 
 const ButtonCustom: React.FC<ButtonProps> = ({
   children,
+  href,
   onPress,
   title = "Button",
   backgroundColor = MainColor.yellow,
@@ -44,7 +47,13 @@ const ButtonCustom: React.FC<ButtonProps> = ({
           : { backgroundColor },
         style,
       ]}
-      onPress={onPress}
+      onPress={() => {
+        if (href) {
+          router.push(href);
+        } else {
+          onPress?.();
+        }
+      }}
       disabled={disabled}
       activeOpacity={0.8}
     >

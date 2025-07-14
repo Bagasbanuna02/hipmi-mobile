@@ -9,16 +9,17 @@ import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import Forum_BerandaSection from "@/screens/Forum/berandaSection";
 import { Ionicons } from "@expo/vector-icons";
-import { router, Stack } from "expo-router";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 
 export default function Forum() {
+  const { id } = useLocalSearchParams();
   return (
     <>
       <Stack.Screen
         options={{
           title: "Forum",
           headerLeft: () => <BackButton />,
-          headerRight: () => <AvatarCustom />,
+          headerRight: () => <AvatarCustom href={`/forum/${id}/forumku`}/>,
         }}
       />
 
