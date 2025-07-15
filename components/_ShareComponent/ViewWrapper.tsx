@@ -1,4 +1,5 @@
 import { MainColor } from "@/constants/color-palet";
+import { OS_HEIGHT } from "@/constants/constans-value";
 import { GStyles } from "@/styles/global-styles";
 import {
   ImageBackground,
@@ -71,6 +72,7 @@ const ViewWrapper = ({
             edges={["bottom"]}
             style={{
               backgroundColor: MainColor.darkblue,
+              height: OS_HEIGHT
             }}
           >
             {footerComponent}

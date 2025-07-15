@@ -1,4 +1,5 @@
 import { AccentColor, MainColor } from "@/constants/color-palet";
+import { OS_IOS_HEIGHT, OS_ANDROID_HEIGHT } from "@/constants/constans-value";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import { Platform, View } from "react-native";
@@ -15,12 +16,12 @@ export default function EventLayout() {
           ios: {
             borderTopWidth: 0,
             paddingTop: 5,
-            height: 65,
+            height: OS_IOS_HEIGHT,
           },
           android: {
             borderTopWidth: 0,
             paddingTop: 5,
-            height: 115,
+            height: OS_ANDROID_HEIGHT,
           },
           default: {},
         }),

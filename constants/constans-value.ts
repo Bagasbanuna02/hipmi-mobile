@@ -1,4 +1,9 @@
+import { Platform } from "react-native";
+
 export {
+  OS_ANDROID_HEIGHT,
+  OS_IOS_HEIGHT,
+  OS_HEIGHT,
   TEXT_SIZE_SMALL,
   TEXT_SIZE_MEDIUM,
   TEXT_SIZE_LARGE,
@@ -12,6 +17,11 @@ export {
   PADDING_MEDIUM,
   PADDING_LARGE,
 };
+
+// OS Height
+const OS_ANDROID_HEIGHT = 115
+const OS_IOS_HEIGHT = 65
+const OS_HEIGHT = Platform.OS === "ios" ? OS_IOS_HEIGHT : OS_ANDROID_HEIGHT
 
 // Text Size
 const TEXT_SIZE_SMALL = 12;
