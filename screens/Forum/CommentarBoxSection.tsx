@@ -1,10 +1,10 @@
 import {
-  BaseBox,
-  Grid,
   AvatarCustom,
-  TextCustom,
+  BaseBox,
   ClickableCustom,
+  Grid,
   Spacing,
+  TextCustom,
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
@@ -14,11 +14,9 @@ import { View } from "react-native";
 export default function Forum_CommentarBoxSection({
   data,
   setOpenDrawer,
-  setStatus,
 }: {
   data: any;
   setOpenDrawer: (value: boolean) => void;
-  setStatus: (value: string) => void;
 }) {
   return (
     <>
@@ -46,7 +44,6 @@ export default function Forum_CommentarBoxSection({
               <ClickableCustom
                 onPress={() => {
                   setOpenDrawer(true);
-                  setStatus(data.status);
                 }}
                 style={{
                   alignItems: "flex-end",

@@ -2,7 +2,7 @@ import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import { Feather, Ionicons } from "@expo/vector-icons";
 
-export { drawerItemsForumBeranda };
+export { drawerItemsForumBeranda, drawerItemsForumComentar };
 
 const drawerItemsForumBeranda = ({
   id,
@@ -11,6 +11,15 @@ const drawerItemsForumBeranda = ({
   id: string;
   status: string;
 }) => [
+  {
+    icon: (
+      <Ionicons name="flag" size={ICON_SIZE_SMALL} color={MainColor.white} />
+    ),
+    label: "Laporkan diskusi",
+    // color: MainColor.white,
+    path: `/forum/${id}/report-posting`,
+  },
+    
   {
     icon: (
       <Feather name="edit" size={ICON_SIZE_SMALL} color={MainColor.white} />
@@ -37,5 +46,24 @@ const drawerItemsForumBeranda = ({
     label: "Hapus",
     path: "",
     color: MainColor.red,
+  },
+];
+
+const drawerItemsForumComentar = ({ id }: { id: string }) => [
+  {
+    icon: (
+      <Ionicons name="flag" size={ICON_SIZE_SMALL} color={MainColor.white} />
+    ),
+    label: "Laporkan",
+    // color: MainColor.white,
+    path: `/forum/${id}/report-commentar`,
+  },
+  {
+    icon: (
+      <Ionicons name="trash" size={ICON_SIZE_SMALL} color={MainColor.white} />
+    ),
+    label: "Hapus",
+    color: MainColor.red,
+    path: "",
   },
 ];

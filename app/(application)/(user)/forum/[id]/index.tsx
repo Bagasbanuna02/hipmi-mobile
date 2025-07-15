@@ -1,20 +1,19 @@
 import {
-  AlertCustom,
-  ButtonCustom,
-  DrawerCustom,
-  Spacing,
-  StackCustom,
-  TextAreaCustom,
-  ViewWrapper,
+    AlertCustom,
+    ButtonCustom,
+    DrawerCustom,
+    Spacing,
+    TextAreaCustom,
+    ViewWrapper
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import Forum_CommentarBoxSection from "@/screens/Forum/CommentarBoxSection";
 import Forum_BoxDetailSection from "@/screens/Forum/DiscussionBoxSection";
 import { listDummyCommentarForum } from "@/screens/Forum/list-data-dummy";
 import Forum_MenuDrawerBerandaSection from "@/screens/Forum/MenuDrawerSection.tsx/MenuBeranda";
+import Forum_MenuDrawerCommentar from "@/screens/Forum/MenuDrawerSection.tsx/MenuCommentar";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
-import { Divider } from "react-native-paper";
 
 export default function ForumDetail() {
   const { id } = useLocalSearchParams();
@@ -27,7 +26,6 @@ export default function ForumDetail() {
 
   // Comentar
   const [openDrawerCommentar, setOpenDrawerCommentar] = useState(false);
-  const [statusCommentar, setStatusCommentar] = useState("");
 
   const dataDummy = {
     name: "Bagas",
@@ -78,7 +76,7 @@ export default function ForumDetail() {
             key={i}
             data={e}
             setOpenDrawer={setOpenDrawerCommentar}
-            setStatus={setStatusCommentar}
+
           />
         ))}
       </ViewWrapper>
@@ -145,16 +143,34 @@ export default function ForumDetail() {
         isVisible={openDrawerCommentar}
         closeDrawer={() => setOpenDrawerCommentar(false)}
       >
-        <Forum_MenuDrawerBerandaSection
+        <Forum_MenuDrawerCommentar
           id={id as string}
-          status={statusCommentar}
           setIsDrawerOpen={() => {
             setOpenDrawerCommentar(false);
           }}
           setShowDeleteAlert={setDeleteAlert}
-          setShowAlertStatus={setAlertStatus}
         />
       </DrawerCustom>
+
+      {/* Alert Delete Commentar */}
+      <AlertCustom
+        isVisible={deleteAlert}
+        title="Hapus Komentar"
+        message="Apakah Anda yakin ingin menghapus komentar ini?"
+        onLeftPress={() => {
+          setOpenDrawerCommentar(false);
+          setDeleteAlert(false);
+          console.log("Batal");
+        }}
+        onRightPress={() => {
+          setOpenDrawerCommentar(false);
+          setDeleteAlert(false);
+          console.log("Hapus commentar");
+        }}
+        textLeft="Batal"
+        textRight="Hapus"
+        colorRight={MainColor.red}
+      />
     </>
   );
 }

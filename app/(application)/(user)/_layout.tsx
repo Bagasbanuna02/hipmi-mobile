@@ -114,6 +114,34 @@ export default function UserLayout() {
             headerLeft: () => <BackButton />,
           }}
         />
+        <Stack.Screen
+          name="forum/[id]/report-commentar"
+          options={{
+            title: "Laporkan Komentar",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="forum/[id]/other-report-commentar"
+          options={{
+            title: "Laporkan Komentar",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="forum/[id]/report-posting"
+          options={{
+            title: "Laporkan Diskusi",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="forum/[id]/other-report-posting"
+          options={{
+            title: "Laporkan Diskusi",
+            headerLeft: () => <BackButton />,
+          }}
+        />
 
         {/* ========== Maps Section ========= */}
         <Stack.Screen
