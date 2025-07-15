@@ -1,5 +1,6 @@
 import {
     ButtonCustom,
+    Spacing,
     StackCustom,
     ViewWrapper
 } from "@/components";
@@ -33,6 +34,7 @@ export default function ForumReportCommentar() {
           >
             Lainnya
           </ButtonCustom>
+          <Spacing/>
         </StackCustom>
       </ViewWrapper>
     </>

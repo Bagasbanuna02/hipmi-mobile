@@ -44,17 +44,16 @@ export const GStyles = StyleSheet.create({
   },
   floatingContainer: {
     position: "absolute",
-    bottom: 80,
+    bottom: 100,
     right: 20,
     zIndex: 8,
   },
 
-  // Style saat disabled
+  // =============== Disabled Styles =============== //
   disabledBox: {
     backgroundColor: MainColor.disabled,
     borderColor: AccentColor.disabledBorder,
   },
-
   inputDisabled: {
     backgroundColor: "#f0f0f0",
     borderColor: "#ddd",
@@ -65,7 +64,7 @@ export const GStyles = StyleSheet.create({
   inputPlaceholderDisabled: {
     color: "#444",
   },
-  // =============== Main Styles =============== //
+  // =============== Disabled Styles =============== //
 
   // =============== AUTHENTICATION =============== //
   authContainer: {
@@ -93,6 +92,11 @@ export const GStyles = StyleSheet.create({
     fontSize: TEXT_SIZE_MEDIUM,
     color: MainColor.white_gray,
     fontWeight: "normal",
+  },
+  textLabelBold: {
+    fontSize: TEXT_SIZE_MEDIUM,
+    color: MainColor.white_gray,
+    fontWeight: "bold",
   },
   // =============== TEXT & LABEL =============== //
 
@@ -284,8 +288,10 @@ export const GStyles = StyleSheet.create({
   //  TextArea untuk tambahan
   textAreaInput: {
     textAlignVertical: "top",
-    padding: 5,
-    height: undefined, // biar multiline bebas tinggi
+    paddingTop: 10,
+    // height: undefined, // biar multiline bebas tinggi
+    height: 100,
+    width: "100%",
   },
 
   // Select

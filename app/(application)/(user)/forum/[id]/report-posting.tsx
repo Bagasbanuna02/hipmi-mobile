@@ -1,4 +1,4 @@
-import { ViewWrapper, StackCustom, ButtonCustom } from "@/components";
+import { ViewWrapper, StackCustom, ButtonCustom, Spacing } from "@/components";
 import { MainColor, AccentColor } from "@/constants/color-palet";
 import Forum_ReportListSection from "@/screens/Forum/ReportListSection";
 import { router } from "expo-router";
@@ -29,6 +29,7 @@ export default function ForumReportPosting() {
             >
               Lainnya
             </ButtonCustom>
+            <Spacing />
           </StackCustom>
         </ViewWrapper>
       </>

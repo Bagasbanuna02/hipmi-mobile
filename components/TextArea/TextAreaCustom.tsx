@@ -105,7 +105,7 @@ const TextAreaCustom: React.FC<TextAreaCustomProps> = ({
           multiline
           numberOfLines={numberOfLines}
           style={[
-            GStyles.inputText,
+            // GStyles.inputText,
             GStyles.textAreaInput,
             { color: fontColor },
           ]}

@@ -1,10 +1,10 @@
 import {
-    AlertCustom,
-    ButtonCustom,
-    DrawerCustom,
-    Spacing,
-    TextAreaCustom,
-    ViewWrapper
+  AlertCustom,
+  ButtonCustom,
+  DrawerCustom,
+  Spacing,
+  TextAreaCustom,
+  ViewWrapper,
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import Forum_CommentarBoxSection from "@/screens/Forum/CommentarBoxSection";
@@ -26,6 +26,7 @@ export default function ForumDetail() {
 
   // Comentar
   const [openDrawerCommentar, setOpenDrawerCommentar] = useState(false);
+  const [alertDeleteCommentar, setAlertDeleteCommentar] = useState(false);
 
   const dataDummy = {
     name: "Bagas",
@@ -76,7 +77,6 @@ export default function ForumDetail() {
             key={i}
             data={e}
             setOpenDrawer={setOpenDrawerCommentar}
-
           />
         ))}
       </ViewWrapper>
@@ -148,23 +148,23 @@ export default function ForumDetail() {
           setIsDrawerOpen={() => {
             setOpenDrawerCommentar(false);
           }}
-          setShowDeleteAlert={setDeleteAlert}
+          setShowDeleteAlert={setAlertDeleteCommentar}
         />
       </DrawerCustom>
 
       {/* Alert Delete Commentar */}
       <AlertCustom
-        isVisible={deleteAlert}
+        isVisible={alertDeleteCommentar}
         title="Hapus Komentar"
         message="Apakah Anda yakin ingin menghapus komentar ini?"
         onLeftPress={() => {
           setOpenDrawerCommentar(false);
-          setDeleteAlert(false);
+          setAlertDeleteCommentar(false);
           console.log("Batal");
         }}
         onRightPress={() => {
           setOpenDrawerCommentar(false);
-          setDeleteAlert(false);
+          setAlertDeleteCommentar(false);
           console.log("Hapus commentar");
         }}
         textLeft="Batal"

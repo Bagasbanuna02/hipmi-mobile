@@ -11,7 +11,7 @@ import {
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import Forum_BoxDetailSection from "@/screens/Forum/DiscussionBoxSection";
-import { listDataDummyCommentarForum } from "@/screens/Forum/list-data-dummy";
+import { listDummyDiscussionForum } from "@/screens/Forum/list-data-dummy";
 import Forum_MenuDrawerBerandaSection from "@/screens/Forum/MenuDrawerSection.tsx/MenuBeranda";
 import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
@@ -47,12 +47,14 @@ export default function Forumku() {
               </ButtonCustom>
             </Grid.Col>
           </Grid>
-          {listDataDummyCommentarForum.map((e, i) => (
+          {listDummyDiscussionForum.map((e, i) => (
             <Forum_BoxDetailSection
               key={i}
               data={e}
               setOpenDrawer={setOpenDrawer}
               setStatus={setStatus}
+              isTruncate={true}
+              href={`/forum/${id}`}
             />
           ))}
         </StackCustom>
