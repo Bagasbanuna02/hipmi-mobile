@@ -22,15 +22,8 @@ export default function ProfileEdit() {
   });
 
   const options = [
-    { label: "React", value: "react" },
-    { label: "Vue", value: "vue" },
-    { label: "Angular", value: "angular" },
-    { label: "Svelte", value: "svelte" },
-    { label: "Next.js", value: "nextjs" },
-    { label: "Nuxt.js", value: "nuxtjs" },
-    { label: "Remix", value: "remix" },
-    { label: "Sapper", value: "sapper" },
-    { label: "SvelteKit", value: "sveltekit" },
+    { label: "Laki-laki", value: "laki-laki" },
+    { label: "Perempuan", value: "perempuan" },
   ];
 
   const handleSave = () => {
@@ -59,16 +52,6 @@ export default function ProfileEdit() {
       }
     >
       <StackCustom gap={"xs"}>
-        <SelectCustom
-          label="Framework"
-          placeholder="Pilih framework favoritmu"
-          data={options}
-          value={data.selectedValue}
-          onChange={(value) => {
-            setData({ ...(data as any), selectedValue: value });
-          }}
-        />
-
         <TextInputCustom
           label="Nama"
           placeholder="Nama"
@@ -95,6 +78,16 @@ export default function ProfileEdit() {
             setData({ ...data, alamat: text });
           }}
           required
+        />
+        <SelectCustom
+          required
+          label="Jenis Kelamin"
+          placeholder="Pilih jenis kelamin"
+          data={options}
+          value={data.selectedValue}
+          onChange={(value) => {
+            setData({ ...(data as any), selectedValue: value });
+          }}
         />
       </StackCustom>
     </ViewWrapper>

@@ -30,14 +30,14 @@ const drawerItemsForumBeranda = ({
   {
     icon:
       status === "Open" ? (
-        <Ionicons name="open" size={ICON_SIZE_SMALL} color={MainColor.white} />
-      ) : (
         <Ionicons name="close" size={ICON_SIZE_SMALL} color={MainColor.white} />
+      ) : (
+        <Ionicons name="open" size={ICON_SIZE_SMALL} color={MainColor.white} />
       ),
 
-    label: status === "Open" ? "Buka forum" : "Tutup forum",
+    label: status === "Open" ? "Tutup forum" : "Buka forum",
     path: "",
-    color: status === "Open" ? MainColor.green : MainColor.orange,
+    color: status === "Open" ? MainColor.orange : MainColor.green,
   },
   {
     icon: (

@@ -103,14 +103,7 @@ export default function CreateProfile() {
           required
           onChange={(value) => setData({ ...(data as any), gender: value })}
         />
-        <TextInputCustom
-          required
-          label="Alamat"
-          placeholder="Masukkan alamat"
-          value={data.address}
-          onChangeText={(text) => setData({ ...data, address: text })}
-        />
-        {/* <Spacing /> */}
+        <Spacing />
       </StackCustom>
     </ViewWrapper>
   );
