@@ -76,6 +76,13 @@ export default function UserLayout() {
             ),
           }}
         />
+        <Stack.Screen
+          name="event/create"
+          options={{
+            title: "Tambah Event",
+            headerLeft: () => <BackButton />,
+          }}
+        />
 
         <Stack.Screen
           name="event/detail/[id]"

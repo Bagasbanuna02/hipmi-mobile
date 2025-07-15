@@ -1,4 +1,5 @@
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
+import FloatingButton from "@/components/Button/FloatingButton";
 import { AccentColor, MainColor } from "@/constants/color-palet";
 import { GStyles } from "@/styles/global-styles";
 import { router } from "expo-router";
@@ -6,7 +7,11 @@ import { Text, TouchableHighlight, View } from "react-native";
 
 export default function Event() {
   return (
-    <ViewWrapper>
+    <ViewWrapper
+      floatingButton={
+        <FloatingButton onPress={() => router.push("/event/create")} />
+      }
+    >
       <TouchableHighlight onPress={() => router.push("/event/detail/1")}>
         <View
           style={{

@@ -1,6 +1,7 @@
-import { MainColor } from "@/constants/color-palet";
+import { AccentColor, MainColor } from "@/constants/color-palet";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
+import { Platform, View } from "react-native";
 
 export default function EventLayout() {
   return (
@@ -9,18 +10,20 @@ export default function EventLayout() {
         headerShown: false,
         tabBarActiveTintColor: MainColor.yellow,
         tabBarInactiveTintColor: MainColor.white_gray,
-        tabBarStyle: {
-          backgroundColor: MainColor.darkblue,
-        },
-        //   tabBarButton: HapticTab,
-        //   tabBarBackground: BlurTabBarBackground,
-        //   tabBarStyle: Platform.select({
-        //     ios: {
-        //       // Use a transparent background on iOS to show the blur effect
-        //       position: "absolute",
-        //     },
-        //     default: {},
-        //   }),
+        tabBarBackground: CustomTabBarBackground,
+        tabBarStyle: Platform.select({
+          ios: {
+            borderTopWidth: 0,
+            paddingTop: 5,
+            height: 65,
+          },
+          android: {
+            borderTopWidth: 0,
+            paddingTop: 5,
+            height: 115,
+          },
+          default: {},
+        }),
       }}
     >
       <Tabs.Screen
@@ -60,5 +63,18 @@ export default function EventLayout() {
         }}
       />
     </Tabs>
+  );
+}
+
+function CustomTabBarBackground() {
+  return (
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: MainColor.darkblue,
+        borderTopWidth: 1,
+        borderTopColor: AccentColor.blue,
+      }}
+    />
   );
 }

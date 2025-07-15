@@ -1,11 +1,11 @@
 import { GStyles } from "@/styles/global-styles";
 import React, { useEffect, useState } from "react";
 import {
-    TextInput as RNTextInput,
-    StyleProp,
-    Text,
-    View,
-    ViewStyle,
+  TextInput as RNTextInput,
+  StyleProp,
+  Text,
+  View,
+  ViewStyle,
 } from "react-native";
 
 type IconType = React.ReactNode | string;
@@ -79,7 +79,7 @@ const TextAreaCustom: React.FC<TextAreaCustomProps> = ({
   };
 
   return (
-    <View style={GStyles.inputContainerArea}>
+    <View style={[GStyles.inputContainerArea]}>
       {label && (
         <Text style={GStyles.inputLabel}>
           {label}
