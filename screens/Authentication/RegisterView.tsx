@@ -1,7 +1,7 @@
 import Spacing from "@/components/_ShareComponent/Spacing";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import ButtonCustom from "@/components/Button/ButtonCustom";
-import { TextInputCustom } from "@/components/TextInput/TextInputCustom";
+import TextInputCustom from "@/components/TextInput/TextInputCustom";
 import { MainColor } from "@/constants/color-palet";
 import { GStyles } from "@/styles/global-styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
