@@ -6,6 +6,7 @@ import ButtonCustom from "../Button/ButtonCustom";
 interface ButtonData {
   id: string | number;
   label: string;
+  value: string;
 }
 
 interface ScrollableCustomProps {
@@ -27,7 +28,7 @@ const ScrollableCustom = ({
       style={styles.scrollView}
     >
       {data.map((item) => {
-        const isActive = activeId === item.id;
+        const isActive = activeId === item.value;
 
         return (
           <ButtonCustom

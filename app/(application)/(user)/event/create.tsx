@@ -41,14 +41,14 @@ export default function EventCreate() {
   };
 
   const buttonSubmit = (
-    <BoxButtonOnFooter>
       <ButtonCustom title="Simpan" onPress={handlerSubmit} />
-    </BoxButtonOnFooter>
+    // <BoxButtonOnFooter>
+    // </BoxButtonOnFooter>
   );
 
   return (
     <>
-      <ViewWrapper footerComponent={buttonSubmit}>
+      <ViewWrapper>
         <StackCustom gap={"xs"}>
           <TextInputCustom
             placeholder="Masukkan nama event"
@@ -93,7 +93,10 @@ export default function EventCreate() {
             showCount
             maxLength={100}
           />
+
+          {buttonSubmit}
         </StackCustom>
+
       </ViewWrapper>
     </>
   );

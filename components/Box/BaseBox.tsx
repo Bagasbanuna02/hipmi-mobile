@@ -1,10 +1,22 @@
 import { AccentColor } from "@/constants/color-palet";
-import { PADDING_EXTRA_SMALL, PADDING_MEDIUM, PADDING_SMALL } from "@/constants/constans-value";
-import { StyleProp, TouchableHighlight, View, ViewStyle } from "react-native";
+import {
+  PADDING_EXTRA_SMALL,
+  PADDING_MEDIUM,
+  PADDING_SMALL,
+} from "@/constants/constans-value";
+import { Href, router } from "expo-router";
+import {
+  StyleProp,
+  TouchableHighlight,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from "react-native";
 
 interface BaseBoxProps {
   children: React.ReactNode;
   style?: StyleProp<ViewStyle>;
+  href?: Href;
   onPress?: () => void;
   marginBottom?: number;
   padding?: number;
@@ -15,16 +27,19 @@ interface BaseBoxProps {
 export default function BaseBox({
   children,
   style,
+  href,
   onPress,
   marginBottom = PADDING_MEDIUM,
-  paddingBlock = PADDING_EXTRA_SMALL,
+  paddingBlock = PADDING_MEDIUM,
   paddingInline = PADDING_SMALL,
 }: BaseBoxProps) {
+
   return (
     <>
-      {onPress ? (
-        <TouchableHighlight
-          onPress={onPress}
+      {onPress || href ? (
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={href ? () => router.navigate(href) : onPress}
           style={[
             {
               backgroundColor: AccentColor.darkblue,
@@ -37,10 +52,9 @@ export default function BaseBox({
             },
             style,
           ]}
-          // activeOpacity={0.7}
         >
           <View>{children}</View>
-        </TouchableHighlight>
+        </TouchableOpacity>
       ) : (
         <View
           style={[

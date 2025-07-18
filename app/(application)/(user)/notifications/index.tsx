@@ -11,18 +11,18 @@ import { useState } from "react";
 import { View } from "react-native";
 
 const categories = [
-  { id: 1, label: "Semua" },
-  { id: 2, label: "Event" },
-  { id: 3, label: "Job" },
-  { id: 4, label: "Voting" },
-  { id: 5, label: "Donasi" },
-  { id: 6, label: "Investasi" },
-  { id: 7, label: "Forum" },
-  { id: 8, label: "Collaboration" },
+  { value: "all", label: "Semua" },
+  { value: "event", label: "Event" },
+  { value: "job", label: "Job" },
+  { value: "voting", label: "Voting" },
+  { value: "donasi", label: "Donasi" },
+  { value: "investasi", label: "Investasi" },
+  { value: "forum", label: "Forum" },
+  { value: "collaboration", label: "Collaboration" },
 ];
 
-const selectedCategory = (id: number) => {
-  const category = categories.find((c) => c.id === id);
+const selectedCategory = (value: string) => {
+  const category = categories.find((c) => c.value === value);
   return category?.label;
 };
 
@@ -31,7 +31,7 @@ const BoxNotification = ({
   activeCategory,
 }: {
   index: number;
-  activeCategory: number | null;
+  activeCategory: string | null;
 }) => {
   return (
     <>
@@ -39,13 +39,13 @@ const BoxNotification = ({
         onPress={() =>
           console.log(
             "Notification >",
-            selectedCategory(activeCategory as number)
+            selectedCategory(activeCategory as string)
           )
         }
       >
         <StackCustom>
           <TextCustom bold>
-            # {selectedCategory(activeCategory as number)}
+            # {selectedCategory(activeCategory as string)}
           </TextCustom>
 
           <View
@@ -81,38 +81,31 @@ const BoxNotification = ({
 };
 
 export default function Notifications() {
-  const [activeCategory, setActiveCategory] = useState<number | null>(1);
+  const [activeCategory, setActiveCategory] = useState<string | null>("all");
 
   const handlePress = (item: any) => {
-    setActiveCategory(item.id);
+    setActiveCategory(item.value);
     // tambahkan logika lain seperti filter dsb.
   };
   return (
     <ViewWrapper
       headerComponent={
         <ScrollableCustom
-          data={categories}
+          data={categories.map((e, i) => ({
+            id: i,
+            label: e.label,
+            value: e.value,
+          }))}
           onButtonPress={handlePress}
-          activeId={activeCategory as any}
+          activeId={activeCategory as string}
         />
       }
     >
       {Array.from({ length: 20 }).map((e, i) => (
         <View key={i}>
-          <BoxNotification index={i} activeCategory={activeCategory} />
+          <BoxNotification index={i} activeCategory={activeCategory as any} />
         </View>
       ))}
-
-      {/* Konten utama di sini */}
-      {/* <View style={{ flex: 1 }}>
-        <Text style={{ color: "white" }}>
-          {activeCategory
-            ? `Kategori Aktif: ${
-                categories.find((c) => c.id === activeCategory)?.label
-              }`
-            : "Pilih kategori"}
-        </Text>
-      </View> */}
     </ViewWrapper>
   );
 }

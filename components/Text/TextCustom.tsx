@@ -3,6 +3,7 @@ import {
   TEXT_SIZE_LARGE,
   TEXT_SIZE_MEDIUM,
   TEXT_SIZE_SMALL,
+  TEXT_SIZE_XLARGE,
 } from "@/constants/constans-value";
 import React from "react";
 import {
@@ -21,7 +22,7 @@ interface TextCustomProps {
   style?: StyleProp<TextStyle>;
   bold?: boolean;
   semiBold?: boolean;
-  size?: "default" | "large" | "small";
+  size?: "default" | "large" | "small" | "xlarge";
   color?: "default" | "yellow" | "red" | "gray" | "green" | "black"
   align?: TextAlign; // Prop untuk alignment
   truncate?: boolean | number;
@@ -51,6 +52,7 @@ const TextCustom: React.FC<TextCustomProps> = ({
 
     // Size
     if (size === "large") selectedStyles.push(styles.large);
+    else if (size === "xlarge") selectedStyles.push(styles.xlarge);
     else if (size === "small") selectedStyles.push(styles.small);
 
     // Color
@@ -113,11 +115,14 @@ export const styles = StyleSheet.create({
     fontFamily: "Poppins-SemiBold",
     fontWeight: "500",
   },
+  small: {
+    fontSize: TEXT_SIZE_SMALL,
+  },
   large: {
     fontSize: TEXT_SIZE_LARGE,
   },
-  small: {
-    fontSize: TEXT_SIZE_SMALL,
+  xlarge: {
+    fontSize: TEXT_SIZE_XLARGE,
   },
   yellow: {
     color: MainColor.yellow,

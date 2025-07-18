@@ -1,30 +1,151 @@
+import {
+  AvatarCustom,
+  BaseBox,
+  Grid,
+  StackCustom,
+  TextCustom,
+} from "@/components";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import FloatingButton from "@/components/Button/FloatingButton";
-import { AccentColor, MainColor } from "@/constants/color-palet";
-import { GStyles } from "@/styles/global-styles";
 import { router } from "expo-router";
-import { Text, TouchableHighlight, View } from "react-native";
 
 export default function Event() {
+  const index = "test-id-event";
   return (
     <ViewWrapper
+      hideFooter
       floatingButton={
         <FloatingButton onPress={() => router.push("/event/create")} />
       }
     >
-      <TouchableHighlight onPress={() => router.push("/event/detail/1")}>
-        <View
-          style={{
-            padding: 20,
-            backgroundColor: MainColor.darkblue,
-            borderRadius: 10,
-            borderColor: AccentColor.blue,
-            borderWidth: 1,
-          }}
-        >
-          <Text style={GStyles.textLabel}>Event</Text>
-        </View>
-      </TouchableHighlight>
+      {/* {Array.from({ length: 10 }).map((_, index) => (
+        <BaseBox key={index}>
+          <StackCustom gap={"xs"}>
+            <Grid>
+              <Grid.Col span={2}>
+                <AvatarCustom href={`/profile/${index}`} />
+              </Grid.Col>
+              <Grid.Col span={10} style={{ justifyContent: "center" }}>
+                <TextCustom bold>Username</TextCustom>
+              </Grid.Col>
+            </Grid>
+            <TextCustom truncate bold>
+              Lorem ipsum dolor sit
+            </TextCustom>
+            <TextCustom truncate={2}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro sed
+              doloremque tempora soluta. Dolorem ex quidem ipsum tempora, ipsa,
+              obcaecati quia suscipit numquam, voluptates commodi porro impedit
+              natus quos doloremque!
+            </TextCustom>
+          </StackCustom>
+        </BaseBox>
+      ))} */}
+      <BaseBox>
+        <StackCustom gap={"xs"}>
+          <Grid>
+            <Grid.Col span={2}>
+              <AvatarCustom href={`/profile/${index}`} />
+            </Grid.Col>
+            <Grid.Col span={10} style={{ justifyContent: "center" }}>
+              <TextCustom bold>Username</TextCustom>
+            </Grid.Col>
+          </Grid>
+          <TextCustom truncate bold>
+            Lorem ipsum dolor sit
+          </TextCustom>
+          <TextCustom truncate={2}>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro sed
+            doloremque tempora soluta. Dolorem ex quidem ipsum tempora, ipsa,
+            obcaecati quia suscipit numquam, voluptates commodi porro impedit
+            natus quos doloremque!
+          </TextCustom>
+        </StackCustom>
+      </BaseBox>
+      <BaseBox>
+        <StackCustom gap={"xs"}>
+          <Grid>
+            <Grid.Col span={2}>
+              <AvatarCustom href={`/profile/${index}`} />
+            </Grid.Col>
+            <Grid.Col span={10} style={{ justifyContent: "center" }}>
+              <TextCustom bold>Username</TextCustom>
+            </Grid.Col>
+          </Grid>
+          <TextCustom truncate bold>
+            Lorem ipsum dolor sit
+          </TextCustom>
+          <TextCustom truncate={2}>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro sed
+            doloremque tempora soluta. Dolorem ex quidem ipsum tempora, ipsa,
+            obcaecati quia suscipit numquam, voluptates commodi porro impedit
+            natus quos doloremque!
+          </TextCustom>
+        </StackCustom>
+      </BaseBox>
+      <BaseBox>
+        <StackCustom gap={"xs"}>
+          <Grid>
+            <Grid.Col span={2}>
+              <AvatarCustom href={`/profile/${index}`} />
+            </Grid.Col>
+            <Grid.Col span={10} style={{ justifyContent: "center" }}>
+              <TextCustom bold>Username</TextCustom>
+            </Grid.Col>
+          </Grid>
+          <TextCustom truncate bold>
+            Lorem ipsum dolor sit
+          </TextCustom>
+          <TextCustom truncate={2}>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro sed
+            doloremque tempora soluta. Dolorem ex quidem ipsum tempora, ipsa,
+            obcaecati quia suscipit numquam, voluptates commodi porro impedit
+            natus quos doloremque!
+          </TextCustom>
+        </StackCustom>
+      </BaseBox>
+      <BaseBox>
+        <StackCustom gap={"xs"}>
+          <Grid>
+            <Grid.Col span={2}>
+              <AvatarCustom href={`/profile/${index}`} />
+            </Grid.Col>
+            <Grid.Col span={10} style={{ justifyContent: "center" }}>
+              <TextCustom bold>Username</TextCustom>
+            </Grid.Col>
+          </Grid>
+          <TextCustom truncate bold>
+            Lorem ipsum dolor sit
+          </TextCustom>
+          <TextCustom truncate={2}>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro sed
+            doloremque tempora soluta. Dolorem ex quidem ipsum tempora, ipsa,
+            obcaecati quia suscipit numquam, voluptates commodi porro impedit
+            natus quos doloremque!
+          </TextCustom>
+        </StackCustom>
+      </BaseBox>
+      <BaseBox>
+        <StackCustom gap={"xs"}>
+          <Grid>
+            <Grid.Col span={2}>
+              <AvatarCustom href={`/profile/${index}`} />
+            </Grid.Col>
+            <Grid.Col span={10} style={{ justifyContent: "center" }}>
+              <TextCustom bold>Username</TextCustom>
+            </Grid.Col>
+          </Grid>
+          <TextCustom truncate bold>
+            Lorem ipsum dolor sit
+          </TextCustom>
+          <TextCustom truncate={2}>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro sed
+            doloremque tempora soluta. Dolorem ex quidem ipsum tempora, ipsa,
+            obcaecati quia suscipit numquam, voluptates commodi porro impedit
+            natus quos doloremque!
+          </TextCustom>
+        </StackCustom>
+      </BaseBox>
     </ViewWrapper>
   );
 }

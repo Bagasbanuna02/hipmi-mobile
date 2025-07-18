@@ -20,8 +20,15 @@ interface ViewWrapperProps {
   headerComponent?: React.ReactNode;
   footerComponent?: React.ReactNode;
   floatingButton?: React.ReactNode;
+  hideFooter?: boolean;
   style?: StyleProp<ViewStyle>;
 }
+
+/**
+ * 
+ * @param hideFooter 
+ * @returns meneyembunyikan footer ketika menggunakan tabs (misal: bottom tab)
+ */
 
 const ViewWrapper = ({
   children,
@@ -29,6 +36,7 @@ const ViewWrapper = ({
   headerComponent,
   footerComponent,
   floatingButton,
+  hideFooter = false,
   style,
 }: ViewWrapperProps) => {
   const assetBackground = require("../../assets/images/main-background.png");
@@ -78,10 +86,12 @@ const ViewWrapper = ({
             {footerComponent}
           </SafeAreaView>
         ) : (
-          <SafeAreaView
-            edges={["bottom"]}
-            style={{ backgroundColor: MainColor.darkblue }}
-          />
+          hideFooter ? null : (
+            <SafeAreaView
+              edges={["bottom"]}
+              style={{ backgroundColor: MainColor.darkblue }}
+            />
+          )
         )}
 
         {/* Floating Component (misal: FAB) */}
