@@ -1,35 +1,28 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 // DateTimeInput.tsx
+import { MainColor } from "@/constants/color-palet";
+import { GStyles } from "@/styles/global-styles";
+import { Ionicons } from "@expo/vector-icons";
 import DateTimePicker, {
-  DateTimePickerEvent,
+    DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
+import dayjs from "dayjs";
 import React, { useState } from "react";
 import {
-  Button,
-  Platform,
-  Text,
-  TouchableOpacity,
-  View,
-  StyleProp,
-  ViewStyle,
+    StyleProp,
+    Text,
+    View,
+    ViewStyle
 } from "react-native";
-import ButtonCustom from "../Button/ButtonCustom";
-import TextCustom from "../Text/TextCustom";
-import dayjs from "dayjs";
-import TextInputCustom from "../TextInput/TextInputCustom";
-import { GStyles } from "@/styles/global-styles";
-import ButtonCenteredOnly from "../Button/ButtonCenteredOnly";
-import Spacing from "../_ShareComponent/Spacing";
-import Grid from "../Grid/GridCustom";
-import { Ionicons } from "@expo/vector-icons";
 import ClickableCustom from "../Clickable/ClickableCustom";
-import { AccentColor, MainColor } from "@/constants/color-palet";
+import TextCustom from "../Text/TextCustom";
 
 interface DateTimeInputProps {
   // Main
   value?: DateTimePickerEvent;
   mode?: "date" | "time";
   onChange: (selectedDate: DateTimePickerEvent) => void;
+  maximumDate?: Date;
+  minimumDate?: Date;
   // Main
   label?: string;
   required?: boolean;
@@ -42,11 +35,13 @@ interface DateTimeInputProps {
   containerStyle?: StyleProp<ViewStyle>;
 }
 
-const DateTimeInput: React.FC<DateTimeInputProps> = ({
+const DateTimeInput_IOS: React.FC<DateTimeInputProps> = ({
   // Main
   value,
   mode,
   onChange,
+  maximumDate,
+  minimumDate,
   // Main
   label,
   required,
@@ -153,7 +148,8 @@ const DateTimeInput: React.FC<DateTimeInputProps> = ({
               mode={"datetime"}
               display="inline"
               onChange={handleConfirm}
-              minimumDate={new Date(Date.now())} // 30 days from now
+              minimumDate={minimumDate}
+              maximumDate={maximumDate}
             />
           </View>
         </>
@@ -162,4 +158,4 @@ const DateTimeInput: React.FC<DateTimeInputProps> = ({
   );
 };
 
-export default DateTimeInput;
+export default DateTimeInput_IOS;

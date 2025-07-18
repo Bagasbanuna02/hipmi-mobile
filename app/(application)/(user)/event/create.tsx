@@ -1,40 +1,43 @@
-/* eslint-disable import/no-duplicates */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-  BoxButtonOnFooter,
-  ButtonCustom,
-  SelectCustom,
-  Spacing,
-  StackCustom,
-  TextAreaCustom,
-  TextCustom,
-  TextInputCustom,
-  ViewWrapper,
+    BoxButtonOnFooter,
+    ButtonCustom,
+    SelectCustom,
+    StackCustom,
+    TextAreaCustom,
+    TextInputCustom,
+    ViewWrapper,
 } from "@/components";
-import DateTimeInput from "@/components/DateInput/DateTimeIOS";
 import DateTimePickerCustom from "@/components/DateInput/DateTimePickerCustom";
 import { masterTypeEvent } from "@/lib/dummy-data/event/master-type-event";
 import { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import React, { useState } from "react";
-import { Platform, StyleSheet } from "react-native";
+import { Platform } from "react-native";
 
 export default function EventCreate() {
-  const [selectedDateIOS, setSelectedDateIOS] = useState<DateTimePickerEvent>();
-  const [selectDateAndroid, setSelectDateAndroid] = useState<Date>(new Date());
-  const [selectedTimeAndroid, setSelectedTimeAndroid] = useState<Date>(
-    new Date()
-  );
+  const [selectedDate, setSelectedDate] = useState<
+    Date | DateTimePickerEvent | null
+  >(null);
+
+  const [selectedEndDate, setSelectedEndDate] = useState<
+    Date | DateTimePickerEvent | null
+  >(null);
 
   const handlerSubmit = () => {
-    console.log("Simpan");
-    const combined = new Date(selectDateAndroid);
-    combined.setHours(selectedTimeAndroid.getHours());
-    combined.setMinutes(selectedTimeAndroid.getMinutes());
-    combined.setSeconds(selectedTimeAndroid.getSeconds());
-    combined.setMilliseconds(selectedTimeAndroid.getMilliseconds());
+    if (selectedDate) {
+      console.log("Tanggal yang dipilih:", selectedDate);
+      console.log(`ISO Format ${Platform.OS}:`, selectedDate.toString());
+      // Kirim ke API atau proses lanjutan
+    } else {
+      console.warn("Tanggal belum dipilih");
+    }
 
-    const newDate = Platform.OS === "ios" ? selectedDateIOS : combined;
-    console.log(`newDate ${Platform.OS} > `, newDate);
+    if (selectedEndDate) {
+      console.log("Tanggal yang dipilih:", selectedEndDate);
+      console.log(`ISO Format ${Platform.OS}:`, selectedEndDate.toString());
+      // Kirim ke API atau proses lanjutan
+    } else {
+      console.warn("Tanggal belum dipilih");
+    }
   };
 
   const buttonSubmit = (
@@ -43,39 +46,9 @@ export default function EventCreate() {
     </BoxButtonOnFooter>
   );
 
-  const time = () => {
-    return (
-      <>
-        {Platform.OS === "ios" ? (
-          <DateTimeInput
-            label="Tanggal Event"
-            value={selectedDateIOS}
-            onChange={(date: DateTimePickerEvent) => {
-              setSelectedDateIOS(date);
-            }}
-            required
-          />
-        ) : (
-          <DateTimePickerCustom
-            dateValue={selectDateAndroid}
-            timeValue={selectedTimeAndroid}
-            onChangeDate={(date: Date) => {
-              setSelectDateAndroid(date);
-            }}
-            onChangeTime={(time: Date) => {
-              setSelectedTimeAndroid(time);
-            }}
-          />
-        )}
-      </>
-    );
-  };
-
   return (
     <>
       <ViewWrapper footerComponent={buttonSubmit}>
-        <TextCustom>Test Datetime</TextCustom>
-
         <StackCustom gap={"xs"}>
           <TextInputCustom
             placeholder="Masukkan nama event"
@@ -94,7 +67,24 @@ export default function EventCreate() {
             required
           />
 
-          {time()}
+          <DateTimePickerCustom
+            label="Tanggal & Waktu Mulai"
+            required
+            onChange={(date: Date) => {
+              setSelectedDate(date as any);
+            }}
+            value={selectedDate as any}
+            minimumDate={new Date(Date.now())}
+          />
+
+          <DateTimePickerCustom
+            label="Tanggal & Waktu Berakhir"
+            required
+            onChange={(date: Date) => {
+              setSelectedEndDate(date as any);
+            }}
+            value={selectedEndDate as any}
+          />
 
           <TextAreaCustom
             label="Deskripsi"
@@ -108,11 +98,3 @@ export default function EventCreate() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    // padding: 20,
-  },
-});
