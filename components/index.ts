@@ -4,6 +4,7 @@ import AlertCustom from "./Alert/AlertCustom";
 import LeftButtonCustom from "./Button/BackButton";
 import ButtonCenteredOnly from "./Button/ButtonCenteredOnly";
 import ButtonCustom from "./Button/ButtonCustom";
+import DotButton from "./Button/DotButton";
 // Drawer
 import DrawerCustom from "./Drawer/DrawerCustom";
 import MenuDrawerDynamicGrid from "./Drawer/MenuDrawerDynamicGird";
@@ -48,11 +49,12 @@ export {
   // Box
   BaseBox,
   BoxButtonOnFooter,
-  ButtonCenteredOnly,
   InformationBox,
-  LeftButtonCustom as BackButton,
   // Button
+  ButtonCenteredOnly,
   ButtonCustom,
+  LeftButtonCustom as BackButton,
+  DotButton,
   // Drawer
   DrawerCustom,
   MenuDrawerDynamicGrid,

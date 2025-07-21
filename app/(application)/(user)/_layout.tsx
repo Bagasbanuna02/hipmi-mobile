@@ -92,6 +92,14 @@ export default function UserLayout() {
           }}
         />
 
+        <Stack.Screen
+          name="event/[id]/edit"
+          options={{
+            title: "Edit Event",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
         {/* ========== Forum Section ========= */}
         <Stack.Screen
           name="forum/create"
