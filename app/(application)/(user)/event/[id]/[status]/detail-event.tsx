@@ -4,14 +4,16 @@ import {
   DrawerCustom,
   Grid,
   MenuDrawerDynamicGrid,
+  Spacing,
   StackCustom,
   TextCustom,
-  ViewWrapper,
+  ViewWrapper
 } from "@/components";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import LeftButtonCustom from "@/components/Button/BackButton";
 import { AccentColor } from "@/constants/color-palet";
 import { ICON_SIZE_MEDIUM } from "@/constants/constans-value";
+import Event_AlertButtonStatusSection from "@/screens/Event/AlertButtonStatusSection";
 import Event_ButtonStatusSection from "@/screens/Event/ButtonStatusSection";
 import { Ionicons } from "@expo/vector-icons";
 import { router, Stack, useLocalSearchParams } from "expo-router";
@@ -43,8 +45,10 @@ const listData = [
 ];
 
 export default function EventDetail() {
-  const { id, detail } = useLocalSearchParams();
+  const { id, status } = useLocalSearchParams();
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
 
   const handlePress = (item: IMenuDrawerItem) => {
     console.log("PATH >> ", item.path);
@@ -52,7 +56,7 @@ export default function EventDetail() {
     setOpenDrawer(false);
   };
 
-  const drawerItemsDraftEvent = [
+  const drawerMenuDraftEvent = ({ id }: { id: string }) => [
     {
       icon: (
         <Ionicons
@@ -70,10 +74,10 @@ export default function EventDetail() {
     <>
       <Stack.Screen
         options={{
-          title: `Detail ${detail === "publish" ? "" : detail}`,
+          title: `Detail ${status === "publish" ? "" : status}`,
           headerLeft: () => <LeftButtonCustom />,
           headerRight: () =>
-            detail === "draft" ? (
+            status === "draft" ? (
               <DotButton onPress={() => setOpenDrawer(true)} />
             ) : null,
         }}
@@ -82,7 +86,7 @@ export default function EventDetail() {
         <BaseBox>
           <StackCustom>
             <TextCustom bold align="center" size="xlarge">
-              Judul event {id}
+              Judul event {status}
             </TextCustom>
             {listData.map((item, index) => (
               <Grid key={index}>
@@ -96,9 +100,13 @@ export default function EventDetail() {
             ))}
           </StackCustom>
         </BaseBox>
+        <Event_ButtonStatusSection
+          status={status as string}
+          onOpenAlert={setOpenAlert}
+          onOpenDeleteAlert={setOpenDeleteAlert}
+        />
+        <Spacing />
       </ViewWrapper>
-
-      {/* <Event_ButtonStatusSection detail={detail as string} /> */}
 
       <DrawerCustom
         isVisible={openDrawer}
@@ -106,11 +114,20 @@ export default function EventDetail() {
         height={250}
       >
         <MenuDrawerDynamicGrid
-          data={drawerItemsDraftEvent}
+          data={drawerMenuDraftEvent({ id: id as string })}
           columns={4}
           onPressItem={handlePress}
         />
       </DrawerCustom>
+
+      <Event_AlertButtonStatusSection
+        id={id as string}
+        status={status as string}
+        openAlert={openAlert}
+        setOpenAlert={setOpenAlert}
+        openDeleteAlert={openDeleteAlert}
+        setOpenDeleteAlert={setOpenDeleteAlert}
+      />
     </>
   );
 }
