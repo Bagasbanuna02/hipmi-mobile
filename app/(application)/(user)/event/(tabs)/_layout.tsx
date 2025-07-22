@@ -46,7 +46,7 @@ export default function EventLayout() {
         }}
       />
       <Tabs.Screen
-        name="kontribusi"
+        name="contribution"
         options={{
           title: "Kontribusi",
           tabBarIcon: ({ color }) => (
@@ -55,7 +55,7 @@ export default function EventLayout() {
         }}
       />
       <Tabs.Screen
-        name="riwayat"
+        name="history"
         options={{
           title: "Riwayat",
           tabBarIcon: ({ color }) => (
