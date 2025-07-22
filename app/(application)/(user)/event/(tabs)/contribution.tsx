@@ -8,7 +8,7 @@ import {
   ViewWrapper,
 } from "@/components";
 
-export default function Kontribusi() {
+export default function EventContribution() {
   return (
     <ViewWrapper hideFooter>
       {Array.from({ length: 10 }).map((_, index) => (

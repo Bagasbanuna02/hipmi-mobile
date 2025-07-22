@@ -9,7 +9,7 @@ import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { masterStatus } from "@/lib/dummy-data/_master/status";
 import { useState } from "react";
 
-export default function Status() {
+export default function EventStatus() {
   const id = "test-id-event";
 
   const [activeCategory, setActiveCategory] = useState<string | null>(

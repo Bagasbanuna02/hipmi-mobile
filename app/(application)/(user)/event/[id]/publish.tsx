@@ -14,7 +14,7 @@ import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { Alert } from "react-native";
 
-export default function EventPublish() {
+export default function EventDetailPublish() {
   const { id } = useLocalSearchParams();
   const [openDrawer, setOpenDrawer] = useState(false);
 

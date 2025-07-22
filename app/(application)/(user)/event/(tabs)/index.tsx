@@ -3,7 +3,7 @@ import FloatingButton from "@/components/Button/FloatingButton";
 import Event_BoxPublishSection from "@/screens/Event/BoxPublishSection";
 import { router } from "expo-router";
 
-export default function Event() {
+export default function EventBeranda() {
   return (
     <ViewWrapper
       hideFooter

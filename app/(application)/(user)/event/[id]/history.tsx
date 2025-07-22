@@ -12,7 +12,7 @@ import { menuDrawerPublishEvent } from "@/screens/Event/menuDrawerPublish";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 
-export default function EventDetailContribution() {
+export default function EventDetailHistory() {
   const { id } = useLocalSearchParams();
   const [openDrawer, setOpenDrawer] = useState(false);
 
@@ -26,7 +26,7 @@ export default function EventDetailContribution() {
     <>
       <Stack.Screen
         options={{
-          title: `Detail kontribusi`,
+          title: `Detail riwayat`,
           headerLeft: () => <LeftButtonCustom />,
           headerRight: () => <DotButton onPress={() => setOpenDrawer(true)} />,
         }}
