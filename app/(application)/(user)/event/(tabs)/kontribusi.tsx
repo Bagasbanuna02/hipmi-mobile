@@ -5,14 +5,14 @@ import {
   Grid,
   StackCustom,
   TextCustom,
-  ViewWrapper
+  ViewWrapper,
 } from "@/components";
 
 export default function Kontribusi() {
   return (
-    <ViewWrapper>
+    <ViewWrapper hideFooter>
       {Array.from({ length: 10 }).map((_, index) => (
-        <BaseBox key={index} href={`/event/${index}/publish/detail-event`}>
+        <BaseBox key={index} href={`/event/${index}/contribution`}>
           <StackCustom>
             <AvatarUsernameAndOtherComponent
               avatarHref={`/profile/${index}`}

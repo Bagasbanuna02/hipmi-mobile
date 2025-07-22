@@ -100,6 +100,14 @@ export default function UserLayout() {
           }}
         />
 
+        <Stack.Screen
+          name="event/[id]/list-of-participants"
+          options={{
+            title: "Daftar peserta",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
         {/* ========== Forum Section ========= */}
         <Stack.Screen
           name="forum/create"
