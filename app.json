@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "hipmi-mobile",
+    "name": "HIPMI BADUNG",
     "slug": "hipmi-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -38,7 +38,16 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
+          "recordAudioAndroid": true
+        }
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
