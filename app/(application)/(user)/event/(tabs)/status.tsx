@@ -1,9 +1,9 @@
 import {
-  BaseBox,
+  BoxWithHeaderSection,
   Grid,
   ScrollableCustom,
   StackCustom,
-  TextCustom,
+  TextCustom
 } from "@/components";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { masterStatus } from "@/lib/dummy-data/_master/status";
@@ -35,7 +35,7 @@ export default function EventStatus() {
 
   return (
     <ViewWrapper headerComponent={scrollComponent}>
-      <BaseBox href={`/event/${id}/${activeCategory}/detail-event`}>
+      <BoxWithHeaderSection href={`/event/${id}/${activeCategory}/detail-event`}>
         <StackCustom gap={"xs"}>
           <Grid>
             <Grid.Col span={8}>
@@ -57,7 +57,7 @@ export default function EventStatus() {
             dolore optio porro!
           </TextCustom>
         </StackCustom>
-      </BaseBox>
+      </BoxWithHeaderSection>
     </ViewWrapper>
   );
 }
