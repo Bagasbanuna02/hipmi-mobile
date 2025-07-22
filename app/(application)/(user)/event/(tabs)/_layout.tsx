@@ -30,7 +30,7 @@ export default function EventLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: "Beranda",
           tabBarIcon: ({ color }) => (
             <Ionicons size={20} name="home" color={color} />
           ),

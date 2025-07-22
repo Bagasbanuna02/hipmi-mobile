@@ -8,9 +8,6 @@ import DotButton from "./Button/DotButton";
 // Drawer
 import DrawerCustom from "./Drawer/DrawerCustom";
 import MenuDrawerDynamicGrid from "./Drawer/MenuDrawerDynamicGird";
-// ShareComponent
-import Spacing from "./_ShareComponent/Spacing";
-import ViewWrapper from "./_ShareComponent/ViewWrapper";
 // Text
 import TextCustom from "./Text/TextCustom";
 // TextInput
@@ -40,7 +37,10 @@ import CenterCustom from "./Center/CenterCustom";
 import ClickableCustom from "./Clickable/ClickableCustom";
 // Scroll
 import ScrollableCustom from "./Scroll/ScrollCustom";
-
+// ShareComponent
+import Spacing from "./_ShareComponent/Spacing";
+import ViewWrapper from "./_ShareComponent/ViewWrapper";
+import AvatarUsernameAndOtherComponent from "./_ShareComponent/AvataraAndOtherHeaderComponent";
 export {
   AlertCustom,
   // Image
@@ -84,4 +84,6 @@ export {
   ClickableCustom,
   // Scroll
   ScrollableCustom,
+  // ShareComponent
+  AvatarUsernameAndOtherComponent,
 };

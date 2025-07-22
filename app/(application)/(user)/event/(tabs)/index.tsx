@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-  AvatarCustom,
+  AvatarUsernameAndOtherComponent,
   BaseBox,
-  Grid,
   StackCustom,
   TextCustom,
 } from "@/components";
@@ -11,6 +11,7 @@ import { router } from "expo-router";
 
 export default function Event() {
   const index = "test-id-event";
+  const status = "publish";
   return (
     <ViewWrapper
       hideFooter
@@ -18,17 +19,13 @@ export default function Event() {
         <FloatingButton onPress={() => router.push("/event/create")} />
       }
     >
-      {/* {Array.from({ length: 10 }).map((_, index) => (
-        <BaseBox key={index}>
+      {Array.from({ length: 10 }).map((_, index) => (
+        <BaseBox key={index} href={`/event/${index}/${status}/detail-event`}>
           <StackCustom gap={"xs"}>
-            <Grid>
-              <Grid.Col span={2}>
-                <AvatarCustom href={`/profile/${index}`} />
-              </Grid.Col>
-              <Grid.Col span={10} style={{ justifyContent: "center" }}>
-                <TextCustom bold>Username</TextCustom>
-              </Grid.Col>
-            </Grid>
+            <AvatarUsernameAndOtherComponent
+              avatarHref={`/profile/${index}`}
+              name="Lorem ipsum dolor sit"
+            />
             <TextCustom truncate bold>
               Lorem ipsum dolor sit
             </TextCustom>
@@ -40,112 +37,7 @@ export default function Event() {
             </TextCustom>
           </StackCustom>
         </BaseBox>
-      ))} */}
-      <BaseBox>
-        <StackCustom gap={"xs"}>
-          <Grid>
-            <Grid.Col span={2}>
-              <AvatarCustom href={`/profile/${index}`} />
-            </Grid.Col>
-            <Grid.Col span={10} style={{ justifyContent: "center" }}>
-              <TextCustom bold>Username</TextCustom>
-            </Grid.Col>
-          </Grid>
-          <TextCustom truncate bold>
-            Lorem ipsum dolor sit
-          </TextCustom>
-          <TextCustom truncate={2}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro sed
-            doloremque tempora soluta. Dolorem ex quidem ipsum tempora, ipsa,
-            obcaecati quia suscipit numquam, voluptates commodi porro impedit
-            natus quos doloremque!
-          </TextCustom>
-        </StackCustom>
-      </BaseBox>
-      <BaseBox>
-        <StackCustom gap={"xs"}>
-          <Grid>
-            <Grid.Col span={2}>
-              <AvatarCustom href={`/profile/${index}`} />
-            </Grid.Col>
-            <Grid.Col span={10} style={{ justifyContent: "center" }}>
-              <TextCustom bold>Username</TextCustom>
-            </Grid.Col>
-          </Grid>
-          <TextCustom truncate bold>
-            Lorem ipsum dolor sit
-          </TextCustom>
-          <TextCustom truncate={2}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro sed
-            doloremque tempora soluta. Dolorem ex quidem ipsum tempora, ipsa,
-            obcaecati quia suscipit numquam, voluptates commodi porro impedit
-            natus quos doloremque!
-          </TextCustom>
-        </StackCustom>
-      </BaseBox>
-      <BaseBox>
-        <StackCustom gap={"xs"}>
-          <Grid>
-            <Grid.Col span={2}>
-              <AvatarCustom href={`/profile/${index}`} />
-            </Grid.Col>
-            <Grid.Col span={10} style={{ justifyContent: "center" }}>
-              <TextCustom bold>Username</TextCustom>
-            </Grid.Col>
-          </Grid>
-          <TextCustom truncate bold>
-            Lorem ipsum dolor sit
-          </TextCustom>
-          <TextCustom truncate={2}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro sed
-            doloremque tempora soluta. Dolorem ex quidem ipsum tempora, ipsa,
-            obcaecati quia suscipit numquam, voluptates commodi porro impedit
-            natus quos doloremque!
-          </TextCustom>
-        </StackCustom>
-      </BaseBox>
-      <BaseBox>
-        <StackCustom gap={"xs"}>
-          <Grid>
-            <Grid.Col span={2}>
-              <AvatarCustom href={`/profile/${index}`} />
-            </Grid.Col>
-            <Grid.Col span={10} style={{ justifyContent: "center" }}>
-              <TextCustom bold>Username</TextCustom>
-            </Grid.Col>
-          </Grid>
-          <TextCustom truncate bold>
-            Lorem ipsum dolor sit
-          </TextCustom>
-          <TextCustom truncate={2}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro sed
-            doloremque tempora soluta. Dolorem ex quidem ipsum tempora, ipsa,
-            obcaecati quia suscipit numquam, voluptates commodi porro impedit
-            natus quos doloremque!
-          </TextCustom>
-        </StackCustom>
-      </BaseBox>
-      <BaseBox>
-        <StackCustom gap={"xs"}>
-          <Grid>
-            <Grid.Col span={2}>
-              <AvatarCustom href={`/profile/${index}`} />
-            </Grid.Col>
-            <Grid.Col span={10} style={{ justifyContent: "center" }}>
-              <TextCustom bold>Username</TextCustom>
-            </Grid.Col>
-          </Grid>
-          <TextCustom truncate bold>
-            Lorem ipsum dolor sit
-          </TextCustom>
-          <TextCustom truncate={2}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro sed
-            doloremque tempora soluta. Dolorem ex quidem ipsum tempora, ipsa,
-            obcaecati quia suscipit numquam, voluptates commodi porro impedit
-            natus quos doloremque!
-          </TextCustom>
-        </StackCustom>
-      </BaseBox>
+      ))}
     </ViewWrapper>
   );
 }

@@ -7,42 +7,15 @@ import {
   Spacing,
   StackCustom,
   TextCustom,
-  ViewWrapper
+  ViewWrapper,
 } from "@/components";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import LeftButtonCustom from "@/components/Button/BackButton";
-import { AccentColor } from "@/constants/color-palet";
-import { ICON_SIZE_MEDIUM } from "@/constants/constans-value";
 import Event_AlertButtonStatusSection from "@/screens/Event/AlertButtonStatusSection";
 import Event_ButtonStatusSection from "@/screens/Event/ButtonStatusSection";
-import { Ionicons } from "@expo/vector-icons";
+import { menuDrawerDraftEvent } from "@/screens/Event/menuDrawerDraft";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
-
-const listData = [
-  {
-    title: "Lokasi",
-    value:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur eveniet ab eum ducimus tempore a quia deserunt quisquam. Tempora, atque. Aperiam minima asperiores dicta perferendis quis adipisci, dolore optio porro!",
-  },
-  {
-    title: "Tipe Acara",
-    value: "Workshop",
-  },
-  {
-    title: "Tanggal Mulai",
-    value: "Senin, 18 Juli 2025, 10:00 WIB",
-  },
-  {
-    title: "Tanggal Berakhir",
-    value: "Selasa, 19 Juli 2025, 12:00 WIB",
-  },
-  {
-    title: "Deskripsi",
-    value:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur eveniet ab eum ducimus tempore a quia deserunt quisquam. Tempora, atque. Aperiam minima asperiores dicta perferendis quis adipisci, dolore optio porro!",
-  },
-];
 
 export default function EventDetail() {
   const { id, status } = useLocalSearchParams();
@@ -55,20 +28,6 @@ export default function EventDetail() {
     router.navigate(item.path as any);
     setOpenDrawer(false);
   };
-
-  const drawerMenuDraftEvent = ({ id }: { id: string }) => [
-    {
-      icon: (
-        <Ionicons
-          name="create"
-          size={ICON_SIZE_MEDIUM}
-          color={AccentColor.white}
-        />
-      ),
-      label: "Edit event",
-      path: `/(application)/(user)/event/${id}/edit`,
-    },
-  ];
 
   return (
     <>
@@ -114,7 +73,7 @@ export default function EventDetail() {
         height={250}
       >
         <MenuDrawerDynamicGrid
-          data={drawerMenuDraftEvent({ id: id as string })}
+          data={menuDrawerDraftEvent({ id: id as string })}
           columns={4}
           onPressItem={handlePress}
         />
@@ -131,3 +90,28 @@ export default function EventDetail() {
     </>
   );
 }
+
+const listData = [
+  {
+    title: "Lokasi",
+    value:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur eveniet ab eum ducimus tempore a quia deserunt quisquam. Tempora, atque. Aperiam minima asperiores dicta perferendis quis adipisci, dolore optio porro!",
+  },
+  {
+    title: "Tipe Acara",
+    value: "Workshop",
+  },
+  {
+    title: "Tanggal Mulai",
+    value: "Senin, 18 Juli 2025, 10:00 WIB",
+  },
+  {
+    title: "Tanggal Berakhir",
+    value: "Selasa, 19 Juli 2025, 12:00 WIB",
+  },
+  {
+    title: "Deskripsi",
+    value:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur eveniet ab eum ducimus tempore a quia deserunt quisquam. Tempora, atque. Aperiam minima asperiores dicta perferendis quis adipisci, dolore optio porro!",
+  },
+];

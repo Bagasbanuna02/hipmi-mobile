@@ -1,0 +1,46 @@
+import { ImageSourcePropType, View } from "react-native";
+import Grid from "../Grid/GridCustom";
+import AvatarCustom from "../Image/AvatarCustom";
+import TextCustom from "../Text/TextCustom";
+
+const AvatarUsernameAndOtherComponent = ({
+  avatarHref,
+  avatar,
+  name,
+  rightComponent,
+}: {
+  avatarHref?: string;
+  avatar?: ImageSourcePropType;
+  name?: string;
+  rightComponent?: React.ReactNode;
+}) => {
+  return (
+    <>
+      <View>
+        <Grid containerStyle={{ zIndex: 10 }}>
+          <Grid.Col span={2}>
+            <AvatarCustom source={avatar} href={avatarHref as any} />
+          </Grid.Col>
+          <Grid.Col
+            span={rightComponent ? 6 : 10}
+            style={{ justifyContent: "center" }}
+          >
+            <TextCustom truncate bold>
+              {name || "Username"}
+            </TextCustom>
+          </Grid.Col>
+          {rightComponent && (
+            <Grid.Col
+              span={4}
+              style={{ alignItems: "flex-end", justifyContent: "center" }}
+            >
+              {rightComponent}
+            </Grid.Col>
+          )}
+        </Grid>
+      </View>
+    </>
+  );
+};
+
+export default AvatarUsernameAndOtherComponent;
