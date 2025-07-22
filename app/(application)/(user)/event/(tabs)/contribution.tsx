@@ -1,28 +1,25 @@
 import {
   AvatarCustom,
   AvatarUsernameAndOtherComponent,
-  BaseBox,
+  BoxWithHeaderSection,
   Grid,
   StackCustom,
   TextCustom,
   ViewWrapper
 } from "@/components";
+import React from "react";
 
-export default function Kontribusi() {
+export default function EventContribution() {
   return (
-    <ViewWrapper>
+    <ViewWrapper hideFooter>
       {Array.from({ length: 10 }).map((_, index) => (
-        <BaseBox key={index} href={`/event/${index}/publish/detail-event`}>
+        <BoxWithHeaderSection key={index} href={`/event/${index}/contribution`}>
           <StackCustom>
             <AvatarUsernameAndOtherComponent
               avatarHref={`/profile/${index}`}
               rightComponent={
                 <TextCustom truncate>
-                  {new Date().toDateString().split(" ")[2] +
-                    ", " +
-                    new Date().toDateString().split(" ")[1] +
-                    " " +
-                    new Date().toDateString().split(" ")[3]}
+                  {new Date().toLocaleDateString()}
                 </TextCustom>
               }
             />
@@ -39,7 +36,7 @@ export default function Kontribusi() {
               ))}
             </Grid>
           </StackCustom>
-        </BaseBox>
+        </BoxWithHeaderSection>
       ))}
     </ViewWrapper>
   );

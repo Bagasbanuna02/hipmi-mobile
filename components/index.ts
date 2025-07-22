@@ -19,6 +19,7 @@ import Grid from "./Grid/GridCustom";
 // Box
 import BaseBox from "./Box/BaseBox";
 import BoxButtonOnFooter from "./Box/BoxButtonOnFooter";
+import BoxWithHeaderSection from "./Box/BoxWithHeaderInformation";
 import InformationBox from "./Box/InformationBox";
 // Stack
 import StackCustom from "./Stack/StackCustom";
@@ -38,30 +39,35 @@ import ClickableCustom from "./Clickable/ClickableCustom";
 // Scroll
 import ScrollableCustom from "./Scroll/ScrollCustom";
 // ShareComponent
+import AvatarUsernameAndOtherComponent from "./_ShareComponent/AvataraAndOtherHeaderComponent";
 import Spacing from "./_ShareComponent/Spacing";
 import ViewWrapper from "./_ShareComponent/ViewWrapper";
-import AvatarUsernameAndOtherComponent from "./_ShareComponent/AvataraAndOtherHeaderComponent";
 export {
   AlertCustom,
   // Image
   AvatarCustom,
-  LandscapeFrameUploaded,
+  // ShareComponent
+  AvatarUsernameAndOtherComponent, LeftButtonCustom as BackButton,
   // Box
   BaseBox,
-  BoxButtonOnFooter,
-  InformationBox,
+  BoxButtonOnFooter, BoxWithHeaderSection,
   // Button
   ButtonCenteredOnly,
   ButtonCustom,
-  LeftButtonCustom as BackButton,
-  DotButton,
+  // Center
+  CenterCustom,
+  // Clickable
+  ClickableCustom,
+  // Divider
+  DividerCustom, DotButton,
   // Drawer
   DrawerCustom,
-  MenuDrawerDynamicGrid,
   // Grid
-  Grid,
+  Grid, InformationBox, LandscapeFrameUploaded,
   // Map
-  MapCustom,
+  MapCustom, MenuDrawerDynamicGrid,
+  // Scroll
+  ScrollableCustom,
   // Select
   SelectCustom,
   // ShareComponent
@@ -75,15 +81,6 @@ export {
   // TextInput
   TextInputCustom,
   // ViewWrapper
-  ViewWrapper,
-  // Divider
-  DividerCustom,
-  // Center
-  CenterCustom,
-  // Clickable
-  ClickableCustom,
-  // Scroll
-  ScrollableCustom,
-  // ShareComponent
-  AvatarUsernameAndOtherComponent,
+  ViewWrapper
 };
+

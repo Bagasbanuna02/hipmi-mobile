@@ -1,16 +1,14 @@
 import { AccentColor } from "@/constants/color-palet";
 import {
-  PADDING_EXTRA_SMALL,
   PADDING_MEDIUM,
-  PADDING_SMALL,
+  PADDING_SMALL
 } from "@/constants/constans-value";
 import { Href, router } from "expo-router";
 import {
   StyleProp,
-  TouchableHighlight,
   TouchableOpacity,
   View,
-  ViewStyle,
+  ViewStyle
 } from "react-native";
 
 interface BaseBoxProps {
@@ -20,6 +18,8 @@ interface BaseBoxProps {
   onPress?: () => void;
   marginBottom?: number;
   padding?: number;
+  paddingTop?: number;
+  paddingBottom?: number;
   paddingInline?: number;
   paddingBlock?: number;
 }
@@ -32,6 +32,8 @@ export default function BaseBox({
   marginBottom = PADDING_MEDIUM,
   paddingBlock = PADDING_MEDIUM,
   paddingInline = PADDING_SMALL,
+  paddingTop = PADDING_MEDIUM,
+  paddingBottom = PADDING_MEDIUM,
 }: BaseBoxProps) {
 
   return (
@@ -49,6 +51,8 @@ export default function BaseBox({
               marginBottom,
               paddingBlock,
               paddingInline,
+              paddingTop,
+              paddingBottom,
             },
             style,
           ]}

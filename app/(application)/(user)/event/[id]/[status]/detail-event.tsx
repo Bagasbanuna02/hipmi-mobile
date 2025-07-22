@@ -17,7 +17,7 @@ import { menuDrawerDraftEvent } from "@/screens/Event/menuDrawerDraft";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 
-export default function EventDetail() {
+export default function EventDetailStatus() {
   const { id, status } = useLocalSearchParams();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);

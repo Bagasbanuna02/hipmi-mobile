@@ -49,6 +49,9 @@ export default ScrollableCustom;
 
 const styles = StyleSheet.create({
   scrollView: {
+    backgroundColor: MainColor.soft_darkblue,
+    borderRadius: 50,
+    padding: 5,
     // maxHeight: 50,
   },
   buttonContainer: {

@@ -1,15 +1,15 @@
 import {
-    BoxButtonOnFooter,
-    ButtonCustom,
-    SelectCustom,
-    StackCustom,
-    TextAreaCustom,
-    TextInputCustom,
-    ViewWrapper,
+  ButtonCustom,
+  SelectCustom,
+  StackCustom,
+  TextAreaCustom,
+  TextInputCustom,
+  ViewWrapper,
 } from "@/components";
 import DateTimePickerCustom from "@/components/DateInput/DateTimePickerCustom";
 import { masterTypeEvent } from "@/lib/dummy-data/event/master-type-event";
 import { DateTimePickerEvent } from "@react-native-community/datetimepicker";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import { Platform } from "react-native";
 
@@ -23,25 +23,32 @@ export default function EventCreate() {
   >(null);
 
   const handlerSubmit = () => {
-    if (selectedDate) {
-      console.log("Tanggal yang dipilih:", selectedDate);
-      console.log(`ISO Format ${Platform.OS}:`, selectedDate.toString());
-      // Kirim ke API atau proses lanjutan
-    } else {
-      console.warn("Tanggal belum dipilih");
-    }
+    try {
+      if (selectedDate) {
+        console.log("Tanggal yang dipilih:", selectedDate);
+        console.log(`ISO Format ${Platform.OS}:`, selectedDate.toString());
+        // Kirim ke API atau proses lanjutan
+      } else {
+        console.log("Tanggal belum dipilih");
+      }
 
-    if (selectedEndDate) {
-      console.log("Tanggal yang dipilih:", selectedEndDate);
-      console.log(`ISO Format ${Platform.OS}:`, selectedEndDate.toString());
-      // Kirim ke API atau proses lanjutan
-    } else {
-      console.warn("Tanggal belum dipilih");
+      if (selectedEndDate) {
+        console.log("Tanggal yang dipilih:", selectedEndDate);
+        console.log(`ISO Format ${Platform.OS}:`, selectedEndDate.toString());
+        // Kirim ke API atau proses lanjutan
+      } else {
+        console.log("Tanggal berakhir belum dipilih");
+      }
+
+      console.log("Data berhasil disimpan");
+      router.navigate("/event/status");
+    } catch (error) {
+      console.log(error);
     }
   };
 
   const buttonSubmit = (
-      <ButtonCustom title="Simpan" onPress={handlerSubmit} />
+    <ButtonCustom title="Simpan" onPress={handlerSubmit} />
     // <BoxButtonOnFooter>
     // </BoxButtonOnFooter>
   );
@@ -96,7 +103,6 @@ export default function EventCreate() {
 
           {buttonSubmit}
         </StackCustom>
-
       </ViewWrapper>
     </>
   );

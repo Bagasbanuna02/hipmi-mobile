@@ -4,7 +4,7 @@ import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import { Platform, View } from "react-native";
 
-export default function EventLayout() {
+export default function EventTabsLayout() {
   return (
     <Tabs
       screenOptions={{
@@ -46,7 +46,7 @@ export default function EventLayout() {
         }}
       />
       <Tabs.Screen
-        name="kontribusi"
+        name="contribution"
         options={{
           title: "Kontribusi",
           tabBarIcon: ({ color }) => (
@@ -55,7 +55,7 @@ export default function EventLayout() {
         }}
       />
       <Tabs.Screen
-        name="riwayat"
+        name="history"
         options={{
           title: "Riwayat",
           tabBarIcon: ({ color }) => (

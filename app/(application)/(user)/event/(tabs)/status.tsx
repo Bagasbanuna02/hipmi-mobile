@@ -1,15 +1,15 @@
 import {
-  BaseBox,
+  BoxWithHeaderSection,
   Grid,
   ScrollableCustom,
   StackCustom,
-  TextCustom,
+  TextCustom
 } from "@/components";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { masterStatus } from "@/lib/dummy-data/_master/status";
 import { useState } from "react";
 
-export default function Status() {
+export default function EventStatus() {
   const id = "test-id-event";
 
   const [activeCategory, setActiveCategory] = useState<string | null>(
@@ -35,7 +35,7 @@ export default function Status() {
 
   return (
     <ViewWrapper headerComponent={scrollComponent}>
-      <BaseBox href={`/event/${id}/${activeCategory}/detail-event`}>
+      <BoxWithHeaderSection href={`/event/${id}/${activeCategory}/detail-event`}>
         <StackCustom gap={"xs"}>
           <Grid>
             <Grid.Col span={8}>
@@ -57,7 +57,7 @@ export default function Status() {
             dolore optio porro!
           </TextCustom>
         </StackCustom>
-      </BaseBox>
+      </BoxWithHeaderSection>
     </ViewWrapper>
   );
 }
