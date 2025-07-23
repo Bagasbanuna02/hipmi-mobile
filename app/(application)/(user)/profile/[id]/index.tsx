@@ -4,8 +4,8 @@ import LeftButtonCustom from "@/components/Button/BackButton";
 import DrawerCustom from "@/components/Drawer/DrawerCustom";
 import { MainColor } from "@/constants/color-palet";
 import { drawerItemsProfile } from "@/screens/Profile/ListPage";
-import Profile_MenuDrawerSection from "@/screens/Profile/MenuDrawerSection";
-import ProfilSection from "@/screens/Profile/ProfilSection";
+import Profile_MenuDrawerSection from "@/screens/Profile/menuDrawerSection";
+import ProfileSection from "@/screens/Profile/ProfileSection";
 import { GStyles } from "@/styles/global-styles";
 import { Ionicons } from "@expo/vector-icons";
 import { router, Stack, useLocalSearchParams } from "expo-router";
@@ -52,7 +52,7 @@ export default function Profile() {
             headerTitleStyle: GStyles.headerTitleStyle,
           }}
         />
-        <ProfilSection />
+        <ProfileSection />
       </ViewWrapper>
 
       {/* Drawer Komponen Eksternal */}

@@ -6,7 +6,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 import AvatarAndBackground from "./AvatarAndBackground";
 
-export default function ProfilSection() {
+export default function ProfileSection() {
   const { id } = useLocalSearchParams();
 
   const listData = [

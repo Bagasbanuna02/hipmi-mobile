@@ -4,12 +4,14 @@ import {
   StackCustom,
   TextCustom,
 } from "@/components";
+import { Href } from "expo-router";
 
 export default function Event_BoxPublishSection({
   id,
   title,
   username,
   description,
+  href,
 
   // Avatar
   sourceAvatar,
@@ -19,6 +21,7 @@ export default function Event_BoxPublishSection({
   title?: string;
   username?: string;
   description?: string;
+  href: Href;
 
   // Avatar
   sourceAvatar?: string;
@@ -26,7 +29,7 @@ export default function Event_BoxPublishSection({
 }) {
   return (
     <>
-      <BoxWithHeaderSection href={`/event/${id}/history`}>
+      <BoxWithHeaderSection href={href}>
         <StackCustom gap={"xs"}>
           <AvatarUsernameAndOtherComponent
             avatarHref={`/profile/${id}`}

@@ -56,10 +56,11 @@ export default function EventHistory() {
         <Event_BoxPublishSection
           key={index.toString()}
           id={index.toString()}
-          username={`Hisrory ${activeCategory === "main" ? "Saya" : "Semua"}`}
+          username={`Riwayat ${activeCategory === "main" ? "Saya" : "Semua"}`}
           rightComponentAvatar={
             <TextCustom>{new Date().toLocaleDateString()}</TextCustom>
           }
+          href={`/event/${index}/history`}
         />
       ))}
     </ViewWrapper>

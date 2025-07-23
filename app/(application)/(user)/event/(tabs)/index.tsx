@@ -12,7 +12,11 @@ export default function EventBeranda() {
       }
     >
       {Array.from({ length: 10 }).map((_, index) => (
-        <Event_BoxPublishSection key={index} id={index.toString()} />
+        <Event_BoxPublishSection
+          key={index}
+          id={index.toString()}
+          href={`/event/${index}/publish`}
+        />
       ))}
     </ViewWrapper>
   );
