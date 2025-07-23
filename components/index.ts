@@ -31,6 +31,7 @@ import SelectCustom from "./Select/SelectCustom";
 import AvatarCustom from "./Image/AvatarCustom";
 import LandscapeFrameUploaded from "./Image/LandscapeFrameUploaded";
 // Divider
+import Divider from "./Divider/Divider";
 import DividerCustom from "./Divider/DividerCustom";
 // Map
 import MapCustom from "./Map/MapCustom";
@@ -60,12 +61,14 @@ export {
   BoxButtonOnFooter,
   BoxWithHeaderSection, ButtonCenteredOnly,
   ButtonCustom,
+  DotButton,
   // Center
   CenterCustom,
   // Clickable
   ClickableCustom,
   // Divider
-  DividerCustom, DotButton,
+  Divider,
+  DividerCustom, 
   // Drawer
   DrawerCustom, FloatingButton,
   // Grid

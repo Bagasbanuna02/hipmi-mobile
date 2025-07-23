@@ -1,11 +1,9 @@
 import {
+  AvatarUsernameAndOtherComponent,
   BoxWithHeaderSection,
   StackCustom,
-  AvatarUsernameAndOtherComponent,
-  TextCustom,
-  BaseBox,
+  TextCustom
 } from "@/components";
-import { MainColor } from "@/constants/color-palet";
 import { Href } from "expo-router";
 
 function Collaboration_BoxPublishSection({
@@ -38,22 +36,21 @@ function Collaboration_BoxPublishSection({
             name={username || "Username"}
             rightComponent={rightComponentAvatar}
             avatar={sourceAvatar as any}
+            withBottomLine
           />
-          <BaseBox backgroundColor={MainColor.soft_darkblue}>
-            <StackCustom>
-              <TextCustom truncate={2} size="large" bold align="center">
-                {title || "Lorem ipsum dolor sit"}
-              </TextCustom>
-              <TextCustom truncate={2}>
-                {description ||
-                  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro sed doloremque tempora soluta. Dolorem ex quidem ipsum tempora, ipsa, obcaecati quia suscipit numquam, voluptates commodi porro impedit natus quos doloremque!"}
-              </TextCustom>
-            </StackCustom>
-          </BaseBox>
 
-          <TextCustom bold size="small" align="center">
+          <StackCustom>
+            <TextCustom truncate={2} size="large" bold align="center">
+              {title || "Lorem ipsum dolor sit"}
+            </TextCustom>
+            <TextCustom truncate={2}>
+              {description ||
+                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro sed doloremque tempora soluta. Dolorem ex quidem ipsum tempora, ipsa, obcaecati quia suscipit numquam, voluptates commodi porro impedit natus quos doloremque!"}
+            </TextCustom>
+            {/* <TextCustom bold size="small" >
             2 Partisipan
-          </TextCustom>
+          </TextCustom> */}
+          </StackCustom>
         </StackCustom>
       </BoxWithHeaderSection>
     </>
