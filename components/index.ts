@@ -5,6 +5,7 @@ import LeftButtonCustom from "./Button/BackButton";
 import ButtonCenteredOnly from "./Button/ButtonCenteredOnly";
 import ButtonCustom from "./Button/ButtonCustom";
 import DotButton from "./Button/DotButton";
+import FloatingButton from "./Button/FloatingButton";
 // Drawer
 import DrawerCustom from "./Drawer/DrawerCustom";
 import MenuDrawerDynamicGrid from "./Drawer/MenuDrawerDynamicGird";
@@ -42,36 +43,46 @@ import ScrollableCustom from "./Scroll/ScrollCustom";
 import AvatarUsernameAndOtherComponent from "./_ShareComponent/AvataraAndOtherHeaderComponent";
 import Spacing from "./_ShareComponent/Spacing";
 import ViewWrapper from "./_ShareComponent/ViewWrapper";
+import TabBarBackground from "./_ShareComponent/TabBarBackground";
+
 export {
   AlertCustom,
   // Image
   AvatarCustom,
   // ShareComponent
-  AvatarUsernameAndOtherComponent, LeftButtonCustom as BackButton,
+  AvatarUsernameAndOtherComponent,
   // Box
   BaseBox,
-  BoxButtonOnFooter, BoxWithHeaderSection,
+  BoxButtonOnFooter,
+  BoxWithHeaderSection,
   // Button
+  LeftButtonCustom as BackButton,
   ButtonCenteredOnly,
   ButtonCustom,
+  FloatingButton,
+  DotButton,
   // Center
   CenterCustom,
   // Clickable
   ClickableCustom,
   // Divider
-  DividerCustom, DotButton,
+  DividerCustom,
   // Drawer
   DrawerCustom,
   // Grid
-  Grid, InformationBox, LandscapeFrameUploaded,
+  Grid,
+  InformationBox,
+  LandscapeFrameUploaded,
   // Map
-  MapCustom, MenuDrawerDynamicGrid,
+  MapCustom,
+  MenuDrawerDynamicGrid,
   // Scroll
   ScrollableCustom,
   // Select
   SelectCustom,
   // ShareComponent
   Spacing,
+  TabBarBackground,
   // Stack
   StackCustom,
   // TextArea
@@ -81,6 +92,5 @@ export {
   // TextInput
   TextInputCustom,
   // ViewWrapper
-  ViewWrapper
+  ViewWrapper,
 };
-

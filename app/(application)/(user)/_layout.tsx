@@ -107,6 +107,25 @@ export default function UserLayout() {
             headerLeft: () => <BackButton />,
           }}
         />
+        {/* ========== End Event Section ========= */}
+
+        {/* ========== Collaboration Section ========= */}
+        <Stack.Screen
+          name="collaboration/(tabs)"
+          options={{
+            title: "Collaboration",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="collaboration/create"
+          options={{
+            title: "Tambah Proyek",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
+        {/* ========== End Collaboration Section ========= */}
 
         {/* ========== Forum Section ========= */}
         <Stack.Screen
@@ -127,7 +146,7 @@ export default function UserLayout() {
           name="forum/[id]/forumku"
           options={{
             title: "Forumku",
-            headerLeft: () => <BackButton icon={'close'} />,
+            headerLeft: () => <BackButton icon={"close"} />,
           }}
         />
         <Stack.Screen

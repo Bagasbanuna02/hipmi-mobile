@@ -1,10 +1,11 @@
-import { AccentColor } from "@/constants/color-palet";
+import { AccentColor, MainColor } from "@/constants/color-palet";
 import {
   PADDING_MEDIUM,
   PADDING_SMALL
 } from "@/constants/constans-value";
 import { Href, router } from "expo-router";
 import {
+  AccessibilityInfo,
   StyleProp,
   TouchableOpacity,
   View,
@@ -22,6 +23,7 @@ interface BaseBoxProps {
   paddingBottom?: number;
   paddingInline?: number;
   paddingBlock?: number;
+  backgroundColor?: string;
 }
 
 export default function BaseBox({
@@ -34,6 +36,7 @@ export default function BaseBox({
   paddingInline = PADDING_SMALL,
   paddingTop = PADDING_MEDIUM,
   paddingBottom = PADDING_MEDIUM,
+  backgroundColor = AccentColor.darkblue,
 }: BaseBoxProps) {
 
   return (
@@ -44,7 +47,7 @@ export default function BaseBox({
           onPress={href ? () => router.navigate(href) : onPress}
           style={[
             {
-              backgroundColor: AccentColor.darkblue,
+              backgroundColor,
               borderColor: AccentColor.blue,
               borderWidth: 1,
               borderRadius: 10,
@@ -63,7 +66,7 @@ export default function BaseBox({
         <View
           style={[
             {
-              backgroundColor: AccentColor.darkblue,
+              backgroundColor,
               borderColor: AccentColor.blue,
               borderWidth: 1,
               borderRadius: 10,

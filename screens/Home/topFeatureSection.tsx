@@ -14,7 +14,10 @@ export default function Home_FeatureSection() {
           <Ionicons name="analytics" size={48} color="white" />
           <Text style={stylesHome.gridLabel}>Event</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={stylesHome.gridItem}>
+        <TouchableOpacity
+          style={stylesHome.gridItem}
+          onPress={() => router.push("/(application)/(user)/collaboration/(tabs)")}
+        >
           <Ionicons name="share" size={48} color="white" />
           <Text style={stylesHome.gridLabel}>Collaboration</Text>
         </TouchableOpacity>
