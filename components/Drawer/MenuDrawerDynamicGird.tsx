@@ -2,13 +2,26 @@ import { AccentColor, MainColor } from "@/constants/color-palet";
 import { TEXT_SIZE_SMALL } from "@/constants/constans-value";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { IMenuDrawerItem } from "../_Interface/types";
+import { Href } from "expo-router";
 
-const MenuDrawerDynamicGrid = ({ data, columns = 3, onPressItem }: any) => {
+type IMenuDrawerItemProps = {
+    icon: React.ReactNode;
+    label: string;
+    path?: Href;
+    color?: string;
+}
+
+interface MenuDrawerDynamicGridProps {
+    data: IMenuDrawerItemProps[];
+    columns?: number;
+    onPressItem?: (item: IMenuDrawerItemProps) => void;
+}
+const MenuDrawerDynamicGrid = ({ data, columns = 4, onPressItem }: MenuDrawerDynamicGridProps) => {
   const numColumns = columns;
 
   return (
     <View style={styles.container}>
-      {data.map((item: IMenuDrawerItem, index: any) => (
+      {data.map((item: IMenuDrawerItemProps, index: any) => (
         <TouchableOpacity
           key={index}
           style={[styles.itemContainer, { flexBasis: `${100 / numColumns}%` }]}

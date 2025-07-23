@@ -114,13 +114,20 @@ export default function UserLayout() {
           name="collaboration/(tabs)"
           options={{
             title: "Collaboration",
-            headerLeft: () => <BackButton />,
+            headerLeft: () => <BackButton path="/home" />,
           }}
         />
         <Stack.Screen
           name="collaboration/create"
           options={{
             title: "Tambah Proyek",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="collaboration/[id]/list-of-participants"
+          options={{
+            title: "Daftar Partisipan",
             headerLeft: () => <BackButton />,
           }}
         />

@@ -12,7 +12,7 @@ export default function BoxWithHeaderSection({
 }) {
   return (
     <>
-      <BaseBox href={href} onPress={onPress} paddingTop={5}>
+      <BaseBox href={href} onPress={onPress} style={{ paddingTop: 5 }}>
         {children}
       </BaseBox>
     </>
