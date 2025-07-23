@@ -1,11 +1,10 @@
-import { AccentColor, MainColor } from "@/constants/color-palet";
+import { AccentColor } from "@/constants/color-palet";
 import {
   PADDING_MEDIUM,
   PADDING_SMALL
 } from "@/constants/constans-value";
 import { Href, router } from "expo-router";
 import {
-  AccessibilityInfo,
   StyleProp,
   TouchableOpacity,
   View,

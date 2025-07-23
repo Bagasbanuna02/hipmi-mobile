@@ -15,9 +15,9 @@ export default function CollaborationTabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="participans"
+        name="participant"
         options={{
-          title: "Participans",
+          title: "Partisipan",
           tabBarIcon: ({ color }) => (
             <Ionicons size={20} name="people" color={color} />
           ),
@@ -26,7 +26,7 @@ export default function CollaborationTabsLayout() {
       <Tabs.Screen
         name="group"
         options={{
-          title: "Group",
+          title: "Grup",
           tabBarIcon: ({ color }) => (
             <Ionicons size={20} name="chatbox-ellipses" color={color} />
           ),
