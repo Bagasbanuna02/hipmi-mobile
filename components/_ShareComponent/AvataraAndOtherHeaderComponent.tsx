@@ -19,7 +19,6 @@ const AvatarUsernameAndOtherComponent = ({
 }) => {
   return (
     <>
-      <View>
         <Grid containerStyle={{ zIndex: 10 }}>
           <Grid.Col span={2}>
             <AvatarCustom source={avatar} href={avatarHref as any} />
@@ -42,6 +41,7 @@ const AvatarUsernameAndOtherComponent = ({
           )}
         </Grid>
         {withBottomLine && <Divider marginTop={0} />}
+      <View>
       </View>
     </>
   );
