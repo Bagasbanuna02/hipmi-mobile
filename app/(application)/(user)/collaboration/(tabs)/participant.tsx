@@ -1,12 +1,14 @@
-import { ButtonCustom, Spacing, TextCustom } from "@/components";
+import { ButtonCustom, Spacing } from "@/components";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { AccentColor, MainColor } from "@/constants/color-palet";
-import Event_BoxPublishSection from "@/screens/Event/BoxPublishSection";
+import Collaboration_BoxPublishSection from "@/screens/Collaboration/BoxPublishSection";
 import { useState } from "react";
 import { View } from "react-native";
 
-export default function EventHistory() {
-  const [activeCategory, setActiveCategory] = useState<string | null>("all");
+export default function CollaborationParticipans() {
+  const [activeCategory, setActiveCategory] = useState<string | null>(
+    "participant"
+  );
 
   const handlePress = (item: any) => {
     setActiveCategory(item);
@@ -26,13 +28,15 @@ export default function EventHistory() {
     >
       <ButtonCustom
         backgroundColor={
-          activeCategory === "all" ? MainColor.yellow : AccentColor.blue
+          activeCategory === "participant" ? MainColor.yellow : AccentColor.blue
         }
-        textColor={activeCategory === "all" ? MainColor.black : MainColor.white}
+        textColor={
+          activeCategory === "participant" ? MainColor.black : MainColor.white
+        }
         style={{ width: "49%" }}
-        onPress={() => handlePress("all")}
+        onPress={() => handlePress("participant")}
       >
-        Semua Riwayat
+        Partisipasi Proyek
       </ButtonCustom>
       <Spacing width={"2%"} />
       <ButtonCustom
@@ -45,22 +49,27 @@ export default function EventHistory() {
         style={{ width: "49%" }}
         onPress={() => handlePress("main")}
       >
-        Riwayat Saya
+        Proyek Saya
       </ButtonCustom>
     </View>
   );
 
   return (
-    <ViewWrapper headerComponent={headerComponent} hideFooter>
+    <ViewWrapper hideFooter headerComponent={headerComponent}>
       {Array.from({ length: 10 }).map((_, index) => (
-        <Event_BoxPublishSection
+        <Collaboration_BoxPublishSection
           key={index.toString()}
           id={index.toString()}
-          username={`Riwayat ${activeCategory === "main" ? "Saya" : "Semua"}`}
-          rightComponentAvatar={
-            <TextCustom>{new Date().toLocaleDateString()}</TextCustom>
+          username={` ${
+            activeCategory === "participant"
+              ? "Partisipasi Proyek"
+              : "Proyek Saya"
+          }`}
+          href={
+            activeCategory === "participant"
+              ? `/collaboration/${index}/detail-participant`
+              : `/collaboration/${index}/detail-project-main`
           }
-          href={`/event/${index}/history`}
         />
       ))}
     </ViewWrapper>

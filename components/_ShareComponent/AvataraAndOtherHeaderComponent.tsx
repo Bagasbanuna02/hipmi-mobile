@@ -2,21 +2,23 @@ import { ImageSourcePropType, View } from "react-native";
 import Grid from "../Grid/GridCustom";
 import AvatarCustom from "../Image/AvatarCustom";
 import TextCustom from "../Text/TextCustom";
+import Divider from "../Divider/Divider"
 
 const AvatarUsernameAndOtherComponent = ({
   avatarHref,
   avatar,
   name,
   rightComponent,
+  withBottomLine = false,
 }: {
   avatarHref?: string;
   avatar?: ImageSourcePropType;
   name?: string;
   rightComponent?: React.ReactNode;
+  withBottomLine?: boolean;
 }) => {
   return (
     <>
-      <View>
         <Grid containerStyle={{ zIndex: 10 }}>
           <Grid.Col span={2}>
             <AvatarCustom source={avatar} href={avatarHref as any} />
@@ -38,6 +40,8 @@ const AvatarUsernameAndOtherComponent = ({
             </Grid.Col>
           )}
         </Grid>
+        {withBottomLine && <Divider marginTop={0} />}
+      <View>
       </View>
     </>
   );

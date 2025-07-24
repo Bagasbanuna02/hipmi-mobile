@@ -9,20 +9,20 @@ import {
 
 import { AccentColor, MainColor } from "@/constants/color-palet";
 import { DRAWER_HEIGHT } from "@/constants/constans-value";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface DrawerCustomProps {
   children?: React.ReactNode;
-  height?: number;
+  height?: number | "auto";
   isVisible: boolean;
   drawerAnim?: Animated.Value;
   closeDrawer: () => void;
   //   openLogoutAlert: () => void;
 }
 
-
 /**
- * 
- * @param drawerAnim 
+ *
+ * @param drawerAnim
  * @example   const drawerAnim = useRef(new Animated.Value(DRAWER_HEIGHT)).current; // mulai di luar bawah layar
  */
 export default function DrawerCustom({
@@ -34,7 +34,9 @@ export default function DrawerCustom({
 }: //   openLogoutAlert,
 DrawerCustomProps) {
   const drawerAnima = useRef(
-    new Animated.Value(height || DRAWER_HEIGHT)
+    new Animated.Value(
+      height === "auto" ? DRAWER_HEIGHT : height || DRAWER_HEIGHT
+    )
   ).current;
   // Efek untuk handle open/close drawer
   useEffect(() => {
@@ -46,7 +48,7 @@ DrawerCustomProps) {
       }).start();
     } else {
       Animated.timing(drawerAnima, {
-        toValue: height || DRAWER_HEIGHT,
+        toValue: height === "auto" ? DRAWER_HEIGHT : height || DRAWER_HEIGHT,
         duration: 300,
         useNativeDriver: true,
       }).start();
@@ -99,7 +101,7 @@ DrawerCustomProps) {
         style={[
           styles.drawer,
           {
-            height: height || DRAWER_HEIGHT,
+            height: height === "auto" ? "auto" : height || DRAWER_HEIGHT,
             transform: [{ translateY: drawerAnima }],
           },
         ]}
@@ -110,34 +112,7 @@ DrawerCustomProps) {
         />
 
         {children}
-
-        {/* <TouchableOpacity
-          style={styles.menuItem}
-          onPress={() => {
-            alert("Pilihan 1 diklik");
-            closeDrawer();
-          }}
-        >
-          <Text>Menu Item 1</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.menuItem}
-          onPress={() => {
-            alert("Pilihan 2 diklik");
-            closeDrawer();
-          }}
-        >
-          <Text>Menu Item 2</Text>
-        </TouchableOpacity>
-
-
-        <TouchableOpacity
-          style={styles.menuItem}
-          onPress={() => alert("Logout via Alert bawaan")}
-        >
-          <Text style={{ color: "red" }}>Keluar</Text>
-        </TouchableOpacity> */}
+        {height === "auto" && <SafeAreaView edges={["bottom"]} />}
       </Animated.View>
     </>
   );
