@@ -131,6 +131,21 @@ export default function UserLayout() {
             headerLeft: () => <BackButton />,
           }}
         />
+        <Stack.Screen
+          name="collaboration/[id]/detail-participant"
+          options={{
+            title: "Partisipasi Proyek",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
+        <Stack.Screen
+          name="collaboration/[id]/detail-project-main"
+          options={{
+            title: "Proyek Saya",
+            headerLeft: () => <BackButton />,
+          }}
+        />
 
         {/* ========== End Collaboration Section ========= */}
 

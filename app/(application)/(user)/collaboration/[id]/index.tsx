@@ -1,19 +1,14 @@
 import {
-    AlertDefaultSystem,
-    AvatarUsernameAndOtherComponent,
-    BackButton,
-    BoxWithHeaderSection,
-    ButtonCustom,
-    DotButton,
-    DrawerCustom,
-    Grid,
-    MenuDrawerDynamicGrid,
-    Spacing,
-    StackCustom,
-    TextAreaCustom,
-    TextCustom,
-    ViewWrapper
+  AlertDefaultSystem,
+  BackButton,
+  ButtonCustom,
+  DotButton,
+  DrawerCustom,
+  MenuDrawerDynamicGrid,
+  TextAreaCustom,
+  ViewWrapper,
 } from "@/components";
+import Collaboration_BoxDetailSection from "@/screens/Collaboration/BoxDetailSection";
 import { Ionicons } from "@expo/vector-icons";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
@@ -34,26 +29,7 @@ export default function CollaborationDetail() {
         }}
       />
       <ViewWrapper>
-        <BoxWithHeaderSection>
-          <AvatarUsernameAndOtherComponent />
-          <Spacing />
-          <StackCustom>
-            <TextCustom align="center" bold size="large">
-              Judul Proyek {id}
-            </TextCustom>
-            <Spacing height={0} />
-            {listData.map((item, index) => (
-              <Grid key={index}>
-                <Grid.Col span={4}>
-                  <TextCustom bold>{item.title}</TextCustom>
-                </Grid.Col>
-                <Grid.Col span={8}>
-                  <TextCustom>{item.value}</TextCustom>
-                </Grid.Col>
-              </Grid>
-            ))}
-          </StackCustom>
-        </BoxWithHeaderSection>
+        <Collaboration_BoxDetailSection id={id as string} />
 
         <ButtonCustom onPress={() => setOpenDrawerPartisipasi(true)}>
           Partisipasi
@@ -113,24 +89,3 @@ export default function CollaborationDetail() {
     </>
   );
 }
-
-const listData = [
-  {
-    title: "Industri",
-    value: "Pilihan Industri",
-  },
-  {
-    title: "Deskripsi",
-    value: "Deskripsi Proyek",
-  },
-  {
-    title: "Tujuan Proyek",
-    value:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  },
-  {
-    title: "Keuntungan Proyek",
-    value:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  },
-];
