@@ -37,6 +37,7 @@ export default function LoginView() {
     // router.navigate(`/(application)/(user)/portofolio/${id}`)
     // router.navigate(`/(application)/(image)/preview-image/${id}`);
     // router.replace("/(application)/(user)/event/(tabs)");
+    // router.replace("/(application)/coba");
   }
 
   return (

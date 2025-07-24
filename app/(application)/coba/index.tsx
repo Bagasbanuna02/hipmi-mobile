@@ -8,7 +8,9 @@ import {
   ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { router, Stack } from "expo-router";
+import EventDetailScreen from "./double-scroll";
+import LeftButtonCustom from "@/components/Button/BackButton";
 
 const { width } = Dimensions.get("window");
 
@@ -16,7 +18,9 @@ const { width } = Dimensions.get("window");
 const HomeScreen = () => (
   <View style={styles.screen}>
     <Text style={styles.screenTitle}>Selamat Datang!</Text>
-    <Text style={styles.screenText}>Ini adalah halaman utama aplikasi Anda</Text>
+    <Text style={styles.screenText}>
+      Ini adalah halaman utama aplikasi Anda
+    </Text>
   </View>
 );
 const SearchScreen = () => (
@@ -65,9 +69,7 @@ const CustomTab = ({ icon, label, isActive, onPress }: any) => (
 
 // Main Custom Tab Navigator
 const CustomTabNavigator = () => {
-  const [activeTab, setActiveTab] = React.useState(
-    'home'
-  );
+  const [activeTab, setActiveTab] = React.useState("home");
   const [showHome, setShowHome] = React.useState(true);
 
   const tabs = [
@@ -97,13 +99,12 @@ const CustomTabNavigator = () => {
     },
   ];
 
-  
   // Function untuk handle tab press
   const handleTabPress = (tabId: string) => {
     setActiveTab(tabId);
     setShowHome(false); // Hide home when any tab is pressed
   };
-  
+
   // Determine which component to show
   const getActiveComponent = () => {
     if (showHome || activeTab === "home") {
@@ -111,38 +112,46 @@ const CustomTabNavigator = () => {
     }
     // const selectedTab = tabs.find((tab) => tab.id === activeTab);
     // return selectedTab ? selectedTab.component : HomeScreen;
-    return HomeScreen
+    return HomeScreen;
   };
 
   const ActiveComponent = getActiveComponent();
 
   return (
-    <View style={styles.container}>
-      {/* Content Area */}
-      <ScrollView>
-        <View style={styles.content}>
-          <ActiveComponent />
-        </View>
-      </ScrollView>
+    <>
+      <Stack.Screen
+        options={{
+          title: "Custom Tab Navigator",
+        }}
+      />
+      <EventDetailScreen />
+    </>
+    // <View style={styles.container}>
+    //   {/* Content Area */}
+    //   <ScrollView>
+    //     <View style={styles.content}>
+    //       <ActiveComponent />
+    //     </View>
+    //   </ScrollView>
 
-      {/* Custom Tab Bar */}
-      <View style={styles.tabBar}>
-        <View style={styles.tabContainer}>
-          {tabs.map((e) => (
-            <CustomTab
-              key={e.id}
-              icon={activeTab === e.id ? e.activeIcon : e.icon}
-              label={e.label}
-              isActive={activeTab === e.id && !showHome}
-              onPress={() => {
-                handleTabPress(e.id);
-                router.push(e.path as any);
-              }}
-            />
-          ))}
-        </View>
-      </View>
-    </View>
+    //   {/* Custom Tab Bar */}
+    //   <View style={styles.tabBar}>
+    //     <View style={styles.tabContainer}>
+    //       {tabs.map((e) => (
+    //         <CustomTab
+    //           key={e.id}
+    //           icon={activeTab === e.id ? e.activeIcon : e.icon}
+    //           label={e.label}
+    //           isActive={activeTab === e.id && !showHome}
+    //           onPress={() => {
+    //             handleTabPress(e.id);
+    //             router.push(e.path as any);
+    //           }}
+    //         />
+    //       ))}
+    //     </View>
+    //   </View>
+    // </View>
   );
 };
 
