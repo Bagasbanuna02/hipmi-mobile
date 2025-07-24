@@ -11,8 +11,7 @@ export const checkboxStyles = (props: {
     container: {
       flexDirection: "row",
       alignItems: "flex-start",
-    //   marginBottom: 12,
-
+      //   marginBottom: 12,
     },
     innerContainer: {
       flexDirection: "row",

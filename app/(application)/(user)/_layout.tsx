@@ -140,12 +140,13 @@ export default function UserLayout() {
         />
 
         <Stack.Screen
-          name="collaboration/[id]/detail-project-main"
+          name="collaboration/[id]/edit"
           options={{
-            title: "Proyek Saya",
+            title: "Edit Proyek",
             headerLeft: () => <BackButton />,
           }}
         />
+
 
         {/* ========== End Collaboration Section ========= */}
 

@@ -8,7 +8,7 @@ import {
 } from "@/components";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import Collaboration_BoxDetailSection from "@/screens/Collaboration/BoxDetailSection";
-import { Feather, MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 
@@ -21,7 +21,6 @@ export default function CollaborationDetailParticipant() {
       <ViewWrapper>
         <Collaboration_BoxDetailSection id={id as string} />
         <BaseBox style={{ height: 500 }}>
-          <StackCustom>
             <TextCustom align="center" bold size="large">
               Partisipan
             </TextCustom>
@@ -40,7 +39,6 @@ export default function CollaborationDetailParticipant() {
                 }
               />
             ))}
-          </StackCustom>
         </BaseBox>
       </ViewWrapper>
 

@@ -1,61 +1,82 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Animated, Easing } from "react-native";
+import { AccentColor } from "@/constants/color-palet";
 import { MaterialIcons } from "@expo/vector-icons"; // Bisa diganti dengan ikon lain
+import React, { useContext } from "react";
+import { Animated, Text, TouchableOpacity, View } from "react-native";
 import { checkboxStyles } from "./checkbox-styles";
 
+// Context untuk Group
+interface CheckboxGroupContextType {
+  value: (string | number)[];
+  onChange: (value: (string | number)[]) => void;
+  disabled?: boolean;
+}
+
+const CheckboxGroupContext =
+  React.createContext<CheckboxGroupContextType | null>(null);
 
 // Tipe props
+// Tambahkan prop baru: groupValueKey
 interface CheckboxProps {
   label?: string;
   description?: string;
   error?: string;
-  value?: boolean;
+  value?: boolean; // controlled value (untuk standalone)
   onChange?: (checked: boolean) => void;
   disabled?: boolean;
-  size?: number; // ukuran checkbox (default: 20)
-  color?: string; // warna utama (default: '#3b82f6' - biru tailwind)
+  size?: number;
+  color?: string;
   style?: object;
   component?: React.ReactNode;
+  // Prop tambahan untuk Group
+  valueKey?: string | number; // nilai unik untuk identifikasi di group
 }
 
-export const CheckboxCustom: React.FC<CheckboxProps> = ({
+const CheckboxCustom: React.FC<CheckboxProps> = ({
   label,
   description,
   error,
   value: controlledValue,
   onChange,
-  disabled = false,
+  disabled: propDisabled,
   size = 20,
-  color = "#3b82f6",
+  color = AccentColor.softblue,
   style,
   component,
+  valueKey,
 }) => {
-  const [uncontrolledChecked, setUncontrolledChecked] = useState(false);
-  const isChecked = controlledValue ?? uncontrolledChecked;
+  //   const [uncontrolledChecked, setUncontrolledChecked] = useState(false);
+  //   const isChecked = controlledValue ?? uncontrolledChecked;
+  //   const scaleValue = new Animated.Value(isChecked ? 1 : 0);
+
+  const group = useContext(CheckboxGroupContext);
+  const isInsideGroup = !!group && valueKey !== undefined;
+
+  // Jika di dalam group, gunakan logika group
+  const isChecked = isInsideGroup
+    ? group.value.includes(valueKey!)
+    : controlledValue ?? false;
+
+  const disabled = propDisabled || (isInsideGroup && group.disabled);
+
   const scaleValue = new Animated.Value(isChecked ? 1 : 0);
 
   const toggle = () => {
     if (disabled) return;
 
-    const newValue = !isChecked;
-    if (onChange) onChange(newValue);
-    if (controlledValue === undefined) {
-      setUncontrolledChecked(newValue);
+    if (isInsideGroup) {
+      const newValue = isChecked
+        ? group.value.filter((v) => v !== valueKey)
+        : [...group.value, valueKey!];
+      group.onChange(newValue);
+    } else if (onChange) {
+      onChange(!controlledValue);
     }
-
-    // Animasi scale
-    Animated.spring(scaleValue, {
-      toValue: newValue ? 1 : 0,
-      friction: 7,
-      tension: 40,
-      useNativeDriver: true,
-    }).start();
   };
 
   const styles = checkboxStyles({
     size,
     color,
-    disabled,
+    disabled: disabled as boolean,
     error: !!error,
   });
 
@@ -106,4 +127,7 @@ export const CheckboxCustom: React.FC<CheckboxProps> = ({
   );
 };
 
-export default CheckboxCustom
+export default CheckboxCustom;
+
+// Export context agar bisa digunakan
+export { CheckboxGroupContext };

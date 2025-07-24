@@ -1,77 +1,90 @@
 import {
-  AvatarCustom,
-  AvatarUsernameAndOtherComponent,
-  BaseBox,
+  AlertDefaultSystem,
+  BackButton,
+  ButtonCustom,
+  DotButton,
   DrawerCustom,
-  Grid,
+  MenuDrawerDynamicGrid,
+  Spacing,
   StackCustom,
   TextCustom,
-  ViewWrapper,
+  ViewWrapper
 } from "@/components";
-import CheckboxCustom from "@/components/Checkbox/CheckboxCustom";
-import { ICON_SIZE_SMALL } from "@/constants/constans-value";
+import { IconEdit } from "@/components/_Icon";
 import Collaboration_BoxDetailSection from "@/screens/Collaboration/BoxDetailSection";
-import { Feather, MaterialIcons } from "@expo/vector-icons";
-import { useLocalSearchParams } from "expo-router";
+import Collaboration_MainParticipanSelectedSection from "@/screens/Collaboration/ProjectMainSelectedSection";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
-import { View } from "react-native";
 
 export default function CollaborationDetailProjectMain() {
   const { id } = useLocalSearchParams();
+  const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerParticipant, setOpenDrawerParticipant] = useState(false);
-  const [agreed, setAgreed] = useState(false);
-  const [newsletter, setNewsletter] = useState(false);
+  const [selected, setSelected] = useState<(string | number)[]>([]);
+
+  const handleEdit = () => {
+    console.log("Edit collaboration");
+    router.push("/(application)/(user)/collaboration/(id)/edit");
+  };
 
   return (
     <>
+      <Stack.Screen
+        options={{
+          title: "Proyek Saya",
+          headerLeft: () => <BackButton />,
+          headerRight: () => <DotButton onPress={() => setOpenDrawer(true)} />,
+        }}
+      />
       <ViewWrapper>
         <Collaboration_BoxDetailSection id={id as string} />
-        <BaseBox style={{ height: 500 }}>
-          <StackCustom>
-            <TextCustom size="default" color="red" bold>
-              *{" "}
-              <TextCustom size="small" semiBold>
-                Pilih user yang akan menjadi tim proyek anda
-              </TextCustom>
-            </TextCustom>
+        <Collaboration_MainParticipanSelectedSection
+          selected={selected}
+          setSelected={setSelected}
+          setOpenDrawerParticipant={setOpenDrawerParticipant}
+        />
 
-            {Array.from({ length: 5 }).map((_, index) => (
-              <Grid key={index}>
-                <Grid.Col
-                  span={2}
-                  style={{ alignItems: "center", justifyContent: "center" }}
-                >
-                  <CheckboxCustom
-                    value={newsletter}
-                    onChange={() => {
-                      console.log("newsletter", newsletter);
-                      setNewsletter(!newsletter);
-                    }}
-                  />
-                </Grid.Col>
-                <Grid.Col span={2} style={{ alignItems: "center" }}>
-                  <AvatarCustom />
-                </Grid.Col>
-                <Grid.Col span={6} style={{ justifyContent: "center" }}>
-                  <TextCustom bold truncate>
-                    Username
-                  </TextCustom>
-                </Grid.Col>
-                <Grid.Col
-                  span={2}
-                  style={{ alignItems: "center", justifyContent: "center" }}
-                >
-                  <MaterialIcons
-                    name="notes"
-                    size={ICON_SIZE_SMALL}
-                    color="white"
-                  />
-                </Grid.Col>
-              </Grid>
-            ))}
-          </StackCustom>
-        </BaseBox>
+        <ButtonCustom
+          onPress={() => {
+            AlertDefaultSystem({
+              title: "Buat Grup",
+              message:
+                "Apakah anda yakin ingin membuat grup untuk proyek ini ?",
+              textLeft: "Tidak",
+              textRight: "Ya",
+              onPressLeft: () => {},
+              onPressRight: () => {
+                router.navigate(
+                  "/(application)/(user)/collaboration/(tabs)/group"
+                );
+                console.log("selected :", selected);
+              },
+            });
+          }}
+        >
+          Buat Grup
+        </ButtonCustom>
+        <Spacing />
       </ViewWrapper>
+
+      <DrawerCustom
+        isVisible={openDrawer}
+        closeDrawer={() => setOpenDrawer(false)}
+        height={"auto"}
+      >
+        <MenuDrawerDynamicGrid
+          data={[
+            {
+              label: "Edit",
+              path: "/(application)/(user)/collaboration/(tabs)/group",
+              icon: <IconEdit />,
+            },
+          ]}
+          onPressItem={(item) => {
+            handleEdit();
+          }}
+        />
+      </DrawerCustom>
 
       <DrawerCustom
         isVisible={openDrawerParticipant}

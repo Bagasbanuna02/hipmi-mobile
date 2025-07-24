@@ -7,6 +7,9 @@ import ButtonCenteredOnly from "./Button/ButtonCenteredOnly";
 import ButtonCustom from "./Button/ButtonCustom";
 import DotButton from "./Button/DotButton";
 import FloatingButton from "./Button/FloatingButton";
+// Checkbox
+import CheckboxCustom from "./Checkbox/CheckboxCustom";
+import CheckboxGroup from "./Checkbox/CheckboxGroup";
 // Drawer
 import DrawerCustom from "./Drawer/DrawerCustom";
 import MenuDrawerDynamicGrid from "./Drawer/MenuDrawerDynamicGird";
@@ -59,18 +62,23 @@ export {
   // Box
   BaseBox,
   BoxButtonOnFooter,
-  BoxWithHeaderSection, ButtonCenteredOnly,
+  BoxWithHeaderSection,
+  ButtonCenteredOnly,
   ButtonCustom,
   DotButton,
   // Center
   CenterCustom,
+  // Checkbox
+  CheckboxCustom,
+  CheckboxGroup,
   // Clickable
   ClickableCustom,
   // Divider
   Divider,
-  DividerCustom, 
+  DividerCustom,
   // Drawer
-  DrawerCustom, FloatingButton,
+  DrawerCustom,
+  FloatingButton,
   // Grid
   Grid,
   InformationBox,
@@ -85,7 +93,8 @@ export {
   // ShareComponent
   Spacing,
   // Stack
-  StackCustom, TabBarBackground,
+  StackCustom,
+  TabBarBackground,
   // TextArea
   TextAreaCustom,
   // Text
@@ -93,6 +102,5 @@ export {
   // TextInput
   TextInputCustom,
   // ViewWrapper
-  ViewWrapper
+  ViewWrapper,
 };
-
