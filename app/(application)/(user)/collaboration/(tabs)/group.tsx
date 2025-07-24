@@ -4,13 +4,19 @@ import { MainColor } from "@/constants/color-palet";
 import { Feather } from "@expo/vector-icons";
 
 export default function CollaborationGroup() {
+  
+
   return (
     <ViewWrapper hideFooter>
       {Array.from({ length: 10 }).map((_, index) => (
-        <BaseBox key={index} paddingBlock={5}>
+        <BaseBox
+          key={index}
+          paddingBlock={5}
+          href={`/collaboration/${index}/${generateProjectName()}/room-chat`}
+        >
           <Grid>
             <Grid.Col span={10}>
-              <TextCustom bold>Nama Grup</TextCustom>
+              <TextCustom bold>{generateProjectName()}</TextCustom>
               <TextCustom size="small">2 Anggota</TextCustom>
             </Grid.Col>
             <Grid.Col
@@ -24,4 +30,39 @@ export default function CollaborationGroup() {
       ))}
     </ViewWrapper>
   );
+}
+
+
+function generateProjectName() {
+  const adjectives = [
+    "Blue",
+    "Dark",
+    "Bright",
+    "Quantum",
+    "Silent",
+    "Cyber",
+    "Epic",
+    "Golden",
+    "Shadow",
+    "Rapid",
+  ];
+
+  const nouns = [
+    "Spark",
+    "Core",
+    "Orbit",
+    "Nest",
+    "Drive",
+    "Nova",
+    "Cloud",
+    "Blade",
+    "Matrix",
+    "Link",
+  ];
+
+  const randomAdjective =
+    adjectives[Math.floor(Math.random() * adjectives.length)];
+  const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
+
+  return randomAdjective + randomNoun;
 }
