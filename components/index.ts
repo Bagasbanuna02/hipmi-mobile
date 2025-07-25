@@ -49,6 +49,7 @@ import AvatarUsernameAndOtherComponent from "./_ShareComponent/AvataraAndOtherHe
 import Spacing from "./_ShareComponent/Spacing";
 import TabBarBackground from "./_ShareComponent/TabBarBackground";
 import ViewWrapper from "./_ShareComponent/ViewWrapper";
+import SearchInput from "./_ShareComponent/SearchInput";
 
 export {
   AlertCustom,
@@ -91,6 +92,7 @@ export {
   // Select
   SelectCustom,
   // ShareComponent
+  SearchInput,
   Spacing,
   // Stack
   StackCustom,
