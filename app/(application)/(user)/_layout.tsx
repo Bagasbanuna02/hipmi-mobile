@@ -162,6 +162,13 @@ export default function UserLayout() {
           name="job/(tabs)"
           options={{
             title: "Job Vacancy",
+            headerLeft: () => <BackButton path="/home" />,
+          }}
+        />
+        <Stack.Screen
+          name="job/[id]/index"
+          options={{
+            title: "Detail Lowongan Pekerjaan",
             headerLeft: () => <BackButton />,
           }}
         />

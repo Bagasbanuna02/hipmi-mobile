@@ -20,7 +20,7 @@ export default function JobBeranda() {
       headerComponent={<SearchInput placeholder="Cari pekerjaan" />}
     >
       {jobDataDummy.map((item, index) => (
-        <BoxWithHeaderSection key={index}>
+        <BoxWithHeaderSection key={index} onPress={() => router.push(`/job/${item.id}`)}>
           <AvatarUsernameAndOtherComponent avatarHref={`/profile/${item.id}`} />
           <Spacing />
           <TextCustom truncate={2} align="center" bold size="large">
