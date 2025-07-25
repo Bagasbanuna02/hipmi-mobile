@@ -3,9 +3,9 @@ import { jobDataDummy } from "@/screens/Job/listDataDummy";
 
 export default function JobArchive() {
   return (
-    <ViewWrapper>
+    <ViewWrapper hideFooter>
       {jobDataDummy.map((e, i) => (
-        <BaseBox key={i} paddingBlock={20}>
+        <BaseBox key={i} paddingTop={20} paddingBottom={20}>
           <TextCustom align="center" bold truncate size="large">
             {e.posisi}
           </TextCustom>

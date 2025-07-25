@@ -1,18 +1,16 @@
 import {
-  BaseBox,
   ButtonCustom,
   Spacing,
-  StackCustom,
-  TextCustom,
-  ViewWrapper,
+  ViewWrapper
 } from "@/components";
+import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
+import Job_BoxDetailSection from "@/screens/Job/BoxDetailSection";
 import { jobDataDummy } from "@/screens/Job/listDataDummy";
 import { Ionicons } from "@expo/vector-icons";
+import * as Clipboard from "expo-clipboard";
 import { useLocalSearchParams } from "expo-router";
 import { Alert, Linking } from "react-native";
-import * as Clipboard from "expo-clipboard";
-import { MainColor } from "@/constants/color-palet";
 
 export default function JobDetail() {
   const { id } = useLocalSearchParams();
@@ -34,7 +32,9 @@ export default function JobDetail() {
 
     return (
       <ButtonCustom
-        iconLeft={<Ionicons name="globe" size={ICON_SIZE_SMALL} color="white" />}
+        iconLeft={
+          <Ionicons name="globe" size={ICON_SIZE_SMALL} color="white" />
+        }
         onPress={openInBrowser}
         backgroundColor="green"
         textColor="white"
@@ -70,25 +70,9 @@ export default function JobDetail() {
 
   return (
     <ViewWrapper>
-      <BaseBox>
-        <StackCustom gap={"lg"}>
-          <TextCustom align="center" bold size="large">
-            {jobDetail?.posisi}
-          </TextCustom>
-
-          <StackCustom gap={"sm"}>
-            <TextCustom bold>Syarat & Ketentuan :</TextCustom>
-            <TextCustom>{jobDetail?.syaratKetentuan}</TextCustom>
-          </StackCustom>
-
-          <StackCustom gap={"sm"}>
-            <TextCustom bold>Deskripsi :</TextCustom>
-            <TextCustom>{jobDetail?.deskripsi}</TextCustom>
-          </StackCustom>
-        </StackCustom>
-      </BaseBox>
+      <Job_BoxDetailSection data={jobDetail}/>
       <OpenLinkButton />
-      <Spacing/>
+      <Spacing />
       <CopyLinkButton />
     </ViewWrapper>
   );

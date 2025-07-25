@@ -154,7 +154,7 @@ export default function UserLayout() {
         <Stack.Screen
           name="job/create"
           options={{
-            title: "Tambah Lowongan Pekerjaan",
+            title: "Tambah Job",
             headerLeft: () => <BackButton />,
           }}
         />
@@ -168,7 +168,14 @@ export default function UserLayout() {
         <Stack.Screen
           name="job/[id]/index"
           options={{
-            title: "Detail Lowongan Pekerjaan",
+            title: "Detail Job",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="job/[id]/edit"
+          options={{
+            title: "Edit Job",
             headerLeft: () => <BackButton />,
           }}
         />

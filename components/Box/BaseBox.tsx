@@ -72,6 +72,8 @@ export default function BaseBox({
               marginBottom,
               paddingBlock,
               paddingInline,
+              paddingTop,
+              paddingBottom,
             },
             style,
           ]}

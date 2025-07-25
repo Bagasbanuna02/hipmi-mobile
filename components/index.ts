@@ -50,6 +50,7 @@ import Spacing from "./_ShareComponent/Spacing";
 import TabBarBackground from "./_ShareComponent/TabBarBackground";
 import ViewWrapper from "./_ShareComponent/ViewWrapper";
 import SearchInput from "./_ShareComponent/SearchInput";
+import DummyLandscapeImage from "./_ShareComponent/DummyLandscapeImage";
 
 export {
   AlertCustom,
@@ -93,6 +94,7 @@ export {
   SelectCustom,
   // ShareComponent
   SearchInput,
+  DummyLandscapeImage,
   Spacing,
   // Stack
   StackCustom,

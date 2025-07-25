@@ -33,9 +33,15 @@ export default function JobStatus() {
   return (
     <ViewWrapper headerComponent={scrollComponent} hideFooter>
       {jobDataDummy.map((e, i) => (
-        <BaseBox key={i} paddingBlock={20}>
+        <BaseBox
+          key={i}
+          paddingTop={20}
+          paddingBottom={20}
+          href={`/job/${e.id}/${activeCategory}/detail`}
+          // onPress={() => console.log("pressed")}
+        >
           <TextCustom align="center" bold truncate size="large">
-            {activeCategory?.toUpperCase()} {e.posisi}
+            {e.posisi} {activeCategory?.toUpperCase()}
           </TextCustom>
         </BaseBox>
       ))}

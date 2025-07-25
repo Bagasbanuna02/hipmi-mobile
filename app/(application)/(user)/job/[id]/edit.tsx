@@ -11,17 +11,11 @@ import {
 } from "@/components";
 import { router } from "expo-router";
 
-export default function JobCreate() {
+export default function JobEdit() {
   const buttonSubmit = () => {
     return (
       <>
-        <ButtonCustom
-          onPress={() =>
-            router.replace("/(application)/(user)/job/(tabs)/status")
-          }
-        >
-          Simpan
-        </ButtonCustom>
+        <ButtonCustom onPress={() => router.back()}>Update</ButtonCustom>
         <Spacing />
       </>
     );

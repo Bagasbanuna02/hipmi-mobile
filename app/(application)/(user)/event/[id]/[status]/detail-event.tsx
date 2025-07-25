@@ -73,9 +73,9 @@ export default function EventDetailStatus() {
         height={250}
       >
         <MenuDrawerDynamicGrid
-          data={menuDrawerDraftEvent({ id: id as string })}
+          data={menuDrawerDraftEvent({ id: id as string }) as any}
           columns={4}
-          onPressItem={handlePress}
+          onPressItem={handlePress as any}
         />
       </DrawerCustom>
 
