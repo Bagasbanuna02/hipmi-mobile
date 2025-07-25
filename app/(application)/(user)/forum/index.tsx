@@ -3,16 +3,14 @@ import {
   AvatarCustom,
   BackButton,
   DrawerCustom,
-  TextInputCustom,
+  SearchInput,
   ViewWrapper,
 } from "@/components";
 import FloatingButton from "@/components/Button/FloatingButton";
 import { MainColor } from "@/constants/color-palet";
-import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import Forum_BoxDetailSection from "@/screens/Forum/DiscussionBoxSection";
 import { listDummyDiscussionForum } from "@/screens/Forum/list-data-dummy";
 import Forum_MenuDrawerBerandaSection from "@/screens/Forum/MenuDrawerSection.tsx/MenuBeranda";
-import { Ionicons } from "@expo/vector-icons";
 import { router, Stack } from "expo-router";
 import { useState } from "react";
 
@@ -34,20 +32,7 @@ export default function Forum() {
       />
 
       <ViewWrapper
-        headerComponent={
-          <TextInputCustom
-            iconLeft={
-              <Ionicons
-                name="search-outline"
-                size={ICON_SIZE_SMALL}
-                color={MainColor.placeholder}
-              />
-            }
-            placeholder="Cari topik forum..."
-            borderRadius={50}
-            containerStyle={{ marginBottom: 0 }}
-          />
-        }
+        headerComponent={<SearchInput placeholder="Cari topik diskusi" />}
         floatingButton={
           <FloatingButton
             onPress={() =>

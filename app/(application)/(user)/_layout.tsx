@@ -150,6 +150,38 @@ export default function UserLayout() {
 
         {/* ========== End Collaboration Section ========= */}
 
+        {/* ========== Job Section ========= */}
+        <Stack.Screen
+          name="job/create"
+          options={{
+            title: "Tambah Job",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="job/(tabs)"
+          options={{
+            title: "Job Vacancy",
+            headerLeft: () => <BackButton path="/home" />,
+          }}
+        />
+        <Stack.Screen
+          name="job/[id]/index"
+          options={{
+            title: "Detail Job",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="job/[id]/edit"
+          options={{
+            title: "Edit Job",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
+        {/* ========== End Job Section ========= */}
+
         {/* ========== Forum Section ========= */}
         <Stack.Screen
           name="forum/create"

@@ -1,3 +1,5 @@
 import IconEdit from "./IconEdit";
+import IconHome from "./IconHome";
+import IconStatus from "./IconStatus";
 
-export { IconEdit };
+export { IconEdit, IconHome, IconStatus };
