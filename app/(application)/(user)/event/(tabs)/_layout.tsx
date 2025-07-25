@@ -1,3 +1,4 @@
+import { IconHome, IconStatus } from "@/components/_Icon";
 import { TabsStyles } from "@/styles/tabs-styles";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
@@ -12,7 +13,7 @@ export default function EventTabsLayout() {
         options={{
           title: "Beranda",
           tabBarIcon: ({ color }) => (
-            <Ionicons size={20} name="home" color={color} />
+            <IconHome color={color}/>
           ),
         }}
       />
@@ -21,7 +22,7 @@ export default function EventTabsLayout() {
         options={{
           title: "Status",
           tabBarIcon: ({ color }) => (
-            <Ionicons size={20} name="list" color={color} />
+            <IconStatus color={color}/>
           ),
         }}
       />

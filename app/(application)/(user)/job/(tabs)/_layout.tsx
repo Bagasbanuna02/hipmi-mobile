@@ -1,9 +1,9 @@
-import { IconHome } from "@/components/_Icon";
+import { IconHome, IconStatus } from "@/components/_Icon";
 import { TabsStyles } from "@/styles/tabs-styles";
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 
-export default function CollaborationTabsLayout() {
+export default function JobTabsLayout() {
   return (
     <Tabs screenOptions={TabsStyles}>
       <Tabs.Screen
@@ -14,20 +14,18 @@ export default function CollaborationTabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="participant"
+        name="status"
         options={{
-          title: "Partisipan",
-          tabBarIcon: ({ color }) => (
-            <Ionicons size={20} name="people" color={color} />
-          ),
+          title: "Status",
+          tabBarIcon: ({ color }) => <IconStatus color={color} />,
         }}
       />
       <Tabs.Screen
-        name="group"
+        name="archive"
         options={{
-          title: "Grup",
+          title: "Arsip",
           tabBarIcon: ({ color }) => (
-            <Ionicons size={20} name="chatbox-ellipses" color={color} />
+            <Ionicons size={20} name="archive" color={color} />
           ),
         }}
       />
