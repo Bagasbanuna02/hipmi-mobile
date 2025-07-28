@@ -150,6 +150,38 @@ export default function UserLayout() {
 
         {/* ========== End Collaboration Section ========= */}
 
+        {/* ========== Voting Section ========= */}
+        <Stack.Screen
+          name="voting/create"
+          options={{
+            title: "Tambah Voting",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="voting/(tabs)"
+          options={{
+            title: "Voting",
+            headerLeft: () => <BackButton path="/home" />,
+          }}
+        />
+        <Stack.Screen
+          name="voting/[id]/edit"
+          options={{
+            title: "Edit Voting",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="voting/[id]/list-of-contributor"
+          options={{
+            title: "Daftar Kontributor",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
+        {/* ========== End Voting Section ========= */}
+
         {/* ========== Job Section ========= */}
         <Stack.Screen
           name="job/create"

@@ -315,4 +315,9 @@ export const GStyles = StyleSheet.create({
   },
 
   // =============== TEXT INPUT , TEXT AREA , SELECT =============== //
+
+  // =============== Alignment =============== //
+  alignSelfCenter: {
+    alignSelf: "center",
+  },
 });

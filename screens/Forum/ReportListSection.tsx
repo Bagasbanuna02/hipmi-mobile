@@ -1,8 +1,6 @@
-import { BaseBox, ButtonCustom, StackCustom, TextCustom } from "@/components";
+import { BaseBox, StackCustom, TextCustom } from "@/components";
 import { RadioCustom, RadioGroup } from "@/components/Radio/RadioCustom";
-import { MainColor } from "@/constants/color-palet";
 import { listDummyReportForum } from "@/lib/dummy-data/forum/report-list";
-import { router } from "expo-router";
 import { useState } from "react";
 import { View } from "react-native";
 

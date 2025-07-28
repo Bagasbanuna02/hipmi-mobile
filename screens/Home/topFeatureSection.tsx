@@ -16,12 +16,17 @@ export default function Home_FeatureSection() {
         </TouchableOpacity>
         <TouchableOpacity
           style={stylesHome.gridItem}
-          onPress={() => router.push("/(application)/(user)/collaboration/(tabs)")}
+          onPress={() =>
+            router.push("/(application)/(user)/collaboration/(tabs)")
+          }
         >
           <Ionicons name="share" size={48} color="white" />
           <Text style={stylesHome.gridLabel}>Collaboration</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={stylesHome.gridItem}>
+        <TouchableOpacity
+          style={stylesHome.gridItem}
+          onPress={() => router.push("/(application)/(user)/voting/(tabs)")}
+        >
           <Ionicons name="cube" size={48} color="white" />
           <Text style={stylesHome.gridLabel}>Voting</Text>
         </TouchableOpacity>

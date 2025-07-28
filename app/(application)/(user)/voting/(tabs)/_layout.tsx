@@ -1,13 +1,13 @@
 import {
-  IconContribution,
-  IconHistory,
-  IconHome,
-  IconStatus,
+    IconContribution,
+    IconHistory,
+    IconHome,
+    IconStatus,
 } from "@/components/_Icon";
 import { TabsStyles } from "@/styles/tabs-styles";
 import { Tabs } from "expo-router";
 
-export default function EventTabsLayout() {
+export default function VotingTabsLayout() {
   return (
     <Tabs screenOptions={TabsStyles}>
       <Tabs.Screen
