@@ -1,19 +1,16 @@
 import {
-    AlertDefaultSystem,
-    BackButton,
-    DotButton,
-    DrawerCustom,
-    MenuDrawerDynamicGrid,
-    Spacing,
-    ViewWrapper,
+  AlertDefaultSystem,
+  BackButton,
+  DotButton,
+  DrawerCustom,
+  MenuDrawerDynamicGrid,
+  Spacing,
+  ViewWrapper,
 } from "@/components";
-import { IconArchive, IconEdit } from "@/components/_Icon";
+import { IconArchive, IconContribution, IconEdit } from "@/components/_Icon";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
-import { MainColor } from "@/constants/color-palet";
-import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import { Voting_BoxDetailSection } from "@/screens/Voting/BoxDetailSection";
 import Voting_ButtonStatusSection from "@/screens/Voting/ButtonStatusSection";
-import { Ionicons } from "@expo/vector-icons";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 
@@ -44,7 +41,6 @@ export default function VotingDetailStatus() {
     router.navigate(item.path as any);
     setOpenDrawerPublish(false);
   };
-    
 
   return (
     <>
@@ -66,6 +62,7 @@ export default function VotingDetailStatus() {
         <Spacing />
       </ViewWrapper>
 
+      {/* ========= Draft Drawer ========= */}
       <DrawerCustom
         isVisible={openDrawerDraft}
         closeDrawer={() => setOpenDrawerDraft(false)}
@@ -84,6 +81,7 @@ export default function VotingDetailStatus() {
         />
       </DrawerCustom>
 
+      {/* ========= Publish Drawer ========= */}
       <DrawerCustom
         isVisible={openDrawerPublish}
         closeDrawer={() => setOpenDrawerPublish(false)}
@@ -92,13 +90,7 @@ export default function VotingDetailStatus() {
         <MenuDrawerDynamicGrid
           data={[
             {
-              icon: (
-                <Ionicons
-                  name="people"
-                  size={ICON_SIZE_SMALL}
-                  color={MainColor.white}
-                />
-              ),
+              icon: <IconContribution />,
               label: "Daftar Kontributor",
               path: `/voting/${id}/list-of-contributor`,
             },

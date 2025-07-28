@@ -6,7 +6,7 @@ export default function IconContribution({ color }: { color?: string }) {
     <>
       <Ionicons
         size={ICON_SIZE_SMALL}
-        name="extension-puzzle"
+        name="people"
         color={color || "white"}
       />
     </>
