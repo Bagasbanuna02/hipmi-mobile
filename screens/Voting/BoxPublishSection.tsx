@@ -9,20 +9,25 @@ import {
   CircleContainer,
 } from "@/components";
 import dayjs from "dayjs";
+import { Href } from "expo-router";
 
 export default function Voting_BoxPublishSection({
+  href,
+  id,
   bottomComponent,
 }: {
+  href?: Href
+  id?: string
   bottomComponent?: React.ReactNode;
 }) {
   return (
     <>
-      <BoxWithHeaderSection>
+      <BoxWithHeaderSection href={href}>
         <AvatarUsernameAndOtherComponent avatarHref="/profile/1" />
         <Spacing />
         <StackCustom>
           <TextCustom align="center" bold truncate size="large">
-            Voting Title Here
+            Voting Title {id}
           </TextCustom>
 
           <BadgeCustom
