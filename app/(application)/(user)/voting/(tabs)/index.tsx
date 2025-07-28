@@ -16,7 +16,7 @@ export default function VotingBeranda() {
       headerComponent={<SearchInput placeholder="Cari voting" />}
     >
       {Array.from({ length: 5 }).map((_, index) => (
-        <Voting_BoxPublishSection key={index} />
+        <Voting_BoxPublishSection key={index} href={`/voting/${index}`} />
       ))}
     </ViewWrapper>
   );

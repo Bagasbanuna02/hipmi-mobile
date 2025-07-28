@@ -39,18 +39,12 @@ export default function Voting_BoxPublishSection({
           </BadgeCustom>
 
           <Grid>
-            <Grid.Col span={3} style={{ alignItems: "center" }}>
-              <CircleContainer value={"10"} />
-            </Grid.Col>
-            <Grid.Col span={3} style={{ alignItems: "center" }}>
-              <CircleContainer value={"9"} />
-            </Grid.Col>
-            <Grid.Col span={3} style={{ alignItems: "center" }}>
-              <CircleContainer value={"10"} />
-            </Grid.Col>
-            <Grid.Col span={3} style={{ alignItems: "center" }}>
-              <CircleContainer value={"9"} />
-            </Grid.Col>
+            {Array.from({ length: 4 }).map((_, i) => (
+              <Grid.Col span={3} style={{ alignItems: "center" }} key={i}>
+                <CircleContainer value={9 % (i + 4)} />
+                <TextCustom size="small">Pilihan {i + 1}</TextCustom>
+              </Grid.Col>
+            ))}
           </Grid>
           {bottomComponent}
         </StackCustom>

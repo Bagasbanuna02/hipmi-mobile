@@ -4,7 +4,7 @@ import {
   ScrollableCustom,
   StackCustom,
   TextCustom,
-  ViewWrapper
+  ViewWrapper,
 } from "@/components";
 import { masterStatus } from "@/lib/dummy-data/_master/status";
 import dayjs from "dayjs";
@@ -39,8 +39,7 @@ export default function VotingStatus() {
           key={i}
           paddingTop={20}
           paddingBottom={20}
-          // href={`/job/${e.id}/${activeCategory}/detail`}
-          // onPress={() => console.log("pressed")}
+          href={`/voting/${i}/${activeCategory}/detail`}
         >
           <StackCustom>
             <TextCustom align="center" bold truncate size="large">

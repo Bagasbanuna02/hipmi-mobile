@@ -15,17 +15,17 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { TouchableOpacity } from "react-native";
 
-export default function VotingCreate() {
+export default function VotingEdit() {
   const buttonSubmit = () => {
     return (
       <>
         <BoxButtonOnFooter>
           <ButtonCustom
             onPress={() =>
-              router.replace("/(application)/(user)/voting/(tabs)/status")
+              router.back()
             }
           >
-            Simpan
+            Update
           </ButtonCustom>
         </BoxButtonOnFooter>
       </>
