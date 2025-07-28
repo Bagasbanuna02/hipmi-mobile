@@ -1,9 +1,23 @@
-import { TextCustom, ViewWrapper } from "@/components";
+import {
+  FloatingButton,
+  SearchInput,
+  ViewWrapper
+} from "@/components";
+import Voting_BoxPublishSection from "@/screens/Voting/BoxPublishSection";
+import { router } from "expo-router";
 
 export default function VotingBeranda() {
   return (
-    <ViewWrapper>
-      <TextCustom>Voting Beranda</TextCustom>
+    <ViewWrapper
+      hideFooter
+      floatingButton={
+        <FloatingButton onPress={() => router.push("/voting/create")} />
+      }
+      headerComponent={<SearchInput placeholder="Cari voting" />}
+    >
+      {Array.from({ length: 5 }).map((_, index) => (
+        <Voting_BoxPublishSection key={index} />
+      ))}
     </ViewWrapper>
   );
 }

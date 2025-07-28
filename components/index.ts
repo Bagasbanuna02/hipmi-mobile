@@ -7,6 +7,10 @@ import ButtonCenteredOnly from "./Button/ButtonCenteredOnly";
 import ButtonCustom from "./Button/ButtonCustom";
 import DotButton from "./Button/DotButton";
 import FloatingButton from "./Button/FloatingButton";
+// Badge
+import BadgeCustom from "./Badge/BadgeCustom";
+// Container
+import CircleContainer from "./Container/CircleContainer";
 // Checkbox
 import CheckboxCustom from "./Checkbox/CheckboxCustom";
 import CheckboxGroup from "./Checkbox/CheckboxGroup";
@@ -68,6 +72,8 @@ export {
   ButtonCenteredOnly,
   ButtonCustom,
   DotButton,
+  // Badge
+  BadgeCustom,
   // Center
   CenterCustom,
   // Checkbox
@@ -75,6 +81,8 @@ export {
   CheckboxGroup,
   // Clickable
   ClickableCustom,
+  // Container
+  CircleContainer,
   // Divider
   Divider,
   DividerCustom,

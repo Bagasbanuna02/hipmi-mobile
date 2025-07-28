@@ -165,14 +165,8 @@ export default function UserLayout() {
             headerLeft: () => <BackButton path="/home" />,
           }}
         />
+       
         {/* <Stack.Screen
-          name="voting/[id]/index"
-          options={{
-            title: "Detail Voting",
-            headerLeft: () => <BackButton />,
-          }}
-        />
-        <Stack.Screen
           name="voting/[id]/edit"
           options={{
             title: "Edit Voting",
