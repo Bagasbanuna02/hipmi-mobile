@@ -147,7 +147,6 @@ export default function UserLayout() {
           }}
         />
 
-
         {/* ========== End Collaboration Section ========= */}
 
         {/* ========== Voting Section ========= */}
@@ -181,6 +180,39 @@ export default function UserLayout() {
         />
 
         {/* ========== End Voting Section ========= */}
+
+        {/* ========== Crowdfunding Section ========= */}
+        <Stack.Screen
+          name="crowdfunding/index"
+          options={{
+            title: "Crowdfunding",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
+        {/* ========== End Crowdfunding Section ========= */}
+
+        {/* ========== Investment Section ========= */}
+        <Stack.Screen
+          name="investment/create"
+          options={{
+            title: "Tambah Investasi",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
+        {/* ========== End Investment Section ========= */}
+        
+        {/* ========== Donation Section ========= */}
+        <Stack.Screen
+          name="donation/create"
+          options={{
+            title: "Tambah Donasi",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
+        {/* ========== End Donation Section ========= */}
 
         {/* ========== Job Section ========= */}
         <Stack.Screen
