@@ -194,6 +194,13 @@ export default function UserLayout() {
 
         {/* ========== Investment Section ========= */}
         <Stack.Screen
+          name="investment/(tabs)"
+          options={{
+            title: "Investasi",
+            headerLeft: () => <BackButton path="/crowdfunding" />,
+          }}
+        />
+        <Stack.Screen
           name="investment/create"
           options={{
             title: "Tambah Investasi",
@@ -202,7 +209,7 @@ export default function UserLayout() {
         />
 
         {/* ========== End Investment Section ========= */}
-        
+
         {/* ========== Donation Section ========= */}
         <Stack.Screen
           name="donation/create"

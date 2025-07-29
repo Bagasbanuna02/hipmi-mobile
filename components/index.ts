@@ -55,6 +55,8 @@ import TabBarBackground from "./_ShareComponent/TabBarBackground";
 import ViewWrapper from "./_ShareComponent/ViewWrapper";
 import SearchInput from "./_ShareComponent/SearchInput";
 import DummyLandscapeImage from "./_ShareComponent/DummyLandscapeImage";
+// Progress
+import ProgressCustom from "./Progress/ProgressCustom";
 
 export {
   AlertCustom,
@@ -96,6 +98,8 @@ export {
   // Map
   MapCustom,
   MenuDrawerDynamicGrid,
+  // Progress
+  ProgressCustom,
   // Scroll
   ScrollableCustom,
   // Select

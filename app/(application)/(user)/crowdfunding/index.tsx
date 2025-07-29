@@ -15,7 +15,7 @@ export default function Crowdfunding() {
     {
       title: "Investasi",
       desc: "Buat investasi dan jual beli saham lebih mudah dengan pengguna lain.",
-      path: "investment/create",
+      path: "investment/(tabs)",
     },
     {
       title: "Donasi",
