@@ -22,7 +22,7 @@ export default function InvestmentBursa() {
       }
     >
       {Array.from({ length: 10 }).map((_, index) => (
-        <BaseBox key={index} paddingTop={7} paddingBottom={7}>
+        <BaseBox key={index} paddingTop={7} paddingBottom={7} href={`/investment/${index}`}>
           <Grid>
             <Grid.Col span={5}>
               <Image

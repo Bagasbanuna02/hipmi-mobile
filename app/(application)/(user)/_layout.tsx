@@ -207,6 +207,27 @@ export default function UserLayout() {
             headerLeft: () => <BackButton />,
           }}
         />
+        <Stack.Screen
+          name="investment/[id]/index"
+          options={{
+            title: "Detail Investasi",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="investment/[id]/list-of-document"
+          options={{
+            title: "Daftar Dokumen",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="investment/[id]/edit"
+          options={{
+            title: "Edit Investasi",
+            headerLeft: () => <BackButton />,
+          }}
+        />
 
         {/* ========== End Investment Section ========= */}
 
