@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 import {
   View,
@@ -11,6 +12,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { router, Stack } from "expo-router";
 import EventDetailScreen from "./double-scroll";
 import LeftButtonCustom from "@/components/Button/BackButton";
+import CustomUploadButton from "./upload-button";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const { width } = Dimensions.get("window");
 
@@ -117,14 +120,38 @@ const CustomTabNavigator = () => {
 
   const ActiveComponent = getActiveComponent();
 
+  const handleImageUpload = (file: any) => {
+    console.log("Gambar dipilih:", file);
+    // Upload ke server
+  };
+
+  const handlePdfOrPngUpload = (file: any) => {
+    console.log("PDF atau PNG dipilih:", file);
+  };
+
   return (
     <>
-      <Stack.Screen
-        options={{
-          title: "Custom Tab Navigator",
-        }}
-      />
-      <EventDetailScreen />
+      <SafeAreaView edges={["bottom"]} style={styles.container}>
+        <Stack.Screen
+          options={{
+            title: "Custom Tab Navigator",
+          }}
+        />
+        <EventDetailScreen />
+
+        <CustomUploadButton
+          allowedExtensions={["jpeg", "png"]}
+          buttonTitle="Unggah Gambar (JPEG/PNG)"
+          onFileSelected={handleImageUpload}
+        />
+
+        {/* Hanya PDF atau PNG */}
+        <CustomUploadButton
+          allowedExtensions={["pdf"]}
+          buttonTitle="Unggah PDF atau PNG"
+          onFileSelected={handlePdfOrPngUpload}
+        />
+      </SafeAreaView>
     </>
     // <View style={styles.container}>
     //   {/* Content Area */}
