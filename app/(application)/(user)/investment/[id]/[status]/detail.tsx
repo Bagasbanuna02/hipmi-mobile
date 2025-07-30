@@ -17,8 +17,14 @@ import {
 import { IconEdit } from "@/components/_Icon";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import { AccentColor, MainColor } from "@/constants/color-palet";
+import { ICON_SIZE_MEDIUM } from "@/constants/constans-value";
 import Investment_ButtonStatusSection from "@/screens/Invesment/ButtonStatusSection";
-import { FontAwesome6 } from "@expo/vector-icons";
+import {
+  AntDesign,
+  FontAwesome6,
+  Ionicons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import { useState } from "react";
@@ -78,6 +84,7 @@ export default function InvestmentDetailStatus() {
                 <BaseBox
                   backgroundColor={AccentColor.blue}
                   style={{ borderColor: AccentColor.softblue, borderWidth: 1 }}
+                  href={`/investment/${id}/prospektus/file`}
                 >
                   <StackCustom>
                     <TextCustom align="center">Prospektus</TextCustom>
@@ -127,8 +134,30 @@ export default function InvestmentDetailStatus() {
           data={[
             {
               icon: <IconEdit />,
-              label: "Edit",
+              label: "Edit Data",
               path: `/investment/${id}/edit`,
+            },
+            {
+              icon: (
+                <AntDesign
+                  name="edit"
+                  size={ICON_SIZE_MEDIUM}
+                  color={MainColor.white}
+                />
+              ),
+              label: "Edit Prospektus",
+              path: `/investment/${id}/edit-prospectus`,
+            },
+            {
+              icon: (
+                <MaterialIcons
+                  name="create"
+                  size={ICON_SIZE_MEDIUM}
+                  color={MainColor.white}
+                />
+              ),
+              label: "Update Dokumen",
+              path: `/investment/${id}/recap-of-document`,
             },
           ]}
           columns={4}
