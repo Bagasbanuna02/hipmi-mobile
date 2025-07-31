@@ -215,37 +215,39 @@ export default function UserLayout() {
           }}
         />
         <Stack.Screen
-          name="investment/[id]/list-of-document"
-          options={{
-            title: "Daftar Dokumen",
-            headerLeft: () => <BackButton />,
-          }}
-        />
-        <Stack.Screen
           name="investment/[id]/edit"
           options={{
             title: "Edit Investasi",
             headerLeft: () => <BackButton />,
           }}
         />
+
         <Stack.Screen
-          name="investment/[id]/add-document"
+          name="investment/[id]/edit-prospectus"
+          options={{
+            title: "Edit Prospektus",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
+        <Stack.Screen
+          name="investment/[id]/(document)/list-of-document"
+          options={{
+            title: "Daftar Dokumen",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="investment/[id]/(document)/add-document"
           options={{
             title: "Tambah Dokumen",
             headerLeft: () => <BackButton />,
           }}
         />
         <Stack.Screen
-          name="investment/[id]/edit-document"
+          name="investment/[id]/(document)/edit-document"
           options={{
             title: "Edit Dokumen",
-            headerLeft: () => <BackButton />,
-          }}
-        />
-        <Stack.Screen
-          name="investment/[id]/edit-prospectus"
-          options={{
-            title: "Edit Prospektus",
             headerLeft: () => <BackButton />,
           }}
         />

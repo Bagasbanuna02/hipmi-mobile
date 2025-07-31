@@ -32,13 +32,13 @@ export default function LoginView() {
 
     // router.navigate("/verification");
     // router.navigate(`/(application)/(user)/profile/${id}`);
-    // router.navigate("/(application)/(user)/home");
+    router.navigate("/(application)/(user)/home");
     // router.navigate(`/(application)/profile/${id}/edit`);
     // router.navigate(`/(application)/(user)/portofolio/${id}`)
     // router.navigate(`/(application)/(image)/preview-image/${id}`);
     // router.replace("/(application)/(user)/event/(tabs)");
     // router.replace("/(application)/coba");
-    router.navigate("/investment/(tabs)")
+    // router.navigate("/investment/(tabs)")
   }
 
   return (

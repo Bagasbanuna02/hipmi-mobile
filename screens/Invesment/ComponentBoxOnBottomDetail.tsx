@@ -21,7 +21,7 @@ export default function Invesment_ComponentBoxOnBottomDetail({
       {status === "publish" ? (
         <>
           <Grid>
-            <Grid.Col span={6} style={{ paddingInline: 5 }}>
+            <Grid.Col span={6} style={{ paddingInline: 5, marginBlock: 0 }}>
               <BaseBox
                 backgroundColor={AccentColor.blue}
                 style={{ borderColor: AccentColor.softblue, borderWidth: 1 }}
@@ -36,11 +36,11 @@ export default function Invesment_ComponentBoxOnBottomDetail({
               </BaseBox>
             </Grid.Col>
 
-            <Grid.Col span={6} style={{ paddingInline: 5 }}>
+            <Grid.Col span={6} style={{ paddingInline: 5, marginBlock: 0 }}>
               <BaseBox
                 backgroundColor={AccentColor.blue}
                 style={{ borderColor: AccentColor.softblue, borderWidth: 1 }}
-                href={`/investment/${id}/list-of-document`}
+                href={`/investment/${id}/(document)/list-of-document`}
               >
                 <StackCustom>
                   <TextCustom align="center">Dokumen</TextCustom>
@@ -53,7 +53,7 @@ export default function Invesment_ComponentBoxOnBottomDetail({
           </Grid>
 
           <Grid>
-            <Grid.Col span={6} style={{ paddingInline: 5 }}>
+            <Grid.Col span={6} style={{ paddingInline: 5, marginBlock: 0 }}>
               <BaseBox
                 backgroundColor={AccentColor.blue}
                 style={{ borderColor: AccentColor.softblue, borderWidth: 1 }}
@@ -72,7 +72,7 @@ export default function Invesment_ComponentBoxOnBottomDetail({
               </BaseBox>
             </Grid.Col>
 
-            <Grid.Col span={6} style={{ paddingInline: 5 }}>
+            <Grid.Col span={6} style={{ paddingInline: 5, marginBlock: 0 }}>
               <BaseBox
                 backgroundColor={AccentColor.blue}
                 style={{ borderColor: AccentColor.softblue, borderWidth: 1 }}
@@ -109,7 +109,7 @@ export default function Invesment_ComponentBoxOnBottomDetail({
             <BaseBox
               backgroundColor={AccentColor.blue}
               style={{ borderColor: AccentColor.softblue, borderWidth: 1 }}
-              href={`/investment/${id}/list-of-document`}
+              href={`/investment/${id}/(document)/list-of-document`}
             >
               <StackCustom>
                 <TextCustom align="center">Dokumen</TextCustom>

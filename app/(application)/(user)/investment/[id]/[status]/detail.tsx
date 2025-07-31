@@ -101,7 +101,7 @@ export default function InvestmentDetailStatus() {
                 />
               ),
               label: "Update Dokumen",
-              path: `/investment/${id}/recap-of-document`,
+              path: `/investment/${id}/(document)/recap-of-document`,
             },
           ]}
           columns={4}
@@ -120,7 +120,7 @@ export default function InvestmentDetailStatus() {
             {
               icon: <IconDocument />,
               label: "Update Dokumen",
-              path: `/investment/${id}/recap-of-document`,
+              path: `/investment/${id}/(document)/recap-of-document`,
             },
             {
               icon: <IconNews />,

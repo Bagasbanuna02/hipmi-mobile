@@ -37,7 +37,7 @@ export default function InvestmentDetail() {
   const bottomSection = (
     <Invesment_ComponentBoxOnBottomDetail
       id={id as string}
-      status={status as string}
+      status={'publish'}
     />
   );
 

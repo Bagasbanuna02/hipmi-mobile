@@ -75,7 +75,7 @@ export default function InvestmentRecapOfDocument() {
                 />
               ),
               label: "Tambah Dokumen",
-              path: `/investment/${id}/add-document`,
+              path: `/investment/${id}/(document)/add-document`,
             },
           ]}
           onPressItem={(item) => {
@@ -96,7 +96,7 @@ export default function InvestmentRecapOfDocument() {
             {
               icon: <IconEdit />,
               label: "Edit Dokumen",
-              path: `/investment/${id}/edit-document`,
+              path: `/investment/${id}/(document)/edit-document`,
             },
             {
               icon: (
