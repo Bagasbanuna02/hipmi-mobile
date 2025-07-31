@@ -258,6 +258,14 @@ export default function UserLayout() {
           }}
         />
 
+        <Stack.Screen
+          name="investment/[id]/investor"
+          options={{
+            title: "Investor",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
         {/* ========== End Investment Section ========= */}
 
         {/* ========== Donation Section ========= */}

@@ -8,7 +8,7 @@ import {
 } from "@/components";
 import { View } from "react-native";
 
-export default function BoxDetailDataSection({
+export default function Invesment_BoxDetailDataSection({
   title,
   data,
   bottomSection,
@@ -41,7 +41,7 @@ export default function BoxDetailDataSection({
               </Grid.Col>
             </Grid>
           ))}
-
+          <Spacing />
           {bottomSection}
         </StackCustom>
       </BaseBox>

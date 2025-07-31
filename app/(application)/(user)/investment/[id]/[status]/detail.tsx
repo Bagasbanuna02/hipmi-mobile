@@ -1,33 +1,27 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-  BackButton,
-  BaseBox,
-  CenterCustom,
-  DotButton,
-  DrawerCustom,
-  Grid,
-  MenuDrawerDynamicGrid,
-  ProgressCustom,
-  Spacing,
-  StackCustom,
-  TextCustom,
-  ViewWrapper,
+    BackButton,
+    BaseBox,
+    DotButton,
+    DrawerCustom,
+    MenuDrawerDynamicGrid,
+    ProgressCustom,
+    Spacing,
+    StackCustom,
+    TextCustom,
+    ViewWrapper
 } from "@/components";
-import {
-  IconDocument,
-  IconEdit,
-  IconNews,
-  IconProspectus,
-} from "@/components/_Icon";
+import { IconDocument, IconEdit, IconNews } from "@/components/_Icon";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
-import { AccentColor, MainColor } from "@/constants/color-palet";
+import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_MEDIUM } from "@/constants/constans-value";
 import {
-  listDataNotPublishInvesment,
-  listDataPublishInvesment,
+    listDataNotPublishInvesment,
+    listDataPublishInvesment,
 } from "@/lib/dummy-data/investment/dummy-data-not-publish";
-import BoxDetailDataSection from "@/screens/Invesment/BoxDetailDataSection";
+import Invesment_BoxDetailDataSection from "@/screens/Invesment/BoxDetailDataSection";
+import Investment_ButtonInvestasiSection from "@/screens/Invesment/ButtonInvestasiSection";
 import Investment_ButtonStatusSection from "@/screens/Invesment/ButtonStatusSection";
+import Invesment_ComponentBoxOnBottomDetail from "@/screens/Invesment/ComponentBoxOnBottomDetail";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
@@ -51,37 +45,10 @@ export default function InvestmentDetailStatus() {
   };
 
   const bottomSection = (
-    <Grid>
-      <Grid.Col span={6} style={{ paddingRight: 10 }}>
-        <BaseBox
-          backgroundColor={AccentColor.blue}
-          style={{ borderColor: AccentColor.softblue, borderWidth: 1 }}
-          href={`/investment/${id}/prospektus/file`}
-        >
-          <StackCustom>
-            <TextCustom align="center">Prospektus</TextCustom>
-            <CenterCustom>
-              <IconProspectus size={50} color={MainColor.white} />
-            </CenterCustom>
-          </StackCustom>
-        </BaseBox>
-      </Grid.Col>
-
-      <Grid.Col span={6} style={{ paddingLeft: 10 }}>
-        <BaseBox
-          backgroundColor={AccentColor.blue}
-          style={{ borderColor: AccentColor.softblue, borderWidth: 1 }}
-          href={`/investment/${id}/list-of-document`}
-        >
-          <StackCustom>
-            <TextCustom align="center">Dokumen</TextCustom>
-            <CenterCustom>
-              <IconDocument size={50} color={MainColor.white} />
-            </CenterCustom>
-          </StackCustom>
-        </BaseBox>
-      </Grid.Col>
-    </Grid>
+    <Invesment_ComponentBoxOnBottomDetail
+      id={id as string}
+      status={status as string}
+    />
   );
 
   return (
@@ -98,6 +65,7 @@ export default function InvestmentDetailStatus() {
             ) : null,
         }}
       />
+
       <ViewWrapper>
         <StackCustom gap={"sm"}>
           {status === "publish" && (
@@ -108,7 +76,7 @@ export default function InvestmentDetailStatus() {
               </StackCustom>
             </BaseBox>
           )}
-          <BoxDetailDataSection
+          <Invesment_BoxDetailDataSection
             data={
               status === "publish"
                 ? listDataPublishInvesment
@@ -117,8 +85,9 @@ export default function InvestmentDetailStatus() {
             bottomSection={bottomSection}
           />
           <Investment_ButtonStatusSection status={status as string} />
-          <Spacing />
+          <Investment_ButtonInvestasiSection isMine={false} />
         </StackCustom>
+        <Spacing />
       </ViewWrapper>
 
       {/* ========= Draft Drawer ========= */}
