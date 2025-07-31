@@ -320,4 +320,7 @@ export const GStyles = StyleSheet.create({
   alignSelfCenter: {
     alignSelf: "center",
   },
+  alignSelfFlexEnd: {
+    alignSelf: "flex-end",
+  },
 });

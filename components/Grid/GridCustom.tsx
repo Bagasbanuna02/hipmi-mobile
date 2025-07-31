@@ -90,7 +90,7 @@ const Col: React.FC<ColProps> = ({ children, span, style }) => {
     col: {
       flexBasis: `${(100 / columns) * colSpan}%`,
       paddingVertical: margin,
-    //   marginBottom: gap,
+      // marginBottom: gap,
       marginBlock: gap,
     },
   });

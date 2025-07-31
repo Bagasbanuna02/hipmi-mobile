@@ -7,7 +7,7 @@ import BaseBox from "./BaseBox";
 export default function InformationBox({ text }: { text: string }) {
   return (
     <>
-      <BaseBox>
+      <BaseBox paddingTop={5} paddingBottom={5}>
         <Grid>
           <Grid.Col
             span={2}

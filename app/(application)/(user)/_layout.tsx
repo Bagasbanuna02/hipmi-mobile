@@ -1,6 +1,7 @@
 import { BackButton } from "@/components";
 import LeftButtonCustom from "@/components/Button/BackButton";
 import { MainColor } from "@/constants/color-palet";
+import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import { HeaderStyles } from "@/styles/header-styles";
 import { Ionicons } from "@expo/vector-icons";
 import { router, Stack } from "expo-router";
@@ -147,7 +148,6 @@ export default function UserLayout() {
           }}
         />
 
-
         {/* ========== End Collaboration Section ========= */}
 
         {/* ========== Voting Section ========= */}
@@ -181,6 +181,142 @@ export default function UserLayout() {
         />
 
         {/* ========== End Voting Section ========= */}
+
+        {/* ========== Crowdfunding Section ========= */}
+        <Stack.Screen
+          name="crowdfunding/index"
+          options={{
+            title: "Crowdfunding",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
+        {/* ========== End Crowdfunding Section ========= */}
+
+        {/* ========== Investment Section ========= */}
+        <Stack.Screen
+          name="investment/(tabs)"
+          options={{
+            title: "Investasi",
+            headerLeft: () => <BackButton path="/crowdfunding" />,
+          }}
+        />
+        <Stack.Screen
+          name="investment/create"
+          options={{
+            title: "Tambah Investasi",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="investment/[id]/index"
+          options={{
+            title: "Detail Investasi",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="investment/[id]/edit"
+          options={{
+            title: "Edit Investasi",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
+        <Stack.Screen
+          name="investment/[id]/edit-prospectus"
+          options={{
+            title: "Edit Prospektus",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
+        <Stack.Screen
+          name="investment/[id]/(document)/list-of-document"
+          options={{
+            title: "Daftar Dokumen",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="investment/[id]/(document)/add-document"
+          options={{
+            title: "Tambah Dokumen",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="investment/[id]/(document)/edit-document"
+          options={{
+            title: "Edit Dokumen",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
+        <Stack.Screen
+          name="investment/[id]/(news)/add-news"
+          options={{
+            title: "Tambah Berita",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
+        <Stack.Screen
+          name="investment/[id]/investor"
+          options={{
+            title: "Investor",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
+        <Stack.Screen
+          name="investment/[id]/(transaction-flow)/index"
+          options={{
+            title: "Pembelian Saham",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="investment/[id]/(transaction-flow)/select-bank"
+          options={{
+            title: "Pilih Bank",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="investment/[id]/(transaction-flow)/invoice"
+          options={{
+            title: "Invoice",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="investment/[id]/(transaction-flow)/process"
+          options={{
+            title: "Proses",
+            headerLeft: () => (
+              <Ionicons
+                name="close"
+                size={ICON_SIZE_SMALL}
+                color={MainColor.yellow}
+                onPress={() => router.navigate(`/investment/(tabs)/transaction`)}
+              />
+            ),
+          }}
+        />
+
+        {/* ========== End Investment Section ========= */}
+
+        {/* ========== Donation Section ========= */}
+        <Stack.Screen
+          name="donation/create"
+          options={{
+            title: "Tambah Donasi",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
+        {/* ========== End Donation Section ========= */}
 
         {/* ========== Job Section ========= */}
         <Stack.Screen
