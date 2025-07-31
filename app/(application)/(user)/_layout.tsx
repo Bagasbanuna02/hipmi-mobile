@@ -266,6 +266,14 @@ export default function UserLayout() {
           }}
         />
 
+        <Stack.Screen
+          name="investment/[id]/(transaction-flow)/index"
+          options={{
+            title: "Pembelian Saham",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
         {/* ========== End Investment Section ========= */}
 
         {/* ========== Donation Section ========= */}

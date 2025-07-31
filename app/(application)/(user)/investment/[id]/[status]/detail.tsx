@@ -1,27 +1,17 @@
 import {
-    BackButton,
-    BaseBox,
-    DotButton,
-    DrawerCustom,
-    MenuDrawerDynamicGrid,
-    ProgressCustom,
-    Spacing,
-    StackCustom,
-    TextCustom,
-    ViewWrapper
+  BackButton,
+  DotButton,
+  DrawerCustom,
+  MenuDrawerDynamicGrid,
+  ViewWrapper,
 } from "@/components";
 import { IconDocument, IconEdit, IconNews } from "@/components/_Icon";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_MEDIUM } from "@/constants/constans-value";
-import {
-    listDataNotPublishInvesment,
-    listDataPublishInvesment,
-} from "@/lib/dummy-data/investment/dummy-data-not-publish";
-import Invesment_BoxDetailDataSection from "@/screens/Invesment/BoxDetailDataSection";
 import Investment_ButtonInvestasiSection from "@/screens/Invesment/ButtonInvestasiSection";
-import Investment_ButtonStatusSection from "@/screens/Invesment/ButtonStatusSection";
 import Invesment_ComponentBoxOnBottomDetail from "@/screens/Invesment/ComponentBoxOnBottomDetail";
+import Invesment_DetailDataPublishSection from "@/screens/Invesment/DetailDataPublishSection";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
@@ -51,6 +41,10 @@ export default function InvestmentDetailStatus() {
     />
   );
 
+  const buttonSection = (
+    <Investment_ButtonInvestasiSection id={id as string} isMine={false} />
+  );
+
   return (
     <>
       <Stack.Screen
@@ -67,27 +61,11 @@ export default function InvestmentDetailStatus() {
       />
 
       <ViewWrapper>
-        <StackCustom gap={"sm"}>
-          {status === "publish" && (
-            <BaseBox>
-              <StackCustom>
-                <TextCustom bold>Progress Saham</TextCustom>
-                <ProgressCustom value={70} size="lg" />
-              </StackCustom>
-            </BaseBox>
-          )}
-          <Invesment_BoxDetailDataSection
-            data={
-              status === "publish"
-                ? listDataPublishInvesment
-                : listDataNotPublishInvesment
-            }
-            bottomSection={bottomSection}
-          />
-          <Investment_ButtonStatusSection status={status as string} />
-          <Investment_ButtonInvestasiSection isMine={false} />
-        </StackCustom>
-        <Spacing />
+        <Invesment_DetailDataPublishSection
+          status={status as string}
+          bottomSection={bottomSection}
+          buttonSection={buttonSection}
+        />
       </ViewWrapper>
 
       {/* ========= Draft Drawer ========= */}
