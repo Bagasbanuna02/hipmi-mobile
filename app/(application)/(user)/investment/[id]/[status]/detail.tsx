@@ -13,19 +13,22 @@ import {
   TextCustom,
   ViewWrapper,
 } from "@/components";
-import { IconEdit } from "@/components/_Icon";
+import {
+  IconDocument,
+  IconEdit,
+  IconNews,
+  IconProspectus,
+} from "@/components/_Icon";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import { AccentColor, MainColor } from "@/constants/color-palet";
-import { ICON_SIZE_MEDIUM, ICON_SIZE_SMALL } from "@/constants/constans-value";
-import { listDataNotPublish } from "@/lib/dummy-data/investment/dummy-data-not-publish";
+import { ICON_SIZE_MEDIUM } from "@/constants/constans-value";
+import {
+  listDataNotPublishInvesment,
+  listDataPublishInvesment,
+} from "@/lib/dummy-data/investment/dummy-data-not-publish";
 import BoxDetailDataSection from "@/screens/Invesment/BoxDetailDataSection";
 import Investment_ButtonStatusSection from "@/screens/Invesment/ButtonStatusSection";
-import {
-  AntDesign,
-  FontAwesome6,
-  Ionicons,
-  MaterialIcons,
-} from "@expo/vector-icons";
+import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import { useState } from "react";
@@ -58,11 +61,7 @@ export default function InvestmentDetailStatus() {
           <StackCustom>
             <TextCustom align="center">Prospektus</TextCustom>
             <CenterCustom>
-              <FontAwesome6
-                name="file-contract"
-                size={50}
-                color={MainColor.white}
-              />
+              <IconProspectus size={50} color={MainColor.white} />
             </CenterCustom>
           </StackCustom>
         </BaseBox>
@@ -77,11 +76,7 @@ export default function InvestmentDetailStatus() {
           <StackCustom>
             <TextCustom align="center">Dokumen</TextCustom>
             <CenterCustom>
-              <FontAwesome6
-                name="file-lines"
-                size={50}
-                color={MainColor.white}
-              />
+              <IconDocument size={50} color={MainColor.white} />
             </CenterCustom>
           </StackCustom>
         </BaseBox>
@@ -114,7 +109,11 @@ export default function InvestmentDetailStatus() {
             </BaseBox>
           )}
           <BoxDetailDataSection
-            data={listDataNotPublish}
+            data={
+              status === "publish"
+                ? listDataPublishInvesment
+                : listDataNotPublishInvesment
+            }
             bottomSection={bottomSection}
           />
           <Investment_ButtonStatusSection status={status as string} />
@@ -172,29 +171,16 @@ export default function InvestmentDetailStatus() {
         <MenuDrawerDynamicGrid
           data={[
             {
-              icon: (
-                <FontAwesome6
-                  name="file-lines"
-                  size={ICON_SIZE_SMALL}
-                  color={MainColor.white}
-                />
-              ),
+              icon: <IconDocument />,
               label: "Update Dokumen",
               path: `/investment/${id}/recap-of-document`,
             },
             {
-              icon: (
-                <Ionicons
-                  name="newspaper-outline"
-                  size={ICON_SIZE_MEDIUM}
-                  color={MainColor.white}
-                />
-              ),
+              icon: <IconNews />,
               label: "Update Berita",
-              path: `/investment/${id}/edit`,
+              path: `/investment/${id}/(news)/recap-of-news`,
             },
           ]}
-          columns={4}
           onPressItem={handlePressPublish as any}
         />
       </DrawerCustom>

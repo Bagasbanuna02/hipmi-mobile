@@ -24,7 +24,7 @@ export default function BoxDetailDataSection({
           <DummyLandscapeImage />
           <Spacing />
           <TextCustom align="center" size="xlarge" bold>
-            {title || "Title of Investment"}
+            {title || "Judul Investasi"}
           </TextCustom>
           <Spacing />
 

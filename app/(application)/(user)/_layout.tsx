@@ -250,6 +250,13 @@ export default function UserLayout() {
           }}
         />
 
+        <Stack.Screen
+          name="investment/[id]/(news)/add-news"
+          options={{
+            title: "Tambah Berita",
+            headerLeft: () => <BackButton />,
+          }}
+        />
 
         {/* ========== End Investment Section ========= */}
 
