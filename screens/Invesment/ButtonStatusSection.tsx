@@ -3,8 +3,10 @@ import { router } from "expo-router";
 
 export default function Investment_ButtonStatusSection({
   status,
+  buttonPublish
 }: {
   status: string;
+  buttonPublish?: React.ReactNode;
 }) {
   const handleBatalkanReview = () => {
     AlertDefaultSystem({
@@ -74,7 +76,9 @@ export default function Investment_ButtonStatusSection({
 
   switch (status) {
     case "publish":
-      return <></>;
+      return <>
+      {buttonPublish}
+      </>;
 
     case "review":
       return (

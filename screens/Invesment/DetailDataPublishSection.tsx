@@ -29,8 +29,10 @@ export default function Invesment_DetailDataPublishSection({
           }
           bottomSection={bottomSection}
         />
-        <Investment_ButtonStatusSection status={status as string} />
-        {buttonSection}
+        <Investment_ButtonStatusSection
+          status={status as string}
+          buttonPublish={buttonSection}
+        />
       </StackCustom>
       <Spacing />
     </>

@@ -1,6 +1,7 @@
 import { BackButton } from "@/components";
 import LeftButtonCustom from "@/components/Button/BackButton";
 import { MainColor } from "@/constants/color-palet";
+import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import { HeaderStyles } from "@/styles/header-styles";
 import { Ionicons } from "@expo/vector-icons";
 import { router, Stack } from "expo-router";
@@ -273,6 +274,34 @@ export default function UserLayout() {
           options={{
             title: "Pembelian Saham",
             headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="investment/[id]/(transaction-flow)/select-bank"
+          options={{
+            title: "Pilih Bank",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="investment/[id]/(transaction-flow)/invoice"
+          options={{
+            title: "Invoice",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="investment/[id]/(transaction-flow)/process"
+          options={{
+            title: "Proses",
+            headerLeft: () => (
+              <Ionicons
+                name="close"
+                size={ICON_SIZE_SMALL}
+                color={MainColor.yellow}
+                onPress={() => router.navigate(`/investment/(tabs)/transaction`)}
+              />
+            ),
           }}
         />
 
