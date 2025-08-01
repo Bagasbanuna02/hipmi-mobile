@@ -38,7 +38,8 @@ export default function LoginView() {
     // router.navigate(`/(application)/(image)/preview-image/${id}`);
     // router.replace("/(application)/(user)/event/(tabs)");
     // router.replace("/(application)/coba");
-    router.navigate("/investment/(tabs)")
+    // router.navigate("/investment/(tabs)")
+    router.navigate("/crowdfunding")
   }
 
   return (

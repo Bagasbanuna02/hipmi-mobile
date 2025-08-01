@@ -341,13 +341,27 @@ export default function UserLayout() {
 
         {/* ========== Donation Section ========= */}
         <Stack.Screen
+          name="donation/(tabs)"
+          options={{
+            title: "Donasi",
+            headerLeft: () => <BackButton path="/home" />,
+          }}
+        />
+
+        <Stack.Screen
           name="donation/create"
           options={{
             title: "Tambah Donasi",
             headerLeft: () => <BackButton />,
           }}
         />
-
+        <Stack.Screen
+          name="donation/create-story"
+          options={{
+            title: "Tambah Donasi",
+            headerLeft: () => <BackButton />,
+          }}
+        />
         {/* ========== End Donation Section ========= */}
 
         {/* ========== Job Section ========= */}

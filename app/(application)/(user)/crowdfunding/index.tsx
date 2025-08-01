@@ -20,7 +20,7 @@ export default function Crowdfunding() {
     {
       title: "Donasi",
       desc: "Berbagi info untuk berdonasi lebih luas dan lebih efisien.",
-      path: "donation/create",
+      path: "donation/(tabs)",
     },
   ];
 
