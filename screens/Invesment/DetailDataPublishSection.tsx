@@ -14,8 +14,8 @@ export default function Invesment_DetailDataPublishSection({
   buttonSection,
 }: {
   status: string;
-  bottomSection: React.ReactNode;
-  buttonSection: React.ReactNode;
+  bottomSection?: React.ReactNode;
+  buttonSection?: React.ReactNode;
 }) {
   return (
     <>

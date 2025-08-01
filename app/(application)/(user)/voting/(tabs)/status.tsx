@@ -6,7 +6,7 @@ import {
   TextCustom,
   ViewWrapper,
 } from "@/components";
-import { masterStatus } from "@/lib/dummy-data/_master/status";
+import { dummyMasterStatus } from "@/lib/dummy-data/_master/status";
 import dayjs from "dayjs";
 import { useState } from "react";
 
@@ -22,7 +22,7 @@ export default function VotingStatus() {
 
   const scrollComponent = (
     <ScrollableCustom
-      data={masterStatus.map((e, i) => ({
+      data={dummyMasterStatus.map((e, i) => ({
         id: i,
         label: e.label,
         value: e.value,

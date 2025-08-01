@@ -1,19 +1,19 @@
 import {
-    BaseBox,
-    ButtonCenteredOnly,
-    ButtonCustom,
-    Grid,
-    InformationBox,
-    Spacing,
-    StackCustom,
-    TextCustom,
-    ViewWrapper
+  BaseBox,
+  ButtonCenteredOnly,
+  ButtonCustom,
+  Grid,
+  InformationBox,
+  Spacing,
+  StackCustom,
+  TextCustom,
+  ViewWrapper,
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { router, useLocalSearchParams } from "expo-router";
 
 export default function InvestmentInvoice() {
-    const { id } = useLocalSearchParams();
+  const { id } = useLocalSearchParams();
   return (
     <>
       <ViewWrapper>
@@ -84,19 +84,26 @@ export default function InvestmentInvoice() {
           <BaseBox>
             <StackCustom>
               <TextCustom>Upload bukti transfer anda.</TextCustom>
-              <ButtonCenteredOnly onPress={() => {
-                router.push("/(application)/(image)/take-picture/123")
-              }} icon="upload">
+              <ButtonCenteredOnly
+                onPress={() => {
+                  router.push("/(application)/(image)/take-picture/123");
+                }}
+                icon="upload"
+              >
                 Upload
               </ButtonCenteredOnly>
             </StackCustom>
           </BaseBox>
 
-          <ButtonCustom onPress={() => {
-            router.push(`/investment/${id}/(transaction-flow)/process`)
-
-          }}>Saya Sudah Transfer</ButtonCustom>
+          <ButtonCustom
+            onPress={() => {
+              router.push(`/investment/${id}/(transaction-flow)/process`);
+            }}
+          >
+            Saya Sudah Transfer
+          </ButtonCustom>
         </StackCustom>
+        <Spacing/>
       </ViewWrapper>
     </>
   );

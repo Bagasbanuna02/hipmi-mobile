@@ -1,4 +1,9 @@
-import { BaseBox, BoxButtonOnFooter, ButtonCustom, ViewWrapper } from "@/components";
+import {
+  BaseBox,
+  BoxButtonOnFooter,
+  ButtonCustom,
+  ViewWrapper,
+} from "@/components";
 import { RadioCustom, RadioGroup } from "@/components/Radio/RadioCustom";
 import { dummyMasterBank } from "@/lib/dummy-data/_master/bank";
 import { router, useLocalSearchParams } from "expo-router";
@@ -13,7 +18,7 @@ export default function InvestmentSelectBank() {
       <>
         <BoxButtonOnFooter>
           <ButtonCustom
-            onPress={() => router.push(`/investment/${id}/invoice`)}
+            onPress={() => router.replace(`/investment/${id}/invoice`)}
           >
             Pilih
           </ButtonCustom>

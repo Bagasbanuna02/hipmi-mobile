@@ -5,14 +5,14 @@ import { StyleSheet } from "react-native";
 import ClickableCustom from "../Clickable/ClickableCustom";
 import { router } from "expo-router";
 
-export default function DummyLandscapeImage() {
+export default function DummyLandscapeImage({height}: {height?: number}) {
   return (
     <ClickableCustom
       onPress={() => {
         router.push("/(application)/(image)/preview-image/1");
       }}
     >
-      <Image source={DUMMY_IMAGE.background} style={styles.backgroundImage} />
+      <Image source={DUMMY_IMAGE.background} style={[styles.backgroundImage, {height: height || 200}]} />
     </ClickableCustom>
   );
 }
@@ -20,7 +20,6 @@ export default function DummyLandscapeImage() {
 const styles = StyleSheet.create({
   backgroundImage: {
     width: "100%",
-    height: 200, // Tinggi background sesuai kebutuhan
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 6,

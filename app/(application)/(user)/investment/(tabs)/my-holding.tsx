@@ -7,13 +7,14 @@ import {
   TextCustom,
   ViewWrapper,
 } from "@/components";
+import { router } from "expo-router";
 import { View } from "react-native";
 
 export default function InvestmentMyHolding() {
   return (
     <ViewWrapper hideFooter>
       {Array.from({ length: 10 }).map((_, index) => (
-        <BaseBox key={index} paddingTop={7} paddingBottom={7}>
+        <BaseBox key={index} paddingTop={7} paddingBottom={7} onPress={() => router.push(`/investment/${index}/(my-holding)/holding-${index}`)}>
           <Grid>
             <Grid.Col span={6}>
               <StackCustom gap={"xs"}>

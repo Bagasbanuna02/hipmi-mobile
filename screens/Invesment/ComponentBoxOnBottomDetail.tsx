@@ -25,7 +25,7 @@ export default function Invesment_ComponentBoxOnBottomDetail({
               <BaseBox
                 backgroundColor={AccentColor.blue}
                 style={{ borderColor: AccentColor.softblue, borderWidth: 1 }}
-                href={`/investment/${id}/prospektus/file`}
+                href={`/(file)/${id}`}
               >
                 <StackCustom>
                   <TextCustom align="center">Prospektus</TextCustom>
@@ -94,7 +94,7 @@ export default function Invesment_ComponentBoxOnBottomDetail({
             <BaseBox
               backgroundColor={AccentColor.blue}
               style={{ borderColor: AccentColor.softblue, borderWidth: 1 }}
-              href={`/investment/${id}/prospektus/file`}
+              href={`/(file)/${id}`}
             >
               <StackCustom>
                 <TextCustom align="center">Prospektus</TextCustom>

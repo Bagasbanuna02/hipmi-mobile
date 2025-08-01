@@ -8,7 +8,7 @@ export default function InvestmentListOfDocument() {
         <Investment_BoxDetailDocument
           key={index}
           title={`Judul Dokumen ${index + 1}`}
-          href={`/investment/${index + 1}/dokumen/file`}
+          href={`/(file)/${index + 1}`}
         />
       ))}
     </ViewWrapper>
