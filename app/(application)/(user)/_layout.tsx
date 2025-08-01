@@ -330,6 +330,13 @@ export default function UserLayout() {
           }}
         />
 
+        <Stack.Screen
+          name="investment/[id]/(my-holding)/[id]"
+          options={{
+            title: "Detail Saham Saya",
+            headerLeft: () => <BackButton />,
+          }}
+        />
         {/* ========== End Investment Section ========= */}
 
         {/* ========== Donation Section ========= */}
