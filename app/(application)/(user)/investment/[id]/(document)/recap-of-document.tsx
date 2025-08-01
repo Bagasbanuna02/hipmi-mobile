@@ -53,7 +53,7 @@ export default function InvestmentRecapOfDocument() {
                 onPress={() => setOpenDrawerBox(true)}
               />
             }
-            href={`/investment/${id}/dokumen/file`}
+            href={`/(file)/${id}`}
           />
         ))}
       </ViewWrapper>
