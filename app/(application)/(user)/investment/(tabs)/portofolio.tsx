@@ -1,5 +1,5 @@
 import { ScrollableCustom, ViewWrapper } from "@/components";
-import { masterStatus } from "@/lib/dummy-data/_master/status";
+import { dummyMasterStatus } from "@/lib/dummy-data/_master/status";
 import Investment_StatusBox from "@/screens/Invesment/StatusBox";
 import { useState } from "react";
 
@@ -15,7 +15,7 @@ export default function InvestmentPortofolio() {
 
   const scrollComponent = (
     <ScrollableCustom
-      data={masterStatus.map((e, i) => ({
+      data={dummyMasterStatus.map((e, i) => ({
         id: i,
         label: e.label,
         value: e.value,

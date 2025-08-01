@@ -287,7 +287,16 @@ export default function UserLayout() {
           name="investment/[id]/(transaction-flow)/invoice"
           options={{
             title: "Invoice",
-            headerLeft: () => <BackButton />,
+            headerLeft: () => (
+              <Ionicons
+                name="close"
+                size={ICON_SIZE_SMALL}
+                color={MainColor.yellow}
+                onPress={() =>
+                  router.navigate(`/investment/(tabs)/transaction`)
+                }
+              />
+            ),
           }}
         />
         <Stack.Screen
@@ -299,9 +308,25 @@ export default function UserLayout() {
                 name="close"
                 size={ICON_SIZE_SMALL}
                 color={MainColor.yellow}
-                onPress={() => router.navigate(`/investment/(tabs)/transaction`)}
+                onPress={() =>
+                  router.navigate(`/investment/(tabs)/transaction`)
+                }
               />
             ),
+          }}
+        />
+        <Stack.Screen
+          name="investment/[id]/(transaction-flow)/success"
+          options={{
+            title: "Transaksi Berhasil",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="investment/[id]/(transaction-flow)/failed"
+          options={{
+            title: "Transaksi Gagal",
+            headerLeft: () => <BackButton />,
           }}
         />
 

@@ -1,12 +1,12 @@
 import {
-  BoxWithHeaderSection,
-  Grid,
-  ScrollableCustom,
-  StackCustom,
-  TextCustom
+    BoxWithHeaderSection,
+    Grid,
+    ScrollableCustom,
+    StackCustom,
+    TextCustom
 } from "@/components";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
-import { masterStatus } from "@/lib/dummy-data/_master/status";
+import { dummyMasterStatus } from "@/lib/dummy-data/_master/status";
 import { useState } from "react";
 
 export default function EventStatus() {
@@ -23,7 +23,7 @@ export default function EventStatus() {
 
   const scrollComponent = (
     <ScrollableCustom
-      data={masterStatus.map((e, i) => ({
+      data={dummyMasterStatus.map((e, i) => ({
         id: i,
         label: e.label,
         value: e.value,

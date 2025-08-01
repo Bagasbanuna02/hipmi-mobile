@@ -1,10 +1,10 @@
 import {
-  BaseBox,
-  ScrollableCustom,
-  TextCustom,
-  ViewWrapper,
+    BaseBox,
+    ScrollableCustom,
+    TextCustom,
+    ViewWrapper,
 } from "@/components";
-import { masterStatus } from "@/lib/dummy-data/_master/status";
+import { dummyMasterStatus } from "@/lib/dummy-data/_master/status";
 import { jobDataDummy } from "@/screens/Job/listDataDummy";
 import { useState } from "react";
 
@@ -20,7 +20,7 @@ export default function JobStatus() {
 
   const scrollComponent = (
     <ScrollableCustom
-      data={masterStatus.map((e, i) => ({
+      data={dummyMasterStatus.map((e, i) => ({
         id: i,
         label: e.label,
         value: e.value,

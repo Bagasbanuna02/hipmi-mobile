@@ -21,7 +21,7 @@ type BadgeSize = "xs" | "sm" | "md" | "lg";
 interface BadgeProps extends ViewProps {
   children: React.ReactNode;
   variant?: BadgeVariant;
-  color?: BadgeColor;
+  color?: BadgeColor | string;
   size?: BadgeSize;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
@@ -43,7 +43,8 @@ const BadgeCustom: React.FC<BadgeProps> = ({
   style,
   ...props
 }) => {
-  const colors = {
+  // Daftar warna bawaan
+  const defaultColors = {
     primary: "#339AF0",
     success: "#40C057",
     warning: "#FAB005",
@@ -52,8 +53,7 @@ const BadgeCustom: React.FC<BadgeProps> = ({
     dark: "#212529",
   };
 
-  const themeColor = colors[color];
-
+  const themeColor = color in defaultColors ? defaultColors[color as BadgeColor] : color;
   // Ganti bagian sizeStyles dan styles.container
   const sizeStyles = {
     xs: {
