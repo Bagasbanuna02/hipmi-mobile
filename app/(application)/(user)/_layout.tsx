@@ -404,7 +404,21 @@ export default function UserLayout() {
             headerLeft: () => <BackButton />,
           }}
         />
-
+        <Stack.Screen
+          name="donation/[id]/list-of-donatur"
+          options={{
+            title: "Daftar Donatur",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="donation/[id]/fund-disbursement"
+          options={{
+            title: "Pencairan Dana",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        
         <Stack.Screen
           name="donation/[id]/(news)/recap-of-news"
           options={{

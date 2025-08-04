@@ -40,7 +40,7 @@ export default function DonasiDetailBeranda() {
       <ViewWrapper footerComponent={buttonSection}>
         <StackCustom>
           <Donation_ComponentBoxDetailData
-            bottomSection={<Donation_ProgressSection />}
+            bottomSection={<Donation_ProgressSection id={id as string} />}
           />
           <Donation_ComponentInfoFundrising id={id as string} />
           <Donation_ComponentStoryFunrising id={id as string} />
