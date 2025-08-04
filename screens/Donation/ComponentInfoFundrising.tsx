@@ -1,21 +1,28 @@
-import { BaseBox, StackCustom, Grid, TextCustom } from "@/components";
+import {
+  AvatarUsernameAndOtherComponent,
+  BaseBox,
+  Grid,
+  InformationBox,
+  StackCustom,
+  TextCustom,
+} from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function Donation_ComponentStoryFunrising({
+export default function Donation_ComponentInfoFundrising({
   id,
 }: {
   id: string;
 }) {
   return (
     <>
-      <BaseBox href={`/donation/${id}/detail-story`}>
+      <BaseBox href={`/donation/${id}/infromation-fundrising`} style={{paddingBottom: 0}}>
         <StackCustom gap={"xs"}>
           <Grid>
             <Grid.Col span={10}>
               <TextCustom bold size="large">
-                Cerita Penggalang Dana
+                Informasi Penggalang Dana
               </TextCustom>
             </Grid.Col>
             <Grid.Col span={2}>
@@ -29,12 +36,11 @@ export default function Donation_ComponentStoryFunrising({
               />
             </Grid.Col>
           </Grid>
-          <TextCustom truncate={3}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam,
-            iusto porro quae optio accusantium amet minima deleniti temporibus
-            cum voluptatem vel veniam doloribus blanditiis sapiente deserunt
-            distinctio eaque aliquid laboriosam?
-          </TextCustom>
+
+          <AvatarUsernameAndOtherComponent />
+          <InformationBox
+            text="Semua dana yang terkumpul akan disalurkan ke penggalang dana, kabar penyaluran dapat dilihat di halaman kabar terbaru."
+          />
         </StackCustom>
       </BaseBox>
     </>

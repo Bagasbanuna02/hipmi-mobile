@@ -42,7 +42,7 @@ export default function DonasiDetailStatus() {
       />
       <ViewWrapper>
         <Donation_ComponentBoxDetailData />
-        <Donation_ComponentStoryFunrising />
+        <Donation_ComponentStoryFunrising id={id as string} />
         <Spacing />
         <Donation_ButtonStatusSection status={status as string} />
         <Spacing />

@@ -5,9 +5,14 @@ import {
   TextCustom,
   Grid,
 } from "@/components";
+import React from "react";
 import { View } from "react-native";
 
-export default function Donation_ComponentBoxDetailData() {
+export default function Donation_ComponentBoxDetailData({
+  bottomSection,
+}: {
+  bottomSection?: React.ReactNode;
+}) {
   return (
     <>
       <BaseBox>
@@ -39,6 +44,7 @@ export default function Donation_ComponentBoxDetailData() {
               </View>
             </Grid.Col>
           </Grid>
+          {bottomSection}
         </StackCustom>
       </BaseBox>
     </>

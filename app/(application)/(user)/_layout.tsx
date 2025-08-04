@@ -390,8 +390,21 @@ export default function UserLayout() {
             headerLeft: () => <BackButton />,
           }}
         />
-        
-        
+        <Stack.Screen
+          name="donation/[id]/detail-story"
+          options={{
+            title: "Cerita Penggalang",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="donation/[id]/infromation-fundrising"
+          options={{
+            title: "Informasi Penggalang Dana",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
         {/* ========== End Donation Section ========= */}
 
         {/* ========== Job Section ========= */}
