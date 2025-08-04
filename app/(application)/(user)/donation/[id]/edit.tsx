@@ -1,19 +1,19 @@
 import {
-  ButtonCenteredOnly,
-  ButtonCustom,
-  InformationBox,
-  LandscapeFrameUploaded,
-  SelectCustom,
-  Spacing,
-  StackCustom,
-  TextInputCustom,
-  ViewWrapper,
+    ButtonCenteredOnly,
+    ButtonCustom,
+    InformationBox,
+    LandscapeFrameUploaded,
+    SelectCustom,
+    Spacing,
+    StackCustom,
+    TextInputCustom,
+    ViewWrapper,
 } from "@/components";
 import { dummyDonasiDurasi } from "@/lib/dummy-data/donasi/durasi";
 import { dummyDonasiKategori } from "@/lib/dummy-data/donasi/kategori";
 import { router } from "expo-router";
 
-export default function DonationCreate() {
+export default function DonationEdit() {
   return (
     <ViewWrapper>
       <StackCustom gap={"xs"}>
@@ -63,15 +63,15 @@ export default function DonationCreate() {
           placeholder="Pilih Durasi Donasi"
           required
         />
+
         <Spacing />
         <ButtonCustom
           onPress={() => {
-            router.push("/donation/create-story");
+            router.back();
           }}
         >
-          Selanjutnya
+          Update
         </ButtonCustom>
-        <Spacing />
       </StackCustom>
       <Spacing />
     </ViewWrapper>

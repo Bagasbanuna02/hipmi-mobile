@@ -362,6 +362,36 @@ export default function UserLayout() {
             headerLeft: () => <BackButton />,
           }}
         />
+        <Stack.Screen
+          name="donation/[id]/index"
+          options={{
+            title: "Detail Donasi",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="donation/[id]/edit"
+          options={{
+            title: "Edit Donasi",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="donation/[id]/edit-story"
+          options={{
+            title: "Edit Donasi",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="donation/[id]/edit-rekening"
+          options={{
+            title: "Edit Rekening",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        
+        
         {/* ========== End Donation Section ========= */}
 
         {/* ========== Job Section ========= */}

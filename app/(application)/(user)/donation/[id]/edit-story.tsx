@@ -1,17 +1,16 @@
 import {
-  ButtonCenteredOnly,
-  ButtonCustom,
-  InformationBox,
-  LandscapeFrameUploaded,
-  Spacing,
-  StackCustom,
-  TextAreaCustom,
-  TextInputCustom,
-  ViewWrapper,
+    ButtonCenteredOnly,
+    ButtonCustom,
+    InformationBox,
+    LandscapeFrameUploaded,
+    Spacing,
+    StackCustom,
+    TextAreaCustom,
+    ViewWrapper
 } from "@/components";
 import { router } from "expo-router";
 
-export default function DonationCreateStory() {
+export default function DonationEditStory() {
   return (
     <ViewWrapper>
       <StackCustom gap={"xs"}>
@@ -19,13 +18,6 @@ export default function DonationCreateStory() {
         <TextAreaCustom
           label="Pembukaan Cerita"
           placeholder="Masukkan pembukaan cerita"
-          required
-          showCount
-          maxLength={1000}
-        />
-        <TextAreaCustom
-          label="Tujuan Donasi"
-          placeholder="Masukkan tujuan donasi"
           required
           showCount
           maxLength={1000}
@@ -40,27 +32,22 @@ export default function DonationCreateStory() {
         >
           Upload
         </ButtonCenteredOnly>
+        <Spacing />
+        <TextAreaCustom
+          label="Tujuan Donasi"
+          placeholder="Masukkan tujuan donasi"
+          required
+          showCount
+          maxLength={1000}
+        />
 
         <Spacing height={40} />
-        <InformationBox text="Pastikan Anda mengisi nama bank dan nomor rekening dengan benar. Informasi ini akan membantu admin memverifikasi dan memproses penggalangan dana Anda dengan cepat dan tepat setelah penggalangan dana dipublikasikan." />
-        <TextInputCustom
-          label="Nama Bank"
-          placeholder="Masukkan nama bank"
-          required
-        />
-        <TextInputCustom
-          label="Nomor Rekening"
-          placeholder="Masukkan nomor rekening"
-          required
-        />
-
-        <Spacing />
         <ButtonCustom
           onPress={() => {
-            router.navigate(`/donation/(tabs)/status`);
+            router.back();
           }}
         >
-          Simpan
+          Update
         </ButtonCustom>
       </StackCustom>
       <Spacing />
