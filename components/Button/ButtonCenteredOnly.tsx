@@ -7,7 +7,7 @@ import ButtonCustom from "./ButtonCustom";
 
 interface ButtonCenteredOnlyProps {
   children?: React.ReactNode;
-  icon?: "plus" | "upload";
+  icon?: "plus" | "upload" | string;
   onPress: () => void;
 }
 export default function ButtonCenteredOnly({
@@ -19,7 +19,7 @@ export default function ButtonCenteredOnly({
     <ButtonCustom
       onPress={onPress}
       iconLeft={
-        <Feather name={icon} size={ICON_SIZE_BUTTON} color={MainColor.black} />
+        <Feather name={icon as any} size={ICON_SIZE_BUTTON} color={MainColor.black} />
       }
       style={[GStyles.buttonCentered50Percent]}
     >

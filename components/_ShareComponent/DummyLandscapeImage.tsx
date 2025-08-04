@@ -5,11 +5,13 @@ import { StyleSheet } from "react-native";
 import ClickableCustom from "../Clickable/ClickableCustom";
 import { router } from "expo-router";
 
-export default function DummyLandscapeImage({height}: {height?: number}) {
+export default function DummyLandscapeImage({height, unClickPath}: {height?: number, unClickPath?: boolean}) {
   return (
     <ClickableCustom
       onPress={() => {
-        router.push("/(application)/(image)/preview-image/1");
+        if (!unClickPath) {
+          router.push("/(application)/(image)/preview-image/1");
+        }
       }}
     >
       <Image source={DUMMY_IMAGE.background} style={[styles.backgroundImage, {height: height || 200}]} />

@@ -344,7 +344,7 @@ export default function UserLayout() {
           name="donation/(tabs)"
           options={{
             title: "Donasi",
-            headerLeft: () => <BackButton path="/home" />,
+            headerLeft: () => <BackButton path="/crowdfunding" />,
           }}
         />
 
@@ -362,6 +362,122 @@ export default function UserLayout() {
             headerLeft: () => <BackButton />,
           }}
         />
+
+        <Stack.Screen
+          name="donation/[id]/edit"
+          options={{
+            title: "Edit Donasi",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="donation/[id]/edit-story"
+          options={{
+            title: "Edit Donasi",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="donation/[id]/edit-rekening"
+          options={{
+            title: "Edit Rekening",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="donation/[id]/detail-story"
+          options={{
+            title: "Cerita Penggalang",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="donation/[id]/infromation-fundrising"
+          options={{
+            title: "Informasi Penggalang Dana",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="donation/[id]/list-of-donatur"
+          options={{
+            title: "Daftar Donatur",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="donation/[id]/fund-disbursement"
+          options={{
+            title: "Pencairan Dana",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
+        <Stack.Screen
+          name="donation/[id]/(news)/recap-of-news"
+          options={{
+            title: "Rekap Kabar",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="donation/[id]/(news)/add-news"
+          options={{
+            title: "Tambah Berita",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="donation/[id]/(news)/[news]/edit-news"
+          options={{
+            title: "Edit Berita",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
+        <Stack.Screen
+          name="donation/[id]/(transaction-flow)/index"
+          options={{
+            title: "Donasi",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="donation/[id]/(transaction-flow)/select-bank"
+          options={{
+            title: "Pilih Bank",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="donation/[id]/(transaction-flow)/[transaction]/invoice"
+          options={{
+            title: "Invoice",
+            headerLeft: () => (
+              <Ionicons
+                name="close"
+                size={ICON_SIZE_SMALL}
+                color={MainColor.yellow}
+                onPress={() => router.navigate(`/donation/(tabs)/my-donation`)}
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="donation/[id]/(transaction-flow)/[transaction]/process"
+          options={{
+            title: "Proses",
+            headerLeft: () => (
+              <Ionicons
+                name="close"
+                size={ICON_SIZE_SMALL}
+                color={MainColor.yellow}
+                onPress={() => router.navigate(`/donation/(tabs)/my-donation`)}
+              />
+            ),
+          }}
+        />
+
         {/* ========== End Donation Section ========= */}
 
         {/* ========== Job Section ========= */}
