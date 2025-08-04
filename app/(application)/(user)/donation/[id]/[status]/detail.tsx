@@ -6,13 +6,14 @@ import {
   Spacing,
   ViewWrapper,
 } from "@/components";
-import { IconEdit } from "@/components/_Icon";
+import { IconEdit, IconNews } from "@/components/_Icon";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import Donation_ButtonStatusSection from "@/screens/Donation/ButtonStatusSection";
 import Donation_ComponentBoxDetailData from "@/screens/Donation/ComponentBoxDetailData";
 import Donation_ComponentStoryFunrising from "@/screens/Donation/ComponentStoryFunrising";
+import Donation_ProgressSection from "@/screens/Donation/ProgressSection";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
@@ -21,6 +22,7 @@ import { useState } from "react";
 export default function DonasiDetailStatus() {
   const { id, status } = useLocalSearchParams();
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [openDrawerPublish, setOpenDrawerPublish] = useState(false);
 
   const handlePress = (item: IMenuDrawerItem) => {
     console.log("PATH ", item.path);
@@ -37,11 +39,17 @@ export default function DonasiDetailStatus() {
           headerRight: () =>
             status === "draft" ? (
               <DotButton onPress={() => setOpenDrawer(true)} />
+            ) : status === "publish" ? (
+              <DotButton onPress={() => setOpenDrawerPublish(true)} />
             ) : null,
         }}
       />
       <ViewWrapper>
-        <Donation_ComponentBoxDetailData />
+        <Donation_ComponentBoxDetailData
+          bottomSection={
+            status === "publish" && <Donation_ProgressSection id={id as string} />
+          }
+        />
         <Donation_ComponentStoryFunrising id={id as string} />
         <Spacing />
         <Donation_ButtonStatusSection status={status as string} />
@@ -62,7 +70,7 @@ export default function DonasiDetailStatus() {
             },
             {
               icon: <IconEdit />,
-              label: "Edit Cerita Penggalang",
+              label: "Edit Cerita",
               path: `/donation/${id}/edit-story`,
             },
             {
@@ -79,6 +87,27 @@ export default function DonasiDetailStatus() {
           ]}
           columns={4}
           onPressItem={handlePress as any}
+        />
+      </DrawerCustom>
+
+      <DrawerCustom
+        isVisible={openDrawerPublish}
+        closeDrawer={() => setOpenDrawerPublish(false)}
+        height={"auto"}
+      >
+        <MenuDrawerDynamicGrid
+          data={[
+            {
+              icon: <IconNews />,
+              label: "Rekap Kabar",
+              path: `/donation/${id}/(news)/recap-of-news`,
+            },
+          ]}
+          onPressItem={(item) => {
+            console.log("PATH ", item.path);
+            router.navigate(item.path as any);
+            setOpenDrawerPublish(false);
+          }}
         />
       </DrawerCustom>
     </>

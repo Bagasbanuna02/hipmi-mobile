@@ -344,7 +344,7 @@ export default function UserLayout() {
           name="donation/(tabs)"
           options={{
             title: "Donasi",
-            headerLeft: () => <BackButton path="/home" />,
+            headerLeft: () => <BackButton path="/crowdfunding" />,
           }}
         />
 
@@ -362,13 +362,7 @@ export default function UserLayout() {
             headerLeft: () => <BackButton />,
           }}
         />
-        {/* <Stack.Screen
-          name="donation/[id]/index"
-          options={{
-            title: "Detail Donasi",
-            headerLeft: () => <BackButton />,
-          }}
-        /> */}
+
         <Stack.Screen
           name="donation/[id]/edit"
           options={{
@@ -418,7 +412,7 @@ export default function UserLayout() {
             headerLeft: () => <BackButton />,
           }}
         />
-        
+
         <Stack.Screen
           name="donation/[id]/(news)/recap-of-news"
           options={{
@@ -438,6 +432,49 @@ export default function UserLayout() {
           options={{
             title: "Edit Berita",
             headerLeft: () => <BackButton />,
+          }}
+        />
+
+        <Stack.Screen
+          name="donation/[id]/(transaction-flow)/index"
+          options={{
+            title: "Donasi",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="donation/[id]/(transaction-flow)/select-bank"
+          options={{
+            title: "Pilih Bank",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="donation/[id]/(transaction-flow)/[transaction]/invoice"
+          options={{
+            title: "Invoice",
+            headerLeft: () => (
+              <Ionicons
+                name="close"
+                size={ICON_SIZE_SMALL}
+                color={MainColor.yellow}
+                onPress={() => router.navigate(`/donation/(tabs)/my-donation`)}
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="donation/[id]/(transaction-flow)/[transaction]/process"
+          options={{
+            title: "Proses",
+            headerLeft: () => (
+              <Ionicons
+                name="close"
+                size={ICON_SIZE_SMALL}
+                color={MainColor.yellow}
+                onPress={() => router.navigate(`/donation/(tabs)/my-donation`)}
+              />
+            ),
           }}
         />
 

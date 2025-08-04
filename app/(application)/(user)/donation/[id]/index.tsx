@@ -23,7 +23,13 @@ export default function DonasiDetailBeranda() {
   const buttonSection = (
     <>
       <BoxButtonOnFooter>
-        <ButtonCustom>Donasi</ButtonCustom>
+        <ButtonCustom
+          onPress={() =>
+            router.navigate(`/donation/${id}/(transaction-flow)`)
+          }
+        >
+          Donasi
+        </ButtonCustom>
       </BoxButtonOnFooter>
     </>
   );
