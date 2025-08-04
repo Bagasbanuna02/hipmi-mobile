@@ -362,13 +362,13 @@ export default function UserLayout() {
             headerLeft: () => <BackButton />,
           }}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="donation/[id]/index"
           options={{
             title: "Detail Donasi",
             headerLeft: () => <BackButton />,
           }}
-        />
+        /> */}
         <Stack.Screen
           name="donation/[id]/edit"
           options={{
@@ -401,6 +401,28 @@ export default function UserLayout() {
           name="donation/[id]/infromation-fundrising"
           options={{
             title: "Informasi Penggalang Dana",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+
+        <Stack.Screen
+          name="donation/[id]/(news)/recap-of-news"
+          options={{
+            title: "Rekap Kabar",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="donation/[id]/(news)/add-news"
+          options={{
+            title: "Tambah Berita",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="donation/[id]/(news)/[news]/edit-news"
+          options={{
+            title: "Edit Berita",
             headerLeft: () => <BackButton />,
           }}
         />
