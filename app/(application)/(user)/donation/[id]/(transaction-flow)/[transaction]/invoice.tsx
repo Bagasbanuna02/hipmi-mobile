@@ -13,12 +13,12 @@ import { MainColor } from "@/constants/color-palet";
 import { router, useLocalSearchParams } from "expo-router";
 
 export default function DonationInvoice() {
-  const { id } = useLocalSearchParams();
+  const { id, transaction } = useLocalSearchParams();
   return (
     <>
       <ViewWrapper>
         <StackCustom>
-          <InformationBox text="Mohon transfer ke rekening dibawah" />
+          <InformationBox text={`Mohon transfer donasi anda ke rekening dibawah dengan Id: ${transaction}`} />
           <BaseBox>
             <StackCustom gap={"xs"}>
               <TextCustom>Nama BANK</TextCustom>

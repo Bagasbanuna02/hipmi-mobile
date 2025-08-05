@@ -30,7 +30,7 @@ export default function LoginView() {
     const id = randomAlfabet + randomNumber + fixNumber;
     console.log("login user id :", id);
 
-    // router.navigate("/verification");
+    router.navigate("/verification");
     // router.navigate(`/(application)/(user)/profile/${id}`);
     // router.navigate("/(application)/(user)/home");
     // router.navigate(`/(application)/profile/${id}/edit`);
@@ -39,7 +39,7 @@ export default function LoginView() {
     // router.replace("/(application)/(user)/event/(tabs)");
     // router.replace("/(application)/coba");
     // router.navigate("/investment/(tabs)")
-    router.navigate("/crowdfunding")
+    // router.navigate("/crowdfunding")
   }
 
   return (

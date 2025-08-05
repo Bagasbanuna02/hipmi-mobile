@@ -3,8 +3,9 @@ import { Ionicons } from "@expo/vector-icons";
 import Grid from "../Grid/GridCustom";
 import TextCustom from "../Text/TextCustom";
 import BaseBox from "./BaseBox";
+import React from "react";
 
-export default function InformationBox({ text }: { text: string }) {
+export default function InformationBox({ text }: { text: React.ReactNode | string }) {
   return (
     <>
       <BaseBox paddingTop={5} paddingBottom={5}>
