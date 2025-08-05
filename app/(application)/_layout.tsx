@@ -7,7 +7,8 @@ export default function ApplicationLayout() {
     <>
       <Stack screenOptions={HeaderStyles}>
         <Stack.Screen name="(user)" options={{ headerShown: false }} />
-        <Stack.Screen name="(admin)" options={{ headerShown: false }} />
+        <Stack.Screen name="admin" options={{ headerShown: false }} />
+        
 
         {/* Take Picture */}
         <Stack.Screen
