@@ -477,6 +477,20 @@ export default function UserLayout() {
             ),
           }}
         />
+        <Stack.Screen
+          name="donation/[id]/(transaction-flow)/[transaction]/success"
+          options={{
+            title: "Donasi Berhasil",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="donation/[id]/(transaction-flow)/[transaction]/failed"
+          options={{
+            title: "Donasi Gagal",
+            headerLeft: () => <BackButton />,
+          }}
+        />
 
         {/* ========== End Donation Section ========= */}
 

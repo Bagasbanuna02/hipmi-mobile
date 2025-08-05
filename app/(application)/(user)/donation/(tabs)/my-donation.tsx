@@ -1,13 +1,14 @@
 import {
-    BadgeCustom,
-    BaseBox,
-    DummyLandscapeImage,
-    Grid,
-    StackCustom,
-    TextCustom,
-    ViewWrapper
+  BadgeCustom,
+  BaseBox,
+  DummyLandscapeImage,
+  Grid,
+  StackCustom,
+  TextCustom,
+  ViewWrapper,
 } from "@/components";
 import { dummyMasterStatusTransaction } from "@/lib/dummy-data/_master/status-transaction";
+import { router } from "expo-router";
 import { View } from "react-native";
 
 export default function DonationMyDonation() {
@@ -17,6 +18,19 @@ export default function DonationMyDonation() {
     );
     return dummyMasterStatusTransaction[randomIndex];
   });
+
+  const handlePress = (value: string) => {
+    if (value === "menunggu") {
+      router.push(`/donation/${value}/(transaction-flow)/123/invoice`);
+    } else if (value === "proses") {
+      router.push(`/donation/${value}/(transaction-flow)/123/process`);
+    } else if (value === "berhasil") {
+      router.push(`/donation/${value}/(transaction-flow)/123/success`);
+    } else if (value === "gagal") {
+      router.push(`/donation/${value}/(transaction-flow)/123/failed`);
+    }
+  };
+
   return (
     <ViewWrapper hideFooter>
       {randomStatusData.map((item, index) => (
@@ -24,11 +38,13 @@ export default function DonationMyDonation() {
           key={index}
           paddingTop={7}
           paddingBottom={7}
-          href={`/investment/${index}`}
+          onPress={() => {
+            handlePress(item.value);
+          }}
         >
           <Grid>
             <Grid.Col span={5}>
-              <DummyLandscapeImage height={100} />
+              <DummyLandscapeImage height={100} unClickPath />
             </Grid.Col>
             <Grid.Col span={1}>
               <View />

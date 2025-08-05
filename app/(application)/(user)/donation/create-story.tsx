@@ -57,7 +57,7 @@ export default function DonationCreateStory() {
         <Spacing />
         <ButtonCustom
           onPress={() => {
-            router.navigate(`/donation/(tabs)/status`);
+            router.replace(`/donation/(tabs)/status`);
           }}
         >
           Simpan

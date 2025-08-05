@@ -52,11 +52,17 @@ export const drawerItemsProfile = ({
     label: "Tambah portofolio",
     path: `/(application)/portofolio/${id}/create`,
   },
-  // {
-  //   icon: "settings",
-  //   label: "Dashboard Admin",
-  //   path: `/(application)/profile/dashboard-admin`,
-  // },
+  {
+    icon: (
+      <Ionicons
+        name="settings"
+        size={ICON_SIZE_MEDIUM}
+        color={AccentColor.white}
+      />
+    ),
+    label: "Dashboard Admin",
+    path: `/(application)/(admin)/dashboard`,
+  },
   {
     icon: (
       <Ionicons

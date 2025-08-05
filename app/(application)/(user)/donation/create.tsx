@@ -66,7 +66,7 @@ export default function DonationCreate() {
         <Spacing />
         <ButtonCustom
           onPress={() => {
-            router.push("/donation/create-story");
+            router.replace("/donation/create-story");
           }}
         >
           Selanjutnya
