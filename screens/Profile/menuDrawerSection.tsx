@@ -26,9 +26,14 @@ export default function Profile_MenuDrawerSection({
     <>
       {/* Menu Items */}
       <MenuDrawerDynamicGrid
-        data={drawerItems}
+        data={drawerItems.map((item) => ({
+          icon: item.icon,
+          label: item.label,
+          path: item.path as any,
+          color: item.color,
+        }))}
         columns={4} // Ubah ke 2 jika ingin 2 kolom per baris
-        onPressItem={handlePress}
+        onPressItem={(item) => handlePress(item as any)}
       />
     </>
   );
