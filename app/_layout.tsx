@@ -14,7 +14,10 @@ export default function RootLayout() {
             headerTitleAlign: "center",
           }}
         >
-          <Stack.Screen name="index" options={{ title: "" }} />
+          <Stack.Screen
+            name="index"
+            options={{ title: "", headerBackVisible: false }}
+          />
           <Stack.Screen name="+not-found" options={{ title: "" }} />
           <Stack.Screen
             name="verification"

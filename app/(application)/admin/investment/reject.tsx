@@ -1,10 +1,10 @@
 import { TextCustom, ViewWrapper } from "@/components";
 
-export default function AdminInformation() {
+export default function AdminInvestmentReject() {
   return (
     <>
       <ViewWrapper>
-        <TextCustom>Information</TextCustom>
+        <TextCustom>Admin Investment Reject</TextCustom>
       </ViewWrapper>
     </>
   );

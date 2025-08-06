@@ -1,22 +1,28 @@
 import { MainColor } from "@/constants/color-palet";
 import React from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleProp, StyleSheet, TextInput, View, ViewStyle } from "react-native";
 
 interface CircularInputProps {
-  value: string | number;
-  onChange?: (value: string) => void;
+  value?: string | number
+  onChange?: (value: string | number) => void;
+  icon?: React.ReactNode;
+  style?: StyleProp<ViewStyle>
 }
 
-const CircularInput: React.FC<CircularInputProps> = ({ value, onChange }) => {
+const CircularInput: React.FC<CircularInputProps> = ({ value, onChange, icon, style }) => {
   return (
-    <View style={styles.circleContainer}>
-      <TextInput
-        value={String(value)}
-        onChangeText={onChange}
-        style={styles.input}
-        keyboardType="numeric"
-        maxLength={2} // Batasan maksimal karakter
-      />
+    <View style={[styles.circleContainer, style]}>
+      {icon ? (
+        icon
+      ) : (
+        <TextInput
+          value={String(value)}
+          onChangeText={onChange}
+          style={styles.input}
+          keyboardType="numeric"
+          maxLength={2} // Batasan maksimal karakter
+        />
+      )}
     </View>
   );
 };

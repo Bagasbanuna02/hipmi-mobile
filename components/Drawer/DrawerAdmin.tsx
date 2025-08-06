@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import {
-    Animated,
-    Dimensions,
-    InteractionManager,
-    PanResponder,
-    StyleSheet
+  Animated,
+  Dimensions,
+  InteractionManager,
+  PanResponder,
+  StyleSheet,
 } from "react-native";
 
 import { AccentColor, MainColor } from "@/constants/color-palet";
@@ -107,9 +107,15 @@ export default function DrawerAdmin({
         {...panResponder.panHandlers}
       >
         {/* Handle Bar (opsional) */}
-        {/* <View style={styles.handleBar} /> */}
-
-        <SafeAreaView>{children}</SafeAreaView>
+        <SafeAreaView
+          edges={["top", "bottom"]}
+          style={{
+            flex: 1,
+          }}
+        >
+          {children}
+          {/* <Spacing/> */}
+        </SafeAreaView>
       </Animated.View>
     </>
   );

@@ -61,7 +61,7 @@ export const drawerItemsProfile = ({
       />
     ),
     label: "Dashboard Admin",
-    path: `/(application)/(admin)/dashboard`,
+    path: `/(application)/admin/dashboard`,
   },
   {
     icon: (

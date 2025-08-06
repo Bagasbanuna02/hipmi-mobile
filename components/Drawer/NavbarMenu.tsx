@@ -1,17 +1,17 @@
 import { AccentColor, MainColor } from "@/constants/color-palet";
 import { Ionicons } from "@expo/vector-icons";
 import { router, usePathname } from "expo-router";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import TextCustom from "../Text/TextCustom";
 
-interface NavbarItem {
+export interface NavbarItem {
   label: string;
   icon?: keyof typeof Ionicons.glyphMap;
   color?: string;
@@ -33,6 +33,17 @@ export default function NavbarMenu({ items, onClose }: NavbarMenuProps) {
   const [activeLink, setActiveLink] = useState<string | null>(null);
   const [openKeys, setOpenKeys] = useState<string[]>([]); // Untuk kontrol dropdown
 
+  // Normalisasi path: hapus trailing slash
+  const normalizePath = (path: string) => path.replace(/\/+$/, "");
+  const normalizedPathname = pathname ? normalizePath(pathname) : "";
+
+  // Set activeLink saat pathname berubah
+  useEffect(() => {
+    if (normalizedPathname) {
+      setActiveLink(normalizedPathname);
+    }
+  }, [normalizedPathname]);
+
   // Toggle dropdown
   const toggleOpen = (label: string) => {
     setOpenKeys((prev) =>
@@ -41,18 +52,31 @@ export default function NavbarMenu({ items, onClose }: NavbarMenuProps) {
   };
 
   return (
-    <View style={styles.container}>
-      {items.map((item) => (
-        <MenuItem
-          key={item.label}
-          item={item}
-          onClose={onClose}
-          activeLink={activeLink}
-          setActiveLink={setActiveLink}
-          isOpen={openKeys.includes(item.label)}
-          toggleOpen={() => toggleOpen(item.label)}
-        />
-      ))}
+    <View
+      style={{
+        //  flex: 1,
+        //  backgroundColor: MainColor.black,
+        marginBottom: 20, 
+      }}
+    >
+      <ScrollView
+        contentContainerStyle={{
+          paddingVertical: 10, // Opsional: tambahkan padding
+        }}
+        //  showsVerticalScrollIndicator={false} // Opsional: sembunyikan indikator scroll
+      >
+        {items.map((item) => (
+          <MenuItem
+            key={item.label}
+            item={item}
+            onClose={onClose}
+            activeLink={activeLink}
+            setActiveLink={setActiveLink}
+            isOpen={openKeys.includes(item.label)}
+            toggleOpen={() => toggleOpen(item.label)}
+          />
+        ))}
+      </ScrollView>
     </View>
   );
 }
@@ -83,7 +107,7 @@ function MenuItem({
       duration: 200,
       useNativeDriver: false,
     }).start();
-  }, [isOpen, item.links]);
+  }, [isOpen, item.links, animatedHeight]);
 
   // Jika ada submenu
   if (item.links && item.links.length > 0) {
@@ -93,7 +117,7 @@ function MenuItem({
         <TouchableOpacity style={styles.parentItem} onPress={toggleOpen}>
           <Ionicons
             name={item.icon}
-            size={20}
+            size={16}
             color={MainColor.white}
             style={styles.icon}
           />
@@ -135,7 +159,7 @@ function MenuItem({
                 }}
               >
                 <Ionicons
-                  name="caret-forward-sharp"
+                  name="radio-button-on-outline"
                   size={16}
                   color={isSubActive ? MainColor.yellow : MainColor.white}
                   style={styles.icon}
@@ -168,7 +192,7 @@ function MenuItem({
     >
       <Ionicons
         name={item.icon}
-        size={20}
+        size={16}
         color={isActive ? MainColor.yellow : MainColor.white}
         style={styles.icon}
       />
@@ -186,14 +210,14 @@ function MenuItem({
 // Styles
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    marginBottom: 5,
   },
   parentItem: {
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 12,
     paddingHorizontal: 10,
-    backgroundColor: AccentColor.darkblue,
+    // backgroundColor: AccentColor.darkblue,
     borderRadius: 8,
     marginBottom: 5,
     justifyContent: "space-between",
@@ -210,7 +234,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 12,
     paddingHorizontal: 10,
-    backgroundColor: AccentColor.darkblue,
+    // backgroundColor: AccentColor.darkblue,
     borderRadius: 8,
     marginBottom: 5,
   },
@@ -246,6 +270,7 @@ const styles = StyleSheet.create({
   },
   subText: {
     color: MainColor.white,
-    fontSize: 14,
+    fontSize: 16,
+    fontWeight: "500",
   },
 });
