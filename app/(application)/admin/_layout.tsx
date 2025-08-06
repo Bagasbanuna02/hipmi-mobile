@@ -23,6 +23,7 @@ export default function AdminLayout() {
     <>
       <Stack
         screenOptions={{
+          title: "HIPMI DASHBOARD",
           headerStyle: GStyles.headerStyle,
           headerTitleStyle: GStyles.headerTitleStyle,
           headerTitleAlign: "center",
@@ -47,44 +48,58 @@ export default function AdminLayout() {
           ),
         }}
       >
-        <Stack.Screen name="dashboard" options={{ title: "Main Dashboard" }} />
+        <Stack.Screen name="dashboard" 
+        // options={{ title: "Main Dashboard" }} 
+        />
         <Stack.Screen
           name="investment/index"
-          options={{ title: "Dashboard Investasi" }}
+          // options={{ title: "Dashboard Investasi" }}
         />
         <Stack.Screen
           name="investment/publish"
-          options={{ title: "Investasi Publish" }}
+          // options={{ title: "Investasi Publish" }}
         />
         <Stack.Screen
           name="investment/review"
-          options={{ title: "Investasi Review" }}
+          // options={{ title: "Investasi Review" }}
         />
         <Stack.Screen
           name="investment/reject"
-          options={{ title: "Investasi Reject" }}
+          // options={{ title: "Investasi Reject" }}
         />
-        <Stack.Screen name="maps" options={{ title: "Maps" }} />
-        <Stack.Screen name="information" options={{ title: "Information" }} />
-        <Stack.Screen name="job/index" options={{ title: "Dashboard Job" }} />
-        <Stack.Screen name="job/publish" options={{ title: "Job Publish" }} />
-        <Stack.Screen name="job/review" options={{ title: "Job Review" }} />
-        <Stack.Screen name="job/reject" options={{ title: "Job Reject" }} />
+        <Stack.Screen name="maps" 
+        // options={{ title: "Maps" }} 
+        />
+        <Stack.Screen name="app-information/index" 
+        // options={{ title: "Information" }} 
+        />
+        <Stack.Screen name="job/index" 
+        // options={{ title: "Dashboard Job" }} 
+        />
+        <Stack.Screen name="job/publish" 
+        // options={{ title: "Job Publish" }} 
+        />
+        <Stack.Screen name="job/review" 
+        // options={{ title: "Job Review" }} 
+        />
+        <Stack.Screen name="job/reject" 
+        // options={{ title: "Job Reject" }} 
+        />
         <Stack.Screen
           name="collaboration/index"
-          options={{ title: "Dashboard Collaboration" }}
+          // options={{ title: "Dashboard Collaboration" }}
         />
         <Stack.Screen
           name="collaboration/publish"
-          options={{ title: "Collaboration Publish" }}
+          // options={{ title: "Collaboration Publish" }}
         />
         <Stack.Screen
           name="collaboration/group"
-          options={{ title: "Collaboration Group" }}
+          // options={{ title: "Collaboration Group" }}
         />
         <Stack.Screen
           name="collaboration/reject"
-          options={{ title: "Collaboration Reject" }}
+          // options={{ title: "Collaboration Reject" }}
         />
       </Stack>
 

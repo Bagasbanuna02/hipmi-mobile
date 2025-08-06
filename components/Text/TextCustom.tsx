@@ -22,7 +22,7 @@ interface TextCustomProps {
   style?: StyleProp<TextStyle>;
   bold?: boolean;
   semiBold?: boolean;
-  size?: "default" | "large" | "small" | "xlarge";
+  size?: "default" | "large" | "small" | "xlarge" | number
   color?: "default" | "yellow" | "red" | "gray" | "green" | "black"
   align?: TextAlign; // Prop untuk alignment
   truncate?: boolean | number;
@@ -54,6 +54,7 @@ const TextCustom: React.FC<TextCustomProps> = ({
     if (size === "large") selectedStyles.push(styles.large);
     else if (size === "xlarge") selectedStyles.push(styles.xlarge);
     else if (size === "small") selectedStyles.push(styles.small);
+    else if (typeof size === "number") selectedStyles.push({ fontSize: size });
 
     // Color
     if (color === "yellow") selectedStyles.push(styles.yellow);
@@ -105,7 +106,7 @@ export const styles = StyleSheet.create({
     fontSize: TEXT_SIZE_MEDIUM,
     color: MainColor.white,
     fontFamily: "Poppins-Regular",
-    lineHeight: 20,
+    // lineHeight: 20,
   },
   bold: {
     fontFamily: "Poppins-Bold",

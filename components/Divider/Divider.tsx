@@ -2,8 +2,8 @@ import { AccentColor } from "@/constants/color-palet";
 import { View } from "react-native";
 
 export default function Divider({
-    color = AccentColor.blue,
-    size = 1,
+    color = AccentColor.white,
+    size = 0.5,
     marginTop= 12,
     marginBottom= 12, 
 }: {

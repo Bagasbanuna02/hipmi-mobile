@@ -86,7 +86,7 @@ const adminListMenu: NavbarItem[] = [
   {
     label: "App Information",
     icon: "information-circle",
-    link: "/admin/information",
+    link: "/admin/app-information",
   },
   {
     label: "User Access",

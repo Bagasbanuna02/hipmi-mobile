@@ -1,10 +1,10 @@
-import { TextCustom, ViewWrapper } from "@/components";
+import { MapCustom, ViewWrapper } from "@/components";
 
 export default function AdminMaps() {
   return (
     <>
       <ViewWrapper>
-        <TextCustom>Maps</TextCustom>
+        <MapCustom height={"100%"} />
       </ViewWrapper>
     </>
   );
