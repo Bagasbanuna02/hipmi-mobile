@@ -7,6 +7,7 @@ import { Href } from "expo-router";
 type IMenuDrawerItemProps = {
     icon: React.ReactNode;
     label: string;
+    value?: string;
     path?: Href;
     color?: string;
 }

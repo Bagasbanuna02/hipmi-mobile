@@ -51,34 +51,34 @@ export default function NavbarMenu({ items, onClose }: NavbarMenuProps) {
     );
   };
 
- return (
-   <View
-     style={{
-      //  flex: 1,
-      //  backgroundColor: MainColor.black,
-       marginBottom: 20,
-     }}
-   >
-     <ScrollView
-       contentContainerStyle={{
-         paddingVertical: 10, // Opsional: tambahkan padding
-       }}
-      //  showsVerticalScrollIndicator={false} // Opsional: sembunyikan indikator scroll
-     >
-       {items.map((item) => (
-         <MenuItem
-           key={item.label}
-           item={item}
-           onClose={onClose}
-           activeLink={activeLink}
-           setActiveLink={setActiveLink}
-           isOpen={openKeys.includes(item.label)}
-           toggleOpen={() => toggleOpen(item.label)}
-         />
-       ))}
-     </ScrollView>
-   </View>
- );
+  return (
+    <View
+      style={{
+        //  flex: 1,
+        //  backgroundColor: MainColor.black,
+        marginBottom: 20, 
+      }}
+    >
+      <ScrollView
+        contentContainerStyle={{
+          paddingVertical: 10, // Opsional: tambahkan padding
+        }}
+        //  showsVerticalScrollIndicator={false} // Opsional: sembunyikan indikator scroll
+      >
+        {items.map((item) => (
+          <MenuItem
+            key={item.label}
+            item={item}
+            onClose={onClose}
+            activeLink={activeLink}
+            setActiveLink={setActiveLink}
+            isOpen={openKeys.includes(item.label)}
+            toggleOpen={() => toggleOpen(item.label)}
+          />
+        ))}
+      </ScrollView>
+    </View>
+  );
 }
 
 // Komponen Item Menu

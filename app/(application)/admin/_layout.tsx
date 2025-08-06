@@ -1,15 +1,24 @@
-import { StackCustom } from "@/components";
+import {
+  AlertDefaultSystem,
+  DrawerCustom,
+  GridComponentView,
+  MenuDrawerDynamicGrid,
+  StackCustom,
+  TextCustom,
+} from "@/components";
 import DrawerAdmin from "@/components/Drawer/DrawerAdmin";
-import NavbarMenu, { NavbarItem } from "@/components/Drawer/NavbarMenu";
+import NavbarMenu from "@/components/Drawer/NavbarMenu";
 import { AccentColor, MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
+import { adminListMenu } from "@/screens/Admin/listPageAdmin";
 import { GStyles } from "@/styles/global-styles";
 import { FontAwesome6, Ionicons } from "@expo/vector-icons";
-import { Stack } from "expo-router";
+import { router, Stack } from "expo-router";
 import { useState } from "react";
 
 export default function AdminLayout() {
-  const [openDrawer, setOpenDrawer] = useState(false);
+  const [openDrawerNavbar, setOpenDrawerNavbar] = useState(false);
+  const [openDrawerUser, setOpenDrawerUser] = useState(false);
   return (
     <>
       <Stack
@@ -25,7 +34,7 @@ export default function AdminLayout() {
               name="menu"
               size={ICON_SIZE_SMALL}
               color={MainColor.white}
-              onPress={() => setOpenDrawer(true)}
+              onPress={() => setOpenDrawerNavbar(true)}
             />
           ),
           headerRight: () => (
@@ -33,15 +42,28 @@ export default function AdminLayout() {
               name="circle-user"
               size={ICON_SIZE_SMALL}
               color={MainColor.white}
+              onPress={() => setOpenDrawerUser(true)}
             />
           ),
         }}
       >
         <Stack.Screen name="dashboard" options={{ title: "Main Dashboard" }} />
-        <Stack.Screen name="investment/index" options={{ title: "Dashboard Investasi" }} />
-        <Stack.Screen name="investment/publish" options={{ title: "Investasi Publish" }} />
-        <Stack.Screen name="investment/review" options={{ title: "Investasi Review" }} />
-        <Stack.Screen name="investment/reject" options={{ title: "Investasi Reject" }} />
+        <Stack.Screen
+          name="investment/index"
+          options={{ title: "Dashboard Investasi" }}
+        />
+        <Stack.Screen
+          name="investment/publish"
+          options={{ title: "Investasi Publish" }}
+        />
+        <Stack.Screen
+          name="investment/review"
+          options={{ title: "Investasi Review" }}
+        />
+        <Stack.Screen
+          name="investment/reject"
+          options={{ title: "Investasi Reject" }}
+        />
         <Stack.Screen name="maps" options={{ title: "Maps" }} />
         <Stack.Screen name="information" options={{ title: "Information" }} />
         <Stack.Screen name="job/index" options={{ title: "Dashboard Job" }} />
@@ -66,112 +88,125 @@ export default function AdminLayout() {
         />
       </Stack>
 
-      <DrawerAdmin isVisible={openDrawer} onClose={() => setOpenDrawer(false)}>
+      <DrawerAdmin
+        isVisible={openDrawerNavbar}
+        onClose={() => setOpenDrawerNavbar(false)}
+      >
         <StackCustom gap={"xs"}>
           <Ionicons
             name="close"
             size={ICON_SIZE_SMALL}
             color={MainColor.white}
-            onPress={() => setOpenDrawer(false)}
+            onPress={() => setOpenDrawerNavbar(false)}
             style={{ alignSelf: "flex-end" }}
           />
 
-          <NavbarMenu items={listItem} onClose={() => setOpenDrawer(false)} />
+          <NavbarMenu
+            items={adminListMenu}
+            onClose={() => setOpenDrawerNavbar(false)}
+          />
         </StackCustom>
       </DrawerAdmin>
+
+      <DrawerCustom
+        isVisible={openDrawerUser}
+        closeDrawer={() => setOpenDrawerUser(false)}
+        height={"auto"}
+      >
+        <StackCustom>
+          <GridComponentView
+            leftIcon={
+              <Ionicons
+                name="person"
+                size={ICON_SIZE_SMALL}
+                color={MainColor.white}
+              />
+            }
+          >
+            <TextCustom>Username</TextCustom>
+          </GridComponentView>
+          <GridComponentView
+            leftIcon={
+              <Ionicons
+                name="ribbon-outline"
+                size={ICON_SIZE_SMALL}
+                color={MainColor.white}
+              />
+            }
+          >
+            <TextCustom>User Role</TextCustom>
+          </GridComponentView>
+
+          <MenuDrawerDynamicGrid
+            columns={3}
+            data={[
+              {
+                label: "Notifikasi",
+                value: "notification",
+                icon: (
+                  <Ionicons
+                    name="notifications"
+                    size={ICON_SIZE_SMALL}
+                    color={MainColor.white}
+                  />
+                ),
+                path: "/admin/notification",
+              },
+              {
+                label: "Kembali ke User",
+                value: "back-to-user",
+                icon: (
+                  <Ionicons
+                    name="git-compare"
+                    size={ICON_SIZE_SMALL}
+                    color={MainColor.white}
+                  />
+                ),
+                path: "" as any,
+              },
+              {
+                label: "Keluar",
+                value: "logout",
+                icon: (
+                  <Ionicons
+                    name="log-out"
+                    size={ICON_SIZE_SMALL}
+                    color={MainColor.white}
+                  />
+                ),
+                path: "" as any,
+                color: MainColor.red,
+              },
+            ]}
+            onPressItem={(item) => {
+              if (item.value === "notification") {
+                router.push("/admin/notification");
+                setOpenDrawerUser(false);
+              } else if (item.value === "back-to-user") {
+                AlertDefaultSystem({
+                  title: "Kembali ke User",
+                  message: "Apakah Anda yakin ingin kembali ke user?",
+                  textLeft: "Batal",
+                  textRight: "Ya",
+                  onPressRight: () => {
+                    router.replace(`/(application)/(user)/profile/${123}`);
+                  },
+                });
+              } else if (item.value === "logout") {
+                AlertDefaultSystem({
+                  title: "Keluar",
+                  message: "Apakah Anda yakin ingin keluar?",
+                  textLeft: "Batal",
+                  textRight: "Keluar",
+                  onPressRight: () => {
+                    router.replace("/");
+                  },
+                });
+              }
+            }}
+          />
+        </StackCustom>
+      </DrawerCustom>
     </>
   );
 }
-
-const listItem: NavbarItem[] = [
-  {
-    label: "Main Dashboard",
-    icon: "home",
-    link: "/admin/dashboard",
-  },
-  {
-    label: "Investasi",
-    icon: "wallet",
-    links: [
-      { label: "Dashboard", link: "/admin/investment" },
-      { label: "Publish", link: "/admin/investment/publish" },
-      { label: "Review", link: "/admin/investment/review" },
-      { label: "Reject", link: "/admin/investment/reject" },
-    ],
-  },
-  {
-    label: "Donasi",
-    icon: "hand-right",
-    links: [
-      { label: "Dashboard", link: "/admin/donasi" },
-      { label: "Publish", link: "/admin/donasi/publish" },
-      { label: "Review", link: "/admin/donasi/review" },
-      { label: "Reject", link: "/admin/donasi/reject" },
-      { label: "Kategori", link: "/admin/donasi/kategori" },
-    ],
-  },
-  {
-    label: "Event",
-    icon: "calendar-clear",
-    links: [
-      { label: "Dashboard", link: "/admin/event" },
-      { label: "Publish", link: "/admin/event/publish" },
-      { label: "Review", link: "/admin/event/review" },
-      { label: "Reject", link: "/admin/event/reject" },
-      { label: "Tipe Acara", link: "/admin/event/tipe-acara" },
-      { label: "Riwayat", link: "/admin/event/riwayat" },
-    ],
-  },
-  {
-    label: "Voting",
-    icon: "accessibility-outline",
-    links: [
-      { label: "Dashboard", link: "/admin/voting" },
-      { label: "Publish", link: "/admin/voting/publish" },
-      { label: "Review", link: "/admin/voting/review" },
-      { label: "Reject", link: "/admin/voting/reject" },
-      { label: "Riwayat", link: "/admin/voting/riwayat" },
-    ],
-  },
-  {
-    label: "Job",
-    icon: "desktop-outline",
-    links: [
-      { label: "Dashboard", link: "/admin/job" },
-      { label: "Publish", link: "/admin/job/publish" },
-      { label: "Review", link: "/admin/job/review" },
-      { label: "Reject", link: "/admin/job/reject" },
-    ],
-  },
-  {
-    label: "Forum",
-    icon: "chatbubble-ellipses-outline",
-    links: [
-      { label: "Dashboard", link: "/admin/forum" },
-      { label: "Posting", link: "/admin/forum/publish" },
-      { label: "Report Posting", link: "/admin/forum/review" },
-      { label: "Report Comment", link: "/admin/forum/reject" },
-    ],
-  },
-  {
-    label: "Collaboration",
-    icon: "people",
-    links: [
-      { label: "Dashboard", link: "/admin/collaboration" },
-      { label: "Publish", link: "/admin/collaboration/publish" },
-      { label: "Group", link: "/admin/collaboration/group" },
-      { label: "Reject", link: "/admin/collaboration/reject" },
-    ],
-  },
-  { label: "Maps", icon: "map", link: "/admin/maps" },
-  {
-    label: "App Information",
-    icon: "information-circle",
-    link: "/admin/information",
-  },
-  {
-    label: "User Access",
-    icon: "people",
-    link: "/admin/user-access",
-  },
-];
