@@ -1,42 +1,37 @@
 import {
+  ActionIcon,
   ScrollableCustom,
-  ViewWrapper
+  StackCustom,
+  ViewWrapper,
 } from "@/components";
+import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
+import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import AdminAppInformation_BusinessFieldSection from "@/screens/Admin/App-Information/BusinessFieldSection";
 import AdminAppInformation_Bank from "@/screens/Admin/App-Information/InformationBankSection";
 import AdminAppInformation_StickerSection from "@/screens/Admin/App-Information/StickerSection";
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { useState } from "react";
+import { View } from "react-native";
 
 export default function AdminInformation() {
   const [activeCategory, setActiveCategory] = useState<string | null>("bank");
+  const [activePage, setActivePage] = useState<string>("Informasi Bank");
 
   const handlePress = (item: any) => {
     setActiveCategory(item.value);
+    setActivePage(item.label);
     // tambahkan logika lain seperti filter dsb.
   };
 
   const scrollComponent = (
-    <ScrollableCustom
-      data={[
-        {
-          id: "1",
-          label: "Informasi Bank",
-          value: "bank",
-        },
-        {
-          id: "2",
-          label: "Bidang Bisnis",
-          value: "business",
-        },
-        {
-          id: "3",
-          label: "Stiker",
-          value: "sticker",
-        },
-      ]}
-      onButtonPress={handlePress}
-      activeId={activeCategory as any}
-    />
+    <StackCustom>
+      <ScrollableCustom
+        data={listPage}
+        onButtonPress={handlePress}
+        activeId={activeCategory as any}
+      />
+    </StackCustom>
   );
 
   const renderContent = () => {
@@ -55,8 +50,47 @@ export default function AdminInformation() {
   return (
     <>
       <ViewWrapper headerComponent={scrollComponent}>
+        <AdminComp_BoxTitle
+          title={activePage}
+          rightComponent={
+            <View style={{ flexDirection: "row" }}>
+              <ActionIcon
+                icon={
+                  <Ionicons name="add" size={ICON_SIZE_SMALL} color="black" />
+                }
+                onPress={() => {
+                  if (activeCategory === "bank") {
+                    router.push("/admin/app-information/information-bank/create");
+                  } else if (activeCategory === "business") {
+                    router.push("/admin/app-information/business-field/create");
+                  } else if (activeCategory === "sticker") {
+                    router.push("/admin/app-information/sticker/create");
+                  }
+                }}
+              />
+            </View>
+          }
+        />
         {renderContent()}
       </ViewWrapper>
     </>
   );
 }
+
+const listPage = [
+  {
+    id: "1",
+    label: "Informasi Bank",
+    value: "bank",
+  },
+  {
+    id: "2",
+    label: "Bidang Bisnis",
+    value: "business",
+  },
+  {
+    id: "3",
+    label: "Stiker",
+    value: "sticker",
+  },
+];

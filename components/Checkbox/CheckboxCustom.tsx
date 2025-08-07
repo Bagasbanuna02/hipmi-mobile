@@ -1,4 +1,4 @@
-import { AccentColor } from "@/constants/color-palet";
+import { AccentColor, MainColor } from "@/constants/color-palet";
 import { MaterialIcons } from "@expo/vector-icons"; // Bisa diganti dengan ikon lain
 import React, { useContext } from "react";
 import { Animated, Text, TouchableOpacity, View } from "react-native";
@@ -17,7 +17,7 @@ const CheckboxGroupContext =
 // Tipe props
 // Tambahkan prop baru: groupValueKey
 interface CheckboxProps {
-  label?: string;
+  label?: string | React.ReactNode;
   description?: string;
   error?: string;
   value?: boolean; // controlled value (untuk standalone)
@@ -39,7 +39,7 @@ const CheckboxCustom: React.FC<CheckboxProps> = ({
   onChange,
   disabled: propDisabled,
   size = 20,
-  color = AccentColor.softblue,
+  color = MainColor.yellow,
   style,
   component,
   valueKey,

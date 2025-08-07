@@ -1,95 +1,77 @@
-import {
-  BaseBox,
-  ButtonCustom,
-  Divider,
-  Grid,
-  TextCustom
-} from "@/components";
-import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
+import { ActionIcon, Grid, StackCustom, TextCustom } from "@/components";
 import { MainColor } from "@/constants/color-palet";
-import { ICON_SIZE_SMALL } from "@/constants/constans-value";
+import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
 import { dummyMasterBank } from "@/lib/dummy-data/_master/bank";
-import { FontAwesome5, Ionicons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { useState } from "react";
-import { TouchableOpacity, View } from "react-native";
-import { Switch } from "react-native-paper";
+import { View } from "react-native";
+import { Divider, Switch } from "react-native-paper";
 
 export default function AdminAppInformation_Bank() {
   const [value, setValue] = useState(false);
   return (
     <>
-      <AdminComp_BoxTitle
-        title="Bank"
-        rightComponent={
-          <TouchableOpacity
-            activeOpacity={0.7}
-            style={{
-              backgroundColor: MainColor.yellow,
-              padding: 5,
-              borderRadius: 50,
-            }}
-            onPress={() => {}}
-          >
-            <Ionicons name="add" size={16} color="black" />
-          </TouchableOpacity>
-        }
-      />
-      <BaseBox>
+      <>
         <Grid>
-          <Grid.Col span={4} style={{ alignItems: "center" }}>
+          <Grid.Col span={3} style={{ alignItems: "center" }}>
             <TextCustom bold>Aksi</TextCustom>
           </Grid.Col>
-          <Grid.Col span={4} style={{ alignItems: "center" }}>
+          <Grid.Col span={3} style={{ alignItems: "center" }}>
             <TextCustom bold>Status</TextCustom>
           </Grid.Col>
-          <Grid.Col span={4}>
+          <Grid.Col span={6}>
             <TextCustom bold>Nama Bank</TextCustom>
           </Grid.Col>
         </Grid>
 
         <Divider />
 
-        {dummyMasterBank.map((e, i) => (
-          <View key={i}>
-            <Grid>
-              <Grid.Col span={4}>
-                <ButtonCustom
-                  iconLeft={
-                    <FontAwesome5
-                      name="edit"
-                      size={ICON_SIZE_SMALL}
-                      color="black"
-                    />
-                  }
-                  onPress={() => {}}
+        <StackCustom>
+          {dummyMasterBank.map((e, i) => (
+            <View key={i}>
+              <Grid>
+                <Grid.Col span={3} style={{ alignItems: "center" }}>
+                  <ActionIcon
+                    icon={
+                      <FontAwesome5
+                        name="edit"
+                        size={ICON_SIZE_BUTTON}
+                        color="black"
+                      />
+                    }
+                    onPress={() => {
+                      router.push(
+                        `/admin/app-information/information-bank/${i}`
+                      );
+                    }}
+                  />
+                </Grid.Col>
+                <Grid.Col
+                  span={3}
+                  style={{ alignItems: "center", justifyContent: "center" }}
                 >
-                  Edit
-                </ButtonCustom>
-              </Grid.Col>
-              <Grid.Col
-                span={4}
-                style={{ alignItems: "center", justifyContent: "center" }}
-              >
-                <Switch
-                  value={value}
-                  onValueChange={() => {
-                    setValue(!value);
-                  }}
-                  theme={{
-                    colors: {
-                      primary: MainColor.yellow,
-                    },
-                  }}
-                />
-              </Grid.Col>
-              <Grid.Col span={4} style={{ justifyContent: "center" }}>
-                <TextCustom>{e.code}</TextCustom>
-              </Grid.Col>
-            </Grid>
-            <Divider />
-          </View>
-        ))}
-      </BaseBox>
+                  <Switch
+                    value={value}
+                    onValueChange={() => {
+                      setValue(!value);
+                    }}
+                    theme={{
+                      colors: {
+                        primary: MainColor.yellow,
+                      },
+                    }}
+                  />
+                </Grid.Col>
+                <Grid.Col span={6} style={{ justifyContent: "center" }}>
+                  <TextCustom>{e.code}</TextCustom>
+                </Grid.Col>
+              </Grid>
+              <Divider />
+            </View>
+          ))}
+        </StackCustom>
+      </>
     </>
   );
 }

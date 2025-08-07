@@ -1,6 +1,8 @@
 // Alert
 import AlertCustom from "./Alert/AlertCustom";
 import AlertDefaultSystem from "./Alert/AlertDefaultSystem";
+// ActionIcon
+import ActionIcon from "./ActionIcon/ActionIcon";
 // Button
 import LeftButtonCustom from "./Button/BackButton";
 import ButtonCenteredOnly from "./Button/ButtonCenteredOnly";
@@ -60,6 +62,9 @@ import GridComponentView from "./_ShareComponent/GridSectionView";
 import ProgressCustom from "./Progress/ProgressCustom";
 
 export {
+  // ActionIcon
+  ActionIcon,
+  // Alert
   AlertCustom,
   AlertDefaultSystem,
   // Image
