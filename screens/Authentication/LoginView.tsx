@@ -32,7 +32,7 @@ export default function LoginView() {
 
     // router.navigate("/verification");
     // router.navigate(`/(application)/(user)/profile/${id}`);
-    // router.navigate("/(application)/(user)/home");
+    router.navigate("/(application)/(user)/home");
     // router.navigate(`/(application)/profile/${id}/edit`);
     // router.navigate(`/(application)/(user)/portofolio/${id}`)
     // router.navigate(`/(application)/(image)/preview-image/${id}`);
@@ -40,7 +40,7 @@ export default function LoginView() {
     // router.replace("/(application)/coba");
     // router.navigate("/investment/(tabs)")1
     // router.navigate("/crowdfunding")
-    router.navigate("/admin/dashboard")
+    // router.navigate("/admin/dashboard")
   }
 
   return (
@@ -78,9 +78,15 @@ export default function LoginView() {
           placeholder="Masukkan nomor"
         />
 
-        <Spacing height={20} />
+        <Spacing />
 
         <ButtonCustom onPress={handleLogin}>Login</ButtonCustom>
+
+        <Spacing />
+
+        <ButtonCustom onPress={() => router.navigate("/admin/dashboard")}>
+          Admin ( Delete Soon )
+        </ButtonCustom>
       </View>
     </ViewWrapper>
   );
