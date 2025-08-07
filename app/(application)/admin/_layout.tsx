@@ -9,7 +9,7 @@ import {
 import DrawerAdmin from "@/components/Drawer/DrawerAdmin";
 import NavbarMenu from "@/components/Drawer/NavbarMenu";
 import { AccentColor, MainColor } from "@/constants/color-palet";
-import { ICON_SIZE_SMALL } from "@/constants/constans-value";
+import { ICON_SIZE_MEDIUM, ICON_SIZE_SMALL, ICON_SIZE_XLARGE } from "@/constants/constans-value";
 import { adminListMenu } from "@/screens/Admin/listPageAdmin";
 import { GStyles } from "@/styles/global-styles";
 import { FontAwesome6, Ionicons } from "@expo/vector-icons";
@@ -33,7 +33,7 @@ export default function AdminLayout() {
           headerLeft: () => (
             <Ionicons
               name="menu"
-              size={ICON_SIZE_SMALL}
+              size={ICON_SIZE_XLARGE}
               color={MainColor.white}
               onPress={() => setOpenDrawerNavbar(true)}
             />
@@ -41,7 +41,7 @@ export default function AdminLayout() {
           headerRight: () => (
             <FontAwesome6
               name="circle-user"
-              size={ICON_SIZE_SMALL}
+              size={ICON_SIZE_MEDIUM}
               color={MainColor.white}
               onPress={() => setOpenDrawerUser(true)}
             />
