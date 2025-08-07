@@ -59,7 +59,13 @@ export default function AdminInformation() {
                   <Ionicons name="add" size={ICON_SIZE_SMALL} color="black" />
                 }
                 onPress={() => {
-                  router.push("/admin/app-information/information-bank/create");
+                  if (activeCategory === "bank") {
+                    router.push("/admin/app-information/information-bank/create");
+                  } else if (activeCategory === "business") {
+                    router.push("/admin/app-information/business-field/create");
+                  } else if (activeCategory === "sticker") {
+                    router.push("/admin/app-information/sticker/create");
+                  }
                 }}
               />
             </View>

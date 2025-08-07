@@ -6,14 +6,12 @@ import {
     ViewWrapper
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
-import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 
 export default function AdminAppInformation_BankCreate() {
   const buttonSubmit = (
     <BoxButtonOnFooter>
       <ButtonCustom
-        iconLeft={<Ionicons name="add" size={16} color="black" />}
         onPress={() => router.back()}
       >
         Tambah
