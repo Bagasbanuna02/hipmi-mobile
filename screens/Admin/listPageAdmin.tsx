@@ -57,9 +57,9 @@ const adminListMenu: NavbarItem[] = [
     icon: "desktop-outline",
     links: [
       { label: "Dashboard", link: "/admin/job" },
-      { label: "Publish", link: "/admin/job/publish" },
-      { label: "Review", link: "/admin/job/review" },
-      { label: "Reject", link: "/admin/job/reject" },
+      { label: "Publish", link: "/admin/job/publish/status" },
+      { label: "Review", link: "/admin/job/review/status" },
+      { label: "Reject", link: "/admin/job/reject/status" },
     ],
   },
   {
