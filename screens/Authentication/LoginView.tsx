@@ -84,7 +84,7 @@ export default function LoginView() {
 
         <Spacing />
 
-        <ButtonCustom onPress={() => router.navigate("/admin/user-access")}>
+        <ButtonCustom onPress={() => router.navigate("/admin/collaboration")}>
           Admin ( Delete Soon )
         </ButtonCustom>
       </View>

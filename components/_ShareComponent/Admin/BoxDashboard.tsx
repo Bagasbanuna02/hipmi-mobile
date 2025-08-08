@@ -3,7 +3,7 @@ import CircleContainer from "@/components/Container/CircleContainer";
 import Grid from "@/components/Grid/GridCustom";
 import StackCustom from "@/components/Stack/StackCustom";
 import TextCustom from "@/components/Text/TextCustom";
-import { MainColor } from "@/constants/color-palet";
+import { AccentColor, MainColor } from "@/constants/color-palet";
 
 interface BoxDashboardProps {
   item: {
@@ -37,7 +37,7 @@ export default function AdminComp_BoxDashboard({ item }: BoxDashboardProps) {
             span={3}
             style={{ alignItems: "flex-start", justifyContent: "center" }}
           >
-            <CircleContainer icon={item.icon} />
+            <CircleContainer style={{ backgroundColor: MainColor.white, borderColor: AccentColor.blue }} icon={item.icon} />
           </Grid.Col>
         </Grid>
       </BaseBox>

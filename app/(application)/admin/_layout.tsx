@@ -48,59 +48,36 @@ export default function AdminLayout() {
           ),
         }}
       >
-        <Stack.Screen name="dashboard" 
-        // options={{ title: "Main Dashboard" }} 
-        />
-        <Stack.Screen
-          name="investment/index"
-          // options={{ title: "Dashboard Investasi" }}
-        />
-        <Stack.Screen
-          name="investment/publish"
-          // options={{ title: "Investasi Publish" }}
-        />
-        <Stack.Screen
-          name="investment/review"
-          // options={{ title: "Investasi Review" }}
-        />
-        <Stack.Screen
-          name="investment/reject"
-          // options={{ title: "Investasi Reject" }}
-        />
-        <Stack.Screen name="maps" 
-        // options={{ title: "Maps" }} 
-        />
-        <Stack.Screen name="app-information/index" 
-        // options={{ title: "Information" }} 
-        />
-        <Stack.Screen name="job/index" 
-        // options={{ title: "Dashboard Job" }} 
-        />
-        <Stack.Screen name="job/publish" 
-        // options={{ title: "Job Publish" }} 
-        />
-        <Stack.Screen name="job/review" 
-        // options={{ title: "Job Review" }} 
-        />
-        <Stack.Screen name="job/reject" 
-        // options={{ title: "Job Reject" }} 
-        />
-        <Stack.Screen
-          name="collaboration/index"
-          // options={{ title: "Dashboard Collaboration" }}
-        />
-        <Stack.Screen
-          name="collaboration/publish"
-          // options={{ title: "Collaboration Publish" }}
-        />
-        <Stack.Screen
-          name="collaboration/group"
-          // options={{ title: "Collaboration Group" }}
-        />
-        <Stack.Screen
-          name="collaboration/reject"
-          // options={{ title: "Collaboration Reject" }}
-        />
+        <Stack.Screen name="dashboard" />
+        {/* ================== Investment Start ================== */}
+        <Stack.Screen name="investment/index" />
+        <Stack.Screen name="investment/publish" />
+        <Stack.Screen name="investment/review" />
+        <Stack.Screen name="investment/reject" />
+        {/* ================== Investment End ================== */}
+
+        {/* ================== Maps Start ================== */}
+        <Stack.Screen name="maps" />
+        {/* ================== Maps End ================== */}
+
+        {/* ================== App Information Start ================== */}
+        <Stack.Screen name="app-information/index" />
+        {/* ================== App Information End ================== */}
+
+        {/* ================== Job Start ================== */}
+        <Stack.Screen name="job/index" />
+        <Stack.Screen name="job/publish" />
+        <Stack.Screen name="job/review" />
+        <Stack.Screen name="job/reject" />
+
+        {/* ================== Collaboration Start ================== */}
+        <Stack.Screen name="collaboration/index" />
+        <Stack.Screen name="collaboration/publish" />
+        <Stack.Screen name="collaboration/group" />
+        <Stack.Screen name="collaboration/reject" />
+        <Stack.Screen name="collaboration/[id]/[status]"/>
+        <Stack.Screen name="collaboration/[id]/group"/>
+        {/* ================== Collaboration End ================== */}
       </Stack>
 
       <DrawerAdmin
