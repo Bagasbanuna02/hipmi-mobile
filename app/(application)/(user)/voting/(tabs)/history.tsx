@@ -1,5 +1,5 @@
 import { ViewWrapper } from "@/components";
-import TabsTwoHeaderCustom from "@/components/_ShareComponent/TabsTwoHeaderCustom";
+import TabsTwoButtonCustom from "@/components/_ShareComponent/TabsTwoHeaderCustom";
 import Voting_BoxPublishSection from "@/screens/Voting/BoxPublishSection";
 import { useState } from "react";
 
@@ -15,7 +15,7 @@ export default function VotingHistory() {
     <ViewWrapper
       hideFooter
       headerComponent={
-        <TabsTwoHeaderCustom
+        <TabsTwoButtonCustom
           leftValue="all"
           rightValue="main"
           leftText="Semua Riwayat"

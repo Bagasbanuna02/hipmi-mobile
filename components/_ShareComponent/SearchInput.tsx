@@ -17,7 +17,7 @@ export default function SearchInput({
   onPress,
   iconLeft,
   iconRight,
-  containerStyle = { marginBottom: 0 },
+  containerStyle,
   style,
   ...props
 }: SearchInputProps) {
@@ -32,7 +32,7 @@ export default function SearchInput({
       }
       placeholder={placeholder}
       borderRadius={50}
-      containerStyle={containerStyle}
+      containerStyle={[containerStyle, { marginBottom: 0 }]}
       {...props}
     />
   );

@@ -1,15 +1,16 @@
-import { MainColor, AccentColor } from "@/constants/color-palet";
+import { AccentColor, MainColor } from "@/constants/color-palet";
 import { View } from "react-native";
 import ButtonCustom from "../Button/ButtonCustom";
 import Spacing from "./Spacing";
 
-export default function TabsTwoHeaderCustom ({
+export default function TabsTwoButtonCustom ({
     leftValue,
     rightValue,
     leftText,
     rightText,
     activeCategory,
     handlePress,
+    hideBackground,
 }: {
     leftValue: string;
     rightValue: string;
@@ -17,6 +18,7 @@ export default function TabsTwoHeaderCustom ({
     rightText: string;
     activeCategory: string | null;
     handlePress: (item: string) => void;
+    hideBackground?: boolean;
 }) {
     return (
       <>
@@ -25,7 +27,7 @@ export default function TabsTwoHeaderCustom ({
             flexDirection: "row",
             alignItems: "center",
             padding: 5,
-            backgroundColor: MainColor.soft_darkblue,
+            backgroundColor: hideBackground ? "transparent" : MainColor.soft_darkblue,
             borderRadius: 50,
             width: "100%",
           }}

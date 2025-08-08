@@ -69,6 +69,8 @@ export default function AdminLayout() {
         <Stack.Screen name="job/publish" />
         <Stack.Screen name="job/review" />
         <Stack.Screen name="job/reject" />
+        <Stack.Screen name="job/[status]/status" />
+        <Stack.Screen name="job/[id]/[status]/index" />
 
         {/* ================== Collaboration Start ================== */}
         <Stack.Screen name="collaboration/index" />
