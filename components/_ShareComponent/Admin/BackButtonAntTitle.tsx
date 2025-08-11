@@ -1,12 +1,13 @@
 import Grid from "@/components/Grid/GridCustom";
 import TextCustom from "@/components/Text/TextCustom";
-import { View } from "react-native";
 import AdminBackButton from "./BackButton";
 
 export default function AdminBackButtonAntTitle({
   title,
+  rightComponent,
 }: {
   title: string;
+  rightComponent?: React.ReactNode;
 }) {
   return (
     <>
@@ -22,8 +23,8 @@ export default function AdminBackButtonAntTitle({
               {title}
             </TextCustom>
           </Grid.Col>
-          <Grid.Col span={2}>
-            <View />
+          <Grid.Col span={2} style={{ alignItems: "flex-end" }}>
+            {rightComponent}
           </Grid.Col>
         </Grid>
       </>

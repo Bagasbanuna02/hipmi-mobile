@@ -8,7 +8,7 @@ type IMenuDrawerItemProps = {
     icon: React.ReactNode;
     label: string;
     value?: string;
-    path?: Href;
+    path?: Href | string;
     color?: string;
 }
 

@@ -83,6 +83,12 @@ export default function AdminLayout() {
 
         {/* ================== Forum Start ================== */}
         <Stack.Screen name="forum/index" />
+        <Stack.Screen name="forum/[id]/index" />
+        <Stack.Screen name="forum/report-comment"/>
+        <Stack.Screen name="forum/report-posting"/>
+        
+        <Stack.Screen name="forum/[id]/list-report-posting" />
+        <Stack.Screen name="forum/[id]/list-report-comment"/>
         {/* ================== Forum End ================== */}
       </Stack>
 
