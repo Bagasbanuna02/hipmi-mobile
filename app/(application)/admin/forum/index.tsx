@@ -1,18 +1,17 @@
 import { Spacing, StackCustom, ViewWrapper } from "@/components";
 import {
-  IconPublish,
-  IconReject,
-  IconReview,
+    IconPublish,
+    IconReport,
 } from "@/components/_Icon/IconComponent";
 import AdminComp_BoxDashboard from "@/components/_ShareComponent/Admin/BoxDashboard";
 import AdminTitlePage from "@/components/_ShareComponent/Admin/TitlePage";
 import { MainColor } from "@/constants/color-palet";
 
-export default function AdminJob() {
+export default function AdminForum() {
   return (
     <>
       <ViewWrapper>
-        <AdminTitlePage title="Job Vacancy" />
+        <AdminTitlePage title="Forum" />
         <Spacing />
         <StackCustom gap={"xs"}>
           {listData.map((item, i) => (
@@ -26,18 +25,18 @@ export default function AdminJob() {
 
 const listData = [
   {
-    label: "Publish",
+    label: "Posting",
     value: 4,
     icon: <IconPublish size={25} color={MainColor.green} />,
   },
   {
-    label: "Review",
+    label: "Report Posting",
     value: 7,
-    icon: <IconReview size={25} color={MainColor.orange} />,
+    icon: <IconReport size={25} color={MainColor.orange} />,
   },
   {
-    label: "Reject",
+    label: "Report Comment",
     value: 5,
-    icon: <IconReject size={25} color={MainColor.red} />,
+    icon: <IconReport size={25} color={MainColor.red} />,
   },
 ];

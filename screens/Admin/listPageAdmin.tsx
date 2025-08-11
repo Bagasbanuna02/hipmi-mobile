@@ -67,9 +67,9 @@ const adminListMenu: NavbarItem[] = [
     icon: "chatbubble-ellipses-outline",
     links: [
       { label: "Dashboard", link: "/admin/forum" },
-      { label: "Posting", link: "/admin/forum/publish" },
-      { label: "Report Posting", link: "/admin/forum/review" },
-      { label: "Report Comment", link: "/admin/forum/reject" },
+      { label: "Posting", link: "/admin/forum/posting" },
+      { label: "Report Posting", link: "/admin/forum/report-posting" },
+      { label: "Report Comment", link: "/admin/forum/report-comment" },
     ],
   },
   {

@@ -17,17 +17,8 @@ export default function AdminComp_BoxTitle({
         paddingTop={5}
         paddingBottom={5}
       >
-        {/* <TextCustom
-          // style={{ alignSelf: "center" }}
-          bold
-          size={TEXT_SIZE_LARGE}
-        >
-          {title}
-        </TextCustom>
-        {rightComponent} */}
-
         <Grid>
-          <Grid.Col span={6} style={{ justifyContent: "center" }}>
+          <Grid.Col span={rightComponent ? 6 : 12} style={{ justifyContent: "center" }}>
             <TextCustom
               // style={{ alignSelf: "center" }}
               bold
@@ -36,15 +27,17 @@ export default function AdminComp_BoxTitle({
               {title}
             </TextCustom>
           </Grid.Col>
-          <Grid.Col
-            span={6}
-            style={{
-              justifyContent: "center",
-              alignItems: "flex-end",
-            }}
-          >
-            {rightComponent}
-          </Grid.Col>
+          {rightComponent && (
+            <Grid.Col
+              span={6}
+              style={{
+                justifyContent: "center",
+                alignItems: "flex-end",
+              }}
+            >
+              {rightComponent}
+            </Grid.Col>
+          )}
         </Grid>
       </BaseBox>
     </>

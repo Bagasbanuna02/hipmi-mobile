@@ -2,6 +2,7 @@ import { MainColor } from "@/constants/color-palet";
 import { Stack } from "expo-router";
 import "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
 
 export default function RootLayout() {
   return (
@@ -30,6 +31,7 @@ export default function RootLayout() {
           <Stack.Screen name="(application)" options={{ headerShown: false }} />
         </Stack>
       </SafeAreaProvider>
+      <Toast />
     </>
   );
 }

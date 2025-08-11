@@ -66,9 +66,9 @@ export default function AdminLayout() {
 
         {/* ================== Job Start ================== */}
         <Stack.Screen name="job/index" />
-        <Stack.Screen name="job/publish" />
+        {/* <Stack.Screen name="job/publish" />
         <Stack.Screen name="job/review" />
-        <Stack.Screen name="job/reject" />
+        <Stack.Screen name="job/reject" /> */}
         <Stack.Screen name="job/[status]/status" />
         <Stack.Screen name="job/[id]/[status]/index" />
 
@@ -80,6 +80,16 @@ export default function AdminLayout() {
         <Stack.Screen name="collaboration/[id]/[status]"/>
         <Stack.Screen name="collaboration/[id]/group"/>
         {/* ================== Collaboration End ================== */}
+
+        {/* ================== Forum Start ================== */}
+        <Stack.Screen name="forum/index" />
+        <Stack.Screen name="forum/[id]/index" />
+        <Stack.Screen name="forum/report-comment"/>
+        <Stack.Screen name="forum/report-posting"/>
+        
+        <Stack.Screen name="forum/[id]/list-report-posting" />
+        <Stack.Screen name="forum/[id]/list-report-comment"/>
+        {/* ================== Forum End ================== */}
       </Stack>
 
       <DrawerAdmin
