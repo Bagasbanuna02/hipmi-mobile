@@ -22,11 +22,11 @@ const adminListMenu: NavbarItem[] = [
     label: "Donasi",
     icon: "hand-right",
     links: [
-      { label: "Dashboard", link: "/admin/donasi" },
-      { label: "Publish", link: "/admin/donasi/publish" },
-      { label: "Review", link: "/admin/donasi/review" },
-      { label: "Reject", link: "/admin/donasi/reject" },
-      { label: "Kategori", link: "/admin/donasi/kategori" },
+      { label: "Dashboard", link: "/admin/donation" },
+      { label: "Publish", link: "/admin/donation/publish/status" },
+      { label: "Review", link: "/admin/donation/review/status" },
+      { label: "Reject", link: "/admin/donation/reject/status" },
+      { label: "Kategori", link: "/admin/donation/category" },
     ],
   },
   {
@@ -34,11 +34,11 @@ const adminListMenu: NavbarItem[] = [
     icon: "calendar-clear",
     links: [
       { label: "Dashboard", link: "/admin/event" },
-      { label: "Publish", link: "/admin/event/publish" },
-      { label: "Review", link: "/admin/event/review" },
-      { label: "Reject", link: "/admin/event/reject" },
-      { label: "Tipe Acara", link: "/admin/event/tipe-acara" },
-      { label: "Riwayat", link: "/admin/event/riwayat" },
+      { label: "Publish", link: "/admin/event/publish/status" },
+      { label: "Review", link: "/admin/event/review/status" },
+      { label: "Reject", link: "/admin/event/reject/status" },
+      { label: "Tipe Acara", link: "/admin/event/type-of-event" },
+      { label: "Riwayat", link: "/admin/event/riwayat/status" },
     ],
   },
   {
@@ -46,10 +46,10 @@ const adminListMenu: NavbarItem[] = [
     icon: "accessibility-outline",
     links: [
       { label: "Dashboard", link: "/admin/voting" },
-      { label: "Publish", link: "/admin/voting/publish" },
-      { label: "Review", link: "/admin/voting/review" },
-      { label: "Reject", link: "/admin/voting/reject" },
-      { label: "Riwayat", link: "/admin/voting/riwayat" },
+      { label: "Publish", link: "/admin/voting/publish/status" },
+      { label: "Review", link: "/admin/voting/review/status" },
+      { label: "Reject", link: "/admin/voting/reject/status" },
+      { label: "Riwayat", link: "/admin/voting/riwayat/status" },
     ],
   },
   {

@@ -86,10 +86,33 @@ export default function AdminLayout() {
         <Stack.Screen name="forum/[id]/index" />
         <Stack.Screen name="forum/report-comment"/>
         <Stack.Screen name="forum/report-posting"/>
-        
         <Stack.Screen name="forum/[id]/list-report-posting" />
         <Stack.Screen name="forum/[id]/list-report-comment"/>
         {/* ================== Forum End ================== */}
+
+        {/* ================== Voting Start ================== */}
+        <Stack.Screen name="voting/index" />
+        <Stack.Screen name="voting/[status]/status" />
+        <Stack.Screen name="voting/[id]/[status]/index" />
+        <Stack.Screen name="voting/[id]/reject-input"/>
+        {/* ================== Voting End ================== */}
+
+        {/* ================== Event Start ================== */}
+        <Stack.Screen name="event/index" />
+        <Stack.Screen name="event/[status]/status" />
+        <Stack.Screen name="event/type-of-event"/>
+        <Stack.Screen name="event/type-create"/>
+        <Stack.Screen name="event/type-update"/>
+        {/* <Stack.Screen name="event/[id]/[status]/index" />
+        <Stack.Screen name="event/[id]/reject-input"/> */}
+        {/* ================== Event End ================== */}
+
+        {/* ================== Donasi Start ================== */}
+        {/* <Stack.Screen name="donation/index" /> */}
+        {/* <Stack.Screen name="donation/[status]/status" /> */}
+        {/* <Stack.Screen name="donation/[id]/[status]/index" />
+        <Stack.Screen name="donation/[id]/reject-input"/> */}
+        {/* ================== Donasi End ================== */}
       </Stack>
 
       <DrawerAdmin
