@@ -106,6 +106,13 @@ export default function AdminLayout() {
         {/* <Stack.Screen name="event/[id]/[status]/index" />
         <Stack.Screen name="event/[id]/reject-input"/> */}
         {/* ================== Event End ================== */}
+
+        {/* ================== Donasi Start ================== */}
+        {/* <Stack.Screen name="donation/index" /> */}
+        {/* <Stack.Screen name="donation/[status]/status" /> */}
+        {/* <Stack.Screen name="donation/[id]/[status]/index" />
+        <Stack.Screen name="donation/[id]/reject-input"/> */}
+        {/* ================== Donasi End ================== */}
       </Stack>
 
       <DrawerAdmin

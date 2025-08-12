@@ -22,11 +22,11 @@ const adminListMenu: NavbarItem[] = [
     label: "Donasi",
     icon: "hand-right",
     links: [
-      { label: "Dashboard", link: "/admin/donasi" },
-      { label: "Publish", link: "/admin/donasi/publish" },
-      { label: "Review", link: "/admin/donasi/review" },
-      { label: "Reject", link: "/admin/donasi/reject" },
-      { label: "Kategori", link: "/admin/donasi/kategori" },
+      { label: "Dashboard", link: "/admin/donation" },
+      { label: "Publish", link: "/admin/donation/publish/status" },
+      { label: "Review", link: "/admin/donation/review/status" },
+      { label: "Reject", link: "/admin/donation/reject/status" },
+      { label: "Kategori", link: "/admin/donation/category" },
     ],
   },
   {
