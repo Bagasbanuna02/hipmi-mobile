@@ -109,3 +109,23 @@ export const IconDot = ({ size, color }: { size?: number; color?: string }) => {
     </>
   );
 };
+
+export const IconList = ({
+  size,
+  color,
+}: {
+  size?: number;
+  color?: string;
+}) => {
+  return (
+    <>
+      <Ionicons
+        name="list"
+        size={size || ICON_SIZE_MEDIUM}
+        color={color || MainColor.white}
+      />
+    </>
+  );
+};
+  
+  

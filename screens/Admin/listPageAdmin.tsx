@@ -34,11 +34,11 @@ const adminListMenu: NavbarItem[] = [
     icon: "calendar-clear",
     links: [
       { label: "Dashboard", link: "/admin/event" },
-      { label: "Publish", link: "/admin/event/publish" },
-      { label: "Review", link: "/admin/event/review" },
-      { label: "Reject", link: "/admin/event/reject" },
-      { label: "Tipe Acara", link: "/admin/event/tipe-acara" },
-      { label: "Riwayat", link: "/admin/event/riwayat" },
+      { label: "Publish", link: "/admin/event/publish/status" },
+      { label: "Review", link: "/admin/event/review/status" },
+      { label: "Reject", link: "/admin/event/reject/status" },
+      { label: "Tipe Acara", link: "/admin/event/type-of-event" },
+      { label: "Riwayat", link: "/admin/event/riwayat/status" },
     ],
   },
   {

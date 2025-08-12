@@ -96,6 +96,16 @@ export default function AdminLayout() {
         <Stack.Screen name="voting/[id]/[status]/index" />
         <Stack.Screen name="voting/[id]/reject-input"/>
         {/* ================== Voting End ================== */}
+
+        {/* ================== Event Start ================== */}
+        <Stack.Screen name="event/index" />
+        <Stack.Screen name="event/[status]/status" />
+        <Stack.Screen name="event/type-of-event"/>
+        <Stack.Screen name="event/type-create"/>
+        <Stack.Screen name="event/type-update"/>
+        {/* <Stack.Screen name="event/[id]/[status]/index" />
+        <Stack.Screen name="event/[id]/reject-input"/> */}
+        {/* ================== Event End ================== */}
       </Stack>
 
       <DrawerAdmin

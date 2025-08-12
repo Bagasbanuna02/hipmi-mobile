@@ -1,18 +1,15 @@
 import {
-  ActionIcon,
   ScrollableCustom,
   StackCustom,
-  ViewWrapper,
+  ViewWrapper
 } from "@/components";
+import AdminActionIconPlus from "@/components/_ShareComponent/Admin/ActionIconPlus";
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
-import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import AdminAppInformation_BusinessFieldSection from "@/screens/Admin/App-Information/BusinessFieldSection";
 import AdminAppInformation_Bank from "@/screens/Admin/App-Information/InformationBankSection";
 import AdminAppInformation_StickerSection from "@/screens/Admin/App-Information/StickerSection";
-import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useState } from "react";
-import { View } from "react-native";
 
 export default function AdminInformation() {
   const [activeCategory, setActiveCategory] = useState<string | null>("bank");
@@ -53,22 +50,17 @@ export default function AdminInformation() {
         <AdminComp_BoxTitle
           title={activePage}
           rightComponent={
-            <View style={{ flexDirection: "row" }}>
-              <ActionIcon
-                icon={
-                  <Ionicons name="add" size={ICON_SIZE_SMALL} color="black" />
+            <AdminActionIconPlus
+              onPress={() => {
+                if (activeCategory === "bank") {
+                  router.push("/admin/app-information/information-bank/create");
+                } else if (activeCategory === "business") {
+                  router.push("/admin/app-information/business-field/create");
+                } else if (activeCategory === "sticker") {
+                  router.push("/admin/app-information/sticker/create");
                 }
-                onPress={() => {
-                  if (activeCategory === "bank") {
-                    router.push("/admin/app-information/information-bank/create");
-                  } else if (activeCategory === "business") {
-                    router.push("/admin/app-information/business-field/create");
-                  } else if (activeCategory === "sticker") {
-                    router.push("/admin/app-information/sticker/create");
-                  }
-                }}
-              />
-            </View>
+              }}
+            />
           }
         />
         {renderContent()}
