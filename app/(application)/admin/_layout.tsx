@@ -86,10 +86,16 @@ export default function AdminLayout() {
         <Stack.Screen name="forum/[id]/index" />
         <Stack.Screen name="forum/report-comment"/>
         <Stack.Screen name="forum/report-posting"/>
-        
         <Stack.Screen name="forum/[id]/list-report-posting" />
         <Stack.Screen name="forum/[id]/list-report-comment"/>
         {/* ================== Forum End ================== */}
+
+        {/* ================== Voting Start ================== */}
+        <Stack.Screen name="voting/index" />
+        <Stack.Screen name="voting/[status]/status" />
+        <Stack.Screen name="voting/[id]/[status]/index" />
+        <Stack.Screen name="voting/[id]/reject-input"/>
+        {/* ================== Voting End ================== */}
       </Stack>
 
       <DrawerAdmin

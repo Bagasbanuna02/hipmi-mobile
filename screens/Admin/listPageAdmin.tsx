@@ -46,10 +46,10 @@ const adminListMenu: NavbarItem[] = [
     icon: "accessibility-outline",
     links: [
       { label: "Dashboard", link: "/admin/voting" },
-      { label: "Publish", link: "/admin/voting/publish" },
-      { label: "Review", link: "/admin/voting/review" },
-      { label: "Reject", link: "/admin/voting/reject" },
-      { label: "Riwayat", link: "/admin/voting/riwayat" },
+      { label: "Publish", link: "/admin/voting/publish/status" },
+      { label: "Review", link: "/admin/voting/review/status" },
+      { label: "Reject", link: "/admin/voting/reject/status" },
+      { label: "Riwayat", link: "/admin/voting/riwayat/status" },
     ],
   },
   {
