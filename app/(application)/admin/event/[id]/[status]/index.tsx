@@ -166,8 +166,8 @@ export default function AdminEventDetail() {
               AlertDefaultSystem({
                 title: "Publish",
                 message: "Apakah anda yakin ingin mempublikasikan data ini?",
-                textLeft: "Cancel",
-                textRight: "Publish",
+                textLeft: "Batal",
+                textRight: "Ya",
                 onPressLeft: () => {
                   router.back();
                 },
@@ -190,7 +190,6 @@ export default function AdminEventDetail() {
             }}
           />
         )}
-        <Spacing />
         <Spacing />
       </ViewWrapper>
 

@@ -1,16 +1,19 @@
 import {
+  AlertDefaultSystem,
   BadgeCustom,
   BaseBox,
-  ButtonCustom,
   DummyLandscapeImage,
   Grid,
+  Spacing,
   StackCustom,
   TextCustom,
-  ViewWrapper,
+  ViewWrapper
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
+import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
+import AdminButtonReview from "@/components/_ShareComponent/Admin/ButtonReview";
 import { MainColor } from "@/constants/color-palet";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 
 export default function AdminJobDetailStatus() {
@@ -91,19 +94,35 @@ export default function AdminJobDetailStatus() {
         </BaseBox>
 
         {status === "review" && (
-          <Grid>
-            <Grid.Col span={6} style={{ paddingRight: 10 }}>
-              <ButtonCustom backgroundColor={MainColor.green} textColor="white">
-                Publish
-              </ButtonCustom>
-            </Grid.Col>
-            <Grid.Col span={6} style={{ paddingLeft: 10 }}>
-              <ButtonCustom backgroundColor={MainColor.red} textColor="white">
-                Reject
-              </ButtonCustom>
-            </Grid.Col>
-          </Grid>
+          <AdminButtonReview
+            onPublish={() => {
+              AlertDefaultSystem({
+                title: "Publish",
+                message: "Apakah anda yakin ingin mempublikasikan data ini?",
+                textLeft: "Batal",
+                textRight: "Ya",
+                onPressLeft: () => {
+                  router.back();
+                },
+                onPressRight: () => {
+                  router.back();
+                },
+              });
+            }}
+            onReject={() => {
+              router.push(`/admin/job/${id}/reject-input`);
+            }}
+          />
         )}
+        {status === "reject" && (
+          <AdminButtonReject
+            title="Tambah Catatan"
+            onReject={() => {
+              router.push(`/admin/job/${id}/reject-input`);
+            }}
+          />
+        )}
+        <Spacing />
       </ViewWrapper>
     </>
   );
