@@ -5,9 +5,11 @@ import {
   FlatList,
   Modal,
   Pressable,
+  StyleProp,
   Text,
   TouchableOpacity,
   View,
+  ViewStyle,
 } from "react-native";
 
 type SelectItem = {
@@ -24,6 +26,7 @@ type SelectProps = {
   disabled?: boolean; // <-- tambahkan prop disabled
   onChange: (value: string | number) => void;
   borderRadius?: number;
+  styleContainer?: StyleProp<ViewStyle>;
 };
 
 const SelectCustom: React.FC<SelectProps> = ({
@@ -35,6 +38,7 @@ const SelectCustom: React.FC<SelectProps> = ({
   disabled = false, // <-- default false
   onChange,
   borderRadius = 8,
+  styleContainer,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -43,7 +47,7 @@ const SelectCustom: React.FC<SelectProps> = ({
   const hasError = required && value === null; // <-- check if empty and required
 
   return (
-    <View style={GStyles.inputContainerArea}>
+    <View style={[GStyles.inputContainerArea, styleContainer]}>
       {label && (
         <Text style={GStyles.inputLabel}>
           {label}
@@ -52,7 +56,7 @@ const SelectCustom: React.FC<SelectProps> = ({
       )}
       <Pressable
         style={[
-          { borderRadius },
+          { borderRadius, },
           hasError ? GStyles.inputErrorBorder : null,
           GStyles.inputContainerInput,
           disabled && GStyles.disabledBox,

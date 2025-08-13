@@ -39,7 +39,7 @@ export default function AdminJobRejectInput() {
     <>
       <ViewWrapper
         footerComponent={buttonSubmit}
-        headerComponent={<AdminBackButtonAntTitle title="Masukan Alasan" />}
+        headerComponent={<AdminBackButtonAntTitle title="Penolakan Job" />}
       >
         <TextAreaCustom
           value={value}

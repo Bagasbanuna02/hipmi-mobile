@@ -39,7 +39,7 @@ export default function AdminVotingRejectInput() {
     <>
       <ViewWrapper
         footerComponent={buttonSubmit}
-        headerComponent={<AdminBackButtonAntTitle title="Masukan Alasan" />}
+        headerComponent={<AdminBackButtonAntTitle title="Penolakan Voting" />}
       >
         <TextAreaCustom
           value={value}
