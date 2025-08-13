@@ -7,6 +7,8 @@ import {
   DrawerCustom,
   DummyLandscapeImage,
   MenuDrawerDynamicGrid,
+  ProgressCustom,
+  Spacing,
   StackCustom,
   TextCustom,
   ViewWrapper,
@@ -18,10 +20,12 @@ import AdminButtonReview from "@/components/_ShareComponent/Admin/ButtonReview";
 import { GridDetail_4_8 } from "@/components/_ShareComponent/GridDetail_4_8";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_BUTTON, TEXT_SIZE_LARGE } from "@/constants/constans-value";
+import AdminDonation_BoxOfDonationStory from "@/screens/Admin/Donation/BoxOfDonationStory";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import React from "react";
+import { View } from "react-native";
 
 export default function AdminDonationDetail() {
   const { id, status } = useLocalSearchParams();
@@ -68,18 +72,18 @@ export default function AdminDonationDetail() {
       label: "Kategori",
       value: "Kategori Donasi",
     },
-    {
-      label: "Total Donatur",
-      value: "-",
-    },
-    {
-      label: "Progress",
-      value: "0 %",
-    },
-    {
-      label: "Dana Terkumpul",
-      value: "Rp 0",
-    },
+    // {
+    //   label: "Total Donatur",
+    //   value: "-",
+    // },
+    // {
+    //   label: "Progress",
+    //   value: "0 %",
+    // },
+    // {
+    //   label: "Dana Terkumpul",
+    //   value: "Rp 0",
+    // },
   ];
 
   const listPencarianDana = [
@@ -114,6 +118,8 @@ export default function AdminDonationDetail() {
     />
   );
 
+
+
   return (
     <>
       <ViewWrapper
@@ -125,33 +131,50 @@ export default function AdminDonationDetail() {
         }
       >
         {status === "publish" && (
-          <BaseBox>
-            <StackCustom>
-              <TextCustom bold align="center" size={TEXT_SIZE_LARGE}>
-                Pencarian Dana
-              </TextCustom>
+          <View>
+            <BaseBox>
+              <StackCustom>
+                <TextCustom bold align="center" size={TEXT_SIZE_LARGE}>
+                  Pencarian Dana
+                </TextCustom>
 
-              <StackCustom gap={5}>
-                {listPencarianDana.map((item, i) => (
-                  <GridDetail_4_8
-                    key={i}
-                    label={<TextCustom bold>{item.label}</TextCustom>}
-                    value={<TextCustom>{item.value}</TextCustom>}
-                  />
-                ))}
+                <StackCustom gap={5}>
+                  {listPencarianDana.map((item, i) => (
+                    <GridDetail_4_8
+                      key={i}
+                      label={<TextCustom bold>{item.label}</TextCustom>}
+                      value={<TextCustom>{item.value}</TextCustom>}
+                    />
+                  ))}
+                </StackCustom>
+                <ButtonCustom
+                  iconLeft={
+                    <Ionicons name="cash-outline" size={ICON_SIZE_BUTTON} />
+                  }
+                  onPress={() => {
+                    router.push(`/admin/donation/${id}/disbursement-of-funds`);
+                  }}
+                >
+                  Cairkan Dana
+                </ButtonCustom>
               </StackCustom>
-              <ButtonCustom
-                iconLeft={
-                  <Ionicons name="cash-outline" size={ICON_SIZE_BUTTON} />
-                }
-                onPress={() => {
-                  router.push(`/admin/donation/${id}/disbursement-of-funds`);
-                }}
-              >
-                Cairkan Dana
-              </ButtonCustom>
-            </StackCustom>
-          </BaseBox>
+            </BaseBox>
+
+            <BaseBox>
+              <ProgressCustom size="lg" />
+              <Spacing />
+              <StackCustom gap={"xs"}>
+                <GridDetail_4_8
+                  label={<TextCustom bold>Jumlah Donatur</TextCustom>}
+                  value={<TextCustom>0 orang</TextCustom>}
+                />
+                <GridDetail_4_8
+                  label={<TextCustom bold>Dana Terkumpul</TextCustom>}
+                  value={<TextCustom>Rp 0</TextCustom>}
+                />
+              </StackCustom>
+            </BaseBox>
+          </View>
         )}
 
         <BaseBox>
@@ -168,34 +191,42 @@ export default function AdminDonationDetail() {
         </BaseBox>
 
         {status === "review" && (
-          <AdminButtonReview
-            onPublish={() => {
-              AlertDefaultSystem({
-                title: "Publish",
-                message: "Apakah anda yakin ingin mempublikasikan data ini?",
-                textLeft: "Batal",
-                textRight: "Ya",
-                onPressLeft: () => {
-                  router.back();
-                },
-                onPressRight: () => {
-                  router.back();
-                },
-              });
-            }}
-            onReject={() => {
-              router.push(`/admin/donation/${id}/reject-input`);
-            }}
-          />
+          <StackCustom>
+            <AdminDonation_BoxOfDonationStory />
+
+            <AdminButtonReview
+              onPublish={() => {
+                AlertDefaultSystem({
+                  title: "Publish",
+                  message: "Apakah anda yakin ingin mempublikasikan data ini?",
+                  textLeft: "Batal",
+                  textRight: "Ya",
+                  onPressLeft: () => {
+                    router.back();
+                  },
+                  onPressRight: () => {
+                    router.back();
+                  },
+                });
+              }}
+              onReject={() => {
+                router.push(`/admin/donation/${id}/reject-input`);
+              }}
+            />
+          </StackCustom>
         )}
 
         {status === "reject" && (
-          <AdminButtonReject
-            title="Tambah Catatan"
-            onReject={() => {
-              router.push(`/admin/donation/${id}/reject-input`);
-            }}
-          />
+          <StackCustom>
+            <AdminDonation_BoxOfDonationStory />
+
+            <AdminButtonReject
+              title="Tambah Catatan"
+              onReject={() => {
+                router.push(`/admin/donation/${id}/reject-input`);
+              }}
+            />
+          </StackCustom>
         )}
       </ViewWrapper>
 
