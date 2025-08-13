@@ -51,9 +51,6 @@ export default function AdminLayout() {
         <Stack.Screen name="dashboard" />
         {/* ================== Investment Start ================== */}
         <Stack.Screen name="investment/index" />
-        <Stack.Screen name="investment/publish" />
-        <Stack.Screen name="investment/review" />
-        <Stack.Screen name="investment/reject" />
         {/* ================== Investment End ================== */}
 
         {/* ================== Maps Start ================== */}

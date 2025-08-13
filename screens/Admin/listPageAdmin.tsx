@@ -13,9 +13,9 @@ const adminListMenu: NavbarItem[] = [
     icon: "wallet",
     links: [
       { label: "Dashboard", link: "/admin/investment" },
-      { label: "Publish", link: "/admin/investment/publish" },
-      { label: "Review", link: "/admin/investment/review" },
-      { label: "Reject", link: "/admin/investment/reject" },
+      { label: "Publish", link: "/admin/investment/publish/status" },
+      { label: "Review", link: "/admin/investment/review/status" },
+      { label: "Reject", link: "/admin/investment/reject/status" },
     ],
   },
   {
