@@ -9,7 +9,7 @@ import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 
-export default function AdminEventRejectInput() {
+export default function AdminDonationRejectInput() {
   const { id } = useLocalSearchParams();
   const [value, setValue] = useState(id as string);
   const buttonSubmit = (
@@ -27,7 +27,7 @@ export default function AdminEventRejectInput() {
             },
             onPressRight: () => {
               console.log("value:", value);
-              router.replace(`/admin/event/reject/status`);
+              router.replace(`/admin/donation/reject/status`);
             },
           })
         }
@@ -39,7 +39,7 @@ export default function AdminEventRejectInput() {
     <>
       <ViewWrapper
         footerComponent={buttonSubmit}
-        headerComponent={<AdminBackButtonAntTitle title="Penolakan Event" />}
+        headerComponent={<AdminBackButtonAntTitle title="Penolakan Donasi" />}
       >
         <TextAreaCustom
           value={value}

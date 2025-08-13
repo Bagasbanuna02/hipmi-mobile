@@ -14,7 +14,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import { Divider } from "react-native-paper";
 
-export default function AdminDonationStatus() {
+export default function AdminInvestmentStatus() {
   const { status } = useLocalSearchParams();
   const rightComponent = (
     <SearchInput
@@ -27,7 +27,7 @@ export default function AdminDonationStatus() {
       <ViewWrapper
         headerComponent={
           <AdminComp_BoxTitle
-            title={`Donasi ${_.startCase(status as string)}`}
+            title={`Investasi ${_.startCase(status as string)}`}
             rightComponent={rightComponent}
           />
         }
@@ -35,7 +35,7 @@ export default function AdminDonationStatus() {
         <AdminTitleTable
           title1="Aksi"
           title2="Username"
-          title3="Judul Donasi"
+          title3="Judul Investasi"
         />
         <Spacing />
         <Divider />
@@ -49,7 +49,7 @@ export default function AdminDonationStatus() {
                   <Octicons name="eye" size={ICON_SIZE_BUTTON} color="black" />
                 }
                 onPress={() => {
-                  router.push(`/admin/donation/${index}/${status}`);
+                  router.push(`/admin/investment/${index}/${status}`);
                 }}
               />
             }

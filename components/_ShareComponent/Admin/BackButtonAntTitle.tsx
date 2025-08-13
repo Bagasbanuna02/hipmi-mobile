@@ -5,28 +5,37 @@ import AdminBackButton from "./BackButton";
 export default function AdminBackButtonAntTitle({
   title,
   rightComponent,
+  newComponent,
 }: {
-  title: string;
+  title?: string;
   rightComponent?: React.ReactNode;
+  newComponent?: React.ReactNode;
 }) {
   return (
     <>
       <Grid>
-        <Grid.Col span={2}>
+        <Grid.Col span={2} style={{ justifyContent: "center" }}>
           <AdminBackButton />
-          </Grid.Col>
-          <Grid.Col
-            span={8}
-            style={{ alignItems: "center", justifyContent: "center" }}
-          >
+        </Grid.Col>
+        <Grid.Col
+          span={newComponent ? 10 : 8}
+          style={{ alignItems: "center", justifyContent: "center" }}
+        >
+          {newComponent ? (
+            newComponent
+          ) : (
             <TextCustom bold size={"large"} align="center">
               {title}
             </TextCustom>
-          </Grid.Col>
-          <Grid.Col span={2} style={{ alignItems: "flex-end" }}>
-            {rightComponent}
-          </Grid.Col>
-        </Grid>
-      </>
-    );
+          )}
+        </Grid.Col>
+        <Grid.Col
+          span={newComponent ? 0 : 2}
+          style={{ alignItems: "flex-end" }}
+        >
+          {rightComponent}
+        </Grid.Col>
+      </Grid>
+    </>
+  );
 }
