@@ -31,15 +31,7 @@ export default function LoginView() {
     console.log("login user id :", id);
 
     router.navigate("/verification");
-    // router.navigate(`/(application)/(user)/profile/${id}`);
-    // router.navigate("/(application)/(user)/home");
-    // router.navigate(`/(application)/profile/${id}/edit`);
-    // router.navigate(`/(application)/(user)/portofolio/${id}`)
-    // router.navigate(`/(application)/(image)/preview-image/${id}`);
-    // router.replace("/(application)/(user)/event/(tabs)");
     // router.replace("/(application)/coba");
-    // router.navigate("/investment/(tabs)")1
-    // router.navigate("/crowdfunding")
     // router.navigate("/admin/dashboard")
   }
 
@@ -84,9 +76,9 @@ export default function LoginView() {
 
         <Spacing />
 
-        <ButtonCustom onPress={() => router.navigate("/admin/investment")}>
+        {/* <ButtonCustom onPress={() => router.navigate("/admin/investment")}>
           Admin ( Delete Soon )
-        </ButtonCustom>
+        </ButtonCustom> */}
       </View>
     </ViewWrapper>
   );
