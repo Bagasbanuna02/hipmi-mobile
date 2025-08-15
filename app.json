@@ -4,7 +4,7 @@
     "slug": "hipmi-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo-hipmi.png",
+    "icon": "./assets/images/icon.png",
     "scheme": "hipmimobile",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
