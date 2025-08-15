@@ -11,7 +11,8 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
+    "app/(application)/admin/app-information/business-field/[id]",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-, "app/(application)/admin/app-information/business-field/[id]"    ]
+  ]
 }
