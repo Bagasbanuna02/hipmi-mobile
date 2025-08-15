@@ -3,11 +3,14 @@ import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import ButtonCustom from "@/components/Button/ButtonCustom";
 import { MainColor } from "@/constants/color-palet";
 import { GStyles } from "@/styles/global-styles";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { Text, View } from "react-native";
 import { OtpInput } from "react-native-otp-entry";
 
 export default function VerificationView() {
+  const { kodeId } = useLocalSearchParams();
+  console.log("kodeId ", kodeId);
+  
   const handleVerification = () => {
     console.log("Verification clicked");
     router.push("/register");
