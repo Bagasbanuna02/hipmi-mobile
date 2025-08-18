@@ -32,9 +32,36 @@ export default function LoginView() {
     setSelectedCountry(country);
   }
 
+  async function validateData() {
+    if (inputValue.length === 0) {
+      return Toast.show({
+        type: "error",
+        text1: "Masukan nomor anda",
+      });
+    }
+
+    if (selectedCountry === null) {
+      return Toast.show({
+        type: "error",
+        text1: "Pilih negara",
+      });
+    }
+
+    if (inputValue.length < 9) {
+      return Toast.show({
+        type: "error",
+        text1: "Nomor tidak valid",
+      });
+    }
+
+    return true;
+  }
+
   async function handleLogin() {
-    const callingCode =
-      selectedCountry?.callingCode.replace(/^\+/, "").trim() || "";
+    const isValid = await validateData();
+    if (!isValid) return;
+
+    const callingCode = selectedCountry?.callingCode.replace(/^\+/, "") || "";
     const fixNumber = inputValue.replace(/\s+/g, "");
     const realNumber = callingCode + fixNumber;
 
@@ -47,6 +74,7 @@ export default function LoginView() {
         text2: "Login berhasil",
       });
       router.navigate(`/verification?kodeId=${response.kodeId}`);
+      // router.replace("/(application)/coba");
     } else {
       Toast.show({
         type: "error",
@@ -54,15 +82,6 @@ export default function LoginView() {
         text2: response.message,
       });
     }
-
-    // const randomAlfabet = Math.random().toString(36).substring(2, 8);
-    // const randomNumber = Math.floor(Math.random() * 1000000);
-    // const id = randomAlfabet + randomNumber + fixNumber;
-    // console.log("login user id :", id);
-
-    // router.navigate("/verification");
-    // router.replace("/(application)/coba");
-    // router.navigate("/admin/dashboard")
   }
 
   return (

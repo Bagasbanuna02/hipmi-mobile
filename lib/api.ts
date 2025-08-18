@@ -1,6 +1,6 @@
 const API_BASE = (path: string) => {
-  const url = "https://stg-hipmi.wibudev.com/";
-  //   const url = "http://10.169.174.254:3000/";
+//   const url = "https://stg-hipmi.wibudev.com/";
+    const url = "http://172.20.173.254:3000/";
   return `${url}/${path}`;
 };
 
