@@ -10,7 +10,7 @@ export async function apiVersion() {
   return data;
 }
 
-export async function apiLogin({ nomor }: { nomor: string }) {
+export async function apiLoginBack({ nomor }: { nomor: string }) {
   const response = await fetch(API_BASE("api/auth/login"), {
     method: "POST",
     headers: {

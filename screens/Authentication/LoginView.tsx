@@ -2,7 +2,7 @@ import ButtonCustom from "@/components/Button/ButtonCustom";
 import Spacing from "@/components/_ShareComponent/Spacing";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { MainColor } from "@/constants/color-palet";
-import { apiLogin, apiVersion } from "@/lib/api";
+import { apiLogin, apiVersion } from "@/service/api";
 import { GStyles } from "@/styles/global-styles";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
@@ -14,6 +14,7 @@ export default function LoginView() {
   const [version, setVersion] = useState<string>("");
   const [selectedCountry, setSelectedCountry] = useState<null | ICountry>(null);
   const [inputValue, setInputValue] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     onLoadVersion();
@@ -65,15 +66,17 @@ export default function LoginView() {
     const fixNumber = inputValue.replace(/\s+/g, "");
     const realNumber = callingCode + fixNumber;
 
+    setLoading(true);
     const response = await apiLogin({ nomor: realNumber });
 
     if (response.success) {
       Toast.show({
         type: "success",
-        text1: "Success",
-        text2: "Login berhasil",
+        text1: "Sukses",
+        text2: "Kode OTP berhasil dikirim",
       });
       router.navigate(`/verification?kodeId=${response.kodeId}`);
+      setLoading(false);
       // router.replace("/(application)/coba");
     } else {
       Toast.show({
@@ -81,6 +84,7 @@ export default function LoginView() {
         text1: "Error",
         text2: response.message,
       });
+      setLoading(false);
     }
   }
 
@@ -121,7 +125,9 @@ export default function LoginView() {
 
         <Spacing />
 
-        <ButtonCustom onPress={handleLogin}>Login</ButtonCustom>
+        <ButtonCustom onPress={handleLogin} isLoading={loading}>
+          Login
+        </ButtonCustom>
         <Spacing />
 
         {/* <ButtonCustom onPress={() => router.navigate("/admin/investment")}>
