@@ -37,6 +37,7 @@ export default function UserLayout() {
           name="waiting-room"
           options={{
             title: "Waiting Room",
+            headerBackVisible: false,
           }}
         />
 
