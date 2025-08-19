@@ -11,10 +11,12 @@ import { OtpInput } from "react-native-otp-entry";
 import Toast from "react-native-toast-message";
 
 export default function VerificationView() {
-  const { kodeId } = useLocalSearchParams();
+  const { kodeId, nomor } = useLocalSearchParams();
+  console.log("nomor", nomor);
+
   const [codeOtp, setCodeOtp] = useState<string>("");
   const [inputOtp, setInputOtp] = useState<string>("");
-  const [nomor, setNomor] = useState<string>("");
+  const [userNumber, setUserNumber] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -25,7 +27,7 @@ export default function VerificationView() {
     const response = await apiCheckCodeOtp({ kodeId: kodeId });
     console.log("response ", JSON.stringify(response, null, 2));
     setCodeOtp(response.otp);
-    setNomor(response.nomor);
+    setUserNumber(response.nomor);
   }
 
   const handleVerification = async () => {
@@ -47,7 +49,7 @@ export default function VerificationView() {
 
     try {
       setLoading(true);
-      const response = await apiValidationCode({ nomor: nomor });
+      const response = await apiValidationCode({ nomor: userNumber });
       console.log("response ", JSON.stringify(response, null, 2));
 
       if (response.success) {
@@ -61,7 +63,7 @@ export default function VerificationView() {
           router.replace("/(application)/(user)/waiting-room");
         }
       } else {
-        router.replace(`/register?nomor=${nomor}`);
+        router.replace(`/register?nomor=${userNumber}`);
       }
     } catch (error) {
       console.log("Error verification", error);
@@ -79,7 +81,9 @@ export default function VerificationView() {
               <Text style={GStyles.authTitle}>Verifikasi KOde OTP</Text>
               <Spacing height={30} />
               <Text style={GStyles.textLabel}>Masukan 4 digit kode otp</Text>
-              <Text style={GStyles.textLabel}>Yang di kirim ke +{nomor}</Text>
+              <Text style={GStyles.textLabel}>
+                Yang di kirim ke +{userNumber}
+              </Text>
               <Spacing height={30} />
               <OtpInput
                 disabled={codeOtp === ""}

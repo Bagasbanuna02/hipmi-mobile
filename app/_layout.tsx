@@ -1,3 +1,4 @@
+import { AuthProvider } from "@/context/AuthContext";
 import AppRoot from "@/screens/RootLayout/AppRoot";
 import "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -7,7 +8,9 @@ export default function RootLayout() {
   return (
     <>
       <SafeAreaProvider>
-        <AppRoot />
+          <AppRoot />
+        {/* <AuthProvider>
+        </AuthProvider> */}
       </SafeAreaProvider>
       <Toast />
     </>
