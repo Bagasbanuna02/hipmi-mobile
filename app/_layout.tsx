@@ -1,5 +1,5 @@
-import { MainColor } from "@/constants/color-palet";
-import { Stack } from "expo-router";
+import { AuthProvider } from "@/context/AuthContext";
+import AppRoot from "@/screens/RootLayout/AppRoot";
 import "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
@@ -8,28 +8,9 @@ export default function RootLayout() {
   return (
     <>
       <SafeAreaProvider>
-        <Stack
-          screenOptions={{
-            headerStyle: { backgroundColor: MainColor.darkblue },
-            headerTitleStyle: { color: MainColor.yellow, fontWeight: "bold" },
-            headerTitleAlign: "center",
-          }}
-        >
-          <Stack.Screen
-            name="index"
-            options={{ title: "", headerBackVisible: false }}
-          />
-          <Stack.Screen name="+not-found" options={{ title: "" }} />
-          <Stack.Screen
-            name="verification"
-            options={{ title: "", headerBackVisible: false }}
-          />
-          <Stack.Screen
-            name="register"
-            options={{ title: "", headerBackVisible: false }}
-          />
-          <Stack.Screen name="(application)" options={{ headerShown: false }} />
-        </Stack>
+          <AppRoot />
+        {/* <AuthProvider>
+        </AuthProvider> */}
       </SafeAreaProvider>
       <Toast />
     </>

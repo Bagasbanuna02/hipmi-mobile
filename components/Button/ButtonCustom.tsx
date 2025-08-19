@@ -6,6 +6,7 @@ import { radiusMap } from "@/constants/radius-value";
 import { MainColor } from "@/constants/color-palet";
 import { stylesButton } from "./buttonCustomStyles";
 import { Href, router } from "expo-router";
+import { ActivityIndicator } from "react-native-paper";
 
 // Import radiusMap
 
@@ -23,6 +24,7 @@ interface ButtonProps {
   disabled?: boolean;
   iconLeft?: React.ReactNode;
   style?: StyleProp<ViewStyle>;
+  isLoading?: boolean;
 }
 
 const ButtonCustom: React.FC<ButtonProps> = ({
@@ -36,6 +38,7 @@ const ButtonCustom: React.FC<ButtonProps> = ({
   disabled = false,
   iconLeft,
   style,
+  isLoading = false,
 }) => {
   return (
     <TouchableOpacity
@@ -59,9 +62,13 @@ const ButtonCustom: React.FC<ButtonProps> = ({
     >
       {/* Render icon jika tersedia */}
       {iconLeft && iconLeft}
-      <Text style={[stylesButton.buttonText, { color: textColor }]}>
-        {children || title}
-      </Text>
+      {isLoading ? (
+        <ActivityIndicator size={18} color={MainColor.darkblue} />
+      ) : (
+        <Text style={[stylesButton.buttonText, { color: textColor }]}>
+          {children || title}
+        </Text>
+      )}
     </TouchableOpacity>
   );
 };

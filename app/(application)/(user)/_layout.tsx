@@ -33,6 +33,14 @@ export default function UserLayout() {
           }}
         />
 
+        <Stack.Screen
+          name="waiting-room"
+          options={{
+            title: "Waiting Room",
+            headerBackVisible: false,
+          }}
+        />
+
         {/* ========== Profile Section ========= */}
         <Stack.Screen
           name="profile"

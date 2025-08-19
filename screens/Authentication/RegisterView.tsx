@@ -5,16 +5,71 @@ import TextInputCustom from "@/components/TextInput/TextInputCustom";
 import { MainColor } from "@/constants/color-palet";
 import { GStyles } from "@/styles/global-styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { Text, View } from "react-native";
 import { useState } from "react";
+import { apiRegister } from "@/service/api";
+import Toast from "react-native-toast-message";
 
 export default function RegisterView() {
-  const [username, setUsername] = useState("Bagas Banuna");
-  const handleRegister = () => {
-    console.log("Success register", username);
-    router.push("/(application)/(user)/home");
+  const { nomor } = useLocalSearchParams();
+  const [username, setUsername] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const validasiData = () => {
+    if (!nomor) {
+      Toast.show({
+        type: "error",
+        text1: "Gagal",
+        text2: "Nomor tidak ditemukan",
+      });
+      return false;
+    }
+    if (!username) {
+      Toast.show({
+        type: "error",
+        text1: "Gagal",
+        text2: "Username tidak boleh kosong",
+      });
+      return false;
+    }
+    return true;
   };
+
+  async function handleRegister() {
+    const isValid = validasiData();
+    if (!isValid) return;
+    const data = {
+      nomor: nomor as string,
+      username: username,
+    };
+
+    try {
+      setLoading(true);
+      const response = await apiRegister({ data });
+      console.log("Success register", JSON.stringify(response, null, 2));
+
+      if (response.success) {
+        Toast.show({
+          type: "success",
+          text1: "Sukses",
+          text2: "Anda berhasil terdaftar",
+        });
+        router.replace("/(application)/(user)/waiting-room");
+      }
+
+      Toast.show({
+        type: "info",
+        text1: "Info",
+        text2: response.message,
+      });
+    } catch (error: any) {
+      console.log("Error register", error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <>
       <ViewWrapper withBackground>
@@ -33,7 +88,7 @@ export default function RegisterView() {
               <Text style={GStyles.textLabel}>
                 Anda akan terdaftar dengan nomor
               </Text>
-              <Text style={GStyles.textLabel}>+6282xxxxxxxxx</Text>
+              <Text style={GStyles.textLabel}>+{nomor}</Text>
               <Spacing />
             </View>
             <TextInputCustom
@@ -42,17 +97,9 @@ export default function RegisterView() {
               onChangeText={(text) => setUsername(text)}
             />
 
-            <ButtonCustom onPress={handleRegister}>Daftar</ButtonCustom>
-            {/* <Spacing />
-            <ButtonCustom
-              title="Coba"
-              backgroundColor={MainColor.yellow}
-              textColor={MainColor.black}
-              onPress={() => {
-                console.log("Home clicked");
-                router.push("/(application)/coba");
-              }}
-            /> */}
+            <ButtonCustom isLoading={loading} onPress={handleRegister}>
+              Daftar
+            </ButtonCustom>
           </View>
         </View>
       </ViewWrapper>

@@ -2,19 +2,76 @@ import Spacing from "@/components/_ShareComponent/Spacing";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import ButtonCustom from "@/components/Button/ButtonCustom";
 import { MainColor } from "@/constants/color-palet";
+import { apiCheckCodeOtp, apiValidationCode } from "@/service/api";
 import { GStyles } from "@/styles/global-styles";
 import { router, useLocalSearchParams } from "expo-router";
+import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { OtpInput } from "react-native-otp-entry";
+import Toast from "react-native-toast-message";
 
 export default function VerificationView() {
-  const { kodeId } = useLocalSearchParams();
-  console.log("kodeId ", kodeId);
-  
-  const handleVerification = () => {
-    console.log("Verification clicked");
-    router.push("/register");
+  const { kodeId, nomor } = useLocalSearchParams();
+  console.log("nomor", nomor);
+
+  const [codeOtp, setCodeOtp] = useState<string>("");
+  const [inputOtp, setInputOtp] = useState<string>("");
+  const [userNumber, setUserNumber] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    onLoadCheckCodeOtp(kodeId as string);
+  }, [kodeId]);
+
+  async function onLoadCheckCodeOtp(kodeId: string) {
+    const response = await apiCheckCodeOtp({ kodeId: kodeId });
+    console.log("response ", JSON.stringify(response, null, 2));
+    setCodeOtp(response.otp);
+    setUserNumber(response.nomor);
+  }
+
+  const handleVerification = async () => {
+    const codeOtpNumber = parseInt(codeOtp);
+    const inputOtpNumber = parseInt(inputOtp);
+
+    console.log("codeOtpNumber ", codeOtpNumber, typeof codeOtpNumber);
+    console.log("inputOtpNumber ", inputOtpNumber, typeof inputOtpNumber);
+
+    if (inputOtpNumber !== codeOtpNumber) {
+      Toast.show({
+        type: "error",
+        text1: "Gagal",
+        text2: "Kode OTP tidak sesuai",
+      });
+
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const response = await apiValidationCode({ nomor: userNumber });
+      console.log("response ", JSON.stringify(response, null, 2));
+
+      if (response.success) {
+        if (response.active) {
+          if (response.roleId === "1") {
+            router.replace("/(application)/(user)/home");
+          } else {
+            router.replace("/(application)/admin/dashboard");
+          }
+        } else {
+          router.replace("/(application)/(user)/waiting-room");
+        }
+      } else {
+        router.replace(`/register?nomor=${userNumber}`);
+      }
+    } catch (error) {
+      console.log("Error verification", error);
+    } finally {
+      setLoading(false);
+    }
   };
+
   return (
     <>
       <ViewWrapper withBackground>
@@ -25,10 +82,11 @@ export default function VerificationView() {
               <Spacing height={30} />
               <Text style={GStyles.textLabel}>Masukan 4 digit kode otp</Text>
               <Text style={GStyles.textLabel}>
-                Yang di kirim ke +6282xxxxxxxxx
+                Yang di kirim ke +{userNumber}
               </Text>
               <Spacing height={30} />
               <OtpInput
+                disabled={codeOtp === ""}
                 numberOfDigits={4}
                 theme={{
                   pinCodeContainerStyle: {
@@ -44,6 +102,7 @@ export default function VerificationView() {
                     paddingRight: 10,
                   },
                 }}
+                onTextChange={(otp: string) => setInputOtp(otp)}
               />
               <Spacing height={30} />
               <Text style={GStyles.textLabel}>
@@ -55,6 +114,8 @@ export default function VerificationView() {
           </View>
 
           <ButtonCustom
+            isLoading={loading}
+            disabled={codeOtp === ""}
             backgroundColor={MainColor.yellow}
             textColor={MainColor.black}
             onPress={() => handleVerification()}
