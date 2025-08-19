@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios, { AxiosInstance } from "axios";
 import Constants from "expo-constants";
 const API_BASE_URL = Constants.expoConfig?.extra?.API_BASE_URL;
@@ -12,9 +13,18 @@ export const apiClient: AxiosInstance = axios.create({
   },
 });
 
+// Endpoint yang TIDAK butuh token
+const PUBLIC_ROUTES = [
+  // "/version",
+  "/auth/send-otp",
+  "/auth/verify-otp",
+  "/auth/register",
+  "/auth/logout", // opsional, tergantung kebutuhan
+];
+
 // apiClient.interceptors.request.use(
 //   (config) => {
-//     const token = localStorage.getItem("token");
+//     const token = AsyncStorage.getItem("authToken");
 //     if (token) {
 //       config.headers.Authorization = `Bearer ${token}`;
 //     }
@@ -24,6 +34,30 @@ export const apiClient: AxiosInstance = axios.create({
 //     return Promise.reject(error);
 //   }
 // );
+
+apiClient.interceptors.request.use(
+  (config) => {
+    const token = AsyncStorage.getItem("authToken");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    // const isPublic = PUBLIC_ROUTES.some((route) => config.url?.includes(route));
+
+    // if (!isPublic) {
+    //   const token = AsyncStorage.getItem("authToken");
+    //   if (token) {
+    //     config.headers.Authorization = `Bearer ${token}`;
+    //   } else {
+    //     console.warn(`Token tidak ditemukan untuk endpoint: ${config.url}`);
+    //   }
+    // }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export async function apiVersion() {
   console.log("API_BASE_URL", API_BASE_URL);

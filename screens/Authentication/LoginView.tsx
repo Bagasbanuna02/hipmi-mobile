@@ -2,7 +2,8 @@ import ButtonCustom from "@/components/Button/ButtonCustom";
 import Spacing from "@/components/_ShareComponent/Spacing";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { MainColor } from "@/constants/color-palet";
-import { apiLogin, apiVersion } from "@/service/api";
+import { useAuth } from "@/hook/use-auth";
+import { apiVersion } from "@/service/api";
 import { GStyles } from "@/styles/global-styles";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
@@ -16,12 +17,15 @@ export default function LoginView() {
   const [inputValue, setInputValue] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
+  const { loginWithNomor } = useAuth();
+
   useEffect(() => {
     onLoadVersion();
   }, []);
 
   async function onLoadVersion() {
     const res = await apiVersion();
+    console.log("Version", res.data);
     setVersion(res.data);
   }
 
@@ -66,24 +70,26 @@ export default function LoginView() {
     const fixNumber = inputValue.replace(/\s+/g, "");
     const realNumber = callingCode + fixNumber;
 
-    setLoading(true);
-    const response = await apiLogin({ nomor: realNumber });
+    try {
+      setLoading(true);
+      // const response = await apiLogin({ nomor: realNumber });
+      await loginWithNomor(realNumber);
 
-    if (response.success) {
       Toast.show({
         type: "success",
         text1: "Sukses",
         text2: "Kode OTP berhasil dikirim",
       });
-      router.navigate(`/verification?kodeId=${response.kodeId}`);
-      setLoading(false);
-      // router.replace("/(application)/coba");
-    } else {
+
+      router.navigate(`/verification?nomor=${realNumber}`);
+    } catch (error) {
+      console.log("Error login", error);
       Toast.show({
         type: "error",
         text1: "Error",
-        text2: response.message,
+        text2: error as string,
       });
+    } finally {
       setLoading(false);
     }
   }

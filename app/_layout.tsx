@@ -8,9 +8,9 @@ export default function RootLayout() {
   return (
     <>
       <SafeAreaProvider>
+        <AuthProvider>
           <AppRoot />
-        {/* <AuthProvider>
-        </AuthProvider> */}
+        </AuthProvider>
       </SafeAreaProvider>
       <Toast />
     </>
