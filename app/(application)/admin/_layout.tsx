@@ -9,7 +9,12 @@ import {
 import DrawerAdmin from "@/components/Drawer/DrawerAdmin";
 import NavbarMenu from "@/components/Drawer/NavbarMenu";
 import { AccentColor, MainColor } from "@/constants/color-palet";
-import { ICON_SIZE_MEDIUM, ICON_SIZE_SMALL, ICON_SIZE_XLARGE } from "@/constants/constans-value";
+import {
+  ICON_SIZE_MEDIUM,
+  ICON_SIZE_SMALL,
+  ICON_SIZE_XLARGE,
+} from "@/constants/constans-value";
+import { useAuth } from "@/hooks/use-auth";
 import { adminListMenu } from "@/screens/Admin/listPageAdmin";
 import { GStyles } from "@/styles/global-styles";
 import { FontAwesome6, Ionicons } from "@expo/vector-icons";
@@ -19,6 +24,9 @@ import { useState } from "react";
 export default function AdminLayout() {
   const [openDrawerNavbar, setOpenDrawerNavbar] = useState(false);
   const [openDrawerUser, setOpenDrawerUser] = useState(false);
+
+  const { logout } = useAuth();
+
   return (
     <>
       <Stack
@@ -74,32 +82,32 @@ export default function AdminLayout() {
         <Stack.Screen name="collaboration/publish" />
         <Stack.Screen name="collaboration/group" />
         <Stack.Screen name="collaboration/reject" />
-        <Stack.Screen name="collaboration/[id]/[status]"/>
-        <Stack.Screen name="collaboration/[id]/group"/>
+        <Stack.Screen name="collaboration/[id]/[status]" />
+        <Stack.Screen name="collaboration/[id]/group" />
         {/* ================== Collaboration End ================== */}
 
         {/* ================== Forum Start ================== */}
         <Stack.Screen name="forum/index" />
         <Stack.Screen name="forum/[id]/index" />
-        <Stack.Screen name="forum/report-comment"/>
-        <Stack.Screen name="forum/report-posting"/>
+        <Stack.Screen name="forum/report-comment" />
+        <Stack.Screen name="forum/report-posting" />
         <Stack.Screen name="forum/[id]/list-report-posting" />
-        <Stack.Screen name="forum/[id]/list-report-comment"/>
+        <Stack.Screen name="forum/[id]/list-report-comment" />
         {/* ================== Forum End ================== */}
 
         {/* ================== Voting Start ================== */}
         <Stack.Screen name="voting/index" />
         <Stack.Screen name="voting/[status]/status" />
         <Stack.Screen name="voting/[id]/[status]/index" />
-        <Stack.Screen name="voting/[id]/reject-input"/>
+        <Stack.Screen name="voting/[id]/reject-input" />
         {/* ================== Voting End ================== */}
 
         {/* ================== Event Start ================== */}
         <Stack.Screen name="event/index" />
         <Stack.Screen name="event/[status]/status" />
-        <Stack.Screen name="event/type-of-event"/>
-        <Stack.Screen name="event/type-create"/>
-        <Stack.Screen name="event/type-update"/>
+        <Stack.Screen name="event/type-of-event" />
+        <Stack.Screen name="event/type-create" />
+        <Stack.Screen name="event/type-update" />
         {/* <Stack.Screen name="event/[id]/[status]/index" />
         <Stack.Screen name="event/[id]/reject-input"/> */}
         {/* ================== Event End ================== */}
@@ -223,7 +231,7 @@ export default function AdminLayout() {
                   textLeft: "Batal",
                   textRight: "Keluar",
                   onPressRight: () => {
-                    router.replace("/");
+                    logout();
                   },
                 });
               }

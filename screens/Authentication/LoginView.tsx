@@ -2,10 +2,10 @@ import ButtonCustom from "@/components/Button/ButtonCustom";
 import Spacing from "@/components/_ShareComponent/Spacing";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { MainColor } from "@/constants/color-palet";
-import { useAuth } from "@/hook/use-auth";
-import { apiVersion } from "@/service/api";
+import { useAuth } from "@/hooks/use-auth";
+import { apiClient, apiVersion } from "@/service/api";
 import { GStyles } from "@/styles/global-styles";
-import { router } from "expo-router";
+import { Redirect, router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import PhoneInput, { ICountry } from "react-native-international-phone-number";
@@ -17,16 +17,25 @@ export default function LoginView() {
   const [inputValue, setInputValue] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  const { loginWithNomor } = useAuth();
+  const { loginWithNomor, token, isAdmin, isUserActive } = useAuth();
+
+  // console.log("Token state:", token ? "AVAILABLE" : "NOT AVAILABLE");
+  // console.log("isAdmin state:", isAdmin);
+  // console.log("isUserActive state:", isUserActive);
+  // console.log("isAuthenticated state:", isAuthenticated);
 
   useEffect(() => {
     onLoadVersion();
   }, []);
 
   async function onLoadVersion() {
+    // const token = await AsyncStorage.getItem("authToken");
+    // console.log("Token Version:", token);
     const res = await apiVersion();
-    console.log("Version", res.data);
     setVersion(res.data);
+
+    const seasonKey = await apiClient.get("/mobile/season-key");
+    console.log("seasonKey", seasonKey.data);
   }
 
   function handleInputValue(phoneNumber: string) {
@@ -92,6 +101,18 @@ export default function LoginView() {
     } finally {
       setLoading(false);
     }
+  }
+
+  if (token && !isUserActive) {
+    return <Redirect href={"/(application)/(user)/waiting-room"} />;
+  }
+
+  if (token && !isAdmin) {
+    return <Redirect href={"/(application)/(user)/home"} />;
+  }
+
+  if (token && isAdmin) {
+    return <Redirect href={"/(application)/admin/dashboard"} />;
   }
 
   return (

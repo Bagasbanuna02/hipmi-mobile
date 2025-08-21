@@ -3,6 +3,7 @@ import AlertCustom from "@/components/Alert/AlertCustom";
 import LeftButtonCustom from "@/components/Button/BackButton";
 import DrawerCustom from "@/components/Drawer/DrawerCustom";
 import { MainColor } from "@/constants/color-palet";
+import { useAuth } from "@/hooks/use-auth";
 import { drawerItemsProfile } from "@/screens/Profile/ListPage";
 import Profile_MenuDrawerSection from "@/screens/Profile/menuDrawerSection";
 import ProfileSection from "@/screens/Profile/ProfileSection";
@@ -16,6 +17,8 @@ export default function Profile() {
   const { id } = useLocalSearchParams();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [showLogoutAlert, setShowLogoutAlert] = useState(false);
+
+  const { logout } = useAuth();
 
   const openDrawer = () => {
     setIsDrawerOpen(true);
@@ -65,6 +68,7 @@ export default function Profile() {
           drawerItems={drawerItemsProfile({ id: id as string })}
           setShowLogoutAlert={setShowLogoutAlert}
           setIsDrawerOpen={setIsDrawerOpen}
+          logout={logout}
         />
       </DrawerCustom>
 

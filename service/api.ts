@@ -3,55 +3,29 @@ import axios, { AxiosInstance } from "axios";
 import Constants from "expo-constants";
 const API_BASE_URL = Constants.expoConfig?.extra?.API_BASE_URL;
 
-// const API_BASE_URL = process.env.API_BASE_URL
-
 export const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 10000,
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
 // Endpoint yang TIDAK butuh token
-const PUBLIC_ROUTES = [
-  // "/version",
-  "/auth/send-otp",
-  "/auth/verify-otp",
-  "/auth/register",
-  "/auth/logout", // opsional, tergantung kebutuhan
-];
-
-// apiClient.interceptors.request.use(
-//   (config) => {
-//     const token = AsyncStorage.getItem("authToken");
-//     if (token) {
-//       config.headers.Authorization = `Bearer ${token}`;
-//     }
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   }
-// );
+// const PUBLIC_ROUTES = [
+//   // "/version",
+//   "/auth/send-otp",
+//   "/auth/verify-otp",
+//   "/auth/register",
+//   "/auth/logout", // opsional, tergantung kebutuhan
+// ];
 
 apiClient.interceptors.request.use(
-  (config) => {
-    const token = AsyncStorage.getItem("authToken");
+  async (config) => {
+    const token = await AsyncStorage.getItem("authToken");
     if (token) {
+      // config.timeout = 10000;
+      config.headers["Content-Type"] = "application/json";
       config.headers.Authorization = `Bearer ${token}`;
     }
 
-    // const isPublic = PUBLIC_ROUTES.some((route) => config.url?.includes(route));
-
-    // if (!isPublic) {
-    //   const token = AsyncStorage.getItem("authToken");
-    //   if (token) {
-    //     config.headers.Authorization = `Bearer ${token}`;
-    //   } else {
-    //     console.warn(`Token tidak ditemukan untuk endpoint: ${config.url}`);
-    //   }
-    // }
+    // console.log("config", JSON.stringify(config, null, 2));
     return config;
   },
   (error) => {
@@ -60,9 +34,9 @@ apiClient.interceptors.request.use(
 );
 
 export async function apiVersion() {
-  console.log("API_BASE_URL", API_BASE_URL);
+  // console.log("API_BASE_URL", API_BASE_URL);
   const response = await apiClient.get("/version");
-  console.log("Response version", response.data);
+  // console.log("Response version", JSON.stringify(response.data, null, 2));
   return response.data;
 }
 

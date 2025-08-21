@@ -1,3 +1,4 @@
+import { AlertDefaultSystem } from "@/components";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import MenuDrawerDynamicGrid from "@/components/Drawer/MenuDrawerDynamicGird";
 import { router } from "expo-router";
@@ -6,15 +7,28 @@ export default function Profile_MenuDrawerSection({
   drawerItems,
   setShowLogoutAlert,
   setIsDrawerOpen,
+  logout,
 }: {
   drawerItems: IMenuDrawerItem[];
   setShowLogoutAlert: (value: boolean) => void;
   setIsDrawerOpen: (value: boolean) => void;
+  logout: () => Promise<void>;
 }) {
   const handlePress = (item: IMenuDrawerItem) => {
     if (item.label === "Keluar") {
       //   console.log("Logout clicked");
-      setShowLogoutAlert(true);
+      // setShowLogoutAlert(true);
+      AlertDefaultSystem({
+        title: "Apakah anda yakin ingin keluar?",
+        message: "Anda akan keluar dari akun ini",
+        textLeft: "Batal",
+        textRight: "Keluar",
+        onPressRight: () => {
+          logout();
+          setIsDrawerOpen(false);
+        },
+        onPressLeft: () => setIsDrawerOpen(false),
+      });
     } else {
       console.log("PATH >> ", item.path);
       router.push(item.path as any);

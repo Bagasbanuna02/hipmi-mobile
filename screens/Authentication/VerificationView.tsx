@@ -2,8 +2,10 @@ import Spacing from "@/components/_ShareComponent/Spacing";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import ButtonCustom from "@/components/Button/ButtonCustom";
 import { MainColor } from "@/constants/color-palet";
-import { apiCheckCodeOtp, apiValidationCode } from "@/service/api";
+import { useAuth } from "@/hooks/use-auth";
+import { apiCheckCodeOtp } from "@/service/api";
 import { GStyles } from "@/styles/global-styles";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
@@ -11,21 +13,23 @@ import { OtpInput } from "react-native-otp-entry";
 import Toast from "react-native-toast-message";
 
 export default function VerificationView() {
-  const { kodeId, nomor } = useLocalSearchParams();
-  console.log("nomor", nomor);
+  const { nomor } = useLocalSearchParams();
 
   const [codeOtp, setCodeOtp] = useState<string>("");
   const [inputOtp, setInputOtp] = useState<string>("");
   const [userNumber, setUserNumber] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+
+  // --- Context ---
+  const { validateOtp, isLoading } = useAuth();
 
   useEffect(() => {
-    onLoadCheckCodeOtp(kodeId as string);
-  }, [kodeId]);
+    onLoadCheckCodeOtp();
+  }, []);
 
-  async function onLoadCheckCodeOtp(kodeId: string) {
-    const response = await apiCheckCodeOtp({ kodeId: kodeId });
-    console.log("response ", JSON.stringify(response, null, 2));
+  async function onLoadCheckCodeOtp() {
+    const kodeId = await AsyncStorage.getItem("kode_otp");
+    const response = await apiCheckCodeOtp({ kodeId: kodeId as string });
+    console.log("response kode otp :", JSON.stringify(response.otp, null, 2));
     setCodeOtp(response.otp);
     setUserNumber(response.nomor);
   }
@@ -34,41 +38,41 @@ export default function VerificationView() {
     const codeOtpNumber = parseInt(codeOtp);
     const inputOtpNumber = parseInt(inputOtp);
 
-    console.log("codeOtpNumber ", codeOtpNumber, typeof codeOtpNumber);
-    console.log("inputOtpNumber ", inputOtpNumber, typeof inputOtpNumber);
-
     if (inputOtpNumber !== codeOtpNumber) {
       Toast.show({
         type: "error",
-        text1: "Gagal",
-        text2: "Kode OTP tidak sesuai",
+        text1: "Kode OTP tidak sesuai",
       });
 
       return;
     }
 
     try {
-      setLoading(true);
-      const response = await apiValidationCode({ nomor: userNumber });
-      console.log("response ", JSON.stringify(response, null, 2));
+      const response = await validateOtp(nomor as string);
+      return router.replace(response);
 
-      if (response.success) {
-        if (response.active) {
-          if (response.roleId === "1") {
-            router.replace("/(application)/(user)/home");
-          } else {
-            router.replace("/(application)/admin/dashboard");
-          }
-        } else {
-          router.replace("/(application)/(user)/waiting-room");
-        }
-      } else {
-        router.replace(`/register?nomor=${userNumber}`);
-      }
+      // if (response.success) {
+      //   await userData(response.token);
+
+      //   if (response.active) {
+      //     if (response.roleId === "1") {
+      //       return "/(application)/(user)/home";
+      //     } else {
+      //       return "/(application)/admin/dashboard";
+      //     }
+      //   } else {
+      //     return "/(application)/(user)/waiting-room";
+      //   }
+      // } else {
+      //   Toast.show({
+      //     type: "info",
+      //     text1: "Anda belum terdaftar",
+      //     text2: "Silahkan daftar terlebih dahulu",
+      //   });
+      //   return `/register?nomor=${nomor}`;
+      // }
     } catch (error) {
       console.log("Error verification", error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -114,7 +118,7 @@ export default function VerificationView() {
           </View>
 
           <ButtonCustom
-            isLoading={loading}
+            isLoading={isLoading}
             disabled={codeOtp === ""}
             backgroundColor={MainColor.yellow}
             textColor={MainColor.black}

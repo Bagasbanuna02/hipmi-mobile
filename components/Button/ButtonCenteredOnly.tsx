@@ -9,17 +9,24 @@ interface ButtonCenteredOnlyProps {
   children?: React.ReactNode;
   icon?: "plus" | "upload" | string;
   onPress: () => void;
+  isLoading?: boolean;
 }
 export default function ButtonCenteredOnly({
   onPress,
   children,
-  icon = "plus"
+  icon = "plus",
+  isLoading = false,
 }: ButtonCenteredOnlyProps) {
   return (
     <ButtonCustom
+      isLoading={isLoading}
       onPress={onPress}
       iconLeft={
-        <Feather name={icon as any} size={ICON_SIZE_BUTTON} color={MainColor.black} />
+        <Feather
+          name={icon as any}
+          size={ICON_SIZE_BUTTON}
+          color={MainColor.black}
+        />
       }
       style={[GStyles.buttonCentered50Percent]}
     >
