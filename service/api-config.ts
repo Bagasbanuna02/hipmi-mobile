@@ -7,14 +7,6 @@ export const apiConfig: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
 });
 
-// Endpoint yang TIDAK butuh token
-// const PUBLIC_ROUTES = [
-//   // "/version",
-//   "/auth/send-otp",
-//   "/auth/verify-otp",
-//   "/auth/register",
-//   "/auth/logout", // opsional, tergantung kebutuhan
-// ];
 
 apiConfig.interceptors.request.use(
   async (config) => {
