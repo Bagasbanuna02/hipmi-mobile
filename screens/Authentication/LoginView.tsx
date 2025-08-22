@@ -33,9 +33,6 @@ export default function LoginView() {
     // console.log("Token Version:", token);
     const res = await apiVersion();
     setVersion(res.data);
-
-    const seasonKey = await apiClient.get("/mobile/season-key");
-    console.log("seasonKey", seasonKey.data);
   }
 
   function handleInputValue(phoneNumber: string) {
