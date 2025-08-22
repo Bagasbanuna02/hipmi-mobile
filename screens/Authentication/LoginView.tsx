@@ -3,7 +3,7 @@ import Spacing from "@/components/_ShareComponent/Spacing";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
-import { apiClient, apiVersion } from "@/service/api";
+import { apiVersion } from "@/service/api-config";
 import { GStyles } from "@/styles/global-styles";
 import { Redirect, router } from "expo-router";
 import { useEffect, useState } from "react";
@@ -19,18 +19,11 @@ export default function LoginView() {
 
   const { loginWithNomor, token, isAdmin, isUserActive } = useAuth();
 
-  // console.log("Token state:", token ? "AVAILABLE" : "NOT AVAILABLE");
-  // console.log("isAdmin state:", isAdmin);
-  // console.log("isUserActive state:", isUserActive);
-  // console.log("isAuthenticated state:", isAuthenticated);
-
   useEffect(() => {
     onLoadVersion();
   }, []);
 
   async function onLoadVersion() {
-    // const token = await AsyncStorage.getItem("authToken");
-    // console.log("Token Version:", token);
     const res = await apiVersion();
     setVersion(res.data);
   }

@@ -10,28 +10,6 @@ export default function UserLayout() {
   return (
     <>
       <Stack screenOptions={HeaderStyles}>
-        <Stack.Screen
-          name="home"
-          options={{
-            title: "HIPMI",
-            headerLeft: () => (
-              <Ionicons
-                name="search"
-                size={20}
-                color={MainColor.yellow}
-                onPress={() => router.push("/user-search")}
-              />
-            ),
-            headerRight: () => (
-              <Ionicons
-                name="notifications"
-                size={20}
-                color={MainColor.yellow}
-                onPress={() => router.push("/notifications")}
-              />
-            ),
-          }}
-        />
 
         <Stack.Screen
           name="waiting-room"

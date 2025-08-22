@@ -42,12 +42,10 @@ export default function RegisterView() {
     const isValid = validasiData();
     if (!isValid) return;
 
-    const response = await registerUser({
+    await registerUser({
       nomor: nomor as string,
       username: username,
     });
-
-    console.log("Success register page", JSON.stringify(response, null, 2));
   }
 
   return (

@@ -3,7 +3,7 @@ import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import ButtonCustom from "@/components/Button/ButtonCustom";
 import { MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
-import { apiCheckCodeOtp } from "@/service/api";
+import { apiCheckCodeOtp } from "@/service/api-config";
 import { GStyles } from "@/styles/global-styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router, useLocalSearchParams } from "expo-router";
@@ -29,7 +29,6 @@ export default function VerificationView() {
   async function onLoadCheckCodeOtp() {
     const kodeId = await AsyncStorage.getItem("kode_otp");
     const response = await apiCheckCodeOtp({ kodeId: kodeId as string });
-    console.log("response kode otp :", JSON.stringify(response.otp, null, 2));
     setCodeOtp(response.otp);
     setUserNumber(response.nomor);
   }
@@ -82,7 +81,7 @@ export default function VerificationView() {
         <View style={GStyles.authContainer}>
           <View>
             <View style={GStyles.authContainerTitle}>
-              <Text style={GStyles.authTitle}>Verifikasi KOde OTP</Text>
+              <Text style={GStyles.authTitle}>Verifikasi Kode OTP</Text>
               <Spacing height={30} />
               <Text style={GStyles.textLabel}>Masukan 4 digit kode otp</Text>
               <Text style={GStyles.textLabel}>

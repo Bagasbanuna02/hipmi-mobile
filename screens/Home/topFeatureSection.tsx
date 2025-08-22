@@ -4,39 +4,42 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { stylesHome } from "./homeViewStyle";
 
 export default function Home_FeatureSection() {
+  const listFeature = [
+    {
+      name: "Event",
+      icon: <Ionicons name="analytics" size={48} color="white" />,
+      onPress: () => router.push("/(application)/(user)/event/(tabs)"),
+    },
+    {
+      name: "Collaboration",
+      icon: <Ionicons name="share" size={48} color="white" />,
+      onPress: () => router.push("/(application)/(user)/collaboration/(tabs)"),
+    },
+    {
+      name: "Voting",
+      icon: <Ionicons name="cube" size={48} color="white" />,
+      onPress: () => router.push("/(application)/(user)/voting/(tabs)"),
+    },
+    {
+      name: "Crowdfunding",
+      icon: <Ionicons name="heart" size={48} color="white" />,
+      onPress: () => router.push("/(application)/(user)/crowdfunding"),
+    },
+  ];
+
   return (
     <>
       <View style={stylesHome.gridContainer}>
-        <TouchableOpacity
-          style={stylesHome.gridItem}
-          onPress={() => router.push("/(application)/(user)/event/(tabs)")}
-        >
-          <Ionicons name="analytics" size={48} color="white" />
-          <Text style={stylesHome.gridLabel}>Event</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={stylesHome.gridItem}
-          onPress={() =>
-            router.push("/(application)/(user)/collaboration/(tabs)")
-          }
-        >
-          <Ionicons name="share" size={48} color="white" />
-          <Text style={stylesHome.gridLabel}>Collaboration</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={stylesHome.gridItem}
-          onPress={() => router.push("/(application)/(user)/voting/(tabs)")}
-        >
-          <Ionicons name="cube" size={48} color="white" />
-          <Text style={stylesHome.gridLabel}>Voting</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={stylesHome.gridItem}
-          onPress={() => router.push("/(application)/(user)/crowdfunding")}
-        >
-          <Ionicons name="heart" size={48} color="white" />
-          <Text style={stylesHome.gridLabel}>Crowdfunding</Text>
-        </TouchableOpacity>
+        {listFeature.map((item, index) => (
+          <TouchableOpacity
+            key={index}
+            style={stylesHome.gridItem}
+            onPress={item.onPress}
+          >
+            {item.icon}
+            <Text style={stylesHome.gridLabel}>{item.name}</Text>
+          </TouchableOpacity>
+        ))}
       </View>
     </>
   );

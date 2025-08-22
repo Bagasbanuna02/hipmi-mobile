@@ -14,18 +14,17 @@ import { router } from "expo-router";
 import Toast from "react-native-toast-message";
 
 export default function WaitingRoom() {
-  const { token, userData, isLoading, logout } = useAuth();
+  const { token, isLoading, logout, userData } = useAuth();
 
   async function handleCheck() {
     try {
       const response = await userData(token as string);
-      console.log("response check", JSON.stringify(response, null, 2));
       if (response.active) {
         Toast.show({
           type: "success",
           text1: "Akun anda telah aktif", // text2: "Anda berhasil login",
         });
-        router.replace("/(application)/(user)/home");
+        router.replace(`/(application)/(user)/profile/create`);
       } else {
         Toast.show({
           type: "error",
@@ -57,7 +56,7 @@ export default function WaitingRoom() {
                 onPressRight: () => {
                   logout();
                 },
-              })
+              });
             }}
           >
             Keluar

@@ -1,9 +1,9 @@
 import {
-  apiClient,
+  apiConfig,
   apiLogin,
   apiRegister,
   apiValidationCode,
-} from "@/service/api";
+} from "@/service/api-config";
 import { IUser } from "@/types/User";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
@@ -72,7 +72,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsLoading(true);
     try {
       const response = await apiLogin({ nomor: nomor });
-      console.log("Success login api", JSON.stringify(response, null, 2));
       await AsyncStorage.setItem("kode_otp", response.kodeId);
     } catch (error: any) {
       throw new Error(error.response?.data?.message || "Gagal kirim OTP");
@@ -92,7 +91,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setToken(token);
         await AsyncStorage.setItem("authToken", token);
 
-        const responseUser = await apiClient.get(
+        const responseUser = await apiConfig.get(
           `/mobile/user?token=${token}`,
           {
             headers: {
@@ -101,7 +100,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           }
         );
         const dataUser = responseUser.data.data;
-        console.log("res validasi user :", JSON.stringify(dataUser, null, 2));
 
         setUser(dataUser);
         await AsyncStorage.setItem("userData", JSON.stringify(dataUser));
@@ -137,14 +135,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const userData = async (token: string) => {
     try {
       setIsLoading(true);
-      const response = await apiClient.get(`/mobile/user?token=${token}`, {
+      const response = await apiConfig.get(`/mobile/user?token=${token}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
       const dataUser = response.data.data;
-      console.log("res validasi user :", JSON.stringify(dataUser, null, 2));
 
       setUser(dataUser);
       await AsyncStorage.setItem("userData", JSON.stringify(dataUser));
@@ -166,7 +163,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsLoading(true);
     try {
       const response = await apiRegister({ data: userData });
-      console.log("Success register api", JSON.stringify(response, null, 2));
 
       const { token } = response;
       if (!response.success) {
