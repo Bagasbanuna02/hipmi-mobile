@@ -1,6 +1,6 @@
 import { ITabs } from "@/components/_Interface/types";
 
-export  const tabsHome: ITabs[] = [
+export const tabsHome: any = (profileId: string) => [
   {
     id: "forum",
     icon: "chatbubble-ellipses-outline",
@@ -33,7 +33,7 @@ export  const tabsHome: ITabs[] = [
     icon: "person-outline",
     activeIcon: "person",
     label: "Profile",
-    path: "/profile/id-percoban-123456",
+    path: `/profile/${profileId}`,
     isActive: true,
     disabled: false,
   },

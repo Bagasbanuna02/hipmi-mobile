@@ -6,12 +6,12 @@ export interface IMasterUserRole {
 }
 
 export interface IUser {
-  id: string;
-  username: string;
-  nomor: string;
-  active: boolean;
-  createdAt: string | null;
-  updatedAt: string | null;
-  masterUserRoleId: string;
-  MasterUserRole: IMasterUserRole;
+  id?: string;
+  username?: string;
+  nomor?: string;
+  active?: boolean;
+  createdAt?: string | null;
+  updatedAt?: string | null;
+  masterUserRoleId?: string;
+  MasterUserRole?: IMasterUserRole;
 }

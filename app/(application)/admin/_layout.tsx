@@ -221,7 +221,7 @@ export default function AdminLayout() {
                   textLeft: "Batal",
                   textRight: "Ya",
                   onPressRight: () => {
-                    router.replace(`/(application)/(user)/profile/${123}`);
+                    router.replace(`/(application)/(user)/home`);
                   },
                 });
               } else if (item.value === "logout") {

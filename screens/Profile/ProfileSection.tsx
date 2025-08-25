@@ -5,8 +5,10 @@ import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 import AvatarAndBackground from "./AvatarAndBackground";
+import { IProfile } from "@/types/Type-Profile";
+import _ from "lodash";
 
-export default function ProfileSection() {
+export default function ProfileSection({ data }: { data: IProfile }) {
   const { id } = useLocalSearchParams();
 
   const listData = [
@@ -14,13 +16,13 @@ export default function ProfileSection() {
       icon: (
         <Ionicons name="call-outline" size={ICON_SIZE_SMALL} color="white" />
       ),
-      label: "+6282340374412",
+      label: `+${data && data.User.nomor ? data.User.nomor : "-"}`,
     },
     {
       icon: (
         <Ionicons name="mail-outline" size={ICON_SIZE_SMALL} color="white" />
       ),
-      label: "bagasbanuna@gmail.com",
+      label: `${data && data.email ? data.email : "-"}`,
     },
     {
       icon: (
@@ -30,28 +32,38 @@ export default function ProfileSection() {
           color="white"
         />
       ),
-      label: "Jalan Raya Sesetan No. 123, Bandung, Indonesia",
+      label: `${data && data.alamat ? data.alamat : "-"}`,
     },
     {
       icon: (
         <FontAwesome5 name="transgender" size={ICON_SIZE_SMALL} color="white" />
       ),
-      label: "Laki-laki",
+      label: `${
+        data && data.jenisKelamin ? _.startCase(data.jenisKelamin) : "-"
+      }`,
     },
   ];
 
   return (
     <>
       <BaseBox>
-        <AvatarAndBackground backgroundId="test-background-id" imageId="test-image-id" />
+        {/* <TextCustom>
+          {JSON.stringify(data.imageBackgroundId, null, 2)}
+        </TextCustom> */}
+        <AvatarAndBackground
+          backgroundId={data?.imageBackgroundId as any}
+          imageId={data?.imageId as any}
+        />
         <Spacing height={50} />
 
         <View style={{ alignItems: "center" }}>
           <TextCustom bold size="large" align="center">
-            Nama User
+            {data && data.name ? data.name : "-"}
           </TextCustom>
           <Spacing height={5} />
-          <TextCustom size="small">@Username</TextCustom>
+          <TextCustom size="small">
+            @{data && data.User.username ? data.User.username : "-"}
+          </TextCustom>
         </View>
         <Spacing height={30} />
 

@@ -12,6 +12,8 @@ const AvatarAndBackground = ({
   imageId: string;
 }) => {
   return (
+    // console.log("backgroundId", backgroundId),
+    // console.log("imageId", imageId),
     <View style={styles.container}>
       {/* Background Image */}
       <ClickableCustom

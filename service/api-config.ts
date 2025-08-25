@@ -10,6 +10,7 @@ export const apiConfig: AxiosInstance = axios.create({
 
 apiConfig.interceptors.request.use(
   async (config) => {
+    console.log("API_BASE_URL >>", API_BASE_URL);
     const token = await AsyncStorage.getItem("authToken");
     if (token) {
       // config.timeout = 10000;

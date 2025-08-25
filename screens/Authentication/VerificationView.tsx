@@ -29,6 +29,7 @@ export default function VerificationView() {
   async function onLoadCheckCodeOtp() {
     const kodeId = await AsyncStorage.getItem("kode_otp");
     const response = await apiCheckCodeOtp({ kodeId: kodeId as string });
+    console.log("Response check code otp >>", JSON.stringify(response.otp, null, 2));
     setCodeOtp(response.otp);
     setUserNumber(response.nomor);
   }

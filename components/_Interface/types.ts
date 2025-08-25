@@ -24,4 +24,5 @@ interface IMenuDrawerItem {
   label: string;
   path?: string;
   color?: string;
+  value?: string;
 }

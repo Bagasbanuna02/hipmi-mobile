@@ -13,8 +13,8 @@ import InformationBox from "@/components/Box/InformationBox";
 import LandscapeFrameUploaded from "@/components/Image/LandscapeFrameUploaded";
 import { useAuth } from "@/hooks/use-auth";
 import { apiCreateProfile } from "@/service/api-client/api-profile";
-import { router } from "expo-router";
-import { useState } from "react";
+import { router, useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
 import { View } from "react-native";
 import Toast from "react-native-toast-message";
 
@@ -30,6 +30,16 @@ export default function CreateProfile() {
     jenisKelamin: "",
   });
 
+  useFocusEffect(
+    useCallback(() => {
+      Toast.show({
+        type: "info",
+        text1: "Lengkapi Profile Anda",
+        text2: "Untuk menjelajahi fitur-fitur yang ada",
+      });
+    }, [])
+  );
+
   const handlerSave = async () => {
     if (!data.name || !data.email || !data.alamat || !data.jenisKelamin) {
       Toast.show({
@@ -43,8 +53,6 @@ export default function CreateProfile() {
     try {
       setIsLoading(true);
       const response = await apiCreateProfile(data);
-      console.log("data create profile >>", JSON.stringify(response, null, 2));
-
       if (response.status === 400) {
         Toast.show({
           type: "error",
@@ -56,7 +64,7 @@ export default function CreateProfile() {
 
       Toast.show({
         type: "success",
-        text1: "Success",
+        text1: "Sukses",
         text2: "Profile berhasil dibuat",
       });
       router.push("/(application)/(user)/home");

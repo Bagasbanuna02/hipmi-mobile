@@ -22,12 +22,15 @@ export default function Application() {
 
   async function onLoadData() {
     const response = await apiUser(user?.id as string);
-    console.log("data user >>", JSON.stringify(response.active, null, 2));
     setData(response.data);
   }
 
-  if (data?.active === false) {
+  if (data && data?.active === false) {
     return <Redirect href={`/waiting-room`} />;
+  }
+
+  if (data && data?.Profile === null) {
+    return <Redirect href={`/profile/create`} />;
   }
 
   return (
@@ -57,7 +60,11 @@ export default function Application() {
           ),
         }}
       />
-      <ViewWrapper footerComponent={<TabSection tabs={tabsHome} />}>
+      <ViewWrapper
+        footerComponent={
+          <TabSection tabs={tabsHome(data?.Profile?.id as string)} />
+        }
+      >
         <StackCustom>
           <Home_ImageSection />
 

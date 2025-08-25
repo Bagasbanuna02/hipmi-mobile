@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   ButtonCustom,
   SelectCustom,
@@ -7,46 +6,69 @@ import {
   ViewWrapper,
 } from "@/components";
 import BoxButtonOnFooter from "@/components/Box/BoxButtonOnFooter";
+import { apiProfile, apiUpdateProfile } from "@/service/api-client/api-profile";
+import { IProfile } from "@/types/Type-Profile";
 import { router, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
-import { StyleSheet } from "react-native";
+import { useEffect, useState } from "react";
+import Toast from "react-native-toast-message";
 
 export default function ProfileEdit() {
   const { id } = useLocalSearchParams();
 
-  const [data, setData] = useState({
-    nama: "Bagas Banuna",
-    email: "bagasbanuna@gmail.com",
-    alamat: "Jember",
-    selectedValue: "",
-  });
+  const [data, setData] = useState<IProfile | any>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const options = [
     { label: "Laki-laki", value: "laki-laki" },
     { label: "Perempuan", value: "perempuan" },
   ];
 
-  const handleSave = () => {
-    console.log({
-      nama: data.nama,
-      email: data.email,
-      alamat: data.alamat,
-      selectedValue: data.selectedValue,
-    });
-    router.back();
+  useEffect(() => {
+    onLoadData(id as string);
+  }, [id]);
+
+  async function onLoadData(id: string) {
+    try {
+      const response = await apiProfile({ id });
+      setData(response.data);
+    } catch (error) {
+      console.log("error get profile >>", error);
+    }
+  }
+
+  const handleUpdate = async () => {
+    try {
+      setIsLoading(true);
+      const response = await apiUpdateProfile({ id: id as string, data });
+      if (!response.success) {
+        Toast.show({
+          type: "info",
+          text1: "Info",
+          text2: response.message,
+        });
+
+        return;
+      }
+
+      Toast.show({
+        type: "success",
+        text1: "Sukses",
+        text2: "Profile berhasil diupdate",
+      });
+      return router.back();
+    } catch (error) {
+      console.log("error update profile >>", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <ViewWrapper
       footerComponent={
         <BoxButtonOnFooter>
-          <ButtonCustom
-            // disabled={
-            //   !data.nama || !data.email || !data.alamat || !data.selectedValue
-            // }
-            onPress={handleSave}
-          >
-            Simpan
+          <ButtonCustom isLoading={isLoading} onPress={handleUpdate}>
+            Update
           </ButtonCustom>
         </BoxButtonOnFooter>
       }
@@ -55,16 +77,17 @@ export default function ProfileEdit() {
         <TextInputCustom
           label="Nama"
           placeholder="Nama"
-          value={data.nama}
+          value={data?.name}
           onChangeText={(text) => {
-            setData({ ...data, nama: text });
+            setData({ ...data, name: text });
           }}
           required
         />
         <TextInputCustom
+          keyboardType="email-address"
           label="Email"
           placeholder="Email"
-          value={data.email}
+          value={data?.email}
           onChangeText={(text) => {
             setData({ ...data, email: text });
           }}
@@ -73,7 +96,7 @@ export default function ProfileEdit() {
         <TextInputCustom
           label="Alamat"
           placeholder="Alamat"
-          value={data.alamat}
+          value={data?.alamat}
           onChangeText={(text) => {
             setData({ ...data, alamat: text });
           }}
@@ -84,25 +107,12 @@ export default function ProfileEdit() {
           label="Jenis Kelamin"
           placeholder="Pilih jenis kelamin"
           data={options}
-          value={data.selectedValue}
+          value={data?.jenisKelamin}
           onChange={(value) => {
-            setData({ ...(data as any), selectedValue: value });
+            setData({ ...(data as any), jenisKelamin: value });
           }}
         />
       </StackCustom>
     </ViewWrapper>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    padding: 20,
-  },
-  result: {
-    marginTop: 20,
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-});

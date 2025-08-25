@@ -5,12 +5,10 @@ import { router } from "expo-router";
 
 export default function Profile_MenuDrawerSection({
   drawerItems,
-  setShowLogoutAlert,
   setIsDrawerOpen,
   logout,
 }: {
   drawerItems: IMenuDrawerItem[];
-  setShowLogoutAlert: (value: boolean) => void;
   setIsDrawerOpen: (value: boolean) => void;
   logout: () => Promise<void>;
 }) {
