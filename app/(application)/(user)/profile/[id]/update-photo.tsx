@@ -6,42 +6,109 @@ import {
   ButtonCustom,
 } from "@/components";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
-import { router, useLocalSearchParams } from "expo-router";
+import API_STRORAGE from "@/constants/base-url-api-strorage";
+import DIRECTORY_ID from "@/constants/directory-id";
+import DUMMY_IMAGE from "@/constants/dummy-image-value";
+import { apiProfile } from "@/service/api-client/api-profile";
+import { uploadImageService } from "@/service/upload-service";
+import { IProfile } from "@/types/Type-Profile";
+import pickImage from "@/utils/pickImage";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
+import { useCallback, useState } from "react";
+import { Image } from "react-native";
 
 export default function UpdatePhotoProfile() {
   const { id } = useLocalSearchParams();
+  const [data, setData] = useState<IProfile>();
+  const [imageUri, setImageUri] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData(id as string);
+    }, [id])
+  );
+
+  async function onLoadData(id: string) {
+    try {
+      const response = await apiProfile({ id });
+      console.log(
+        "response image id >>",
+        JSON.stringify(response.data.imageId, null, 2)
+      );
+      setData(response.data);
+    } catch (error) {
+      console.log("error get profile >>", error);
+    }
+  }
+
+  async function onUpload() {
+    try {
+      setIsLoading(true);
+
+      const response = await uploadImageService({
+        imageUri,
+        dirId: DIRECTORY_ID.profile_foto,
+      });
+
+      console.log("Upload res >>", JSON.stringify(response, null, 2));
+      if (response.success) {
+        router.back();
+      }
+    } catch (error) {
+      console.log("error upload >>", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   const buttonFooter = (
     <BoxButtonOnFooter>
       <ButtonCustom
+        isLoading={isLoading}
         onPress={() => {
-          console.log("Simpan foto profile >>", id);
-          router.back();
+          onUpload();
+          // console.log("Simpan foto profile >>", id);
+          // router.back();
         }}
       >
-        Simpan
+        Update
       </ButtonCustom>
     </BoxButtonOnFooter>
   );
+
+  const image = imageUri ? (
+    <Image source={{ uri: imageUri }} style={{ width: 200, height: 200 }} />
+  ) : (
+    <AvatarCustom
+      size="xl"
+      source={
+        data?.imageId
+          ? API_STRORAGE.GET({ fileId: data.imageId })
+          : DUMMY_IMAGE.avatar
+      }
+    />
+  );
+
   return (
     <ViewWrapper footerComponent={buttonFooter}>
       <BaseBox
         style={{ alignItems: "center", justifyContent: "center", height: 250 }}
       >
-        <AvatarCustom size="xl" />
+        {image}
       </BaseBox>
 
+      {/* Upload Image */}
       <ButtonCenteredOnly
         icon="upload"
         onPress={() => {
-          console.log("Update photo >>", id);
-          router.navigate(`/(application)/take-picture/${id}`);
+          pickImage({
+            setImageUri,
+          });
         }}
       >
-        Update
+        Upload
       </ButtonCenteredOnly>
-
-      {/* <Spacing />
-      <ButtonCustom>Test</ButtonCustom> */}
     </ViewWrapper>
   );
 }
