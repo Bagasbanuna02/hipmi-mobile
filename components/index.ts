@@ -38,6 +38,7 @@ import StackCustom from "./Stack/StackCustom";
 import SelectCustom from "./Select/SelectCustom";
 // Image
 import AvatarCustom from "./Image/AvatarCustom";
+import AvatarComp from "./Image/AvatarComp";
 import LandscapeFrameUploaded from "./Image/LandscapeFrameUploaded";
 // Divider
 import Divider from "./Divider/Divider";
@@ -69,6 +70,7 @@ export {
   AlertDefaultSystem,
   // Image
   AvatarCustom,
+  AvatarComp,
   // ShareComponent
   AvatarUsernameAndOtherComponent,
   // Button

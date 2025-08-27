@@ -15,11 +15,13 @@ export async function apiProfile({ id }: { id: string }) {
 export async function apiUpdateProfile({
   id,
   data,
+  category,
 }: {
   id: string;
   data: any;
+  category: "profile" | "photo" | "background";
 }) {
-  const response = await apiConfig.put(`/mobile/profile/${id}`, {
+  const response = await apiConfig.put(`/mobile/profile/${id}?category=${category}`, {
     data: data,
   });
   return response.data;

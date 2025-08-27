@@ -14,8 +14,8 @@ type Size = "base" | "sm" | "md" | "lg" | "xl";
 interface AvatarCustomProps {
   source?: ImageSourcePropType;
   size?: Size;
-  onPress?: () => void;
-  href?: Href | undefined;
+  onPress?: () => any;
+  href?: Href | undefined | any;
 }
 
 const sizeMap = {

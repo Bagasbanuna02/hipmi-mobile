@@ -1,15 +1,14 @@
 import {
-  AvatarCustom,
   BaseBox,
   BoxButtonOnFooter,
   ButtonCenteredOnly,
-  ButtonCustom,
+  ButtonCustom
 } from "@/components";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import API_STRORAGE from "@/constants/base-url-api-strorage";
 import DIRECTORY_ID from "@/constants/directory-id";
 import DUMMY_IMAGE from "@/constants/dummy-image-value";
-import { apiProfile } from "@/service/api-client/api-profile";
+import { apiProfile, apiUpdateProfile } from "@/service/api-client/api-profile";
 import { uploadImageService } from "@/service/upload-service";
 import { IProfile } from "@/types/Type-Profile";
 import pickImage from "@/utils/pickImage";
@@ -53,6 +52,12 @@ export default function UpdatePhotoProfile() {
 
       console.log("Upload res >>", JSON.stringify(response, null, 2));
       if (response.success) {
+        const imageId = response.data.id;
+        await apiUpdateProfile({
+          id: id as string,
+          data: { imageId },
+          category: "photo",
+        });
         router.back();
       }
     } catch (error) {
@@ -78,15 +83,15 @@ export default function UpdatePhotoProfile() {
   );
 
   const image = imageUri ? (
-    <Image source={{ uri: imageUri }} style={{ width: 200, height: 200 }} />
+    <Image source={{ uri: imageUri }} style={{ width: "100%", height: "100%" }} />
   ) : (
-    <AvatarCustom
-      size="xl"
+    <Image
       source={
         data?.imageId
-          ? API_STRORAGE.GET({ fileId: data.imageId })
+          ? { uri: API_STRORAGE.GET({ fileId: data.imageId }) }
           : DUMMY_IMAGE.avatar
       }
+      style={{ width: "100%", height: "100%" }}
     />
   );
 

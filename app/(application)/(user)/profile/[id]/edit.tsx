@@ -39,7 +39,11 @@ export default function ProfileEdit() {
   const handleUpdate = async () => {
     try {
       setIsLoading(true);
-      const response = await apiUpdateProfile({ id: id as string, data });
+      const response = await apiUpdateProfile({
+        id: id as string,
+        data,
+        category: "profile",
+      });
       if (!response.success) {
         Toast.show({
           type: "info",
