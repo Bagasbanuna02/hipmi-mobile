@@ -50,6 +50,11 @@ export default function UpdatePhotoProfile() {
         dirId: DIRECTORY_ID.profile_foto,
       });
 
+      console.log(
+        "response upload photo>>",
+        JSON.stringify(response, null, 2)
+      );
+
       if (response.success) {
         const fileId = response.data.id;
         await apiUpdateProfile({

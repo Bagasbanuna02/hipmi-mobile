@@ -47,10 +47,11 @@ export async function uploadImageService({
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
       },
-      timeout: 30000,
+      // timeout: 30000,
     });
 
     const { data } = response;
+    console.log("response upload >>", JSON.stringify(data, null, 2));
 
     if (!data.success) {
       Toast.show({
@@ -62,10 +63,10 @@ export async function uploadImageService({
       return;
     }
 
-    Toast.show({
-      type: "success",
-      text1: "File berhasil diunggah",
-    });
+    // Toast.show({
+    //   type: "success",
+    //   text1: "File berhasil diunggah",
+    // });
 
     return data;
   } catch (error) {

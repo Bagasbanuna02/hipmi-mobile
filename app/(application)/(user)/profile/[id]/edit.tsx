@@ -54,6 +54,8 @@ export default function ProfileEdit() {
         return;
       }
 
+      
+
       Toast.show({
         type: "success",
         text1: "Sukses",
