@@ -29,7 +29,6 @@ apiConfig.interceptors.request.use(
 export async function apiVersion() {
   // console.log("API_BASE_URL", API_BASE_URL);
   const response = await apiConfig.get("/version");
-  // console.log("Response version", JSON.stringify(response.data, null, 2));
   return response.data;
 }
 

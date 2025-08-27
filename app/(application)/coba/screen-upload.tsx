@@ -26,7 +26,6 @@ export default function ScreenUpload() {
         dirId: DIRECTORY_ID.profile_foto,
       });
 
-      console.log("Response", JSON.stringify(response, null, 2));
       if (response.success) {
         await AsyncStorage.setItem("idImage", response.data.id);
         router.back();

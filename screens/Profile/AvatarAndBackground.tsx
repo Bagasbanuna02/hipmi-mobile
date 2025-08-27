@@ -1,4 +1,5 @@
 import { AvatarComp, ClickableCustom } from "@/components";
+import API_STRORAGE from "@/constants/base-url-api-strorage";
 import { AccentColor } from "@/constants/color-palet";
 import DUMMY_IMAGE from "@/constants/dummy-image-value";
 import { router } from "expo-router";
@@ -12,30 +13,31 @@ const AvatarAndBackground = ({
   imageId: string;
 }) => {
   return (
-    console.log("backgroundId", backgroundId),
-    (
-      <View style={styles.container}>
-        {/* Background Image */}
-        <ClickableCustom
-          onPress={() => {
-            router.navigate(
-              `/(application)/(image)/preview-image/${backgroundId}`
-            );
-          }}
-        >
-          <ImageBackground
-            source={DUMMY_IMAGE.background}
-            style={styles.backgroundImage}
-            resizeMode="cover"
-          />
-        </ClickableCustom>
+    <View style={styles.container}>
+      {/* Background Image */}
+      <ClickableCustom
+        onPress={() => {
+          router.navigate(
+            `/(application)/(image)/preview-image/${backgroundId}`
+          );
+        }}
+      >
+        <ImageBackground
+          source={
+            backgroundId
+              ? { uri: API_STRORAGE.GET({ fileId: backgroundId }) }
+              : DUMMY_IMAGE.background
+          }
+          style={styles.backgroundImage}
+          resizeMode="cover"
+        />
+      </ClickableCustom>
 
-        {/* Avatar yang sedikit keluar */}
-        <View style={styles.avatarOverlap}>
-          <AvatarComp size="lg" fileId={imageId} />
-        </View>
+      {/* Avatar yang sedikit keluar */}
+      <View style={styles.avatarOverlap}>
+        <AvatarComp size="lg" fileId={imageId} />
       </View>
-    )
+    </View>
   );
 };
 

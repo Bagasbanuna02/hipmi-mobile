@@ -2,7 +2,7 @@ import {
   BaseBox,
   BoxButtonOnFooter,
   ButtonCenteredOnly,
-  ButtonCustom
+  ButtonCustom,
 } from "@/components";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import API_STRORAGE from "@/constants/base-url-api-strorage";
@@ -50,12 +50,11 @@ export default function UpdatePhotoProfile() {
         dirId: DIRECTORY_ID.profile_foto,
       });
 
-      console.log("Upload res >>", JSON.stringify(response, null, 2));
       if (response.success) {
-        const imageId = response.data.id;
+        const fileId = response.data.id;
         await apiUpdateProfile({
           id: id as string,
-          data: { imageId },
+          data: { fileId },
           category: "photo",
         });
         router.back();
@@ -83,7 +82,10 @@ export default function UpdatePhotoProfile() {
   );
 
   const image = imageUri ? (
-    <Image source={{ uri: imageUri }} style={{ width: "100%", height: "100%" }} />
+    <Image
+      source={{ uri: imageUri }}
+      style={{ width: "100%", height: "100%" }}
+    />
   ) : (
     <Image
       source={

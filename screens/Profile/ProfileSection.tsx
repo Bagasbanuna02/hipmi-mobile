@@ -47,9 +47,6 @@ export default function ProfileSection({ data }: { data: IProfile }) {
   return (
     <>
       <BaseBox>
-        {/* <TextCustom>
-          {JSON.stringify(data.imageBackgroundId, null, 2)}
-        </TextCustom> */}
         <AvatarAndBackground
           backgroundId={data?.imageBackgroundId as any}
           imageId={data?.imageId as any}

@@ -50,7 +50,6 @@ export async function uploadImageService({
       timeout: 30000,
     });
 
-    console.log("Response", JSON.stringify(response, null, 2));
     const { data } = response;
 
     if (!data.success) {
