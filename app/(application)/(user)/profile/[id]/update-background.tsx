@@ -15,6 +15,7 @@ import pickImage from "@/utils/pickImage";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
 import { Image } from "react-native";
+import Toast from "react-native-toast-message";
 
 export default function UpdateBackgroundProfile() {
   const { id } = useLocalSearchParams();
@@ -52,15 +53,35 @@ export default function UpdateBackgroundProfile() {
 
       if (response.success) {
         const fileId = response.data.id;
-        await apiUpdateProfile({
+        const responseUpdate = await apiUpdateProfile({
           id: id as string,
           data: { fileId },
           category: "background",
         });
+
+        if (!responseUpdate.success) {
+          Toast.show({
+            type: "error",
+            text1: "Info",
+            text2: responseUpdate.message,
+          });
+          return;
+        }
+
+        Toast.show({
+          type: "success",
+          text1: "Sukses",
+          text2: "Background berhasil diupdate",
+        });
+        
         router.back();
       }
     } catch (error) {
-      console.log("error upload >>", error);
+      Toast.show({
+        type: "error",
+        text1: "Gagal",
+        text2: error as string,
+      });
     } finally {
       setIsLoading(false);
     }

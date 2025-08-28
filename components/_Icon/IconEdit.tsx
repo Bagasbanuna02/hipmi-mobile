@@ -6,8 +6,8 @@ export default function IconEdit({
   size,
   color,
 }: {
-  size: number;
-  color: string;
+  size?: number;
+  color?: string;
 }) {
   return (
     <>

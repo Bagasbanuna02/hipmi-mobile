@@ -15,6 +15,7 @@ import pickImage from "@/utils/pickImage";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
 import { Image } from "react-native";
+import Toast from "react-native-toast-message";
 
 export default function UpdatePhotoProfile() {
   const { id } = useLocalSearchParams();
@@ -31,10 +32,6 @@ export default function UpdatePhotoProfile() {
   async function onLoadData(id: string) {
     try {
       const response = await apiProfile({ id });
-      console.log(
-        "response image id >>",
-        JSON.stringify(response.data.imageId, null, 2)
-      );
       setData(response.data);
     } catch (error) {
       console.log("error get profile >>", error);
@@ -50,22 +47,39 @@ export default function UpdatePhotoProfile() {
         dirId: DIRECTORY_ID.profile_foto,
       });
 
-      console.log(
-        "response upload photo>>",
-        JSON.stringify(response, null, 2)
-      );
+      console.log("response upload photo>>", JSON.stringify(response, null, 2));
 
       if (response.success) {
         const fileId = response.data.id;
-        await apiUpdateProfile({
+        const responseUpdate = await apiUpdateProfile({
           id: id as string,
           data: { fileId },
           category: "photo",
         });
+
+        if (!responseUpdate.success) {
+          Toast.show({
+            type: "error",
+            text1: "Info",
+            text2: responseUpdate.message,
+          });
+          return;
+        }
+
+        Toast.show({
+          type: "success",
+          text1: "Sukses",
+          text2: "Photo berhasil diupdate",
+        });
+        
         router.back();
       }
     } catch (error) {
-      console.log("error upload >>", error);
+      Toast.show({
+        type: "error",
+        text1: "Gagal",
+        text2: error as string,
+      });
     } finally {
       setIsLoading(false);
     }
@@ -77,8 +91,6 @@ export default function UpdatePhotoProfile() {
         isLoading={isLoading}
         onPress={() => {
           onUpload();
-          // console.log("Simpan foto profile >>", id);
-          // router.back();
         }}
       >
         Update
@@ -87,10 +99,7 @@ export default function UpdatePhotoProfile() {
   );
 
   const image = imageUri ? (
-    <Image
-      source={{ uri: imageUri }}
-      style={{ width: "100%", height: "100%" }}
-    />
+    <Image source={{ uri: imageUri }} style={{ width: 200, height: 200 }} />
   ) : (
     <Image
       source={
@@ -98,7 +107,7 @@ export default function UpdatePhotoProfile() {
           ? { uri: API_STRORAGE.GET({ fileId: data.imageId }) }
           : DUMMY_IMAGE.avatar
       }
-      style={{ width: "100%", height: "100%" }}
+      style={{ width: 200, height: 200 }}
     />
   );
 

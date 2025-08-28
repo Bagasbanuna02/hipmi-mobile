@@ -8,7 +8,7 @@ import {
   Spacing,
   StackCustom,
   TextCustom,
-  ViewWrapper
+  ViewWrapper,
 } from "@/components";
 import { IconEdit } from "@/components/_Icon";
 import Collaboration_BoxDetailSection from "@/screens/Collaboration/BoxDetailSection";

@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { API_BASE_URL, apiConfig } from "@/service/api-config";
+import { API_BASE_URL } from "@/service/api-config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import Toast from "react-native-toast-message";
 
 export async function uploadImageService({
   dirId,
@@ -17,12 +15,7 @@ export async function uploadImageService({
   console.log("url >>", url);
 
   if (!imageUri) {
-    Toast.show({
-      type: "error",
-      text1: "Gagal",
-      text2: "Harap pilih gambar terlebih dahulu",
-    });
-    return;
+    throw new Error("Harap pilih gambar terlebih dahulu");
   }
 
   try {
@@ -40,8 +33,6 @@ export async function uploadImageService({
     });
     formData.append("dirId", dirId);
 
-    console.log("Form data >>", JSON.stringify(formData, null, 2));
-
     const response = await axios.post(url, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -51,28 +42,13 @@ export async function uploadImageService({
     });
 
     const { data } = response;
-    console.log("response upload >>", JSON.stringify(data, null, 2));
 
     if (!data.success) {
-      Toast.show({
-        type: "error",
-        text1: "Gagal",
-        text2: data.message,
-      });
-
-      return;
+      throw new Error(data.message);
     }
-
-    // Toast.show({
-    //   type: "success",
-    //   text1: "File berhasil diunggah",
-    // });
 
     return data;
   } catch (error) {
-    Toast.show({
-      type: "error",
-      text1: "File gagal diunggah",
-    });
+    throw error;
   }
 }
