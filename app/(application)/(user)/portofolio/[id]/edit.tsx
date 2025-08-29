@@ -1,15 +1,15 @@
 import {
-  BoxButtonOnFooter,
-  ButtonCenteredOnly,
-  ButtonCustom,
-  Grid,
-  SelectCustom,
-  Spacing,
-  StackCustom,
-  TextAreaCustom,
-  TextCustom,
-  TextInputCustom,
-  ViewWrapper,
+    BoxButtonOnFooter,
+    ButtonCenteredOnly,
+    ButtonCustom,
+    Grid,
+    SelectCustom,
+    Spacing,
+    StackCustom,
+    TextAreaCustom,
+    TextCustom,
+    TextInputCustom,
+    ViewWrapper,
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import dummyMasterBidangBisnis from "@/lib/dummy-data/master-bidang-bisnis";
@@ -26,7 +26,7 @@ export default function PortofolioEdit() {
   const [inputValue, setInputValue] = useState<string>("");
 
   const [data, setData] = useState({
-    name: "",
+    namaBisnis: "",
     bidang_usaha: "",
     sub_bidang_usaha: "",
     alamat: "",

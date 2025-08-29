@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
+  AvatarComp,
   AvatarCustom,
   BaseBox,
   CenterCustom,
@@ -10,11 +12,12 @@ import {
 import DividerCustom from "@/components/Divider/DividerCustom";
 import { AccentColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
+import DUMMY_IMAGE from "@/constants/dummy-image-value";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 
-export default function Portofolio_Data() {
+export default function Portofolio_Data({ data }: { data: any }) {
   const { id } = useLocalSearchParams();
 
   const listData = [
@@ -22,60 +25,63 @@ export default function Portofolio_Data() {
       icon: (
         <FontAwesome name="building-o" size={ICON_SIZE_SMALL} color="white" />
       ),
-      label: "PT.Bali Interakrtif Perkasa",
+      label: data && data?.namaBisnis ? data.namaBisnis : "-",
     },
     {
       icon: (
         <Ionicons name="call-outline" size={ICON_SIZE_SMALL} color="white" />
       ),
-      label: "+6282340374412",
+      label: data && data?.tlpn ? data.tlpn : "-",
     },
     {
       icon: (
         <Ionicons name="home-outline" size={ICON_SIZE_SMALL} color="white" />
       ),
-      label: "Jl. Raya Kuta No. 123, Bandung, Indonesia",
+      label: data && data?.alamatKantor ? data.alamatKantor : "-",
     },
     {
       icon: (
         <Ionicons name="list-outline" size={ICON_SIZE_SMALL} color="white" />
       ),
-      label: "Teknologia",
+      label:
+        data && data?.MasterBidangBisnis?.name
+          ? data.MasterBidangBisnis.name
+          : "-",
     },
   ];
 
-  const listSubBidang = [
-    {
-      icon: (
-        <Ionicons
-          name="chevron-forward-outline"
-          size={ICON_SIZE_SMALL}
-          color="white"
-        />
-      ),
-      label: "Security System",
-    },
-    {
-      icon: (
-        <Ionicons
-          name="chevron-forward-outline"
-          size={ICON_SIZE_SMALL}
-          color="white"
-        />
-      ),
-      label: "Web Developers",
-    },
-    {
-      icon: (
-        <Ionicons
-          name="chevron-forward-outline"
-          size={ICON_SIZE_SMALL}
-          color="white"
-        />
-      ),
-      label: "Mobile Developers",
-    },
-  ];
+  // const listSubBidang = [
+  //   {
+  //     icon: (
+  //       <Ionicons
+  //         name="chevron-forward-outline"
+  //         size={ICON_SIZE_SMALL}
+  //         color="white"
+  //       />
+  //     ),
+  //     label: "Security System",
+  //   },
+  //   {
+  //     icon: (
+  //       <Ionicons
+  //         name="chevron-forward-outline"
+  //         size={ICON_SIZE_SMALL}
+  //         color="white"
+  //       />
+  //     ),
+  //     label: "Web Developers",
+  //   },
+  //   {
+  //     icon: (
+  //       <Ionicons
+  //         name="chevron-forward-outline"
+  //         size={ICON_SIZE_SMALL}
+  //         color="white"
+  //       />
+  //     ),
+  //     label: "Mobile Developers",
+  //   },
+  // ];
 
   return (
     <>
@@ -86,7 +92,9 @@ export default function Portofolio_Data() {
               <TextCustom bold>Data Bisnis</TextCustom>
             </Grid.Col>
             <Grid.Col span={6} style={{ alignItems: "flex-end" }}>
-              <TextCustom color="yellow">ID: {id}</TextCustom>
+              <TextCustom color="yellow" size={12} bold>
+                ID: {(data && data?.id_Portofolio) || "-"}
+              </TextCustom>
             </Grid.Col>
           </Grid>
 
@@ -106,7 +114,11 @@ export default function Portofolio_Data() {
             }}
           >
             <CenterCustom>
-              <AvatarCustom size="xl" />
+              <AvatarComp
+                size="xl"
+                fileId={data?.logoId as any}
+                fileIdDefault={DUMMY_IMAGE.dummy_image}
+              />
             </CenterCustom>
           </ClickableCustom>
 
@@ -125,7 +137,7 @@ export default function Portofolio_Data() {
                 </Grid.Col>
               </Grid>
             ))}
-            <View style={{ paddingLeft: 10 }}>
+            {/* <View style={{ paddingLeft: 10 }}>
               {listSubBidang.map((item, index) => (
                 <Grid key={index}>
                   <Grid.Col span={2} style={{ alignItems: "center" }}>
@@ -138,7 +150,7 @@ export default function Portofolio_Data() {
                   </Grid.Col>
                 </Grid>
               ))}
-            </View>
+            </View> */}
           </View>
 
           <DividerCustom labelPosition="top" color={AccentColor.blue} />
@@ -160,10 +172,7 @@ export default function Portofolio_Data() {
             </Grid>
 
             <TextCustom style={{ paddingInline: 10 }}>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Doloremque, alias perspiciatis quis enim eos facilis sit est?
-              Doloremque, rerum. Cumque error asperiores harum temporibus
-              cupiditate ullam, id quibusdam! Harum, rerum!
+              {(data && data?.deskripsi) || "-"}
             </TextCustom>
           </View>
         </StackCustom>

@@ -1,47 +1,28 @@
-import { BaseBox, Grid, TextCustom, ViewWrapper } from "@/components";
-import { MainColor } from "@/constants/color-palet";
-import { ICON_SIZE_SMALL } from "@/constants/constans-value";
-import { Ionicons } from "@expo/vector-icons";
-import { router, useLocalSearchParams } from "expo-router";
+import { TextCustom, ViewWrapper } from "@/components";
+import Portofolio_BoxView from "@/screens/Portofolio/BoxPortofolioView";
+import { apiGetPortofolio } from "@/service/api-client/api-portofolio";
+import { useFocusEffect, useLocalSearchParams } from "expo-router";
+import { useCallback, useState } from "react";
 
 export default function ListPortofolio() {
   const { id } = useLocalSearchParams();
+  const [data, setData] = useState<any[]>([]);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadPortofolio(id as string);
+    }, [id])
+  );
+
+  const onLoadPortofolio = async (id: string) => {
+    const response = await apiGetPortofolio({ id: id });
+    setData(response.data);
+  };
   return (
     <ViewWrapper>
-      {Array.from({ length: 10 }).map((_, index) => (
-        <BaseBox
-          key={index}
-          style={{ backgroundColor: MainColor.darkblue }}
-          onPress={() => {
-            console.log("press to Portofolio");
-            router.push(`/portofolio/${id}`);
-          }}
-        >
-          <Grid>
-            <Grid.Col
-              span={10}
-              style={{ justifyContent: "center", backgroundColor: "" }}
-            >
-              <TextCustom bold size="large" truncate={1}>
-                Nama usaha portofolio
-              </TextCustom>
-              <TextCustom size="small" color="yellow">
-                #id-porofolio12345
-              </TextCustom>
-            </Grid.Col>
-            <Grid.Col
-              span={2}
-              style={{ alignItems: "flex-end", justifyContent: "center" }}
-            >
-              <Ionicons
-                name="caret-forward"
-                size={ICON_SIZE_SMALL}
-                color="white"
-              />
-            </Grid.Col>
-          </Grid>
-        </BaseBox>
-      ))}
+      {data ? data?.map((item: any, index: number) => (
+        <Portofolio_BoxView key={index} data={item} />
+      )) : <TextCustom>Tidak ada portofolio</TextCustom>}
     </ViewWrapper>
   );
 }

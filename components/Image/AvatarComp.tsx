@@ -16,6 +16,7 @@ const sizeMap = {
 
 interface AvatarCompProps {
   fileId?: string;
+  fileIdDefault?: string;
   size: Size;
   onPress?: () => void | any;
   href?: Href | undefined | any;
@@ -23,6 +24,7 @@ interface AvatarCompProps {
 
 export default function AvatarComp({
   fileId,
+  fileIdDefault,
   size,
   onPress,
   href = `/(application)/(image)/preview-image/${fileId}`,
@@ -34,7 +36,11 @@ export default function AvatarComp({
       <Avatar.Image
         size={dimension}
         source={
-          fileId ? { uri: API_STRORAGE.GET({ fileId }) } : DUMMY_IMAGE.avatar
+          fileId
+            ? { uri: API_STRORAGE.GET({ fileId }) }
+            : fileIdDefault
+            ? fileIdDefault
+            : DUMMY_IMAGE.avatar
         }
       />
     );

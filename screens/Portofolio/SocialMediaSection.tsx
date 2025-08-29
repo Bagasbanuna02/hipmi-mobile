@@ -3,10 +3,10 @@ import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function Portofolio_SocialMediaSection() {
+export default function Portofolio_SocialMediaSection({ data }: { data: any }) {
   const listData = [
     {
-      label: "Facebook ku bagas",
+      label: data && data?.facebook ? data.facebook : "-",
       icon: (
         <Ionicons
           name="logo-facebook"
@@ -16,7 +16,7 @@ export default function Portofolio_SocialMediaSection() {
       ),
     },
     {
-      label: "Tiktok ku bagas",
+      label: data && data?.tiktok ? data.tiktok : "-",
       icon: (
         <Ionicons
           name="logo-tiktok"
@@ -26,7 +26,7 @@ export default function Portofolio_SocialMediaSection() {
       ),
     },
     {
-      label: "Instagram ku bagas",
+      label: data && data?.instagram ? data.instagram : "-",
       icon: (
         <Ionicons
           name="logo-instagram"
@@ -36,7 +36,7 @@ export default function Portofolio_SocialMediaSection() {
       ),
     },
     {
-      label: "Twitter ku bagas",
+      label: data && data?.twitter ? data.twitter : "-",
       icon: (
         <Ionicons
           name="logo-twitter"
@@ -46,7 +46,7 @@ export default function Portofolio_SocialMediaSection() {
       ),
     },
     {
-      label: "Youtube ku bagas",
+      label: data && data?.youtube ? data.youtube : "-",
       icon: (
         <Ionicons
           name="logo-youtube"

@@ -1,16 +1,12 @@
 import { BaseBox, Grid, Spacing, TextCustom } from "@/components";
-import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
+import { IProfile } from "@/types/Type-Profile";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
-import { router, useLocalSearchParams } from "expo-router";
+import _ from "lodash";
 import { View } from "react-native";
 import AvatarAndBackground from "./AvatarAndBackground";
-import { IProfile } from "@/types/Type-Profile";
-import _ from "lodash";
 
 export default function ProfileSection({ data }: { data: IProfile }) {
-  const { id } = useLocalSearchParams();
-
   const listData = [
     {
       icon: (
@@ -82,57 +78,7 @@ export default function ProfileSection({ data }: { data: IProfile }) {
         ))}
       </BaseBox>
 
-      <BaseBox>
-        <View>
-          <TextCustom bold size="large" align="center">
-            Portofolio
-          </TextCustom>
-          <Spacing />
-
-          {Array.from({ length: 2 }).map((_, index) => (
-            <BaseBox
-              key={index}
-              style={{ backgroundColor: MainColor.darkblue }}
-              onPress={() => {
-                console.log("press to Portofolio");
-                router.push(`/portofolio/${id}`);
-              }}
-            >
-              <Grid>
-                <Grid.Col
-                  span={10}
-                  style={{ justifyContent: "center", backgroundColor: "" }}
-                >
-                  <TextCustom bold size="large" truncate={1}>
-                    Nama usaha portofolio
-                  </TextCustom>
-                  <TextCustom size="small" color="yellow">
-                    #id-porofolio12345
-                  </TextCustom>
-                </Grid.Col>
-                <Grid.Col
-                  span={2}
-                  style={{ alignItems: "flex-end", justifyContent: "center" }}
-                >
-                  <Ionicons
-                    name="caret-forward"
-                    size={ICON_SIZE_SMALL}
-                    color="white"
-                  />
-                </Grid.Col>
-              </Grid>
-            </BaseBox>
-          ))}
-        </View>
-
-        <TextCustom
-          bold
-          align="right"
-          onPress={() => router.push(`/portofolio/${id}/list`)}
-        >
-          Lihat semua
-        </TextCustom>
-      </BaseBox>
+     
     </>
   );
 }
