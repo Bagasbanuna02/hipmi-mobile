@@ -16,12 +16,15 @@ import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
 import { Image } from "react-native";
 import Toast from "react-native-toast-message";
+import { useAuth } from "@/hooks/use-auth";
+import { apiFileDelete } from "@/service/api-client/api-file";
 
 export default function UpdatePhotoProfile() {
   const { id } = useLocalSearchParams();
   const [data, setData] = useState<IProfile>();
   const [imageUri, setImageUri] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { token } = useAuth();
 
   useFocusEffect(
     useCallback(() => {
@@ -32,6 +35,7 @@ export default function UpdatePhotoProfile() {
   async function onLoadData(id: string) {
     try {
       const response = await apiProfile({ id });
+
       setData(response.data);
     } catch (error) {
       console.log("error get profile >>", error);
@@ -46,8 +50,6 @@ export default function UpdatePhotoProfile() {
         imageUri,
         dirId: DIRECTORY_ID.profile_foto,
       });
-
-      console.log("response upload photo>>", JSON.stringify(response, null, 2));
 
       if (response.success) {
         const fileId = response.data.id;
@@ -66,12 +68,23 @@ export default function UpdatePhotoProfile() {
           return;
         }
 
+        if (data?.imageId) {
+          const deletePrevFile = await apiFileDelete({
+            token: token as string,
+            id: data?.imageId as string,
+          });
+
+          if (!deletePrevFile.success) {
+            console.log("error delete prev file >>", deletePrevFile.message);
+          }
+        }
+
         Toast.show({
           type: "success",
           text1: "Sukses",
           text2: "Photo berhasil diupdate",
         });
-        
+
         router.back();
       }
     } catch (error) {

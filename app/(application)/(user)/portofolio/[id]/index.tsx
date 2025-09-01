@@ -1,4 +1,4 @@
-import { AlertCustom, DrawerCustom, Spacing, StackCustom } from "@/components";
+import { DrawerCustom, Spacing, StackCustom } from "@/components";
 import LeftButtonCustom from "@/components/Button/BackButton";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { MainColor } from "@/constants/color-palet";
@@ -12,12 +12,7 @@ import Portofolio_SocialMediaSection from "@/screens/Portofolio/SocialMediaSecti
 import { apiGetOnePortofolio } from "@/service/api-client/api-portofolio";
 import { GStyles } from "@/styles/global-styles";
 import { Ionicons } from "@expo/vector-icons";
-import {
-  router,
-  Stack,
-  useFocusEffect,
-  useLocalSearchParams,
-} from "expo-router";
+import { Stack, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
 import { TouchableOpacity } from "react-native";
 
@@ -25,7 +20,7 @@ export default function Portofolio() {
   const { id } = useLocalSearchParams();
   const { user } = useAuth();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [deleteAlert, setDeleteAlert] = useState(false);
+  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
   const [data, setData] = useState<any>();
 
   const openDrawer = () => {
@@ -43,6 +38,10 @@ export default function Portofolio() {
 
   async function onLoadData(id: string) {
     const response = await apiGetOnePortofolio({ id: id });
+    console.log(
+      "Response portofolio >>",
+      JSON.stringify(response.data.namaBisnis, null, 2)
+    );
 
     setData(response.data);
   }
@@ -79,7 +78,11 @@ export default function Portofolio() {
           <Portofolio_Data data={data} />
           <Portofolio_BusinessLocation />
           <Portofolio_SocialMediaSection data={data?.Portofolio_MediaSosial} />
-          <Portofolio_ButtonDelete setShowDeleteAlert={setDeleteAlert} />
+          <Portofolio_ButtonDelete
+            id={id as string}
+            isLoadingDelete={isLoadingDelete}
+            setIsLoadingDelete={setIsLoadingDelete}
+          />
           <Spacing />
         </StackCustom>
       </ViewWrapper>
@@ -95,22 +98,6 @@ export default function Portofolio() {
           setIsDrawerOpen={setIsDrawerOpen}
         />
       </DrawerCustom>
-
-      {/* Alert Delete */}
-      <AlertCustom
-        isVisible={deleteAlert}
-        onLeftPress={() => setDeleteAlert(false)}
-        onRightPress={() => {
-          setDeleteAlert(false);
-          console.log("Hapus portofolio");
-          router.back();
-        }}
-        title="Hapus Portofolio"
-        message="Apakah Anda yakin ingin menghapus portofolio ini?"
-        textLeft="Batal"
-        textRight="Hapus"
-        colorRight={MainColor.red}
-      />
     </>
   );
 }

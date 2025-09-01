@@ -61,7 +61,7 @@ const ButtonCustom: React.FC<ButtonProps> = ({
       activeOpacity={0.8}
     >
       {/* Render icon jika tersedia */}
-      {iconLeft && iconLeft}
+      {isLoading ? "" : iconLeft && iconLeft}
       {isLoading ? (
         <ActivityIndicator size={18} color={MainColor.darkblue} />
       ) : (

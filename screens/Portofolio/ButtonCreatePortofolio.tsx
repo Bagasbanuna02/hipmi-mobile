@@ -11,6 +11,8 @@ interface Props {
   dataMedsos: any;
   imageUri: string | null;
   subBidangSelected: any[];
+  isLoadingCreate: boolean;
+  setIsLoadingCreate: (value: boolean) => void;
 }
 
 interface ICreatePortofolio {
@@ -34,9 +36,34 @@ export default function Portofolio_ButtonCreate({
   dataMedsos,
   imageUri,
   subBidangSelected,
+  isLoadingCreate,
+  setIsLoadingCreate,
 }: Props) {
+  const validaasiData = () => {
+    if (
+      !data.namaBisnis ||
+      !data.masterBidangBisnisId ||
+      !data.alamatKantor ||
+      !data.tlpn ||
+      !data.deskripsi
+    ) {
+      return false;
+    }
+    return true;
+  };
+
   const handleCreatePortofolio = async () => {
+    if (!validaasiData()) {
+      Toast.show({
+        type: "info",
+        text1: "Info",
+        text2: "Harap lengkapi data",
+      });
+      return;
+    }
+
     try {
+      setIsLoadingCreate(true);
       let fileId = "";
       if (imageUri) {
         const response = await uploadImageService({
@@ -81,41 +108,19 @@ export default function Portofolio_ButtonCreate({
         text1: "Error",
         text2: error as string,
       });
+    } finally {
+      setIsLoadingCreate(false);
     }
   };
 
-  // const onCreatePortofolio = async ({ fileId }: { fileId: string }) => {
-  //   const newData: ICreatePortofolio = {
-  //     namaBisnis: data.namaBisnis,
-  //     masterBidangBisnisId: data.masterBidangBisnisId,
-  //     alamatKantor: data.alamatKantor,
-  //     tlpn: data.tlpn,
-  //     deskripsi: data.deskripsi,
-  //     fileId: fileId,
-  //     facebook: dataMedsos.facebook,
-  //     twitter: dataMedsos.twitter,
-  //     instagram: dataMedsos.instagram,
-  //     tiktok: dataMedsos.tiktok,
-  //     youtube: dataMedsos.youtube,
-  //   };
-
-  //   try {
-  //     const response = await apiPortofolioCreate({
-  //       id: id,
-  //       data: newData,
-  //     });
-  //     console.log("Response >>", JSON.stringify(response, null, 2));
-  //     return response;
-  //   } catch (error) {
-  //     throw error;
-  //   }
-
-  //   // router.replace(`/maps/create`);
-  // };
-
   return (
     <BoxButtonOnFooter>
-      <ButtonCustom onPress={handleCreatePortofolio}>Selanjutnya</ButtonCustom>
+      <ButtonCustom
+        isLoading={isLoadingCreate}
+        onPress={handleCreatePortofolio}
+      >
+        Selanjutnya
+      </ButtonCustom>
     </BoxButtonOnFooter>
   );
 }

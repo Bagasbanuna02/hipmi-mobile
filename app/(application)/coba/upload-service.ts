@@ -2,7 +2,7 @@
 import { apiConfig } from "@/service/api-config";
 import Toast from "react-native-toast-message";
 
-export async function tryUploadService({
+export default async function tryUploadService({
   dirId,
   imageUri,
 }: {

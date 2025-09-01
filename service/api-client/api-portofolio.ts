@@ -31,3 +31,14 @@ export async function apiGetOnePortofolio({ id }: { id: string }) {
     throw error;
   }
 }
+
+export async function apiDeletePortofolio({ id }: { id: string }) {
+  try {
+    const response = await apiConfig.delete(`/mobile/portofolio/${id}`);
+    
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+  

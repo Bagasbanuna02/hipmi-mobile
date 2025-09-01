@@ -39,7 +39,6 @@ export default function PortofolioCreate() {
   const [data, setData] = useState({
     namaBisnis: "",
     masterBidangBisnisId: "",
-    // sub_bidang_usaha: "",
     alamatKantor: "",
     tlpn: "",
     deskripsi: "",
@@ -66,6 +65,8 @@ export default function PortofolioCreate() {
     youtube: "",
     tiktok: "",
   });
+
+  const [isLoadingCreate, setIsLoadingCreate] = useState(false);
 
   function handleInputValue(phoneNumber: string) {
     setInputValue(phoneNumber);
@@ -111,6 +112,8 @@ export default function PortofolioCreate() {
           dataMedsos={dataMedsos}
           imageUri={imageUri}
           subBidangSelected={listSubBidangSelected}
+          isLoadingCreate={isLoadingCreate}
+          setIsLoadingCreate={setIsLoadingCreate}
         />
       }
     >
@@ -220,7 +223,7 @@ export default function PortofolioCreate() {
           maxRows={5}
           required
           showCount
-          maxLength={100}
+          maxLength={1000}
         />
         <Spacing />
 

@@ -8,6 +8,8 @@ import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import API_STRORAGE from "@/constants/base-url-api-strorage";
 import DIRECTORY_ID from "@/constants/directory-id";
 import DUMMY_IMAGE from "@/constants/dummy-image-value";
+import { useAuth } from "@/hooks/use-auth";
+import { apiFileDelete } from "@/service/api-client/api-file";
 import { apiProfile, apiUpdateProfile } from "@/service/api-client/api-profile";
 import { uploadImageService } from "@/service/upload-service";
 import { IProfile } from "@/types/Type-Profile";
@@ -22,6 +24,7 @@ export default function UpdateBackgroundProfile() {
   const [data, setData] = useState<IProfile>();
   const [imageUri, setImageUri] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { token } = useAuth();
 
   useFocusEffect(
     useCallback(() => {
@@ -32,10 +35,6 @@ export default function UpdateBackgroundProfile() {
   async function onLoadData(id: string) {
     try {
       const response = await apiProfile({ id });
-      console.log(
-        "response image id >>",
-        JSON.stringify(response.data.backgroundId, null, 2)
-      );
       setData(response.data);
     } catch (error) {
       console.log("error get profile >>", error);
@@ -68,12 +67,23 @@ export default function UpdateBackgroundProfile() {
           return;
         }
 
+        if (data?.imageBackgroundId) {
+          const deletePrevFile = await apiFileDelete({
+            token: token as string,
+            id: data?.imageBackgroundId as string,
+          });
+
+          if (!deletePrevFile.success) {
+            console.log("error delete prev file >>", deletePrevFile.message);
+          }
+        }
+
         Toast.show({
           type: "success",
           text1: "Sukses",
           text2: "Background berhasil diupdate",
         });
-        
+
         router.back();
       }
     } catch (error) {

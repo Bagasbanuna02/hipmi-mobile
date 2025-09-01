@@ -22,7 +22,9 @@ export default function Application() {
 
   async function onLoadData() {
     const response = await apiUser(user?.id as string);
-    console.log("User >>", JSON.stringify(response.data, null, 2));
+    console.log("User >>", JSON.stringify(response.data.username, null, 2));
+    console.log("Profile Check >>", JSON.stringify(response.data.Profile.id, null, 2));
+
     setData(response.data);
   }
 

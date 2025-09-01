@@ -1,6 +1,6 @@
 import { API_BASE_URL } from "@/service/api-config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
+import { apiFileUpload } from "./api-client/api-file";
 
 export async function uploadImageService({
   dirId,
@@ -10,7 +10,7 @@ export async function uploadImageService({
   imageUri: string | null;
 }) {
   const token = await AsyncStorage.getItem("authToken");
-  const url = `${API_BASE_URL}/mobile/upload`;
+  const url = `${API_BASE_URL}/mobile/file`;
 
   console.log("url >>", url);
 
@@ -33,21 +33,18 @@ export async function uploadImageService({
     });
     formData.append("dirId", dirId);
 
-    const response = await axios.post(url, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${token}`,
-      },
-      // timeout: 30000,
+    const response = await apiFileUpload({
+      token: token as string,
+      formData,
     });
 
-    const { data } = response;
+    console.log("Response upload file >>", JSON.stringify(response, null, 2));
 
-    if (!data.success) {
-      throw new Error(data.message);
+    if (!response.success) {
+      throw new Error(response.message);
     }
 
-    return data;
+    return response;
   } catch (error) {
     throw error;
   }
