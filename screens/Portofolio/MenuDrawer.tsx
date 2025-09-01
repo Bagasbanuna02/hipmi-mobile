@@ -21,7 +21,7 @@ export default function Portofolio_MenuDrawerSection({
       <MenuDrawerDynamicGrid
         data={drawerItems}
         columns={4} // Ubah ke 2 jika ingin 2 kolom per baris
-        onPressItem={handlePress}
+        onPressItem={handlePress as any}
       />
     </>
   );

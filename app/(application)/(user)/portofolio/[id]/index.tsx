@@ -91,7 +91,7 @@ export default function Portofolio() {
       <DrawerCustom
         isVisible={isDrawerOpen}
         closeDrawer={closeDrawer}
-        height={350}
+        height={"auto"}
       >
         <Portofolio_MenuDrawerSection
           drawerItems={drawerItemsPortofolio({ id: id as string })}
