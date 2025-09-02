@@ -14,7 +14,6 @@ import Toast from "react-native-toast-message";
 export default function RegisterView() {
   const { nomor } = useLocalSearchParams();
   const [username, setUsername] = useState("");
-  // const [loading, setLoading] = useState(false);
 
   const { registerUser, isLoading } = useAuth();
 
@@ -22,16 +21,22 @@ export default function RegisterView() {
     if (!nomor) {
       Toast.show({
         type: "error",
-        text1: "Gagal",
-        text2: "Nomor tidak ditemukan",
+        text1: "Lengkapi nomor",
       });
       return false;
     }
     if (!username) {
       Toast.show({
         type: "error",
-        text1: "Gagal",
-        text2: "Username tidak boleh kosong",
+        text1: "Username tidak boleh kosong",
+      });
+      return false;
+    }
+
+    if (username.includes(" ")) {
+      Toast.show({
+        type: "info",
+        text1: "Username tidak boleh mengandung spasi",
       });
       return false;
     }
@@ -42,9 +47,20 @@ export default function RegisterView() {
     const isValid = validasiData();
     if (!isValid) return;
 
+    if (username.length < 5) {
+      Toast.show({
+        type: "info",
+        text1: "Info",
+        text2: "Username minimal 5 karakter",
+      });
+      return;
+    }
+
+    const usernameLower = username.toLowerCase();
+
     await registerUser({
       nomor: nomor as string,
-      username: username,
+      username: usernameLower,
     });
   }
 
@@ -73,6 +89,11 @@ export default function RegisterView() {
               placeholder="Masukkan username"
               value={username}
               onChangeText={(text) => setUsername(text)}
+              error={
+                username.includes(" ")
+                  ? "Username tidak boleh mengandung spasi"
+                  : ""
+              }
             />
 
             <ButtonCustom isLoading={isLoading} onPress={handleRegister}>

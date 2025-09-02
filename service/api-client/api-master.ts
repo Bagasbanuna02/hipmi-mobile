@@ -9,12 +9,14 @@ export async function apiMasterBidangBisnis() {
   }
 }
 
-export async function apiMasterSubBidangBisnis({id}: {id: string}) {
+export async function apiMasterSubBidangBisnis({ id }: { id?: string }) {
   try {
-    const response = await apiConfig.get(`/master/sub-bidang-bisnis/${id}`);
+    const selectBidangId = id ? `/${id}` : "";
+    const response = await apiConfig.get(
+      `/master/sub-bidang-bisnis${selectBidangId}`
+    );
     return response.data;
   } catch (error) {
     throw error;
   }
 }
-

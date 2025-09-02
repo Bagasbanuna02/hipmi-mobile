@@ -45,7 +45,9 @@ export default function Portofolio_ButtonCreate({
       !data.masterBidangBisnisId ||
       !data.alamatKantor ||
       !data.tlpn ||
-      !data.deskripsi
+      !data.deskripsi ||
+      subBidangSelected.map((item) => item.id).includes("") ||
+      subBidangSelected.map((item) => item.id).includes(null)
     ) {
       return false;
     }
@@ -53,6 +55,10 @@ export default function Portofolio_ButtonCreate({
   };
 
   const handleCreatePortofolio = async () => {
+    console.log(
+      "Data sub bidang >>",
+      JSON.stringify(subBidangSelected, null, 2)
+    );
     if (!validaasiData()) {
       Toast.show({
         type: "info",
@@ -90,18 +96,18 @@ export default function Portofolio_ButtonCreate({
         youtube: dataMedsos.youtube,
         subBidang: subBidangSelected,
       };
-
-      try {
-        const response = await apiPortofolioCreate({
-          data: newData,
-        });
-        console.log("Response >>", JSON.stringify(response, null, 2));
-        // return router.replace(`/maps/create`);
-        // return router.push(`/maps/create`);
-        return router.back();
-      } catch (error) {
-        throw error;
-      }
+      const response = await apiPortofolioCreate({
+        data: newData,
+      });
+      console.log("Response >>", JSON.stringify(response, null, 2));
+      // return router.replace(`/maps/create`);
+      // return router.push(`/maps/create`);
+      Toast.show({
+        type: "success",
+        text1: "Sukses",
+        text2: "Data berhasil disimpan",
+      });
+      return router.back();
     } catch (error) {
       Toast.show({
         type: "error",

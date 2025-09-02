@@ -14,4 +14,5 @@ export interface IMasterSubBidangBisnis {
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
+  masterBidangBisnisId: string;
 }

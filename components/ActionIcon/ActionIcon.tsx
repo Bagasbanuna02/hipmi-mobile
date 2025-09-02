@@ -9,11 +9,13 @@ export default function ActionIcon({
   onPress,
   icon,
   size = "md",
+  disabled = false,
 }: {
   href?: Href;
   onPress?: () => void;
   icon: React.ReactNode;
   size?: SizeType;
+  disabled?: boolean;
 }) {
   const sizeMap = {
     xs: 22,
@@ -25,7 +27,7 @@ export default function ActionIcon({
 
   const getSize = (size: SizeType): DimensionValue => {
     if (!size) return sizeMap.md; // Default to 'md' if size is undefined
-    if (typeof size === 'string' && size in sizeMap) {
+    if (typeof size === "string" && size in sizeMap) {
       return sizeMap[size as keyof typeof sizeMap];
     }
     return size as DimensionValue;
@@ -35,9 +37,10 @@ export default function ActionIcon({
 
   return (
     <TouchableOpacity
+      disabled={disabled}
       activeOpacity={0.7}
       style={{
-        backgroundColor: MainColor.yellow,
+        backgroundColor: disabled ? MainColor.disabled : MainColor.yellow,
         padding: 5,
         borderRadius: 50,
         alignItems: "center",
@@ -46,6 +49,7 @@ export default function ActionIcon({
         height: iconSize,
       }}
       onPress={() => {
+        if (disabled) return;
         if (href) {
           router.push(href);
         } else {

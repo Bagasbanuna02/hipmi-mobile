@@ -40,14 +40,14 @@ export default function Portofolio() {
     const response = await apiGetOnePortofolio({ id: id });
     console.log(
       "Response portofolio >>",
-      JSON.stringify(response.data.namaBisnis, null, 2)
+      JSON.stringify(response.data, null, 2)
     );
 
     setData(response.data);
   }
 
   const userId = user?.id;
-  const userLoginId = data?.Profile?.User?.id;
+  const userLoginId = data?.Profile?.userId
 
   console.log("User ID >>", userId);
   console.log("User Login ID >>", userLoginId);
@@ -75,7 +75,7 @@ export default function Portofolio() {
       <ViewWrapper>
         {/* <PorfofolioSection setShowDeleteAlert={setDeleteAlert} data={data} /> */}
         <StackCustom>
-          <Portofolio_Data data={data} />
+          <Portofolio_Data data={data} listSubBidang={data?.Portofolio_BidangDanSubBidangBisnis as any []} />
           <Portofolio_BusinessLocation />
           <Portofolio_SocialMediaSection data={data?.Portofolio_MediaSosial} />
           <Portofolio_ButtonDelete

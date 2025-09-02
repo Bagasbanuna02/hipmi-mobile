@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
+  ActionIcon,
   AvatarComp,
   BaseBox,
   ButtonCenteredOnly,
   CenterCustom,
+  Grid,
   InformationBox,
   SelectCustom,
   Spacing,
@@ -13,7 +15,9 @@ import {
   TextInputCustom,
   ViewWrapper,
 } from "@/components";
+import { IconPlus } from "@/components/_Icon";
 import { MainColor } from "@/constants/color-palet";
+import { ICON_SIZE_XLARGE } from "@/constants/constans-value";
 import DUMMY_IMAGE from "@/constants/dummy-image-value";
 import Portofolio_ButtonCreate from "@/screens/Portofolio/ButtonCreatePortofolio";
 import {
@@ -25,10 +29,12 @@ import {
   IMasterSubBidangBisnis,
 } from "@/types/Type-Master";
 import pickImage from "@/utils/pickImage";
+import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
+import _ from "lodash";
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import PhoneInput, { ICountry } from "react-native-international-phone-number";
 import { Avatar } from "react-native-paper";
 
@@ -46,12 +52,11 @@ export default function PortofolioCreate() {
   const [imageUri, setImageUri] = useState<string | null>(null);
 
   const [bidangBisnis, setBidangBisnis] = useState<IMasterBidangBisnis[]>([]);
-  const [selectBidangId, setSelectBidangId] = useState<string>("");
   const [subBidangBisnis, setSubBidangBisnis] = useState<
     IMasterSubBidangBisnis[]
   >([]);
 
-  // const [subBidangSelected, setSubBidangSelected] = useState<string[]>([]);
+  const [selectedSubBidang, setSelectedSubBidang] = useState<string[]>([]);
   const [listSubBidangSelected, setListSubBidangSelected] = useState([
     {
       id: "",
@@ -82,6 +87,7 @@ export default function PortofolioCreate() {
 
   useEffect(() => {
     onLoadMaster();
+    onLoadMasterSubBidangBisnis();
   }, []);
 
   const onLoadMaster = async () => {
@@ -94,13 +100,21 @@ export default function PortofolioCreate() {
     }
   };
 
-  const onLoadMasterSubBidangBisnis = async ({ id }: { id: string }) => {
+  const onLoadMasterSubBidangBisnis = async () => {
     try {
-      const response = await apiMasterSubBidangBisnis({ id: id });
+      const response = await apiMasterSubBidangBisnis({});
       setSubBidangBisnis(response.data);
     } catch (error) {
+      setSubBidangBisnis([]);
       console.log("Error onLoadMasterBidangBisnis", error);
     }
+  };
+
+  const handlerSelectedSubBidang = ({ id }: { id: string }) => {
+    const selectedList = subBidangBisnis?.filter(
+      (item) => (item?.masterBidangBisnisId as any) === id
+    );
+    setSelectedSubBidang(selectedList as any[]);
   };
 
   return (
@@ -136,45 +150,100 @@ export default function PortofolioCreate() {
           }))}
           value={data.masterBidangBisnisId}
           onChange={(value) => {
+            const isSameBidang = data.masterBidangBisnisId === value;
+
+            if (!isSameBidang) {
+              setListSubBidangSelected([{ id: "" }]);
+            }
+
             setData({ ...(data as any), masterBidangBisnisId: value });
-            setSelectBidangId(id as string);
-            onLoadMasterSubBidangBisnis({ id: value as string });
+            handlerSelectedSubBidang({ id: value as string });
           }}
         />
 
-        {/* {listSubBidangSelected.map((item, index) => (
-          <Grid key={index}>
-            <Grid.Col span={10}>
-              <SelectCustom
-                disabled={selectBidangId === ""}
-                label="Sub Bidang Usaha"
-                required
-                data={subBidangBisnis.map((item) => ({
-                  label: item.name,
-                  value: item.id,
-                }))}
-                value={data.sub_bidang_usaha}
-                onChange={(value) => {
-                  setData({ ...(data as any), sub_bidang_usaha: value });
-                  setListSubBidangSelected([
-                    ...listSubBidangSelected,
-                    { id: value as string },
-                  ]);
-                }}
-              />
-            </Grid.Col>
-            <Grid.Col
-              span={2}
-              style={{ alignItems: "center", justifyContent: "center" }}
-            >
-              <TouchableOpacity onPress={() => console.log("delete")}>
-                <Ionicons name="trash" size={24} color={MainColor.red} />
-              </TouchableOpacity>
-            </Grid.Col>
-          </Grid>
+        {listSubBidangSelected.map((item, index) => (
+          <SelectCustom
+            key={index}
+            disabled={data.masterBidangBisnisId === ""}
+            label="Sub Bidang Usaha"
+            required
+            data={_.map(selectedSubBidang as any)
+              .filter((option: any) => {
+                const selectedValues = listSubBidangSelected.map((s) => s.id);
+                return (
+                  option.id === item.id || // biarkan tetap muncul kalau ini valuenya sendiri
+                  !selectedValues.includes(option.id)
+                );
+              })
+              .map((e: any) => ({
+                value: e.id,
+                label: e.name,
+              }))}
+            value={item.id || null}
+            onChange={(value) => {
+              const list = _.clone(listSubBidangSelected);
+              list[index].id = value as any;
+              setListSubBidangSelected(list);
+            }}
+          />
         ))}
 
-        <ButtonCenteredOnly
+        <CenterCustom>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+            <ActionIcon
+              disabled={
+                selectedSubBidang.length === listSubBidangSelected.length
+              }
+              onPress={() => {
+                setListSubBidangSelected([
+                  ...listSubBidangSelected,
+                  { id: "" },
+                ]);
+              }}
+              icon={
+                <Ionicons
+                  name="add-circle-outline"
+                  size={ICON_SIZE_XLARGE}
+                  color={MainColor.black}
+                />
+              }
+              size="xl"
+            />
+            <ActionIcon
+              disabled={listSubBidangSelected.length <= 1}
+              onPress={() => {
+                const list = _.clone(listSubBidangSelected);
+                list.pop();
+                setListSubBidangSelected(list);
+              }}
+              icon={
+                <Ionicons
+                  name="remove-circle-outline"
+                  size={ICON_SIZE_XLARGE}
+                  color={MainColor.black}
+                />
+              }
+              size="xl"
+            />
+          </View>
+        </CenterCustom>
+        <Spacing />
+
+        {/* <SelectCustom
+          label="Bidang Usaha"
+          required
+          data={bidangBisnis.map((item) => ({
+            label: item.name,
+            value: item.id,
+          }))}
+          value={null}
+          onChange={(value) => {
+            setData({ ...(data as any), masterBidangBisnisId: value });
+            handlerSelectedSubBidang({ id: value as string });
+          }}
+        /> */}
+
+        {/* <ButtonCenteredOnly
           onPress={() => {
             setListSubBidangSelected([...listSubBidangSelected, { id: "" }]);
           }}

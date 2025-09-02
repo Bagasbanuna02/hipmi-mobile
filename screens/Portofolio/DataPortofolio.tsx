@@ -17,7 +17,13 @@ import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 
-export default function Portofolio_Data({ data }: { data: any }) {
+export default function Portofolio_Data({
+  data,
+  listSubBidang,
+}: {
+  data: any;
+  listSubBidang: any[];
+}) {
   const { id } = useLocalSearchParams();
 
   const listData = [
@@ -83,6 +89,8 @@ export default function Portofolio_Data({ data }: { data: any }) {
   //   },
   // ];
 
+  console.log("List Sub Bidang >>", JSON.stringify(listSubBidang, null, 2));
+
   return (
     <>
       <BaseBox>
@@ -137,20 +145,24 @@ export default function Portofolio_Data({ data }: { data: any }) {
                 </Grid.Col>
               </Grid>
             ))}
-            {/* <View style={{ paddingLeft: 10 }}>
-              {listSubBidang.map((item, index) => (
+            <View style={{ paddingLeft: 10 }}>
+              {listSubBidang?.map((item, index) => (
                 <Grid key={index}>
                   <Grid.Col span={2} style={{ alignItems: "center" }}>
-                    {item.icon}
+                    <Ionicons
+                      name="chevron-forward-outline"
+                      size={ICON_SIZE_SMALL}
+                      color="white"
+                    />
                   </Grid.Col>
                   <Grid.Col span={10}>
                     <TextCustom style={{ paddingLeft: 5 }}>
-                      {item.label}
+                      {item?.MasterSubBidangBisnis?.name || "-"}
                     </TextCustom>
                   </Grid.Col>
                 </Grid>
               ))}
-            </View> */}
+            </View>
           </View>
 
           <DividerCustom labelPosition="top" color={AccentColor.blue} />

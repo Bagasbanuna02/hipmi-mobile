@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { StackCustom, ViewWrapper } from "@/components";
 import { MainColor } from "@/constants/color-palet";
@@ -8,31 +9,40 @@ import TabSection from "@/screens/Home/tabSection";
 import { tabsHome } from "@/screens/Home/tabsList";
 import Home_FeatureSection from "@/screens/Home/topFeatureSection";
 import { apiUser } from "@/service/api-client/api-user";
+import { apiVersion } from "@/service/api-config";
 import { Ionicons } from "@expo/vector-icons";
 import { Redirect, router, Stack } from "expo-router";
 import { useEffect, useState } from "react";
 
 export default function Application() {
-  const { user } = useAuth();
-  const [data, setData] = useState<any>({});
+  const { token, user } = useAuth();
+
+  const [data, setData] = useState<any>();
 
   useEffect(() => {
     onLoadData();
+    checkVersion();
   }, []);
 
   async function onLoadData() {
     const response = await apiUser(user?.id as string);
-    console.log("User >>", JSON.stringify(response.data.username, null, 2));
-    console.log("Profile Check >>", JSON.stringify(response.data.Profile.id, null, 2));
+    console.log("Response profile >>", JSON.stringify(response?.data?.Profile, null, 2));
 
     setData(response.data);
   }
 
+  const checkVersion = async () => {
+    const response = await apiVersion();
+    console.log("Version >>", JSON.stringify(response.data, null, 2));
+  };
+
   if (data && data?.active === false) {
+    console.log("User is not active");
     return <Redirect href={`/waiting-room`} />;
   }
 
   if (data && data?.Profile === null) {
+    console.log("Profile is null");
     return <Redirect href={`/profile/create`} />;
   }
 
@@ -40,7 +50,7 @@ export default function Application() {
     <>
       <Stack.Screen
         options={{
-          title: "HIPMI",
+          title: `HIPMI`,
           headerLeft: () => (
             <Ionicons
               name="search"
