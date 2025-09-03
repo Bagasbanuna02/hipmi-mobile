@@ -38,10 +38,10 @@ export default function Portofolio() {
 
   async function onLoadData(id: string) {
     const response = await apiGetOnePortofolio({ id: id });
-    console.log(
-      "Response portofolio >>",
-      JSON.stringify(response.data, null, 2)
-    );
+    // console.log(
+    //   "Response portofolio >>",
+    //   JSON.stringify(response.data, null, 2)
+    // );
 
     setData(response.data);
   }

@@ -89,7 +89,7 @@ export default function Portofolio_Data({
   //   },
   // ];
 
-  console.log("List Sub Bidang >>", JSON.stringify(listSubBidang, null, 2));
+  // console.log("List Sub Bidang >>", JSON.stringify(listSubBidang, null, 2));
 
   return (
     <>
