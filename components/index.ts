@@ -61,6 +61,8 @@ import DummyLandscapeImage from "./_ShareComponent/DummyLandscapeImage";
 import GridComponentView from "./_ShareComponent/GridSectionView";
 // Progress
 import ProgressCustom from "./Progress/ProgressCustom";
+// Loader
+import LoaderCustom from "./Loader/LoaderCustom";
 
 export {
   // ActionIcon
@@ -128,4 +130,6 @@ export {
   TextInputCustom,
   // ViewWrapper
   ViewWrapper,
+  // Loader
+  LoaderCustom,
 };

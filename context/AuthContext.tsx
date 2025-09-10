@@ -92,7 +92,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         await AsyncStorage.setItem("authToken", token);
 
         const responseUser = await apiConfig.get(
-          `/mobile/user?token=${token}`,
+          `/mobile?token=${token}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

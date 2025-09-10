@@ -1,5 +1,5 @@
 import {
-  AvatarCustom,
+  AvatarComp,
   ClickableCustom,
   Grid,
   Spacing,
@@ -10,39 +10,42 @@ import {
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
+import { apiAllUser } from "@/service/api-client/api-user";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import _ from "lodash";
+import { useEffect, useState } from "react";
 
 export default function UserSearch() {
-  function generateRandomPhoneNumber(index: number) {
-    let prefix;
+  const [data, setData] = useState<any[]>([]);
+  const [search, setSearch] = useState<string>("");
 
-    // Menentukan prefix berdasarkan index genap atau ganjil
-    if (index % 2 === 0) {
-      const evenPrefixes = ["6288", "6289", "6281"];
-      prefix = evenPrefixes[Math.floor(Math.random() * evenPrefixes.length)];
-    } else {
-      const oddPrefixes = ["6285", "6283"];
-      prefix = oddPrefixes[Math.floor(Math.random() * oddPrefixes.length)];
+  useEffect(() => {
+    onLoadData(search);
+  }, [search]);
+
+  const onLoadData = async (search: string) => {
+    try {
+      const response = await apiAllUser({ search: search });
+      console.log("[DATA USER] >", JSON.stringify(response.data, null, 2));
+      setData(response.data);
+    } catch (error) {
+      console.log("Error fetching data", error);
     }
+  };
 
-    // Menghitung panjang sisa nomor acak (antara 10 - 12 digit)
-    const remainingLength = Math.floor(Math.random() * 3) + 10; // 10, 11, atau 12
+  const handleSearch = (search: string) => {
+    setSearch(search);
+    onLoadData(search);
+  };
 
-    // Membuat sisa nomor acak
-    let randomNumber = "";
-    for (let i = 0; i < remainingLength; i++) {
-      randomNumber += Math.floor(Math.random() * 10); // Digit acak antara 0-9
-    }
-
-    // Menggabungkan prefix dan sisa nomor
-    return prefix + randomNumber;
-  }
   return (
     <>
       <ViewWrapper
         headerComponent={
           <TextInputCustom
+            value={search}
+            onChangeText={handleSearch}
             iconLeft={
               <Ionicons
                 name="search"
@@ -57,41 +60,46 @@ export default function UserSearch() {
         }
       >
         <StackCustom>
-          {Array.from({ length: 20 }).map((e, index) => {
-            return (
-              <Grid key={index}>
-                <Grid.Col span={2}>
-                  <AvatarCustom href={`/profile/${index}`}/>  
-                </Grid.Col>
-                <Grid.Col span={9}>
-                  <TextCustom size="large">Nama user {index}</TextCustom>
-                  <TextCustom size="small">
-                    +{generateRandomPhoneNumber(index)}
-                  </TextCustom>
-                </Grid.Col>
-                <Grid.Col
-                  span={1}
-                  style={{
-                    justifyContent: "center",
-                    alignItems: "flex-end",
+          {!_.isEmpty(data) ? (
+            data?.map((e, index) => {
+              return (
+                <ClickableCustom
+                  key={index}
+                  onPress={() => {
+                    console.log("Ke Profile");
+                    router.push(`/profile/${e?.Profile?.id}`);
                   }}
                 >
-                  <ClickableCustom
-                    onPress={() => {
-                      console.log("Ke Profile");
-                      router.push(`/profile/${index}`);
-                    }}
-                  >
-                    <Ionicons
-                      name="chevron-forward"
-                      size={ICON_SIZE_SMALL}
-                      color={MainColor.white}
-                    />
-                  </ClickableCustom>
-                </Grid.Col>
-              </Grid>
-            );
-          })}
+                  <Grid>
+                    <Grid.Col span={2}>
+                      <AvatarComp fileId={e?.Profile?.imageId} size="base" />
+                    </Grid.Col>
+                    <Grid.Col span={9}>
+                      <StackCustom gap={"sm"}>
+                        <TextCustom size="large">{e?.username}</TextCustom>
+                        <TextCustom size="small">+{e?.nomor}</TextCustom>
+                      </StackCustom>
+                    </Grid.Col>
+                    <Grid.Col
+                      span={1}
+                      style={{
+                        justifyContent: "center",
+                        alignItems: "flex-end",
+                      }}
+                    >
+                      <Ionicons
+                        name="chevron-forward"
+                        size={ICON_SIZE_SMALL}
+                        color={MainColor.white}
+                      />
+                    </Grid.Col>
+                  </Grid>
+                </ClickableCustom>
+              );
+            })
+          ) : (
+            <TextCustom align="center">Tidak ditemukan</TextCustom>
+          )}
         </StackCustom>
         <Spacing height={50} />
       </ViewWrapper>

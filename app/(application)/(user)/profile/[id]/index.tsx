@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { LoaderCustom } from "@/components";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import LeftButtonCustom from "@/components/Button/BackButton";
 import DrawerCustom from "@/components/Drawer/DrawerCustom";
@@ -9,6 +11,7 @@ import Profile_PortofolioSection from "@/screens/Profile/PortofolioSection";
 import ProfileSection from "@/screens/Profile/ProfileSection";
 import { apiGetPortofolio } from "@/service/api-client/api-portofolio";
 import { apiProfile } from "@/service/api-client/api-profile";
+import { apiUser } from "@/service/api-client/api-user";
 import { GStyles } from "@/styles/global-styles";
 import { IProfile } from "@/types/Type-Profile";
 import { Ionicons } from "@expo/vector-icons";
@@ -20,9 +23,10 @@ export default function Profile() {
   const { id } = useLocalSearchParams();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [data, setData] = useState<IProfile>();
-  const [dataPortofolio, setDataPortofolio] = useState<any[]>();
+  const [dataToken, setDataToken] = useState<IProfile>();
+  const [listPortofolio, setListPortofolio] = useState<any[]>();
 
-  const { logout, isAdmin } = useAuth();
+  const { logout, isAdmin, user } = useAuth();
 
   const openDrawer = () => {
     setIsDrawerOpen(true);
@@ -36,12 +40,26 @@ export default function Profile() {
     useCallback(() => {
       onLoadData(id as string);
       onLoadPortofolio(id as string);
+      onLoadUserByToken();
+      isUserCheck();
     }, [id])
   );
+
+  const isUserCheck = () => {
+    const userId = id;
+    const userLoginId = dataToken?.id;
+
+    return userId === userLoginId;
+  };
 
   const onLoadData = async (id: string) => {
     const response = await apiProfile({ id: id });
     setData(response.data);
+  };
+
+  const onLoadUserByToken = async () => {
+    const response = await apiUser(user?.id as string);
+    setDataToken(response?.data?.Profile);
   };
 
   const onLoadPortofolio = async (id: string) => {
@@ -52,7 +70,7 @@ export default function Profile() {
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       ) // urut desc
       .slice(0, 2);
-    setDataPortofolio(lastTwoByDate);
+    setListPortofolio(lastTwoByDate);
   };
 
   return (
@@ -61,27 +79,34 @@ export default function Profile() {
         options={{
           title: "Profile",
           headerLeft: () => <LeftButtonCustom />,
-          headerRight: () => (
-            <TouchableOpacity onPress={openDrawer}>
-              <Ionicons
-                name="ellipsis-vertical"
-                size={20}
-                color={MainColor.yellow}
-              />
-            </TouchableOpacity>
-          ),
+          headerRight: () =>
+            isUserCheck() && (
+              <TouchableOpacity onPress={openDrawer}>
+                <Ionicons
+                  name="ellipsis-vertical"
+                  size={20}
+                  color={MainColor.yellow}
+                />
+              </TouchableOpacity>
+            ),
           headerStyle: GStyles.headerStyle,
           headerTitleStyle: GStyles.headerTitleStyle,
         }}
       />
       {/* Main View */}
       <ViewWrapper>
-        <ProfileSection data={data as any} />
+        {!data || !dataToken ? (
+          <LoaderCustom />
+        ) : (
+          <>
+            <ProfileSection data={data as any} />
 
-        <Profile_PortofolioSection
-          data={dataPortofolio as any}
-          profileId={id as string}
-        />
+            <Profile_PortofolioSection
+              data={listPortofolio as any}
+              profileId={id as string}
+            />
+          </>
+        )}
       </ViewWrapper>
 
       {/* Drawer Komponen Eksternal */}
