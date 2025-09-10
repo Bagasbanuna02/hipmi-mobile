@@ -220,52 +220,88 @@ export default function PortofolioEdit() {
     }
   }, [subBidangBisnis, data.masterBidangBisnisId]);
 
+  function validateData(data: any) {
+    if (
+      !data.namaBisnis ||
+      !data.alamatKantor ||
+      !data.tlpn ||
+      !data.deskripsi ||
+      !data.masterBidangBisnisId
+    ) {
+      return false;
+    }
+
+    return true;
+  }
+
+  function validateDataSubBidang(dataArray: any[]) {
+    return !dataArray.some(
+      (item: any) =>
+        !item.MasterSubBidangBisnis.id ||
+        item.MasterSubBidangBisnis.id.trim() === ""
+    );
+  }
+
   const handleSubmitUpdate = async () => {
-    console.log("LIST >>", JSON.stringify(listSubBidangSelected, null, 2));
-    // try {
-    //   setIsLoading(true);
-    //   const callingCode = selectedCountry?.callingCode.replace(/^\+/, "") || "";
-    //   const fixNumber = data.tlpn.replace(/\s+/g, "");
-    //   const realNumber = callingCode + fixNumber;
+    const callingCode = selectedCountry?.callingCode.replace(/^\+/, "") || "";
+    const fixNumber = data.tlpn.replace(/\s+/g, "");
+    const realNumber = callingCode + fixNumber;
 
-    //   const newData: IFormData = {
-    //     id_Portofolio: data.id_Portofolio,
-    //     namaBisnis: data.namaBisnis,
-    //     alamatKantor: data.alamatKantor,
-    //     tlpn: realNumber,
-    //     deskripsi: data.deskripsi,
-    //     masterBidangBisnisId: data.masterBidangBisnisId,
-    //     subBidang: listSubBidangSelected,
-    //   };
+    const newData: IFormData = {
+      id_Portofolio: data.id_Portofolio,
+      namaBisnis: data.namaBisnis,
+      alamatKantor: data.alamatKantor,
+      tlpn: realNumber,
+      deskripsi: data.deskripsi,
+      masterBidangBisnisId: data.masterBidangBisnisId,
+      subBidang: listSubBidangSelected,
+    };
 
-    //   const response = await apiUpdatePortofolio({
-    //     id: id as string,
-    //     data: newData,
-    //     category: "detail",
-    //   });
+    if (!validateData(newData)) {
+      return Toast.show({
+        type: "error",
+        text1: "Harap lengkapi data",
+      });
+    }
 
-    //   if (!response.success) {
-    //     Toast.show({
-    //       type: "info",
-    //       text1: "Info",
-    //       text2: response.message,
-    //     });
+    if (!validateDataSubBidang(listSubBidangSelected as any)) {
+      return Toast.show({
+        type: "error",
+        text1: "Harap lengkapi sub bidang",
+      });
+    }
 
-    //     return;
-    //   }
+    try {
+      setIsLoading(true);
 
-    //   Toast.show({
-    //     type: "success",
-    //     text1: "Sukses",
-    //     text2: "Data terupdate",
-    //   });
+      const response = await apiUpdatePortofolio({
+        id: id as string,
+        data: newData,
+        category: "detail",
+      });
 
-    //   router.back();
-    // } catch (error) {
-    //   console.log("Error handleSubmitUpdate", error);
-    // } finally {
-    //   setIsLoading(false);
-    // }
+      if (!response.success) {
+        Toast.show({
+          type: "info",
+          text1: "Info",
+          text2: response.message,
+        });
+
+        return;
+      }
+
+      Toast.show({
+        type: "success",
+        text1: "Sukses",
+        text2: "Data terupdate",
+      });
+
+      router.back();
+    } catch (error) {
+      console.log("Error handleSubmitUpdate", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const buttonUpdate = (
@@ -281,7 +317,13 @@ export default function PortofolioEdit() {
   );
 
   if (!bidangBisnis || !subBidangBisnis) {
-    return <ActivityIndicator size="large" color={MainColor.yellow} />;
+    return (
+      <>
+        <ViewWrapper>
+          <ActivityIndicator size="large" color={MainColor.yellow} />
+        </ViewWrapper>
+      </>
+    );
   }
 
   return (
@@ -384,36 +426,6 @@ export default function PortofolioEdit() {
           </CenterCustom>
           <Spacing />
 
-          {/* <Grid>
-            <Grid.Col span={10}>
-              <SelectCustom
-                // disabled
-                label="Sub Bidang Usaha"
-                required
-                data={dummyMasterSubBidangBisnis.map((item) => ({
-                  label: item.name,
-                  value: item.id,
-                }))}
-                value={data.masterSubBidangBisnisId}
-                onChange={(value) => {
-                  setData({ ...(data as any), masterSubBidangBisnisId: value });
-                }}
-              />
-            </Grid.Col>
-            <Grid.Col
-              span={2}
-              style={{ alignItems: "center", justifyContent: "center" }}
-            >
-              <TouchableOpacity onPress={() => console.log("delete")}>
-                <Ionicons name="trash" size={24} color={MainColor.red} />
-              </TouchableOpacity>
-            </Grid.Col>
-          </Grid> */}
-          {/* <ButtonCenteredOnly onPress={() => console.log("add")}>
-            Tambah Pilihan
-          </ButtonCenteredOnly>
-          <Spacing /> */}
-
           <View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <TextCustom semiBold style={{ color: MainColor.white_gray }}>
@@ -458,8 +470,6 @@ export default function PortofolioEdit() {
             maxLength={1000}
           />
           <Spacing />
-
-          <TextCustom>{JSON.stringify(subBidangBisnis, null, 2)}</TextCustom>
         </StackCustom>
       </ViewWrapper>
     </>
