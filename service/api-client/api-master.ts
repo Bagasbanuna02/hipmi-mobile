@@ -20,3 +20,7 @@ export async function apiMasterSubBidangBisnis({ id }: { id?: string }) {
     throw error;
   }
 }
+
+// export async function apiMasterEventType(params:type) {
+  
+// }

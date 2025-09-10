@@ -15,7 +15,7 @@ import { apiUser } from "@/service/api-client/api-user";
 import { GStyles } from "@/styles/global-styles";
 import { Ionicons } from "@expo/vector-icons";
 import { Stack, useFocusEffect, useLocalSearchParams } from "expo-router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { TouchableOpacity } from "react-native";
 
 export default function Portofolio() {
