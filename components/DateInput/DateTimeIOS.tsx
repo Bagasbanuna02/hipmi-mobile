@@ -3,24 +3,19 @@ import { MainColor } from "@/constants/color-palet";
 import { GStyles } from "@/styles/global-styles";
 import { Ionicons } from "@expo/vector-icons";
 import DateTimePicker, {
-    DateTimePickerEvent,
+  DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
 import dayjs from "dayjs";
 import React, { useState } from "react";
-import {
-    StyleProp,
-    Text,
-    View,
-    ViewStyle
-} from "react-native";
+import { StyleProp, Text, View, ViewStyle } from "react-native";
 import ClickableCustom from "../Clickable/ClickableCustom";
 import TextCustom from "../Text/TextCustom";
 
 interface DateTimeInputProps {
   // Main
-  value?: DateTimePickerEvent;
+  value?: DateTimePickerEvent | Date | null;
   mode?: "date" | "time";
-  onChange: (selectedDate: DateTimePickerEvent) => void;
+  onChange: (selectedDate: DateTimePickerEvent | Date | null) => void;
   maximumDate?: Date;
   minimumDate?: Date;
   // Main
@@ -74,7 +69,7 @@ const DateTimeInput_IOS: React.FC<DateTimeInputProps> = ({
       <ClickableCustom
         activeOpacity={0.8}
         style={[GStyles.inputContainerArea, containerStyle]}
-        onPress={handlePress}
+        onPress={() => !disabled && handlePress()}
       >
         {label && (
           <Text style={GStyles.inputLabel}>
@@ -95,11 +90,11 @@ const DateTimeInput_IOS: React.FC<DateTimeInputProps> = ({
             <Ionicons
               name="calendar-outline"
               size={20}
-              color={MainColor.placeholder}
+              color={disabled ? MainColor.white : MainColor.placeholder}
             />
           </View>
 
-          <TextCustom color="gray">
+          <TextCustom color={disabled ? "default" : "gray"}>
             {selectedDate ? (
               <TextCustom color="black">
                 {dayjs(selectedDate).format("DD-MM-YYYY HH:mm")}

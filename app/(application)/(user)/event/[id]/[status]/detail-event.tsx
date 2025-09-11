@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   BaseBox,
   DotButton,
@@ -11,17 +12,64 @@ import {
 } from "@/components";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import LeftButtonCustom from "@/components/Button/BackButton";
-import Event_AlertButtonStatusSection from "@/screens/Event/AlertButtonStatusSection";
 import Event_ButtonStatusSection from "@/screens/Event/ButtonStatusSection";
 import { menuDrawerDraftEvent } from "@/screens/Event/menuDrawerDraft";
-import { router, Stack, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import { apiEventGetOne } from "@/service/api-client/api-event";
+import { dateTimeView } from "@/utils/dateTimeView";
+import {
+  router,
+  Stack,
+  useFocusEffect,
+  useLocalSearchParams,
+} from "expo-router";
+import { useCallback, useState } from "react";
 
 export default function EventDetailStatus() {
   const { id, status } = useLocalSearchParams();
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [openAlert, setOpenAlert] = useState(false);
-  const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
+  // const [openAlert, setOpenAlert] = useState(false);
+
+  const [data, setData] = useState<any>();
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [id])
+  );
+
+  async function onLoadData() {
+    try {
+      const response = await apiEventGetOne({ id: id as string });
+      if (response.success) {
+        setData(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  }
+
+  const listData = [
+    {
+      title: "Lokasi",
+      value: data?.lokasi || "-",
+    },
+    {
+      title: "Tipe Acara",
+      value: data?.EventMaster_TipeAcara?.name || "-",
+    },
+    {
+      title: "Tanggal Mulai",
+      value: dateTimeView({ date: data?.tanggal }) || "-",
+    },
+    {
+      title: "Tanggal Berakhir",
+      value: dateTimeView({ date: data?.tanggalSelesai }) || "-",
+    },
+    {
+      title: "Deskripsi",
+      value: data?.deskripsi || "-",
+    },
+  ];
 
   const handlePress = (item: IMenuDrawerItem) => {
     console.log("PATH >> ", item.path);
@@ -45,7 +93,7 @@ export default function EventDetailStatus() {
         <BaseBox>
           <StackCustom>
             <TextCustom bold align="center" size="xlarge">
-              Judul event {status}
+              {data?.title || "-"}
             </TextCustom>
             {listData.map((item, index) => (
               <Grid key={index}>
@@ -60,9 +108,8 @@ export default function EventDetailStatus() {
           </StackCustom>
         </BaseBox>
         <Event_ButtonStatusSection
+          id={id as string}
           status={status as string}
-          onOpenAlert={setOpenAlert}
-          onOpenDeleteAlert={setOpenDeleteAlert}
         />
         <Spacing />
       </ViewWrapper>
@@ -70,7 +117,7 @@ export default function EventDetailStatus() {
       <DrawerCustom
         isVisible={openDrawer}
         closeDrawer={() => setOpenDrawer(false)}
-        height={250}
+        height={"auto"}
       >
         <MenuDrawerDynamicGrid
           data={menuDrawerDraftEvent({ id: id as string }) as any}
@@ -78,40 +125,6 @@ export default function EventDetailStatus() {
           onPressItem={handlePress as any}
         />
       </DrawerCustom>
-
-      <Event_AlertButtonStatusSection
-        id={id as string}
-        status={status as string}
-        openAlert={openAlert}
-        setOpenAlert={setOpenAlert}
-        openDeleteAlert={openDeleteAlert}
-        setOpenDeleteAlert={setOpenDeleteAlert}
-      />
     </>
   );
 }
-
-const listData = [
-  {
-    title: "Lokasi",
-    value:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur eveniet ab eum ducimus tempore a quia deserunt quisquam. Tempora, atque. Aperiam minima asperiores dicta perferendis quis adipisci, dolore optio porro!",
-  },
-  {
-    title: "Tipe Acara",
-    value: "Workshop",
-  },
-  {
-    title: "Tanggal Mulai",
-    value: "Senin, 18 Juli 2025, 10:00 WIB",
-  },
-  {
-    title: "Tanggal Berakhir",
-    value: "Selasa, 19 Juli 2025, 12:00 WIB",
-  },
-  {
-    title: "Deskripsi",
-    value:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur eveniet ab eum ducimus tempore a quia deserunt quisquam. Tempora, atque. Aperiam minima asperiores dicta perferendis quis adipisci, dolore optio porro!",
-  },
-];

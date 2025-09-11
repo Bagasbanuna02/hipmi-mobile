@@ -1,27 +1,57 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
-    BoxWithHeaderSection,
-    Grid,
-    ScrollableCustom,
-    StackCustom,
-    TextCustom
+  BoxWithHeaderSection,
+  Grid,
+  LoaderCustom,
+  ScrollableCustom,
+  StackCustom,
+  TextCustom,
 } from "@/components";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
+import { useAuth } from "@/hooks/use-auth";
 import { dummyMasterStatus } from "@/lib/dummy-data/_master/status";
-import { useState } from "react";
+import { apiEventGetByStatus } from "@/service/api-client/api-event";
+import { useFocusEffect } from "expo-router";
+import _ from "lodash";
+import { useCallback, useState } from "react";
 
 export default function EventStatus() {
-  const id = "test-id-event";
-
+  const { user } = useAuth();
+  const id = user?.id || "";
   const [activeCategory, setActiveCategory] = useState<string | null>(
     "publish"
   );
+  const [listData, setListData] = useState([]);
+  const [loadingGetData, setLoadingGetData] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [activeCategory, id])
+  );
+
+  async function onLoadData() {
+    try {
+      setLoadingGetData(true);
+      const response = await apiEventGetByStatus({
+        id: id!,
+        status: activeCategory!,
+      });
+      // console.log("Response", JSON.stringify(response.data, null, 2));
+      setListData(response.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoadingGetData(false);
+    }
+  }
 
   const handlePress = (item: any) => {
     setActiveCategory(item.value);
     // tambahkan logika lain seperti filter dsb.
   };
 
-  const scrollComponent = (
+  const tabsComponent = (
     <ScrollableCustom
       data={dummyMasterStatus.map((e, i) => ({
         id: i,
@@ -34,30 +64,36 @@ export default function EventStatus() {
   );
 
   return (
-    <ViewWrapper headerComponent={scrollComponent}>
-      <BoxWithHeaderSection href={`/event/${id}/${activeCategory}/detail-event`}>
-        <StackCustom gap={"xs"}>
-          <Grid>
-            <Grid.Col span={8}>
-              <TextCustom truncate bold>
-                Lorem ipsum,{" "}
-                <TextCustom color="green">{activeCategory}</TextCustom> dolor
-                sit amet consectetur adipisicing elit.
-              </TextCustom>
-            </Grid.Col>
-            <Grid.Col span={4} style={{ alignItems: "flex-end" }}>
-              <TextCustom>{new Date().toLocaleDateString()}</TextCustom>
-            </Grid.Col>
-          </Grid>
+    <ViewWrapper headerComponent={tabsComponent}>
+      {loadingGetData ? (
+        <LoaderCustom />
+      ) : _.isEmpty(listData) ? (
+        <TextCustom align="center">Tidak ada data {activeCategory}</TextCustom>
+      ) : (
+        listData.map((item: any, i) => (
+          <BoxWithHeaderSection
+            key={i}
+            href={`/event/${item.id }/${activeCategory}/detail-event`}
+          >
+            <StackCustom gap={"xs"}>
+              <Grid>
+                <Grid.Col span={8}>
+                  <TextCustom truncate bold>
+                    {item?.title}
+                  </TextCustom>
+                </Grid.Col>
+                <Grid.Col span={4} style={{ alignItems: "flex-end" }}>
+                  <TextCustom>
+                    {new Date(item?.tanggal).toLocaleDateString()}
+                  </TextCustom>
+                </Grid.Col>
+              </Grid>
 
-          <TextCustom truncate={2}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur
-            eveniet ab eum ducimus tempore a quia deserunt quisquam. Tempora,
-            atque. Aperiam minima asperiores dicta perferendis quis adipisci,
-            dolore optio porro!
-          </TextCustom>
-        </StackCustom>
-      </BoxWithHeaderSection>
+              <TextCustom truncate={2}>{item?.deskripsi}</TextCustom>
+            </StackCustom>
+          </BoxWithHeaderSection>
+        ))
+      )}
     </ViewWrapper>
   );
 }

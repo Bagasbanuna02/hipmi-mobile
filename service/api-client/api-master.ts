@@ -21,6 +21,11 @@ export async function apiMasterSubBidangBisnis({ id }: { id?: string }) {
   }
 }
 
-// export async function apiMasterEventType(params:type) {
-  
-// }
+export async function apiMasterEventType() {
+  try {
+    const response = await apiConfig.get(`/mobile/master/event-type`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

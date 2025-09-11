@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 // DateTimeInput.tsx
 import { MainColor } from "@/constants/color-palet";
 import { GStyles } from "@/styles/global-styles";
@@ -119,7 +119,7 @@ const DateTimeInput_Android: React.FC<DateTimeInputProps> = ({
             <Ionicons
               name="calendar-outline"
               size={20}
-              color={MainColor.placeholder}
+              color={disabled ? MainColor.white_gray : MainColor.placeholder}
             />
           </View>
 
@@ -131,8 +131,8 @@ const DateTimeInput_Android: React.FC<DateTimeInputProps> = ({
             }}
           >
             <Grid.Col span={6} style={{}}>
-              <Pressable onPress={toggleDatePicker}>
-                <TextCustom color="gray">
+              <Pressable onPress={() => !disabled && toggleDatePicker()}>
+                <TextCustom color={disabled ? "default" : "gray"}>
                   {selectedDate ? (
                     <TextCustom color="black">
                       {selectedDate.toLocaleDateString()}
@@ -148,8 +148,8 @@ const DateTimeInput_Android: React.FC<DateTimeInputProps> = ({
             </Grid.Col>
 
             <Grid.Col span={5} style={{}}>
-              <Pressable onPress={toggleTimePicker}>
-                <TextCustom color="gray">
+              <Pressable onPress={() => !disabled && toggleTimePicker()}>
+                <TextCustom color={disabled ? "default" : "gray"}>
                   {selectedTime ? (
                     <TextCustom color="black">
                       {selectedTime.toLocaleTimeString("id-ID", {
