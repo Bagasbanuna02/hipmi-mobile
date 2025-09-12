@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { AccentColor, MainColor } from "@/constants/color-palet";
 import { TEXT_SIZE_SMALL } from "@/constants/constans-value";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -5,19 +6,23 @@ import { IMenuDrawerItem } from "../_Interface/types";
 import { Href } from "expo-router";
 
 type IMenuDrawerItemProps = {
-    icon: React.ReactNode;
-    label: string;
-    value?: string;
-    path?: Href | string;
-    color?: string;
-}
+  icon: React.ReactNode;
+  label: string;
+  value?: string;
+  path?: Href | string;
+  color?: string;
+};
 
 interface MenuDrawerDynamicGridProps {
-    data: IMenuDrawerItemProps[];
-    columns?: number;
-    onPressItem?: (item: IMenuDrawerItemProps) => void;
+  data: IMenuDrawerItemProps[];
+  columns?: number;
+  onPressItem?: (item: IMenuDrawerItemProps) => void;
 }
-const MenuDrawerDynamicGrid = ({ data, columns = 4, onPressItem }: MenuDrawerDynamicGridProps) => {
+const MenuDrawerDynamicGrid = ({
+  data,
+  columns = 4,
+  onPressItem,
+}: MenuDrawerDynamicGridProps) => {
   const numColumns = columns;
 
   return (

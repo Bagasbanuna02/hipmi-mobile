@@ -1,4 +1,4 @@
-import { AvatarUsernameAndOtherComponent, BaseBox, BoxWithHeaderSection, Grid, StackCustom, TextCustom } from "@/components";
+import { AvatarUsernameAndOtherComponent, BoxWithHeaderSection, Grid, StackCustom, TextCustom } from "@/components";
 import { dateTimeView } from "@/utils/dateTimeView";
 
 export default function Event_BoxDetailPublishSection({
@@ -31,7 +31,6 @@ export default function Event_BoxDetailPublishSection({
     },
   ];
 
-  console.log("DATA >> ", JSON.stringify(data, null, 2));
 
   return (
     <>

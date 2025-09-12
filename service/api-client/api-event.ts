@@ -52,7 +52,13 @@ export async function apiEventUpdateStatus({
   }
 }
 
-export async function apiEventUpdateData({ id, data }: { id: string; data: any }) {
+export async function apiEventUpdateData({
+  id,
+  data,
+}: {
+  id: string;
+  data: any;
+}) {
   try {
     const response = await apiConfig.put(`/mobile/event/${id}`, {
       data: data,
@@ -71,11 +77,36 @@ export async function apiEventDelete({ id }: { id: string }) {
     throw error;
   }
 }
-  
 
 export async function apiEventGetAll() {
   try {
     const response = await apiConfig.get(`/mobile/event`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiEventJoin({
+  id,
+  userId,
+}: {
+  id: string;
+  userId?: string;
+}) {
+  try {
+    const response = await apiConfig.post(`/mobile/event/${id}/participants`, {
+      userId: userId,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiEventListOfParticipants({id}: {id: string}){
+  try {
+    const response = await apiConfig.get(`/mobile/event/${id}/participants`);
     return response.data;
   } catch (error) {
     throw error;

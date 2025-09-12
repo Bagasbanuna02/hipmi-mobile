@@ -9,16 +9,19 @@ import {
 } from "@/components";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import LeftButtonCustom from "@/components/Button/BackButton";
+import { useAuth } from "@/hooks/use-auth";
 import Event_BoxDetailPublishSection from "@/screens/Event/BoxDetailPublishSection";
 import { menuDrawerPublishEvent } from "@/screens/Event/menuDrawerPublish";
-import { apiEventGetOne } from "@/service/api-client/api-event";
+import { apiEventGetOne, apiEventJoin } from "@/service/api-client/api-event";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { Alert } from "react-native";
+import Toast from "react-native-toast-message";
 
 export default function EventDetailPublish() {
   const { id } = useLocalSearchParams();
+  const { user } = useAuth();
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [isLoadingJoin, setIsLoadingJoin] = useState(false);
 
   const [data, setData] = useState();
 
@@ -43,11 +46,43 @@ export default function EventDetailPublish() {
     setOpenDrawer(false);
   };
 
+  const handlerJoin = async () => {
+    const userId = user?.id;
+    if (!userId) {
+      return Toast.show({
+        type: "error",
+        text2: "Anda belum login",
+      });
+    }
+
+    try {
+      setIsLoadingJoin(true);
+      const response = await apiEventJoin({
+        id: id as string,
+        userId: userId as string,
+      });
+      if (response.success) {
+        router.navigate(
+          `/(application)/(user)/event/${id}/list-of-participants`
+        );
+        Toast.show({
+          type: "success",
+          text1: "Anda berhasil join",
+        });
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setIsLoadingJoin(false);
+    }
+  };
+
   const footerButton = (
     <ButtonCustom
+      isLoading={isLoadingJoin}
       backgroundColor="green"
       textColor="white"
-      onPress={() => Alert.alert("Anda berhasil join event ini")}
+      onPress={() => handlerJoin()}
     >
       Join
     </ButtonCustom>
@@ -63,7 +98,10 @@ export default function EventDetailPublish() {
         }}
       />
       <ViewWrapper>
-        <Event_BoxDetailPublishSection data={data} footerButton={footerButton} />
+        <Event_BoxDetailPublishSection
+          data={data}
+          footerButton={footerButton}
+        />
         <Spacing />
       </ViewWrapper>
 
@@ -75,7 +113,7 @@ export default function EventDetailPublish() {
         <MenuDrawerDynamicGrid
           data={menuDrawerPublishEvent({ id: id as string })}
           columns={4}
-          // onPressItem={handlePress}
+          onPressItem={handlePress as any}
         />
       </DrawerCustom>
     </>
