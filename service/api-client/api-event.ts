@@ -62,3 +62,23 @@ export async function apiEventUpdateData({ id, data }: { id: string; data: any }
     throw error;
   }
 }
+
+export async function apiEventDelete({ id }: { id: string }) {
+  try {
+    const response = await apiConfig.delete(`/mobile/event/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+  
+
+export async function apiEventGetAll() {
+  try {
+    const response = await apiConfig.get(`/mobile/event`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+  

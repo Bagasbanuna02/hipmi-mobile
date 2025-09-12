@@ -80,7 +80,7 @@ export default function EventEdit() {
     }
   };
 
-  const validateDate = () => {
+  const validateDate = async () => {
     if (
       data?.title === "" ||
       data?.lokasi === "" ||
@@ -92,7 +92,8 @@ export default function EventEdit() {
         text1: "Info",
         text2: "Lengkapi semua data",
       });
-      return;
+
+      return false;
     }
 
     const startDate = new Date(selectedDate as any);
@@ -104,12 +105,17 @@ export default function EventEdit() {
         text1: "Info",
         text2: "Ubah tanggal berakhirnya event",
       });
-      return;
+
+      return false;
     }
+
+    return true;
   };
 
   const handlerSubmit = async () => {
-    validateDate();
+    const isValid = await validateDate();
+    if (!isValid) return;
+
     try {
       setIsLoading(true);
       const newData = {

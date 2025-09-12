@@ -1,21 +1,50 @@
-import {
-    BaseBox,
-    Grid,
-    StackCustom,
-    TextCustom
-} from "@/components";
+import { AvatarUsernameAndOtherComponent, BaseBox, BoxWithHeaderSection, Grid, StackCustom, TextCustom } from "@/components";
+import { dateTimeView } from "@/utils/dateTimeView";
 
 export default function Event_BoxDetailPublishSection({
+  data,
   footerButton,
 }: {
+  data?: any;
   footerButton?: React.ReactNode;
 }) {
+  const listData = [
+    {
+      title: "Lokasi",
+      value: data?.lokasi || "-",
+    },
+    {
+      title: "Tipe Acara",
+      value: data?.EventMaster_TipeAcara?.name || "-",
+    },
+    {
+      title: "Tanggal Mulai",
+      value: dateTimeView({ date: data?.tanggal }) || "-",
+    },
+    {
+      title: "Tanggal Berakhir",
+      value: dateTimeView({ date: data?.tanggalSelesai }) || "-",
+    },
+    {
+      title: "Deskripsi",
+      value: data?.deskripsi || "-",
+    },
+  ];
+
+  console.log("DATA >> ", JSON.stringify(data, null, 2));
+
   return (
     <>
-      <BaseBox>
+      <BoxWithHeaderSection>
         <StackCustom>
+          <AvatarUsernameAndOtherComponent
+            avatarHref={`/profile/${data?.Author?.Profile?.id}`}
+            name={data?.Author?.username || "-"}
+            avatar={data?.Author?.Profile?.imageId || ""}
+          />
+
           <TextCustom bold align="center" size="xlarge">
-            Judul event publish
+            {data?.title || "-"}
           </TextCustom>
           {listData.map((item, index) => (
             <Grid key={index}>
@@ -28,34 +57,9 @@ export default function Event_BoxDetailPublishSection({
             </Grid>
           ))}
         </StackCustom>
-      </BaseBox>
+      </BoxWithHeaderSection>
 
       {footerButton}
     </>
   );
 }
-
-const listData = [
-  {
-    title: "Lokasi",
-    value:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur eveniet ab eum ducimus tempore a quia deserunt quisquam. Tempora, atque. Aperiam minima asperiores dicta perferendis quis adipisci, dolore optio porro!",
-  },
-  {
-    title: "Tipe Acara",
-    value: "Workshop",
-  },
-  {
-    title: "Tanggal Mulai",
-    value: "Senin, 18 Juli 2025, 10:00 WIB",
-  },
-  {
-    title: "Tanggal Berakhir",
-    value: "Selasa, 19 Juli 2025, 12:00 WIB",
-  },
-  {
-    title: "Deskripsi",
-    value:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur eveniet ab eum ducimus tempore a quia deserunt quisquam. Tempora, atque. Aperiam minima asperiores dicta perferendis quis adipisci, dolore optio porro!",
-  },
-];

@@ -1,7 +1,6 @@
-import { ImageSourcePropType } from "react-native";
 import Divider from "../Divider/Divider";
 import Grid from "../Grid/GridCustom";
-import AvatarCustom from "../Image/AvatarCustom";
+import AvatarComp from "../Image/AvatarComp";
 import TextCustom from "../Text/TextCustom";
 
 const AvatarUsernameAndOtherComponent = ({
@@ -12,7 +11,7 @@ const AvatarUsernameAndOtherComponent = ({
   withBottomLine = false,
 }: {
   avatarHref?: string;
-  avatar?: ImageSourcePropType;
+  avatar?: string;
   name?: string;
   rightComponent?: React.ReactNode;
   withBottomLine?: boolean;
@@ -21,7 +20,7 @@ const AvatarUsernameAndOtherComponent = ({
     <>
       <Grid containerStyle={{ zIndex: 10 }}>
         <Grid.Col span={2}>
-          <AvatarCustom source={avatar} href={avatarHref as any} />
+          <AvatarComp fileId={avatar} href={avatarHref as any} size="base" />
         </Grid.Col>
         <Grid.Col
           span={rightComponent ? 6 : 10}

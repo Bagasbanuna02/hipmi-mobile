@@ -1,5 +1,8 @@
 import { AlertDefaultSystem, ButtonCustom, Grid } from "@/components";
-import { apiEventUpdateStatus } from "@/service/api-client/api-event";
+import {
+  apiEventDelete,
+  apiEventUpdateStatus,
+} from "@/service/api-client/api-event";
 import { router } from "expo-router";
 import Toast from "react-native-toast-message";
 
@@ -118,9 +121,26 @@ export default function Event_ButtonStatusSection({
       message: "Apakah Anda yakin ingin menghapus data ini?",
       textLeft: "Batal",
       textRight: "Hapus",
-      onPressRight: () => {
-        console.log("Hapus");
-        router.back();
+      onPressRight: async () => {
+        try {
+          const response = await apiEventDelete({ id: id });
+          if (response.success) {
+            Toast.show({
+              type: "success",
+              text1: response.message,
+            });
+            router.back();
+          } else {
+            Toast.show({
+              type: "info",
+              text1: "Info",
+              text2: response.message,
+            });
+            router.back();
+          }
+        } catch (error) {
+          console.log("[ERROR]", error);
+        }
       },
     });
   };

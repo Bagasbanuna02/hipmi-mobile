@@ -7,6 +7,8 @@ export const dateTimeView = ({
   date: any;
   withoutTime?: boolean;
 }) => {
-  const newDate = dayjs(date).format(`DD-MM-YYYY, ${withoutTime ? "" : "HH:mm"}`);
+  const newDate = dayjs(date).format(
+    `DD-MM-YYYY ${withoutTime ? "" : ", HH:mm"}`
+  );
   return newDate;
 };

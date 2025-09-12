@@ -7,21 +7,15 @@ import {
 import { Href } from "expo-router";
 
 export default function Event_BoxPublishSection({
-  id,
-  title,
-  username,
-  description,
   href,
+  data,
 
   // Avatar
   sourceAvatar,
   rightComponentAvatar,
 }: {
-  id: string;
-  title?: string;
-  username?: string;
-  description?: string;
   href: Href;
+  data?: any;
 
   // Avatar
   sourceAvatar?: string;
@@ -32,18 +26,15 @@ export default function Event_BoxPublishSection({
       <BoxWithHeaderSection href={href}>
         <StackCustom gap={"xs"}>
           <AvatarUsernameAndOtherComponent
-            avatarHref={`/profile/${id}`}
-            name={username || "Lorem ipsum dolor sit"}
+            avatarHref={`/profile/${data?.Author?.Profile?.id}`}
+            name={data?.Author?.username || "-"}
             rightComponent={rightComponentAvatar}
-            avatar={sourceAvatar as any}
+            avatar={data?.Author?.Profile?.imageId || ""}
           />
           <TextCustom truncate bold>
-            {title || "Lorem ipsum dolor sit"}
+            {data?.title || "-"}
           </TextCustom>
-          <TextCustom truncate={2}>
-            {description ||
-              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro sed doloremque tempora soluta. Dolorem ex quidem ipsum tempora, ipsa, obcaecati quia suscipit numquam, voluptates commodi porro impedit natus quos doloremque!"}
-          </TextCustom>
+          <TextCustom truncate={2}>{data?.deskripsi || "-"}</TextCustom>
         </StackCustom>
       </BoxWithHeaderSection>
     </>
