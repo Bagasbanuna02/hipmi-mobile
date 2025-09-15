@@ -15,7 +15,7 @@ export default function Event_BoxPublishSection({
   rightComponentAvatar,
 }: {
   href: Href;
-  data?: any;
+  data: any;
 
   // Avatar
   sourceAvatar?: string;

@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
+  AlertDefaultSystem,
   ButtonCustom,
   DotButton,
   DrawerCustom,
+  LoaderCustom,
   MenuDrawerDynamicGrid,
-  Spacing,
   ViewWrapper,
 } from "@/components";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
@@ -12,31 +13,59 @@ import LeftButtonCustom from "@/components/Button/BackButton";
 import { useAuth } from "@/hooks/use-auth";
 import Event_BoxDetailPublishSection from "@/screens/Event/BoxDetailPublishSection";
 import { menuDrawerPublishEvent } from "@/screens/Event/menuDrawerPublish";
-import { apiEventGetOne, apiEventJoin } from "@/service/api-client/api-event";
-import { router, Stack, useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
+import {
+  apiEventCheckParticipants,
+  apiEventGetOne,
+  apiEventJoin,
+} from "@/service/api-client/api-event";
+import {
+  router,
+  Stack,
+  useFocusEffect,
+  useLocalSearchParams,
+} from "expo-router";
+import { useCallback, useState } from "react";
 import Toast from "react-native-toast-message";
 
 export default function EventDetailPublish() {
   const { id } = useLocalSearchParams();
   const { user } = useAuth();
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [isLoadingData, setIsLoadingData] = useState(false);
   const [isLoadingJoin, setIsLoadingJoin] = useState(false);
 
   const [data, setData] = useState();
+  const [isParticipant, setIsParticipant] = useState<boolean | null>(null);
 
-  useEffect(() => {
-    onLoadData();
-  }, [id]);
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [])
+  );
 
   async function onLoadData() {
     try {
+      setIsLoadingData(true);
       const response = await apiEventGetOne({ id: id as string });
       if (response.success) {
         setData(response.data);
+
+        const responseCheckParticipants = await apiEventCheckParticipants({
+          id: id as string,
+          userId: user?.id as string,
+        });
+
+        if (
+          responseCheckParticipants.success &&
+          responseCheckParticipants.data
+        ) {
+          setIsParticipant(true);
+        }
       }
     } catch (error) {
       console.log("[ERROR]", error);
+    } finally {
+      setIsLoadingData(false);
     }
   }
 
@@ -77,16 +106,30 @@ export default function EventDetailPublish() {
     }
   };
 
-  const footerButton = (
-    <ButtonCustom
-      isLoading={isLoadingJoin}
-      backgroundColor="green"
-      textColor="white"
-      onPress={() => handlerJoin()}
-    >
-      Join
-    </ButtonCustom>
-  );
+  const footerButton = () => {
+    return (
+      <>
+        <ButtonCustom
+          disabled={isParticipant as any}
+          isLoading={isLoadingJoin}
+          backgroundColor="green"
+          textColor="white"
+          onPress={() =>
+            AlertDefaultSystem({
+              title: "Join event",
+              message: "Anda yakin ingin join sebagai peserta event ?",
+              textLeft: "Tidak",
+              textRight: "Ya",
+              onPressLeft: () => {},
+              onPressRight: () => handlerJoin(),
+            })
+          }
+        >
+          {isParticipant ? "Anda sudah tergabung" : "Join"}
+        </ButtonCustom>
+      </>
+    );
+  };
 
   return (
     <>
@@ -98,11 +141,14 @@ export default function EventDetailPublish() {
         }}
       />
       <ViewWrapper>
-        <Event_BoxDetailPublishSection
-          data={data}
-          footerButton={footerButton}
-        />
-        <Spacing />
+        {isLoadingData ? (
+          <LoaderCustom />
+        ) : (
+          <Event_BoxDetailPublishSection
+            data={data}
+            footerButton={footerButton()}
+          />
+        )}
       </ViewWrapper>
 
       <DrawerCustom

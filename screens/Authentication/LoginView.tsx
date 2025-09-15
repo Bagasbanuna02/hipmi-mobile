@@ -98,7 +98,7 @@ export default function LoginView() {
   }
 
   if (token && !isAdmin) {
-    return <Redirect href={"/(application)/(user)/event/(tabs)"} />;
+    return <Redirect href={"/(application)/(user)/home"} />;
   }
 
   if (token && isAdmin) {

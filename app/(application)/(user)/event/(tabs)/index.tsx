@@ -21,7 +21,7 @@ export default function EventBeranda() {
   const onLoadData = async () => {
     try {
       setIsLoadData(true);
-      const response = await apiEventGetAll();
+      const response = await apiEventGetAll({category: "beranda"});
       // console.log("Response", JSON.stringify(response.data, null, 2));
       setListData(response.data);
     } catch (error) {

@@ -2,6 +2,7 @@ import {
   AvatarComp,
   ClickableCustom,
   Grid,
+  LoaderCustom,
   Spacing,
   StackCustom,
   TextCustom,
@@ -19,6 +20,7 @@ import { useEffect, useState } from "react";
 export default function UserSearch() {
   const [data, setData] = useState<any[]>([]);
   const [search, setSearch] = useState<string>("");
+  const [isLoadList, setIsLoadList] = useState(false);
 
   useEffect(() => {
     onLoadData(search);
@@ -26,11 +28,14 @@ export default function UserSearch() {
 
   const onLoadData = async (search: string) => {
     try {
+      setIsLoadList(true);
       const response = await apiAllUser({ search: search });
       console.log("[DATA USER] >", JSON.stringify(response.data, null, 2));
       setData(response.data);
     } catch (error) {
       console.log("Error fetching data", error);
+    } finally {
+      setIsLoadList(false);
     }
   };
 
@@ -60,7 +65,9 @@ export default function UserSearch() {
         }
       >
         <StackCustom>
-          {!_.isEmpty(data) ? (
+          {isLoadList ? (
+            <LoaderCustom />
+          ) : !_.isEmpty(data) ? (
             data?.map((e, index) => {
               return (
                 <ClickableCustom

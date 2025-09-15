@@ -5,7 +5,7 @@ export default function Event_BoxDetailPublishSection({
   data,
   footerButton,
 }: {
-  data?: any;
+  data: any;
   footerButton?: React.ReactNode;
 }) {
   const listData = [

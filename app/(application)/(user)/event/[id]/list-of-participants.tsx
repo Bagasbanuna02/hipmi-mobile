@@ -5,33 +5,57 @@ import {
   BaseBox,
   LoaderCustom,
   TextCustom,
-  ViewWrapper
+  ViewWrapper,
 } from "@/components";
-import { apiEventListOfParticipants } from "@/service/api-client/api-event";
+import {
+  apiEventGetOne,
+  apiEventListOfParticipants,
+} from "@/service/api-client/api-event";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
+import { View } from "react-native";
 
 export default function EventListOfParticipants() {
   const { id } = useLocalSearchParams();
+  const [startDate, setStartDate] = useState();
   const [listData, setListData] = useState([]);
   const [isLoadData, setIsLoadData] = useState(false);
 
   useEffect(() => {
-    onLoadData();
+    handlerLoadData();
   }, [id]);
 
-  const onLoadData = async () => {
+  const handlerLoadData = () => {
     try {
       setIsLoadData(true);
-      const response = await apiEventListOfParticipants({ id: id as string });
-      if (response.success) {
-        console.log("Response", JSON.stringify(response.data, null, 2));
-        setListData(response.data);
-      }
+      onLoadData();
+      onLoadList();
     } catch (error) {
       console.log("[ERROR]", error);
     } finally {
       setIsLoadData(false);
+    }
+  };
+
+  const onLoadData = async () => {
+    try {
+      const response = await apiEventGetOne({ id: id as string });
+      if (response.success) {
+        setStartDate(response.data.tanggal);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  };
+
+  const onLoadList = async () => {
+    try {
+      const response = await apiEventListOfParticipants({ id: id as string });
+      if (response.success) {
+        setListData(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
     }
   };
 
@@ -48,7 +72,27 @@ export default function EventListOfParticipants() {
               avatar={item?.User?.Profile?.imageId}
               name={item?.User?.username}
               avatarHref={`/profile/${item?.User?.Profile?.id}`}
-              rightComponent={<BadgeCustom color={item?.isPresent ? "green" : "red"}>{item?.isPresent ? "Hadir" : "Tidak Hadir"}</BadgeCustom>}
+              rightComponent={
+                new Date().getTime() > new Date(startDate as any).getTime() ? (
+                  <View
+                    style={{
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <BadgeCustom color={item?.isPresent ? "green" : "red"}>
+                      {item?.isPresent ? "Hadir" : "Tidak Hadir"}
+                    </BadgeCustom>
+                  </View>
+                ) : (
+                  <View
+                    style={{
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <BadgeCustom color="gray">-</BadgeCustom>
+                  </View>
+                )
+              }
             />
           </BaseBox>
         ))

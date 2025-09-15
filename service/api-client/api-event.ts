@@ -44,10 +44,8 @@ export async function apiEventUpdateStatus({
 }) {
   try {
     const response = await apiConfig.put(`/mobile/event/${id}/${status}`);
-    console.log("[SUCCESS]", response.data);
     return response.data;
   } catch (error) {
-    // console.log("[ERROR FECTH]", error);
     throw error;
   }
 }
@@ -78,9 +76,19 @@ export async function apiEventDelete({ id }: { id: string }) {
   }
 }
 
-export async function apiEventGetAll() {
+export async function apiEventGetAll({
+  category,
+  userId,
+}: {
+  category?: "beranda" | "contribution" | "all-history" | "my-history";
+  userId?: string;
+}) {
   try {
-    const response = await apiConfig.get(`/mobile/event`);
+    const categoryEvent = category ? `?category=${category}` : "";
+    const userIdCreator = userId ? `&userId=${userId}` : "";
+    const response = await apiConfig.get(
+      `/mobile/event${categoryEvent}${userIdCreator}`
+    );
     return response.data;
   } catch (error) {
     throw error;
@@ -104,7 +112,7 @@ export async function apiEventJoin({
   }
 }
 
-export async function apiEventListOfParticipants({id}: {id: string}){
+export async function apiEventListOfParticipants({ id }: { id?: string }) {
   try {
     const response = await apiConfig.get(`/mobile/event/${id}/participants`);
     return response.data;
@@ -112,4 +120,21 @@ export async function apiEventListOfParticipants({id}: {id: string}){
     throw error;
   }
 }
-  
+
+export async function apiEventCheckParticipants({
+  id,
+  userId,
+}: {
+  id: string;
+  userId?: string;
+}) {
+  try {
+    const selectUserId = userId ? `?userId=${userId}` : "";
+    const response = await apiConfig.get(
+      `/mobile/event/${id}/check-participants${selectUserId}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

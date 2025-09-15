@@ -1,12 +1,41 @@
-import { ButtonCustom, Spacing, TextCustom } from "@/components";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { ButtonCustom, LoaderCustom, Spacing, TextCustom } from "@/components";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { AccentColor, MainColor } from "@/constants/color-palet";
+import { useAuth } from "@/hooks/use-auth";
 import Event_BoxPublishSection from "@/screens/Event/BoxPublishSection";
-import { useState } from "react";
+import { apiEventGetAll } from "@/service/api-client/api-event";
+import { dateTimeView } from "@/utils/dateTimeView";
+import _ from "lodash";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 
 export default function EventHistory() {
   const [activeCategory, setActiveCategory] = useState<string | null>("all");
+  const { user } = useAuth();
+  const [listData, setListData] = useState<any>([]);
+  const [isLoadList, setIsLoadList] = useState(false);
+
+  useEffect(() => {
+    onLoadData({ userId: user?.id });
+  }, [user?.id, activeCategory]);
+
+  async function onLoadData({ userId }: { userId?: string }) {
+    try {
+      setIsLoadList(true);
+      const response = await apiEventGetAll({
+        category: activeCategory === "all" ? "all-history" : "my-history",
+        userId: userId,
+      });
+      if (response.success) {
+        setListData(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setIsLoadList(false);
+    }
+  }
 
   const handlePress = (item: any) => {
     setActiveCategory(item);
@@ -52,17 +81,24 @@ export default function EventHistory() {
 
   return (
     <ViewWrapper headerComponent={headerComponent} hideFooter>
-      {Array.from({ length: 10 }).map((_, index) => (
-        <Event_BoxPublishSection
-          key={index.toString()}
-          id={index.toString()}
-          username={`Riwayat ${activeCategory === "main" ? "Saya" : "Semua"}`}
-          rightComponentAvatar={
-            <TextCustom>{new Date().toLocaleDateString()}</TextCustom>
-          }
-          href={`/event/${index}/history`}
-        />
-      ))}
+      {isLoadList ? (
+        <LoaderCustom />
+      ) : _.isEmpty(listData) ? (
+        <TextCustom align="center">Belum ada riwayat</TextCustom>
+      ) : (
+        listData.map((item: any, index: number) => (
+          <Event_BoxPublishSection
+            key={index.toString()}
+            data={item}
+            rightComponentAvatar={
+              <TextCustom>
+                {dateTimeView({ date: item?.tanggal, withoutTime: true })}
+              </TextCustom>
+            }
+            href={`/event/${item.id}/history`}
+          />
+        ))
+      )}
     </ViewWrapper>
   );
 }
