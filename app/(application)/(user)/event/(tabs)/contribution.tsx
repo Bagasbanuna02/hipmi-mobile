@@ -35,6 +35,7 @@ export default function EventContribution() {
         category: "contribution",
         userId: user?.id,
       });
+      console.log("[DATA] ", JSON.stringify(response.data, null, 2));
       if (response.success) {
         setListData(response.data);
 
@@ -70,9 +71,9 @@ export default function EventContribution() {
           >
             <StackCustom>
               <AvatarUsernameAndOtherComponent
-                avatar={item?.User?.Profile?.imageId}
-                avatarHref={`/profile/${item?.User?.Profile?.id}`}
-                name={item?.User?.username}
+                avatar={item?.Event?.Author?.Profile?.imageId}
+                avatarHref={`/profile/${item?.Event?.Author?.Profile?.id}`}
+                name={item?.Event?.Author?.username}
                 rightComponent={
                   <TextCustom truncate>
                     {dateTimeView({
@@ -83,10 +84,10 @@ export default function EventContribution() {
                 }
               />
 
-              <TextCustom bold align="center" size="xlarge">
+              <TextCustom bold align="center" size="xlarge" truncate={2}>
                 {item?.Event?.title}
               </TextCustom>
-              <Spacing height={10} />
+              <Spacing height={0} />
 
               {/* <Grid>
                 {item?.Event?.Event_Peserta?.map(

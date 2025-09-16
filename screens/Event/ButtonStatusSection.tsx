@@ -127,7 +127,7 @@ export default function Event_ButtonStatusSection({
           if (response.success) {
             Toast.show({
               type: "success",
-              text1: response.message,
+              text1: "Data dihapus",
             });
             router.back();
           } else {
