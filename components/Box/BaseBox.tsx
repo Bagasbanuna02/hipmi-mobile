@@ -40,7 +40,7 @@ export default function BaseBox({
 
   return (
     <>
-      {onPress || href ? (
+      {onPress as any || href ? (
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={href ? () => router.navigate(href) : onPress}

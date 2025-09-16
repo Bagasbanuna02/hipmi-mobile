@@ -7,19 +7,99 @@ import {
   StackCustom,
   TextAreaCustom,
   TextInputCustom,
-  ViewWrapper,
+  ViewWrapper
 } from "@/components";
+import DIRECTORY_ID from "@/constants/directory-id";
+import { useAuth } from "@/hooks/use-auth";
+import { apiJobCreate } from "@/service/api-client/api-job";
+import { uploadImageService } from "@/service/upload-service";
+import pickImage from "@/utils/pickImage";
 import { router } from "expo-router";
+import { useState } from "react";
+import Toast from "react-native-toast-message";
 
 export default function JobCreate() {
+  const nextUrl = "/(application)/(user)/job/(tabs)/status";
+  const { user } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const [image, setImage] = useState<string | null>(null);
+  const [data, setData] = useState({
+    title: "",
+    content: "",
+    deskripsi: "",
+    authorId: "",
+  });
+
+  const handlerOnSubmit = async () => {
+    let imageId = "";
+    const newData = {
+      title: data.title,
+      content: data.content,
+      deskripsi: data.deskripsi,
+      authorId: user?.id,
+      imageId: "",
+    };
+
+    if (!data.title || !data.content || !data.deskripsi || !user?.id) {
+      Toast.show({
+        type: "info",
+        text1: "Info",
+        text2: "Harap isi semua data",
+      });
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+
+      if (image === null || !image) {
+        const response = await apiJobCreate(newData);
+        if (response.success) {
+          Toast.show({
+            type: "success",
+            text1: "Berhasil",
+            text2: "Lowongan berhasil dibuat",
+          });
+          router.replace(nextUrl);
+        }
+
+        return;
+      }
+
+      const responseUploadImage = await uploadImageService({
+        imageUri: image,
+        dirId: DIRECTORY_ID.job_image,
+      });
+
+      if (responseUploadImage.success) {
+        imageId = responseUploadImage.data.id;
+      }
+
+      const fixData = {
+        ...newData,
+        imageId: imageId,
+      };
+
+      const response = await apiJobCreate(fixData);
+      if (response.success) {
+        Toast.show({
+          type: "success",
+          text1: "Berhasil",
+          text2: "Lowongan berhasil dibuat",
+        });
+        router.replace(nextUrl);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const buttonSubmit = () => {
     return (
       <>
-        <ButtonCustom
-          onPress={() =>
-            router.replace("/(application)/(user)/job/(tabs)/status")
-          }
-        >
+        <ButtonCustom isLoading={isLoading} onPress={() => handlerOnSubmit()}>
           Simpan
         </ButtonCustom>
         <Spacing />
@@ -32,10 +112,19 @@ export default function JobCreate() {
       <StackCustom gap={"xs"}>
         <InformationBox text="Poster atau gambar lowongan kerja bersifat opsional, tidak wajib untuk dimasukkan dan upload lah gambar yang sesuai dengan deskripsi lowongan kerja." />
 
-        <LandscapeFrameUploaded />
+        {/* <BaseBox>
+          <Image
+            source={image ? { uri: image } : DUMMY_IMAGE.dummy_image}
+            style={{ width: "100%", height: 200 }}
+          />
+        </BaseBox> */}
+        <LandscapeFrameUploaded image={image as string} />
         <ButtonCenteredOnly
           onPress={() => {
-            router.push("/(application)/(image)/take-picture/123");
+            // router.push("/(application)/(image)/take-picture/123");
+            pickImage({
+              setImageUri: setImage,
+            });
           }}
           icon="upload"
         >
@@ -48,6 +137,8 @@ export default function JobCreate() {
           label="Judul Lowongan"
           placeholder="Masukan Judul Lowongan Kerja"
           required
+          value={data.title}
+          onChangeText={(value) => setData({ ...data, title: value })}
         />
 
         <TextAreaCustom
@@ -56,6 +147,8 @@ export default function JobCreate() {
           required
           showCount
           maxLength={1000}
+          value={data.content}
+          onChangeText={(value) => setData({ ...data, content: value })}
         />
 
         <TextAreaCustom
@@ -64,6 +157,8 @@ export default function JobCreate() {
           required
           showCount
           maxLength={1000}
+          value={data.deskripsi}
+          onChangeText={(value) => setData({ ...data, deskripsi: value })}
         />
 
         {buttonSubmit()}

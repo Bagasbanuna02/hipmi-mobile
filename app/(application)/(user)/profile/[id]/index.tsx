@@ -77,18 +77,16 @@ export default function Profile() {
     <>
       <Stack.Screen
         options={{
-          title: "Profile",
+          title: `Profile`,
           headerLeft: () => <LeftButtonCustom />,
-          headerRight: () =>
-            isUserCheck() && (
-              <TouchableOpacity onPress={openDrawer}>
-                <Ionicons
-                  name="ellipsis-vertical"
-                  size={20}
-                  color={MainColor.yellow}
-                />
-              </TouchableOpacity>
-            ),
+          headerRight: () => (
+            <ButtonnDot
+              id={id as string}
+              openDrawer={openDrawer}
+              isUserCheck={isUserCheck()}
+              logout={logout}
+            />
+          ),
           headerStyle: GStyles.headerStyle,
           headerTitleStyle: GStyles.headerTitleStyle,
         }}
@@ -124,3 +122,44 @@ export default function Profile() {
     </>
   );
 }
+
+const ButtonnDot = ({
+  id,
+  openDrawer,
+  isUserCheck,
+  logout,
+}: {
+  id: string;
+  openDrawer: () => void;
+  isUserCheck: boolean;
+  logout: () => Promise<void>;
+}) => {
+  const isId = id === undefined || id === null;
+
+  console.log("ID CHECK", id);
+
+  if (isId) {
+    console.log("ID UNDEFINED", id);
+    return (
+      <>
+        <TouchableOpacity onPress={logout}>
+          <Ionicons name="log-out" size={20} color={MainColor.red} />
+        </TouchableOpacity>
+      </>
+    );
+  }
+
+  return (
+    <>
+      {isUserCheck && (
+        <TouchableOpacity onPress={openDrawer}>
+          <Ionicons
+            name="ellipsis-vertical"
+            size={20}
+            color={MainColor.yellow}
+          />
+        </TouchableOpacity>
+      )}
+    </>
+  );
+};

@@ -1,21 +1,132 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
+  BaseBox,
   ButtonCenteredOnly,
   ButtonCustom,
+  DummyLandscapeImage,
   InformationBox,
   LandscapeFrameUploaded,
+  LoaderCustom,
   Spacing,
   StackCustom,
   TextAreaCustom,
   TextInputCustom,
   ViewWrapper,
 } from "@/components";
-import { router } from "expo-router";
+import DIRECTORY_ID from "@/constants/directory-id";
+import { apiJobGetOne, apiJobUpdateData } from "@/service/api-client/api-job";
+import {
+  deleteImageService,
+  uploadImageService,
+} from "@/service/upload-service";
+import pickImage from "@/utils/pickImage";
+import { router, useLocalSearchParams } from "expo-router";
+import { useEffect, useState } from "react";
+import Toast from "react-native-toast-message";
 
 export default function JobEdit() {
+  const { id } = useLocalSearchParams();
+  const [data, setData] = useState<any>({
+    title: "",
+    content: "",
+    deskripsi: "",
+  });
+  const [isLoadData, setIsLoadData] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [imageUri, setImageUri] = useState<string | null>(null);
+
+  useEffect(() => {
+    onLoadData();
+  }, [id]);
+
+  const onLoadData = async () => {
+    try {
+      setIsLoadData(true);
+      const response = await apiJobGetOne({ id: id as string });
+      if (response.success) {
+        setData(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setIsLoadData(false);
+    }
+  };
+
+  const handlerOnUpdate = async () => {
+    if (!data.title || !data.content || !data.deskripsi) {
+      Toast.show({
+        type: "info",
+        text1: "Info",
+        text2: "Harap isi semua data",
+      });
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      let newImageId = "";
+
+      if (imageUri) {
+        const responseUploadImage = await uploadImageService({
+          imageUri: imageUri,
+          dirId: DIRECTORY_ID.job_image,
+        });
+
+        if (responseUploadImage.success) {
+          newImageId = responseUploadImage.data.id;
+        }
+      }
+
+      if (data?.imageId) {
+        const responseDeleteImage = await deleteImageService({
+          id: data.imageId,
+        });
+
+        if (!responseDeleteImage.success) {
+          console.log("[ERROR DELETE IMAGE]", responseDeleteImage.message);
+        }
+      }
+
+      const newData = {
+        title: data.title,
+        content: data.content,
+        deskripsi: data.deskripsi,
+        imageId: newImageId,
+      };
+
+      const response = await apiJobUpdateData({
+        id: id as string,
+        data: newData,
+      });
+
+      if (response.success) {
+        Toast.show({
+          type: "success",
+          text1: response.message,
+        });
+        router.back();
+      } else {
+        Toast.show({
+          type: "info",
+          text1: "Info",
+          text2: response.message,
+        });
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const buttonSubmit = () => {
     return (
       <>
-        <ButtonCustom onPress={() => router.back()}>Update</ButtonCustom>
+        <ButtonCustom isLoading={isLoading} onPress={() => handlerOnUpdate()}>
+          Update
+        </ButtonCustom>
         <Spacing />
       </>
     );
@@ -23,45 +134,64 @@ export default function JobEdit() {
 
   return (
     <ViewWrapper>
-      <StackCustom gap={"xs"}>
-        <InformationBox text="Poster atau gambar lowongan kerja bersifat opsional, tidak wajib untuk dimasukkan dan upload lah gambar yang sesuai dengan deskripsi lowongan kerja." />
+      {isLoadData ? (
+        <LoaderCustom />
+      ) : (
+        <StackCustom gap={"xs"}>
+          <InformationBox text="Poster atau gambar lowongan kerja bersifat opsional, tidak wajib untuk dimasukkan dan upload lah gambar yang sesuai dengan deskripsi lowongan kerja." />
 
-        <LandscapeFrameUploaded />
-        <ButtonCenteredOnly
-          onPress={() => {
-            router.push("/(application)/(image)/take-picture/123");
-          }}
-          icon="upload"
-        >
-          Upload
-        </ButtonCenteredOnly>
+          {imageUri ? (
+            <LandscapeFrameUploaded image={imageUri as any} />
+          ) : (
+            <BaseBox>
+              <DummyLandscapeImage imageId={data?.imageId} />
+            </BaseBox>
+          )}
 
-        <Spacing />
+          <ButtonCenteredOnly
+            onPress={() => {
+              pickImage({
+                setImageUri,
+              });
+            }}
+            icon="upload"
+          >
+            Upload
+          </ButtonCenteredOnly>
 
-        <TextInputCustom
-          label="Judul Lowongan"
-          placeholder="Masukan Judul Lowongan Kerja"
-          required
-        />
+          <Spacing />
 
-        <TextAreaCustom
-          label="Syarat & Kualifikasi"
-          placeholder="Masukan Syarat & Kualifikasi Lowongan Kerja"
-          required
-          showCount
-          maxLength={1000}
-        />
+          <TextInputCustom
+            label="Judul Lowongan"
+            placeholder="Masukan Judul Lowongan Kerja"
+            required
+            value={data.title}
+            onChangeText={(value) => setData({ ...data, title: value })}
+          />
 
-        <TextAreaCustom
-          label="Deskripsi Lowongan"
-          placeholder="Masukan Deskripsi Lowongan Kerja"
-          required
-          showCount
-          maxLength={1000}
-        />
+          <TextAreaCustom
+            label="Syarat & Kualifikasi"
+            placeholder="Masukan Syarat & Kualifikasi Lowongan Kerja"
+            required
+            showCount
+            maxLength={1000}
+            value={data.content}
+            onChangeText={(value) => setData({ ...data, content: value })}
+          />
 
-        {buttonSubmit()}
-      </StackCustom>
+          <TextAreaCustom
+            label="Deskripsi Lowongan"
+            placeholder="Masukan Deskripsi Lowongan Kerja"
+            required
+            showCount
+            maxLength={1000}
+            value={data.deskripsi}
+            onChangeText={(value) => setData({ ...data, deskripsi: value })}
+          />
+
+          {buttonSubmit()}
+        </StackCustom>
+      )}
     </ViewWrapper>
   );
 }

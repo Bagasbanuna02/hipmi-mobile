@@ -1,6 +1,6 @@
 import { API_BASE_URL } from "@/service/api-config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { apiFileUpload } from "./api-client/api-file";
+import { apiFileDelete, apiFileUpload } from "./api-client/api-file";
 
 export async function uploadImageService({
   dirId,
@@ -43,6 +43,21 @@ export async function uploadImageService({
     if (!response.success) {
       throw new Error(response.message);
     }
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function deleteImageService({ id }: { id: string }) {
+  const token = await AsyncStorage.getItem("authToken");
+
+  try {
+    const response = await apiFileDelete({
+      id: id,
+      token: token as string,
+    });
 
     return response;
   } catch (error) {

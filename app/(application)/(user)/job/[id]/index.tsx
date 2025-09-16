@@ -1,25 +1,41 @@
-import {
-  ButtonCustom,
-  Spacing,
-  ViewWrapper
-} from "@/components";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { ButtonCustom, LoaderCustom, Spacing, ViewWrapper } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import Job_BoxDetailSection from "@/screens/Job/BoxDetailSection";
-import { jobDataDummy } from "@/screens/Job/listDataDummy";
+import { apiJobGetOne } from "@/service/api-client/api-job";
 import { Ionicons } from "@expo/vector-icons";
 import * as Clipboard from "expo-clipboard";
 import { useLocalSearchParams } from "expo-router";
+import { useEffect, useState } from "react";
 import { Alert, Linking } from "react-native";
 
 export default function JobDetail() {
   const { id } = useLocalSearchParams();
+  const [data, setData] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const jobDetail = jobDataDummy.find((e) => e.id === Number(id));
+  useEffect(() => {
+    onLoadData();
+  }, [id]);
 
-  const OpenLinkButton = () => {
-    const jobUrl =
-      "https://stg-hipmi.wibudev.com/job-vacancy/cm6ijt9w8005zucv4twsct657";
+  const onLoadData = async () => {
+    try {
+      setIsLoading(true);
+      const response = await apiJobGetOne({ id: id as string });
+
+      setData(response.data);
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const linkUrl = `http://192.168.1.83:3000/job-vacancy/`;
+
+  const OpenLinkButton = ({ id }: { id: string }) => {
+    const jobUrl = `${linkUrl}${id}`;
 
     const openInBrowser = async () => {
       const supported = await Linking.canOpenURL(jobUrl);
@@ -44,9 +60,8 @@ export default function JobDetail() {
     );
   };
 
-  const CopyLinkButton = () => {
-    const jobUrl =
-      "https://stg-hipmi.wibudev.com/job-vacancy/cm6ijt9w8005zucv4twsct657";
+  const CopyLinkButton = ({ id }: { id: string }) => {
+    const jobUrl = `${linkUrl}${id}`;
 
     const copyToClipboard = async () => {
       await Clipboard.setStringAsync(jobUrl);
@@ -70,10 +85,16 @@ export default function JobDetail() {
 
   return (
     <ViewWrapper>
-      <Job_BoxDetailSection data={jobDetail}/>
-      <OpenLinkButton />
-      <Spacing />
-      <CopyLinkButton />
+      {isLoading ? (
+        <LoaderCustom />
+      ) : (
+        <>
+          <Job_BoxDetailSection data={data} />
+          <OpenLinkButton id={id as string} />
+          <Spacing />
+          <CopyLinkButton id={id as string} />
+        </>
+      )}
     </ViewWrapper>
   );
 }

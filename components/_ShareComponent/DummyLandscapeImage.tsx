@@ -4,17 +4,33 @@ import { Image } from "expo-image";
 import { StyleSheet } from "react-native";
 import ClickableCustom from "../Clickable/ClickableCustom";
 import { router } from "expo-router";
+import API_STRORAGE from "@/constants/base-url-api-strorage";
 
-export default function DummyLandscapeImage({height, unClickPath}: {height?: number, unClickPath?: boolean}) {
+export default function DummyLandscapeImage({
+  height,
+  unClickPath,
+  imageId,
+}: {
+  height?: number;
+  unClickPath?: boolean;
+  imageId?: string;
+}) {
   return (
     <ClickableCustom
       onPress={() => {
         if (!unClickPath) {
-          router.push("/(application)/(image)/preview-image/1");
+          router.push(`/(application)/(image)/preview-image/${imageId}`);
         }
       }}
     >
-      <Image source={DUMMY_IMAGE.background} style={[styles.backgroundImage, {height: height || 200}]} />
+      <Image
+        source={
+          imageId
+            ? { uri: API_STRORAGE.GET({ fileId: imageId }) }
+            : DUMMY_IMAGE.dummy_image
+        }
+        style={[styles.backgroundImage, { height: height || 200 }]}
+      />
     </ClickableCustom>
   );
 }

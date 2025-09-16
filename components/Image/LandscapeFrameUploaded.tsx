@@ -2,7 +2,11 @@ import DUMMY_IMAGE from "@/constants/dummy-image-value";
 import { Image } from "react-native";
 import BaseBox from "../Box/BaseBox";
 
-export default function LandscapeFrameUploaded() {
+export default function LandscapeFrameUploaded({
+  image,
+}: {
+  image?: string;
+}) {
   return (
     <BaseBox
       style={{
@@ -11,7 +15,7 @@ export default function LandscapeFrameUploaded() {
       }}
     >
       <Image
-        source={DUMMY_IMAGE.background}
+        source={image ? { uri: image } : DUMMY_IMAGE.dummy_image}
         resizeMode="cover"
         style={{ width: "100%", height: "100%", borderRadius: 10 }}
       />

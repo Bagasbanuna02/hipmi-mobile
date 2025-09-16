@@ -11,6 +11,7 @@ interface SearchInputProps {
   iconRight?: React.ReactNode;
   containerStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<TextStyle>;
+  onChangeText?: (value: string) => void;
 }
 export default function SearchInput({
   placeholder,
@@ -19,6 +20,7 @@ export default function SearchInput({
   iconRight,
   containerStyle,
   style,
+  onChangeText,
   ...props
 }: SearchInputProps) {
   return (
@@ -30,6 +32,7 @@ export default function SearchInput({
           color={MainColor.placeholder}
         />
       }
+      onChangeText={onChangeText}
       placeholder={placeholder}
       borderRadius={50}
       containerStyle={[containerStyle, { marginBottom: 0 }]}
