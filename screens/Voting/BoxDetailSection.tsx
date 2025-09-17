@@ -2,35 +2,38 @@ import {
   BoxWithHeaderSection,
   Spacing,
   StackCustom,
-  TextCustom
+  TextCustom,
 } from "@/components";
-import { View } from "react-native";
 import { Voting_ComponentDetailDataSection } from "./ComponentDetailDataSection";
+import { Ionicons } from "@expo/vector-icons";
 
 export function Voting_BoxDetailSection({
   headerAvatar,
+  data,
 }: {
   headerAvatar?: React.ReactNode;
+  data?: any;
 }) {
   return (
     <>
       <BoxWithHeaderSection>
         {headerAvatar ? headerAvatar : <Spacing />}
         <StackCustom>
-          <Voting_ComponentDetailDataSection/>
-          <Spacing/>
+          <Voting_ComponentDetailDataSection data={data} />
+          <Spacing height={0} />
 
-          <View>
+          <StackCustom>
             <TextCustom bold size="small">
               Pilihan :
             </TextCustom>
-            {Array.from({ length: 3 }).map((_, i) => (
-              <View key={i}>
-                <TextCustom>Nama Pilihan {i + 1}</TextCustom>
-                <Spacing />
-              </View>
+            {data?.Voting_DaftarNamaVote?.map((item: any, i: number) => (
+              <StackCustom key={i}>
+                <TextCustom>
+                  <Ionicons name="caret-forward" size={14} /> {item?.value}
+                </TextCustom>
+              </StackCustom>
             ))}
-          </View>
+          </StackCustom>
         </StackCustom>
       </BoxWithHeaderSection>
     </>

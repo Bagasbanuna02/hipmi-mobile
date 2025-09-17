@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   AlertDefaultSystem,
   BackButton,
@@ -11,13 +12,41 @@ import { IconArchive, IconContribution, IconEdit } from "@/components/_Icon";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import { Voting_BoxDetailSection } from "@/screens/Voting/BoxDetailSection";
 import Voting_ButtonStatusSection from "@/screens/Voting/ButtonStatusSection";
-import { router, Stack, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import { apiVotingGetOne } from "@/service/api-client/api-voting";
+import {
+  router,
+  Stack,
+  useFocusEffect,
+  useLocalSearchParams,
+} from "expo-router";
+import { useCallback, useState } from "react";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function VotingDetailStatus() {
+  const {user} = useAuth()
   const { id, status } = useLocalSearchParams();
+  console.log("ID >> ", id);
+  console.log("STATUS >> ", status);
   const [openDrawerDraft, setOpenDrawerDraft] = useState(false);
   const [openDrawerPublish, setOpenDrawerPublish] = useState(false);
+
+  const [data, setData] = useState<any>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [id])
+  );
+
+  const onLoadData = async () => {
+    try {
+      const response = await apiVotingGetOne({ id: id as string });
+      console.log("Response", JSON.stringify(response.data, null, 2));
+      setData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handlePressDraft = (item: IMenuDrawerItem) => {
     console.log("PATH >> ", item.path);
@@ -57,8 +86,8 @@ export default function VotingDetailStatus() {
         }}
       />
       <ViewWrapper>
-        <Voting_BoxDetailSection />
-        <Voting_ButtonStatusSection status={status as string} />
+        <Voting_BoxDetailSection data={data as any}/>
+        <Voting_ButtonStatusSection id={id as string} status={status as string} />
         <Spacing />
       </ViewWrapper>
 

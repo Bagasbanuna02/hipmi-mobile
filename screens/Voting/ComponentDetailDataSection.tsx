@@ -1,21 +1,17 @@
-import { BadgeCustom, TextCustom } from "@/components";
+import { BadgeCustom, StackCustom, TextCustom } from "@/components";
 import { GStyles } from "@/styles/global-styles";
+import { dateTimeView } from "@/utils/dateTimeView";
 import dayjs from "dayjs";
 import { View } from "react-native";
 
-export function Voting_ComponentDetailDataSection() {
+export function Voting_ComponentDetailDataSection({ data }: { data?: any }) {
   return (
     <>
       <TextCustom align="center" bold size="large">
-        Title of Voting Here
+        {data?.title || "-"}
       </TextCustom>
-      <TextCustom>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis
-        corporis blanditiis est provident corrupti facilis iste cum voluptate.
-        Natus eum aut quos consequatur doloribus fugiat sit ullam minima non
-        enim?
-      </TextCustom>
-      <View>
+      <TextCustom>{data?.deskripsi || "-"}</TextCustom>
+      <StackCustom gap={"sm"}>
         <TextCustom bold size="small" align="center">
           Batas Voting
         </TextCustom>
@@ -23,10 +19,13 @@ export function Voting_ComponentDetailDataSection() {
           style={[GStyles.alignSelfCenter, { width: "70%" }]}
           variant="light"
         >
-          {dayjs().format("DD/MM/YYYY")} -{" "}
-          {dayjs().add(1, "day").format("DD/MM/YYYY")}
+          {data?.awalVote &&
+            dateTimeView({ date: data?.awalVote, withoutTime: true })}{" "}
+          -{" "}
+          {data?.akhirVote &&
+            dateTimeView({ date: data?.akhirVote, withoutTime: true })}
         </BadgeCustom>
-      </View>
+      </StackCustom>
     </>
   );
 }

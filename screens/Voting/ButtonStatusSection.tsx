@@ -1,10 +1,13 @@
 import { AlertDefaultSystem, ButtonCustom, Grid } from "@/components";
+import { apiVotingUpdateStatus } from "@/service/api-client/api-voting";
 import { router } from "expo-router";
 import { View } from "react-native";
 
 export default function Voting_ButtonStatusSection({
+  id,
   status,
 }: {
+  id: string;
   status: string;
 }) {
   const handleBatalkanReview = () => {
@@ -13,9 +16,15 @@ export default function Voting_ButtonStatusSection({
       message: "Apakah Anda yakin ingin batalkan review ini?",
       textLeft: "Batal",
       textRight: "Ya",
-      onPressRight: () => {
-        console.log("Hapus");
-        router.back();
+      onPressRight: async() => {
+        // console.log("Hapus");
+        // router.back();
+        const response = await apiVotingUpdateStatus({
+          id: id as string,
+          status: "draft",
+        })
+        console.log("[RES BATALKAN REVIEW]", JSON.stringify(response, null, 2));
+        // router.back();
       },
     });
   };
