@@ -1,5 +1,9 @@
 import { AlertDefaultSystem, ButtonCustom, Grid } from "@/components";
-import { apiJobDelete, apiJobUpdateStatus } from "@/service/api-client/api-job";
+import {
+  apiJobDelete,
+  apiJobUpdateData,
+  apiJobUpdateStatus,
+} from "@/service/api-client/api-job";
 import { router } from "expo-router";
 import Toast from "react-native-toast-message";
 
@@ -8,11 +12,13 @@ export default function Job_ButtonStatusSection({
   status,
   isLoading,
   onSetLoading,
+  isArchive,
 }: {
   id: string;
   status: string;
   isLoading: boolean;
   onSetLoading: (value: boolean) => void;
+  isArchive?: boolean;
 }) {
   const handleBatalkanReview = () => {
     AlertDefaultSystem({
@@ -27,7 +33,7 @@ export default function Job_ButtonStatusSection({
             id: id,
             status: "draft",
           });
-          console.log("[RESPONSE]", JSON.stringify(response, null, 2));
+
           if (response.success) {
             Toast.show({
               type: "success",
@@ -64,7 +70,7 @@ export default function Job_ButtonStatusSection({
             id: id,
             status: "review",
           });
-          console.log("[RESPONSE]", JSON.stringify(response, null, 2));
+
           if (response.success) {
             Toast.show({
               type: "success",
@@ -101,7 +107,7 @@ export default function Job_ButtonStatusSection({
             id: id,
             status: "draft",
           });
-          console.log("[RESPONSE]", JSON.stringify(response, null, 2));
+
           if (response.success) {
             Toast.show({
               type: "success",
@@ -137,13 +143,52 @@ export default function Job_ButtonStatusSection({
           const response = await apiJobDelete({
             id: id,
           });
-          console.log("[RESPONSE]", JSON.stringify(response, null, 2));
+
           if (response.success) {
             Toast.show({
               type: "success",
               text1: response.message,
             });
             router.back();
+          } else {
+            Toast.show({
+              type: "info",
+              text1: "Info",
+              text2: response.message,
+            });
+            router.back();
+          }
+        } catch (error) {
+          console.log("[ERROR]", error);
+        } finally {
+          onSetLoading(false);
+        }
+      },
+    });
+  };
+
+  const handleArchive = () => {
+    AlertDefaultSystem({
+      title: "Arsipkan",
+      message: "Apakah Anda yakin ingin mengarsipkan data ini?",
+      textLeft: "Batal",
+      textRight: "Arsipkan",
+      onPressRight: async () => {
+        try {
+          onSetLoading(true);
+          const response = await apiJobUpdateData({
+            id: id,
+            data: isArchive,
+            category: "archive",
+          });
+
+          if (response.success) {
+            Toast.show({
+              type: "success",
+              text1: response.message,
+            });
+            // router.back();
+            router.replace("/(application)/(user)/job/(tabs)/archive");
           } else {
             Toast.show({
               type: "info",
@@ -181,9 +226,9 @@ export default function Job_ButtonStatusSection({
       return (
         <>
           <ButtonCustom
+            isLoading={isLoading}
             onPress={() => {
-              console.log("Arsipkan");
-              router.replace("/(application)/(user)/job/(tabs)/archive");
+              handleArchive();
             }}
           >
             Arsipkan

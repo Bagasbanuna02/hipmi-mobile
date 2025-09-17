@@ -99,6 +99,7 @@ export default function JobEdit() {
       const response = await apiJobUpdateData({
         id: id as string,
         data: newData,
+        category: "edit",
       });
 
       if (response.success) {

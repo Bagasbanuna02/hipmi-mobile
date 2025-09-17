@@ -77,6 +77,7 @@ export default function JobDetailStatus() {
                 status={status as string}
                 isLoading={isLoading}
                 onSetLoading={setIsLoading}
+                isArchive={true}
               />
             </StackCustom>
             <Spacing />

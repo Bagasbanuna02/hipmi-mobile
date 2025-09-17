@@ -59,10 +59,24 @@ export async function apiJobDelete({ id }: { id: string }) {
   }
 }
 
-export async function apiJobGetAll({ search }: { search?: string }) {
+export async function apiJobGetAll({
+  search,
+  category,
+  authorId,
+}: {
+  search?: string;
+  category: "archive" | "beranda";
+  authorId?: string;
+}) {
   try {
-    const searchText = search ? `?search=${search}` : "";
-    const response = await apiConfig.get(`/mobile/job${searchText}`);
+    let categoryText = category ? `?category=${category}` : "";
+    if (category === "archive") {
+      categoryText = `?category=${category}&authorId=${authorId}`;
+    }
+    const searchText = search ? `&search=${search}` : "";
+    const response = await apiConfig.get(
+      `/mobile/job${categoryText}${searchText}`
+    );
     return response.data;
   } catch (error) {
     throw error;
@@ -72,12 +86,15 @@ export async function apiJobGetAll({ search }: { search?: string }) {
 export async function apiJobUpdateData({
   id,
   data,
+  category,
 }: {
   id: string;
   data: any;
+  category: "edit" | "archive";
 }) {
   try {
-    const response = await apiConfig.put(`/mobile/job/${id}`, {
+    const categoryJob = category ? `?category=${category}` : "";
+    const response = await apiConfig.put(`/mobile/job/${id}${categoryJob}`, {
       data: data,
     });
     return response.data;

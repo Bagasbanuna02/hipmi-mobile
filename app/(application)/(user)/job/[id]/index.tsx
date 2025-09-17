@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ButtonCustom, LoaderCustom, Spacing, ViewWrapper } from "@/components";
+import { ButtonCustom, LoaderCustom, Spacing, StackCustom, ViewWrapper } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import Job_BoxDetailSection from "@/screens/Job/BoxDetailSection";
@@ -90,9 +90,11 @@ export default function JobDetail() {
       ) : (
         <>
           <Job_BoxDetailSection data={data} />
-          <OpenLinkButton id={id as string} />
+          <StackCustom>
+            <OpenLinkButton id={id as string} />
+            <CopyLinkButton id={id as string} />
+          </StackCustom>
           <Spacing />
-          <CopyLinkButton id={id as string} />
         </>
       )}
     </ViewWrapper>

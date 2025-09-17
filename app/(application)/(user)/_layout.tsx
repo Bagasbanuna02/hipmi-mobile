@@ -509,6 +509,13 @@ export default function UserLayout() {
             headerLeft: () => <BackButton />,
           }}
         />
+        <Stack.Screen
+          name="job/[id]/archive"
+          options={{
+            title: "Arsip Job",
+            headerLeft: () => <BackButton />,
+          }}
+        />
 
         {/* ========== End Job Section ========= */}
 

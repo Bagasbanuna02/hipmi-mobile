@@ -1,16 +1,57 @@
-import { BaseBox, TextCustom, ViewWrapper } from "@/components";
-import { jobDataDummy } from "@/screens/Job/listDataDummy";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { BaseBox, LoaderCustom, TextCustom, ViewWrapper } from "@/components";
+import { useAuth } from "@/hooks/use-auth";
+import { apiJobGetAll } from "@/service/api-client/api-job";
+import { useFocusEffect } from "expo-router";
+import _ from "lodash";
+import { useCallback, useState } from "react";
 
 export default function JobArchive() {
+  const { user } = useAuth();
+  const [listData, setListData] = useState<any[]>([]);
+  const [isLoadData, setIsLoadData] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [user?.id])
+  );
+
+  const onLoadData = async () => {
+    try {
+      setIsLoadData(true);
+      const response = await apiJobGetAll({
+        category: "archive",
+        authorId: user?.id,
+      });
+      setListData(response.data);
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setIsLoadData(false);
+    }
+  };
+
   return (
     <ViewWrapper hideFooter>
-      {jobDataDummy.map((e, i) => (
-        <BaseBox key={i} paddingTop={20} paddingBottom={20}>
-          <TextCustom align="center" bold truncate size="large">
-            {e.posisi}
-          </TextCustom>
-        </BaseBox>
-      ))}
+      {isLoadData ? (
+        <LoaderCustom />
+      ) : _.isEmpty(listData) ? (
+        <TextCustom align="center">Anda tidak memiliki arsip</TextCustom>
+      ) : (
+        listData.map((item, index) => (
+          <BaseBox
+            key={index}
+            paddingTop={20}
+            paddingBottom={20}
+            href={`/job/${item.id}/archive`}
+          >
+            <TextCustom align="center" bold truncate size="large">
+              {item?.title || "-"}
+            </TextCustom>
+          </BaseBox>
+        ))
+      )}
     </ViewWrapper>
   );
 }

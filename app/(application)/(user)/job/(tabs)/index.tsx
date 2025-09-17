@@ -28,7 +28,7 @@ export default function JobBeranda() {
   const onLoadData = async (search: string) => {
     try {
       setIsLoadData(true);
-      const response = await apiJobGetAll({ search });
+      const response = await apiJobGetAll({ search, category: "beranda" });
       setListData(response.data);
     } catch (error) {
       console.log("[ERROR]", error);
