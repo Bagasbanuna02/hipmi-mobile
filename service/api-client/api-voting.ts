@@ -35,7 +35,6 @@ export async function apiVotingGetOne({ id }: { id: string }) {
   }
 }
 
-
 export async function apiVotingUpdateStatus({
   id,
   status,
@@ -45,6 +44,71 @@ export async function apiVotingUpdateStatus({
 }) {
   try {
     const response = await apiConfig.put(`/mobile/voting/${id}/${status}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiVotingDelete({ id }: { id: string }) {
+  try {
+    const response = await apiConfig.delete(`/mobile/voting/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiVotingUpdateData({
+  id,
+  data,
+}: {
+  id: string;
+  data: any;
+}) {
+  try {
+    const response = await apiConfig.put(`/mobile/voting/${id}`, {
+      data: data,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiVotingGetAll({ search }: { search: string }) {
+  try {
+    const searchQuery = search ? `?search=${search}` : "";
+    const response = await apiConfig.get(`/mobile/voting${searchQuery}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiVotingVote({ id, data }: { id: string; data: any }) {
+  try {
+    const response = await apiConfig.post(`/mobile/voting/${id}`, {
+      data: data,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiVotingCheckContribution({
+  id,
+  authorId,
+}: {
+  id: string;
+  authorId: string;
+}) {
+  try {
+    const response = await apiConfig.get(
+      `/mobile/voting/${id}/contribution?authorId=${authorId}`
+    );
+    console.log("[DATA CONTRIBUION]", response.data);
     return response.data;
   } catch (error) {
     throw error;

@@ -12,7 +12,6 @@ import { useAuth } from "@/hooks/use-auth";
 import { dummyMasterStatus } from "@/lib/dummy-data/_master/status";
 import { apiVotingGetByStatus } from "@/service/api-client/api-voting";
 import { dateTimeView } from "@/utils/dateTimeView";
-import dayjs from "dayjs";
 import { useFocusEffect } from "expo-router";
 import _ from "lodash";
 import { useCallback, useState } from "react";
@@ -20,7 +19,6 @@ import { useCallback, useState } from "react";
 export default function VotingStatus() {
   const { user } = useAuth();
   const id = user?.id || "";
-  console.log("ID >> ", id);
   const [activeCategory, setActiveCategory] = useState<string | null>(
     "publish"
   );
@@ -41,7 +39,6 @@ export default function VotingStatus() {
         id: id as string,
         status: activeCategory!,
       });
-      console.log("[RES LIST STATUS]", JSON.stringify(response.data, null, 2));
       setListData(response.data);
     } catch (error) {
       console.log(error);

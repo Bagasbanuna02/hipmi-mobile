@@ -6,7 +6,11 @@ import {
   CircleContainer,
 } from "@/components";
 
-export default function Voting_BoxDetailHasilVotingSection() {
+export default function Voting_BoxDetailHasilVotingSection({
+  listData,
+}: {
+  listData?: any[];
+}) {
   return (
     <>
       <BaseBox>
@@ -16,10 +20,12 @@ export default function Voting_BoxDetailHasilVotingSection() {
           </TextCustom>
 
           <Grid>
-            {Array.from({ length: 4 }).map((_, i) => (
-              <Grid.Col span={3} style={{ alignItems: "center" }} key={i}>
-                <CircleContainer value={9 % (i + 4)} />
-                <TextCustom size="small">Pilihan {i + 1}</TextCustom>
+            {listData?.map((item: any, i: number) => (
+              <Grid.Col span={12 / listData?.length} style={{ alignItems: "center" }} key={i}>
+                <StackCustom>
+                  <CircleContainer value={item?.jumlah} />
+                  <TextCustom align="center" size="small">{item?.value}</TextCustom>
+                </StackCustom>
               </Grid.Col>
             ))}
           </Grid>

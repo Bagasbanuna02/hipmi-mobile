@@ -1,8 +1,6 @@
 import { BadgeCustom, StackCustom, TextCustom } from "@/components";
 import { GStyles } from "@/styles/global-styles";
 import { dateTimeView } from "@/utils/dateTimeView";
-import dayjs from "dayjs";
-import { View } from "react-native";
 
 export function Voting_ComponentDetailDataSection({ data }: { data?: any }) {
   return (

@@ -1,14 +1,21 @@
 import { AlertDefaultSystem, ButtonCustom, Grid } from "@/components";
-import { apiVotingUpdateStatus } from "@/service/api-client/api-voting";
+import {
+  apiVotingDelete,
+  apiVotingUpdateStatus,
+} from "@/service/api-client/api-voting";
 import { router } from "expo-router";
-import { View } from "react-native";
+import Toast from "react-native-toast-message";
 
 export default function Voting_ButtonStatusSection({
   id,
   status,
+  isLoading,
+  onSetLoading,
 }: {
   id: string;
   status: string;
+  isLoading: boolean;
+  onSetLoading: (value: boolean) => void;
 }) {
   const handleBatalkanReview = () => {
     AlertDefaultSystem({
@@ -16,15 +23,33 @@ export default function Voting_ButtonStatusSection({
       message: "Apakah Anda yakin ingin batalkan review ini?",
       textLeft: "Batal",
       textRight: "Ya",
-      onPressRight: async() => {
-        // console.log("Hapus");
-        // router.back();
-        const response = await apiVotingUpdateStatus({
-          id: id as string,
-          status: "draft",
-        })
-        console.log("[RES BATALKAN REVIEW]", JSON.stringify(response, null, 2));
-        // router.back();
+      onPressRight: async () => {
+        try {
+          onSetLoading(true);
+          const response = await apiVotingUpdateStatus({
+            id: id as string,
+            status: "draft",
+          });
+
+          if (response?.success) {
+            Toast.show({
+              type: "success",
+              text1: response.message,
+            });
+            router.back();
+          } else {
+            Toast.show({
+              type: "info",
+              text1: "Info",
+              text2: response.message,
+            });
+            router.back();
+          }
+        } catch (error) {
+          console.log("[ERROR]", error);
+        } finally {
+          onSetLoading(false);
+        }
       },
     });
   };
@@ -35,9 +60,33 @@ export default function Voting_ButtonStatusSection({
       message: "Apakah Anda yakin ingin ajukan review ini?",
       textLeft: "Batal",
       textRight: "Ya",
-      onPressRight: () => {
-        console.log("Hapus");
-        router.back();
+      onPressRight: async () => {
+        try {
+          onSetLoading(true);
+          const response = await apiVotingUpdateStatus({
+            id: id as string,
+            status: "review",
+          });
+
+          if (response?.success) {
+            Toast.show({
+              type: "success",
+              text1: response.message,
+            });
+            router.back();
+          } else {
+            Toast.show({
+              type: "info",
+              text1: "Info",
+              text2: response.message,
+            });
+            router.back();
+          }
+        } catch (error) {
+          console.log("[ERROR]", error);
+        } finally {
+          onSetLoading(false);
+        }
       },
     });
   };
@@ -48,9 +97,33 @@ export default function Voting_ButtonStatusSection({
       message: "Apakah Anda yakin ingin edit kembali ini?",
       textLeft: "Batal",
       textRight: "Ya",
-      onPressRight: () => {
-        console.log("Hapus");
-        router.back();
+      onPressRight: async () => {
+        try {
+          onSetLoading(true);
+          const response = await apiVotingUpdateStatus({
+            id: id as string,
+            status: "draft",
+          });
+
+          if (response?.success) {
+            Toast.show({
+              type: "success",
+              text1: response.message,
+            });
+            router.back();
+          } else {
+            Toast.show({
+              type: "info",
+              text1: "Info",
+              text2: response.message,
+            });
+            router.back();
+          }
+        } catch (error) {
+          console.log("[ERROR]", error);
+        } finally {
+          onSetLoading(false);
+        }
       },
     });
   };
@@ -61,9 +134,32 @@ export default function Voting_ButtonStatusSection({
       message: "Apakah Anda yakin ingin menghapus data ini?",
       textLeft: "Batal",
       textRight: "Hapus",
-      onPressRight: () => {
-        console.log("Hapus");
-        router.back();
+      onPressRight: async () => {
+       try {
+        onSetLoading(true);
+         const response = await apiVotingDelete({
+           id: id as string,
+         });
+
+         if (response?.success) {
+           Toast.show({
+             type: "success",
+             text1: response.message,
+           });
+           router.back();
+         } else {
+           Toast.show({
+             type: "info",
+             text1: "Info",
+             text2: response.message,
+           });
+           router.back();
+         }
+       } catch (error) {
+         console.log("[ERROR]", error);
+       } finally {
+         onSetLoading(false);
+       }
       },
     });
   };
@@ -72,6 +168,7 @@ export default function Voting_ButtonStatusSection({
     return (
       <>
         <ButtonCustom
+          isLoading={isLoading}
           backgroundColor="red"
           textColor="white"
           onPress={handleOpenDeleteAlert}
@@ -88,7 +185,7 @@ export default function Voting_ButtonStatusSection({
 
     case "review":
       return (
-        <ButtonCustom onPress={handleBatalkanReview}>
+        <ButtonCustom isLoading={isLoading} onPress={handleBatalkanReview}>
           Batalkan Review
         </ButtonCustom>
       );
@@ -97,15 +194,14 @@ export default function Voting_ButtonStatusSection({
       return (
         <>
           <Grid>
-            <Grid.Col span={5}>
-              <ButtonCustom onPress={handleAjukanReview}>
+            <Grid.Col span={6} style={{ paddingRight: 10 }}>
+              <ButtonCustom isLoading={isLoading} onPress={handleAjukanReview}>
                 Ajukan Review
               </ButtonCustom>
             </Grid.Col>
-            <Grid.Col span={2}>
-              <View />
+            <Grid.Col span={6} style={{ paddingRight: 10 }}>
+              {DeleteButton()}
             </Grid.Col>
-            <Grid.Col span={5}>{DeleteButton()}</Grid.Col>
           </Grid>
         </>
       );
@@ -114,15 +210,14 @@ export default function Voting_ButtonStatusSection({
       return (
         <>
           <Grid>
-            <Grid.Col span={5}>
-              <ButtonCustom onPress={handleEditKembali}>
+            <Grid.Col span={6} style={{ paddingRight: 10 }}>
+              <ButtonCustom isLoading={isLoading} onPress={handleEditKembali}>
                 Edit Kembali
               </ButtonCustom>
             </Grid.Col>
-            <Grid.Col span={2}>
-              <View />
+            <Grid.Col span={6} style={{ paddingLeft: 10 }}>
+              {DeleteButton()}
             </Grid.Col>
-            <Grid.Col span={5}>{DeleteButton()}</Grid.Col>
           </Grid>
         </>
       );

@@ -15,37 +15,43 @@ export default function Voting_BoxPublishSection({
   href,
   id,
   bottomComponent,
+  data,
 }: {
-  href?: Href
-  id?: string
+  href?: Href;
+  id?: string;
   bottomComponent?: React.ReactNode;
+  data?: any;
 }) {
   return (
     <>
       <BoxWithHeaderSection href={href}>
-        <AvatarUsernameAndOtherComponent avatarHref="/profile/1" />
-        <Spacing />
-        <StackCustom>
+        <AvatarUsernameAndOtherComponent
+          avatar={data?.Author?.Profile?.imageId || ""}
+          name={data?.Author?.username || "Username"}
+          avatarHref="/profile/1"
+        />
+        <Spacing height={0} />
+        <StackCustom gap={"lg"}>
           <TextCustom align="center" bold truncate size="large">
-            Voting Title {id}
+            {data?.title || "-"}
           </TextCustom>
 
           <BadgeCustom
             style={{ width: "70%", alignSelf: "center" }}
             variant="light"
           >
-            {dayjs().format("DD/MM/YYYY")} -{" "}
-            {dayjs().add(1, "day").format("DD/MM/YYYY")}
+            {dayjs(data?.awalVote).format("DD/MM/YYYY")} -{" "}
+            {dayjs(data?.akhirVote).format("DD/MM/YYYY")}
           </BadgeCustom>
 
-          <Grid>
+          {/* <Grid>
             {Array.from({ length: 4 }).map((_, i) => (
               <Grid.Col span={3} style={{ alignItems: "center" }} key={i}>
                 <CircleContainer value={9 % (i + 4)} />
                 <TextCustom size="small">Pilihan {i + 1}</TextCustom>
               </Grid.Col>
             ))}
-          </Grid>
+          </Grid> */}
           {bottomComponent}
         </StackCustom>
       </BoxWithHeaderSection>

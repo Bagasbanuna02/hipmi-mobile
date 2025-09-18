@@ -142,26 +142,6 @@ export default function VotingCreate() {
           }
         />
 
-        {/* <Grid>
-          <Grid.Col span={10}>
-            <TextInputCustom
-              label="Pilihan"
-              placeholder="Masukan Pilihan"
-              required
-            />
-          </Grid.Col>
-          <Grid.Col
-            span={2}
-            style={{ alignItems: "center", justifyContent: "center" }}
-          >
-            <TouchableOpacity onPress={() => console.log("delete")}>
-              <Ionicons name="trash" size={24} color={MainColor.red} />
-            </TouchableOpacity>
-          </Grid.Col>
-        </Grid> */}
-        {/* <ButtonCenteredOnly onPress={() => console.log("add")}>
-          Tambah Pilihan
-        </ButtonCenteredOnly> */}
 
         {listVote.map((item, index) => (
           <TextInputCustom

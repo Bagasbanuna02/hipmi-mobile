@@ -20,15 +20,12 @@ import {
   useLocalSearchParams,
 } from "expo-router";
 import { useCallback, useState } from "react";
-import { useAuth } from "@/hooks/use-auth";
 
 export default function VotingDetailStatus() {
-  const {user} = useAuth()
   const { id, status } = useLocalSearchParams();
-  console.log("ID >> ", id);
-  console.log("STATUS >> ", status);
   const [openDrawerDraft, setOpenDrawerDraft] = useState(false);
   const [openDrawerPublish, setOpenDrawerPublish] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [data, setData] = useState<any>(null);
 
@@ -41,10 +38,11 @@ export default function VotingDetailStatus() {
   const onLoadData = async () => {
     try {
       const response = await apiVotingGetOne({ id: id as string });
-      console.log("Response", JSON.stringify(response.data, null, 2));
-      setData(response.data);
+      if(response.success){
+        setData(response.data);
+      }
     } catch (error) {
-      console.log(error);
+      console.log("[ERROR]", error);
     }
   };
 
@@ -62,7 +60,7 @@ export default function VotingDetailStatus() {
         textLeft: "Batal",
         textRight: "Ya",
         onPressRight: () => {
-          console.log("Hapus");
+          console.log("Arsip voting");
           router.back();
         },
       });
@@ -86,8 +84,13 @@ export default function VotingDetailStatus() {
         }}
       />
       <ViewWrapper>
-        <Voting_BoxDetailSection data={data as any}/>
-        <Voting_ButtonStatusSection id={id as string} status={status as string} />
+        <Voting_BoxDetailSection data={data as any} />
+        <Voting_ButtonStatusSection
+          isLoading={isLoading}
+          onSetLoading={setIsLoading}
+          id={id as string}
+          status={status as string}
+        />
         <Spacing />
       </ViewWrapper>
 
