@@ -2,17 +2,24 @@
 import {
   AlertDefaultSystem,
   BackButton,
+  BaseBox,
   DotButton,
   DrawerCustom,
+  LoaderCustom,
   MenuDrawerDynamicGrid,
   Spacing,
+  TextCustom,
   ViewWrapper,
 } from "@/components";
 import { IconArchive, IconContribution, IconEdit } from "@/components/_Icon";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
+import Voting_BoxDetailHasilVotingSection from "@/screens/Voting/BoxDetailHasilVotingSection";
 import { Voting_BoxDetailSection } from "@/screens/Voting/BoxDetailSection";
 import Voting_ButtonStatusSection from "@/screens/Voting/ButtonStatusSection";
-import { apiVotingGetOne } from "@/service/api-client/api-voting";
+import {
+  apiVotingGetOne,
+  apiVotingUpdateData,
+} from "@/service/api-client/api-voting";
 import {
   router,
   Stack,
@@ -20,12 +27,14 @@ import {
   useLocalSearchParams,
 } from "expo-router";
 import { useCallback, useState } from "react";
+import Toast from "react-native-toast-message";
 
 export default function VotingDetailStatus() {
   const { id, status } = useLocalSearchParams();
   const [openDrawerDraft, setOpenDrawerDraft] = useState(false);
   const [openDrawerPublish, setOpenDrawerPublish] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingGetData, setLoadingGetData] = useState(false);
 
   const [data, setData] = useState<any>(null);
 
@@ -37,12 +46,16 @@ export default function VotingDetailStatus() {
 
   const onLoadData = async () => {
     try {
+      setLoadingGetData(true);
       const response = await apiVotingGetOne({ id: id as string });
-      if(response.success){
+
+      if (response.success) {
         setData(response.data);
       }
     } catch (error) {
       console.log("[ERROR]", error);
+    } finally {
+      setLoadingGetData(false);
     }
   };
 
@@ -59,9 +72,24 @@ export default function VotingDetailStatus() {
         message: "Apakah Anda yakin ingin mengarsipkan voting ini?",
         textLeft: "Batal",
         textRight: "Ya",
-        onPressRight: () => {
-          console.log("Arsip voting");
-          router.back();
+        onPressRight: async () => {
+          try {
+            const response = await apiVotingUpdateData({
+              id: id as string,
+              data: data.isArsip ? false : true,
+              category: "archive",
+            });
+
+            if (response.success) {
+              Toast.show({
+                type: "success",
+                text1: response.message,
+              });
+              router.back();
+            }
+          } catch (error) {
+            console.log("[ERROR]", error);
+          }
         },
       });
     }
@@ -73,7 +101,7 @@ export default function VotingDetailStatus() {
     <>
       <Stack.Screen
         options={{
-          title: `Detail ${status}`,
+          title: `Detail`,
           headerLeft: () => <BackButton />,
           headerRight: () =>
             status === "draft" ? (
@@ -84,14 +112,37 @@ export default function VotingDetailStatus() {
         }}
       />
       <ViewWrapper>
-        <Voting_BoxDetailSection data={data as any} />
-        <Voting_ButtonStatusSection
-          isLoading={isLoading}
-          onSetLoading={setIsLoading}
-          id={id as string}
-          status={status as string}
-        />
-        <Spacing />
+        {loadingGetData ? (
+          <LoaderCustom />
+        ) : (
+          <>
+            {status === "publish" && (
+              <BaseBox>
+                <TextCustom bold>
+                  Status:{" "}
+                  <TextCustom color={data?.isArsip ? "red" : "green"}>
+                    {data?.isArsip ? "Arsip" : "Publish"}
+                  </TextCustom>
+                </TextCustom>
+              </BaseBox>
+            )}
+            <Spacing height={0} />
+            <Voting_BoxDetailSection data={data as any} />
+            {status === "publish" ? (
+              <Voting_BoxDetailHasilVotingSection
+                listData={data?.Voting_DaftarNamaVote}
+              />
+            ) : (
+              <Voting_ButtonStatusSection
+                isLoading={isLoading}
+                onSetLoading={setIsLoading}
+                id={id as string}
+                status={status as string}
+              />
+            )}
+            <Spacing />
+          </>
+        )}
       </ViewWrapper>
 
       {/* ========= Draft Drawer ========= */}

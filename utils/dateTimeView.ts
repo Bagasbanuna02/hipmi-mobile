@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 
+export const today = new Date();
 export const dateTimeView = ({
   date,
   withoutTime = false,

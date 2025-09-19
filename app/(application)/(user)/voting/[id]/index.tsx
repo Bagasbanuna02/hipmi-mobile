@@ -9,17 +9,19 @@ import {
   LoaderCustom,
   MenuDrawerDynamicGrid,
   StackCustom,
-  TextCustom,
   ViewWrapper,
 } from "@/components";
 import { IconArchive, IconContribution } from "@/components/_Icon";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
+import { useAuth } from "@/hooks/use-auth";
 import Voting_BoxDetailHasilVotingSection from "@/screens/Voting/BoxDetailHasilVotingSection";
 import { Voting_BoxDetailPublishSection } from "@/screens/Voting/BoxDetailPublishSection";
 import {
-  apiVotingCheckContribution,
+  apiVotingContribution,
   apiVotingGetOne,
+  apiVotingUpdateData,
 } from "@/service/api-client/api-voting";
+import { today } from "@/utils/dateTimeView";
 import {
   router,
   Stack,
@@ -27,22 +29,17 @@ import {
   useLocalSearchParams,
 } from "expo-router";
 import React, { useCallback, useState } from "react";
-import { useAuth } from "@/hooks/use-auth";
+import Toast from "react-native-toast-message";
 
 export default function VotingDetail() {
   const { id } = useLocalSearchParams();
   const { user } = useAuth();
-  console.log("[ID]", id);
-  const dateNow = new Date();
-  console.log("[DATE NOW]", dateNow);
 
   const [openDrawerPublish, setOpenDrawerPublish] = useState(false);
   const [data, setData] = useState<any>(null);
   const [loadingGetData, setLoadingGetData] = useState(false);
   const [isContribution, setIsContribution] = useState(false);
   const [nameChoice, setNameChoice] = useState("");
-
-  console.log("[DATA AWAL]", data?.awalVote);
 
   useFocusEffect(
     useCallback(() => {
@@ -65,7 +62,6 @@ export default function VotingDetail() {
   const onLoadData = async () => {
     try {
       const response = await apiVotingGetOne({ id: id as string });
-      // console.log("[DATA]", JSON.stringify(response.data, null, 2));
       if (response.success) {
         setData(response.data);
       }
@@ -76,11 +72,12 @@ export default function VotingDetail() {
 
   const onLoadCheckContribution = async () => {
     try {
-      const response = await apiVotingCheckContribution({
+      const response = await apiVotingContribution({
         id: id as string,
         authorId: user?.id as string,
+        category: "checked",
       });
-      console.log("[DATA CONTRIBUION]", response.data);
+
       if (response.success) {
         setIsContribution(response.data.isContribution);
         setNameChoice(response.data.nameChoice);
@@ -97,9 +94,24 @@ export default function VotingDetail() {
         message: "Apakah Anda yakin ingin mengarsipkan voting ini?",
         textLeft: "Batal",
         textRight: "Ya",
-        onPressRight: () => {
-          console.log("Hapus");
-          router.back();
+        onPressRight: async () => {
+          try {
+            const response = await apiVotingUpdateData({
+              id: id as string,
+              data: data.isArsip ? false : true,
+              category: "archive",
+            });
+
+            if (response.success) {
+              Toast.show({
+                type: "success",
+                text1: response.message,
+              });
+              router.back();
+            }
+          } catch (error) {
+            console.log("[ERROR]", error);
+          }
         },
       });
     }
@@ -124,8 +136,8 @@ export default function VotingDetail() {
           <LoaderCustom />
         ) : (
           <StackCustom gap={"xs"}>
-            {dateNow < new Date(data?.awalVote) && (
-              <InformationBox text="Untuk sementara voting ini belum di buka. Voting akan dimulai sesuai dengan tanggal awal pemilihan, dan akan ditutup sesuai dengan tanggal akhir pemilihan." />
+            {today.getDate() < new Date(data?.awalVote).getDate() && (
+              <InformationBox text="Untuk sementara voting tidak dapat dilakukan. Voting dapat dimulai sesuai dengan tanggal awal pemilihan, dan akan ditutup sesuai dengan tanggal akhir pemilihan." />
             )}
             <Voting_BoxDetailPublishSection
               data={data}
@@ -155,18 +167,28 @@ export default function VotingDetail() {
         height={"auto"}
       >
         <MenuDrawerDynamicGrid
-          data={[
-            {
-              icon: <IconContribution />,
-              label: "Daftar Kontributor",
-              path: `/voting/${id}/list-of-contributor`,
-            },
-            {
-              icon: <IconArchive />,
-              label: "Update Arsip",
-              path: "" as any,
-            },
-          ]}
+          data={
+            user?.id === data?.Author?.id
+              ? [
+                  {
+                    icon: <IconContribution />,
+                    label: "Daftar Kontributor",
+                    path: `/voting/${id}/list-of-contributor`,
+                  },
+                  {
+                    icon: <IconArchive />,
+                    label: "Update Arsip",
+                    path: "" as any,
+                  },
+                ]
+              : [
+                  {
+                    icon: <IconContribution />,
+                    label: "Daftar Kontributor",
+                    path: `/voting/${id}/list-of-contributor`,
+                  },
+                ]
+          }
           onPressItem={handlePressPublish as any}
         />
       </DrawerCustom>

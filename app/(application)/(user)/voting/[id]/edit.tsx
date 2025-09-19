@@ -150,6 +150,7 @@ export default function VotingEdit() {
       const response = await apiVotingUpdateData({
         id: id as string,
         data: newData,
+        category: "edit",
       });
 
       if (response.success) {

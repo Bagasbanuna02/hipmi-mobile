@@ -9,7 +9,7 @@ import {
 export default function Voting_BoxDetailHasilVotingSection({
   listData,
 }: {
-  listData?: any[];
+  listData: any[];
 }) {
   return (
     <>

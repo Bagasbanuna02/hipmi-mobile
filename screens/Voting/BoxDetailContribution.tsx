@@ -9,23 +9,32 @@ import { GStyles } from "@/styles/global-styles";
 import { Voting_ComponentDetailDataSection } from "./ComponentDetailDataSection";
 
 export function Voting_BoxDetailContributionSection({
+  data,
   headerAvatar,
+  nameChoice,
 }: {
+  data: any;
   headerAvatar?: React.ReactNode;
+  nameChoice?: string;
 }) {
   return (
     <>
       <BoxWithHeaderSection>
-        {headerAvatar ? headerAvatar : <Spacing />}
+        {headerAvatar && (
+          <>
+            {headerAvatar}
+            <Spacing />
+          </>
+        )}
         <StackCustom gap={"lg"}>
-          <Voting_ComponentDetailDataSection />
+          <Voting_ComponentDetailDataSection data={data} />
 
-          <StackCustom gap={"xs"}>
+          <StackCustom gap={"sm"}>
             <TextCustom bold size="small" align="center">
               Pilihan Anda
             </TextCustom>
-            <BadgeCustom style={[GStyles.alignSelfCenter]}>
-              Pilihan 1
+            <BadgeCustom variant="light" size="lg" style={[GStyles.alignSelfCenter]}>
+              {nameChoice || "-"}
             </BadgeCustom>
           </StackCustom>
         </StackCustom>

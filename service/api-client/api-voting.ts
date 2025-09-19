@@ -62,12 +62,15 @@ export async function apiVotingDelete({ id }: { id: string }) {
 export async function apiVotingUpdateData({
   id,
   data,
+  category,
 }: {
   id: string;
   data: any;
+  category: "edit" | "archive";
 }) {
+  const categoryQuery = `?category=${category}`;
   try {
-    const response = await apiConfig.put(`/mobile/voting/${id}`, {
+    const response = await apiConfig.put(`/mobile/voting/${id}${categoryQuery}`, {
       data: data,
     });
     return response.data;
@@ -76,10 +79,12 @@ export async function apiVotingUpdateData({
   }
 }
 
-export async function apiVotingGetAll({ search }: { search: string }) {
+export async function apiVotingGetAll({ search, category, authorId }: { search?: string, category: "beranda" | "contribution" | "all-history" | "my-history", authorId?: string }) {
   try {
-    const searchQuery = search ? `?search=${search}` : "";
-    const response = await apiConfig.get(`/mobile/voting${searchQuery}`);
+    const categoryQuery = category ? `?category=${category}` : "";
+    const searchQuery = search ? `&search=${search}` : "";
+    const authorIdQuery = authorId ? `&authorId=${authorId}` : "";
+    const response = await apiConfig.get(`/mobile/voting${categoryQuery}${searchQuery}${authorIdQuery}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -97,18 +102,23 @@ export async function apiVotingVote({ id, data }: { id: string; data: any }) {
   }
 }
 
-export async function apiVotingCheckContribution({
+export async function apiVotingContribution({
   id,
   authorId,
+  category,
 }: {
   id: string;
   authorId: string;
+  category: "list" | "checked";
 }) {
+  const query =
+    category === "list"
+      ? "?category=list"
+      : `?category=checked&authorId=${authorId}`;
   try {
     const response = await apiConfig.get(
-      `/mobile/voting/${id}/contribution?authorId=${authorId}`
+      `/mobile/voting/${id}/contribution${query}`
     );
-    console.log("[DATA CONTRIBUION]", response.data);
     return response.data;
   } catch (error) {
     throw error;
