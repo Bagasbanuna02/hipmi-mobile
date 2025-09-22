@@ -1,22 +1,73 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
-  AlertDefaultSystem,
   BackButton,
   ButtonCustom,
   DotButton,
   DrawerCustom,
+  LoaderCustom,
   MenuDrawerDynamicGrid,
-  TextAreaCustom,
   ViewWrapper,
 } from "@/components";
+import { useAuth } from "@/hooks/use-auth";
 import Collaboration_BoxDetailSection from "@/screens/Collaboration/BoxDetailSection";
+import {
+  apiCollaborationGetOne,
+  apiCollaborationGetParticipants,
+} from "@/service/api-client/api-collaboration";
 import { Ionicons } from "@expo/vector-icons";
-import { router, Stack, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import {
+  router,
+  Stack,
+  useFocusEffect,
+  useLocalSearchParams,
+} from "expo-router";
+import { useCallback, useState } from "react";
 
 export default function CollaborationDetail() {
+  const { user } = useAuth();
   const { id } = useLocalSearchParams();
-  const [openDrawerPartisipasi, setOpenDrawerPartisipasi] = useState(false);
+  const [data, setData] = useState();
   const [openDrawerMenu, setOpenDrawerMenu] = useState(false);
+  const [isParticipant, setIsParticipant] = useState(false);
+  const [loadingIsParticipant, setLoadingIsParticipant] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+      onLoadParticipants();
+    }, [id])
+  );
+
+  const onLoadData = async () => {
+    try {
+      const response = await apiCollaborationGetOne({ id: id as string });
+      if (response.success) {
+        setData(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  };
+
+  const onLoadParticipants = async () => {
+    try {
+      setLoadingIsParticipant(true);
+      const response = await apiCollaborationGetParticipants({
+        category: "check-participant",
+        id: id as string,
+        authorId: user?.id,
+      });
+
+      if (response.success) {
+        setIsParticipant(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setLoadingIsParticipant(false);
+    }
+  };
+
   return (
     <>
       <Stack.Screen
@@ -29,15 +80,27 @@ export default function CollaborationDetail() {
         }}
       />
       <ViewWrapper>
-        <Collaboration_BoxDetailSection id={id as string} />
+        {!data && !isParticipant ? (
+          <LoaderCustom />
+        ) : (
+          <>
+            <Collaboration_BoxDetailSection data={data} />
 
-        <ButtonCustom onPress={() => setOpenDrawerPartisipasi(true)}>
-          Partisipasi
-        </ButtonCustom>
+            <ButtonCustom
+              disabled={isParticipant || loadingIsParticipant}
+              onPress={() => {
+                router.push(`/collaboration/${id}/create-pacticipants`);
+                //  setOpenDrawerPartisipasi(true);
+              }}
+            >
+              {isParticipant ? "Anda telah berpartisipasi" : "Partisipasi"}
+            </ButtonCustom>
+          </>
+        )}
       </ViewWrapper>
 
       {/* Drawer Partisipasi */}
-      <DrawerCustom
+      {/* <DrawerCustom
         isVisible={openDrawerPartisipasi}
         closeDrawer={() => setOpenDrawerPartisipasi(false)}
         height={300}
@@ -48,6 +111,8 @@ export default function CollaborationDetail() {
           required
           showCount
           maxLength={500}
+          value={description}
+          onChangeText={setDescription}
         />
 
         <ButtonCustom
@@ -58,19 +123,21 @@ export default function CollaborationDetail() {
               message: "Apakah anda sudah yakin ingin menyimpan data ini ?",
               textLeft: "Batal",
               textRight: "Simpan",
-              onPressRight: () => router.replace(`/collaboration/(tabs)/group`),
+              onPressRight: () => {
+                handlerSubmitParticipans();
+              },
             });
           }}
         >
           Simpan
         </ButtonCustom>
-      </DrawerCustom>
+      </DrawerCustom> */}
 
       {/* Drawer Menu */}
       <DrawerCustom
         isVisible={openDrawerMenu}
         closeDrawer={() => setOpenDrawerMenu(false)}
-        height={250}
+        height={"auto"}
       >
         <MenuDrawerDynamicGrid
           data={[

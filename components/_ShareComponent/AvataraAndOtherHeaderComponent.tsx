@@ -1,3 +1,4 @@
+import { AccentColor } from "@/constants/color-palet";
 import Divider from "../Divider/Divider";
 import Grid from "../Grid/GridCustom";
 import AvatarComp from "../Image/AvatarComp";
@@ -39,7 +40,7 @@ const AvatarUsernameAndOtherComponent = ({
           </Grid.Col>
         )}
       </Grid>
-      {withBottomLine && <Divider marginTop={0} />}
+      {withBottomLine && <Divider color={AccentColor.blue} marginTop={0} />}
     </>
   );
 };

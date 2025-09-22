@@ -1,22 +1,33 @@
 import {
-    AvatarUsernameAndOtherComponent,
-    BoxWithHeaderSection,
-    Grid,
-    StackCustom,
-    TextCustom
+  AvatarUsernameAndOtherComponent,
+  BoxWithHeaderSection,
+  Grid,
+  Spacing,
+  StackCustom,
+  TextCustom,
 } from "@/components";
 
-export default function Collaboration_BoxDetailSection({ id }: { id: string }) {
+export default function Collaboration_BoxDetailSection({
+  data,
+}: {
+  data: any;
+}) {
   return (
     <>
       <BoxWithHeaderSection>
+        <AvatarUsernameAndOtherComponent
+          avatar={data?.Author?.Profile?.imageId}
+          name={data?.Author?.username}
+          avatarHref={`/profile/${data?.Author?.Profile?.id}`}
+          withBottomLine
+        />
+        <Spacing height={10}/>
         <StackCustom>
-          <AvatarUsernameAndOtherComponent />
           <TextCustom align="center" bold size="large">
-            Judul Proyek {id}
+            {data?.title || ""}
           </TextCustom>
 
-          {listData.map((item, index) => (
+          {listData(data).map((item, index) => (
             <Grid key={index}>
               <Grid.Col span={4}>
                 <TextCustom bold>{item.title}</TextCustom>
@@ -32,23 +43,21 @@ export default function Collaboration_BoxDetailSection({ id }: { id: string }) {
   );
 }
 
-const listData = [
+const listData = (data: any) => [
   {
     title: "Industri",
-    value: "Pilihan Industri",
+    value: data?.ProjectCollaborationMaster_Industri?.name || "-",
   },
   {
-    title: "Deskripsi",
-    value: "Deskripsi Proyek",
+    title: "Lokasi",
+    value: data?.lokasi || "-",
   },
   {
     title: "Tujuan Proyek",
-    value:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    value: data?.purpose || "-",
   },
   {
     title: "Keuntungan Proyek",
-    value:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    value: data?.benefit || "-",
   },
 ];

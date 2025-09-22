@@ -29,3 +29,12 @@ export async function apiMasterEventType() {
     throw error;
   }
 }
+
+export async function apiMasterCollaborationType() {
+  try {
+    const response = await apiConfig.get(`/mobile/master/collaboration-industry`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

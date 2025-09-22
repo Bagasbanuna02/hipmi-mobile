@@ -125,11 +125,17 @@ export default function UserLayout() {
             headerLeft: () => <BackButton />,
           }}
         />
-
         <Stack.Screen
           name="collaboration/[id]/edit"
           options={{
             title: "Edit Proyek",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="collaboration/[id]/create-pacticipants"
+          options={{
+            title: "Ajukan Partisipasi",
             headerLeft: () => <BackButton />,
           }}
         />

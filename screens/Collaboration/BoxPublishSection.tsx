@@ -7,24 +7,12 @@ import {
 import { Href } from "expo-router";
 
 function Collaboration_BoxPublishSection({
-  id,
-  title,
-  username,
-  description,
   href,
-
-  // Avatar
-  sourceAvatar,
+  data,
   rightComponentAvatar,
 }: {
-  id: string;
-  title?: string;
-  username?: string;
-  description?: string;
   href: Href;
-
-  // Avatar
-  sourceAvatar?: string;
+  data: any;
   rightComponentAvatar?: React.ReactNode;
 }) {
   return (
@@ -32,21 +20,18 @@ function Collaboration_BoxPublishSection({
       <BoxWithHeaderSection href={href}>
         <StackCustom gap={0}>
           <AvatarUsernameAndOtherComponent
-            avatarHref={`/profile/${id}`}
-            name={username || "Username"}
+            avatarHref={`/profile/${data?.Author?.id}`}
+            name={data?.Author?.username || "Username"}
             rightComponent={rightComponentAvatar}
-            avatar={sourceAvatar as any}
+            avatar={data?.Author?.Profile?.imageId}
             withBottomLine
           />
 
           <StackCustom>
             <TextCustom truncate={2} size="large" bold align="center">
-              {title || "Lorem ipsum dolor sit"}
+              {data?.title || "-"}
             </TextCustom>
-            <TextCustom truncate={2}>
-              {description ||
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro sed doloremque tempora soluta. Dolorem ex quidem ipsum tempora, ipsa, obcaecati quia suscipit numquam, voluptates commodi porro impedit natus quos doloremque!"}
-            </TextCustom>
+            <TextCustom truncate={2}>{data?.purpose || "-"}</TextCustom>
             {/* <TextCustom bold size="small" >
             2 Partisipan
           </TextCustom> */}
