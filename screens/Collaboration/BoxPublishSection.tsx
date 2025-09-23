@@ -28,7 +28,7 @@ function Collaboration_BoxPublishSection({
           />
 
           <StackCustom>
-            <TextCustom truncate={2} size="large" bold align="center">
+            <TextCustom truncate size="large" bold align="center">
               {data?.title || "-"}
             </TextCustom>
             <TextCustom truncate={2}>{data?.purpose || "-"}</TextCustom>

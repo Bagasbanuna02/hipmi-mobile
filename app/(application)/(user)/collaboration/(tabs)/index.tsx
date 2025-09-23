@@ -23,7 +23,9 @@ export default function CollaborationBeranda() {
   const onLoadData = async () => {
     try {
       setLoadingGetData(true);
-      const response = await apiCollaborationGetAll();
+      const response = await apiCollaborationGetAll({
+        category: "beranda",
+      });
 
       setListData(response.data);
     } catch (error) {
@@ -32,6 +34,7 @@ export default function CollaborationBeranda() {
       setLoadingGetData(false);
     }
   };
+  
   return (
     <>
       <ViewWrapper

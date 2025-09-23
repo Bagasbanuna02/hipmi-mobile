@@ -1,30 +1,65 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
-  AlertDefaultSystem,
   BackButton,
-  ButtonCustom,
   DotButton,
   DrawerCustom,
+  LoaderCustom,
   MenuDrawerDynamicGrid,
   Spacing,
-  StackCustom,
-  TextCustom,
-  ViewWrapper,
+  ViewWrapper
 } from "@/components";
 import { IconEdit } from "@/components/_Icon";
 import Collaboration_BoxDetailSection from "@/screens/Collaboration/BoxDetailSection";
-import Collaboration_MainParticipanSelectedSection from "@/screens/Collaboration/ProjectMainSelectedSection";
-import { router, Stack, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import {
+  apiCollaborationGetOne
+} from "@/service/api-client/api-collaboration";
+import { MaterialIcons } from "@expo/vector-icons";
+import {
+  router,
+  Stack,
+  useFocusEffect,
+  useLocalSearchParams,
+} from "expo-router";
+import { useCallback, useState } from "react";
 
 export default function CollaborationDetailProjectMain() {
   const { id } = useLocalSearchParams();
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [openDrawerParticipant, setOpenDrawerParticipant] = useState(false);
-  const [selected, setSelected] = useState<(string | number)[]>([]);
+  const [data, setData] = useState<any>();
+  const [loadingGetData, setLoadingGetData] = useState(false);
 
-  const handleEdit = () => {
-    console.log("Edit collaboration");
-    router.push("/(application)/(user)/collaboration/(id)/edit");
+  useFocusEffect(
+    useCallback(() => {
+      handlerLoadData();
+    }, [id])
+  );
+
+  const handlerLoadData = async () => {
+    try {
+      setLoadingGetData(true);
+      await onLoadData();
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setLoadingGetData(false);
+    }
+  };
+
+  const onLoadData = async () => {
+    try {
+      const response = await apiCollaborationGetOne({ id: id as string });
+      if (response.success) {
+        setData(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  };
+
+  const handleSubmit = (item: any) => {
+    console.log("item :", item);
+    router.push(item.path);
+    setOpenDrawer(false);
   };
 
   return (
@@ -37,34 +72,21 @@ export default function CollaborationDetailProjectMain() {
         }}
       />
       <ViewWrapper>
-        <Collaboration_BoxDetailSection id={id as string} />
-        <Collaboration_MainParticipanSelectedSection
-          selected={selected}
-          setSelected={setSelected}
-          setOpenDrawerParticipant={setOpenDrawerParticipant}
-        />
+        {loadingGetData ? (
+          <LoaderCustom />
+        ) : (
+          <>
+            <Collaboration_BoxDetailSection data={data} />
+            {/* <Collaboration_MainParticipanSelectedSection
+              selected={selected}
+              setSelected={setSelected}
+              setOpenDrawerParticipant={setOpenDrawerParticipant}
+              listData={listData as any}
+            /> */}
 
-        <ButtonCustom
-          onPress={() => {
-            AlertDefaultSystem({
-              title: "Buat Grup",
-              message:
-                "Apakah anda yakin ingin membuat grup untuk proyek ini ?",
-              textLeft: "Tidak",
-              textRight: "Ya",
-              onPressLeft: () => {},
-              onPressRight: () => {
-                router.navigate(
-                  "/(application)/(user)/collaboration/(tabs)/group"
-                );
-                console.log("selected :", selected);
-              },
-            });
-          }}
-        >
-          Buat Grup
-        </ButtonCustom>
-        <Spacing />
+            <Spacing />
+          </>
+        )}
       </ViewWrapper>
 
       <DrawerCustom
@@ -76,30 +98,19 @@ export default function CollaborationDetailProjectMain() {
           data={[
             {
               label: "Edit",
-              path: "/(application)/(user)/collaboration/(tabs)/group",
+              path: `/(application)/(user)/collaboration/${id}/edit`,
               icon: <IconEdit />,
             },
+            {
+              label: "Pilih Partisipan",
+              path: `/(application)/(user)/collaboration/${id}/select-of-participants`,
+              icon: <MaterialIcons name="checklist" size={24} color="white" />,
+            },
           ]}
-          onPressItem={(item) => {
-            handleEdit();
+          onPressItem={(item: any) => {
+            handleSubmit(item);
           }}
         />
-      </DrawerCustom>
-
-      <DrawerCustom
-        isVisible={openDrawerParticipant}
-        closeDrawer={() => setOpenDrawerParticipant(false)}
-        height={"auto"}
-      >
-        <StackCustom>
-          <TextCustom bold>Deskripsi Diri</TextCustom>
-          <TextCustom>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi,
-            itaque adipisci. Voluptas, sed quod! Ad facere labore voluptates,
-            neque quidem aut reprehenderit ducimus mollitia quisquam temporibus!
-            Temporibus iusto soluta necessitatibus.
-          </TextCustom>
-        </StackCustom>
       </DrawerCustom>
     </>
   );

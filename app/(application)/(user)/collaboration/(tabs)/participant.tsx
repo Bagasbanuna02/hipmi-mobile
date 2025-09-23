@@ -1,14 +1,45 @@
-import { ButtonCustom, Spacing } from "@/components";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { ButtonCustom, LoaderCustom, Spacing, TextCustom } from "@/components";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { AccentColor, MainColor } from "@/constants/color-palet";
+import { useAuth } from "@/hooks/use-auth";
 import Collaboration_BoxPublishSection from "@/screens/Collaboration/BoxPublishSection";
-import { useState } from "react";
+import { apiCollaborationGetAll } from "@/service/api-client/api-collaboration";
+import { useFocusEffect } from "expo-router";
+import _ from "lodash";
+import { useCallback, useState } from "react";
 import { View } from "react-native";
 
 export default function CollaborationParticipans() {
-  const [activeCategory, setActiveCategory] = useState<string | null>(
-    "participant"
+  const [activeCategory, setActiveCategory] = useState<
+    "participant" | "my-project"
+  >("participant");
+  const { user } = useAuth();
+  const [listData, setListData] = useState<any[]>();
+  const [loadingGetData, setLoadingGetData] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [activeCategory])
   );
+
+  const onLoadData = async () => {
+    try {
+      setLoadingGetData(true);
+      const response = await apiCollaborationGetAll({
+        category:
+          activeCategory === "participant" ? "participant" : "my-project",
+        authorId: user?.id,
+      });
+
+      setListData(response.data);
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setLoadingGetData(false);
+    }
+  };
 
   const handlePress = (item: any) => {
     setActiveCategory(item);
@@ -41,13 +72,13 @@ export default function CollaborationParticipans() {
       <Spacing width={"2%"} />
       <ButtonCustom
         backgroundColor={
-          activeCategory === "main" ? MainColor.yellow : AccentColor.blue
+          activeCategory === "my-project" ? MainColor.yellow : AccentColor.blue
         }
         textColor={
-          activeCategory === "main" ? MainColor.black : MainColor.white
+          activeCategory === "my-project" ? MainColor.black : MainColor.white
         }
         style={{ width: "49%" }}
-        onPress={() => handlePress("main")}
+        onPress={() => handlePress("my-project")}
       >
         Proyek Saya
       </ButtonCustom>
@@ -56,22 +87,27 @@ export default function CollaborationParticipans() {
 
   return (
     <ViewWrapper hideFooter headerComponent={headerComponent}>
-      {Array.from({ length: 10 }).map((_, index) => (
-        <Collaboration_BoxPublishSection
-          key={index.toString()}
-          id={index.toString()}
-          username={` ${
-            activeCategory === "participant"
-              ? "Partisipasi Proyek"
-              : "Proyek Saya"
-          }`}
-          href={
-            activeCategory === "participant"
-              ? `/collaboration/${index}/detail-participant`
-              : `/collaboration/${index}/detail-project-main`
-          }
-        />
-      ))}
+      {loadingGetData ? (
+        <LoaderCustom />
+      ) : _.isEmpty(listData) ? (
+        <TextCustom align="center">Tidak ada data</TextCustom>
+      ) : activeCategory === "participant" ? (
+        listData?.map((item: any, index: number) => (
+          <Collaboration_BoxPublishSection
+            key={index.toString()}
+            data={item?.ProjectCollaboration}
+            href={`/collaboration/${item?.ProjectCollaboration?.id}/detail-participant`}
+          />
+        ))
+      ) : (
+        listData?.map((item: any, index: number) => (
+          <Collaboration_BoxPublishSection
+            key={index.toString()}
+            data={item}
+            href={`/collaboration/${item?.id}/detail-project-main`}
+          />
+        ))
+      )}
     </ViewWrapper>
   );
 }

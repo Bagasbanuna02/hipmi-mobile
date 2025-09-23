@@ -4,6 +4,7 @@ import {
   ButtonCustom,
   DotButton,
   DrawerCustom,
+  InformationBox,
   LoaderCustom,
   MenuDrawerDynamicGrid,
   ViewWrapper,
@@ -26,7 +27,7 @@ import { useCallback, useState } from "react";
 export default function CollaborationDetail() {
   const { user } = useAuth();
   const { id } = useLocalSearchParams();
-  const [data, setData] = useState();
+  const [data, setData] = useState<any>();
   const [openDrawerMenu, setOpenDrawerMenu] = useState(false);
   const [isParticipant, setIsParticipant] = useState(false);
   const [loadingIsParticipant, setLoadingIsParticipant] = useState(false);
@@ -41,6 +42,7 @@ export default function CollaborationDetail() {
   const onLoadData = async () => {
     try {
       const response = await apiCollaborationGetOne({ id: id as string });
+
       if (response.success) {
         setData(response.data);
       }
@@ -84,17 +86,25 @@ export default function CollaborationDetail() {
           <LoaderCustom />
         ) : (
           <>
+            {user?.id === data?.Author?.id && (
+              <InformationBox
+                text={
+                  "Tombol partisipasi hanya muncul untuk proyek yang tidak anda buat"
+                }
+              />
+            )}
             <Collaboration_BoxDetailSection data={data} />
-
-            <ButtonCustom
-              disabled={isParticipant || loadingIsParticipant}
-              onPress={() => {
-                router.push(`/collaboration/${id}/create-pacticipants`);
-                //  setOpenDrawerPartisipasi(true);
-              }}
-            >
-              {isParticipant ? "Anda telah berpartisipasi" : "Partisipasi"}
-            </ButtonCustom>
+            {user?.id !== data?.Author?.id && (
+              <ButtonCustom
+                disabled={isParticipant || loadingIsParticipant}
+                onPress={() => {
+                  router.push(`/collaboration/${id}/create-pacticipants`);
+                  //  setOpenDrawerPartisipasi(true);
+                }}
+              >
+                {isParticipant ? "Anda telah berpartisipasi" : "Partisipasi"}
+              </ButtonCustom>
+            )}
           </>
         )}
       </ViewWrapper>

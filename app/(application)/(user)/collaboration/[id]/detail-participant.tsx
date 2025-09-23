@@ -1,26 +1,54 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
-  AvatarUsernameAndOtherComponent,
-  BaseBox,
+  BackButton,
+  DotButton,
   DrawerCustom,
-  StackCustom,
-  TextCustom,
-  ViewWrapper,
+  MenuDrawerDynamicGrid,
+  ViewWrapper
 } from "@/components";
-import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import Collaboration_BoxDetailSection from "@/screens/Collaboration/BoxDetailSection";
-import { MaterialIcons } from "@expo/vector-icons";
-import { useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import { apiCollaborationGetOne } from "@/service/api-client/api-collaboration";
+import { Ionicons } from "@expo/vector-icons";
+import { router, Stack, useFocusEffect, useLocalSearchParams } from "expo-router";
+import { useCallback, useState } from "react";
 
 export default function CollaborationDetailParticipant() {
   const { id } = useLocalSearchParams();
   const [openDrawerParticipant, setOpenDrawerParticipant] = useState(false);
+  const [data, setData] = useState<any>();
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [id])
+  );
+
+  const onLoadData = async () => {
+    try {
+      const response = await apiCollaborationGetOne({ id: id as string });
+      if (response.success) {
+        setData(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  };
 
   return (
     <>
+      <Stack.Screen
+        options={{
+          title: "Detail Proyek",
+          headerLeft: () => <BackButton />,
+          headerRight: () => (
+            <DotButton onPress={() => setOpenDrawerParticipant(true)} />
+          ),
+        }}
+      />
+
       <ViewWrapper>
-        <Collaboration_BoxDetailSection id={id as string} />
-        <BaseBox style={{ height: 500 }}>
+        <Collaboration_BoxDetailSection data={data} />
+        {/* <BaseBox style={{ height: 500 }}>
             <TextCustom align="center" bold size="large">
               Partisipan
             </TextCustom>
@@ -39,10 +67,30 @@ export default function CollaborationDetailParticipant() {
                 }
               />
             ))}
-        </BaseBox>
+        </BaseBox> */}
       </ViewWrapper>
 
       <DrawerCustom
+        isVisible={openDrawerParticipant}
+        closeDrawer={() => setOpenDrawerParticipant(false)}
+        height={"auto"}
+      >
+        <MenuDrawerDynamicGrid
+          data={[
+            {
+              icon: <Ionicons name="people" size={24} color="white" />,
+              label: "Daftar Partisipan",
+              path: `/collaboration/${id}/list-of-participants`,
+            },
+          ]}
+          onPressItem={(item) => {
+            router.push(item.path as any);
+            setOpenDrawerParticipant(false);
+          }}
+        />
+      </DrawerCustom>
+
+      {/* <DrawerCustom
         isVisible={openDrawerParticipant}
         closeDrawer={() => setOpenDrawerParticipant(false)}
         height={"auto"}
@@ -56,7 +104,7 @@ export default function CollaborationDetailParticipant() {
             Temporibus iusto soluta necessitatibus.
           </TextCustom>
         </StackCustom>
-      </DrawerCustom>
+      </DrawerCustom> */}
     </>
   );
 }

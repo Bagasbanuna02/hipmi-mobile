@@ -1,3 +1,4 @@
+
 import {
   BackButton,
   BoxButtonOnFooter,
@@ -14,6 +15,7 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 export default function CollaborationRoomChat() {
   const { id, detail } = useLocalSearchParams();
+
 
   const inputChat = () => {
     return (

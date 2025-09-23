@@ -15,10 +15,12 @@ export default function Collaboration_ProjectMainSelectedSection({
   selected,
   setSelected,
   setOpenDrawerParticipant,
+  listData,
 }: {
   selected: (string | number)[];
   setSelected: (value: (string | number)[]) => void;
   setOpenDrawerParticipant: (value: boolean) => void;
+  listData: any[];
 }) {
   return (
     <BaseBox style={{ height: 500 }}>
@@ -31,7 +33,7 @@ export default function Collaboration_ProjectMainSelectedSection({
         </TextCustom>
 
         <CheckboxGroup value={selected} onChange={setSelected}>
-          {Array.from({ length: 5 }).map((_, index) => (
+          {listData?.map((item: any, index: any) => (
             <View key={index}>
               <Grid key={index}>
                 <Grid.Col

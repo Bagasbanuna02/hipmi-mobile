@@ -118,13 +118,13 @@ export default function UserLayout() {
             headerLeft: () => <BackButton />,
           }}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="collaboration/[id]/detail-participant"
           options={{
             title: "Partisipasi Proyek",
             headerLeft: () => <BackButton />,
           }}
-        />
+        /> */}
         <Stack.Screen
           name="collaboration/[id]/edit"
           options={{
@@ -136,6 +136,13 @@ export default function UserLayout() {
           name="collaboration/[id]/create-pacticipants"
           options={{
             title: "Ajukan Partisipasi",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
+          name="collaboration/[id]/select-of-participants"
+          options={{
+            title: "Pilih Partisipan",
             headerLeft: () => <BackButton />,
           }}
         />
