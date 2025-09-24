@@ -89,7 +89,7 @@ export default function CollaborationDetail() {
             {user?.id === data?.Author?.id && (
               <InformationBox
                 text={
-                  "Tombol partisipasi hanya muncul untuk proyek yang tidak anda buat"
+                  "Tombol partisipasi hanya muncul pada proyek milik orang lain"
                 }
               />
             )}

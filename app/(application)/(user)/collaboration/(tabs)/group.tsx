@@ -34,9 +34,7 @@ export default function CollaborationGroup() {
         category: "group",
         authorId: user?.id,
       });
-
-      console.log("[RES >>]", JSON.stringify(response.data, null, 2));
-
+      
       if (response.success) {
         setListData(response.data);
       }

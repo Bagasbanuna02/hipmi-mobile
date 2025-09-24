@@ -51,7 +51,7 @@ export default function CollaborationListOfParticipants() {
         {loadingGetData ? (
           <LoaderCustom />
         ) : _.isEmpty(listData) ? (
-          <TextCustom align="center">Tidak ada data</TextCustom>
+          <TextCustom align="center">Tidak ada partisipan</TextCustom>
         ) : (
           listData?.map((item: any, index: number) => (
             <BaseBox key={index} paddingBlock={5}>

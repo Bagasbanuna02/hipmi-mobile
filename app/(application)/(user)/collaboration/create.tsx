@@ -81,7 +81,6 @@ export default function CollaborationCreate() {
 
     try {
       setIsLoading(true);
-      console.log("[DATA]>>", newData);
 
       const response = await apiCollaborationCreate({ data: newData });
       if (response.success) {

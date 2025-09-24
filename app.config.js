@@ -26,6 +26,7 @@ export default {
     },
     edgeToEdgeEnabled: true,
     package: 'com.bip.hipmimobileapp',
+    // softwareKeyboardLayoutMode: 'resize', // option: untuk mengatur keyboard pada room chst collaboration
   },
 
   web: {
