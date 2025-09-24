@@ -1,10 +1,10 @@
 import {
-  AvatarCustom,
+  AvatarComp,
   BaseBox,
   ClickableCustom,
   Grid,
   Spacing,
-  TextCustom,
+  TextCustom
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
@@ -31,12 +31,13 @@ export default function Forum_BoxDetailSection({
         backgroundColor: MainColor.soft_darkblue,
         padding: 8,
         borderRadius: 8,
+        paddingBlock: 20,
       }}
     >
       {isTruncate ? (
-        <TextCustom truncate={2}>{data.deskripsi}</TextCustom>
+        <TextCustom truncate={2}>{data?.diskusi}</TextCustom>
       ) : (
-        <TextCustom>{data.deskripsi}</TextCustom>
+        <TextCustom>{data?.diskusi}</TextCustom>
       )}
     </View>
   );
@@ -47,17 +48,21 @@ export default function Forum_BoxDetailSection({
         <View>
           <Grid>
             <Grid.Col span={2}>
-              <AvatarCustom href={`/profile/${data.id}`} />
+              <AvatarComp
+                fileId={data?.Author?.Profile?.imageId}
+                href={`/profile/${data?.Author?.Profile?.id}`}
+                size={"base"}
+              />
             </Grid.Col>
             <Grid.Col span={8}>
-              <TextCustom>{data.name}</TextCustom>
-              {data.status === "Open" ? (
+              <TextCustom>{data?.Author?.username}</TextCustom>
+              {data?.ForumMaster_StatusPosting?.status === "Open" ? (
                 <TextCustom bold size="small" color="green">
-                  {data.status}
+                  {data?.ForumMaster_StatusPosting?.status}
                 </TextCustom>
               ) : (
                 <TextCustom bold size="small" color="red">
-                  {data.status}
+                  {data?.ForumMaster_StatusPosting?.status}
                 </TextCustom>
               )}
             </Grid.Col>
@@ -71,7 +76,7 @@ export default function Forum_BoxDetailSection({
               <ClickableCustom
                 onPress={() => {
                   setOpenDrawer(true);
-                  setStatus(data.status);
+                  setStatus(data?.ForumMaster_StatusPosting?.status);
                 }}
                 style={{
                   alignItems: "flex-end",
@@ -85,6 +90,7 @@ export default function Forum_BoxDetailSection({
               </ClickableCustom>
             </Grid.Col>
           </Grid>
+
 
           {href ? (
             <ClickableCustom onPress={() => router.push(href as any)}>
@@ -110,7 +116,7 @@ export default function Forum_BoxDetailSection({
                   size={ICON_SIZE_SMALL}
                   color={MainColor.white}
                 />
-                <TextCustom>{data.jumlahBalas}</TextCustom>
+                <TextCustom>{data?.Forum_Komentar?.length}</TextCustom>
               </View>
             </Grid.Col>
             <Grid.Col span={6} style={{ alignItems: "flex-end" }}>
