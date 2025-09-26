@@ -32,9 +32,55 @@ export async function apiMasterEventType() {
 
 export async function apiMasterCollaborationType() {
   try {
-    const response = await apiConfig.get(`/mobile/master/collaboration-industry`);
+    const response = await apiConfig.get(
+      `/mobile/master/collaboration-industry`
+    );
     return response.data;
   } catch (error) {
     throw error;
   }
 }
+
+export async function apiMasterForumReportList() {
+  try {
+    const response = await apiConfig.get(`/mobile/master/forum-report`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiForumCreateReportPosting({
+  id,
+  data,
+}: {
+  id: string;
+  data: any;
+}) {
+  try {
+    const response = await apiConfig.post(`/mobile/forum/${id}/report-posting`, {
+      data: data,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiForumCreateReportCommentar({
+  id,
+  data,
+}: {
+  id: string;
+  data: any;
+}) {
+  try {
+    const response = await apiConfig.post(`/mobile/forum/${id}/report-commentar`, {
+      data: data,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+  

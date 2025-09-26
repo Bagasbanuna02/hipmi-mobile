@@ -4,21 +4,30 @@ import { listDummyReportForum } from "@/lib/dummy-data/forum/report-list";
 import { useState } from "react";
 import { View } from "react-native";
 
-export default function Forum_ReportListSection() {
-  const [value, setValue] = useState<any | number>("");
+export default function Forum_ReportListSection({
+  listMaster,
+  selectReport,
+  setSelectReport,
+}: {
+  listMaster: any[] | null;
+  selectReport: string;
+  setSelectReport: (value: string) => void;
+}) {
   return (
     <>
       <BaseBox>
         <StackCustom>
-          <RadioGroup value={value} onChange={setValue}>
-            {listDummyReportForum.map((e, i) => (
+          <RadioGroup value={selectReport} onChange={(val) => {
+            setSelectReport(val);
+          }}>
+            {listMaster?.map((e, i) => (
               <View key={i}>
                 <RadioCustom
                   label={e.title}
                   //  value={i}
-                  value={e.title}
+                  value={e.id}
                 />
-                <TextCustom>{e.desc}</TextCustom>
+                <TextCustom>{e.deskripsi}</TextCustom>
               </View>
             ))}
           </RadioGroup>

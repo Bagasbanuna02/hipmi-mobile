@@ -241,7 +241,7 @@ export default function ForumDetail() {
         closeDrawer={() => setOpenDrawerCommentar(false)}
       >
         <Forum_MenuDrawerCommentar
-          id={id as string}
+          id={commentId as string}
           commentId={commentId}
           commentAuthorId={commentAuthorId}
           setIsDrawerOpen={() => {

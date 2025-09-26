@@ -5,17 +5,54 @@ import {
   ViewWrapper,
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
-import { router } from "expo-router";
+import { useAuth } from "@/hooks/use-auth";
+import { apiForumCreateReportPosting } from "@/service/api-client/api-master";
+import { router, useLocalSearchParams } from "expo-router";
+import { useState } from "react";
+import Toast from "react-native-toast-message";
 
 export default function ForumOtherReportPosting() {
+  const { id } = useLocalSearchParams();
+  const { user } = useAuth();
+  const [value, setValue] = useState<string>("");
+
+  const handlerSubmitReport = async () => {
+    const newData = {
+      authorId: user?.id,
+      description: value,
+    };
+
+    try {
+      const response = await apiForumCreateReportPosting({
+        id: id as string,
+        data: newData,
+      });
+
+      if (response.success) {
+        Toast.show({
+          type: "success",
+          text1: "Laporan berhasil dikirim",
+        });
+        router.back();
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+      Toast.show({
+        type: "error",
+        text1: "Gagal",
+        text2: "Laporan gagal dikirim",
+      });
+    }
+  };
+
   const handleSubmit = (
     <BoxButtonOnFooter>
       <ButtonCustom
+        disabled={!value}
         backgroundColor={MainColor.red}
         textColor={MainColor.white}
         onPress={() => {
-          console.log("Report lainnya");
-          router.back();
+          handlerSubmitReport();
         }}
       >
         Report
@@ -25,7 +62,11 @@ export default function ForumOtherReportPosting() {
   return (
     <>
       <ViewWrapper footerComponent={handleSubmit}>
-        <TextAreaCustom placeholder="Laporkan Diskusi" />
+        <TextAreaCustom
+          placeholder="Laporkan Diskusi"
+          value={value}
+          onChangeText={setValue}
+        />
       </ViewWrapper>
     </>
   );

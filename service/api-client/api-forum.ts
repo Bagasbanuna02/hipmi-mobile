@@ -11,9 +11,19 @@ export async function apiForumCreate({ data }: { data: any }) {
   }
 }
 
-export async function apiForumGetAll({ search }: { search: string }) {
+export async function apiForumGetAll({
+  search,
+  authorId,
+}: {
+  search: string;
+  authorId?: string;
+}) {
+  const authorQuery = authorId ? `?authorId=${authorId}` : "";
+  const searchQuery = search ? `?search=${search}` : "";
+  const query = search ? searchQuery : authorQuery;
+
   try {
-    const response = await apiConfig.get(`/mobile/forum?search=${search}`);
+    const response = await apiConfig.get(`/mobile/forum${query}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -40,7 +50,13 @@ export async function apiForumUpdate({ id, data }: { id: string; data: any }) {
   }
 }
 
-export async function apiForumUpdateStatus({ id, data }: { id: string; data: any }) {
+export async function apiForumUpdateStatus({
+  id,
+  data,
+}: {
+  id: string;
+  data: any;
+}) {
   try {
     const response = await apiConfig.post(`/mobile/forum/${id}`, {
       data: data,

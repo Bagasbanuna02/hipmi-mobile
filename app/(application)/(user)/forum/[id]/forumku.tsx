@@ -1,36 +1,82 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   AlertCustom,
+  AvatarComp,
   AvatarCustom,
   ButtonCustom,
   CenterCustom,
   DrawerCustom,
   Grid,
+  LoaderCustom,
   StackCustom,
   TextCustom,
   ViewWrapper,
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
+import { useAuth } from "@/hooks/use-auth";
 import Forum_BoxDetailSection from "@/screens/Forum/DiscussionBoxSection";
 import { listDummyDiscussionForum } from "@/screens/Forum/list-data-dummy";
 import Forum_MenuDrawerBerandaSection from "@/screens/Forum/MenuDrawerSection.tsx/MenuBeranda";
-import { useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import { apiForumGetAll } from "@/service/api-client/api-forum";
+import { apiUser } from "@/service/api-client/api-user";
+import { useFocusEffect, useLocalSearchParams } from "expo-router";
+import _ from "lodash";
+import { useCallback, useState } from "react";
 
 export default function Forumku() {
   const { id } = useLocalSearchParams();
+  const { user } = useAuth();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [status, setStatus] = useState("");
   const [alertStatus, setAlertStatus] = useState(false);
   const [deleteAlert, setDeleteAlert] = useState(false);
-  
+
+  const [listData, setListData] = useState<any | null>(null);
+  const [dataUser, setDataUser] = useState<any | null>(null);
+  const [loadingGetList, setLoadingGetList] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+      onLoadDataProfile(user?.id as string);
+    }, [user?.id])
+  );
+
+  const onLoadDataProfile = async (id: string) => {
+    try {
+      const response = await apiUser(id);
+
+      setDataUser(response.data);
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+    }
+  };
+
+  const onLoadData = async () => {
+    try {
+      setLoadingGetList(true);
+      const response = await apiForumGetAll({
+        search: "",
+        authorId: id as string,
+      });
+
+      setListData(response.data);
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setLoadingGetList(false);
+    }
+  };
 
   return (
     <>
       <ViewWrapper>
         <StackCustom>
           <CenterCustom>
-            <AvatarCustom
-              href={`/(application)/(image)/preview-image/${id}`}
+            <AvatarComp
+              fileId={dataUser?.Profile?.imageId}
+              href={`/(application)/(image)/preview-image/${dataUser?.Profile?.imageId}`}
               size="xl"
             />
           </CenterCustom>
@@ -38,32 +84,43 @@ export default function Forumku() {
           <Grid>
             <Grid.Col span={6}>
               <TextCustom bold truncate>
-                @bagas_banuna
+                @{dataUser?.username || "-"}
               </TextCustom>
-              <TextCustom>1 postingan</TextCustom>
+              <TextCustom>{listData?.length || "0"} postingan</TextCustom>
             </Grid.Col>
             <Grid.Col span={6} style={{ alignItems: "flex-end" }}>
-              <ButtonCustom href={`/profile/${id}`}>
+              <ButtonCustom href={`/profile/${dataUser?.Profile?.id}`}>
                 Kunjungi Profile
               </ButtonCustom>
             </Grid.Col>
           </Grid>
-          {listDummyDiscussionForum.map((e, i) => (
-            <Forum_BoxDetailSection
-              key={i}
-              data={e}
-              setOpenDrawer={setOpenDrawer}
-              setStatus={setStatus}
-              isTruncate={true}
-              href={`/forum/${id}`}
-            />
-          ))}
+          {loadingGetList ? (
+            <LoaderCustom />
+          ) : _.isEmpty(listData) ? (
+            <TextCustom> Tidak ada diskusi</TextCustom>
+          ) : (
+            <>
+              {listData?.map((item: any, index: number) => (
+                <Forum_BoxDetailSection
+                  isRightComponent={false}
+                  key={index}
+                  data={item}
+                  isTruncate={true}
+                  href={`/forum/${item.id}`}
+                  onSetData={(value) => {
+                    setOpenDrawer(value.setOpenDrawer);
+                    setStatus(value.setStatus);
+                  }}
+                />
+              ))}
+            </>
+          )}
         </StackCustom>
       </ViewWrapper>
 
       {/* Drawer Komponen Eksternal */}
       <DrawerCustom
-        height={350}
+        height={"auto"}
         isVisible={openDrawer}
         closeDrawer={() => setOpenDrawer(false)}
       >
@@ -73,42 +130,9 @@ export default function Forumku() {
           setIsDrawerOpen={() => {
             setOpenDrawer(false);
           }}
-          setShowDeleteAlert={setDeleteAlert}
-          setShowAlertStatus={setAlertStatus}
+          authorId={id as string}
         />
       </DrawerCustom>
-
-      {/* Alert Komponen Eksternal */}
-      <AlertCustom
-        isVisible={alertStatus}
-        onLeftPress={() => setAlertStatus(false)}
-        onRightPress={() => {
-          setOpenDrawer(false);
-          setAlertStatus(false);
-          console.log("Ubah status forum");
-        }}
-        title="Ubah Status Forum"
-        message="Apakah Anda yakin ingin mengubah status forum ini?"
-        textLeft="Batal"
-        textRight="Ubah"
-        colorRight={MainColor.green}
-      />
-
-      {/* Alert Delete */}
-      <AlertCustom
-        isVisible={deleteAlert}
-        onLeftPress={() => setDeleteAlert(false)}
-        onRightPress={() => {
-          setOpenDrawer(false);
-          setDeleteAlert(false);
-          console.log("Hapus forum");
-        }}
-        title="Hapus Forum"
-        message="Apakah Anda yakin ingin menghapus forum ini?"
-        textLeft="Batal"
-        textRight="Hapus"
-        colorRight={MainColor.red}
-      />
     </>
   );
 }
