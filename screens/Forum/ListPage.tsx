@@ -2,24 +2,20 @@ import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import { Feather, Ionicons } from "@expo/vector-icons";
 
-export { drawerItemsForumBeranda, drawerItemsForumComentar };
+export {
+  drawerItemsForumBerandaForAuthor,
+  drawerItemsForumComentarForAuthor,
+  drawerItemsForumBerandaForNonAuthor,
+  drawerItemsForumComentarForNonAuthor,
+};
 
-const drawerItemsForumBeranda = ({
+const drawerItemsForumBerandaForAuthor = ({
   id,
   status,
 }: {
   id: string;
   status: string;
 }) => [
-  {
-    icon: (
-      <Ionicons name="flag" size={ICON_SIZE_SMALL} color={MainColor.white} />
-    ),
-    label: "Laporkan diskusi",
-    // color: MainColor.white,
-    path: `/forum/${id}/report-posting`,
-  },
-    
   {
     icon: (
       <Feather name="edit" size={ICON_SIZE_SMALL} color={MainColor.white} />
@@ -49,15 +45,18 @@ const drawerItemsForumBeranda = ({
   },
 ];
 
-const drawerItemsForumComentar = ({ id }: { id: string }) => [
+const drawerItemsForumBerandaForNonAuthor = ({ id }: { id: string }) => [
   {
     icon: (
       <Ionicons name="flag" size={ICON_SIZE_SMALL} color={MainColor.white} />
     ),
-    label: "Laporkan",
+    label: "Laporkan diskusi",
     // color: MainColor.white,
-    path: `/forum/${id}/report-commentar`,
+    path: `/forum/${id}/report-posting`,
   },
+];
+
+const drawerItemsForumComentarForAuthor = ({ id }: { id: string }) => [
   {
     icon: (
       <Ionicons name="trash" size={ICON_SIZE_SMALL} color={MainColor.white} />
@@ -65,5 +64,16 @@ const drawerItemsForumComentar = ({ id }: { id: string }) => [
     label: "Hapus",
     color: MainColor.red,
     path: "",
+  },
+];
+
+const drawerItemsForumComentarForNonAuthor = ({ id }: { id: string }) => [
+  {
+    icon: (
+      <Ionicons name="flag" size={ICON_SIZE_SMALL} color={MainColor.white} />
+    ),
+    label: "Laporkan",
+    // color: MainColor.white,
+    path: `/forum/${id}/report-commentar`,
   },
 ];

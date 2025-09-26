@@ -19,7 +19,6 @@ import _ from "lodash";
 import { useCallback, useState } from "react";
 
 export default function Forum() {
-  const id = "test-id-forum";
   const [openDrawer, setOpenDrawer] = useState(false);
   const [status, setStatus] = useState("");
   const { user } = useAuth();
@@ -27,6 +26,8 @@ export default function Forum() {
   const [listData, setListData] = useState<any[]>();
   const [loadingGetList, setLoadingGetList] = useState(false);
   const [search, setSearch] = useState("");
+  const [dataId, setDataId] = useState("");
+  const [authorId, setAuthorId] = useState("");
 
   useFocusEffect(
     useCallback(() => {
@@ -44,7 +45,6 @@ export default function Forum() {
     try {
       setLoadingGetList(true);
       const response = await apiForumGetAll({ search: search });
-      console.log("[DATA PROFILE]", JSON.stringify(response.data, null, 2));
 
       setListData(response.data);
     } catch (error) {
@@ -96,10 +96,15 @@ export default function Forum() {
             <Forum_BoxDetailSection
               key={i}
               data={e}
-              setOpenDrawer={setOpenDrawer}
-              setStatus={setStatus}
+              onSetData={() => {
+                setDataId(e.id);
+                setOpenDrawer(true);
+                setStatus(e.ForumMaster_StatusPosting?.status);
+                setAuthorId(e.Author?.id);
+              }}
               isTruncate={true}
-              href={`/forum/${id}`}
+              href={`/forum/${e.id}`}
+              isRightComponent={false}
             />
           ))
         )}
@@ -111,55 +116,14 @@ export default function Forum() {
         closeDrawer={() => setOpenDrawer(false)}
       >
         <Forum_MenuDrawerBerandaSection
-          id={id}
+          id={dataId}
+          authorId={authorId}
           status={status}
           setIsDrawerOpen={() => {
             setOpenDrawer(false);
           }}
-          setShowDeleteAlert={() => {}}
-          setShowAlertStatus={() => {}}
         />
       </DrawerCustom>
-
-      {/* Alert Status */}
-      {/* <AlertCustom
-        isVisible={alertStatus}
-        title="Ubah Status Forum"
-        message="Apakah Anda yakin ingin mengubah status forum ini?"
-        onLeftPress={() => {
-          setOpenDrawer(false);
-          setAlertStatus(false);
-          console.log("Batal");
-        }}
-        onRightPress={() => {
-          setOpenDrawer(false);
-          setAlertStatus(false);
-          console.log("Ubah status forum");
-        }}
-        textLeft="Batal"
-        textRight="Ubah"
-        colorRight={MainColor.green}
-      /> */}
-
-      {/* Alert Delete */}
-      {/* <AlertCustom
-        isVisible={deleteAlert}
-        title="Hapus Forum"
-        message="Apakah Anda yakin ingin menghapus forum ini?"
-        onLeftPress={() => {
-          setOpenDrawer(false);
-          setDeleteAlert(false);
-          console.log("Batal");
-        }}
-        onRightPress={() => {
-          setOpenDrawer(false);
-          setDeleteAlert(false);
-          console.log("Hapus forum");
-        }}
-        textLeft="Batal"
-        textRight="Hapus"
-        colorRight={MainColor.red}
-      /> */}
     </>
   );
 }

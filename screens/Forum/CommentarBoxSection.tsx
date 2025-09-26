@@ -1,30 +1,44 @@
 import {
-  AvatarCustom,
-  BaseBox,
+  AvatarComp,
+  BoxWithHeaderSection,
   ClickableCustom,
   Grid,
   Spacing,
-  TextCustom,
+  TextCustom
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
+import { GStyles } from "@/styles/global-styles";
+import { formatChatTime } from "@/utils/formatChatTime";
 import { Entypo } from "@expo/vector-icons";
 import { View } from "react-native";
 
 export default function Forum_CommentarBoxSection({
   data,
-  setOpenDrawer,
+  onSetData,
 }: {
   data: any;
-  setOpenDrawer: (value: boolean) => void;
+  onSetData: ({
+    setCommentId,
+    setOpenDrawer,
+    setCommentAuthorId,
+  }: {
+    setCommentId: string;
+    setOpenDrawer: boolean;
+    setCommentAuthorId: string;
+  }) => void;
 }) {
   return (
     <>
-      <BaseBox>
+      <BoxWithHeaderSection>
         <View>
           <Grid>
             <Grid.Col span={2}>
-              <AvatarCustom href={`/profile/${data.id}`} />
+              <AvatarComp
+                href={`/profile/${data?.Author?.Profile?.id}`}
+                fileId={data?.Author?.Profile?.imageId}
+                size="base"
+              />
             </Grid.Col>
             <Grid.Col
               span={8}
@@ -32,7 +46,7 @@ export default function Forum_CommentarBoxSection({
                 justifyContent: "center",
               }}
             >
-              <TextCustom>{data.name}</TextCustom>
+              <TextCustom>{data?.Author?.username}</TextCustom>
             </Grid.Col>
 
             <Grid.Col
@@ -43,7 +57,11 @@ export default function Forum_CommentarBoxSection({
             >
               <ClickableCustom
                 onPress={() => {
-                  setOpenDrawer(true);
+                  onSetData({
+                    setCommentId: data?.id,
+                    setOpenDrawer: true,
+                    setCommentAuthorId: data?.Author?.id,
+                  });
                 }}
                 style={{
                   alignItems: "flex-end",
@@ -58,14 +76,18 @@ export default function Forum_CommentarBoxSection({
             </Grid.Col>
           </Grid>
 
-          <TextCustom>{data.deskripsi}</TextCustom>
+          <View style={GStyles.forumBox}>
+            <TextCustom>{data.komentar}</TextCustom>
+          </View>
 
-          <Spacing />
+          <Spacing height={10} />
           <View style={{ alignItems: "flex-end" }}>
-            <TextCustom>{data.date}</TextCustom>
+            <TextCustom size="small" color="gray">
+              {formatChatTime(data?.createdAt)}
+            </TextCustom>
           </View>
         </View>
-      </BaseBox>
+      </BoxWithHeaderSection>
     </>
   );
 }

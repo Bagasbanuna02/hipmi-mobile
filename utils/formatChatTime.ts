@@ -22,7 +22,7 @@ export const formatChatTime = (date: string | Date): string => {
 
   // Jika kemarin
   if (messageDate.isSame(now.subtract(1, 'day'), 'day')) {
-    return 'Kemarin';
+    return messageDate.format('dddd HH:mm');
   }
 
   // Jika dalam 7 hari terakhir (tapi bukan kemarin/ hari ini)

@@ -4,6 +4,7 @@ import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import Job_BoxDetailSection from "@/screens/Job/BoxDetailSection";
 import { apiJobGetOne } from "@/service/api-client/api-job";
+import { BASE_URL } from "@/service/api-config";
 import { Ionicons } from "@expo/vector-icons";
 import * as Clipboard from "expo-clipboard";
 import { useLocalSearchParams } from "expo-router";
@@ -32,7 +33,8 @@ export default function JobDetail() {
     }
   };
 
-  const linkUrl = `http://192.168.1.83:3000/job-vacancy/`;
+  const baseUrl = BASE_URL;
+  const linkUrl = `${baseUrl}/job-vacancy/`;
 
   const OpenLinkButton = ({ id }: { id: string }) => {
     const jobUrl = `${linkUrl}${id}`;

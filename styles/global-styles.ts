@@ -323,4 +323,10 @@ export const GStyles = StyleSheet.create({
   alignSelfFlexEnd: {
     alignSelf: "flex-end",
   },
+  forumBox: {
+    backgroundColor: MainColor.soft_darkblue,
+    borderRadius: 8,
+    paddingBlock: 20,
+    paddingInline: 10,
+  },
 });

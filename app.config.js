@@ -69,5 +69,6 @@ export default {
     },
     // Tambahkan environment variables ke sini
     API_BASE_URL: process.env.API_BASE_URL,
+    BASE_URL: process.env.BASE_URL,
   },
 };

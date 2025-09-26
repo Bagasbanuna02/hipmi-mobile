@@ -4,10 +4,12 @@ import {
   ClickableCustom,
   Grid,
   Spacing,
-  TextCustom
+  TextCustom,
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
+import { GStyles } from "@/styles/global-styles";
+import { formatChatTime } from "@/utils/formatChatTime";
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import { Href, router } from "expo-router";
 import { View } from "react-native";
@@ -15,25 +17,28 @@ import { View } from "react-native";
 export default function Forum_BoxDetailSection({
   data,
   isTruncate,
-  setOpenDrawer,
-  setStatus,
   href,
+  isRightComponent = true,
+  onSetData,
 }: {
   data: any;
   isTruncate?: boolean;
-  setOpenDrawer: (value: boolean) => void;
-  setStatus: (value: string) => void;
   href?: Href;
+  isRightComponent?: boolean;
+  onSetData: ({
+    setDataId,
+    setStatus,
+    setOpenDrawer,
+    setAuthorId,
+  }: {
+    setDataId: string;
+    setStatus: string;
+    setOpenDrawer: boolean;
+    setAuthorId: string;
+  }) => void;
 }) {
   const deskripsiView = (
-    <View
-      style={{
-        backgroundColor: MainColor.soft_darkblue,
-        padding: 8,
-        borderRadius: 8,
-        paddingBlock: 20,
-      }}
-    >
+    <View style={GStyles.forumBox}>
       {isTruncate ? (
         <TextCustom truncate={2}>{data?.diskusi}</TextCustom>
       ) : (
@@ -54,8 +59,8 @@ export default function Forum_BoxDetailSection({
                 size={"base"}
               />
             </Grid.Col>
-            <Grid.Col span={8}>
-              <TextCustom>{data?.Author?.username}</TextCustom>
+            <Grid.Col span={6}>
+              <TextCustom truncate>{data?.Author?.username}</TextCustom>
               {data?.ForumMaster_StatusPosting?.status === "Open" ? (
                 <TextCustom bold size="small" color="green">
                   {data?.ForumMaster_StatusPosting?.status}
@@ -68,29 +73,35 @@ export default function Forum_BoxDetailSection({
             </Grid.Col>
 
             <Grid.Col
-              span={2}
+              span={4}
               style={{
-                justifyContent: "center",
+                justifyContent: "flex-start",
+                alignItems: "flex-end",
               }}
             >
-              <ClickableCustom
-                onPress={() => {
-                  setOpenDrawer(true);
-                  setStatus(data?.ForumMaster_StatusPosting?.status);
-                }}
-                style={{
-                  alignItems: "flex-end",
-                }}
-              >
-                <Entypo
-                  name="dots-three-horizontal"
-                  color={MainColor.white}
-                  size={ICON_SIZE_SMALL}
-                />
-              </ClickableCustom>
+              {isRightComponent && (
+                <ClickableCustom
+                  onPress={() => {
+                    onSetData({
+                      setDataId: data?.id,
+                      setStatus: data?.ForumMaster_StatusPosting?.status,
+                      setAuthorId: data?.Author?.id,
+                      setOpenDrawer: true,
+                    });
+                  }}
+                  style={{
+                    alignItems: "flex-end",
+                  }}
+                >
+                  <Entypo
+                    name="dots-three-horizontal"
+                    color={MainColor.white}
+                    size={ICON_SIZE_SMALL}
+                  />
+                </ClickableCustom>
+              )}
             </Grid.Col>
           </Grid>
-
 
           {href ? (
             <ClickableCustom onPress={() => router.push(href as any)}>
@@ -116,11 +127,13 @@ export default function Forum_BoxDetailSection({
                   size={ICON_SIZE_SMALL}
                   color={MainColor.white}
                 />
-                <TextCustom>{data?.Forum_Komentar?.length}</TextCustom>
+                <TextCustom>{data?.count}</TextCustom>
               </View>
             </Grid.Col>
             <Grid.Col span={6} style={{ alignItems: "flex-end" }}>
-              <TextCustom size="small"> {data.date}</TextCustom>
+              <TextCustom truncate size="small" color="gray">
+                {formatChatTime(data?.createdAt)}
+              </TextCustom>
             </Grid.Col>
           </Grid>
         </View>
