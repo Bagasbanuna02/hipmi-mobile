@@ -10,10 +10,12 @@ import { View } from "react-native";
 
 export default function Invesment_BoxDetailDataSection({
   title,
+  imageId,
   data,
   bottomSection,
 }: {
   title?: string;
+  imageId?: string;
   data: any;
   bottomSection?: React.ReactNode;
 }) {
@@ -21,14 +23,14 @@ export default function Invesment_BoxDetailDataSection({
     <>
       <BaseBox paddingBottom={0}>
         <StackCustom gap={"xs"}>
-          <DummyLandscapeImage />
+          <DummyLandscapeImage imageId={imageId} />
           <Spacing />
           <TextCustom align="center" size="xlarge" bold>
             {title || "Judul Investasi"}
           </TextCustom>
           <Spacing />
 
-          {data.map((item: any, index: any) => (
+          {data?.map((item: any, index: any) => (
             <Grid key={index}>
               <Grid.Col span={4}>
                 <TextCustom bold>{item.label}</TextCustom>

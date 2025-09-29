@@ -1,22 +1,54 @@
 import { AlertDefaultSystem, ButtonCustom, Grid } from "@/components";
+import {
+  apiInvestmentDelete,
+  apiInvestmentUpdateStatus,
+} from "@/service/api-client/api-investment";
+import { deleteImageService } from "@/service/upload-service";
 import { router } from "expo-router";
+import { useState } from "react";
+import Toast from "react-native-toast-message";
 
 export default function Investment_ButtonStatusSection({
+  id,
   status,
-  buttonPublish
+  buttonPublish,
 }: {
+  id: string;
   status: string;
   buttonPublish?: React.ReactNode;
 }) {
+  const [isLoading, setIsLoading] = useState(false);
   const handleBatalkanReview = () => {
     AlertDefaultSystem({
       title: "Batalkan Review",
       message: "Apakah Anda yakin ingin batalkan review ini?",
       textLeft: "Batal",
       textRight: "Ya",
-      onPressRight: () => {
-        console.log("Hapus");
-        router.back();
+      onPressRight: async () => {
+        try {
+          setIsLoading(true);
+          const response = await apiInvestmentUpdateStatus({
+            id: id as string,
+            status: "draft",
+          });
+          console.log("[RESPONSE]", JSON.stringify(response, null, 2));
+          if (response.success) {
+            Toast.show({
+              type: "success",
+              text1: "Berhasil Batalkan Review",
+            });
+            router.back();
+          } else {
+            Toast.show({
+              type: "error",
+              text1: "Gagal Batalkan Review",
+            });
+          }
+        } catch (error) {
+          console.log("[ERROR]", error);
+        } finally {
+          setIsLoading(false);
+        }
       },
     });
   };
@@ -27,9 +59,31 @@ export default function Investment_ButtonStatusSection({
       message: "Apakah Anda yakin ingin ajukan review ini?",
       textLeft: "Batal",
       textRight: "Ya",
-      onPressRight: () => {
-        console.log("Hapus");
-        router.back();
+      onPressRight: async () => {
+        try {
+          setIsLoading(true);
+          const response = await apiInvestmentUpdateStatus({
+            id: id as string,
+            status: "review",
+          });
+          console.log("[RESPONSE]", JSON.stringify(response, null, 2));
+          if (response.success) {
+            Toast.show({
+              type: "success",
+              text1: "Berhasil Ajukan Review",
+            });
+            router.back();
+          } else {
+            Toast.show({
+              type: "error",
+              text1: "Gagal Ajukan Review",
+            });
+          }
+        } catch (error) {
+          console.log("[ERROR]", error);
+        } finally {
+          setIsLoading(false);
+        }
       },
     });
   };
@@ -40,9 +94,31 @@ export default function Investment_ButtonStatusSection({
       message: "Apakah Anda yakin ingin edit kembali ini?",
       textLeft: "Batal",
       textRight: "Ya",
-      onPressRight: () => {
-        console.log("Hapus");
-        router.back();
+      onPressRight: async () => {
+        try {
+          setIsLoading(true);
+          const response = await apiInvestmentUpdateStatus({
+            id: id as string,
+            status: "draft",
+          });
+          console.log("[RESPONSE]", JSON.stringify(response, null, 2));
+          if (response.success) {
+            Toast.show({
+              type: "success",
+              text1: "Berhasil Update Status",
+            });
+            router.back();
+          } else {
+            Toast.show({
+              type: "error",
+              text1: "Gagal Update Status",
+            });
+          }
+        } catch (error) {
+          console.log("[ERROR]", error);
+        } finally {
+          setIsLoading(false);
+        }
       },
     });
   };
@@ -53,9 +129,55 @@ export default function Investment_ButtonStatusSection({
       message: "Apakah Anda yakin ingin menghapus data ini?",
       textLeft: "Batal",
       textRight: "Hapus",
-      onPressRight: () => {
-        console.log("Hapus");
-        router.back();
+      onPressRight: async () => {
+        try {
+          setIsLoading(true);
+          const response = await apiInvestmentDelete({
+            id: id as string,
+          });
+
+          console.log("[RESPONSE]", JSON.stringify(response, null, 2));
+          if (response.success) {
+            const deleteImage = await deleteImageService({
+              id: response?.data?.imageId as string,
+            });
+
+            if (!deleteImage.success) {
+              Toast.show({
+                type: "error",
+                text1: "Gagal Hapus Data",
+              });
+              return;
+            }
+
+            const deleteFile = await deleteImageService({
+              id: response?.data?.prospektusFileId as string,
+            });
+
+            if (!deleteFile.success) {
+              Toast.show({
+                type: "error",
+                text1: "Gagal Hapus Data",
+              });
+              return;
+            }
+
+            Toast.show({
+              type: "success",
+              text1: "Berhasil Hapus Data",
+            });
+            router.back();
+          } else {
+            Toast.show({
+              type: "error",
+              text1: "Gagal Hapus Data",
+            });
+          }
+        } catch (error) {
+          console.log("[ERROR]", error);
+        } finally {
+          setIsLoading(false);
+        }
       },
     });
   };
@@ -64,6 +186,7 @@ export default function Investment_ButtonStatusSection({
     return (
       <>
         <ButtonCustom
+          isLoading={isLoading}
           backgroundColor="red"
           textColor="white"
           onPress={handleOpenDeleteAlert}
@@ -76,13 +199,11 @@ export default function Investment_ButtonStatusSection({
 
   switch (status) {
     case "publish":
-      return <>
-      {buttonPublish}
-      </>;
+      return <>{buttonPublish}</>;
 
     case "review":
       return (
-        <ButtonCustom onPress={handleBatalkanReview}>
+        <ButtonCustom isLoading={isLoading} onPress={handleBatalkanReview}>
           Batalkan Review
         </ButtonCustom>
       );
@@ -92,7 +213,7 @@ export default function Investment_ButtonStatusSection({
         <>
           <Grid>
             <Grid.Col span={6} style={{ paddingRight: 10 }}>
-              <ButtonCustom onPress={handleAjukanReview}>
+              <ButtonCustom isLoading={isLoading} onPress={handleAjukanReview}>
                 Ajukan Review
               </ButtonCustom>
             </Grid.Col>
@@ -108,7 +229,7 @@ export default function Investment_ButtonStatusSection({
         <>
           <Grid>
             <Grid.Col span={6} style={{ paddingRight: 10 }}>
-              <ButtonCustom onPress={handleEditKembali}>
+              <ButtonCustom isLoading={isLoading} onPress={handleEditKembali}>
                 Edit Kembali
               </ButtonCustom>
             </Grid.Col>

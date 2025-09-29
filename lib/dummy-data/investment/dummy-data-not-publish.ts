@@ -1,71 +1,73 @@
-export  {listDataNotPublishInvesment, listDataPublishInvesment};
+import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
 
-const listDataNotPublishInvesment = [
+export { listDataNotPublishInvesment, listDataPublishInvesment };
+
+const listDataNotPublishInvesment = ({ data }: { data: any }) => [
   {
     label: "Target Dana",
-    value: "Rp. 7.500.000",
+    value: `Rp. ${formatCurrencyDisplay(data?.targetDana) || "-"}`,
   },
   {
     label: "Harga Per Lembar",
-    value: "Rp. 2.400",
+    value: `Rp. ${formatCurrencyDisplay(data?.hargaLembar) || "-"}`,
   },
   {
     label: "Return Of Investment (ROI)",
-    value: "3 %",
+    value: `${data?.roi || "-"} %`,
   },
   {
     label: "Total Lembar",
-    value: "1.200",
-  },
-  {
-    label: "Jadwal Pembagian",
-    value: "Rp. 2.880.000",
-  },
-  {
-    label: "Pembagian Deviden",
-    value: "Selamanya",
+    value: data?.totalLembar || "-",
   },
   {
     label: "Pencarian Investor",
-    value: "30 Hari",
+    value: data && data?.MasterPencarianInvestor?.name + " hari" || "-",
+  },
+  {
+    label: "Jadwal Pembagian",
+    value: data && data?.MasterPembagianDeviden?.name + " bulan" || "-",
+  },
+  {
+    label: "Pembagian Deviden",
+    value: data?.MasterPeriodeDeviden?.name || "-",
   },
 ];
 
-const listDataPublishInvesment = [
+const listDataPublishInvesment = ({ data }: { data: any }) => [
   {
     label: "Investor",
-    value: "10",
+    value: data?.investor,
   },
   {
     label: "Target Dana",
-    value: "Rp. 7.500.000",
+    value: data?.targetDana,
   },
   {
     label: "Harga Per Lembar",
-    value: "Rp. 2.400",
+    value: data?.hargaPerLembar,
   },
   {
     label: "Return Of Investment (ROI)",
-    value: "3 %",
+    value: data?.roi + " %",
   },
   {
     label: "Total Lembar",
-    value: "1.200",
+    value: data?.totalLembar,
   },
   {
     label: "Sisa Lembar",
-    value: "600",
+    value: data?.sisaLembar,
   },
   {
     label: "Jadwal Pembagian",
-    value: "Rp. 2.880.000",
+    value: data?.jadwalPembagian,
   },
   {
     label: "Pembagian Deviden",
-    value: "Selamanya",
+    value: data?.pembagianDeviden,
   },
   {
     label: "Pencarian Investor",
-    value: "30 Hari",
+    value: data?.pencarianInvestor,
   },
 ];

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   BackButton,
   DotButton,
@@ -12,15 +13,41 @@ import { ICON_SIZE_MEDIUM } from "@/constants/constans-value";
 import Investment_ButtonInvestasiSection from "@/screens/Invesment/ButtonInvestasiSection";
 import Invesment_ComponentBoxOnBottomDetail from "@/screens/Invesment/ComponentBoxOnBottomDetail";
 import Invesment_DetailDataPublishSection from "@/screens/Invesment/DetailDataPublishSection";
+import { apiInvestmentGetById } from "@/service/api-client/api-investment";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
-import { router, Stack, useLocalSearchParams } from "expo-router";
+import {
+  router,
+  Stack,
+  useFocusEffect,
+  useLocalSearchParams,
+} from "expo-router";
 import _ from "lodash";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export default function InvestmentDetailStatus() {
   const { id, status } = useLocalSearchParams();
   const [openDrawerDraft, setOpenDrawerDraft] = useState(false);
   const [openDrawerPublish, setOpenDrawerPublish] = useState(false);
+
+  const [data, setData] = useState<any>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [id, status])
+  );
+
+  const onLoadData = async () => {
+    try {
+      const response = await apiInvestmentGetById({
+        id: id as string,
+      });
+      // console.log("[DATA]", JSON.stringify(response.data, null, 2));
+      setData(response.data);
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  };
 
   const handlePressDraft = (item: IMenuDrawerItem) => {
     console.log("PATH >> ", item.path);
@@ -63,6 +90,7 @@ export default function InvestmentDetailStatus() {
       <ViewWrapper>
         <Invesment_DetailDataPublishSection
           status={status as string}
+          data={data}
           bottomSection={bottomSection}
           buttonSection={buttonSection}
         />

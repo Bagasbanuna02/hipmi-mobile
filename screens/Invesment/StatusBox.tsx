@@ -1,44 +1,43 @@
 import { BaseBox, Grid, Spacing, TextCustom } from "@/components";
+import API_IMAGE from "@/constants/api-storage";
 import DUMMY_IMAGE from "@/constants/dummy-image-value";
+import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
 import { Image } from "expo-image";
 import { Href } from "expo-router";
 import { View } from "react-native";
 
 interface Investment_StatusBoxProps {
-  id: string;
+  data: any;
   status: string;
-  href?: Href
+  href?: Href;
 }
 
 export default function Investment_StatusBox({
-  id,
+  data,
   status,
-  href
+  href,
 }: Investment_StatusBoxProps) {
   return (
     <BaseBox paddingTop={7} paddingBottom={7} href={href}>
       <Grid>
         <Grid.Col span={6}>
-          <TextCustom truncate={2}>
-            Title here : {status} Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Omnis, exercitationem, sequi enim quod distinctio
-            maiores laudantium amet, quidem atque repellat sit vitae qui aliquam
-            est veritatis laborum eum voluptatum totam!
-          </TextCustom>
+          <TextCustom truncate={2}>{data?.title || ""}</TextCustom>
 
           <Spacing />
 
           <TextCustom bold size="small">
             Target Dana:
           </TextCustom>
-          <TextCustom>Rp. 7.500.000</TextCustom>
+          <TextCustom truncate>
+            Rp. {formatCurrencyDisplay(data?.targetDana) || ""}
+          </TextCustom>
         </Grid.Col>
         <Grid.Col span={1}>
           <View />
         </Grid.Col>
         <Grid.Col span={5}>
           <Image
-            source={DUMMY_IMAGE.background}
+            source={API_IMAGE.GET({ fileId: data?.imageId })}
             style={{ width: "auto", height: 100, borderRadius: 10 }}
           />
         </Grid.Col>
