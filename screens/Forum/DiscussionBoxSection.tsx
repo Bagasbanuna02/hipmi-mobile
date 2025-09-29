@@ -55,7 +55,7 @@ export default function Forum_BoxDetailSection({
             <Grid.Col span={2}>
               <AvatarComp
                 fileId={data?.Author?.Profile?.imageId}
-                href={`/profile/${data?.Author?.Profile?.id}`}
+                href={`/forum/${data?.Author?.id}/forumku`}
                 size={"base"}
               />
             </Grid.Col>

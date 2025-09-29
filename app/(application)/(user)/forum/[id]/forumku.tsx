@@ -1,25 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  AlertCustom,
   AvatarComp,
-  AvatarCustom,
   ButtonCustom,
   CenterCustom,
   DrawerCustom,
+  FloatingButton,
   Grid,
   LoaderCustom,
   StackCustom,
   TextCustom,
   ViewWrapper,
 } from "@/components";
-import { MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
 import Forum_BoxDetailSection from "@/screens/Forum/DiscussionBoxSection";
-import { listDummyDiscussionForum } from "@/screens/Forum/list-data-dummy";
 import Forum_MenuDrawerBerandaSection from "@/screens/Forum/MenuDrawerSection.tsx/MenuBeranda";
 import { apiForumGetAll } from "@/service/api-client/api-forum";
 import { apiUser } from "@/service/api-client/api-user";
-import { useFocusEffect, useLocalSearchParams } from "expo-router";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import { useCallback, useState } from "react";
 
@@ -28,9 +25,6 @@ export default function Forumku() {
   const { user } = useAuth();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [status, setStatus] = useState("");
-  const [alertStatus, setAlertStatus] = useState(false);
-  const [deleteAlert, setDeleteAlert] = useState(false);
-
   const [listData, setListData] = useState<any | null>(null);
   const [dataUser, setDataUser] = useState<any | null>(null);
   const [loadingGetList, setLoadingGetList] = useState(false);
@@ -38,8 +32,8 @@ export default function Forumku() {
   useFocusEffect(
     useCallback(() => {
       onLoadData();
-      onLoadDataProfile(user?.id as string);
-    }, [user?.id])
+      onLoadDataProfile(id as string);
+    }, [id])
   );
 
   const onLoadDataProfile = async (id: string) => {
@@ -71,7 +65,17 @@ export default function Forumku() {
 
   return (
     <>
-      <ViewWrapper>
+      <ViewWrapper
+        floatingButton={
+          user?.id === id && (
+            <FloatingButton
+              onPress={() =>
+                router.navigate("/(application)/(user)/forum/create")
+              }
+            />
+          )
+        }
+      >
         <StackCustom>
           <CenterCustom>
             <AvatarComp
