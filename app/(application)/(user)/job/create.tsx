@@ -12,7 +12,7 @@ import {
 import DIRECTORY_ID from "@/constants/directory-id";
 import { useAuth } from "@/hooks/use-auth";
 import { apiJobCreate } from "@/service/api-client/api-job";
-import { uploadImageService } from "@/service/upload-service";
+import { uploadFileService } from "@/service/upload-service";
 import pickImage from "@/utils/pickImage";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -66,7 +66,7 @@ export default function JobCreate() {
         return;
       }
 
-      const responseUploadImage = await uploadImageService({
+      const responseUploadImage = await uploadFileService({
         imageUri: image,
         dirId: DIRECTORY_ID.job_image,
       });

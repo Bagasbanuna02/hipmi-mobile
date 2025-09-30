@@ -1,12 +1,12 @@
 import {
-  BaseBox,
-  ButtonCenteredOnly,
-  ButtonCustom,
-  SelectCustom,
-  Spacing,
-  StackCustom,
-  TextInputCustom,
-  ViewWrapper,
+    BaseBox,
+    ButtonCenteredOnly,
+    ButtonCustom,
+    SelectCustom,
+    Spacing,
+    StackCustom,
+    TextInputCustom,
+    ViewWrapper,
 } from "@/components";
 import BoxButtonOnFooter from "@/components/Box/BoxButtonOnFooter";
 import InformationBox from "@/components/Box/InformationBox";
@@ -15,7 +15,7 @@ import DUMMY_IMAGE from "@/constants/dummy-image-value";
 import { useAuth } from "@/hooks/use-auth";
 import { apiCreateProfile } from "@/service/api-client/api-profile";
 import { apiValidationEmail } from "@/service/api-client/api-validation";
-import { uploadImageService } from "@/service/upload-service";
+import { uploadFileService } from "@/service/upload-service";
 import pickImage from "@/utils/pickImage";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -69,7 +69,7 @@ export default function CreateProfile() {
 
       if (imagePhoto) {
         try {
-          const responseUploadPhoto = await uploadImageService({
+          const responseUploadPhoto = await uploadFileService({
             imageUri: imagePhoto,
             dirId: DIRECTORY_ID.profile_foto,
           });
@@ -90,7 +90,7 @@ export default function CreateProfile() {
 
       if (imageBackground) {
         try {
-          const responseUploadBackground = await uploadImageService({
+          const responseUploadBackground = await uploadFileService({
             imageUri: imageBackground,
             dirId: DIRECTORY_ID.profile_background,
           });

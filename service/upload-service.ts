@@ -2,9 +2,9 @@ import { API_BASE_URL } from "@/service/api-config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { apiFileDelete, apiFileUpload } from "./api-client/api-file";
 
-export async function uploadImageService({
+export async function uploadFileService({
   dirId,
-  imageUri,
+  imageUri: fileUri,
 }: {
   dirId: string;
   imageUri: string | null;
@@ -14,12 +14,12 @@ export async function uploadImageService({
 
   console.log("url >>", url);
 
-  if (!imageUri) {
+  if (!fileUri) {
     throw new Error("Harap pilih gambar terlebih dahulu");
   }
 
   try {
-    const uri = imageUri;
+    const uri = fileUri;
     const filename = uri.split("/").pop();
     const match = /\.(\w+)$/.exec(filename || "");
     const type = match ? `image/${match[1]}` : "image";
@@ -50,7 +50,7 @@ export async function uploadImageService({
   }
 }
 
-export async function deleteImageService({ id }: { id: string }) {
+export async function deleteFileService({ id }: { id: string }) {
   const token = await AsyncStorage.getItem("authToken");
 
   try {

@@ -18,7 +18,7 @@ import DIRECTORY_ID from "@/constants/directory-id";
 import { useAuth } from "@/hooks/use-auth";
 import { apiInvestmentCreate } from "@/service/api-client/api-investment";
 import { apiMasterInvestment } from "@/service/api-client/api-master";
-import { uploadImageService } from "@/service/upload-service";
+import { uploadFileService } from "@/service/upload-service";
 import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
 import pickFile, { IFileData } from "@/utils/pickFile";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -118,7 +118,7 @@ export default function InvestmentCreate() {
 
     try {
       setIsLoading(true);
-      const responseUploadImage = await uploadImageService({
+      const responseUploadImage = await uploadFileService({
         imageUri: image,
         dirId: DIRECTORY_ID.investasi_image,
       });
@@ -132,7 +132,7 @@ export default function InvestmentCreate() {
       }
 
       const imageId = responseUploadImage.data.id;
-      const responseUploadPdf = await uploadImageService({
+      const responseUploadPdf = await uploadFileService({
         imageUri: pdf.uri,
         dirId: DIRECTORY_ID.investasi_prospektus,
       });
@@ -161,7 +161,7 @@ export default function InvestmentCreate() {
       };
 
       const response = await apiInvestmentCreate({ data: newData });
-      console.log("[RESPONSE]", JSON.stringify(response, null, 2));
+
       if (response.success) {
         Toast.show({
           type: "success",
@@ -194,7 +194,6 @@ export default function InvestmentCreate() {
           onPress={() => {
             pickFile({
               setImageUri: ({ uri }) => {
-                console.log("URI IMAGE", uri);
                 setImage(uri);
               },
               allowedType: "image",
@@ -226,7 +225,7 @@ export default function InvestmentCreate() {
           onPress={() => {
             pickFile({
               setPdfUri: ({ uri, name, size }) => {
-                console.log("URI PDF", JSON.stringify(uri, null, 2));
+
                 setPdf({ uri, name, size });
               },
               allowedType: "pdf",

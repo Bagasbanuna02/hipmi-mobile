@@ -3,7 +3,7 @@ import {
   apiInvestmentDelete,
   apiInvestmentUpdateStatus,
 } from "@/service/api-client/api-investment";
-import { deleteImageService } from "@/service/upload-service";
+import { deleteFileService } from "@/service/upload-service";
 import { router } from "expo-router";
 import { useState } from "react";
 import Toast from "react-native-toast-message";
@@ -138,7 +138,7 @@ export default function Investment_ButtonStatusSection({
 
           console.log("[RESPONSE]", JSON.stringify(response, null, 2));
           if (response.success) {
-            const deleteImage = await deleteImageService({
+            const deleteImage = await deleteFileService({
               id: response?.data?.imageId as string,
             });
 
@@ -150,7 +150,7 @@ export default function Investment_ButtonStatusSection({
               return;
             }
 
-            const deleteFile = await deleteImageService({
+            const deleteFile = await deleteFileService({
               id: response?.data?.prospektusFileId as string,
             });
 

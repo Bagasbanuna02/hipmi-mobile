@@ -19,8 +19,8 @@ import {
 } from "@/service/api-client/api-investment";
 import { apiMasterInvestment } from "@/service/api-client/api-master";
 import {
-  deleteImageService,
-  uploadImageService,
+  deleteFileService,
+  uploadFileService,
 } from "@/service/upload-service";
 import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
 import pickFile from "@/utils/pickFile";
@@ -93,7 +93,6 @@ export default function InvestmentEdit() {
       const response = await apiInvestmentGetById({
         id: id as string,
       });
-      // console.log("[DATA]", JSON.stringify(response.data, null, 2));
       setData(response.data);
     } catch (error) {
       console.log("[ERROR]", error);
@@ -145,7 +144,7 @@ export default function InvestmentEdit() {
       setIsLoading(true);
 
       if (image) {
-        const responseUploadImage = await uploadImageService({
+        const responseUploadImage = await uploadFileService({
           imageUri: image,
           dirId: DIRECTORY_ID.investasi_image,
         });
@@ -158,7 +157,7 @@ export default function InvestmentEdit() {
           return;
         }
 
-        const deletePrevImage = await deleteImageService({
+        const deletePrevImage = await deleteFileService({
           id: data?.imageId as any,
         });
 
@@ -179,12 +178,8 @@ export default function InvestmentEdit() {
       const responseUpdate = await apiInvestmentUpdateData({
         id: id as string,
         data: newData,
+        category: "data"
       });
-
-      console.log(
-        "[RESPONSE UPDATE]",
-        JSON.parse(JSON.stringify(responseUpdate))
-      );
 
       if (responseUpdate.success) {
         Toast.show({
@@ -219,7 +214,6 @@ export default function InvestmentEdit() {
           onPress={() => {
             pickFile({
               setImageUri: ({ uri }) => {
-                console.log("URI IMAGE", uri);
                 setImage(uri);
               },
               allowedType: "image",

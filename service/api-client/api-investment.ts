@@ -44,7 +44,7 @@ export async function apiInvestmentUpdateStatus({
   id: string;
   status: "publish" | "draft" | "review" | "reject";
 }) {
-  console.log("[DATA FETCH]", JSON.stringify({ id, status }, null, 2));
+
   try {
     const response = await apiConfig.put(`/mobile/investment/${id}/${status}`);
     return response.data;
@@ -65,12 +65,15 @@ export async function apiInvestmentDelete({ id }: { id: string }) {
 export async function apiInvestmentUpdateData({
   id,
   data,
+  category,
 }: {
   id: string;
   data: any;
+  category: "data" | "prospectus";
 }) {
+
   try {
-    const response = await apiConfig.put(`/mobile/investment/${id}`, {
+    const response = await apiConfig.put(`/mobile/investment/${id}?category=${category}`, {
       data: data,
     });
     return response.data;

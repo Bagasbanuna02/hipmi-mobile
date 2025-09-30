@@ -8,16 +8,16 @@ import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import API_STRORAGE from "@/constants/base-url-api-strorage";
 import DIRECTORY_ID from "@/constants/directory-id";
 import DUMMY_IMAGE from "@/constants/dummy-image-value";
+import { useAuth } from "@/hooks/use-auth";
+import { apiFileDelete } from "@/service/api-client/api-file";
 import { apiProfile, apiUpdateProfile } from "@/service/api-client/api-profile";
-import { uploadImageService } from "@/service/upload-service";
+import { uploadFileService } from "@/service/upload-service";
 import { IProfile } from "@/types/Type-Profile";
 import pickImage from "@/utils/pickImage";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
 import { Image } from "react-native";
 import Toast from "react-native-toast-message";
-import { useAuth } from "@/hooks/use-auth";
-import { apiFileDelete } from "@/service/api-client/api-file";
 
 export default function UpdatePhotoProfile() {
   const { id } = useLocalSearchParams();
@@ -46,7 +46,7 @@ export default function UpdatePhotoProfile() {
     try {
       setIsLoading(true);
 
-      const response = await uploadImageService({
+      const response = await uploadFileService({
         imageUri,
         dirId: DIRECTORY_ID.profile_foto,
       });

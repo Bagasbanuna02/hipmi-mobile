@@ -1,8 +1,8 @@
 import {
-  BaseBox,
-  BoxButtonOnFooter,
-  ButtonCenteredOnly,
-  ButtonCustom,
+    BaseBox,
+    BoxButtonOnFooter,
+    ButtonCenteredOnly,
+    ButtonCustom,
 } from "@/components";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import API_STRORAGE from "@/constants/base-url-api-strorage";
@@ -11,7 +11,7 @@ import DUMMY_IMAGE from "@/constants/dummy-image-value";
 import { useAuth } from "@/hooks/use-auth";
 import { apiFileDelete } from "@/service/api-client/api-file";
 import { apiProfile, apiUpdateProfile } from "@/service/api-client/api-profile";
-import { uploadImageService } from "@/service/upload-service";
+import { uploadFileService } from "@/service/upload-service";
 import { IProfile } from "@/types/Type-Profile";
 import pickImage from "@/utils/pickImage";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
@@ -45,7 +45,7 @@ export default function UpdateBackgroundProfile() {
     try {
       setIsLoading(true);
 
-      const response = await uploadImageService({
+      const response = await uploadFileService({
         imageUri,
         dirId: DIRECTORY_ID.profile_background,
       });

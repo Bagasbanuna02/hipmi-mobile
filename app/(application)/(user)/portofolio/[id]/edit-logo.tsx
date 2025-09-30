@@ -1,9 +1,9 @@
 import {
-  BaseBox,
-  BoxButtonOnFooter,
-  ButtonCenteredOnly,
-  ButtonCustom,
-  ViewWrapper
+    BaseBox,
+    BoxButtonOnFooter,
+    ButtonCenteredOnly,
+    ButtonCustom,
+    ViewWrapper
 } from "@/components";
 import API_STRORAGE from "@/constants/base-url-api-strorage";
 import DIRECTORY_ID from "@/constants/directory-id";
@@ -11,10 +11,10 @@ import DUMMY_IMAGE from "@/constants/dummy-image-value";
 import { useAuth } from "@/hooks/use-auth";
 import { apiFileDelete } from "@/service/api-client/api-file";
 import {
-  apiGetOnePortofolio,
-  apiUpdatePortofolio,
+    apiGetOnePortofolio,
+    apiUpdatePortofolio,
 } from "@/service/api-client/api-portofolio";
-import { uploadImageService } from "@/service/upload-service";
+import { uploadFileService } from "@/service/upload-service";
 import pickImage from "@/utils/pickImage";
 import { Image } from "expo-image";
 import { router, useLocalSearchParams } from "expo-router";
@@ -45,7 +45,7 @@ export default function PortofolioEditLogo() {
     try {
       setIsLoading(true);
 
-      const response = await uploadImageService({
+      const response = await uploadFileService({
         imageUri,
         dirId: DIRECTORY_ID.portofolio_logo,
       });

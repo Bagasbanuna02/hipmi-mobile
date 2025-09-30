@@ -1,7 +1,7 @@
 import { BoxButtonOnFooter, ButtonCustom } from "@/components";
 import DIRECTORY_ID from "@/constants/directory-id";
 import { apiPortofolioCreate } from "@/service/api-client/api-portofolio";
-import { uploadImageService } from "@/service/upload-service";
+import { uploadFileService } from "@/service/upload-service";
 import { router } from "expo-router";
 import Toast from "react-native-toast-message";
 
@@ -72,7 +72,7 @@ export default function Portofolio_ButtonCreate({
       setIsLoadingCreate(true);
       let fileId = "";
       if (imageUri) {
-        const response = await uploadImageService({
+        const response = await uploadFileService({
           imageUri: imageUri,
           dirId: DIRECTORY_ID.portofolio_logo,
         });

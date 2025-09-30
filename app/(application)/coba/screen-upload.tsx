@@ -1,13 +1,13 @@
 import {
-  AvatarCustom,
-  BoxButtonOnFooter,
-  ButtonCustom,
-  StackCustom,
-  ViewWrapper,
+    AvatarCustom,
+    BoxButtonOnFooter,
+    ButtonCustom,
+    StackCustom,
+    ViewWrapper,
 } from "@/components";
 import DIRECTORY_ID from "@/constants/directory-id";
 import DUMMY_IMAGE from "@/constants/dummy-image-value";
-import { uploadImageService } from "@/service/upload-service";
+import { uploadFileService } from "@/service/upload-service";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -21,7 +21,7 @@ export default function ScreenUpload() {
   async function onUpload() {
     setIsLoading(true);
     try {
-      const response = await uploadImageService({
+      const response = await uploadFileService({
         imageUri,
         dirId: DIRECTORY_ID.profile_foto,
       });

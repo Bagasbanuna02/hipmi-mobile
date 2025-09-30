@@ -42,7 +42,7 @@ export default function InvestmentDetailStatus() {
       const response = await apiInvestmentGetById({
         id: id as string,
       });
-      // console.log("[DATA]", JSON.stringify(response.data, null, 2));
+
       setData(response.data);
     } catch (error) {
       console.log("[ERROR]", error);
@@ -63,7 +63,8 @@ export default function InvestmentDetailStatus() {
 
   const bottomSection = (
     <Invesment_ComponentBoxOnBottomDetail
-      id={id as string}
+      id={data?.id}
+      prospectusId={data?.prospektusFileId}
       status={status as string}
     />
   );

@@ -10,15 +10,18 @@ interface ButtonCenteredOnlyProps {
   icon?: "plus" | "upload" | string;
   onPress: () => void;
   isLoading?: boolean;
+  disabled?: boolean;
 }
 export default function ButtonCenteredOnly({
   onPress,
   children,
   icon = "plus",
   isLoading = false,
+  disabled = false,
 }: ButtonCenteredOnlyProps) {
   return (
     <ButtonCustom
+      disabled={disabled}
       isLoading={isLoading}
       onPress={onPress}
       iconLeft={

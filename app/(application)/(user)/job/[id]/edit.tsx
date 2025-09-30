@@ -1,23 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  BaseBox,
-  ButtonCenteredOnly,
-  ButtonCustom,
-  DummyLandscapeImage,
-  InformationBox,
-  LandscapeFrameUploaded,
-  LoaderCustom,
-  Spacing,
-  StackCustom,
-  TextAreaCustom,
-  TextInputCustom,
-  ViewWrapper,
+    BaseBox,
+    ButtonCenteredOnly,
+    ButtonCustom,
+    DummyLandscapeImage,
+    InformationBox,
+    LandscapeFrameUploaded,
+    LoaderCustom,
+    Spacing,
+    StackCustom,
+    TextAreaCustom,
+    TextInputCustom,
+    ViewWrapper,
 } from "@/components";
 import DIRECTORY_ID from "@/constants/directory-id";
 import { apiJobGetOne, apiJobUpdateData } from "@/service/api-client/api-job";
 import {
-  deleteImageService,
-  uploadImageService,
+    deleteFileService,
+    uploadFileService,
 } from "@/service/upload-service";
 import pickImage from "@/utils/pickImage";
 import { router, useLocalSearchParams } from "expo-router";
@@ -69,7 +69,7 @@ export default function JobEdit() {
       let newImageId = "";
 
       if (imageUri) {
-        const responseUploadImage = await uploadImageService({
+        const responseUploadImage = await uploadFileService({
           imageUri: imageUri,
           dirId: DIRECTORY_ID.job_image,
         });
@@ -80,7 +80,7 @@ export default function JobEdit() {
       }
 
       if (data?.imageId) {
-        const responseDeleteImage = await deleteImageService({
+        const responseDeleteImage = await deleteFileService({
           id: data.imageId,
         });
 
