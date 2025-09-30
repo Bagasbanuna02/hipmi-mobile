@@ -1,5 +1,6 @@
 import { apiConfig } from "../api-config";
 
+// ================== START MASTER PORTFOLIO ================== //
 export async function apiMasterBidangBisnis() {
   try {
     const response = await apiConfig.get(`/master/bidang-bisnis`);
@@ -21,6 +22,10 @@ export async function apiMasterSubBidangBisnis({ id }: { id?: string }) {
   }
 }
 
+// ================== END MASTER PORTFOLIO ================== //
+
+// ================== START MASTER EVENT ================== //
+
 export async function apiMasterEventType() {
   try {
     const response = await apiConfig.get(`/mobile/master/event-type`);
@@ -29,6 +34,10 @@ export async function apiMasterEventType() {
     throw error;
   }
 }
+
+// ================== END MASTER EVENT ================== //
+
+// ================== START MASTER COLLABORATION ================== //
 
 export async function apiMasterCollaborationType() {
   try {
@@ -41,6 +50,10 @@ export async function apiMasterCollaborationType() {
   }
 }
 
+// ================== END MASTER COLLABORATION ================== //
+
+// ================== START MASTER FORUM ================== //
+
 export async function apiMasterForumReportList() {
   try {
     const response = await apiConfig.get(`/mobile/master/forum-report`);
@@ -50,6 +63,8 @@ export async function apiMasterForumReportList() {
   }
 }
 
+// ================== END MASTER FORUM ================== //
+
 export async function apiForumCreateReportPosting({
   id,
   data,
@@ -58,9 +73,12 @@ export async function apiForumCreateReportPosting({
   data: any;
 }) {
   try {
-    const response = await apiConfig.post(`/mobile/forum/${id}/report-posting`, {
-      data: data,
-    });
+    const response = await apiConfig.post(
+      `/mobile/forum/${id}/report-posting`,
+      {
+        data: data,
+      }
+    );
     return response.data;
   } catch (error) {
     throw error;
@@ -75,12 +93,32 @@ export async function apiForumCreateReportCommentar({
   data: any;
 }) {
   try {
-    const response = await apiConfig.post(`/mobile/forum/${id}/report-commentar`, {
-      data: data,
-    });
+    const response = await apiConfig.post(
+      `/mobile/forum/${id}/report-commentar`,
+      {
+        data: data,
+      }
+    );
     return response.data;
   } catch (error) {
     throw error;
   }
 }
-  
+
+// ================== START MASTER INVESTMENT ================== //
+
+export async function apiMasterInvestment({
+  category,
+}: {
+  category?: "pencarian-investor" | "periode-deviden" | "pembagian-deviden" | string;
+}) {
+  const selectCategory = category ? `?category=${category}` : "";
+  try {
+    const response = await apiConfig.get(
+      `/mobile/master/investment${selectCategory}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

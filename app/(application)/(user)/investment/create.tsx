@@ -5,6 +5,7 @@ import {
   CenterCustom,
   InformationBox,
   LandscapeFrameUploaded,
+  LoaderCustom,
   SelectCustom,
   Spacing,
   StackCustom,
@@ -15,16 +16,15 @@ import {
 import { MainColor } from "@/constants/color-palet";
 import DIRECTORY_ID from "@/constants/directory-id";
 import { useAuth } from "@/hooks/use-auth";
-import dummyPembagianDeviden from "@/lib/dummy-data/investment/pembagian-deviden";
-import dummyListPencarianInvestor from "@/lib/dummy-data/investment/pencarian-investor";
-import dummyPeriodeDeviden from "@/lib/dummy-data/investment/periode-deviden";
 import { apiInvestmentCreate } from "@/service/api-client/api-investment";
+import { apiMasterInvestment } from "@/service/api-client/api-master";
 import { uploadImageService } from "@/service/upload-service";
 import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
 import pickFile, { IFileData } from "@/utils/pickFile";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { router } from "expo-router";
-import { useState } from "react";
+import { router, useFocusEffect } from "expo-router";
+import _ from "lodash";
+import { useCallback, useState } from "react";
 import Toast from "react-native-toast-message";
 
 export default function InvestmentCreate() {
@@ -46,6 +46,32 @@ export default function InvestmentCreate() {
   const [pdf, setPdf] = useState<IFileData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [loadingMaster, setLoadingMaster] = useState(false);
+  const [listPencarianInvestor, setListPencarianInvestor] = useState<any[]>([]);
+  const [listPeriodeDeviden, setListPeriodeDeviden] = useState<any[]>([]);
+  const [listPembagianDeviden, setListPembagianDeviden] = useState<any[]>([]);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadMaster();
+    }, [])
+  );
+
+  const onLoadMaster = async () => {
+    try {
+      setLoadingMaster(true);
+      const response = await apiMasterInvestment({ category: "" });
+
+      setListPencarianInvestor(response.data.pencarianInvestor);
+      setListPeriodeDeviden(response.data.periodeDeviden);
+      setListPembagianDeviden(response.data.pembagianDeviden);
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setLoadingMaster(false);
+    }
+  };
+
   const displayTargetDana = formatCurrencyDisplay(data.targetDana);
   const displayHargaPerLembar = formatCurrencyDisplay(data.hargaPerLembar);
   const displayTotalLembar = formatCurrencyDisplay(
@@ -57,15 +83,7 @@ export default function InvestmentCreate() {
     setData((prev) => ({ ...prev, [field]: numeric }));
   };
 
-  const handleSubmit = async () => {
-    if (!image || !pdf) {
-      Toast.show({
-        type: "error",
-        text1: "Harap pilih gambar dan file PDF",
-      });
-      return;
-    }
-
+  const validateData = () => {
     if (
       !data.title ||
       !data.targetDana ||
@@ -78,6 +96,22 @@ export default function InvestmentCreate() {
       Toast.show({
         type: "error",
         text1: "Harap isi semua data",
+      });
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSubmit = async () => {
+    if (!validateData()) {
+      return;
+    }
+
+    if (!image || !pdf) {
+      Toast.show({
+        type: "error",
+        text1: "Harap upload gambar dan file PDF",
       });
       return;
     }
@@ -258,47 +292,72 @@ export default function InvestmentCreate() {
           }
         />
 
-        <SelectCustom
-          required
-          placeholder="Pilih batas waktu"
-          label="Pencarian Investor"
-          data={dummyListPencarianInvestor.map((item) => ({
-            label: item.name + `${" "}hari`,
-            value: item.id,
-          }))}
-          onChange={(value) =>
-            setData({ ...data, pencarianInvestor: value as any })
-          }
-          value={data.pencarianInvestor}
-        />
+        {loadingMaster ? (
+          <LoaderCustom />
+        ) : (
+          <SelectCustom
+            required
+            placeholder="Pilih batas waktu"
+            label="Pencarian Investor"
+            data={
+              _.isEmpty(listPencarianInvestor)
+                ? []
+                : listPencarianInvestor.map((item) => ({
+                    label: item.name + `${" "}hari`,
+                    value: item.id,
+                  }))
+            }
+            onChange={(value) =>
+              setData({ ...data, pencarianInvestor: value as any })
+            }
+            value={data.pencarianInvestor}
+          />
+        )}
 
-        <SelectCustom
-          required
-          placeholder="Pilih batas waktu"
-          label="Pilih Periode Deviden"
-          data={dummyPeriodeDeviden.map((item) => ({
-            label: item.name,
-            value: item.id,
-          }))}
-          onChange={(value) =>
-            setData({ ...data, periodeDeviden: value as any })
-          }
-          value={data.periodeDeviden}
-        />
+        {loadingMaster ? (
+          <LoaderCustom />
+        ) : (
+          <SelectCustom
+            required
+            placeholder="Pilih batas waktu"
+            label="Pilih Periode Deviden"
+            data={
+              _.isEmpty(listPeriodeDeviden)
+                ? []
+                : listPeriodeDeviden.map((item) => ({
+                    label: item.name,
+                    value: item.id,
+                  }))
+            }
+            onChange={(value) =>
+              setData({ ...data, periodeDeviden: value as any })
+            }
+            value={data.periodeDeviden}
+          />
+        )}
 
-        <SelectCustom
-          required
-          placeholder="Pilih batas waktu"
-          label="Pilih Pembagian Deviden"
-          data={dummyPembagianDeviden.map((item) => ({
-            label: item.name + `${" "}bulan`,
-            value: item.id,
-          }))}
-          onChange={(value) =>
-            setData({ ...data, pembagianDeviden: value as any })
-          }
-          value={data.pembagianDeviden}
-        />
+        {loadingMaster ? (
+          <LoaderCustom />
+        ) : (
+          <SelectCustom
+            required
+            placeholder="Pilih batas waktu"
+            label="Pilih Pembagian Deviden"
+            data={
+              _.isEmpty(listPembagianDeviden)
+                ? []
+                : listPembagianDeviden.map((item) => ({
+                    label: item.name + `${" "}bulan`,
+                    value: item.id,
+                  }))
+            }
+            onChange={(value) =>
+              setData({ ...data, pembagianDeviden: value as any })
+            }
+            value={data.pembagianDeviden}
+          />
+        )}
+
         <Spacing />
         <ButtonCustom isLoading={isLoading} onPress={() => handleSubmit()}>
           Simpan

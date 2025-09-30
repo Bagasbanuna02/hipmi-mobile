@@ -4,6 +4,7 @@ import {
   ButtonCustom,
   InformationBox,
   LandscapeFrameUploaded,
+  LoaderCustom,
   SelectCustom,
   Spacing,
   StackCustom,
@@ -12,13 +13,11 @@ import {
 } from "@/components";
 import API_STRORAGE from "@/constants/base-url-api-strorage";
 import DIRECTORY_ID from "@/constants/directory-id";
-import dummyPembagianDeviden from "@/lib/dummy-data/investment/pembagian-deviden";
-import dummyListPencarianInvestor from "@/lib/dummy-data/investment/pencarian-investor";
-import dummyPeriodeDeviden from "@/lib/dummy-data/investment/periode-deviden";
 import {
   apiInvestmentGetById,
   apiInvestmentUpdateData,
 } from "@/service/api-client/api-investment";
+import { apiMasterInvestment } from "@/service/api-client/api-master";
 import {
   deleteImageService,
   uploadImageService,
@@ -26,6 +25,7 @@ import {
 import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
 import pickFile from "@/utils/pickFile";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
+import _ from "lodash";
 import { useCallback, useState } from "react";
 import Toast from "react-native-toast-message";
 
@@ -61,23 +61,32 @@ export default function InvestmentEdit() {
 
   const [image, setImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-
-  const displayTargetDana = formatCurrencyDisplay(data?.targetDana);
-  const displayHargaPerLembar = formatCurrencyDisplay(data?.hargaLembar);
-  const displayTotalLembar = formatCurrencyDisplay(
-    Number(data?.targetDana) / Number(data?.hargaLembar)
-  );
-
-  const handleChangeCurrency = (field: keyof typeof data) => (text: string) => {
-    const numeric = text.replace(/\D/g, "");
-    setData((prev) => ({ ...prev, [field]: numeric }));
-  };
+  const [loadingMaster, setLoadingMaster] = useState(false);
+  const [listPencarianInvestor, setListPencarianInvestor] = useState<any[]>([]);
+  const [listPeriodeDeviden, setListPeriodeDeviden] = useState<any[]>([]);
+  const [listPembagianDeviden, setListPembagianDeviden] = useState<any[]>([]);
 
   useFocusEffect(
     useCallback(() => {
+      onLoadMaster();
       onLoadData();
     }, [id])
   );
+
+  const onLoadMaster = async () => {
+    try {
+      setLoadingMaster(true);
+      const response = await apiMasterInvestment({ category: "" });
+
+      setListPencarianInvestor(response.data.pencarianInvestor);
+      setListPeriodeDeviden(response.data.periodeDeviden);
+      setListPembagianDeviden(response.data.pembagianDeviden);
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setLoadingMaster(false);
+    }
+  };
 
   const onLoadData = async () => {
     try {
@@ -91,25 +100,44 @@ export default function InvestmentEdit() {
     }
   };
 
-  const handleSubmitUpdate = async () => {
-    let newData = {
-      ...data,
-    };
+  const displayTargetDana = formatCurrencyDisplay(data?.targetDana);
+  const displayHargaPerLembar = formatCurrencyDisplay(data?.hargaLembar);
+  const displayTotalLembar = formatCurrencyDisplay(
+    Number(data?.targetDana) / Number(data?.hargaLembar)
+  );
 
+  const handleChangeCurrency = (field: keyof typeof data) => (text: string) => {
+    const numeric = text.replace(/\D/g, "");
+    setData((prev) => ({ ...prev, [field]: numeric }));
+  };
+
+  const validateData = () => {
     if (
-      newData?.title === "" ||
-      newData?.targetDana === "" ||
-      newData?.hargaLembar === "" ||
-      newData?.totalLembar === "" ||
-      newData?.roi === "" ||
-      newData?.masterPencarianInvestorId === "" ||
-      newData?.masterPeriodeDevidenId === "" ||
-      newData?.masterPembagianDevidenId === ""
+      !data.title ||
+      !data.targetDana ||
+      !data.hargaLembar ||
+      !data.totalLembar ||
+      !data.roi ||
+      !data.masterPencarianInvestorId ||
+      !data.masterPeriodeDevidenId ||
+      !data.masterPembagianDevidenId
     ) {
       Toast.show({
         type: "info",
         text1: "Harap isi semua data",
       });
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSubmitUpdate = async () => {
+    let newData = {
+      ...data,
+    };
+
+    if (!validateData()) {
       return;
     }
 
@@ -153,7 +181,10 @@ export default function InvestmentEdit() {
         data: newData,
       });
 
-      console.log("[RESPONSE UPDATE]", JSON.parse(JSON.stringify(responseUpdate)));
+      console.log(
+        "[RESPONSE UPDATE]",
+        JSON.parse(JSON.stringify(responseUpdate))
+      );
 
       if (responseUpdate.success) {
         Toast.show({
@@ -249,47 +280,72 @@ export default function InvestmentEdit() {
           value={data?.roi === "" ? "" : data?.roi}
         />
 
-        <SelectCustom
-          required
-          placeholder="Pilih batas waktu"
-          label="Pencarian Investor"
-          data={dummyListPencarianInvestor.map((item) => ({
-            label: item.name + `${" "}hari`,
-            value: item.id,
-          }))}
-          onChange={(value) =>
-            setData({ ...data, masterPencarianInvestorId: value as any })
-          }
-          value={data.masterPencarianInvestorId}
-        />
+        {loadingMaster ? (
+          <LoaderCustom />
+        ) : (
+          <SelectCustom
+            required
+            placeholder="Pilih batas waktu"
+            label="Pencarian Investor"
+            data={
+              _.isEmpty(listPencarianInvestor)
+                ? []
+                : listPencarianInvestor.map((item) => ({
+                    label: item.name + `${" "}hari`,
+                    value: item.id,
+                  }))
+            }
+            onChange={(value) =>
+              setData({ ...data, masterPencarianInvestorId: value as any })
+            }
+            value={data.masterPencarianInvestorId}
+          />
+        )}
 
-        <SelectCustom
-          required
-          placeholder="Pilih batas waktu"
-          label="Pilih Periode Deviden"
-          data={dummyPeriodeDeviden.map((item) => ({
-            label: item.name,
-            value: item.id,
-          }))}
-          onChange={(value) =>
-            setData({ ...data, masterPeriodeDevidenId: value as any })
-          }
-          value={data.masterPeriodeDevidenId}
-        />
+        {loadingMaster ? (
+          <LoaderCustom />
+        ) : (
+          <SelectCustom
+            required
+            placeholder="Pilih batas waktu"
+            label="Pilih Periode Deviden"
+            data={
+              _.isEmpty(listPeriodeDeviden)
+                ? []
+                : listPeriodeDeviden.map((item) => ({
+                    label: item.name,
+                    value: item.id,
+                  }))
+            }
+            onChange={(value) =>
+              setData({ ...data, masterPeriodeDevidenId: value as any })
+            }
+            value={data.masterPeriodeDevidenId}
+          />
+        )}
 
-        <SelectCustom
-          required
-          placeholder="Pilih batas waktu"
-          label="Pilih Pembagian Deviden"
-          data={dummyPembagianDeviden.map((item) => ({
-            label: item.name + `${" "}bulan`,
-            value: item.id,
-          }))}
-          onChange={(value) =>
-            setData({ ...data, masterPembagianDevidenId: value as any })
-          }
-          value={data.masterPembagianDevidenId}
-        />
+        {loadingMaster ? (
+          <LoaderCustom />
+        ) : (
+          <SelectCustom
+            required
+            placeholder="Pilih batas waktu"
+            label="Pilih Pembagian Deviden"
+            data={
+              _.isEmpty(listPembagianDeviden)
+                ? []
+                : listPembagianDeviden.map((item) => ({
+                    label: item.name + `${" "}bulan`,
+                    value: item.id,
+                  }))
+            }
+            onChange={(value) =>
+              setData({ ...data, masterPembagianDevidenId: value as any })
+            }
+            value={data.masterPembagianDevidenId}
+          />
+        )}
+
         <Spacing />
         <ButtonCustom isLoading={isLoading} onPress={handleSubmitUpdate}>
           Simpan
