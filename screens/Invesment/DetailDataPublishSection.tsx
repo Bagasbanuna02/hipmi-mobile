@@ -19,13 +19,14 @@ export default function Invesment_DetailDataPublishSection({
   bottomSection?: React.ReactNode;
   buttonSection?: React.ReactNode;
 }) {
-  // console.log("[DATA DETAIL]", JSON.stringify(data, null, 2));
+
   return (
     <>
       <StackCustom gap={"sm"}>
-        <Invesment_BoxProgressSection status={status as string} />
+        <Invesment_BoxProgressSection progress={data?.progress} status={status as string} />
         <Invesment_BoxDetailDataSection
           title={data?.title}
+          author={data?.author}
           imageId={data?.imageId}
           data={
             status === "publish"

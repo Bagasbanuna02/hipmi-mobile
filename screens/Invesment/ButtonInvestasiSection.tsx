@@ -8,9 +8,12 @@ export default function Investment_ButtonInvestasiSection({
   id: string;
   isMine: boolean;
 }) {
+  console.log("[IS MINE]", isMine);
   return (
     <>
       {isMine ? (
+        <ButtonCustom disabled>Investasi Ini Milik Anda</ButtonCustom>
+      ) : (
         <ButtonCustom
           onPress={() => {
             router.navigate(`/investment/${id}/(transaction-flow)`);
@@ -18,8 +21,6 @@ export default function Investment_ButtonInvestasiSection({
         >
           Beli Saham
         </ButtonCustom>
-      ) : (
-        <ButtonCustom disabled>Investasi Ini Milik Anda</ButtonCustom>
       )}
     </>
   );

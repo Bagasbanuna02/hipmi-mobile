@@ -14,7 +14,7 @@ import {
 } from "@/components";
 import DIRECTORY_ID from "@/constants/directory-id";
 import {
-  apiInvestmentGetById,
+  apiInvestmentGetOne,
   apiInvestmentUpdateData,
 } from "@/service/api-client/api-investment";
 import { deleteFileService, uploadFileService } from "@/service/upload-service";
@@ -40,7 +40,7 @@ export default function InvestmentEditProspectus() {
   const onLoadData = async () => {
     try {
       setLoadingGet(true);
-      const response = await apiInvestmentGetById({
+      const response = await apiInvestmentGetOne({
         id: id as string,
       });
       setData(response.data);

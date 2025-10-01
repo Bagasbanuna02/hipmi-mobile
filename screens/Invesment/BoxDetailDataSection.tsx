@@ -1,5 +1,7 @@
 import {
+  AvatarUsernameAndOtherComponent,
   BaseBox,
+  BoxWithHeaderSection,
   DummyLandscapeImage,
   Grid,
   Spacing,
@@ -10,19 +12,30 @@ import { View } from "react-native";
 
 export default function Invesment_BoxDetailDataSection({
   title,
+  author,
   imageId,
   data,
   bottomSection,
 }: {
   title?: string;
+  author?: any;
   imageId?: string;
   data: any;
   bottomSection?: React.ReactNode;
 }) {
+
   return (
     <>
-      <BaseBox paddingBottom={0}>
+      <BoxWithHeaderSection>
         <StackCustom gap={"xs"}>
+          {author && (
+            <AvatarUsernameAndOtherComponent
+              avatar={author?.Profile?.imageId}
+              name={author?.username}
+              rightComponent={""}
+              withBottomLine={true}
+            />
+          )}
           <DummyLandscapeImage imageId={imageId} />
           <Spacing />
           <TextCustom align="center" size="xlarge" bold>
@@ -46,7 +59,7 @@ export default function Invesment_BoxDetailDataSection({
           <Spacing />
           {bottomSection}
         </StackCustom>
-      </BaseBox>
+      </BoxWithHeaderSection>
     </>
   );
 }

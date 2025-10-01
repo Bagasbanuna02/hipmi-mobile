@@ -28,7 +28,7 @@ export async function apiInvestmentGetByStatus({
   }
 }
 
-export async function apiInvestmentGetById({ id }: { id: string }) {
+export async function apiInvestmentGetOne({ id }: { id: string }) {
   try {
     const response = await apiConfig.get(`/mobile/investment/${id}`);
     return response.data;
@@ -117,11 +117,7 @@ export async function apiInvestmentGetDocument({
   }
 }
 
-export async function apiInvestmentDeleteDocument({
-  id,
-}: {
-  id: string;
-}) {
+export async function apiInvestmentDeleteDocument({ id }: { id: string }) {
   try {
     const response = await apiConfig.delete(
       `/mobile/investment/${id}/document`
@@ -131,3 +127,13 @@ export async function apiInvestmentDeleteDocument({
     throw error;
   }
 }
+
+export async function apiInvestmentGetAll() {
+  try {
+    const response = await apiConfig.get(`/mobile/investment`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+

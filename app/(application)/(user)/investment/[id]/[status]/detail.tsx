@@ -10,10 +10,11 @@ import { IconDocument, IconEdit, IconNews } from "@/components/_Icon";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_MEDIUM } from "@/constants/constans-value";
+import { useAuth } from "@/hooks/use-auth";
 import Investment_ButtonInvestasiSection from "@/screens/Invesment/ButtonInvestasiSection";
 import Invesment_ComponentBoxOnBottomDetail from "@/screens/Invesment/ComponentBoxOnBottomDetail";
 import Invesment_DetailDataPublishSection from "@/screens/Invesment/DetailDataPublishSection";
-import { apiInvestmentGetById } from "@/service/api-client/api-investment";
+import { apiInvestmentGetOne } from "@/service/api-client/api-investment";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import {
   router,
@@ -25,6 +26,7 @@ import _ from "lodash";
 import { useCallback, useState } from "react";
 
 export default function InvestmentDetailStatus() {
+  const { user } = useAuth();
   const { id, status } = useLocalSearchParams();
   const [openDrawerDraft, setOpenDrawerDraft] = useState(false);
   const [openDrawerPublish, setOpenDrawerPublish] = useState(false);
@@ -39,7 +41,7 @@ export default function InvestmentDetailStatus() {
 
   const onLoadData = async () => {
     try {
-      const response = await apiInvestmentGetById({
+      const response = await apiInvestmentGetOne({
         id: id as string,
       });
 
@@ -70,7 +72,7 @@ export default function InvestmentDetailStatus() {
   );
 
   const buttonSection = (
-    <Investment_ButtonInvestasiSection id={id as string} isMine={false} />
+    <Investment_ButtonInvestasiSection id={id as string} isMine={user?.id === data?.author?.id} />
   );
 
   return (

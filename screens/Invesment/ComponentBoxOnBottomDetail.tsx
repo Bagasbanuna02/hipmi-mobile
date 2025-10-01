@@ -18,7 +18,6 @@ export default function Invesment_ComponentBoxOnBottomDetail({
   prospectusId: string;
   status: string;
 }) {
-
   return (
     <>
       {status === "publish" ? (
@@ -28,7 +27,7 @@ export default function Invesment_ComponentBoxOnBottomDetail({
               <BaseBox
                 backgroundColor={AccentColor.blue}
                 style={{ borderColor: AccentColor.softblue, borderWidth: 1 }}
-                href={`/(file)/${id}`}
+                href={`/(file)/${prospectusId}`}
               >
                 <StackCustom>
                   <TextCustom align="center">Prospektus</TextCustom>

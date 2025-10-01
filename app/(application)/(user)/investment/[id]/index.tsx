@@ -9,18 +9,45 @@ import { IconDocument, IconEdit, IconNews } from "@/components/_Icon";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_MEDIUM } from "@/constants/constans-value";
+import { useAuth } from "@/hooks/use-auth";
 import Investment_ButtonInvestasiSection from "@/screens/Invesment/ButtonInvestasiSection";
 import Invesment_ComponentBoxOnBottomDetail from "@/screens/Invesment/ComponentBoxOnBottomDetail";
 import Invesment_DetailDataPublishSection from "@/screens/Invesment/DetailDataPublishSection";
+import { apiInvestmentGetOne } from "@/service/api-client/api-investment";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
-import { router, Stack, useLocalSearchParams } from "expo-router";
+import {
+  router,
+  Stack,
+  useFocusEffect,
+  useLocalSearchParams,
+} from "expo-router";
 import _ from "lodash";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export default function InvestmentDetail() {
+  const { user } = useAuth();
   const { id, status } = useLocalSearchParams();
   const [openDrawerDraft, setOpenDrawerDraft] = useState(false);
   const [openDrawerPublish, setOpenDrawerPublish] = useState(false);
+  const [data, setData] = useState<any>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [id, status])
+  );
+
+  const onLoadData = async () => {
+    try {
+      const response = await apiInvestmentGetOne({
+        id: id as string,
+      });
+
+      setData(response.data);
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  };
 
   const handlePressDraft = (item: IMenuDrawerItem) => {
     console.log("PATH >> ", item.path);
@@ -37,11 +64,14 @@ export default function InvestmentDetail() {
   const bottomSection = (
     <Invesment_ComponentBoxOnBottomDetail
       id={id as string}
-      status={'publish'}
+      prospectusId={data?.prospektusFileId}
+      status={"publish"}
     />
   );
 
-  const buttonSection = <Investment_ButtonInvestasiSection id={id as string} isMine={true} />;
+  const buttonSection = (
+    <Investment_ButtonInvestasiSection id={id as string} isMine={user?.id === data?.author?.id} />
+  );
 
   return (
     <>
@@ -61,6 +91,7 @@ export default function InvestmentDetail() {
       <ViewWrapper>
         <Invesment_DetailDataPublishSection
           status={"publish"}
+          data={data}
           bottomSection={bottomSection}
           buttonSection={buttonSection}
         />

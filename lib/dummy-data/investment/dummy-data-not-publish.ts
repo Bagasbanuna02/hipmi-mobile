@@ -44,30 +44,30 @@ const listDataPublishInvesment = ({ data }: { data: any }) => [
   },
   {
     label: "Harga Per Lembar",
-    value: data?.hargaPerLembar,
+    value: `Rp. ${formatCurrencyDisplay(data?.hargaLembar) || "-"}`,
   },
   {
     label: "Return Of Investment (ROI)",
-    value: data?.roi + " %",
+    value: `${data?.roi || "-"} %`,
   },
   {
     label: "Total Lembar",
-    value: data?.totalLembar,
+    value: data?.totalLembar || "-",
   },
   {
     label: "Sisa Lembar",
-    value: data?.sisaLembar,
-  },
-  {
-    label: "Jadwal Pembagian",
-    value: data?.jadwalPembagian,
-  },
-  {
-    label: "Pembagian Deviden",
-    value: data?.pembagianDeviden,
+    value: data?.sisaLembar || "-",
   },
   {
     label: "Pencarian Investor",
-    value: data?.pencarianInvestor,
+    value: (data && data?.MasterPencarianInvestor?.name + " hari") || "-",
+  },
+  {
+    label: "Jadwal Pembagian",
+    value: (data && data?.MasterPembagianDeviden?.name + " bulan") || "-",
+  },
+  {
+    label: "Pembagian Deviden",
+    value: data?.MasterPeriodeDeviden?.name || "-",
   },
 ];

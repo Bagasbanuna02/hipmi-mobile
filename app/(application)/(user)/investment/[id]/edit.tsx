@@ -14,7 +14,7 @@ import {
 import API_STRORAGE from "@/constants/base-url-api-strorage";
 import DIRECTORY_ID from "@/constants/directory-id";
 import {
-  apiInvestmentGetById,
+  apiInvestmentGetOne,
   apiInvestmentUpdateData,
 } from "@/service/api-client/api-investment";
 import { apiMasterInvestment } from "@/service/api-client/api-master";
@@ -90,7 +90,7 @@ export default function InvestmentEdit() {
 
   const onLoadData = async () => {
     try {
-      const response = await apiInvestmentGetById({
+      const response = await apiInvestmentGetOne({
         id: id as string,
       });
       setData(response.data);
