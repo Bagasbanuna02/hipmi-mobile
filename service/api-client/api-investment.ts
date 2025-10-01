@@ -44,7 +44,6 @@ export async function apiInvestmentUpdateStatus({
   id: string;
   status: "publish" | "draft" | "review" | "reject";
 }) {
-
   try {
     const response = await apiConfig.put(`/mobile/investment/${id}/${status}`);
     return response.data;
@@ -71,11 +70,62 @@ export async function apiInvestmentUpdateData({
   data: any;
   category: "data" | "prospectus";
 }) {
-
   try {
-    const response = await apiConfig.put(`/mobile/investment/${id}?category=${category}`, {
+    const response = await apiConfig.put(
+      `/mobile/investment/${id}?category=${category}`,
+      {
+        data: data,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiInvestmentUpsertDocument({
+  id,
+  data,
+}: {
+  id: string;
+  data: any;
+}) {
+  try {
+    const response = await apiConfig.post(`/mobile/investment/${id}/document`, {
       data: data,
     });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiInvestmentGetDocument({
+  id,
+  category,
+}: {
+  id: string;
+  category: "one-document" | "all-document";
+}) {
+  try {
+    const response = await apiConfig.get(
+      `/mobile/investment/${id}/document?category=${category}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiInvestmentDeleteDocument({
+  id,
+}: {
+  id: string;
+}) {
+  try {
+    const response = await apiConfig.delete(
+      `/mobile/investment/${id}/document`
+    );
     return response.data;
   } catch (error) {
     throw error;

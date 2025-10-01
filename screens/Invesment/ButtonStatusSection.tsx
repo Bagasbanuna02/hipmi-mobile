@@ -3,7 +3,6 @@ import {
   apiInvestmentDelete,
   apiInvestmentUpdateStatus,
 } from "@/service/api-client/api-investment";
-import { deleteFileService } from "@/service/upload-service";
 import { router } from "expo-router";
 import { useState } from "react";
 import Toast from "react-native-toast-message";
@@ -136,36 +135,14 @@ export default function Investment_ButtonStatusSection({
             id: id as string,
           });
 
-          console.log("[RESPONSE]", JSON.stringify(response, null, 2));
+          console.log("[RESPONSE DELETE]", JSON.stringify(response, null, 2));
+
           if (response.success) {
-            const deleteImage = await deleteFileService({
-              id: response?.data?.imageId as string,
-            });
-
-            if (!deleteImage.success) {
-              Toast.show({
-                type: "error",
-                text1: "Gagal Hapus Data",
-              });
-              return;
-            }
-
-            const deleteFile = await deleteFileService({
-              id: response?.data?.prospektusFileId as string,
-            });
-
-            if (!deleteFile.success) {
-              Toast.show({
-                type: "error",
-                text1: "Gagal Hapus Data",
-              });
-              return;
-            }
-
             Toast.show({
               type: "success",
               text1: "Berhasil Hapus Data",
             });
+
             router.back();
           } else {
             Toast.show({

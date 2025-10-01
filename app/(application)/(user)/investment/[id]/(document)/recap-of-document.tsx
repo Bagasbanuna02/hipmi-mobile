@@ -1,23 +1,90 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   AlertDefaultSystem,
   BackButton,
   DotButton,
   DrawerCustom,
+  LoaderCustom,
   MenuDrawerDynamicGrid,
+  TextCustom,
   ViewWrapper,
 } from "@/components";
 import { IconEdit } from "@/components/_Icon";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import Investment_BoxDetailDocument from "@/screens/Invesment/Document/RecapBoxDetail";
+import {
+  apiInvestmentDeleteDocument,
+  apiInvestmentGetDocument,
+} from "@/service/api-client/api-investment";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
-import { router, Stack, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import {
+  router,
+  Stack,
+  useFocusEffect,
+  useLocalSearchParams,
+} from "expo-router";
+import _ from "lodash";
+import { useCallback, useState } from "react";
+import Toast from "react-native-toast-message";
 
 export default function InvestmentRecapOfDocument() {
   const { id } = useLocalSearchParams();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerBox, setOpenDrawerBox] = useState(false);
+  const [list, setList] = useState<any[] | null>(null);
+  const [loadList, setLoadList] = useState(false);
+  const [selectId, setSelectId] = useState<string | null>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadListDocument();
+    }, [id])
+  );
+
+  const onLoadListDocument = async () => {
+    try {
+      setLoadList(true);
+      const response = await apiInvestmentGetDocument({
+        id: id as string,
+        category: "all-document",
+      });
+
+      setList(response.data);
+    } catch (error) {
+      console.log("[ERROR]", error);
+      setList([]);
+    } finally {
+      setLoadList(false);
+    }
+  };
+
+  const handlerDeleteDocument = async () => {
+    try {
+      const response = await apiInvestmentDeleteDocument({
+        id: selectId as string,
+      });
+
+      if (response.success) {
+        Toast.show({
+          type: "success",
+          text1: "Data berhasil dihapus",
+        });
+        setList((prev: any[] | null) => {
+          if (!prev) return null;
+          return prev.filter((item: any) => item.id !== selectId);
+        });
+        setOpenDrawerBox(false);
+        setSelectId(null);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+      Toast.show({
+        type: "error",
+        text1: "Gagal menghapus data",
+      });
+    }
+  };
 
   return (
     <>
@@ -37,25 +104,36 @@ export default function InvestmentRecapOfDocument() {
       />
 
       <ViewWrapper>
-        {Array.from({ length: 10 }).map((_, index) => (
-          <Investment_BoxDetailDocument
-            key={index}
-            title={`Judul Dokumen ${index + 1}`}
-            leftIcon={
-              <Ionicons
-                name="ellipsis-horizontal-outline"
-                size={ICON_SIZE_SMALL}
-                color={MainColor.white}
-                style={{
-                  zIndex: 10,
-                  alignSelf: "flex-end",
-                }}
-                onPress={() => setOpenDrawerBox(true)}
-              />
-            }
-            href={`/(file)/${id}`}
-          />
-        ))}
+        {loadList ? (
+          <LoaderCustom />
+        ) : _.isEmpty(list) ? (
+          <TextCustom align="center" color="gray">
+            Tidak ada data
+          </TextCustom>
+        ) : (
+          list?.map((item: any, index: number) => (
+            <Investment_BoxDetailDocument
+              key={index}
+              title={item.title}
+              leftIcon={
+                <Ionicons
+                  name="ellipsis-horizontal-outline"
+                  size={ICON_SIZE_SMALL}
+                  color={MainColor.white}
+                  style={{
+                    zIndex: 10,
+                    alignSelf: "flex-end",
+                  }}
+                  onPress={() => {
+                    setSelectId(item.id);
+                    setOpenDrawerBox(true);
+                  }}
+                />
+              }
+              href={`/(file)/${item.fileId}`}
+            />
+          ))
+        )}
       </ViewWrapper>
 
       {/* Drawer On Header */}
@@ -69,7 +147,7 @@ export default function InvestmentRecapOfDocument() {
             {
               icon: (
                 <AntDesign
-                  name="pluscircle"
+                  name="plus-circle"
                   size={ICON_SIZE_SMALL}
                   color={MainColor.white}
                 />
@@ -96,7 +174,7 @@ export default function InvestmentRecapOfDocument() {
             {
               icon: <IconEdit />,
               label: "Edit Dokumen",
-              path: `/investment/${id}/(document)/edit-document`,
+              path: `/investment/${selectId}/(document)/edit-document`,
             },
             {
               icon: (
@@ -119,12 +197,14 @@ export default function InvestmentRecapOfDocument() {
                 textLeft: "Batal",
                 textRight: "Hapus",
                 onPressRight: () => {
-                  setOpenDrawerBox(false);
+                  handlerDeleteDocument();
                 },
               });
+            } else {
+              router.push(item.path as any);
             }
-            router.push(item.path as any);
-            setOpenDrawer(false);
+
+            setOpenDrawerBox(false);
           }}
         />
       </DrawerCustom>

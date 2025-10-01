@@ -1,5 +1,5 @@
-import { BaseBox, Grid, TextCustom } from "@/components";
-import { Href } from "expo-router";
+import { BaseBox, ClickableCustom, Grid, TextCustom } from "@/components";
+import { Href, router } from "expo-router";
 
 export default function Investment_BoxDetailDocument({
   title,
@@ -8,17 +8,19 @@ export default function Investment_BoxDetailDocument({
 }: {
   title: string;
   leftIcon?: React.ReactNode;
-  href?: Href;
+  href?: Href | string;
 }) {
   return (
     <>
-      <BaseBox href={href}>
+      <BaseBox>
         <Grid>
           <Grid.Col span={leftIcon ? 10 : 12}>
-            <TextCustom truncate>
-              {title ||
-                `Judul Dokumen: Lorem, ipsum dolor sit amet consectetur adipisicing elit.`}
-            </TextCustom>
+            <ClickableCustom onPress={() => router.push(href as any)}>
+              <TextCustom truncate>
+                {title ||
+                  `Judul Dokumen: Lorem, ipsum dolor sit amet consectetur adipisicing elit.`}
+              </TextCustom>
+            </ClickableCustom>
           </Grid.Col>
           {leftIcon && <Grid.Col span={2}>{leftIcon}</Grid.Col>}
         </Grid>
