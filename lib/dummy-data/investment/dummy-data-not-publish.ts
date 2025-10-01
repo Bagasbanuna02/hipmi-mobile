@@ -40,7 +40,7 @@ const listDataPublishInvesment = ({ data }: { data: any }) => [
   },
   {
     label: "Target Dana",
-    value: data?.targetDana,
+    value: `Rp. ${formatCurrencyDisplay(data?.targetDana) || "-"}`,
   },
   {
     label: "Harga Per Lembar",

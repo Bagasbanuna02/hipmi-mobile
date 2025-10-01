@@ -1,12 +1,11 @@
 import {
   AvatarUsernameAndOtherComponent,
-  BaseBox,
   BoxWithHeaderSection,
   DummyLandscapeImage,
   Grid,
   Spacing,
   StackCustom,
-  TextCustom,
+  TextCustom
 } from "@/components";
 import { View } from "react-native";
 
