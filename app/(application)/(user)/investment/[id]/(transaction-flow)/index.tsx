@@ -10,8 +10,10 @@ import {
   TextInputCustom,
   ViewWrapper,
 } from "@/components";
+import { LOCAL_STORAGE_KEY } from "@/constants/local-storage-key";
 import { apiInvestmentGetOne } from "@/service/api-client/api-investment";
 import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
 
@@ -19,9 +21,10 @@ export default function InvestmentInvest() {
   const { id } = useLocalSearchParams();
   // console.log("[ID]", id);
   const [data, setData] = useState<any>(null);
-  const [value, setValue] = useState<number>(0);
+  const [jumlah, setJumlah] = useState<number>(0);
   const [total, setTotal] = useState<number>(0);
   const [sisaLembar, setSisaLembar] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -45,7 +48,7 @@ export default function InvestmentInvest() {
   const handleTextChange = (text: string) => {
     // Izinkan input kosong → anggap sebagai 0 (atau abaikan, tergantung UX)
     if (text === "") {
-      setValue(0);
+      setJumlah(0);
       setTotal(0);
       return;
     }
@@ -58,7 +61,7 @@ export default function InvestmentInvest() {
       // Karena regex sudah pastikan hanya angka, isNaN biasanya false
       // Tapi tetap aman untuk cek
       if (!isNaN(numValue)) {
-        setValue(numValue);
+        setJumlah(numValue);
         setTotal(numValue * Number(data?.hargaLembar));
         console.log("[VALUE]", numValue);
       }
@@ -71,10 +74,24 @@ export default function InvestmentInvest() {
       <>
         <BoxButtonOnFooter>
           <ButtonCustom
-            disabled={value < 10 || value >= sisaLembar}
-            onPress={() => router.push(`/investment/${id}/select-bank`)}
+            isLoading={isLoading}
+            disabled={jumlah < 10 || jumlah > sisaLembar}
+            onPress={async () => {
+              try {
+                setIsLoading(true);
+                await AsyncStorage.setItem(
+                  LOCAL_STORAGE_KEY.transactionInvestment,
+                  JSON.stringify({ jumlah, total })
+                );
+                router.push(`/investment/${id}/select-bank`);
+              } catch (error) {
+                console.log("[ERROR]", error);
+              } finally {
+                setIsLoading(false);
+              }
+            }}
           >
-            Beli {value}, {sisaLembar}
+            Beli
           </ButtonCustom>
         </BoxButtonOnFooter>
       </>
@@ -126,7 +143,7 @@ export default function InvestmentInvest() {
                   }}
                   placeholder="0"
                   keyboardType="numeric"
-                  value={value.toString()}
+                  value={jumlah.toString()}
                   onChangeText={(value) => {
                     handleTextChange(value);
                   }}

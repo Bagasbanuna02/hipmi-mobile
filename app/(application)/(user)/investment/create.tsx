@@ -74,9 +74,8 @@ export default function InvestmentCreate() {
 
   const displayTargetDana = formatCurrencyDisplay(data.targetDana);
   const displayHargaPerLembar = formatCurrencyDisplay(data.hargaPerLembar);
-  const displayTotalLembar = formatCurrencyDisplay(
-    Number(data.targetDana) / Number(data.hargaPerLembar)
-  );
+  const realTotalLembar = Number(data.targetDana) / Number(data.hargaPerLembar);
+  const displayTotalLembar = formatCurrencyDisplay(realTotalLembar);
 
   const handleChangeCurrency = (field: keyof typeof data) => (text: string) => {
     const numeric = text.replace(/\D/g, "");
@@ -150,7 +149,7 @@ export default function InvestmentCreate() {
         title: data.title,
         targetDana: data.targetDana,
         hargaLembar: data.hargaPerLembar,
-        totalLembar: displayTotalLembar,
+        totalLembar: realTotalLembar.toString(),
         roi: data.rasioKeuntungan,
         masterPencarianInvestorId: data.pencarianInvestor,
         masterPembagianDevidenId: data.pembagianDeviden,

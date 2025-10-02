@@ -5,35 +5,97 @@ import {
   ViewWrapper,
 } from "@/components";
 import { RadioCustom, RadioGroup } from "@/components/Radio/RadioCustom";
-import { dummyMasterBank } from "@/lib/dummy-data/_master/bank";
+import { LOCAL_STORAGE_KEY } from "@/constants/local-storage-key";
+import { useAuth } from "@/hooks/use-auth";
+import { apiInvestmentCreateInvoice } from "@/service/api-client/api-investment";
+import { apiMasterBank } from "@/service/api-client/api-master";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import _ from "lodash";
+import { useEffect, useState } from "react";
 
 export default function InvestmentSelectBank() {
+  const { user } = useAuth();
   const { id } = useLocalSearchParams();
-  const [value, setValue] = useState<any | number>("");
+  const [select, setSelect] = useState<any | number>("");
+  const [listBank, setListBank] = useState<any>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    loadListBank();
+  }, []);
+
+  const loadListBank = async () => {
+    try {
+      const response = await apiMasterBank();
+
+      setListBank(response.data);
+    } catch (error) {
+      console.log("[ERROR]", error);
+      setListBank([]);
+    }
+  };
+
+  const handlerSubmit = async () => {
+    try {
+      setIsLoading(true);
+      const dataCheckout = await AsyncStorage.getItem(
+        LOCAL_STORAGE_KEY.transactionInvestment
+      );
+      if (dataCheckout) {
+        const storage = JSON.parse(dataCheckout);
+        const newData = {
+          ...storage,
+          bankId: select,
+          authorId: user?.id,
+        };
+
+        const response = await apiInvestmentCreateInvoice({
+          id: id as string,
+          data: newData,
+        });
+
+        if (response.success) {
+          console.log("[RESPONSE >>]", response);
+          const invoiceId = response.data.id;
+
+          const delStorage = await AsyncStorage.removeItem(
+            LOCAL_STORAGE_KEY.transactionInvestment
+          );
+          
+          console.log("[DEL STORAGE]", delStorage);
+          router.replace(`/investment/${invoiceId}/invoice`);
+        } else {
+          console.log("[FAILED]", response);
+        }
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const buttonSubmit = () => {
     return (
       <>
         <BoxButtonOnFooter>
-          <ButtonCustom
-            onPress={() => router.replace(`/investment/${id}/invoice`)}
-          >
-            Pilih
-          </ButtonCustom>
+          <ButtonCustom isLoading={isLoading} onPress={() => handlerSubmit()}>Pilih</ButtonCustom>
         </BoxButtonOnFooter>
       </>
     );
   };
+
   return (
     <ViewWrapper footerComponent={buttonSubmit()}>
-      <RadioGroup value={value} onChange={setValue}>
-        {dummyMasterBank.map((item) => (
-          <BaseBox key={item.name}>
-            <RadioCustom label={item.name} value={item.code} />
-          </BaseBox>
-        ))}
+      <RadioGroup value={select} onChange={setSelect}>
+        {_.isEmpty(listBank)
+          ? []
+          : listBank?.map((item: any) => (
+              <BaseBox key={item.id}>
+                <RadioCustom label={item.namaBank} value={item.id} />
+              </BaseBox>
+            ))}
       </RadioGroup>
     </ViewWrapper>
   );

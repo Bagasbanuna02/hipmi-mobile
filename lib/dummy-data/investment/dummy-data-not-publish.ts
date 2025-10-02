@@ -17,15 +17,15 @@ const listDataNotPublishInvesment = ({ data }: { data: any }) => [
   },
   {
     label: "Total Lembar",
-    value: data?.totalLembar || "-",
+    value: formatCurrencyDisplay(data?.totalLembar) || "-",
   },
   {
     label: "Pencarian Investor",
-    value: data && data?.MasterPencarianInvestor?.name + " hari" || "-",
+    value: (data && data?.MasterPencarianInvestor?.name + " hari") || "-",
   },
   {
     label: "Jadwal Pembagian",
-    value: data && data?.MasterPembagianDeviden?.name + " bulan" || "-",
+    value: (data && data?.MasterPembagianDeviden?.name + " bulan") || "-",
   },
   {
     label: "Pembagian Deviden",
@@ -52,11 +52,11 @@ const listDataPublishInvesment = ({ data }: { data: any }) => [
   },
   {
     label: "Total Lembar",
-    value: data?.totalLembar || "-",
+    value: formatCurrencyDisplay(data?.totalLembar) || "-",
   },
   {
     label: "Sisa Lembar",
-    value: data?.sisaLembar || "-",
+    value: formatCurrencyDisplay(data?.sisaLembar) || "-",
   },
   {
     label: "Pencarian Investor",

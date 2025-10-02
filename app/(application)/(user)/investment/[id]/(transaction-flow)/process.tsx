@@ -1,12 +1,10 @@
 import {
   BaseBox,
-  Grid,
   StackCustom,
   TextCustom,
-  ViewWrapper,
+  ViewWrapper
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
-import { Ionicons } from "@expo/vector-icons";
 import { ActivityIndicator } from "react-native";
 
 export default function InvestmentProcess() {
@@ -16,21 +14,22 @@ export default function InvestmentProcess() {
         <BaseBox>
           <StackCustom>
             <TextCustom align="center" bold>
-              Admin sedang memproses transaksi investasimu
+              Admin sedang memvalidasi data dan bukti transfer anda. Mohon
+              tunggu proses ini selesai.
             </TextCustom>
             <ActivityIndicator size="large" color={MainColor.yellow} />
           </StackCustom>
         </BaseBox>
 
-        <BaseBox>
+        {/* <BaseBox>
           <Grid>
-            <Grid.Col span={10} style={{justifyContent: 'center'}}>
+            <Grid.Col span={10} style={{ justifyContent: "center" }}>
               <TextCustom size="small">
                 Hubungi admin jika tidak kunjung di proses! Klik pada logo
                 Whatsapp ini.
               </TextCustom>
             </Grid.Col>
-            <Grid.Col span={2} style={{alignItems: "flex-end"}}>
+            <Grid.Col span={2} style={{ alignItems: "flex-end" }}>
               <Ionicons
                 name="logo-whatsapp"
                 size={50}
@@ -38,7 +37,7 @@ export default function InvestmentProcess() {
               />
             </Grid.Col>
           </Grid>
-        </BaseBox>
+        </BaseBox> */}
       </ViewWrapper>
     </>
   );

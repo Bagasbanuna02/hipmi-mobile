@@ -110,13 +110,26 @@ export async function apiForumCreateReportCommentar({
 export async function apiMasterInvestment({
   category,
 }: {
-  category?: "pencarian-investor" | "periode-deviden" | "pembagian-deviden" | string;
+  category?:
+    | "pencarian-investor"
+    | "periode-deviden"
+    | "pembagian-deviden"
+    | string;
 }) {
   const selectCategory = category ? `?category=${category}` : "";
   try {
     const response = await apiConfig.get(
       `/mobile/master/investment${selectCategory}`
     );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiMasterBank() {
+  try {
+    const response = await apiConfig.get(`/mobile/master/bank`);
     return response.data;
   } catch (error) {
     throw error;

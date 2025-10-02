@@ -137,3 +137,67 @@ export async function apiInvestmentGetAll() {
   }
 }
 
+export async function apiInvestmentCreateInvoice({
+  id,
+  data,
+}: {
+  id: string;
+  data: any;
+}) {
+  try {
+    const response = await apiConfig.post(
+      `/mobile/investment/${id}/invoice`,
+      {
+        data: data,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiInvestmentGetInvoice({
+  id,
+  authorId,
+  category,
+}: {
+  id?: string;
+  authorId?: string;
+  category: "my-invest" | "transaction" | "invoice";
+}) {
+  const categoryQuery = `?category=${category}`;
+  const authorIdQuery = authorId ? `&authorId=${authorId}` : "";
+  try {
+    const response = await apiConfig.get(
+      `/mobile/investment/${id}/invoice${categoryQuery}${authorIdQuery}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiInvestmentUpdateInvoice({
+  id,
+  data,
+  status,
+}: {
+  id: string;
+  data: {
+    imageId?: string;
+  };
+  status: "berhasil" | "gagal" | "proses" | "menunggu";
+}) {
+  try {
+    const response = await apiConfig.put(
+      `/mobile/investment/${id}/invoice?status=${status}`,
+      {
+        data: data,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

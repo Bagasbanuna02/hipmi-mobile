@@ -101,9 +101,8 @@ export default function InvestmentEdit() {
 
   const displayTargetDana = formatCurrencyDisplay(data?.targetDana);
   const displayHargaPerLembar = formatCurrencyDisplay(data?.hargaLembar);
-  const displayTotalLembar = formatCurrencyDisplay(
-    Number(data?.targetDana) / Number(data?.hargaLembar)
-  );
+  const realTotalLembar = Number(data?.targetDana) / Number(data?.hargaLembar);
+  const displayTotalLembar = formatCurrencyDisplay(realTotalLembar);
 
   const handleChangeCurrency = (field: keyof typeof data) => (text: string) => {
     const numeric = text.replace(/\D/g, "");
@@ -134,6 +133,7 @@ export default function InvestmentEdit() {
   const handleSubmitUpdate = async () => {
     let newData = {
       ...data,
+      totalLembar: realTotalLembar.toString(),
     };
 
     if (!validateData()) {
