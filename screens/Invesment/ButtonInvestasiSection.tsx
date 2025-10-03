@@ -8,11 +8,10 @@ export default function Investment_ButtonInvestasiSection({
   id: string;
   isMine: boolean;
 }) {
-  console.log("[IS MINE]", isMine);
   return (
     <>
       {isMine ? (
-        <ButtonCustom disabled>Investasi Ini Milik Anda</ButtonCustom>
+        <ButtonCustom disabled>Investasi ini milik Anda</ButtonCustom>
       ) : (
         <ButtonCustom
           onPress={() => {

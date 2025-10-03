@@ -1,18 +1,51 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
-    BackButton,
-    BaseBox,
-    DrawerCustom,
-    MenuDrawerDynamicGrid,
-    TextCustom,
-    ViewWrapper
+  BackButton,
+  BaseBox,
+  DrawerCustom,
+  LoaderCustom,
+  MenuDrawerDynamicGrid,
+  TextCustom,
+  ViewWrapper,
 } from "@/components";
 import { IconPlus } from "@/components/_Icon";
-import { router, Stack, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import { apiInvestmentGetNews } from "@/service/api-client/api-investment";
+import {
+  router,
+  Stack,
+  useFocusEffect,
+  useLocalSearchParams,
+} from "expo-router";
+import _ from "lodash";
+import { useCallback, useState } from "react";
 
 export default function InvestmentListOfNews() {
   const { id } = useLocalSearchParams();
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [list, setList] = useState<any[] | null>(null);
+  const [loadList, setLoadList] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadList();
+    }, [id])
+  );
+
+  const onLoadList = async () => {
+    try {
+      setLoadList(true);
+      const response = await apiInvestmentGetNews({
+        id: id as string,
+        category: "all-news",
+      });
+
+      setList(response.data);
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setLoadList(false);
+    }
+  };
   return (
     <>
       <Stack.Screen
@@ -22,16 +55,25 @@ export default function InvestmentListOfNews() {
           //   headerRight: () => <DotButton onPress={() => setOpenDrawer(true)} />,
         }}
       />
+
       <ViewWrapper>
-        {Array.from({ length: 15 }).map((_, index) => (
-          <BaseBox
-            key={index}
-            paddingBlock={5}
-            href={`/investment/${id}/(news)/${index + 1}`}
-          >
-            <TextCustom bold>Berita Terbaru {index + 1}</TextCustom>
-          </BaseBox>
-        ))}
+        {loadList ? (
+          <LoaderCustom />
+        ) : _.isEmpty(list) ? (
+          <TextCustom align="center" color="gray">
+            Tidak ada data
+          </TextCustom>
+        ) : (
+          list?.map((item: any, index: number) => (
+            <BaseBox
+              key={index}
+              paddingBlock={5}
+              href={`/investment/[id]/(news)/${item.id}`}
+            >
+              <TextCustom bold>{item.title}</TextCustom>
+            </BaseBox>
+          ))
+        )}
       </ViewWrapper>
 
       <DrawerCustom

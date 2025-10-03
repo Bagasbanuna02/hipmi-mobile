@@ -1,6 +1,6 @@
 // PdfViewer.tsx
 import React, { useState } from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Platform, StyleSheet, View } from "react-native";
 import WebView from "react-native-webview";
 
 interface PdfViewerProps {
@@ -10,6 +10,13 @@ interface PdfViewerProps {
 const PdfViewer: React.FC<PdfViewerProps> = ({ uri }) => {
   const [loading, setLoading] = useState(true);
 
+  // ✅ Bungkus dengan Google Docs Viewer
+  const viewerUrl = `https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(
+    uri
+  )}`;
+
+  const selectedDivice = Platform.OS === "ios" ? uri : viewerUrl;
+
   return (
     <>
       {loading && (
@@ -18,7 +25,9 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ uri }) => {
         </View>
       )}
       <WebView
-        source={{ uri }}
+        source={{
+          uri: selectedDivice,
+        }}
         style={styles.webView}
         onLoadEnd={() => setLoading(false)}
         onError={(syntheticEvent) => {
@@ -26,10 +35,10 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ uri }) => {
           console.warn("WebView error:", nativeEvent);
           setLoading(false);
         }}
-        scalesPageToFit={true}
-        javaScriptEnabled={true}
-        domStorageEnabled={true}
-        originWhitelist={["*"]}
+        // scalesPageToFit={true}
+        // javaScriptEnabled={true}
+        // domStorageEnabled={true}
+        // originWhitelist={["*"]}
       />
     </>
   );

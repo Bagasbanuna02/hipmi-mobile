@@ -145,12 +145,9 @@ export async function apiInvestmentCreateInvoice({
   data: any;
 }) {
   try {
-    const response = await apiConfig.post(
-      `/mobile/investment/${id}/invoice`,
-      {
-        data: data,
-      }
-    );
+    const response = await apiConfig.post(`/mobile/investment/${id}/invoice`, {
+      data: data,
+    });
     return response.data;
   } catch (error) {
     throw error;
@@ -196,6 +193,49 @@ export async function apiInvestmentUpdateInvoice({
         data: data,
       }
     );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiInvestmentCreateNews({
+  id,
+  data,
+}: {
+  id: string;
+  data: any;
+}) {
+  try {
+    const response = await apiConfig.post(`/mobile/investment/${id}/news`, {
+      data: data,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiInvestmentGetNews({
+  id,
+  category,
+}: {
+  id: string;
+  category: "all-news" | "one-news";
+}) {
+  try {
+    const response = await apiConfig.get(
+      `/mobile/investment/${id}/news?category=${category}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiInvestmentDeleteNews({ id }: { id: string }) {
+  try {
+    const response = await apiConfig.delete(`/mobile/investment/${id}/news`);
     return response.data;
   } catch (error) {
     throw error;
