@@ -135,3 +135,19 @@ export async function apiMasterBank() {
     throw error;
   }
 }
+
+export async function apiMasterDonation({
+  category,
+}: {
+  category: "category" | "duration" | "";
+}) {
+  const selectCategory = category ? `?category=${category}` : "";
+  try {
+    const response = await apiConfig.get(
+      `/mobile/master/donation${selectCategory}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

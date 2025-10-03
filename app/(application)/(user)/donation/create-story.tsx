@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   ButtonCenteredOnly,
   ButtonCustom,
@@ -9,9 +10,79 @@ import {
   TextInputCustom,
   ViewWrapper,
 } from "@/components";
-import { router } from "expo-router";
+import DIRECTORY_ID from "@/constants/directory-id";
+import { useAuth } from "@/hooks/use-auth";
+import { apiDonationGetOne } from "@/service/api-client/api-donation";
+import { uploadFileService } from "@/service/upload-service";
+import { router, useLocalSearchParams } from "expo-router";
+import _ from "lodash";
+import { useEffect, useState } from "react";
+import Toast from "react-native-toast-message";
 
 export default function DonationCreateStory() {
+  const { user } = useAuth();
+  const { id } = useLocalSearchParams();
+  console.log("[ID]", id);
+  const [temporary, setTemporary] = useState<any>();
+  const [data, setData] = useState({
+    pembukaan: "",
+    cerita: "",
+    namaBank: "",
+    rekening: "",
+  });
+  const [imageDonasi, setImageDonasi] = useState<string | null>(null);
+
+  useEffect(() => {
+    onLoadData();
+  }, [id]);
+
+  const onLoadData = async () => {
+    try {
+      // const response = await apiDonationGetOne({
+      //   id: id as string,
+      //   category: "temporary",
+      // });
+      // console.log("[RES GET ONE]", JSON.stringify(response, null, 2));
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  };
+
+  const handlerSubmit = async () => {
+    if (_.values(data).includes("")) {
+      Toast.show({
+        type: "error",
+        text1: "Harap isi semua data",
+      });
+      return;
+    }
+
+    try {
+      const responseUploadImageDonasi = await uploadFileService({
+        imageUri: imageDonasi,
+        dirId: DIRECTORY_ID.donasi_cerita_image,
+      });
+
+      const newData = {
+        id: temporary?.id,
+        title: temporary?.title,
+        target: temporary?.target,
+        donasiMaster_KategoriId: temporary?.donasiMaster_KategoriId,
+        donasiMaster_DurasiId: temporary?.donasiMaster_DurasiId,
+        authorId: user?.id,
+        namaBank: data.namaBank,
+        rekening: data.rekening,
+        imageId: temporary?.imageId,
+        CeritaDonasi: {
+          pembukaan: data.pembukaan,
+          cerita: data.cerita,
+        },
+      };
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  };
+
   return (
     <ViewWrapper>
       <StackCustom gap={"xs"}>
@@ -22,6 +93,8 @@ export default function DonationCreateStory() {
           required
           showCount
           maxLength={1000}
+          value={data.pembukaan}
+          onChangeText={(value) => setData({ ...data, pembukaan: value })}
         />
         <TextAreaCustom
           label="Tujuan Donasi"
@@ -29,6 +102,8 @@ export default function DonationCreateStory() {
           required
           showCount
           maxLength={1000}
+          value={data.cerita}
+          onChangeText={(value) => setData({ ...data, cerita: value })}
         />
 
         <LandscapeFrameUploaded />
