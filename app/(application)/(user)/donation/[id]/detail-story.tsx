@@ -1,27 +1,42 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   DummyLandscapeImage,
   StackCustom,
   TextCustom,
   ViewWrapper,
 } from "@/components";
-import { useLocalSearchParams } from "expo-router";
+import { apiDonationGetOne } from "@/service/api-client/api-donation";
+import { useFocusEffect, useLocalSearchParams } from "expo-router";
+import { useCallback, useState } from "react";
 
 export default function DonationDetailStory() {
   const { id } = useLocalSearchParams();
+  const [data, setData] = useState<any>();
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [id])
+  );
+
+  const onLoadData = async () => {
+    try {
+      const response = await apiDonationGetOne({
+        id: id as string,
+        category: "permanent",
+      });
+
+      setData(response.data.CeritaDonasi);
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  };
   return (
     <ViewWrapper>
       <StackCustom>
-        <TextCustom>
-          Lorem {id} ipsum dolor, sit amet consectetur adipisicing elit. Fuga
-          quasi nam nesciunt nisi corporis alias modi, pariatur sit totam rem
-          fugiat ex similique magni, aliquam maiores officiis iure at adipisci.
-        </TextCustom>
-        <DummyLandscapeImage />
-        <TextCustom>
-          Lorem {id} ipsum dolor, sit amet consectetur adipisicing elit. Fuga
-          quasi nam nesciunt nisi corporis alias modi, pariatur sit totam rem
-          fugiat ex similique magni, aliquam maiores officiis iure at adipisci.
-        </TextCustom>
+        <TextCustom>{data?.pembukaan || "-"}</TextCustom>
+        <DummyLandscapeImage imageId={data?.imageId} />
+        <TextCustom>{data?.cerita || "-"}</TextCustom>
       </StackCustom>
     </ViewWrapper>
   );

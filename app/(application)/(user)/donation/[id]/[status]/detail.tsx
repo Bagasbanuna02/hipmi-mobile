@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   BackButton,
   DotButton,
@@ -14,15 +15,42 @@ import Donation_ButtonStatusSection from "@/screens/Donation/ButtonStatusSection
 import Donation_ComponentBoxDetailData from "@/screens/Donation/ComponentBoxDetailData";
 import Donation_ComponentStoryFunrising from "@/screens/Donation/ComponentStoryFunrising";
 import Donation_ProgressSection from "@/screens/Donation/ProgressSection";
+import { apiDonationGetOne } from "@/service/api-client/api-donation";
 import { FontAwesome6 } from "@expo/vector-icons";
-import { router, Stack, useLocalSearchParams } from "expo-router";
+import {
+  router,
+  Stack,
+  useFocusEffect,
+  useLocalSearchParams,
+} from "expo-router";
 import _ from "lodash";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export default function DonasiDetailStatus() {
   const { id, status } = useLocalSearchParams();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerPublish, setOpenDrawerPublish] = useState(false);
+
+  const [data, setData] = useState<any>();
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [id])
+  );
+
+  const onLoadData = async () => {
+    try {
+      const response = await apiDonationGetOne({
+        id: id as string,
+        category: "permanent",
+      });
+
+      setData(response.data);
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  };
 
   const handlePress = (item: IMenuDrawerItem) => {
     console.log("PATH ", item.path);
@@ -46,13 +74,22 @@ export default function DonasiDetailStatus() {
       />
       <ViewWrapper>
         <Donation_ComponentBoxDetailData
+          data={data}
           bottomSection={
-            status === "publish" && <Donation_ProgressSection id={id as string} />
+            status === "publish" && (
+              <Donation_ProgressSection id={id as string} />
+            )
           }
         />
-        <Donation_ComponentStoryFunrising id={id as string} />
+        <Donation_ComponentStoryFunrising
+          id={id as string}
+          dataStory={data?.CeritaDonasi}
+        />
         <Spacing />
-        <Donation_ButtonStatusSection status={status as string} />
+        <Donation_ButtonStatusSection
+          id={id as string}
+          status={status as string}
+        />
         <Spacing />
       </ViewWrapper>
 

@@ -5,13 +5,14 @@ import {
   StackCustom,
   TextCustom,
 } from "@/components";
+import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
 import { View } from "react-native";
 
 export default function Donasi_BoxStatus({
-  id,
+  data,
   status,
 }: {
-  id: string;
+  data: any;
   status: string;
 }) {
   return (
@@ -19,26 +20,30 @@ export default function Donasi_BoxStatus({
       <BaseBox
         paddingTop={7}
         paddingBottom={7}
-        href={`/donation/${id}/${status}/detail`}
+        href={`/donation/${data.id}/${status}/detail`}
       >
         <Grid>
           <Grid.Col span={5}>
-            <DummyLandscapeImage unClickPath height={100} />
+            <DummyLandscapeImage
+              unClickPath
+              height={100}
+              imageId={data.imageId}
+            />
           </Grid.Col>
           <Grid.Col span={1}>
             <View />
           </Grid.Col>
           <Grid.Col span={6}>
             <StackCustom>
-              <TextCustom truncate>
-                Judul Donasi: {status} Lorem ipsum dolor sit amet consectetur
-                adipisicing elit.
-              </TextCustom>
+              <TextCustom truncate={2} bold>{data.title || "-"}</TextCustom>
 
               <View>
                 <TextCustom>Target Dana</TextCustom>
                 <TextCustom bold color="yellow">
-                  Rp. 7.500.000
+                  Rp.
+                  {data && data?.target
+                    ? formatCurrencyDisplay(data.target)
+                    : "-"}
                 </TextCustom>
               </View>
             </StackCustom>

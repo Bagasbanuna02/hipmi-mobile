@@ -186,7 +186,7 @@ export default function UserLayout() {
           name="crowdfunding/index"
           options={{
             title: "Crowdfunding",
-            headerLeft: () => <BackButton />,
+            headerLeft: () => <BackButton path="/home" />,
           }}
         />
 

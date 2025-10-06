@@ -5,8 +5,10 @@ import { Ionicons } from "@expo/vector-icons";
 
 export default function Donation_ComponentStoryFunrising({
   id,
+  dataStory,
 }: {
   id: string;
+  dataStory: any;
 }) {
   return (
     <>
@@ -29,12 +31,7 @@ export default function Donation_ComponentStoryFunrising({
               />
             </Grid.Col>
           </Grid>
-          <TextCustom truncate={3}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam,
-            iusto porro quae optio accusantium amet minima deleniti temporibus
-            cum voluptatem vel veniam doloribus blanditiis sapiente deserunt
-            distinctio eaque aliquid laboriosam?
-          </TextCustom>
+          <TextCustom truncate={3}>{dataStory?.pembukaan || "-"}</TextCustom>
         </StackCustom>
       </BaseBox>
     </>

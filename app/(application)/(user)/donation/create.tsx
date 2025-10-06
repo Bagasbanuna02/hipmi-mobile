@@ -11,8 +11,6 @@ import {
   ViewWrapper,
 } from "@/components";
 import DIRECTORY_ID from "@/constants/directory-id";
-import { dummyDonasiDurasi } from "@/lib/dummy-data/donasi/durasi";
-import { dummyDonasiKategori } from "@/lib/dummy-data/donasi/kategori";
 import { apiDonationCreate } from "@/service/api-client/api-donation";
 import { apiMasterDonation } from "@/service/api-client/api-master";
 import { uploadFileService } from "@/service/upload-service";
@@ -109,8 +107,6 @@ export default function DonationCreate() {
         data: newData,
         category: "temporary",
       });
-
-      console.log("[RESPONSE]", JSON.stringify(response, null, 2));
 
       if (!response.success) {
         Toast.show({
@@ -210,8 +206,8 @@ export default function DonationCreate() {
         <ButtonCustom
           isLoading={isLoading}
           onPress={() => {
-            // handlerSubmit();
-            router.push(`/donation/create-story?id=${"dasdsadsa"}`);
+            handlerSubmit();
+            // router.push(`/donation/create-story?id=${"dasdsadsa"}`);
           }}
         >
           Selanjutnya

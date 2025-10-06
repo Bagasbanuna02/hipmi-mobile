@@ -5,25 +5,29 @@ import {
   TextCustom,
   Grid,
 } from "@/components";
+import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
 import React from "react";
 import { View } from "react-native";
 
 export default function Donation_ComponentBoxDetailData({
   bottomSection,
+  data,
 }: {
   bottomSection?: React.ReactNode;
+  data: any;
 }) {
   return (
     <>
       <BaseBox>
         <StackCustom>
-          <DummyLandscapeImage />
+          <DummyLandscapeImage imageId={data?.imageId} />
           <View>
             <TextCustom bold size="large">
-              Judul Donasi: Lorem, ipsum dolor sit amet consectetur adipisicing
-              elit.
+              {data?.title || "-"}
             </TextCustom>
-            <TextCustom size="small">Durasi: 30 hari</TextCustom>
+            <TextCustom size="small">
+              Durasi: {data?.DonasiMaster_Durasi?.name || "-"}
+            </TextCustom>
           </View>
 
           <Grid>
@@ -31,7 +35,7 @@ export default function Donation_ComponentBoxDetailData({
               <View>
                 <TextCustom size="small">Target Dana</TextCustom>
                 <TextCustom truncate={2} size="large" bold color="yellow">
-                  Rp. 7.500.000
+                  Rp. {formatCurrencyDisplay(data?.target) || "-"}
                 </TextCustom>
               </View>
             </Grid.Col>
@@ -39,7 +43,7 @@ export default function Donation_ComponentBoxDetailData({
               <View>
                 <TextCustom size="small">Kategori</TextCustom>
                 <TextCustom size="large" bold color="yellow">
-                  Kegiatan Sosial
+                  {data?.DonasiMaster_Ketegori?.name || "-"}
                 </TextCustom>
               </View>
             </Grid.Col>

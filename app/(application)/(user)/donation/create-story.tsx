@@ -12,8 +12,12 @@ import {
 } from "@/components";
 import DIRECTORY_ID from "@/constants/directory-id";
 import { useAuth } from "@/hooks/use-auth";
-import { apiDonationGetOne } from "@/service/api-client/api-donation";
+import {
+  apiDonationCreate,
+  apiDonationGetOne,
+} from "@/service/api-client/api-donation";
 import { uploadFileService } from "@/service/upload-service";
+import pickFile from "@/utils/pickFile";
 import { router, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import { useEffect, useState } from "react";
@@ -22,7 +26,6 @@ import Toast from "react-native-toast-message";
 export default function DonationCreateStory() {
   const { user } = useAuth();
   const { id } = useLocalSearchParams();
-  console.log("[ID]", id);
   const [temporary, setTemporary] = useState<any>();
   const [data, setData] = useState({
     pembukaan: "",
@@ -30,7 +33,8 @@ export default function DonationCreateStory() {
     namaBank: "",
     rekening: "",
   });
-  const [imageDonasi, setImageDonasi] = useState<string | null>(null);
+  const [imageStory, setImageStory] = useState<string | null>(null);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     onLoadData();
@@ -38,11 +42,12 @@ export default function DonationCreateStory() {
 
   const onLoadData = async () => {
     try {
-      // const response = await apiDonationGetOne({
-      //   id: id as string,
-      //   category: "temporary",
-      // });
-      // console.log("[RES GET ONE]", JSON.stringify(response, null, 2));
+      const response = await apiDonationGetOne({
+        id: id as string,
+        category: "temporary",
+      });
+
+      setTemporary(response.data);
     } catch (error) {
       console.log("[ERROR]", error);
     }
@@ -58,28 +63,51 @@ export default function DonationCreateStory() {
     }
 
     try {
+      setLoading(true);
       const responseUploadImageDonasi = await uploadFileService({
-        imageUri: imageDonasi,
+        imageUri: imageStory,
         dirId: DIRECTORY_ID.donasi_cerita_image,
       });
 
       const newData = {
-        id: temporary?.id,
+        // Data Donasi
+        temporaryId: temporary?.id,
+        authorId: user?.id,
         title: temporary?.title,
         target: temporary?.target,
         donasiMaster_KategoriId: temporary?.donasiMaster_KategoriId,
         donasiMaster_DurasiId: temporary?.donasiMaster_DurasiId,
-        authorId: user?.id,
+        imageId: temporary?.imageId,
+        // Data Bank
         namaBank: data.namaBank,
         rekening: data.rekening,
-        imageId: temporary?.imageId,
-        CeritaDonasi: {
-          pembukaan: data.pembukaan,
-          cerita: data.cerita,
-        },
+        // Data Cerita
+        imageCeritaId: responseUploadImageDonasi.data.id,
+        pembukaan: data.pembukaan,
+        cerita: data.cerita,
       };
+
+      const response = await apiDonationCreate({
+        data: newData,
+        category: "permanent",
+      });
+
+      if (!response.success) {
+        Toast.show({
+          type: "error",
+          text1: "Gagal membuat donasi",
+        });
+      }
+
+      Toast.show({
+        type: "success",
+        text1: "Donasi berhasil disimpan",
+      });
+      router.replace("/donation/status");
     } catch (error) {
       console.log("[ERROR]", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -106,10 +134,15 @@ export default function DonationCreateStory() {
           onChangeText={(value) => setData({ ...data, cerita: value })}
         />
 
-        <LandscapeFrameUploaded />
+        <LandscapeFrameUploaded image={imageStory || ""} />
         <ButtonCenteredOnly
           onPress={() => {
-            router.push("/(application)/(image)/take-picture/123");
+            pickFile({
+              allowedType: "image",
+              setImageUri: ({ uri }) => {
+                setImageStory(uri);
+              },
+            });
           }}
           icon="upload"
         >
@@ -122,17 +155,23 @@ export default function DonationCreateStory() {
           label="Nama Bank"
           placeholder="Masukkan nama bank"
           required
+          value={data.namaBank}
+          onChangeText={(value) => setData({ ...data, namaBank: value })}
         />
         <TextInputCustom
           label="Nomor Rekening"
           placeholder="Masukkan nomor rekening"
           required
+          keyboardType="numeric"
+          value={data.rekening}
+          onChangeText={(value) => setData({ ...data, rekening: value })}
         />
 
         <Spacing />
         <ButtonCustom
+          isLoading={isLoading}
           onPress={() => {
-            router.replace(`/donation/(tabs)/status`);
+            handlerSubmit();
           }}
         >
           Simpan
