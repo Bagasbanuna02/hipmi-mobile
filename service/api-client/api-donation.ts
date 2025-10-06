@@ -80,3 +80,22 @@ export async function apiDonationDelete({ id }: { id: string }) {
     throw error;
   }
 }
+
+export async function apiDonationUpdateData({
+  id,
+  data,
+  category,
+}: {
+  id: string;
+  data: any;
+  category: "edit-donation" | "edit-story" | "edit-bank-account";
+}) {
+  try {
+    const response = await apiConfig.put(`/mobile/donation/${id}?category=${category}`, {
+      data: data,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
