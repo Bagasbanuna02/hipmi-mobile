@@ -1,15 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   AvatarComp,
-  AvatarCustom,
   BaseBox,
   ButtonCustom,
-  CenterCustom,
   Grid,
   LoaderCustom,
   Spacing,
   TextCustom,
-  ViewWrapper,
+  ViewWrapper
 } from "@/components";
 import Donation_BoxPublish from "@/screens/Donation/BoxPublish";
 import { apiDonationFundrising } from "@/service/api-client/api-donation";

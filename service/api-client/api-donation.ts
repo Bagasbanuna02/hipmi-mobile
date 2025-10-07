@@ -103,20 +103,63 @@ export async function apiDonationUpdateData({
   }
 }
 
-export async function apiDonationGetAll() {
+export async function apiDonationGetAll({
+  category,
+  authorId,
+}: {
+  category: "beranda" | "my-donation";
+  authorId?: string;
+}) {
+    const authorQuery = authorId ? `&authorId=${authorId}` : "";
   try {
-    const response = await apiConfig.get(`/mobile/donation`);
+    const response = await apiConfig.get(
+      `/mobile/donation?category=${category}${authorQuery}`
+    );
     return response.data;
   } catch (error) {
     throw error;
   }
 }
 
-export async function apiDonationFundrising({id}: {id: string}) {
-    try {
-        const response = await apiConfig.get(`/mobile/donation/${id}/fundrising`);
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+export async function apiDonationFundrising({ id }: { id: string }) {
+  try {
+    const response = await apiConfig.get(`/mobile/donation/${id}/fundrising`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiDonationCreateDonatur({
+  id,
+  data,
+}: {
+  id: string;
+  data: any;
+}) {
+  try {
+    const response = await apiConfig.post(`/mobile/donation/${id}/donatur`, {
+      data: data,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiDonationCreateInvoice({
+  id,
+  data,
+}: {
+  id: string;
+  data: any;
+}) {
+  try {
+    const response = await apiConfig.post(`/mobile/donation/${id}/invoice`, {
+      data: data,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 }

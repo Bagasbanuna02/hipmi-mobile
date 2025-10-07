@@ -23,7 +23,9 @@ export default function DonationBeranda() {
   const onLoadData = async () => {
     try {
       setLoadList(true);
-      const response = await apiDonationGetAll();
+      const response = await apiDonationGetAll({
+        category: "beranda"
+      });
       console.log("[RES GET ALL]", JSON.stringify(response.data, null, 2));
 
       setList(response.data);
@@ -44,7 +46,7 @@ export default function DonationBeranda() {
       {loadList ? (
         <LoaderCustom />
       ) : _.isEmpty(list) ? (
-        <TextCustom>Belum ada data</TextCustom>
+        <TextCustom align="center" color="gray">Belum ada donasi</TextCustom>
       ) : (
         list?.map((item: any, index: number) => (
           <Donation_BoxPublish data={item} key={index} id={item.id} />

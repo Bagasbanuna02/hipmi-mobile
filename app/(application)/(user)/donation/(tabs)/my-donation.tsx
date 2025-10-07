@@ -3,74 +3,124 @@ import {
   BaseBox,
   DummyLandscapeImage,
   Grid,
+  LoaderCustom,
   StackCustom,
   TextCustom,
   ViewWrapper,
 } from "@/components";
+import { useAuth } from "@/hooks/use-auth";
 import { dummyMasterStatusTransaction } from "@/lib/dummy-data/_master/status-transaction";
-import { router } from "expo-router";
+import { apiDonationGetAll } from "@/service/api-client/api-donation";
+import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
+import { Href, router, useFocusEffect } from "expo-router";
+import _ from "lodash";
+import { useCallback, useState } from "react";
 import { View } from "react-native";
 
 export default function DonationMyDonation() {
-  const randomStatusData = Array.from({ length: 10 }, () => {
-    const randomIndex = Math.floor(
-      Math.random() * dummyMasterStatusTransaction.length
-    );
-    return dummyMasterStatusTransaction[randomIndex];
-  });
+  const { user } = useAuth();
+  const [list, setList] = useState<any[] | null>(null);
+  const [loadList, setLoadList] = useState(false);
 
-  const handlePress = (value: string) => {
-    if (value === "menunggu") {
-      router.push(`/donation/${value}/(transaction-flow)/123/invoice`);
-    } else if (value === "proses") {
-      router.push(`/donation/${value}/(transaction-flow)/123/process`);
-    } else if (value === "berhasil") {
-      router.push(`/donation/${value}/(transaction-flow)/123/success`);
-    } else if (value === "gagal") {
-      router.push(`/donation/${value}/(transaction-flow)/123/failed`);
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [])
+  );
+
+  const onLoadData = async () => {
+    try {
+      setLoadList(true);
+      const response = await apiDonationGetAll({
+        category: "my-donation",
+        authorId: user?.id,
+      });
+      console.log(
+        "[RES GET MY DONATION]",
+        JSON.stringify(response.data, null, 2)
+      );
+
+      setList(response.data);
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setLoadList(false);
+    }
+  };
+
+  const handlePress = ({
+    invoiceId,
+    donationId,
+    status,
+  }: {
+    invoiceId: string;
+    donationId: string;
+    status: string;
+  }) => {
+    const url: Href = `../${donationId}/(transaction-flow)/${invoiceId}/invoice`;
+    if (status === "menunggu") {
+      router.push(url);
+    } else if (status === "proses") {
+      router.push(url);
+    } else if (status === "berhasil") {
+      router.push(url);
+    } else if (status === "gagal") {
+      router.push(url);
     }
   };
 
   return (
     <ViewWrapper hideFooter>
-      {randomStatusData.map((item, index) => (
-        <BaseBox
-          key={index}
-          paddingTop={7}
-          paddingBottom={7}
-          onPress={() => {
-            handlePress(item.value);
-          }}
-        >
-          <Grid>
-            <Grid.Col span={5}>
-              <DummyLandscapeImage height={100} unClickPath />
-            </Grid.Col>
-            <Grid.Col span={1}>
-              <View />
-            </Grid.Col>
-            <Grid.Col span={6}>
-              <StackCustom gap={"sm"}>
-                <View>
-                  <TextCustom truncate>
-                    Judul Donasi: Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit.
+      {loadList ? (
+        <LoaderCustom />
+      ) : _.isEmpty(list) ? (
+        <TextCustom align="center" color="gray">
+          Belum ada transaksi
+        </TextCustom>
+      ) : (
+        list?.map((item, index) => (
+          <BaseBox
+            key={index}
+            paddingTop={7}
+            paddingBottom={7}
+            onPress={() => {
+              handlePress({
+                status: _.lowerCase(item.statusInvoice),
+                invoiceId: item.id,
+                donationId: item.donasiId,
+              });
+            }}
+          >
+            <Grid>
+              <Grid.Col span={5}>
+                <DummyLandscapeImage
+                  height={100}
+                  unClickPath
+                  imageId={item.imageId}
+                />
+              </Grid.Col>
+              <Grid.Col span={1}>
+                <View />
+              </Grid.Col>
+              <Grid.Col span={6}>
+                <StackCustom>
+                  <TextCustom truncate={2} bold>
+                    {item.title || "-"}
                   </TextCustom>
-                </View>
-                <View>
-                  <TextCustom>Donasi Saya</TextCustom>
+
                   <TextCustom bold color="yellow">
-                    Rp. 7.500.000
+                    Rp. {formatCurrencyDisplay(item.nominal)}
                   </TextCustom>
-                </View>
-                <BadgeCustom variant="light" color={item.color} fullWidth>
-                  {item.label}
-                </BadgeCustom>
-              </StackCustom>
-            </Grid.Col>
-          </Grid>
-        </BaseBox>
-      ))}
+
+                  <BadgeCustom variant="light" color={item.color} fullWidth>
+                    {item.statusInvoice}
+                  </BadgeCustom>
+                </StackCustom>
+              </Grid.Col>
+            </Grid>
+          </BaseBox>
+        ))
+      )}
     </ViewWrapper>
   );
 }

@@ -13,12 +13,15 @@ import { MainColor } from "@/constants/color-palet";
 import { router, useLocalSearchParams } from "expo-router";
 
 export default function DonationInvoice() {
-  const { id, transaction } = useLocalSearchParams();
+  const { invoiceId } = useLocalSearchParams();
+  console.log("invoiceId", invoiceId);
   return (
     <>
       <ViewWrapper>
         <StackCustom>
-          <InformationBox text={`Mohon transfer donasi anda ke rekening dibawah dengan Id: ${transaction}`} />
+          <InformationBox
+            text={`Mohon transfer donasi anda ke rekening dibawah dengan Id: ${invoiceId}`}
+          />
           <BaseBox>
             <StackCustom gap={"xs"}>
               <TextCustom>Nama BANK</TextCustom>
@@ -97,7 +100,7 @@ export default function DonationInvoice() {
 
           <ButtonCustom
             onPress={() => {
-              router.push(`/donation/${id}/(transaction-flow)/process`);
+              router.push(`/donation/${invoiceId}/(transaction-flow)/process`);
             }}
           >
             Saya Sudah Transfer

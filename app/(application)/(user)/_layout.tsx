@@ -449,7 +449,7 @@ export default function UserLayout() {
           }}
         />
         <Stack.Screen
-          name="donation/[id]/(transaction-flow)/[transaction]/invoice"
+          name="donation/[id]/(transaction-flow)/[invoiceId]/invoice"
           options={{
             title: "Invoice",
             headerLeft: () => (
