@@ -91,11 +91,32 @@ export async function apiDonationUpdateData({
   category: "edit-donation" | "edit-story" | "edit-bank-account";
 }) {
   try {
-    const response = await apiConfig.put(`/mobile/donation/${id}?category=${category}`, {
-      data: data,
-    });
+    const response = await apiConfig.put(
+      `/mobile/donation/${id}?category=${category}`,
+      {
+        data: data,
+      }
+    );
     return response.data;
   } catch (error) {
     throw error;
   }
+}
+
+export async function apiDonationGetAll() {
+  try {
+    const response = await apiConfig.get(`/mobile/donation`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiDonationFundrising({id}: {id: string}) {
+    try {
+        const response = await apiConfig.get(`/mobile/donation/${id}/fundrising`);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
 }

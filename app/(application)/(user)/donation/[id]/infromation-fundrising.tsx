@@ -1,32 +1,74 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
+  AvatarComp,
   AvatarCustom,
   BaseBox,
   ButtonCustom,
   CenterCustom,
   Grid,
+  LoaderCustom,
   Spacing,
   TextCustom,
-  ViewWrapper
+  ViewWrapper,
 } from "@/components";
 import Donation_BoxPublish from "@/screens/Donation/BoxPublish";
-import React from "react";
+import { apiDonationFundrising } from "@/service/api-client/api-donation";
+import { useFocusEffect, useLocalSearchParams } from "expo-router";
+import _ from "lodash";
+import React, { useCallback, useState } from "react";
+import { View } from "react-native";
 
 export default function DonationInformationFunrising() {
+  const { id } = useLocalSearchParams();
+  const [data, setData] = useState<any>();
+  const [list, setList] = useState<any[] | null>(null);
+  const [loadList, setLoadList] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [id])
+  );
+
+  const onLoadData = async () => {
+    try {
+      setLoadList(true);
+      const response = await apiDonationFundrising({ id: id as string });
+      console.log(
+        "[RES GET FUNDRISING]",
+        JSON.stringify(response.data, null, 2)
+      );
+
+      setData(response?.data?.user);
+      setList(response?.data?.donasi);
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setLoadList(false);
+    }
+  };
+
   return (
     <>
       <ViewWrapper>
         <BaseBox>
           <Grid>
             <Grid.Col span={6} style={{ justifyContent: "center" }}>
-              <CenterCustom>
-                <AvatarCustom size="lg" />
+              <View
+                style={{
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 10,
+                }}
+              >
+                <AvatarComp size="lg" fileId={data?.Profile?.imageId} />
                 <TextCustom bold size="large" truncate>
-                  @Username
+                  @{data?.username}
                 </TextCustom>
-              </CenterCustom>
+              </View>
             </Grid.Col>
             <Grid.Col span={6} style={{ justifyContent: "center" }}>
-              <ButtonCustom href={`/profile/1234`}>
+              <ButtonCustom href={`/profile/${data?.Profile?.id}`}>
                 Kunjungi Profile
               </ButtonCustom>
             </Grid.Col>
@@ -35,9 +77,15 @@ export default function DonationInformationFunrising() {
 
         <Spacing />
 
-        {Array.from({ length: 10 }).map((_, index) => (
-          <Donation_BoxPublish key={index} id={index.toString()} />
-        ))}
+        {loadList ? (
+          <LoaderCustom />
+        ) : _.isEmpty(list) ? (
+          <TextCustom>Belum ada data</TextCustom>
+        ) : (
+          list?.map((item: any, index: number) => (
+            <Donation_BoxPublish key={index} id={item?.id} data={item} />
+          ))
+        )}
       </ViewWrapper>
     </>
   );

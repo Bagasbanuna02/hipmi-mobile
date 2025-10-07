@@ -11,13 +11,16 @@ import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function Donation_ComponentInfoFundrising({
-  id,
+  dataAuthor,
 }: {
-  id: string;
+  dataAuthor: any;
 }) {
   return (
     <>
-      <BaseBox href={`/donation/${id}/infromation-fundrising`} style={{paddingBottom: 0}}>
+      <BaseBox
+        href={`/donation/${dataAuthor?.id}/infromation-fundrising`}
+        style={{ paddingBottom: 0 }}
+      >
         <StackCustom gap={"xs"}>
           <Grid>
             <Grid.Col span={10}>
@@ -37,10 +40,12 @@ export default function Donation_ComponentInfoFundrising({
             </Grid.Col>
           </Grid>
 
-          <AvatarUsernameAndOtherComponent />
-          <InformationBox
-            text="Semua dana yang terkumpul akan disalurkan ke penggalang dana, kabar penyaluran dapat dilihat di halaman kabar terbaru."
+          <AvatarUsernameAndOtherComponent
+            avatar={dataAuthor?.Profile?.imageId}
+            name={dataAuthor?.username}
+            avatarHref={`/profile/${dataAuthor?.Profile?.id}`}
           />
+          <InformationBox text="Semua dana yang terkumpul akan disalurkan ke penggalang dana, kabar penyaluran dapat dilihat di halaman kabar terbaru." />
         </StackCustom>
       </BaseBox>
     </>

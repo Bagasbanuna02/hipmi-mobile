@@ -8,27 +8,42 @@ import {
 } from "@/components";
 import { View } from "react-native";
 
-export default function Donation_BoxPublish({ id }: { id: string }) {
+export default function Donation_BoxPublish({
+  id,
+  data,
+}: {
+  id: string;
+  data: any;
+}) {
   return (
     <>
       <BaseBox paddingTop={7} paddingBottom={7} href={`/donation/${id}`}>
         <Grid>
           <Grid.Col span={5}>
-            <DummyLandscapeImage unClickPath height={100} />
+            <DummyLandscapeImage
+              unClickPath
+              height={100}
+              imageId={data?.imageId}
+            />
           </Grid.Col>
           <Grid.Col span={1}>
             <View />
           </Grid.Col>
           <Grid.Col span={6}>
             <StackCustom>
-              <View>
-                <TextCustom truncate>
-                  Judul Donasi: Lorem ipsum dolor sit amet consectetur
-                  adipisicing elit.
+              <View style={{ gap: 10 }}>
+                <TextCustom truncate={2} bold>
+                  {data?.title || "-"}
                 </TextCustom>
-                <TextCustom size="small">Sisa hari: 0</TextCustom>
+                <TextCustom size="small">
+                  Sisa hari: {data?.durasiDonasi || 0}
+                </TextCustom>
               </View>
-              <ProgressCustom value={(Number(id) % 5) * 20} size="lg" />
+              <ProgressCustom
+                label={data?.progres + "%" || "0%"}
+                value={data?.progres || 0}
+                size="lg"
+              />
               {/* <TextCustom>
                  Terkumpul : Rp 300.000
                 </TextCustom> */}

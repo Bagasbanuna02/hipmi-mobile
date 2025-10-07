@@ -1,11 +1,39 @@
 import {
   FloatingButton,
-  ViewWrapper
+  LoaderCustom,
+  TextCustom,
+  ViewWrapper,
 } from "@/components";
 import Donation_BoxPublish from "@/screens/Donation/BoxPublish";
-import { router } from "expo-router";
+import { apiDonationGetAll } from "@/service/api-client/api-donation";
+import { router, useFocusEffect } from "expo-router";
+import _ from "lodash";
+import { useCallback, useState } from "react";
 
 export default function DonationBeranda() {
+  const [list, setList] = useState<any[] | null>(null);
+  const [loadList, setLoadList] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [])
+  );
+
+  const onLoadData = async () => {
+    try {
+      setLoadList(true);
+      const response = await apiDonationGetAll();
+      console.log("[RES GET ALL]", JSON.stringify(response.data, null, 2));
+
+      setList(response.data);
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setLoadList(false);
+    }
+  };
+
   return (
     <ViewWrapper
       hideFooter
@@ -13,9 +41,15 @@ export default function DonationBeranda() {
         <FloatingButton onPress={() => router.push("/donation/create")} />
       }
     >
-      {Array.from({ length: 10 }).map((_, index) => (
-        <Donation_BoxPublish key={index} id={index.toString()}/>
-      ))}
+      {loadList ? (
+        <LoaderCustom />
+      ) : _.isEmpty(list) ? (
+        <TextCustom>Belum ada data</TextCustom>
+      ) : (
+        list?.map((item: any, index: number) => (
+          <Donation_BoxPublish data={item} key={index} id={item.id} />
+        ))
+      )}
     </ViewWrapper>
   );
 }
