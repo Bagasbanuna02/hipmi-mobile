@@ -1,11 +1,6 @@
-import {
-  BaseBox,
-  StackCustom,
-  TextCustom,
-  ViewWrapper
-} from "@/components";
-import { MainColor } from "@/constants/color-palet";
-import { ActivityIndicator } from "react-native";
+import { BaseBox, StackCustom, TextCustom, ViewWrapper } from "@/components";
+import MoneyTransferAnimation from "@/components/_ShareComponent/MoneyTransferAnimation";
+import { View } from "react-native";
 
 export default function InvestmentProcess() {
   return (
@@ -17,7 +12,9 @@ export default function InvestmentProcess() {
               Admin sedang memvalidasi data dan bukti transfer anda. Mohon
               tunggu proses ini selesai.
             </TextCustom>
-            <ActivityIndicator size="large" color={MainColor.yellow} />
+            <View style={{ alignItems: "center", justifyContent: "center" }}>
+              <MoneyTransferAnimation />
+            </View>
           </StackCustom>
         </BaseBox>
 

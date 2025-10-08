@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   BadgeCustom,
   BaseBox,
@@ -9,7 +10,6 @@ import {
   ViewWrapper,
 } from "@/components";
 import { useAuth } from "@/hooks/use-auth";
-import { dummyMasterStatusTransaction } from "@/lib/dummy-data/_master/status-transaction";
 import { apiDonationGetAll } from "@/service/api-client/api-donation";
 import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
 import { Href, router, useFocusEffect } from "expo-router";
@@ -25,7 +25,7 @@ export default function DonationMyDonation() {
   useFocusEffect(
     useCallback(() => {
       onLoadData();
-    }, [])
+    }, [user?.id])
   );
 
   const onLoadData = async () => {
@@ -48,6 +48,18 @@ export default function DonationMyDonation() {
     }
   };
 
+  const handlerColor = (status: string) => {
+    if (status === "menunggu") {
+      return "orange";
+    } else if (status === "proses") {
+      return "white";
+    } else if (status === "berhasil") {
+      return "green";
+    } else if (status === "gagal") {
+      return "red";
+    }
+  };
+
   const handlePress = ({
     invoiceId,
     donationId,
@@ -57,15 +69,15 @@ export default function DonationMyDonation() {
     donationId: string;
     status: string;
   }) => {
-    const url: Href = `../${donationId}/(transaction-flow)/${invoiceId}/invoice`;
+    const url: Href = `../${donationId}/(transaction-flow)/${invoiceId}`;
     if (status === "menunggu") {
-      router.push(url);
+      router.push(`${url}/invoice`);
     } else if (status === "proses") {
-      router.push(url);
+      router.push(`${url}/process`);
     } else if (status === "berhasil") {
-      router.push(url);
+      router.push(`${url}/success`);
     } else if (status === "gagal") {
-      router.push(url);
+      router.push(`${url}/failed`);
     }
   };
 
@@ -112,7 +124,11 @@ export default function DonationMyDonation() {
                     Rp. {formatCurrencyDisplay(item.nominal)}
                   </TextCustom>
 
-                  <BadgeCustom variant="light" color={item.color} fullWidth>
+                  <BadgeCustom
+                    variant="light"
+                    color={handlerColor(_.lowerCase(item.statusInvoice))}
+                    fullWidth
+                  >
                     {item.statusInvoice}
                   </BadgeCustom>
                 </StackCustom>

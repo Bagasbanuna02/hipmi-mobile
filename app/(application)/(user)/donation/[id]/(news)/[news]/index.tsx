@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   AlertDefaultSystem,
   BackButton,
@@ -12,13 +13,42 @@ import {
 } from "@/components";
 import { IconEdit } from "@/components/_Icon";
 import { IconTrash } from "@/components/_Icon/IconTrash";
+import { useAuth } from "@/hooks/use-auth";
+import { apiDonationGetNewsById } from "@/service/api-client/api-donation";
+import { formatChatTime } from "@/utils/formatChatTime";
 import dayjs from "dayjs";
-import { router, Stack, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import {
+  router,
+  Stack,
+  useFocusEffect,
+  useLocalSearchParams,
+} from "expo-router";
+import { useCallback, useState } from "react";
 
 export default function DonationNews() {
-  const { id, news } = useLocalSearchParams();
+  const { user } = useAuth();
+  const { news } = useLocalSearchParams();
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [data, setData] = useState<any>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [news])
+  );
+
+  const onLoadData = async () => {
+    try {
+      const response = await apiDonationGetNewsById({
+        id: news as string,
+        category: "get-one",
+      });
+
+      setData(response.data);
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  };
 
   return (
     <>
@@ -26,28 +56,28 @@ export default function DonationNews() {
         options={{
           title: "Detail Kabar",
           headerLeft: () => <BackButton />,
-          headerRight: () => <DotButton onPress={() => setOpenDrawer(true)} />,
+          headerRight: () =>
+            user?.id === data && data?.authorId && (
+              <DotButton onPress={() => setOpenDrawer(true)} />
+            ),
         }}
       />
       <ViewWrapper>
         <BaseBox>
           <StackCustom>
             <TextCustom style={{ alignSelf: "flex-end" }}>
-              {dayjs().format("DD MMM YYYY")}
+              {formatChatTime(data?.createdAt)}
             </TextCustom>
 
-            <DummyLandscapeImage />
+            {data && data.imageId && (
+              <DummyLandscapeImage imageId={data.imageId} />
+            )}
 
             <TextCustom bold size="large" align="center">
-              Judul Berita
+              {data?.title || "-"}
             </TextCustom>
 
-            <TextCustom>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente
-              est id temporibus perferendis eos reiciendis reprehenderit tempora
-              ut quibusdam dolores facilis rerum exercitationem recusandae quis
-              neque, adipisci dolorum, aspernatur labore?
-            </TextCustom>
+            <TextCustom>{data?.deskripsi || "-"}</TextCustom>
           </StackCustom>
         </BaseBox>
       </ViewWrapper>
@@ -62,12 +92,12 @@ export default function DonationNews() {
             {
               icon: <IconEdit />,
               label: "Edit Berita",
-              path: `/donation/${id}/(news)/${news}/edit-news` as any,
+              path: `/donation/[id]/(news)/${news}/edit-news` as any,
             },
             {
               icon: <IconTrash />,
               label: "Hapus Berita",
-              path: `` as any,
+              path: `/donation/[id]/(news)/${news}/edit-news` as any,
               color: "red",
             },
           ]}

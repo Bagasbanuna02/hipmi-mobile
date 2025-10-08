@@ -1,13 +1,6 @@
-import {
-  BaseBox,
-  Grid,
-  StackCustom,
-  TextCustom,
-  ViewWrapper,
-} from "@/components";
-import { MainColor } from "@/constants/color-palet";
-import { Ionicons } from "@expo/vector-icons";
-import { ActivityIndicator } from "react-native";
+import { BaseBox, StackCustom, TextCustom, ViewWrapper } from "@/components";
+import MoneyTransferAnimation from "@/components/_ShareComponent/MoneyTransferAnimation";
+import { View } from "react-native";
 
 export default function DonationProcess() {
   return (
@@ -16,13 +9,16 @@ export default function DonationProcess() {
         <BaseBox>
           <StackCustom>
             <TextCustom align="center" bold>
-              Admin sedang memproses transaksi donasimu
+              Admin sedang memvalidasi data dan bukti transfer anda. Mohon
+              tunggu proses ini selesai.
             </TextCustom>
-            <ActivityIndicator size="large" color={MainColor.yellow} />
+            <View style={{ alignItems: "center", justifyContent: "center" }}>
+              <MoneyTransferAnimation />
+            </View>
           </StackCustom>
         </BaseBox>
 
-        <BaseBox>
+        {/* <BaseBox>
           <Grid>
             <Grid.Col span={10} style={{ justifyContent: "center" }}>
               <TextCustom size="small">
@@ -38,7 +34,7 @@ export default function DonationProcess() {
               />
             </Grid.Col>
           </Grid>
-        </BaseBox>
+        </BaseBox> */}
       </ViewWrapper>
     </>
   );

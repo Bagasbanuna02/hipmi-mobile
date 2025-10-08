@@ -22,7 +22,6 @@ export default function InvestmentInputDonation() {
 
   const handlerSubmit = async () => {
     try {
-      console.log("jumlah", nominal);
       await AsyncStorage.setItem(
         LOCAL_STORAGE_KEY.transactionDonation,
         JSON.stringify({ nominal: nominal.toString() })
@@ -77,6 +76,7 @@ export default function InvestmentInputDonation() {
 
         <BaseBox>
           <TextInputCustom
+            keyboardType="numeric"
             label="Nominal lainnya"
             placeholder="0"
             iconLeft="Rp."

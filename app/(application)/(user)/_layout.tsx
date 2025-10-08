@@ -10,7 +10,6 @@ export default function UserLayout() {
   return (
     <>
       <Stack screenOptions={HeaderStyles}>
-
         <Stack.Screen
           name="waiting-room"
           options={{
@@ -463,7 +462,7 @@ export default function UserLayout() {
           }}
         />
         <Stack.Screen
-          name="donation/[id]/(transaction-flow)/[transaction]/process"
+          name="donation/[id]/(transaction-flow)/[invoiceId]/process"
           options={{
             title: "Proses",
             headerLeft: () => (
@@ -477,14 +476,14 @@ export default function UserLayout() {
           }}
         />
         <Stack.Screen
-          name="donation/[id]/(transaction-flow)/[transaction]/success"
+          name="donation/[id]/(transaction-flow)/[invoiceId]/success"
           options={{
             title: "Donasi Berhasil",
             headerLeft: () => <BackButton />,
           }}
         />
         <Stack.Screen
-          name="donation/[id]/(transaction-flow)/[transaction]/failed"
+          name="donation/[id]/(transaction-flow)/[invoiceId]/failed"
           options={{
             title: "Donasi Gagal",
             headerLeft: () => <BackButton />,

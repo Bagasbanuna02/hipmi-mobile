@@ -7,19 +7,16 @@ import {
 import { RadioCustom, RadioGroup } from "@/components/Radio/RadioCustom";
 import { LOCAL_STORAGE_KEY } from "@/constants/local-storage-key";
 import { useAuth } from "@/hooks/use-auth";
-import { dummyMasterBank } from "@/lib/dummy-data/_master/bank";
 import { apiDonationCreateInvoice } from "@/service/api-client/api-donation";
 import { apiMasterBank } from "@/service/api-client/api-master";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function DonationSelectBank() {
   const { user } = useAuth();
   const { id } = useLocalSearchParams();
-
-  console.log("id", id);
   const [select, setSelect] = useState<any | number>("");
   const [listBank, setListBank] = useState<any>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -54,22 +51,16 @@ export default function DonationSelectBank() {
           authorId: user?.id,
         };
 
-        console.log("[NEW DATA]", newData);
-
         const response = await apiDonationCreateInvoice({
           id: id as string,
           data: newData,
         });
-        console.log("[RESPONSE CREATE>>]", response);
 
         if (response.success) {
           const invoiceId = response.data.id;
 
-          const delStorage = await AsyncStorage.removeItem(
-            LOCAL_STORAGE_KEY.transactionDonation
-          );
+          await AsyncStorage.removeItem(LOCAL_STORAGE_KEY.transactionDonation);
 
-          console.log("[DEL STORAGE]", delStorage);
           router.replace(
             `/(application)/(user)/donation/[id]/(transaction-flow)/${invoiceId}/invoice`
           );
