@@ -19,7 +19,6 @@ import Toast from "react-native-toast-message";
 
 export default function DonationAddNews() {
   const { id } = useLocalSearchParams();
-  console.log("[ID]", id);
   const [data, setData] = useState({
     title: "",
     deskripsi: "",
@@ -47,8 +46,6 @@ export default function DonationAddNews() {
         id: id as string,
         data: newData,
       });
-
-      console.log("[RESPONSE]", JSON.stringify(response, null, 2));
 
       if (!response.success) {
         Toast.show({

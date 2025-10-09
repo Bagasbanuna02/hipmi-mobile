@@ -32,10 +32,6 @@ export default function DonationInformationFunrising() {
     try {
       setLoadList(true);
       const response = await apiDonationFundrising({ id: id as string });
-      console.log(
-        "[RES GET FUNDRISING]",
-        JSON.stringify(response.data, null, 2)
-      );
 
       setData(response?.data?.user);
       setList(response?.data?.donasi);
@@ -78,7 +74,7 @@ export default function DonationInformationFunrising() {
         {loadList ? (
           <LoaderCustom />
         ) : _.isEmpty(list) ? (
-          <TextCustom>Belum ada data</TextCustom>
+          <TextCustom align="center" color="gray" size="small">Belum ada data</TextCustom>
         ) : (
           list?.map((item: any, index: number) => (
             <Donation_BoxPublish key={index} id={item?.id} data={item} />

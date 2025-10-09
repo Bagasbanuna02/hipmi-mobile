@@ -213,9 +213,43 @@ export async function apiDonationCreateNews({
   }
 }
 
-export async function apiDonationGetNewsById({ id , category}: { id: string , category: "get-all" | "get-one"}) {
+export async function apiDonationGetNewsById({
+  id,
+  category,
+}: {
+  id: string;
+  category: "get-all" | "get-one";
+}) {
   try {
-    const response = await apiConfig.get(`/mobile/donation/${id}/news?category=${category}`);
+    const response = await apiConfig.get(
+      `/mobile/donation/${id}/news?category=${category}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiDonationUpdateNews({
+  id,
+  data,
+}: {
+  id: string;
+  data: any;
+}) {
+  try {
+    const response = await apiConfig.put(`/mobile/donation/${id}/news`, {
+      data: data,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiDonationDeleteNews({ id }: { id: string }) {
+  try {
+    const response = await apiConfig.delete(`/mobile/donation/${id}/news`);
     return response.data;
   } catch (error) {
     throw error;

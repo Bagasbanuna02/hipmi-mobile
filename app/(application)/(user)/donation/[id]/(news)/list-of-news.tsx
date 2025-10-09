@@ -12,7 +12,6 @@ import {
 import { IconPlus } from "@/components/_Icon";
 import { apiDonationGetNewsById } from "@/service/api-client/api-donation";
 import { formatChatTime } from "@/utils/formatChatTime";
-import dayjs from "dayjs";
 import {
   router,
   Stack,
@@ -42,7 +41,6 @@ export default function DonationRecapOfNews() {
         category: "get-all",
       });
 
-      console.log("[RESPONSE LIST]", JSON.stringify(response, null, 2));
       setList(response.data);
     } catch (error) {
       console.log("[ERROR]", error);

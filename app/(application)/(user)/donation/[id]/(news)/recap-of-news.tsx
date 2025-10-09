@@ -13,7 +13,6 @@ import {
 import { IconPlus } from "@/components/_Icon";
 import { apiDonationGetNewsById } from "@/service/api-client/api-donation";
 import { formatChatTime } from "@/utils/formatChatTime";
-import dayjs from "dayjs";
 import {
   router,
   Stack,
@@ -25,7 +24,6 @@ import { useCallback, useState } from "react";
 
 export default function DonationRecapOfNews() {
   const { id } = useLocalSearchParams();
-  console.log("[ID]", id);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [list, setList] = useState<any[] | null>(null);
   const [loadList, setLoadList] = useState<boolean>(false);
@@ -44,7 +42,6 @@ export default function DonationRecapOfNews() {
         category: "get-all",
       });
 
-      console.log("[RESPONSE LIST]", JSON.stringify(response, null, 2));
       setList(response.data);
     } catch (error) {
       console.log("[ERROR]", error);

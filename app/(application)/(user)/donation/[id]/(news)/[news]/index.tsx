@@ -14,9 +14,11 @@ import {
 import { IconEdit } from "@/components/_Icon";
 import { IconTrash } from "@/components/_Icon/IconTrash";
 import { useAuth } from "@/hooks/use-auth";
-import { apiDonationGetNewsById } from "@/service/api-client/api-donation";
+import {
+  apiDonationDeleteNews,
+  apiDonationGetNewsById,
+} from "@/service/api-client/api-donation";
 import { formatChatTime } from "@/utils/formatChatTime";
-import dayjs from "dayjs";
 import {
   router,
   Stack,
@@ -24,6 +26,7 @@ import {
   useLocalSearchParams,
 } from "expo-router";
 import { useCallback, useState } from "react";
+import Toast from "react-native-toast-message";
 
 export default function DonationNews() {
   const { user } = useAuth();
@@ -57,7 +60,7 @@ export default function DonationNews() {
           title: "Detail Kabar",
           headerLeft: () => <BackButton />,
           headerRight: () =>
-            user?.id === data && data?.authorId && (
+            user?.id === data?.authorId && (
               <DotButton onPress={() => setOpenDrawer(true)} />
             ),
         }}
@@ -97,7 +100,7 @@ export default function DonationNews() {
             {
               icon: <IconTrash />,
               label: "Hapus Berita",
-              path: `/donation/[id]/(news)/${news}/edit-news` as any,
+              path: "",
               color: "red",
             },
           ]}
@@ -109,7 +112,23 @@ export default function DonationNews() {
                 message: "Apakah Anda yakin ingin menghapus berita ini?",
                 textLeft: "Batal",
                 textRight: "Hapus",
-                onPressRight: () => {
+                onPressRight: async () => {
+                  const response = await apiDonationDeleteNews({
+                    id: news as string,
+                  });
+
+                  if (!response.success) {
+                    Toast.show({
+                      type: "error",
+                      text1: "Gagal menghapus berita",
+                    });
+                    return;
+                  }
+
+                  Toast.show({
+                    type: "success",
+                    text1: "Berita berhasil dihapus",
+                  });
                   router.back();
                 },
               });
