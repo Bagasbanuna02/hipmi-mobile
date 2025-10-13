@@ -1,9 +1,19 @@
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import { AccentColor } from "@/constants/color-palet";
 import { ICON_SIZE_MEDIUM } from "@/constants/constans-value";
-import { Ionicons,  FontAwesome5, FontAwesome, Fontisto } from "@expo/vector-icons";
+import {
+  FontAwesome,
+  Fontisto,
+  Ionicons
+} from "@expo/vector-icons";
 
-export const drawerItemsPortofolio = ({ id }: { id: string }): IMenuDrawerItem[] => [
+export const drawerItemsPortofolio = ({
+  id,
+  maps,
+}: {
+  id: string;
+  maps: any;
+}): IMenuDrawerItem[] => [
   {
     icon: (
       <Ionicons
@@ -45,18 +55,20 @@ export const drawerItemsPortofolio = ({ id }: { id: string }): IMenuDrawerItem[]
         color={AccentColor.white}
       />
     ),
-    label: "Edit Map",
-    path: `/(application)/maps/${id}/edit`,
+    label: `${!maps ? "Tambah" : "Edit"} Map`,
+    path: !maps
+      ? `/(application)/maps/create?id=${id}`
+      : `/(application)/maps/${maps?.id}/edit`,
   },
-  {
-    icon: (
-      <FontAwesome5
-        name="map-pin"
-        size={ICON_SIZE_MEDIUM}
-        color={AccentColor.white}
-      />
-    ),
-    label: "Custom Pin Map",
-    path: `/(application)/maps/${id}/custom-pin`,
-  },
+  // {
+  //   icon: (
+  //     <FontAwesome5
+  //       name="map-pin"
+  //       size={ICON_SIZE_MEDIUM}
+  //       color={AccentColor.white}
+  //     />
+  //   ),
+  //   label: "Custom Pin Map",
+  //   path: `/(application)/maps/${id}/custom-pin`,
+  // },
 ];

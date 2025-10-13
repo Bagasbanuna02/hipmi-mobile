@@ -1,8 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { DrawerCustom, LoaderCustom, Spacing, StackCustom } from "@/components";
+import {
+  ButtonCustom,
+  DrawerCustom,
+  DummyLandscapeImage,
+  LoaderCustom,
+  Spacing,
+  StackCustom,
+  TextCustom,
+} from "@/components";
 import LeftButtonCustom from "@/components/Button/BackButton";
+import GridTwoView from "@/components/_ShareComponent/GridTwoView";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { MainColor } from "@/constants/color-palet";
+import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import { useAuth } from "@/hooks/use-auth";
 import Portofolio_BusinessLocation from "@/screens/Portofolio/BusinessLocationSection";
 import Portofolio_ButtonDelete from "@/screens/Portofolio/ButtonDelete";
@@ -13,19 +23,20 @@ import Portofolio_SocialMediaSection from "@/screens/Portofolio/SocialMediaSecti
 import { apiGetOnePortofolio } from "@/service/api-client/api-portofolio";
 import { apiUser } from "@/service/api-client/api-user";
 import { GStyles } from "@/styles/global-styles";
-import { Ionicons } from "@expo/vector-icons";
+import { openInDeviceMaps } from "@/utils/openInDeviceMaps";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { Stack, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
 import { TouchableOpacity } from "react-native";
 
 export default function Portofolio() {
+  const { user } = useAuth();
   const { id } = useLocalSearchParams();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isLoadingDelete, setIsLoadingDelete] = useState(false);
   const [data, setData] = useState<any>();
   const [profileId, setProfileId] = useState<any>();
-
-  const { user } = useAuth();
+  const [openDrawerLocation, setOpenDrawerLocation] = useState(false);
 
   const openDrawer = () => {
     setIsDrawerOpen(true);
@@ -43,19 +54,13 @@ export default function Portofolio() {
 
   async function onLoadData(id: string) {
     const response = await apiGetOnePortofolio({ id: id });
-    console.log(
-      "[PROFILE ID]>>",
-      JSON.stringify(response.data.Profile.id, null, 2)
-    );
+
     setData(response.data);
   }
 
   const onLoadUserByToken = async () => {
     const response = await apiUser(user?.id as string);
-    console.log(
-      "[PROFILE LOGIN]>>",
-      JSON.stringify(response.data?.Profile.id, null, 2)
-    );
+
     setProfileId(response?.data?.Profile?.id);
   };
 
@@ -89,7 +94,11 @@ export default function Portofolio() {
               data={data}
               listSubBidang={data?.Portofolio_BidangDanSubBidangBisnis as any[]}
             />
-            <Portofolio_BusinessLocation />
+            <Portofolio_BusinessLocation
+              data={data?.BusinessMaps}
+              imageId={data?.logoId}
+              setOpenDrawerLocation={setOpenDrawerLocation}
+            />
             <Portofolio_SocialMediaSection
               data={data?.Portofolio_MediaSosial}
             />
@@ -110,9 +119,92 @@ export default function Portofolio() {
         height={"auto"}
       >
         <Portofolio_MenuDrawerSection
-          drawerItems={drawerItemsPortofolio({ id: id as string })}
+          drawerItems={drawerItemsPortofolio({
+            id: id as string,
+            maps: data?.BusinessMaps,
+          })}
           setIsDrawerOpen={setIsDrawerOpen}
         />
+      </DrawerCustom>
+
+      {/* Drawer Lokasi */}
+      <DrawerCustom
+        isVisible={openDrawerLocation}
+        closeDrawer={() => setOpenDrawerLocation(false)}
+        height={"auto"}
+      >
+        <DummyLandscapeImage
+          height={200}
+          imageId={data?.BusinessMaps?.imageId}
+        />
+        <Spacing />
+        <StackCustom gap={"xs"}>
+          <GridTwoView
+            spanLeft={2}
+            spanRight={10}
+            leftIcon={
+              <FontAwesome
+                name="building-o"
+                size={ICON_SIZE_SMALL}
+                color="white"
+              />
+            }
+            rightIcon={<TextCustom>{data?.BusinessMaps?.namePin}</TextCustom>}
+          />
+
+          <GridTwoView
+            spanLeft={2}
+            spanRight={10}
+            leftIcon={
+              <Ionicons
+                name="list-outline"
+                size={ICON_SIZE_SMALL}
+                color="white"
+              />
+            }
+            rightIcon={
+              <TextCustom>{data?.MasterBidangBisnis?.name}</TextCustom>
+            }
+          />
+
+          <GridTwoView
+            spanLeft={2}
+            spanRight={10}
+            leftIcon={
+              <Ionicons
+                name="call-outline"
+                size={ICON_SIZE_SMALL}
+                color="white"
+              />
+            }
+            rightIcon={<TextCustom>{data?.tlpn}</TextCustom>}
+          />
+          <GridTwoView
+            spanLeft={2}
+            spanRight={10}
+            leftIcon={
+              <Ionicons
+                name="location-outline"
+                size={ICON_SIZE_SMALL}
+                color="white"
+              />
+            }
+            rightIcon={<TextCustom>{data?.alamatKantor}</TextCustom>}
+          />
+
+          <Spacing />
+          <ButtonCustom
+            onPress={() => {
+              openInDeviceMaps({
+                latitude: data?.BusinessMaps?.latitude,
+                longitude: data?.BusinessMaps?.longitude,
+                title: data?.BusinessMaps?.namePin,
+              });
+            }}
+          >
+            Buka Maps
+          </ButtonCustom>
+        </StackCustom>
       </DrawerCustom>
     </>
   );

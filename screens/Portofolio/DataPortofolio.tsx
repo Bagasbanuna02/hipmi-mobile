@@ -41,7 +41,11 @@ export default function Portofolio_Data({
     },
     {
       icon: (
-        <Ionicons name="home-outline" size={ICON_SIZE_SMALL} color="white" />
+        <Ionicons
+          name="location-outline"
+          size={ICON_SIZE_SMALL}
+          color="white"
+        />
       ),
       label: data && data?.alamatKantor ? data.alamatKantor : "-",
     },
@@ -88,8 +92,6 @@ export default function Portofolio_Data({
   //     label: "Mobile Developers",
   //   },
   // ];
-
-  // console.log("List Sub Bidang >>", JSON.stringify(listSubBidang, null, 2));
 
   return (
     <>
