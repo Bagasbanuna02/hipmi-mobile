@@ -135,7 +135,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const userData = async (token: string) => {
     try {
       setIsLoading(true);
-      const response = await apiConfig.get(`/mobile/user?token=${token}`, {
+      const response = await apiConfig.get(`/mobile?token=${token}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

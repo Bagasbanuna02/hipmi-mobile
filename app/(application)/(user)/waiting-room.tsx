@@ -9,6 +9,7 @@ import {
 } from "@/components";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
 import { useAuth } from "@/hooks/use-auth";
+import { apiUser } from "@/service/api-client/api-user";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import Toast from "react-native-toast-message";
@@ -19,12 +20,25 @@ export default function WaitingRoom() {
   async function handleCheck() {
     try {
       const response = await userData(token as string);
+
       if (response.active) {
-        Toast.show({
-          type: "success",
-          text1: "Akun anda telah aktif", // text2: "Anda berhasil login",
-        });
-        router.replace(`/(application)/(user)/profile/create`);
+        const checkProfile = await apiUser(response.id);
+
+        if (checkProfile?.data?.Profile) {
+          Toast.show({
+            type: "success",
+            text1: "Akun anda telah aktif kembali", // text2: "Anda berhasil login",
+          });
+          router.replace(`/(application)/(user)/home`);
+        } else {
+          Toast.show({
+            type: "success",
+            text1: "Akun anda telah aktif", // text2: "Anda berhasil login",
+          });
+          router.replace(`/(application)/(user)/profile/create`);
+        }
+
+        // router.replace(`/(application)/(user)/profile/create`);
       } else {
         Toast.show({
           type: "error",

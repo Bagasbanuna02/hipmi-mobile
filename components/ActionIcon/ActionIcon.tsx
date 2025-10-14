@@ -1,6 +1,6 @@
 import { MainColor } from "@/constants/color-palet";
 import { Href, router } from "expo-router";
-import { DimensionValue, TouchableOpacity } from "react-native";
+import { DimensionValue, StyleProp, TouchableOpacity, ViewStyle } from "react-native";
 
 type SizeType = "xs" | "sm" | "md" | "lg" | "xl" | number | string | undefined;
 
@@ -10,12 +10,14 @@ export default function ActionIcon({
   icon,
   size = "md",
   disabled = false,
+  style,
 }: {
   href?: Href;
   onPress?: () => void;
   icon: React.ReactNode;
   size?: SizeType;
   disabled?: boolean;
+  style?: StyleProp<ViewStyle>;
 }) {
   const sizeMap = {
     xs: 22,
@@ -39,7 +41,7 @@ export default function ActionIcon({
     <TouchableOpacity
       disabled={disabled}
       activeOpacity={0.7}
-      style={{
+      style={[{
         backgroundColor: disabled ? MainColor.disabled : MainColor.yellow,
         padding: 5,
         borderRadius: 50,
@@ -47,7 +49,7 @@ export default function ActionIcon({
         justifyContent: "center",
         width: iconSize,
         height: iconSize,
-      }}
+      }, style]}
       onPress={() => {
         if (disabled) return;
         if (href) {

@@ -26,7 +26,7 @@ export default function Profile() {
   const [dataToken, setDataToken] = useState<IProfile>();
   const [listPortofolio, setListPortofolio] = useState<any[]>();
 
-  const { logout, isAdmin, user } = useAuth();
+  const { token, logout, isAdmin, user, userData } = useAuth();
 
   const openDrawer = () => {
     setIsDrawerOpen(true);
@@ -42,7 +42,8 @@ export default function Profile() {
       onLoadPortofolio(id as string);
       onLoadUserByToken();
       isUserCheck();
-    }, [id])
+      userData(token as string);
+    }, [id, token])
   );
 
   const isUserCheck = () => {
@@ -136,10 +137,7 @@ const ButtonnDot = ({
 }) => {
   const isId = id === undefined || id === null;
 
-  console.log("ID CHECK", id);
-
   if (isId) {
-    console.log("ID UNDEFINED", id);
     return (
       <>
         <TouchableOpacity onPress={logout}>

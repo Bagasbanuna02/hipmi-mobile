@@ -15,7 +15,10 @@ import {
   ICON_SIZE_XLARGE,
 } from "@/constants/constans-value";
 import { useAuth } from "@/hooks/use-auth";
-import { adminListMenu } from "@/screens/Admin/listPageAdmin";
+import {
+  adminListMenu,
+  superAdminListMenu,
+} from "@/screens/Admin/listPageAdmin";
 import { GStyles } from "@/styles/global-styles";
 import { FontAwesome6, Ionicons } from "@expo/vector-icons";
 import { router, Stack } from "expo-router";
@@ -24,8 +27,11 @@ import { useState } from "react";
 export default function AdminLayout() {
   const [openDrawerNavbar, setOpenDrawerNavbar] = useState(false);
   const [openDrawerUser, setOpenDrawerUser] = useState(false);
+  // const [user, setUser] = useState(null);
 
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
+
+  console.log("[USER LAYOUT]", JSON.stringify(user, null, 2));
 
   return (
     <>
@@ -56,58 +62,58 @@ export default function AdminLayout() {
           ),
         }}
       >
-        <Stack.Screen name="dashboard" />
+        {/* <Stack.Screen name="dashboard" /> */}
         {/* ================== Investment Start ================== */}
-        <Stack.Screen name="investment/index" />
+        {/* <Stack.Screen name="investment/index" /> */}
         {/* ================== Investment End ================== */}
 
         {/* ================== Maps Start ================== */}
-        <Stack.Screen name="maps" />
+        {/* <Stack.Screen name="maps" /> */}
         {/* ================== Maps End ================== */}
 
         {/* ================== App Information Start ================== */}
-        <Stack.Screen name="app-information/index" />
+        {/* <Stack.Screen name="app-information/index" /> */}
         {/* ================== App Information End ================== */}
 
         {/* ================== Job Start ================== */}
-        <Stack.Screen name="job/index" />
+        {/* <Stack.Screen name="job/index" /> */}
         {/* <Stack.Screen name="job/publish" />
         <Stack.Screen name="job/review" />
         <Stack.Screen name="job/reject" /> */}
-        <Stack.Screen name="job/[status]/status" />
-        <Stack.Screen name="job/[id]/[status]/index" />
+        {/* <Stack.Screen name="job/[status]/status" />
+        <Stack.Screen name="job/[id]/[status]/index" /> */}
 
         {/* ================== Collaboration Start ================== */}
-        <Stack.Screen name="collaboration/index" />
-        <Stack.Screen name="collaboration/publish" />
+        {/* <Stack.Screen name="collaboration/index" /> */}
+        {/* <Stack.Screen name="collaboration/publish" />
         <Stack.Screen name="collaboration/group" />
         <Stack.Screen name="collaboration/reject" />
         <Stack.Screen name="collaboration/[id]/[status]" />
-        <Stack.Screen name="collaboration/[id]/group" />
+        <Stack.Screen name="collaboration/[id]/group" /> */}
         {/* ================== Collaboration End ================== */}
 
         {/* ================== Forum Start ================== */}
-        <Stack.Screen name="forum/index" />
-        <Stack.Screen name="forum/[id]/index" />
+        {/* <Stack.Screen name="forum/index" /> */}
+        {/* <Stack.Screen name="forum/[id]/index" />
         <Stack.Screen name="forum/report-comment" />
         <Stack.Screen name="forum/report-posting" />
         <Stack.Screen name="forum/[id]/list-report-posting" />
-        <Stack.Screen name="forum/[id]/list-report-comment" />
+        <Stack.Screen name="forum/[id]/list-report-comment" /> */}
         {/* ================== Forum End ================== */}
 
         {/* ================== Voting Start ================== */}
-        <Stack.Screen name="voting/index" />
+        {/* <Stack.Screen name="voting/index" />
         <Stack.Screen name="voting/[status]/status" />
         <Stack.Screen name="voting/[id]/[status]/index" />
-        <Stack.Screen name="voting/[id]/reject-input" />
+        <Stack.Screen name="voting/[id]/reject-input" /> */}
         {/* ================== Voting End ================== */}
 
         {/* ================== Event Start ================== */}
-        <Stack.Screen name="event/index" />
+        {/* <Stack.Screen name="event/index" />
         <Stack.Screen name="event/[status]/status" />
         <Stack.Screen name="event/type-of-event" />
         <Stack.Screen name="event/type-create" />
-        <Stack.Screen name="event/type-update" />
+        <Stack.Screen name="event/type-update" /> */}
         {/* <Stack.Screen name="event/[id]/[status]/index" />
         <Stack.Screen name="event/[id]/reject-input"/> */}
         {/* ================== Event End ================== */}
@@ -134,7 +140,11 @@ export default function AdminLayout() {
           />
 
           <NavbarMenu
-            items={adminListMenu}
+            items={
+              user?.masterUserRoleId === "2"
+                ? adminListMenu
+                : superAdminListMenu
+            }
             onClose={() => setOpenDrawerNavbar(false)}
           />
         </StackCustom>
@@ -155,7 +165,7 @@ export default function AdminLayout() {
               />
             }
           >
-            <TextCustom>Username</TextCustom>
+            <TextCustom>{user?.username || "-"}</TextCustom>
           </GridComponentView>
           <GridComponentView
             leftIcon={
@@ -166,7 +176,13 @@ export default function AdminLayout() {
               />
             }
           >
-            <TextCustom>User Role</TextCustom>
+            <TextCustom>
+              {user
+                ? user?.masterUserRoleId === "2"
+                  ? "Admin"
+                  : "Super Admin"
+                : "-"}
+            </TextCustom>
           </GridComponentView>
 
           <MenuDrawerDynamicGrid

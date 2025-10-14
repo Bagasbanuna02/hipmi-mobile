@@ -1,4 +1,4 @@
-import { StyleProp, ViewStyle } from "react-native";
+import { ViewStyle } from "react-native";
 import Grid from "../Grid/GridCustom";
 
 export default function GridTwoView({
@@ -13,15 +13,23 @@ export default function GridTwoView({
   spanRight?: number;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
-  styleLeft?: StyleProp<ViewStyle>;
-  styleRight?: StyleProp<ViewStyle>;
+  styleLeft?: ViewStyle;
+  styleRight?: ViewStyle;
 }) {
+  const baseStyle: ViewStyle = { justifyContent: "center" };
+
   return (
     <Grid containerStyle={{ marginBottom: 0 }}>
-      <Grid.Col span={spanLeft} style={{ justifyContent: "center" }}>
+      <Grid.Col
+        span={spanLeft}
+        style={styleLeft ? { ...baseStyle, ...styleLeft } : baseStyle}
+      >
         {leftIcon}
       </Grid.Col>
-      <Grid.Col span={spanRight} style={{ justifyContent: "center" }}>
+      <Grid.Col
+        span={spanRight}
+        style={styleRight ? { ...baseStyle, ...styleRight } : baseStyle}
+      >
         {rightIcon}
       </Grid.Col>
     </Grid>
