@@ -10,69 +10,77 @@ import { Divider, Switch } from "react-native-paper";
 
 export default function AdminAppInformation_StickerSection() {
   const [value, setValue] = useState(false);
+
   return (
     <>
-      <Grid>
-        <Grid.Col span={3} style={{ alignItems: "center" }}>
-          <TextCustom bold>Aksi</TextCustom>
-        </Grid.Col>
-        <Grid.Col span={3} style={{ alignItems: "center" }}>
-          <TextCustom bold>Status</TextCustom>
-        </Grid.Col>
-        <Grid.Col span={6}>
-          <TextCustom bold align="center" >Stiker</TextCustom>
-        </Grid.Col>
-      </Grid>
-
-      <Divider />
-
-      <StackCustom>
-        {listSticker.map((e, i) => (
-          <View key={i}>
-            <Grid>
-              <Grid.Col
-                span={3}
-                style={{ alignItems: "center", justifyContent: "center" }}
-              >
-                <ActionIcon
-                  icon={
-                    <FontAwesome5
-                      name="edit"
-                      size={ICON_SIZE_BUTTON}
-                      color="black"
-                    />
-                  }
-                  onPress={() => {
-                    router.push(`/admin/app-information/sticker/${i}`);
-                  }}
-                />
-              </Grid.Col>
-              <Grid.Col
-                span={3}
-                style={{ alignItems: "center", justifyContent: "center" }}
-              >
-                <Switch
-                  value={value}
-                  onValueChange={() => {
-                    setValue(!value);
-                  }}
-                  theme={{
-                    colors: {
-                      primary: MainColor.yellow,
-                    },
-                  }}
-                />
-              </Grid.Col>
-              <Grid.Col span={6} style={{ justifyContent: "center", alignItems: "center" }}>
-                <Image source={e.path} style={{ width: 100, height: 100 }} />
-              </Grid.Col>
-            </Grid>
-            <Divider />
-          </View>
-        ))}
-      </StackCustom>
+      <TextCustom bold align="center">
+        Cooming Soon, Next Update !!
+      </TextCustom>
     </>
   );
+  // return (
+  //   <>
+  //     <Grid>
+  //       <Grid.Col span={3} style={{ alignItems: "center" }}>
+  //         <TextCustom bold>Aksi</TextCustom>
+  //       </Grid.Col>
+  //       <Grid.Col span={3} style={{ alignItems: "center" }}>
+  //         <TextCustom bold>Status</TextCustom>
+  //       </Grid.Col>
+  //       <Grid.Col span={6}>
+  //         <TextCustom bold align="center" >Stiker</TextCustom>
+  //       </Grid.Col>
+  //     </Grid>
+
+  //     <Divider />
+
+  //     <StackCustom>
+  //       {listSticker.map((e, i) => (
+  //         <View key={i}>
+  //           <Grid>
+  //             <Grid.Col
+  //               span={3}
+  //               style={{ alignItems: "center", justifyContent: "center" }}
+  //             >
+  //               <ActionIcon
+  //                 icon={
+  //                   <FontAwesome5
+  //                     name="edit"
+  //                     size={ICON_SIZE_BUTTON}
+  //                     color="black"
+  //                   />
+  //                 }
+  //                 onPress={() => {
+  //                   router.push(`/admin/app-information/sticker/${i}`);
+  //                 }}
+  //               />
+  //             </Grid.Col>
+  //             <Grid.Col
+  //               span={3}
+  //               style={{ alignItems: "center", justifyContent: "center" }}
+  //             >
+  //               <Switch
+  //                 value={value}
+  //                 onValueChange={() => {
+  //                   setValue(!value);
+  //                 }}
+  //                 theme={{
+  //                   colors: {
+  //                     primary: MainColor.yellow,
+  //                   },
+  //                 }}
+  //               />
+  //             </Grid.Col>
+  //             <Grid.Col span={6} style={{ justifyContent: "center", alignItems: "center" }}>
+  //               <Image source={e.path} style={{ width: 100, height: 100 }} />
+  //             </Grid.Col>
+  //           </Grid>
+  //           <Divider />
+  //         </View>
+  //       ))}
+  //     </StackCustom>
+  //   </>
+  // );
 }
 
 const listSticker = [

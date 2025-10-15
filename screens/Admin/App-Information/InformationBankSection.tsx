@@ -1,77 +1,119 @@
-import { ActionIcon, Grid, StackCustom, TextCustom } from "@/components";
-import { MainColor } from "@/constants/color-palet";
+import {
+  ActionIcon,
+  BadgeCustom,
+  CenterCustom,
+  Grid,
+  LoaderCustom,
+  StackCustom,
+  TextCustom,
+} from "@/components";
+import { AccentColor } from "@/constants/color-palet";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
-import { dummyMasterBank } from "@/lib/dummy-data/_master/bank";
+import { apiAdminMasterBank } from "@/service/api-admin/api-master-admin";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { router } from "expo-router";
-import { useState } from "react";
+import { router, useFocusEffect } from "expo-router";
+import _ from "lodash";
+import { useCallback, useState } from "react";
 import { View } from "react-native";
-import { Divider, Switch } from "react-native-paper";
+import { Divider } from "react-native-paper";
 
 export default function AdminAppInformation_Bank() {
-  const [value, setValue] = useState(false);
+  const [listData, setListData] = useState<any | null>(null);
+  const [loadData, setLoadData] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadMasterBank();
+    }, [])
+  );
+
+  const loadMasterBank = async () => {
+    try {
+      setLoadData(true);
+      const response = await apiAdminMasterBank();
+
+      setListData(response.data);
+    } catch (error) {
+      console.log("[ERROR LIST BANK]", error);
+      setListData([]);
+    } finally {
+      setLoadData(false);
+    }
+  };
+
   return (
     <>
-      <>
+      <StackCustom>
         <Grid>
-          <Grid.Col span={3} style={{ alignItems: "center" }}>
-            <TextCustom bold>Aksi</TextCustom>
+          <Grid.Col span={3}>
+            <TextCustom bold align="center">
+              Aksi
+            </TextCustom>
           </Grid.Col>
-          <Grid.Col span={3} style={{ alignItems: "center" }}>
-            <TextCustom bold>Status</TextCustom>
+          <Grid.Col span={3}>
+            <TextCustom bold align="center">
+              Status
+            </TextCustom>
           </Grid.Col>
           <Grid.Col span={6}>
-            <TextCustom bold>Nama Bank</TextCustom>
+            <TextCustom bold align="center">
+              Nama Bank
+            </TextCustom>
           </Grid.Col>
         </Grid>
 
         <Divider />
 
-        <StackCustom>
-          {dummyMasterBank.map((e, i) => (
-            <View key={i}>
-              <Grid>
-                <Grid.Col span={3} style={{ alignItems: "center" }}>
-                  <ActionIcon
-                    icon={
-                      <FontAwesome5
-                        name="edit"
-                        size={ICON_SIZE_BUTTON}
-                        color="black"
-                      />
-                    }
-                    onPress={() => {
-                      router.push(
-                        `/admin/app-information/information-bank/${i}`
-                      );
-                    }}
-                  />
-                </Grid.Col>
-                <Grid.Col
-                  span={3}
-                  style={{ alignItems: "center", justifyContent: "center" }}
-                >
-                  <Switch
-                    value={value}
-                    onValueChange={() => {
-                      setValue(!value);
-                    }}
-                    theme={{
-                      colors: {
-                        primary: MainColor.yellow,
-                      },
-                    }}
-                  />
-                </Grid.Col>
-                <Grid.Col span={6} style={{ justifyContent: "center" }}>
-                  <TextCustom>{e.code}</TextCustom>
-                </Grid.Col>
-              </Grid>
-              <Divider />
-            </View>
-          ))}
-        </StackCustom>
-      </>
+        {loadData ? (
+          <LoaderCustom />
+        ) : _.isEmpty(listData) ? (
+          <TextCustom align="center">Tidak ada data</TextCustom>
+        ) : (
+          <StackCustom>
+            {listData?.map((item: any, index: number) => (
+              <View key={index}>
+                <Grid>
+                  <Grid.Col span={3} style={{ alignItems: "center" }}>
+                    <ActionIcon
+                      icon={
+                        <FontAwesome5
+                          name="edit"
+                          size={ICON_SIZE_BUTTON}
+                          color="black"
+                        />
+                      }
+                      onPress={() => {
+                        router.push(
+                          `/admin/app-information/information-bank/${item.id}`
+                        );
+                      }}
+                    />
+                  </Grid.Col>
+                  <Grid.Col
+                    span={3}
+                    style={{ alignItems: "center", justifyContent: "center" }}
+                  >
+                    <CenterCustom>
+                      <BadgeCustom
+                        color={
+                          item.isActive
+                            ? AccentColor.blue
+                            : AccentColor.blackgray
+                        }
+                      >
+                        {item.isActive ? "Aktif" : "Tidak Aktif"}
+                      </BadgeCustom>
+                    </CenterCustom>
+                  </Grid.Col>
+                  <Grid.Col span={6} style={{ justifyContent: "center" }}>
+                    <TextCustom align="center">{item.namaBank}</TextCustom>
+                  </Grid.Col>
+                </Grid>
+              </View>
+            ))}
+          </StackCustom>
+        )}
+      </StackCustom>
     </>
   );
 }

@@ -1,8 +1,4 @@
-import {
-  ScrollableCustom,
-  StackCustom,
-  ViewWrapper
-} from "@/components";
+import { ScrollableCustom, StackCustom, ViewWrapper } from "@/components";
 import AdminActionIconPlus from "@/components/_ShareComponent/Admin/ActionIconPlus";
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
 import AdminAppInformation_BusinessFieldSection from "@/screens/Admin/App-Information/BusinessFieldSection";
@@ -10,6 +6,7 @@ import AdminAppInformation_Bank from "@/screens/Admin/App-Information/Informatio
 import AdminAppInformation_StickerSection from "@/screens/Admin/App-Information/StickerSection";
 import { router } from "expo-router";
 import { useState } from "react";
+import { Alert } from "react-native";
 
 export default function AdminInformation() {
   const [activeCategory, setActiveCategory] = useState<string | null>("bank");
@@ -57,7 +54,8 @@ export default function AdminInformation() {
                 } else if (activeCategory === "business") {
                   router.push("/admin/app-information/business-field/create");
                 } else if (activeCategory === "sticker") {
-                  router.push("/admin/app-information/sticker/create");
+                  Alert.alert("Coming Soon", "Next Update");
+                  // router.push("/admin/app-information/sticker/create");
                 }
               }}
             />

@@ -93,15 +93,15 @@ export default function LoginView() {
     }
   }
 
-  if (token && !isUserActive) {
+  if (token && token !== "" && !isUserActive) {
     return <Redirect href={"/(application)/(user)/waiting-room"} />;
   }
 
-  if (token && !isAdmin) {
+  if (token && token !== "" && !isAdmin) {
     return <Redirect href={"/(application)/(user)/home"} />;
   }
 
-  if (token && isAdmin) {
+  if (token && token !== "" && isAdmin) {
     return <Redirect href={"/(application)/admin/dashboard"} />;
   }
 

@@ -127,6 +127,10 @@ export async function apiMasterInvestment({
   }
 }
 
+// ================== END MASTER INVESTMENT ================== //
+
+// ================== START MASTER BANK ================== //
+
 export async function apiMasterBank() {
   try {
     const response = await apiConfig.get(`/mobile/master/bank`);
@@ -135,6 +139,8 @@ export async function apiMasterBank() {
     throw error;
   }
 }
+
+// ================== END MASTER BANK ================== //
 
 export async function apiMasterDonation({
   category,
