@@ -1,7 +1,6 @@
 import {
   ActionIcon,
-  BaseBox,
-  Spacing,
+  LoaderCustom,
   StackCustom,
   TextCustom,
   ViewWrapper,
@@ -11,26 +10,59 @@ import AdminTitleTable from "@/components/_ShareComponent/Admin/TableTitle";
 import AdminTableValue from "@/components/_ShareComponent/Admin/TableValue";
 import AdminTitlePage from "@/components/_ShareComponent/Admin/TitlePage";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
+import { apiAdminCollaboration } from "@/service/api-admin/api-admin-collaboration";
 import { Octicons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
+import _ from "lodash";
+import { useCallback, useState } from "react";
 import { Divider } from "react-native-paper";
 
 export default function AdminCollaborationPublish() {
+  const [list, setList] = useState<any[] | null>(null);
+  const [loadList, setLoadList] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      handlerLoadList();
+    }, [])
+  );
+
+  const handlerLoadList = async () => {
+    try {
+      setLoadList(true);
+      const response = await apiAdminCollaboration({
+        category: "publish",
+      });
+
+      if (response.success) {
+        setList(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setLoadList(false);
+    }
+  };
   return (
     <>
       <ViewWrapper headerComponent={<AdminTitlePage title="Collaboration" />}>
         <StackCustom gap={"xs"}>
           <AdminComp_BoxTitle title="Publish" />
-          <BaseBox>
-            <AdminTitleTable
-              title1="Aksi"
-              title2="Username"
-              title3="Judul Proyek"
-            />
-            <Spacing height={10} />
-            <Divider />
 
-            {Array.from({ length: 10 }).map((_, index) => (
+          <AdminTitleTable
+            title1="Aksi"
+            title2="Username"
+            title3="Judul Proyek"
+          />
+          {/* <Spacing height={10} /> */}
+          <Divider />
+
+          {loadList ? (
+            <LoaderCustom />
+          ) : _.isEmpty(list) ? (
+            <TextCustom>Belum ada data</TextCustom>
+          ) : (
+            list?.map((item: any, index: number) => (
               <AdminTableValue
                 key={index}
                 value1={
@@ -43,28 +75,25 @@ export default function AdminCollaborationPublish() {
                       />
                     }
                     onPress={() => {
-                      router.push(`/admin/collaboration/${index}/publish`);
+                      router.push(`/admin/collaboration/${item?.id}/publish`);
                     }}
                   />
                 }
                 value2={
-                  <TextCustom truncate={1}>Username username </TextCustom>
+                  <TextCustom align="center" truncate={1}>
+                    {item?.Author?.username || "-"}{" "}
+                  </TextCustom>
                 }
                 value3={
-                  <TextCustom truncate={2}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Blanditiis asperiores quidem deleniti architecto eaque et
-                    nostrum, ad consequuntur eveniet quisquam quae voluptatum
-                    ducimus! Dolorem nobis modi officia debitis, beatae
-                    mollitia.
+                  <TextCustom align="center" truncate={2}>
+                    {item?.title || "-"}
                   </TextCustom>
                 }
               />
-            ))}
-          </BaseBox>
+            ))
+          )}
         </StackCustom>
       </ViewWrapper>
     </>
   );
 }
-

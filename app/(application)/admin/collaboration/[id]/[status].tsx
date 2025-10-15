@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   BaseBox,
   BoxButtonOnFooter,
@@ -9,17 +10,43 @@ import {
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import { MainColor } from "@/constants/color-palet";
-import { useLocalSearchParams } from "expo-router";
+import { apiAdminCollaborationGetById } from "@/service/api-admin/api-admin-collaboration";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
+import { useCallback, useState } from "react";
 
 export default function AdminCollaborationPublish() {
   const { id, status } = useLocalSearchParams();
-  console.log("params:", id, status);
+  const [data, setData] = useState<any | null>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      handlerLoadData();
+    }, [status])
+  );
+
+  const handlerLoadData = async () => {
+    try {
+      const response = await apiAdminCollaborationGetById({
+        id: id as string,
+        category: status as "publish" | "reject" | "group",
+      });
+
+      if (response.success) {
+        setData(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  };
+
   const bottomFooter = (
     <BoxButtonOnFooter>
       <ButtonCustom
         backgroundColor={MainColor.red}
         textColor="white"
-        onPress={() => {}}
+        onPress={() => {
+          router.push(`/admin/collaboration/${id}/reject-input`);
+        }}
       >
         Reject
       </ButtonCustom>
@@ -29,12 +56,12 @@ export default function AdminCollaborationPublish() {
   return (
     <>
       <ViewWrapper
-        headerComponent={<AdminBackButtonAntTitle title={`Detail ${status}`} />}
+        headerComponent={<AdminBackButtonAntTitle title={`Detail`} />}
         footerComponent={bottomFooter}
       >
         <BaseBox>
           <StackCustom>
-            {listData.map((item, i) => (
+            {listData(data)?.map((item, i) => (
               <Grid key={i}>
                 <Grid.Col
                   span={4}
@@ -54,36 +81,33 @@ export default function AdminCollaborationPublish() {
   );
 }
 
-const listData = [
+const listData = (data: any) => [
   {
     label: "Username",
-    value: "Bagas Banuna",
+    value: (data && data?.Author?.username) || "-",
   },
   {
     label: "Judul Proyek",
-    value:
-      "Judul Proyek: Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    value: (data && data?.title) || "-",
   },
   {
     label: "Industri",
-    value: "Kesehatan",
+    value: (data && data?.ProjectCollaborationMaster_Industri?.name) || "-",
   },
   {
     label: "Jumlah Partisipan ",
-    value: "0",
+    value: (data && data?.ProjectCollaboration_Partisipasi.length) || "0",
   },
   {
     label: "Lokasi",
-    value: "Kuta Selatan, Bali",
+    value: (data && data?.lokasi) || "-",
   },
   {
     label: "Tujuan Proyek",
-    value:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    value: (data && data?.purpose) || "-",
   },
   {
     label: "Keuntungan",
-    value:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    value: (data && data?.benefit) || "-",
   },
 ];

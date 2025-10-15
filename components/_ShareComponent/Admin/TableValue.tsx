@@ -21,8 +21,8 @@ export default function AdminTableValue({
             style={{
               alignItems: "center",
               justifyContent: "center",
-              paddingLeft: 5,
-              paddingRight: 5,
+              paddingLeft: 10,
+              paddingRight: 10,
             }}
           >
             {value1}
@@ -32,8 +32,8 @@ export default function AdminTableValue({
             style={{
               alignItems: "center",
               justifyContent: "center",
-              paddingLeft: 5,
-              paddingRight: 5,
+              paddingLeft: 10,
+              paddingRight: 10,
             }}
           >
             {value2}
@@ -42,8 +42,9 @@ export default function AdminTableValue({
             span={6}
             style={{
               justifyContent: "center",
-              paddingLeft: 5,
-              paddingRight: 5,
+              alignItems: "center",
+              paddingLeft: 10,
+              paddingRight: 10,
             }}
           >
             {value3}
