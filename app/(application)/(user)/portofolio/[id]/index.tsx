@@ -102,11 +102,13 @@ export default function Portofolio() {
             <Portofolio_SocialMediaSection
               data={data?.Portofolio_MediaSosial}
             />
-            <Portofolio_ButtonDelete
-              id={id as string}
-              isLoadingDelete={isLoadingDelete}
-              setIsLoadingDelete={setIsLoadingDelete}
-            />
+            {data?.Profile?.id !== profileId ? null : (
+              <Portofolio_ButtonDelete
+                id={id as string}
+                isLoadingDelete={isLoadingDelete}
+                setIsLoadingDelete={setIsLoadingDelete}
+              />
+            )}
             <Spacing />
           </StackCustom>
         )}

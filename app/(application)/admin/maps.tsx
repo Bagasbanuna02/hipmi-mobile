@@ -1,4 +1,4 @@
-import { ButtonCustom, DrawerCustom, DummyLandscapeImage, Grid, MapCustom, Spacing, StackCustom, TextCustom, ViewWrapper } from "@/components";
+import { ButtonCustom, DrawerCustom, DummyLandscapeImage, Grid, Spacing, StackCustom, TextCustom, ViewWrapper } from "@/components";
 import GridTwoView from "@/components/_ShareComponent/GridTwoView";
 import API_IMAGE from "@/constants/api-storage";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
@@ -7,7 +7,7 @@ import { openInDeviceMaps } from "@/utils/openInDeviceMaps";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { router, useFocusEffect } from "expo-router";
-import { useState, useCallback } from "react";
+import { useCallback, useState } from "react";
 import { View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
