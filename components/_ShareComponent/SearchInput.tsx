@@ -2,7 +2,7 @@ import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import TextInputCustom from "../TextInput/TextInputCustom";
 import { Ionicons } from "@expo/vector-icons";
-import { StyleProp, ViewStyle, TextStyle } from "react-native";
+import { StyleProp, ViewStyle, TextStyle, StyleSheet } from "react-native";
 
 interface SearchInputProps {
   placeholder?: string;
@@ -12,6 +12,8 @@ interface SearchInputProps {
   containerStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<TextStyle>;
   onChangeText?: (value: string) => void;
+  value?: string;
+  disabled?: boolean;
 }
 export default function SearchInput({
   placeholder,
@@ -21,6 +23,8 @@ export default function SearchInput({
   containerStyle,
   style,
   onChangeText,
+  value,
+  disabled,
   ...props
 }: SearchInputProps) {
   return (
@@ -29,14 +33,21 @@ export default function SearchInput({
         <Ionicons
           name="search-outline"
           size={ICON_SIZE_SMALL}
-          color={MainColor.placeholder}
+          color={disabled ? MainColor.white_gray : MainColor.placeholder}
         />
       }
+      value={value}
       onChangeText={onChangeText}
       placeholder={placeholder}
       borderRadius={50}
-      containerStyle={[containerStyle, { marginBottom: 0 }]}
+      containerStyle={[disabled ? styleses.disabled : styleses.containerStyle]}
+      disabled={disabled}
       {...props}
     />
   );
 }
+
+const styleses = StyleSheet.create({
+  containerStyle: { width: "100%", marginBottom: 0 },
+  disabled: { width: "100%", marginBottom: 0, color: MainColor.white_gray },
+});

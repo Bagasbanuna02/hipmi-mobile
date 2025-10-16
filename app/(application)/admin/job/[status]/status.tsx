@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   ActionIcon,
-  BaseBox,
+  LoaderCustom,
   SearchInput,
-  Spacing,
+  StackCustom,
   TextCustom,
   ViewWrapper
 } from "@/components";
@@ -11,17 +12,52 @@ import AdminTitleTable from "@/components/_ShareComponent/Admin/TableTitle";
 import AdminTableValue from "@/components/_ShareComponent/Admin/TableValue";
 import AdminTitlePage from "@/components/_ShareComponent/Admin/TitlePage";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
+import { apiAdminJob } from "@/service/api-admin/api-admin-job";
 import { Octicons } from "@expo/vector-icons";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
+import { useCallback, useState } from "react";
 import { Divider } from "react-native-paper";
 
 export default function AdminJobStatus() {
   const { status } = useLocalSearchParams();
+  console.log("[STATUS]", status);
+
+  const [list, setList] = useState<any | null>(null);
+  const [loadList, setLoadList] = useState(false);
+  const [search, setSearch] = useState("");
+
+  useFocusEffect(
+    useCallback(() => {
+      handlerLoadList();
+    }, [status, search])
+  );
+
+  const handlerLoadList = async () => {
+    try {
+      setLoadList(true);
+      const response = await apiAdminJob({
+        category: status as "publish" | "review" | "reject",
+        search,
+      });
+
+      console.log("[RESPONSE >>]", JSON.stringify(response, null, 2));
+
+      if (response.success) {
+        setList(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setLoadList(false);
+    }
+  };
+
   const rightComponent = (
     <SearchInput
-      containerStyle={{ width: "100%", marginBottom: 0 }}
       placeholder="Cari"
+      onChangeText={setSearch}
+      value={search}
     />
   );
   return (
@@ -32,44 +68,53 @@ export default function AdminJobStatus() {
           rightComponent={rightComponent}
         />
 
-        <BaseBox>
+        <StackCustom>
           <AdminTitleTable
             title1="Aksi"
             title2="Username"
             title3="Judul Pekerjaan"
           />
-          <Spacing />
+          {/* <Spacing /> */}
           <Divider />
 
-          {Array.from({ length: 10 }).map((_, index) => (
-            <AdminTableValue
-              key={index}
-              value1={
-                <ActionIcon
-                  icon={
-                    <Octicons
-                      name="eye"
-                      size={ICON_SIZE_BUTTON}
-                      color="black"
-                    />
-                  }
-                  onPress={() => {
-                    router.push(`/admin/job/${index}/${status}`);
-                  }}
-                />
-              }
-              value2={<TextCustom truncate={1}>Username username</TextCustom>}
-              value3={
-                <TextCustom truncate={2}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Blanditiis asperiores quidem deleniti architecto eaque et
-                  nostrum, ad consequuntur eveniet quisquam quae voluptatum
-                  ducimus! Dolorem nobis modi officia debitis, beatae mollitia.
-                </TextCustom>
-              }
-            />
-          ))}
-        </BaseBox>
+          {loadList ? (
+            <LoaderCustom />
+          ) : _.isEmpty(list) ? (
+            <TextCustom align="center" color="gray">
+              Tidak ada data
+            </TextCustom>
+          ) : (
+            list?.map((item: any, index: number) => (
+              <AdminTableValue
+                key={index}
+                value1={
+                  <ActionIcon
+                    icon={
+                      <Octicons
+                        name="eye"
+                        size={ICON_SIZE_BUTTON}
+                        color="black"
+                      />
+                    }
+                    onPress={() => {
+                      router.push(`/admin/job/${item.id}/${status}`);
+                    }}
+                  />
+                }
+                value2={
+                  <TextCustom align="center" truncate={1}>
+                    {item?.Author?.username || "-"}
+                  </TextCustom>
+                }
+                value3={
+                  <TextCustom truncate={2} align="center">
+                    {item?.title || "-"}
+                  </TextCustom>
+                }
+              />
+            ))
+          )}
+        </StackCustom>
       </ViewWrapper>
     </>
   );
