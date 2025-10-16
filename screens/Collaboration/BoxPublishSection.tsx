@@ -15,23 +15,24 @@ function Collaboration_BoxPublishSection({
   data: any;
   rightComponentAvatar?: React.ReactNode;
 }) {
+
   return (
     <>
       <BoxWithHeaderSection href={href}>
         <StackCustom gap={0}>
           <AvatarUsernameAndOtherComponent
-            avatarHref={`/profile/${data?.Author?.id}`}
+            avatarHref={`/profile/${data?.Author?.Profile?.id}`}
             name={data?.Author?.username || "Username"}
             rightComponent={rightComponentAvatar}
             avatar={data?.Author?.Profile?.imageId}
             withBottomLine
           />
 
-          <StackCustom>
+          <StackCustom style={{paddingBlock: 10}}>
             <TextCustom truncate size="large" bold align="center">
               {data?.title || "-"}
             </TextCustom>
-            <TextCustom truncate={2}>{data?.purpose || "-"}</TextCustom>
+            {/* <TextCustom truncate={2}>{data?.purpose || "-"}</TextCustom> */}
             {/* <TextCustom bold size="small" >
             2 Partisipan
           </TextCustom> */}

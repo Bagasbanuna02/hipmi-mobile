@@ -9,6 +9,7 @@ import {
   ViewWrapper,
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
+import GridTwoView from "@/components/_ShareComponent/GridTwoView";
 import { MainColor } from "@/constants/color-palet";
 import { apiAdminCollaborationGetById } from "@/service/api-admin/api-admin-collaboration";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
@@ -28,7 +29,7 @@ export default function AdminCollaborationPublish() {
     try {
       const response = await apiAdminCollaborationGetById({
         id: id as string,
-        category: status as "publish" | "reject" | "group",
+        category: status as any,
       });
 
       if (response.success) {
@@ -39,7 +40,7 @@ export default function AdminCollaborationPublish() {
     }
   };
 
-  const bottomFooter = (
+  const bottomFooter = status === "publish" && (
     <BoxButtonOnFooter>
       <ButtonCustom
         backgroundColor={MainColor.red}
@@ -76,6 +77,17 @@ export default function AdminCollaborationPublish() {
             ))}
           </StackCustom>
         </BaseBox>
+
+      {data?.report && (
+        <BaseBox>
+          <GridTwoView
+            spanLeft={4}
+            spanRight={8}
+            leftIcon={<TextCustom bold>Catatan report</TextCustom>}
+            rightIcon={<TextCustom>{data?.report}</TextCustom>}
+          />
+        </BaseBox>
+      )}
       </ViewWrapper>
     </>
   );

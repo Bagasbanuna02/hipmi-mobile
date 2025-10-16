@@ -19,7 +19,6 @@ import Toast from "react-native-toast-message";
 
 export default function CollaborationEdit() {
   const { id } = useLocalSearchParams();
-  console.log("id :", id);
   const [data, setData] = useState<any>();
   const [listMaster, setListMaster] = useState<any[]>([]);
   const [loadingData, setLoadingData] = useState(false);

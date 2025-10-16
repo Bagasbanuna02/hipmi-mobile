@@ -7,10 +7,12 @@ export default function AdminTableValue({
   value1,
   value2,
   value3,
+  bottomLine = false,
 }: {
   value1: React.ReactNode;
   value2: React.ReactNode;
   value3: React.ReactNode;
+  bottomLine?: boolean;
 }) {
   return (
     <>
@@ -50,7 +52,7 @@ export default function AdminTableValue({
             {value3}
           </Grid.Col>
         </Grid>
-        <Divider />
+        {bottomLine && <Divider />}
       </View>
     </>
   );

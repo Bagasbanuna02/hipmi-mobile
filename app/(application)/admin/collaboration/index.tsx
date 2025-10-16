@@ -9,7 +9,6 @@ import { useCallback, useState } from "react";
 
 export default function AdminCollaboration() {
   const [list, setList] = useState<any | null>(null);
-  const [loadList, setLoadList] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -19,7 +18,6 @@ export default function AdminCollaboration() {
 
   const handlerLoadList = async () => {
     try {
-      setLoadList(true);
       const response = await apiAdminCollaboration({
         category: "dashboard",
       });
@@ -31,8 +29,6 @@ export default function AdminCollaboration() {
       }
     } catch (error) {
       console.log("[ERROR]", error);
-    } finally {
-      setLoadList(false);
     }
   };
 

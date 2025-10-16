@@ -6,12 +6,41 @@ import {
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
+import { apiAdminCollaborationReject } from "@/service/api-admin/api-admin-collaboration";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
+import Toast from "react-native-toast-message";
 
 export default function AdminCollaborationRejectInput() {
   const { id } = useLocalSearchParams();
-  const [value, setValue] = useState(id as string);
+  const [value, setValue] = useState("");
+
+  const handlerReject = async () => {
+    console.log("value:", value);
+    // router.replace(`/admin/job/reject/status`);
+    try {
+      const response = await apiAdminCollaborationReject({
+        id: id as string,
+        data: value,
+      });
+
+      if (!response.success) {
+        Toast.show({
+          type: "error",
+          text1: "Report gagal",
+        });
+      }
+
+      Toast.show({
+        type: "success",
+        text1: "Report berhasil",
+      });
+
+      router.back();
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  };
 
   const buttonSubmit = (
     <BoxButtonOnFooter>
@@ -23,12 +52,8 @@ export default function AdminCollaborationRejectInput() {
             message: "Apakah anda yakin ingin menolak data ini?",
             textLeft: "Batal",
             textRight: "Ya",
-            onPressLeft: () => {
-              router.back();
-            },
             onPressRight: () => {
-              console.log("value:", value);
-              // router.replace(`/admin/job/reject/status`);
+              handlerReject();
             },
           })
         }
@@ -40,7 +65,9 @@ export default function AdminCollaborationRejectInput() {
     <>
       <ViewWrapper
         footerComponent={buttonSubmit}
-        headerComponent={<AdminBackButtonAntTitle title="Penolakan Collaboration" />}
+        headerComponent={
+          <AdminBackButtonAntTitle title="Penolakan Collaboration" />
+        }
       >
         <TextAreaCustom
           value={value}

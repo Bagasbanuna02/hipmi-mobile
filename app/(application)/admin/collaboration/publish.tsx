@@ -15,6 +15,7 @@ import { Octicons } from "@expo/vector-icons";
 import { router, useFocusEffect } from "expo-router";
 import _ from "lodash";
 import { useCallback, useState } from "react";
+import { View } from "react-native";
 import { Divider } from "react-native-paper";
 
 export default function AdminCollaborationPublish() {
@@ -43,10 +44,11 @@ export default function AdminCollaborationPublish() {
       setLoadList(false);
     }
   };
+
   return (
     <>
       <ViewWrapper headerComponent={<AdminTitlePage title="Collaboration" />}>
-        <StackCustom gap={"xs"}>
+        <StackCustom>
           <AdminComp_BoxTitle title="Publish" />
 
           <AdminTitleTable
@@ -60,36 +62,39 @@ export default function AdminCollaborationPublish() {
           {loadList ? (
             <LoaderCustom />
           ) : _.isEmpty(list) ? (
-            <TextCustom>Belum ada data</TextCustom>
+            <TextCustom align="center" color="gray">
+              Belum ada data
+            </TextCustom>
           ) : (
             list?.map((item: any, index: number) => (
-              <AdminTableValue
-                key={index}
-                value1={
-                  <ActionIcon
-                    icon={
-                      <Octicons
-                        name="eye"
-                        size={ICON_SIZE_BUTTON}
-                        color="black"
-                      />
-                    }
-                    onPress={() => {
-                      router.push(`/admin/collaboration/${item?.id}/publish`);
-                    }}
-                  />
-                }
-                value2={
-                  <TextCustom align="center" truncate={1}>
-                    {item?.Author?.username || "-"}{" "}
-                  </TextCustom>
-                }
-                value3={
-                  <TextCustom align="center" truncate={2}>
-                    {item?.title || "-"}
-                  </TextCustom>
-                }
-              />
+              <View key={index}>
+                <AdminTableValue
+                  value1={
+                    <ActionIcon
+                      icon={
+                        <Octicons
+                          name="eye"
+                          size={ICON_SIZE_BUTTON}
+                          color="black"
+                        />
+                      }
+                      onPress={() => {
+                        router.push(`/admin/collaboration/${item?.id}/publish`);
+                      }}
+                    />
+                  }
+                  value2={
+                    <TextCustom align="center" truncate={1}>
+                      {item?.Author?.username || "-"}{" "}
+                    </TextCustom>
+                  }
+                  value3={
+                    <TextCustom align="center" truncate={2}>
+                      {item?.title || "-"}
+                    </TextCustom>
+                  }
+                />
+              </View>
             ))
           )}
         </StackCustom>

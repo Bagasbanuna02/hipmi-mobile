@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   BaseBox,
   Grid,
@@ -6,23 +7,45 @@ import {
   ViewWrapper,
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
-import { useLocalSearchParams } from "expo-router";
+import { apiAdminCollaborationGetById } from "@/service/api-admin/api-admin-collaboration";
+import { useFocusEffect, useLocalSearchParams } from "expo-router";
+import { useCallback, useState } from "react";
 
 export default function AdminCollaborationGroup() {
   const { id } = useLocalSearchParams();
-  console.log("params:", id);
+  const [data, setData] = useState<any | null>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [id])
+  );
+
+  const onLoadData = async () => {
+    try {
+      const response = await apiAdminCollaborationGetById({
+        id: id as string,
+        category: "group",
+      });
+
+      if (response.success) {
+        setData(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  };
+
   return (
     <>
       <ViewWrapper
-        headerComponent={
-          <AdminBackButtonAntTitle title={`Detail Group ${id}`} />
-        }
+        headerComponent={<AdminBackButtonAntTitle title={`Detail Group`} />}
       >
         <StackCustom gap={"xs"}>
           <BaseBox>
             <StackCustom>
-              {listData.map((item, i) => (
-                <Grid key={i}>
+              {listData(data).map((item: any, index: number) => (
+                <Grid key={index}>
                   <Grid.Col
                     span={4}
                     style={{ justifyContent: "center", paddingRight: 10 }}
@@ -40,21 +63,36 @@ export default function AdminCollaborationGroup() {
             <StackCustom>
               <TextCustom align="center">Anggota</TextCustom>
 
-              {Array.from({ length: 10 }).map((_, i) => (
-                <Grid key={i}>
-                  <Grid.Col
-                    span={4}
-                    style={{ justifyContent: "center", paddingRight: 10 }}
-                  >
-                    <TextCustom bold>Username</TextCustom>
-                  </Grid.Col>
-                  <Grid.Col span={8} style={{ justifyContent: "center" }}>
-                    <TextCustom>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    </TextCustom>
-                  </Grid.Col>
-                </Grid>
-              ))}
+              {data?.ProjectCollaboration_AnggotaRoomChat?.map(
+                (item: any, index: number) => (
+                  <StackCustom key={index} gap={0}>
+                    <Grid>
+                      <Grid.Col
+                        span={4}
+                        style={{ justifyContent: "center", paddingRight: 10 }}
+                      >
+                        <TextCustom bold>Nama</TextCustom>
+                      </Grid.Col>
+                      <Grid.Col span={8} style={{ justifyContent: "center" }}>
+                        <TextCustom>
+                          {item?.User?.Profile?.name || "-"}
+                        </TextCustom>
+                      </Grid.Col>
+                    </Grid>
+                    <Grid>
+                      <Grid.Col
+                        span={4}
+                        style={{ justifyContent: "center", paddingRight: 10 }}
+                      >
+                        <TextCustom bold>Username</TextCustom>
+                      </Grid.Col>
+                      <Grid.Col span={8} style={{ justifyContent: "center" }}>
+                        <TextCustom>{item?.User?.username || "-"}</TextCustom>
+                      </Grid.Col>
+                    </Grid>
+                  </StackCustom>
+                )
+              )}
             </StackCustom>
           </BaseBox>
         </StackCustom>
@@ -63,35 +101,35 @@ export default function AdminCollaborationGroup() {
   );
 }
 
-const listData = [
+const listData = (data: any) => [
   {
     label: "Admin Group",
-    value: "Bagas Banuna",
+    value: data?.ProjectCollaboration?.Author?.username || "-",
   },
   {
     label: "Nama Group",
-    value: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    value: data?.name || "-",
   },
   {
     label: "Industri",
-    value: "Kesehatan",
+    value:
+      data?.ProjectCollaboration?.ProjectCollaborationMaster_Industri?.name ||
+      "-",
   },
   {
     label: "Jumlah Partisipan ",
-    value: "0",
+    value: data?.ProjectCollaboration_AnggotaRoomChat?.length || "-",
   },
   {
     label: "Lokasi",
-    value: "Kuta Selatan, Bali",
+    value: data?.ProjectCollaboration?.lokasi || "-",
   },
   {
     label: "Tujuan Proyek",
-    value:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    value: data?.ProjectCollaboration?.purpose || "-",
   },
   {
     label: "Keuntungan",
-    value:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    value: data?.ProjectCollaboration?.benefit || "-",
   },
 ];
