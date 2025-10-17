@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   AlertDefaultSystem,
   BadgeCustom,
@@ -7,17 +8,42 @@ import {
   Spacing,
   StackCustom,
   TextCustom,
-  ViewWrapper
+  ViewWrapper,
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
 import AdminButtonReview from "@/components/_ShareComponent/Admin/ButtonReview";
 import { MainColor } from "@/constants/color-palet";
-import { router, useLocalSearchParams } from "expo-router";
+import funUpdateStatus from "@/screens/Admin/Job/funUpdateStatus";
+import { apiAdminJobGetById } from "@/service/api-admin/api-admin-job";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
+import { useCallback, useState } from "react";
+import Toast from "react-native-toast-message";
 
 export default function AdminJobDetailStatus() {
   const { id, status } = useLocalSearchParams();
+  const [data, setData] = useState<any | null>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [id])
+  );
+
+  const onLoadData = async () => {
+    try {
+      const response = await apiAdminJobGetById({
+        id: id as string,
+      });
+
+      if (response.success) {
+        setData(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  };
 
   const colorBadge = () => {
     if (status === "publish") {
@@ -32,11 +58,11 @@ export default function AdminJobDetailStatus() {
   const listData = [
     {
       label: "Username",
-      value: "Bagas Banuna",
+      value: data?.Author?.username || "-",
     },
     {
       label: "Judul",
-      value: `Judul Proyek: ${id}Lorem ipsum dolor sit amet consectetur adipisicing elit.`,
+      value: data?.title || "-",
     },
     {
       label: "Status",
@@ -48,23 +74,42 @@ export default function AdminJobDetailStatus() {
     },
     {
       label: "Konten",
-      value: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+      value: data?.content || "-",
     },
     {
       label: "Deskripsi",
-      value: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+      value: data?.deskripsi || "-",
     },
-    // {
-    //   label: "Poster",
-    //   value: (
-    //     <ButtonCustom
-    //       href={`/(application)/()/${id}`}
-    //     >
-    //       Lihat Poster
-    //     </ButtonCustom>
-    //   ),
-    // },
   ];
+
+  const handleUpdate = async ({
+    changeStatus,
+  }: {
+    changeStatus: "publish" | "review" | "reject";
+  }) => {
+    try {
+      const response = await funUpdateStatus({
+        id: id as string,
+        changeStatus,
+      });
+
+      if (!response.success) {
+        Toast.show({
+          type: "error",
+          text1: "Gagal mempublikasikan data",
+        });
+      }
+
+      Toast.show({
+        type: "success",
+        text1: "Berhasil mempublikasikan data",
+      });
+
+      router.back();
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  };
 
   return (
     <>
@@ -73,8 +118,8 @@ export default function AdminJobDetailStatus() {
       >
         <BaseBox>
           <StackCustom>
-            {listData.map((item, i) => (
-              <Grid key={i}>
+            {listData?.map((item, index) => (
+              <Grid key={index}>
                 <Grid.Col
                   span={4}
                   style={{ justifyContent: "center", paddingRight: 10 }}
@@ -87,11 +132,23 @@ export default function AdminJobDetailStatus() {
               </Grid>
             ))}
 
-            <TextCustom bold>Poster</TextCustom>
-
-            <DummyLandscapeImage />
+            {data && data?.imageId && (
+              <StackCustom>
+                <TextCustom bold>Poster</TextCustom>
+                <DummyLandscapeImage imageId={data?.imageId} />
+              </StackCustom>
+            )}
           </StackCustom>
         </BaseBox>
+
+        {data && data?.catatan && (
+          <BaseBox>
+            <StackCustom>
+              <TextCustom bold>Catatan report</TextCustom>
+              <TextCustom>{data?.catatan}</TextCustom>
+            </StackCustom>
+          </BaseBox>
+        )}
 
         {status === "review" && (
           <AdminButtonReview
@@ -101,24 +158,22 @@ export default function AdminJobDetailStatus() {
                 message: "Apakah anda yakin ingin mempublikasikan data ini?",
                 textLeft: "Batal",
                 textRight: "Ya",
-                onPressLeft: () => {
-                  router.back();
-                },
                 onPressRight: () => {
-                  router.back();
+                  handleUpdate({ changeStatus: "publish" });
                 },
               });
             }}
             onReject={() => {
-              router.push(`/admin/job/${id}/reject-input`);
+              router.push(`/admin/job/${id}/${status}/reject-input`);
             }}
           />
         )}
+
         {status === "reject" && (
           <AdminButtonReject
             title="Tambah Catatan"
             onReject={() => {
-              router.push(`/admin/job/${id}/reject-input`);
+              router.push(`/admin/job/${id}/${status}/reject-input`);
             }}
           />
         )}

@@ -5,9 +5,11 @@ import { MainColor } from "@/constants/color-palet";
 export default function AdminButtonReject({
   title,
   onReject,
+  isLoading,  
 }: {
   title: string;
   onReject: () => void;
+  isLoading?: boolean;
 }) {
   return (
     <>
@@ -16,6 +18,7 @@ export default function AdminButtonReject({
         backgroundColor={MainColor.red}
         textColor="white"
         onPress={onReject}
+        isLoading={isLoading}
       >
         {title}
       </ButtonCustom>

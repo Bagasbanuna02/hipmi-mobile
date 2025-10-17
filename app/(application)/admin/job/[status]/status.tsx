@@ -21,8 +21,6 @@ import { Divider } from "react-native-paper";
 
 export default function AdminJobStatus() {
   const { status } = useLocalSearchParams();
-  console.log("[STATUS]", status);
-
   const [list, setList] = useState<any | null>(null);
   const [loadList, setLoadList] = useState(false);
   const [search, setSearch] = useState("");
@@ -40,8 +38,6 @@ export default function AdminJobStatus() {
         category: status as "publish" | "review" | "reject",
         search,
       });
-
-      console.log("[RESPONSE >>]", JSON.stringify(response, null, 2));
 
       if (response.success) {
         setList(response.data);

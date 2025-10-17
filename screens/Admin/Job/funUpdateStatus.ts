@@ -1,0 +1,26 @@
+import { apiAdminJobUpdate } from "@/service/api-admin/api-admin-job";
+
+const funUpdateStatus = async ({
+  id,
+  changeStatus,
+  data,
+}: {
+  id: string;
+  changeStatus: "publish" | "review" | "reject";
+  data?: string;
+}) => {
+  try {
+    const response = await apiAdminJobUpdate({
+      id: id,
+      status: changeStatus as any,
+      data: data,
+    });
+
+    return response;
+  } catch (error) {
+    console.log("[ERROR]", error);
+    throw error;
+  }
+};
+
+export default funUpdateStatus;
