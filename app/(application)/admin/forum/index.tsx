@@ -1,13 +1,54 @@
 import { Spacing, StackCustom, ViewWrapper } from "@/components";
-import {
-    IconPublish,
-    IconReport,
-} from "@/components/_Icon/IconComponent";
+import { IconPublish, IconReport } from "@/components/_Icon/IconComponent";
 import AdminComp_BoxDashboard from "@/components/_ShareComponent/Admin/BoxDashboard";
 import AdminTitlePage from "@/components/_ShareComponent/Admin/TitlePage";
 import { MainColor } from "@/constants/color-palet";
+import { apiAdminForum } from "@/service/api-admin/api-admin-forum";
+import { useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
 
 export default function AdminForum() {
+  const [data, setData] = useState<any | null>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      handlerLoadList();
+    }, [])
+  );
+
+  const handlerLoadList = async () => {
+    try {
+      const response = await apiAdminForum({
+        category: "dashboard",
+      });
+
+      console.log("[RES DASHBOARD]", JSON.stringify(response, null, 2));
+      if (response.success) {
+        setData(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  };
+
+  const listData = [
+    {
+      label: "Posting",
+      value: data?.posting || 0,
+      icon: <IconPublish size={25} color={MainColor.green} />,
+    },
+    {
+      label: "Report Posting",
+      value: data?.report_posting || 0,
+      icon: <IconReport size={25} color={MainColor.orange} />,
+    },
+    {
+      label: "Report Comment",
+      value: data?.report_comment || 0,
+      icon: <IconReport size={25} color={MainColor.red} />,
+    },
+  ];
+
   return (
     <>
       <ViewWrapper>
@@ -22,21 +63,3 @@ export default function AdminForum() {
     </>
   );
 }
-
-const listData = [
-  {
-    label: "Posting",
-    value: 4,
-    icon: <IconPublish size={25} color={MainColor.green} />,
-  },
-  {
-    label: "Report Posting",
-    value: 7,
-    icon: <IconReport size={25} color={MainColor.orange} />,
-  },
-  {
-    label: "Report Comment",
-    value: 5,
-    icon: <IconReport size={25} color={MainColor.red} />,
-  },
-];

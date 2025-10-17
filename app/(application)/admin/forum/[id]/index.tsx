@@ -1,57 +1,83 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   ActionIcon,
-  AlertDefaultSystem,
   BadgeCustom,
   BaseBox,
   DrawerCustom,
   MenuDrawerDynamicGrid,
-  Spacing,
   StackCustom,
   TextCustom,
   ViewWrapper,
 } from "@/components";
-import { IconDot, IconView } from "@/components/_Icon/IconComponent";
-import { IconTrash } from "@/components/_Icon/IconTrash";
+import { IconDot } from "@/components/_Icon/IconComponent";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
-import AdminTitleTable from "@/components/_ShareComponent/Admin/TableTitle";
-import AdminTableValue from "@/components/_ShareComponent/Admin/TableValue";
 import { GridDetail_4_8 } from "@/components/_ShareComponent/GridDetail_4_8";
 import { MainColor } from "@/constants/color-palet";
-import {
-  ICON_SIZE_BUTTON,
-  ICON_SIZE_MEDIUM,
-  ICON_SIZE_XLARGE,
-} from "@/constants/constans-value";
+import { ICON_SIZE_XLARGE } from "@/constants/constans-value";
+import { apiAdminForumPostingById } from "@/service/api-admin/api-admin-forum";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
-import { useState } from "react";
-import { Divider } from "react-native-paper";
-import Toast from "react-native-toast-message";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
+import { useCallback, useState } from "react";
 
 export default function AdminForumDetailPosting() {
+  const { id } = useLocalSearchParams();
   const [openDrawerPage, setOpenDrawerPage] = useState(false);
-  const [openDrawerAction, setOpenDrawerAction] = useState(false);
-  const [id, setId] = useState<any>();
+  const [selectedId, setSelectedId] = useState<any>();
 
-  const handlerAction = (item: { value: string; path: string }) => {
-    if (item.value === "delete") {
-      AlertDefaultSystem({
-        title: "Hapus Posting",
-        message: "Apakah Anda yakin ingin menghapus posting ini?",
-        textLeft: "Batal",
-        textRight: "Hapus",
-        onPressRight: () => {
-          Toast.show({
-            type: "success",
-            text1: "Posting berhasil dihapus",
-          });
-        },
+  const [data, setData] = useState<any | null>(null);
+  const [listComment, setListComment] = useState<any[] | null>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [id])
+  );
+
+  const onLoadData = async () => {
+    try {
+      const response = await apiAdminForumPostingById({
+        id: id as string,
       });
-    } else {
-      router.navigate(item.path as any);
+      console.log("[RES DATA]", JSON.stringify(response, null, 2));
+
+      if (response.success) {
+        setData(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
     }
-    setOpenDrawerAction(false);
   };
+
+  const listDataAction = [
+    {
+      label: "Username",
+      value: data?.Author?.username || "-",
+    },
+    {
+      label: "Status",
+      value:
+        (data && (
+          <BadgeCustom
+            color={
+              data?.ForumMaster_StatusPosting?.status === "Open"
+                ? MainColor.green
+                : MainColor.red
+            }
+          >
+            {data?.ForumMaster_StatusPosting?.status || "-"}
+          </BadgeCustom>
+        )) ||
+        "-",
+    },
+    {
+      label: "Komentar",
+      value: data?.JumlahKomentar || 0,
+    },
+    {
+      label: "Total Report",
+      value: data?.JumlahReportPosting || 0,
+    },
+  ];
 
   return (
     <>
@@ -77,51 +103,56 @@ export default function AdminForumDetailPosting() {
                 value={<TextCustom>{item.value}</TextCustom>}
               />
             ))}
-            <TextCustom bold>Posting</TextCustom>
-            <TextCustom>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Asperiores cupiditate nobis dignissimos explicabo quo unde dolorum
-              numquam eos ab laborum fugiat illo nam velit quibusdam, maxime
-              assumenda aut vero provident!
-            </TextCustom>
+          </StackCustom>
+        </BaseBox>
+
+        <BaseBox>
+          <StackCustom gap={"sm"}>
+            <TextCustom bold>Postingan</TextCustom>
+            <TextCustom>{(data && data?.diskusi) || "-"}</TextCustom>
           </StackCustom>
         </BaseBox>
 
         {/* <AdminComp_BoxTitle title="Komentar" rightComponent={rightComponent} /> */}
-        <BaseBox>
+        {/* <StackCustom>
           <AdminTitleTable title1="Aksi" title2="Username" title3="Komentar" />
-          <Spacing />
           <Divider />
-          {Array.from({ length: 10 }).map((_, index) => (
-            <AdminTableValue
-              key={index}
-              value1={
-                <ActionIcon
-                  icon={
-                    <Ionicons
-                      name="ellipsis-vertical-outline"
-                      size={ICON_SIZE_BUTTON}
-                      color="black"
-                    />
-                  }
-                  onPress={() => {
-                    setOpenDrawerAction(true);
-                    setId(index + 1);
-                  }}
-                />
-              }
-              value2={<TextCustom truncate={1}>Username username</TextCustom>}
-              value3={
-                <TextCustom truncate={2}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Blanditiis asperiores quidem deleniti architecto eaque et
-                  nostrum, ad consequuntur eveniet quisquam quae voluptatum
-                  ducimus! Dolorem nobis modi officia debitis, beatae mollitia.
-                </TextCustom>
-              }
-            />
-          ))}
-        </BaseBox>
+          {!listComment ? (
+            <LoaderCustom />
+          ) : _.isEmpty(listComment) ? (
+            <TextCustom align="center" color="gray">
+              Tidak ada komentar
+            </TextCustom>
+          ) : (
+            listComment?.map((item: any, index: number) => (
+              <AdminTableValue
+                key={index}
+                value1={
+                  <ActionIcon
+                    icon={
+                      <Ionicons
+                        name="ellipsis-vertical-outline"
+                        size={ICON_SIZE_BUTTON}
+                        color="black"
+                      />
+                    }
+                    onPress={() => {
+                      setSelectedId(index + 1);
+                    }}
+                  />
+                }
+                value2={
+                  <TextCustom truncate={1}>
+                    {item?.Author?.username || "-"}
+                  </TextCustom>
+                }
+                value3={
+                  <TextCustom truncate={2}>{item?.komentar || "-"}</TextCustom>
+                }
+              />
+            ))
+          )}
+        </StackCustom> */}
       </ViewWrapper>
 
       <DrawerCustom
@@ -143,6 +174,18 @@ export default function AdminForumDetailPosting() {
               value: "detail",
               path: `/admin/forum/${id}/list-report-posting`,
             },
+            {
+              icon: (
+                <Ionicons
+                  name="list"
+                  size={ICON_SIZE_XLARGE}
+                  color={MainColor.white}
+                />
+              ),
+              label: "Daftar Komentar",
+              value: "detail",
+              path: `/admin/forum/${id}/list-comment`,
+            },
           ]}
           onPressItem={(item) => {
             router.navigate(item.path as any);
@@ -150,54 +193,6 @@ export default function AdminForumDetailPosting() {
           }}
         />
       </DrawerCustom>
-
-      <DrawerCustom
-        isVisible={openDrawerAction}
-        closeDrawer={() => setOpenDrawerAction(false)}
-        height={"auto"}
-      >
-        <MenuDrawerDynamicGrid
-          data={[
-            {
-              icon: <IconView />,
-              label: "Detail Komentar",
-              value: "detail",
-              path: `admin/forum/${id}/list-report-comment`,
-            },
-            {
-              icon: (
-                <IconTrash size={ICON_SIZE_MEDIUM} color={MainColor.white} />
-              ),
-              label: "Hapus Komentar",
-              value: "delete",
-              path: "",
-              color: MainColor.red,
-            },
-          ]}
-          onPressItem={(item) => {
-            handlerAction(item as any);
-          }}
-        />
-      </DrawerCustom>
     </>
   );
 }
-
-const listDataAction = [
-  {
-    label: "Username",
-    value: "Username",
-  },
-  {
-    label: "Status",
-    value: <BadgeCustom color={MainColor.green}>Open</BadgeCustom>,
-  },
-  {
-    label: "Komentar",
-    value: "10",
-  },
-  {
-    label: "Total Report",
-    value: "1",
-  },
-];

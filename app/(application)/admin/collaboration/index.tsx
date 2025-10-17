@@ -22,8 +22,6 @@ export default function AdminCollaboration() {
         category: "dashboard",
       });
 
-      console.log("[RESPONSE]", JSON.stringify(response, null, 2));
-
       if (response.success) {
         setList(response.data);
       }
@@ -46,7 +44,6 @@ export default function AdminCollaboration() {
 }
 
 const listData = (list: any) => {
-  console.log("[LIST masuk]", JSON.stringify(list, null, 2));
   return [
     {
       label: "Publish",

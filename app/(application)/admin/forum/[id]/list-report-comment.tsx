@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   ActionIcon,
   AlertDefaultSystem,
@@ -18,14 +19,41 @@ import AdminTableValue from "@/components/_ShareComponent/Admin/TableValue";
 import { GridDetail_4_8 } from "@/components/_ShareComponent/GridDetail_4_8";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
-import { router } from "expo-router";
-import { useState } from "react";
+import { apiAdminForumCommentById } from "@/service/api-admin/api-admin-forum";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
+import { useCallback, useState } from "react";
 import { Divider } from "react-native-paper";
 import Toast from "react-native-toast-message";
 
 export default function AdminForumReportComment() {
+  const { id } = useLocalSearchParams();
+  console.log("[ID]", id);
+  const [data, setData] = useState<any | null>(null);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerAction, setOpenDrawerAction] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [id])
+  );
+
+  const onLoadData = async () => {
+    try {
+      const response = await apiAdminForumCommentById({
+        id: id as string,
+        category: "get-one",
+      });
+
+      console.log("[RES GET ONE COMMENT]", JSON.stringify(response, null, 2));
+      if (response.success) {
+        setData(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+      setData(null);
+    }
+  };
 
   return (
     <>
@@ -44,20 +72,14 @@ export default function AdminForumReportComment() {
       >
         <BaseBox>
           <StackCustom gap={"sm"}>
-            {listData.map((item, i) => (
-              <GridDetail_4_8
-                key={i}
-                label={<TextCustom bold>{item.label}</TextCustom>}
-                value={<TextCustom>{item.value}</TextCustom>}
-              />
-            ))}
-            <TextCustom bold>Posting</TextCustom>
-            <TextCustom>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Asperiores cupiditate nobis dignissimos explicabo quo unde dolorum
-              numquam eos ab laborum fugiat illo nam velit quibusdam, maxime
-              assumenda aut vero provident!
-            </TextCustom>
+            <GridDetail_4_8
+              label={<TextCustom bold>Username</TextCustom>}
+              value={<TextCustom>{data?.Author?.username || "-"}</TextCustom>}
+            />
+            <GridDetail_4_8
+              label={<TextCustom bold>Komentar</TextCustom>}
+              value={<TextCustom>{data?.komentar || "-"}</TextCustom>}
+            />
           </StackCustom>
         </BaseBox>
 
