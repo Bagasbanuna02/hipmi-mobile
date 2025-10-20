@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   AlertDefaultSystem,
   BadgeCustom,
@@ -14,13 +15,41 @@ import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
 import AdminButtonReview from "@/components/_ShareComponent/Admin/ButtonReview";
 import { GridDetail_4_8 } from "@/components/_ShareComponent/GridDetail_4_8";
 import { MainColor } from "@/constants/color-palet";
+import { apiAdminVotingById } from "@/service/api-admin/api-admin-voting";
+import { dateTimeView } from "@/utils/dateTimeView";
+import { Entypo } from "@expo/vector-icons";
 import dayjs from "dayjs";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
+import { useCallback, useState } from "react";
 import { List } from "react-native-paper";
 
 export default function AdminVotingDetail() {
   const { id, status } = useLocalSearchParams();
+
+  const [data, setData] = useState<any | null>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [id])
+  );
+
+  const onLoadData = async () => {
+    try {
+      const response = await apiAdminVotingById({
+        id: id as string,
+      });
+
+      console.log("[DATA BY ID]", JSON.stringify(response, null, 2));
+
+      if (response.success) {
+        setData(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  };
 
   const colorBadge = () => {
     if (status === "publish") {
@@ -37,63 +66,53 @@ export default function AdminVotingDetail() {
   const listData = [
     {
       label: "Username",
-      value: "Bagas Banuna",
+      value: (data && data?.Author?.username) || "-",
     },
     {
       label: "Judul",
-      value: `Judul Proyek: ${id}Lorem ipsum dolor sit amet consectetur adipisicing elit.`,
+      value: (data && data?.title) || "-",
     },
     {
       label: "Status",
-      value: (
-        <BadgeCustom color={colorBadge()}>
-          {_.startCase(status as string)}
-        </BadgeCustom>
-      ),
+      value:
+        data && data?.Voting_Status?.name ? (
+          <BadgeCustom color={colorBadge()}>
+            {_.startCase(data?.Voting_Status?.name)}
+          </BadgeCustom>
+        ) : (
+          "-"
+        ),
     },
     {
       label: "Mulai Voting",
-      value: dayjs().format("DD/MM/YYYY"),
+      value:
+        (data && data?.awalVote && dateTimeView({ date: data?.awalVote })) ||
+        "-",
     },
     {
       label: "Voting Berakhir",
-      value: dayjs().format("DD/MM/YYYY"),
+      value:
+        (data && data?.akhirVote && dateTimeView({ date: data?.akhirVote })) ||
+        "-",
     },
-
     {
       label: "Deskripsi",
-      value: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+      value: (data && data?.deskripsi) || "-",
     },
     {
-      label: "Daftar Pilhan",
-      value: (
-        <>
-          <List.Item
-            title={<TextCustom>Pilihan 1</TextCustom>}
-            left={(props) => (
-              <List.Icon {...props} icon="circle" color={MainColor.yellow} />
-            )}
-          />
-          <List.Item
-            title={<TextCustom>Pilihan 2</TextCustom>}
-            left={(props) => (
-              <List.Icon {...props} icon="circle" color={MainColor.yellow} />
-            )}
-          />
-          <List.Item
-            title={<TextCustom>Pilihan 3</TextCustom>}
-            left={(props) => (
-              <List.Icon {...props} icon="circle" color={MainColor.yellow} />
-            )}
-          />
-          <List.Item
-            title={<TextCustom>Pilihan 4</TextCustom>}
-            left={(props) => (
-              <List.Icon {...props} icon="circle" color={MainColor.yellow} />
-            )}
-          />
-        </>
-      ),
+      label: "Daftar Pilihan",
+      value:
+        data && data?.Voting_DaftarNamaVote
+          ? data?.Voting_DaftarNamaVote?.map((item: any, i: number) => (
+              <List.Item
+                key={i}
+                title={<TextCustom>{item?.value}</TextCustom>}
+                left={(props) => (
+                  <Entypo name="chevron-right" color={MainColor.yellow} />
+                )}
+              />
+            ))
+          : "-",
     },
   ];
 
@@ -121,17 +140,23 @@ export default function AdminVotingDetail() {
             </TextCustom>
             <Spacing />
             <Grid>
-             
-             {Array.from({length: 4}).map((_, index) => (
-              <Grid.Col key={index} span={3} style={{ paddingRight: 3, paddingLeft: 3 }}>
-                <StackCustom gap={"sm"}>
-                  <CircleContainer value={index % 3 * 3} style={{ alignSelf: "center" }} />
-                  <TextCustom size="small" align="center">
-                    Pilihan {index + 1}
-                  </TextCustom>
-                </StackCustom>
-              </Grid.Col>
-             ))}
+              {Array.from({ length: 4 }).map((_, index) => (
+                <Grid.Col
+                  key={index}
+                  span={3}
+                  style={{ paddingRight: 3, paddingLeft: 3 }}
+                >
+                  <StackCustom gap={"sm"}>
+                    <CircleContainer
+                      value={(index % 3) * 3}
+                      style={{ alignSelf: "center" }}
+                    />
+                    <TextCustom size="small" align="center">
+                      Pilihan {index + 1}
+                    </TextCustom>
+                  </StackCustom>
+                </Grid.Col>
+              ))}
             </Grid>
           </BaseBox>
         )}

@@ -8,8 +8,56 @@ import {
 import AdminComp_BoxDashboard from "@/components/_ShareComponent/Admin/BoxDashboard";
 import AdminTitlePage from "@/components/_ShareComponent/Admin/TitlePage";
 import { MainColor } from "@/constants/color-palet";
+import { apiAdminVoting } from "@/service/api-admin/api-admin-voting";
+import { useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
 
 export default function AdminVoting() {
+  const [data, setData] = useState<any | null>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [])
+  );
+
+  const onLoadData = async () => {
+    try {
+      const response = await apiAdminVoting({
+        category: "dashboard",
+      });
+      
+      if (response.success) {
+        setData(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  };
+
+  const listData = [
+    {
+      label: "Publish",
+      value: (data && data?.publish) || 0,
+      icon: <IconPublish size={25} color={MainColor.green} />,
+    },
+    {
+      label: "Review",
+      value: (data && data?.review) || 0,
+      icon: <IconReview size={25} color={MainColor.orange} />,
+    },
+    {
+      label: "Reject",
+      value: (data && data?.reject) || 0,
+      icon: <IconReject size={25} color={MainColor.red} />,
+    },
+    {
+      label: "Riwayat",
+      value: (data && data?.history) || 0,
+      icon: <IconArchive size={25} color={MainColor.white_gray} />,
+    },
+  ];
+
   return (
     <>
       <ViewWrapper>
@@ -24,26 +72,3 @@ export default function AdminVoting() {
     </>
   );
 }
-
-const listData = [
-  {
-    label: "Publish",
-    value: 4,
-    icon: <IconPublish size={25} color={MainColor.green} />,
-  },
-  {
-    label: "Review",
-    value: 7,
-    icon: <IconReview size={25} color={MainColor.orange} />,
-  },
-  {
-    label: "Reject",
-    value: 5,
-    icon: <IconReject size={25} color={MainColor.red} />,
-  },
-  {
-    label: "Riwayat",
-    value: 5,
-    icon: <IconArchive size={25} color={MainColor.white_gray} />,
-  },
-];

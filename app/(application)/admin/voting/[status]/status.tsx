@@ -1,27 +1,66 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
-    ActionIcon,
-    BaseBox,
-    SearchInput,
-    Spacing,
-    TextCustom,
-    ViewWrapper,
+  ActionIcon,
+  BaseBox,
+  LoaderCustom,
+  SearchInput,
+  Spacing,
+  StackCustom,
+  TextCustom,
+  ViewWrapper,
 } from "@/components";
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
 import AdminTitleTable from "@/components/_ShareComponent/Admin/TableTitle";
 import AdminTableValue from "@/components/_ShareComponent/Admin/TableValue";
 import AdminTitlePage from "@/components/_ShareComponent/Admin/TitlePage";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
+import { apiAdminVoting } from "@/service/api-admin/api-admin-voting";
 import { Octicons } from "@expo/vector-icons";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
+import { useState, useCallback } from "react";
 import { Divider } from "react-native-paper";
 
 export default function AdminVotingStatus() {
   const { status } = useLocalSearchParams();
+  console.log("[STATUS]", status);
+
+  const [list, setList] = useState<any | null>(null);
+  const [loadList, setLoadList] = useState(false);
+  const [search, setSearch] = useState<string>("");
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [status, search])
+  );
+
+  const onLoadData = async () => {
+    try {
+      setLoadList(true);
+      const response = await apiAdminVoting({
+        category: status as "publish" | "review" | "reject" as any,
+        search,
+      });
+
+      // console.log("[LIST BY STATUS]", JSON.stringify(response, null, 2));
+
+      if (response.success) {
+        setList(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setLoadList(false);
+    }
+  };
+
   const rightComponent = (
     <SearchInput
       containerStyle={{ width: "100%", marginBottom: 0 }}
       placeholder="Cari"
+      value={search}
+      onChangeText={setSearch}
     />
   );
   return (
@@ -32,18 +71,17 @@ export default function AdminVotingStatus() {
           rightComponent={rightComponent}
         />
 
-        <BaseBox>
+        <StackCustom gap={"sm"}>
           <AdminTitleTable
             title1="Aksi"
             title2="Username"
             title3="Judul Voting"
           />
-          <Spacing />
           <Divider />
 
-          {Array.from({ length: 10 }).map((_, index) => (
+          {loadList ? <LoaderCustom/> : _.isEmpty(list) ? <TextCustom align="center" bold color="gray">Belum ada data</TextCustom> : list.map((item: any, i: number) => (
             <AdminTableValue
-              key={index}
+              key={i}
               value1={
                 <ActionIcon
                   icon={
@@ -54,22 +92,19 @@ export default function AdminVotingStatus() {
                     />
                   }
                   onPress={() => {
-                    router.push(`/admin/voting/${index}/${status}`);
+                    router.push(`/admin/voting/${item.id}/${status}`);
                   }}
                 />
               }
-              value2={<TextCustom truncate={1}>Username username</TextCustom>}
+              value2={<TextCustom truncate={1}>{item?.Author?.username || "-"}</TextCustom>}
               value3={
-                <TextCustom truncate={2}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Blanditiis asperiores quidem deleniti architecto eaque et
-                  nostrum, ad consequuntur eveniet quisquam quae voluptatum
-                  ducimus! Dolorem nobis modi officia debitis, beatae mollitia.
+                <TextCustom align="center" truncate={2}>
+                  {item?.title || "-"}
                 </TextCustom>
               }
             />
           ))}
-        </BaseBox>
+        </StackCustom>
       </ViewWrapper>
     </>
   );
