@@ -22,7 +22,6 @@ export default function AdminForum() {
         category: "dashboard",
       });
 
-      console.log("[RES DASHBOARD]", JSON.stringify(response, null, 2));
       if (response.success) {
         setData(response.data);
       }
@@ -39,12 +38,12 @@ export default function AdminForum() {
     },
     {
       label: "Report Posting",
-      value: data?.report_posting || 0,
+      value: data?.reportPosting || 0,
       icon: <IconReport size={25} color={MainColor.orange} />,
     },
     {
       label: "Report Comment",
-      value: data?.report_comment || 0,
+      value: data?.reportComment || 0,
       icon: <IconReport size={25} color={MainColor.red} />,
     },
   ];

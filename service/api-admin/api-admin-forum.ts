@@ -41,3 +41,51 @@ export async function apiAdminForumCommentById({
     throw error;
   }
 }
+
+export async function apiAdminForumListReportCommentById({
+  id,
+}: {
+  id: string;
+}) {
+  try {
+    const response = await apiConfig.get(
+      `/mobile/admin/forum/${id}/report-comment`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiAdminForumDeactivateComment({ id }: { id: string }) {
+  try {
+    const response = await apiConfig.put(`/mobile/admin/forum/${id}/comment`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiAdminForumListReportPostingById({
+  id,
+}: {
+  id: string;
+}) {
+  try {
+    const response = await apiConfig.get(
+      `/mobile/admin/forum/${id}/report-posting`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiAdminForumDeactivatePosting({ id }: { id: string }) {
+  try {
+    const response = await apiConfig.put(`/mobile/admin/forum/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

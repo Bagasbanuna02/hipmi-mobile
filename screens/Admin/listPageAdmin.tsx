@@ -69,7 +69,7 @@ const adminListMenu: NavbarItem[] = [
       { label: "Dashboard", link: "/admin/forum" },
       { label: "Posting", link: "/admin/forum/posting" },
       { label: "Report Posting", link: "/admin/forum/report-posting" },
-      { label: "Report Comment", link: "/admin/forum/report-comment" },
+      { label: "Report Komentar", link: "/admin/forum/report-comment" },
     ],
   },
   {
@@ -162,7 +162,7 @@ const superAdminListMenu: NavbarItem[] = [
       { label: "Dashboard", link: "/admin/forum" },
       { label: "Posting", link: "/admin/forum/posting" },
       { label: "Report Posting", link: "/admin/forum/report-posting" },
-      { label: "Report Comment", link: "/admin/forum/report-comment" },
+      { label: "Report Komentar", link: "/admin/forum/report-comment" },
     ],
   },
   {

@@ -1,12 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   ActionIcon,
-  BaseBox,
   Divider,
+  LoaderCustom,
   SearchInput,
-  Spacing,
+  StackCustom,
   TextCustom,
-  ViewWrapper,
+  ViewWrapper
 } from "@/components";
 import { IconView } from "@/components/_Icon/IconComponent";
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
@@ -15,17 +15,47 @@ import AdminTableValue from "@/components/_ShareComponent/Admin/TableValue";
 import AdminTitlePage from "@/components/_ShareComponent/Admin/TitlePage";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
-import { router } from "expo-router";
-import { useState } from "react";
+import { apiAdminForum } from "@/service/api-admin/api-admin-forum";
+import { router, useFocusEffect } from "expo-router";
+import _ from "lodash";
+import { useCallback, useState } from "react";
 
 export default function AdminForumReportPosting() {
-  const [openDrawer, setOpenDrawer] = useState(false);
-  const [id, setId] = useState<any>();
+  const [listData, setListData] = useState<any[] | null>(null);
+  const [loadList, setLoadList] = useState<boolean>(false);
+  const [search, setSearch] = useState<string>("");
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [search])
+  );
+
+  const onLoadData = async () => {
+    try {
+      setLoadList(true);
+
+      const response = await apiAdminForum({
+        category: "report_posting",
+        search: search,
+      });
+
+      if (response.success) {
+        setListData(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setLoadList(false);
+    }
+  };
 
   const rightComponent = (
     <SearchInput
       containerStyle={{ width: "100%", marginBottom: 0 }}
-      placeholder="Cari"
+      placeholder="Cari Postingan"
+      value={search}
+      onChangeText={setSearch}
     />
   );
 
@@ -37,36 +67,49 @@ export default function AdminForumReportPosting() {
           rightComponent={rightComponent}
         />
 
-        <BaseBox>
+        <StackCustom gap={"sm"}>
           <AdminTitleTable title1="Aksi" title2="Pelapor" title3="Postingan" />
-          <Spacing />
+
           <Divider />
-          {Array.from({ length: 10 }).map((_, index) => (
-            <AdminTableValue
-              key={index}
-              value1={
-                <ActionIcon
-                  icon={
-                    <IconView size={ICON_SIZE_BUTTON} color={MainColor.black} />
-                  }
-                  onPress={() => {
-                    router.push(`/admin/forum/${id}/list-report-posting`);
-                  }}
-                />
-              }
-              value2={<TextCustom truncate={1}>Username username</TextCustom>}
-              value3={
-                <TextCustom truncate={2} align="center">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Omnis laborum doloremque eius velit voluptate corrupti vel,
-                  provident quaerat tempore animi sed accusamus amet.
-                  Temporibus, praesentium? Rem voluptatum nesciunt voluptas
-                  repellat.
-                </TextCustom>
-              }
-            />
-          ))}
-        </BaseBox>
+          {loadList ? (
+            <LoaderCustom />
+          ) : _.isEmpty(listData) ? (
+            <TextCustom  align="center" color="gray">
+              Belum ada data
+            </TextCustom>
+          ) : (
+            listData?.map((item: any, index: number) => (
+              <AdminTableValue
+                key={index}
+                value1={
+                  <ActionIcon
+                    icon={
+                      <IconView
+                        size={ICON_SIZE_BUTTON}
+                        color={MainColor.black}
+                      />
+                    }
+                    onPress={() => {
+                      router.push(
+                        `/admin/forum/${item?.Forum_Posting?.id}/list-report-posting`
+                      );
+                    }}
+                  />
+                }
+                value2={
+                  <TextCustom truncate={1}>
+                    {item?.User?.username || "-"}
+                  </TextCustom>
+                }
+                value3={
+                  <TextCustom truncate={2} align="center">
+                    {item?.Forum_Posting?.diskusi || "-"}
+                  </TextCustom>
+                }
+              />
+            ))
+          )}
+        </StackCustom>
       </ViewWrapper>
     </>
   );

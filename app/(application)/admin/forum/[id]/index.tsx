@@ -22,11 +22,7 @@ import { useCallback, useState } from "react";
 export default function AdminForumDetailPosting() {
   const { id } = useLocalSearchParams();
   const [openDrawerPage, setOpenDrawerPage] = useState(false);
-  const [selectedId, setSelectedId] = useState<any>();
-
   const [data, setData] = useState<any | null>(null);
-  const [listComment, setListComment] = useState<any[] | null>(null);
-
   useFocusEffect(
     useCallback(() => {
       onLoadData();
@@ -38,7 +34,6 @@ export default function AdminForumDetailPosting() {
       const response = await apiAdminForumPostingById({
         id: id as string,
       });
-      console.log("[RES DATA]", JSON.stringify(response, null, 2));
 
       if (response.success) {
         setData(response.data);
@@ -86,14 +81,25 @@ export default function AdminForumDetailPosting() {
           <AdminBackButtonAntTitle
             title="Detail Posting"
             rightComponent={
-              <ActionIcon
-                icon={<IconDot size={16} color={MainColor.darkblue} />}
-                onPress={() => setOpenDrawerPage(true)}
-              />
+              data &&
+              data?.isActive && (
+                <ActionIcon
+                  icon={<IconDot size={16} color={MainColor.darkblue} />}
+                  onPress={() => setOpenDrawerPage(true)}
+                />
+              )
             }
           />
         }
       >
+        {data && !data?.isActive && (
+          <BaseBox>
+            <TextCustom bold align="center" color="red">
+              Postingan ini telah di nonaktifkan
+            </TextCustom>
+          </BaseBox>
+        )}
+
         <BaseBox>
           <StackCustom gap={"sm"}>
             {listDataAction.map((item, i) => (
@@ -112,47 +118,6 @@ export default function AdminForumDetailPosting() {
             <TextCustom>{(data && data?.diskusi) || "-"}</TextCustom>
           </StackCustom>
         </BaseBox>
-
-        {/* <AdminComp_BoxTitle title="Komentar" rightComponent={rightComponent} /> */}
-        {/* <StackCustom>
-          <AdminTitleTable title1="Aksi" title2="Username" title3="Komentar" />
-          <Divider />
-          {!listComment ? (
-            <LoaderCustom />
-          ) : _.isEmpty(listComment) ? (
-            <TextCustom align="center" color="gray">
-              Tidak ada komentar
-            </TextCustom>
-          ) : (
-            listComment?.map((item: any, index: number) => (
-              <AdminTableValue
-                key={index}
-                value1={
-                  <ActionIcon
-                    icon={
-                      <Ionicons
-                        name="ellipsis-vertical-outline"
-                        size={ICON_SIZE_BUTTON}
-                        color="black"
-                      />
-                    }
-                    onPress={() => {
-                      setSelectedId(index + 1);
-                    }}
-                  />
-                }
-                value2={
-                  <TextCustom truncate={1}>
-                    {item?.Author?.username || "-"}
-                  </TextCustom>
-                }
-                value3={
-                  <TextCustom truncate={2}>{item?.komentar || "-"}</TextCustom>
-                }
-              />
-            ))
-          )}
-        </StackCustom> */}
       </ViewWrapper>
 
       <DrawerCustom

@@ -4,8 +4,8 @@ import {
   AlertDefaultSystem,
   BaseBox,
   DrawerCustom,
+  LoaderCustom,
   MenuDrawerDynamicGrid,
-  Spacing,
   StackCustom,
   TextCustom,
   ViewWrapper,
@@ -19,18 +19,31 @@ import AdminTableValue from "@/components/_ShareComponent/Admin/TableValue";
 import { GridDetail_4_8 } from "@/components/_ShareComponent/GridDetail_4_8";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
-import { apiAdminForumCommentById } from "@/service/api-admin/api-admin-forum";
+import {
+  apiAdminForumCommentById,
+  apiAdminForumDeactivateComment,
+  apiAdminForumListReportCommentById,
+} from "@/service/api-admin/api-admin-forum";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
+import _ from "lodash";
 import { useCallback, useState } from "react";
 import { Divider } from "react-native-paper";
 import Toast from "react-native-toast-message";
 
 export default function AdminForumReportComment() {
   const { id } = useLocalSearchParams();
-  console.log("[ID]", id);
   const [data, setData] = useState<any | null>(null);
+  const [listReport, setListReport] = useState<any[] | null>(null);
+  const [loadList, setLoadList] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerAction, setOpenDrawerAction] = useState(false);
+  const [selectedReport, setSelectedReport] = useState({
+    id: "",
+    username: "",
+    kategori: "",
+    keterangan: "",
+    deskripsi: "",
+  });
 
   useFocusEffect(
     useCallback(() => {
@@ -40,18 +53,28 @@ export default function AdminForumReportComment() {
 
   const onLoadData = async () => {
     try {
+      setLoadList(true);
       const response = await apiAdminForumCommentById({
         id: id as string,
         category: "get-one",
       });
 
-      console.log("[RES GET ONE COMMENT]", JSON.stringify(response, null, 2));
+      const responseReport = await apiAdminForumListReportCommentById({
+        id: id as string,
+      });
+
       if (response.success) {
         setData(response.data);
+      }
+      if (responseReport.success) {
+        setListReport(responseReport.data);
       }
     } catch (error) {
       console.log("[ERROR]", error);
       setData(null);
+      setListReport([]);
+    } finally {
+      setLoadList(false);
     }
   };
 
@@ -85,34 +108,52 @@ export default function AdminForumReportComment() {
 
         <AdminComp_BoxTitle title="Daftar Report Komentar" />
 
-        <BaseBox>
+        <StackCustom>
           <AdminTitleTable
             title1="Aksi"
-            title2="Username"
+            title2="Pelapor"
             title3="Kategori Report"
           />
-          <Spacing />
           <Divider />
-          {Array.from({ length: 5 }).map((_, index) => (
-            <AdminTableValue
-              key={index}
-              value1={
-                <ActionIcon
-                  icon={<IconView size={ICON_SIZE_BUTTON} color="black" />}
-                  onPress={() => {
-                    setOpenDrawerAction(true);
-                  }}
-                />
-              }
-              value2={<TextCustom truncate={1}>Username username</TextCustom>}
-              value3={
-                <TextCustom truncate={2} align="center">
-                  SPAM
-                </TextCustom>
-              }
-            />
-          ))}
-        </BaseBox>
+          {loadList ? (
+            <LoaderCustom />
+          ) : _.isEmpty(listReport) ? (
+            <TextCustom align="center" color="gray">
+              Tidak ada report
+            </TextCustom>
+          ) : (
+            listReport?.map((item: any, index: number) => (
+              <AdminTableValue
+                key={index}
+                value1={
+                  <ActionIcon
+                    icon={<IconView size={ICON_SIZE_BUTTON} color="black" />}
+                    onPress={() => {
+                      setOpenDrawerAction(true);
+                      setSelectedReport({
+                        id: item.id,
+                        username: item.User?.username,
+                        kategori: item.ForumMaster_KategoriReport?.title,
+                        keterangan: item.ForumMaster_KategoriReport?.deskripsi,
+                        deskripsi: item.deskripsi,
+                      });
+                    }}
+                  />
+                }
+                value2={
+                  <TextCustom truncate={1}>
+                    {item?.User?.username || "-"}
+                  </TextCustom>
+                }
+                value3={
+                  <TextCustom truncate={2} align="center">
+                    {item?.ForumMaster_KategoriReport?.title || "-"}
+                  </TextCustom>
+                }
+              />
+            ))
+          )}
+        </StackCustom>
       </ViewWrapper>
 
       <DrawerCustom
@@ -136,7 +177,19 @@ export default function AdminForumReportComment() {
               message: "Apakah Anda yakin ingin menghapus komentar ini?",
               textLeft: "Batal",
               textRight: "Hapus",
-              onPressRight: () => {
+              onPressRight: async () => {
+                const deleteComment = await apiAdminForumDeactivateComment({
+                  id: id as string,
+                });
+
+                if (!deleteComment.success) {
+                  Toast.show({
+                    type: "error",
+                    text1: "Komentar gagal dihapus",
+                  });
+                  return;
+                }
+
                 setOpenDrawer(false);
                 Toast.show({
                   type: "success",
@@ -154,37 +207,39 @@ export default function AdminForumReportComment() {
         closeDrawer={() => setOpenDrawerAction(false)}
         height={"auto"}
       >
-        {listDataAction.map((item, i) => (
+        <StackCustom>
           <GridDetail_4_8
-            key={i}
-            label={<TextCustom bold>{item.label}</TextCustom>}
-            value={<TextCustom>{item.value}</TextCustom>}
+            label={<TextCustom bold>Pelapor</TextCustom>}
+            value={<TextCustom>{selectedReport?.username || "-"}</TextCustom>}
           />
-        ))}
+
+          {selectedReport?.kategori && (
+            <>
+              <GridDetail_4_8
+                label={<TextCustom bold>Kategori Report</TextCustom>}
+                value={
+                  <TextCustom>{selectedReport?.kategori || "-"}</TextCustom>
+                }
+              />
+              <GridDetail_4_8
+                label={<TextCustom bold>Keterangan</TextCustom>}
+                value={
+                  <TextCustom>{selectedReport?.keterangan || "-"}</TextCustom>
+                }
+              />
+            </>
+          )}
+
+          {selectedReport?.deskripsi && (
+            <GridDetail_4_8
+              label={<TextCustom bold>Deskripsi</TextCustom>}
+              value={
+                <TextCustom>{selectedReport?.deskripsi || "-"}</TextCustom>
+              }
+            />
+          )}
+        </StackCustom>
       </DrawerCustom>
     </>
   );
 }
-
-const listData = [
-  {
-    label: "Username",
-    value: "Username",
-  },
-];
-
-const listDataAction = [
-  {
-    label: "Username",
-    value: "Riyusa",
-  },
-  {
-    label: "Kategori Report",
-    value: "SPAM",
-  },
-  {
-    label: "Deskripsi",
-    value:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis asperiores quidem deleniti architecto eaque et nostrum, ad consequuntur eveniet quisquam quae voluptatum ducimus! Dolorem nobis modi officia debitis, beatae mollitia.",
-  },
-];

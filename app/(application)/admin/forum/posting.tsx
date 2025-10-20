@@ -1,10 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   ActionIcon,
-  BaseBox,
   LoaderCustom,
   SearchInput,
-  Spacing,
   StackCustom,
   TextCustom,
   ViewWrapper,
@@ -39,8 +37,7 @@ export default function AdminForumPosting() {
         category: "posting",
         search: search,
       });
-
-      // console.log("[RES LIST POSTING]", JSON.stringify(response, null, 2));
+      
       if (response.success) {
         setList(response.data);
       }
