@@ -4,9 +4,11 @@ import Grid from "@/components/Grid/GridCustom";
 import { MainColor } from "@/constants/color-palet";
 
 export default function AdminButtonReview({
+  isLoading,
   onPublish,
   onReject,
 }: {
+  isLoading?: boolean;
   onPublish: () => void;
   onReject: () => void;
 }) {
@@ -15,6 +17,7 @@ export default function AdminButtonReview({
       <Grid>
         <Grid.Col span={6} style={{ paddingRight: 10 }}>
           <ButtonCustom
+            isLoading={isLoading}
             iconLeft={<IconPublish />}
             backgroundColor={MainColor.green}
             textColor="white"

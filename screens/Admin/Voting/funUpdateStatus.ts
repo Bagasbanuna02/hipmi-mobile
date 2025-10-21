@@ -1,6 +1,6 @@
-import { apiAdminJobUpdate } from "@/service/api-admin/api-admin-job";
+import { apiAdminVotingUpdateStatus } from "@/service/api-admin/api-admin-voting";
 
-const funUpdateStatusJob = async ({
+const funUpdateStatusVoting = async ({
   id,
   changeStatus,
   data,
@@ -10,7 +10,7 @@ const funUpdateStatusJob = async ({
   data?: string;
 }) => {
   try {
-    const response = await apiAdminJobUpdate({
+    const response = await apiAdminVotingUpdateStatus({
       id: id,
       status: changeStatus as any,
       data: data,
@@ -23,4 +23,4 @@ const funUpdateStatusJob = async ({
   }
 };
 
-export default funUpdateStatusJob;
+export default funUpdateStatusVoting;

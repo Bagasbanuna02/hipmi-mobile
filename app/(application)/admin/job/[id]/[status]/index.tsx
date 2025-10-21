@@ -14,7 +14,7 @@ import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButt
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
 import AdminButtonReview from "@/components/_ShareComponent/Admin/ButtonReview";
 import { MainColor } from "@/constants/color-palet";
-import funUpdateStatus from "@/screens/Admin/Job/funUpdateStatus";
+import funUpdateStatusJob from "@/screens/Admin/Job/funUpdateStatus";
 import { apiAdminJobGetById } from "@/service/api-admin/api-admin-job";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
@@ -88,7 +88,7 @@ export default function AdminJobDetailStatus() {
     changeStatus: "publish" | "review" | "reject";
   }) => {
     try {
-      const response = await funUpdateStatus({
+      const response = await funUpdateStatusJob({
         id: id as string,
         changeStatus,
       });

@@ -11,6 +11,7 @@ import {
 } from "@/components";
 import { IconEdit } from "@/components/_Icon";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
+import ReportBox from "@/components/Box/ReportBox";
 import Job_BoxDetailSection from "@/screens/Job/BoxDetailSection";
 import Job_ButtonStatusSection from "@/screens/Job/ButtonStatusSection";
 import { apiJobGetOne } from "@/service/api-client/api-job";
@@ -70,7 +71,13 @@ export default function JobDetailStatus() {
           <LoaderCustom />
         ) : (
           <>
-            <StackCustom>
+            <StackCustom gap={"xs"}>
+              {data &&
+                data?.catatan &&
+                (status === "draft" || status === "rejected") && (
+                  <ReportBox text={data?.catatan} />
+                )}
+                
               <Job_BoxDetailSection data={data} />
               <Job_ButtonStatusSection
                 id={id as string}

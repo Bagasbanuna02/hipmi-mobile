@@ -8,11 +8,13 @@ import {
   LoaderCustom,
   MenuDrawerDynamicGrid,
   Spacing,
+  StackCustom,
   TextCustom,
   ViewWrapper,
 } from "@/components";
 import { IconArchive, IconContribution, IconEdit } from "@/components/_Icon";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
+import ReportBox from "@/components/Box/ReportBox";
 import Voting_BoxDetailHasilVotingSection from "@/screens/Voting/BoxDetailHasilVotingSection";
 import { Voting_BoxDetailSection } from "@/screens/Voting/BoxDetailSection";
 import Voting_ButtonStatusSection from "@/screens/Voting/ButtonStatusSection";
@@ -48,6 +50,8 @@ export default function VotingDetailStatus() {
     try {
       setLoadingGetData(true);
       const response = await apiVotingGetOne({ id: id as string });
+
+      console.log("[DATA BY ID]", JSON.stringify(response, null, 2));
 
       if (response.success) {
         setData(response.data);
@@ -127,6 +131,13 @@ export default function VotingDetailStatus() {
               </BaseBox>
             )}
             <Spacing height={0} />
+
+            {data &&
+              data?.catatan &&
+              (status === "draft" || status === "rejected") && (
+                <ReportBox text={data?.catatan} />
+              )}
+
             <Voting_BoxDetailSection data={data as any} />
             {status === "publish" ? (
               <Voting_BoxDetailHasilVotingSection

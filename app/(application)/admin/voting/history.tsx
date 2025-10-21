@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  ActionIcon,
-  LoaderCustom,
-  SearchInput,
-  StackCustom,
-  TextCustom,
-  ViewWrapper,
+    ActionIcon,
+    LoaderCustom,
+    SearchInput,
+    StackCustom,
+    TextCustom,
+    ViewWrapper
 } from "@/components";
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
 import AdminTitleTable from "@/components/_ShareComponent/Admin/TableTitle";
@@ -14,13 +14,12 @@ import AdminTitlePage from "@/components/_ShareComponent/Admin/TitlePage";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
 import { apiAdminVoting } from "@/service/api-admin/api-admin-voting";
 import { Octicons } from "@expo/vector-icons";
-import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import _ from "lodash";
 import { useCallback, useState } from "react";
 import { Divider } from "react-native-paper";
 
-export default function AdminVotingStatus() {
-  const { status } = useLocalSearchParams();
+export default function AdminVotingHistory() {
   const [list, setList] = useState<any | null>(null);
   const [loadList, setLoadList] = useState(false);
   const [search, setSearch] = useState<string>("");
@@ -28,14 +27,14 @@ export default function AdminVotingStatus() {
   useFocusEffect(
     useCallback(() => {
       onLoadData();
-    }, [status, search])
+    }, [ search])
   );
 
   const onLoadData = async () => {
-    try {
+    try { 
       setLoadList(true);
       const response = await apiAdminVoting({
-        category: status as "publish" | "review" | "reject" as any,
+        category: "history",
         search,
       });
 
@@ -61,7 +60,7 @@ export default function AdminVotingStatus() {
     <>
       <ViewWrapper headerComponent={<AdminTitlePage title="Voting" />}>
         <AdminComp_BoxTitle
-          title={`${_.startCase(status as string)}`}
+          title="Riwayat"
           rightComponent={rightComponent}
         />
 
@@ -73,43 +72,31 @@ export default function AdminVotingStatus() {
           />
           <Divider />
 
-          {loadList ? (
-            <LoaderCustom />
-          ) : _.isEmpty(list) ? (
-            <TextCustom align="center" bold color="gray">
-              Belum ada data
-            </TextCustom>
-          ) : (
-            list.map((item: any, i: number) => (
-              <AdminTableValue
-                key={i}
-                value1={
-                  <ActionIcon
-                    icon={
-                      <Octicons
-                        name="eye"
-                        size={ICON_SIZE_BUTTON}
-                        color="black"
-                      />
-                    }
-                    onPress={() => {
-                      router.push(`/admin/voting/${item.id}/${status}`);
-                    }}
-                  />
-                }
-                value2={
-                  <TextCustom truncate={1}>
-                    {item?.Author?.username || "-"}
-                  </TextCustom>
-                }
-                value3={
-                  <TextCustom align="center" truncate={2}>
-                    {item?.title || "-"}
-                  </TextCustom>
-                }
-              />
-            ))
-          )}
+          {loadList ? <LoaderCustom/> : _.isEmpty(list) ? <TextCustom align="center" bold color="gray">Belum ada data</TextCustom> : list.map((item: any, i: number) => (
+            <AdminTableValue
+              key={i}
+              value1={
+                <ActionIcon
+                  icon={
+                    <Octicons
+                      name="eye"
+                      size={ICON_SIZE_BUTTON}
+                      color="black"
+                    />
+                  }
+                  onPress={() => {
+                    router.push(`/admin/voting/${item.id}/history`);
+                  }}
+                />
+              }
+              value2={<TextCustom truncate={1}>{item?.Author?.username || "-"}</TextCustom>}
+              value3={
+                <TextCustom align="center" truncate={2}>
+                  {item?.title || "-"}
+                </TextCustom>
+              }
+            />
+          ))}
         </StackCustom>
       </ViewWrapper>
     </>

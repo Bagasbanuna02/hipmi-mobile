@@ -7,15 +7,15 @@ import {
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
-import funUpdateStatusJob from "@/screens/Admin/Job/funUpdateStatus";
-import { apiAdminJobGetById } from "@/service/api-admin/api-admin-job";
+import funUpdateStatusVoting from "@/screens/Admin/Voting/funUpdateStatus";
+import { apiAdminVotingById } from "@/service/api-admin/api-admin-voting";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
 import Toast from "react-native-toast-message";
 
-export default function AdminJobRejectInput() {
+export default function AdminVotingRejectInput() {
   const { id, status } = useLocalSearchParams();
-  const [data, setData] = useState<any | null>(null);
+  const [data, setData] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   useFocusEffect(
@@ -26,7 +26,7 @@ export default function AdminJobRejectInput() {
 
   const onLoadData = async () => {
     try {
-      const response = await apiAdminJobGetById({
+      const response = await apiAdminVotingById({
         id: id as string,
       });
 
@@ -45,7 +45,7 @@ export default function AdminJobRejectInput() {
   }) => {
     try {
       setIsLoading(true);
-      const response = await funUpdateStatusJob({
+      const response = await funUpdateStatusVoting({
         id: id as string,
         changeStatus,
         data: data,
@@ -64,7 +64,7 @@ export default function AdminJobRejectInput() {
       });
 
       if (status === "review") {
-        router.replace(`/admin/job/reject/status`);
+        router.replace(`/admin/voting/reject/status`);
       } else if (status === "reject") {
         router.back();
       }
@@ -78,17 +78,15 @@ export default function AdminJobRejectInput() {
   const buttonSubmit = (
     <BoxButtonOnFooter>
       <AdminButtonReject
+        title="Reject"
         isLoading={isLoading}
-        title="Report"
         onReject={() =>
           AlertDefaultSystem({
             title: "Reject",
             message: "Apakah anda yakin ingin menolak data ini?",
             textLeft: "Batal",
             textRight: "Ya",
-            onPressRight: () => {
-              handleUpdate({ changeStatus: "reject" });
-            },
+            onPressRight: () => handleUpdate({ changeStatus: "reject" }),
           })
         }
       />
@@ -99,7 +97,7 @@ export default function AdminJobRejectInput() {
     <>
       <ViewWrapper
         footerComponent={buttonSubmit}
-        headerComponent={<AdminBackButtonAntTitle title="Penolakan Job" />}
+        headerComponent={<AdminBackButtonAntTitle title="Penolakan Voting" />}
       >
         <TextAreaCustom
           value={data}

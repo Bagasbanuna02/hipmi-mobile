@@ -17,13 +17,31 @@ export async function apiAdminVoting({
   }
 }
 
-export async function apiAdminVotingById({
-  id,
-}: {
-  id: string;
-}) {
+export async function apiAdminVotingById({ id }: { id: string }) {
   try {
     const response = await apiConfig.get(`/mobile/admin/voting/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiAdminVotingUpdateStatus({
+  id,
+  data,
+  status,
+}: {
+  id: string;
+  data?: string;
+  status: "publish" | "review" | "reject";
+}) {
+  try {
+    const response = await apiConfig.put(
+      `/mobile/admin/voting/${id}?status=${status}`,
+      {
+        data: data,
+      }
+    );
     return response.data;
   } catch (error) {
     throw error;

@@ -1,27 +1,39 @@
 import { MainColor } from "@/constants/color-palet";
 import React from "react";
-import { StyleProp, StyleSheet, TextInput, View, ViewStyle } from "react-native";
+import {
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle
+} from "react-native";
+import TextCustom from "../Text/TextCustom";
 
 interface CircularInputProps {
-  value?: string | number
+  value?: string | number;
   onChange?: (value: string | number) => void;
   icon?: React.ReactNode;
-  style?: StyleProp<ViewStyle>
+  style?: StyleProp<ViewStyle>;
 }
 
-const CircularInput: React.FC<CircularInputProps> = ({ value, onChange, icon, style }) => {
+const CircularInput: React.FC<CircularInputProps> = ({
+  value,
+  onChange,
+  icon,
+  style,
+}) => {
   return (
     <View style={[styles.circleContainer, style]}>
       {icon ? (
         icon
       ) : (
-        <TextInput
-          value={String(value)}
-          onChangeText={onChange}
+        <TextCustom
+          // text={String(value)}
           style={styles.input}
-          keyboardType="numeric"
-          maxLength={2} // Batasan maksimal karakter
-        />
+          // keyboardType="numeric"
+          // maxLength={2} // Batasan maksimal karakter
+        >
+          {value}
+        </TextCustom>
       )}
     </View>
   );
@@ -39,7 +51,7 @@ const styles = StyleSheet.create({
   },
   input: {
     color: MainColor.yellow, // Warna kuning
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
     padding: 0,

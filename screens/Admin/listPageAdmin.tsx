@@ -49,7 +49,7 @@ const adminListMenu: NavbarItem[] = [
       { label: "Publish", link: "/admin/voting/publish/status" },
       { label: "Review", link: "/admin/voting/review/status" },
       { label: "Reject", link: "/admin/voting/reject/status" },
-      { label: "Riwayat", link: "/admin/voting/riwayat/status" },
+      { label: "Riwayat", link: "/admin/voting/history" },
     ],
   },
   {
@@ -142,7 +142,7 @@ const superAdminListMenu: NavbarItem[] = [
       { label: "Publish", link: "/admin/voting/publish/status" },
       { label: "Review", link: "/admin/voting/review/status" },
       { label: "Reject", link: "/admin/voting/reject/status" },
-      { label: "Riwayat", link: "/admin/voting/riwayat/status" },
+      { label: "Riwayat", link: "/admin/voting/history" },
     ],
   },
   {
