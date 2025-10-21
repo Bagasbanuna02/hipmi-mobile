@@ -195,7 +195,14 @@ export const GStyles = StyleSheet.create({
   bottomBar: {
     backgroundColor: MainColor.darkblue,
     borderTopColor: AccentColor.blue,
-    borderTopWidth: 1,
+    // borderTopWidth: 0.5,
+    height: "100%",
+    justifyContent: "center",
+    shadowColor: AccentColor.blue,
+    shadowOffset: { width: 0, height: -5},
+    shadowOpacity: 0.4,
+    shadowRadius: 40,
+    elevation: 8, // untuk Android
   },
   bottomBarContainer: {
     paddingHorizontal: 15,

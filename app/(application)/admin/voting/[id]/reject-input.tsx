@@ -1,6 +1,7 @@
 import {
   AlertDefaultSystem,
   BoxButtonOnFooter,
+  ButtonCustom,
   TextAreaCustom,
   ViewWrapper,
 } from "@/components";
@@ -22,9 +23,6 @@ export default function AdminVotingRejectInput() {
             message: "Apakah anda yakin ingin menolak data ini?",
             textLeft: "Batal",
             textRight: "Ya",
-            onPressLeft: () => {
-              router.back();
-            },
             onPressRight: () => {
               console.log("value:", value);
               router.replace(`/admin/voting/reject/status`);
@@ -39,6 +37,7 @@ export default function AdminVotingRejectInput() {
     <>
       <ViewWrapper
         footerComponent={buttonSubmit}
+        // edgesFooter={[]}
         headerComponent={<AdminBackButtonAntTitle title="Penolakan Voting" />}
       >
         <TextAreaCustom

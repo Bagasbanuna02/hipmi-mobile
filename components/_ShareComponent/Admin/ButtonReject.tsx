@@ -14,7 +14,7 @@ export default function AdminButtonReject({
   return (
     <>
       <ButtonCustom
-        iconLeft={<IconReject />}
+        iconLeft={<IconReject size={16} />}
         backgroundColor={MainColor.red}
         textColor="white"
         onPress={onReject}

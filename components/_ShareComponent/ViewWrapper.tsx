@@ -12,7 +12,7 @@ import {
   StyleProp,
   ViewStyle,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { NativeSafeAreaViewProps, SafeAreaView } from "react-native-safe-area-context";
 
 interface ViewWrapperProps {
   children: React.ReactNode;
@@ -21,6 +21,7 @@ interface ViewWrapperProps {
   footerComponent?: React.ReactNode;
   floatingButton?: React.ReactNode;
   hideFooter?: boolean;
+  edgesFooter?: NativeSafeAreaViewProps["edges"];
   style?: StyleProp<ViewStyle>;
 }
 
@@ -37,6 +38,7 @@ const ViewWrapper = ({
   footerComponent,
   floatingButton,
   hideFooter = false,
+  edgesFooter =[],
   style,
 }: ViewWrapperProps) => {
   const assetBackground = require("../../assets/images/main-background.png");
@@ -77,7 +79,7 @@ const ViewWrapper = ({
 
         {footerComponent ? (
           <SafeAreaView
-            edges={["bottom"]}
+            edges={Platform.OS === "ios" ? edgesFooter : ["bottom"]}
             style={{
               backgroundColor: MainColor.darkblue,
               height: OS_HEIGHT
