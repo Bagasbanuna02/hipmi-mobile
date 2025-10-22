@@ -13,6 +13,7 @@ import {
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
 import AdminButtonReview from "@/components/_ShareComponent/Admin/ButtonReview";
+import ReportBox from "@/components/Box/ReportBox";
 import { MainColor } from "@/constants/color-palet";
 import funUpdateStatusJob from "@/screens/Admin/Job/funUpdateStatus";
 import { apiAdminJobGetById } from "@/service/api-admin/api-admin-job";
@@ -141,13 +142,8 @@ export default function AdminJobDetailStatus() {
           </StackCustom>
         </BaseBox>
 
-        {data && data?.catatan && (
-          <BaseBox>
-            <StackCustom>
-              <TextCustom bold>Catatan report</TextCustom>
-              <TextCustom>{data?.catatan}</TextCustom>
-            </StackCustom>
-          </BaseBox>
+        {data && data?.catatan && (status === "reject" || status === "review") && (
+          <ReportBox text={data?.catatan}/>
         )}
 
         {status === "review" && (

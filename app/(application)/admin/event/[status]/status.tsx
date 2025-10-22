@@ -1,8 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   ActionIcon,
   BaseBox,
+  LoaderCustom,
   SearchInput,
   Spacing,
+  StackCustom,
   TextCustom,
   ViewWrapper,
 } from "@/components";
@@ -11,17 +14,56 @@ import AdminTitleTable from "@/components/_ShareComponent/Admin/TableTitle";
 import AdminTableValue from "@/components/_ShareComponent/Admin/TableValue";
 import AdminTitlePage from "@/components/_ShareComponent/Admin/TitlePage";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
+import { apiAdminEvent } from "@/service/api-admin/api-admin-event";
 import { Octicons } from "@expo/vector-icons";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
+import { useState, useCallback } from "react";
 import { Divider } from "react-native-paper";
 
 export default function AdminEventStatus() {
   const { status } = useLocalSearchParams();
+  console.log("[STATUS EVENT]", status);
+
+  const [listData, setListData] = useState<any[] | null>(null);
+  const [loadData, setLoadData] = useState(false);
+  const [search, setSearch] = useState<string>("");
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [status, search])
+  );
+
+  const onLoadData = async () => {
+    try {
+      setLoadData(true);
+      const response = await apiAdminEvent({
+        category: status as "publish" | "review" | "reject" | "history" as any,
+        search,
+      });
+
+      console.log(
+        `[RES LIST BY STATUS: ${status}]`,
+        JSON.stringify(response, null, 2)
+      );
+
+      if (response.success) {
+        setListData(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setLoadData(false);
+    }
+  };
+
   const rightComponent = (
     <SearchInput
       containerStyle={{ width: "100%", marginBottom: 0 }}
       placeholder="Cari"
+      value={search}
+      onChangeText={(value) => setSearch(value)}
     />
   );
   return (
@@ -32,44 +74,50 @@ export default function AdminEventStatus() {
           rightComponent={rightComponent}
         />
 
-        <BaseBox>
+        <StackCustom gap={"sm"}>
           <AdminTitleTable
             title1="Aksi"
             title2="Username"
             title3="Judul Event"
           />
-          <Spacing />
           <Divider />
 
-          {Array.from({ length: 10 }).map((_, index) => (
-            <AdminTableValue
-              key={index}
-              value1={
-                <ActionIcon
-                  icon={
-                    <Octicons
-                      name="eye"
-                      size={ICON_SIZE_BUTTON}
-                      color="black"
-                    />
-                  }
-                  onPress={() => {
-                    router.push(`/admin/event/${index}/${status}`);
-                  }}
-                />
-              }
-              value2={<TextCustom truncate={1}>Username username</TextCustom>}
-              value3={
-                <TextCustom truncate={2}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Blanditiis asperiores quidem deleniti architecto eaque et
-                  nostrum, ad consequuntur eveniet quisquam quae voluptatum
-                  ducimus! Dolorem nobis modi officia debitis, beatae mollitia.
-                </TextCustom>
-              }
-            />
-          ))}
-        </BaseBox>
+          {loadData ? (
+            <LoaderCustom />
+          ) : _.isEmpty(listData) ? (
+            <TextCustom align="center" size="small" color="gray">Belum ada data</TextCustom>
+          ) : (
+            listData?.map((item, index) => (
+              <AdminTableValue
+                key={index}
+                value1={
+                  <ActionIcon
+                    icon={
+                      <Octicons
+                        name="eye"
+                        size={ICON_SIZE_BUTTON}
+                        color="black"
+                      />
+                    }
+                    onPress={() => {
+                      router.push(`/admin/event/${item.id}/${status}`);
+                    }}
+                  />
+                }
+                value2={
+                  <TextCustom truncate={1}>
+                    {item?.Author?.username || "-"}
+                  </TextCustom>
+                }
+                value3={
+                  <TextCustom align="center" truncate={2}>
+                    {item?.title || "-"}
+                  </TextCustom>
+                }
+              />
+            ))
+          )}
+        </StackCustom>
       </ViewWrapper>
     </>
   );

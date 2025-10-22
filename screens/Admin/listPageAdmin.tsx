@@ -38,7 +38,7 @@ const adminListMenu: NavbarItem[] = [
       { label: "Review", link: "/admin/event/review/status" },
       { label: "Reject", link: "/admin/event/reject/status" },
       { label: "Tipe Acara", link: "/admin/event/type-of-event" },
-      { label: "Riwayat", link: "/admin/event/riwayat/status" },
+      { label: "Riwayat", link: "/admin/event/history/status" },
     ],
   },
   {
@@ -131,7 +131,7 @@ const superAdminListMenu: NavbarItem[] = [
       { label: "Review", link: "/admin/event/review/status" },
       { label: "Reject", link: "/admin/event/reject/status" },
       { label: "Tipe Acara", link: "/admin/event/type-of-event" },
-      { label: "Riwayat", link: "/admin/event/riwayat/status" },
+      { label: "Riwayat", link: "/admin/event/history/status" },
     ],
   },
   {

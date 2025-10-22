@@ -191,7 +191,7 @@ export default function EventCreate() {
             placeholder="Masukkan deskripsi event"
             required
             showCount
-            maxLength={100}
+            maxLength={1000}
             onChangeText={(value: any) =>
               setData({ ...data, deskripsi: value })
             }
