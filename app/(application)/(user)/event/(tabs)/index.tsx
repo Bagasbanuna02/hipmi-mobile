@@ -44,6 +44,8 @@ export default function EventBeranda() {
         <TextCustom align="center">Belum ada event</TextCustom>
       ) : (
         listData.map((item: any, index) => (
+
+          
           <Event_BoxPublishSection
             key={index}
             href={`/event/${item.id}/publish`}

@@ -33,11 +33,11 @@ export default function AdminEventDetail() {
   const { user } = useAuth();
   const { id, status } = useLocalSearchParams();
 
-  console.log("[ID Detail]", id);
+  console.log("[ID QRCODE]", id);
   console.log("[STATUS Detail]", status);
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const newURL = DEEP_LINK_URL
-  console.log("[NEW URL]", newURL);
+  console.log("[DEEP LINK URL]", newURL);
 
   const [data, setData] = React.useState<any | null>(null);
   const deepLinkURL = `${DEEP_LINK_URL}/--/event/${id}/confirmation?userId=${user?.id}`;

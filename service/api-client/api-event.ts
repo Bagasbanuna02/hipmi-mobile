@@ -138,3 +138,42 @@ export async function apiEventCheckParticipants({
     throw error;
   }
 }
+
+export async function apiEventGetConfirmation({
+  id,
+  userId,
+}: {
+  id: string;
+  userId?: string;
+}) {
+  try {
+    const response = await apiConfig.get(`/mobile/event/${id}/confirmation?userId=${userId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiEventConfirmationAction({
+  id,
+  userId,
+  category,
+}: {
+  id: string;
+  userId?: string;
+  category?: "join_and_confirm" | "confirmation";
+}) {
+  try {
+    const response = await apiConfig.post(
+      `/mobile/event/${id}/confirmation?category=${category}`,
+      {
+        data: {
+          userId: userId,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

@@ -47,3 +47,4 @@ export async function apiAdminEventUpdateStatus({
     throw error;
   }
 }
+

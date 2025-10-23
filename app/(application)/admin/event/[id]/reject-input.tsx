@@ -11,7 +11,6 @@ import { funUpdateStatusEvent } from "@/screens/Admin/Event/funUpdateStatus";
 import { apiAdminEventById } from "@/service/api-admin/api-admin-event";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
-import { TextInput } from "react-native-paper";
 import Toast from "react-native-toast-message";
 
 export default function AdminEventRejectInput() {

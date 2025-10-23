@@ -55,6 +55,8 @@ export default function EventDetailPublish() {
           userId: user?.id as string,
         });
 
+        console.log("[RES CHECK PARTICIPANTS]", responseCheckParticipants);
+
         if (
           responseCheckParticipants.success &&
           responseCheckParticipants.data
@@ -68,6 +70,8 @@ export default function EventDetailPublish() {
       setIsLoadingData(false);
     }
   }
+
+  console.log("[participans]", isParticipant);
 
   const handlePress = (item: IMenuDrawerItem) => {
     console.log("PATH ", item.path);
