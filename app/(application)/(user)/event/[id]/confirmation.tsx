@@ -74,8 +74,6 @@ export default function UserEventConfirmation() {
         userId: user?.id as string,
       });
 
-      console.log("[RES CONFIRMATION]", JSON.stringify(response, null, 2));
-
       if (response.success) {
         setData(response.data?.dataEvent);
         setPeserta(response.data?.peserta);
@@ -142,11 +140,11 @@ export default function UserEventConfirmation() {
       return (
         <TamplateBox data={data}>
           <TamplateText
-            text={`Event telah selesai, anda terdaftar sebagai peserta dan${
+            text={`Event telah selesai, anda terdaftar sebagai peserta dan ${
               konfirmasi
                 ? "Anda telah mengonfirmasi kehadiran."
                 : "Anda tidak mengonfirmasi kehadiran."
-            }. Terima kasih atas perhatian dan minat Anda. Kami berharap dapat bertemu di acara kami berikutnya.`}
+            } Terima kasih atas perhatian dan minat Anda. Kami berharap dapat bertemu di acara kami berikutnya.`}
           />
           <BackToOtherPath
             path="event"
@@ -173,14 +171,16 @@ export default function UserEventConfirmation() {
       if (isWithinConfirmationWindow && peserta === true) {
         if (konfirmasi === false) {
           return (
-            <TamplateBox data={data}>
-              <TamplateText text="Konfirmasi Kehadiran" />
-            </TamplateBox>
+            <UserParticipan_And_DuringEvent
+              id={data.id}
+              userId={user?.id as string}
+              data={data}
+            />
           );
         }
         return (
           <TamplateBox data={data}>
-            <TamplateText text="Anda telah mengonfirmasi kehadiran." />
+            <TamplateText text="Terimakasih telah mengonfirmasi kehadiran. Silahkan lihat peserta lain pada halaman event atau kembali ke halaman home. Selamat menikmati acara dan selamat berpartisipasi." />
             <BackToOtherPath
               path="event"
               id={data.id}
@@ -192,7 +192,7 @@ export default function UserEventConfirmation() {
 
       return (
         <TamplateBox data={data}>
-          <TamplateText text="Anda terdaftar sebagai peserta. Konfirmasi kehadiran dibuka 1 jam sebelum acara dimulai." />
+          <TamplateText text="Anda telah terdaftar sebagai peserta pada Event ini. Konfirmasi kehadiran dibuka 1 jam sebelum acara dimulai." />
           <BackToOtherPath
             path="event"
             id={data.id}
@@ -326,7 +326,7 @@ const TamplateBox = ({
   );
 };
 
-const TamplateText = ({ text }: { text: string }) => {
+const TamplateText = ({ text }: { text: React.ReactNode }) => {
   return (
     <>
       <TextCustom align="center">{text}</TextCustom>
@@ -442,7 +442,7 @@ const NotStarted_And_UserNotParticipan = ({
 };
 
 // 🟡 ZONA ACARA BERLANGSUNG
-// Acara sedang berlangsung & belum terdaftar
+// Acara sedang berlangsung & belum terdaftar & user harus join dan konfirmasi
 const UserNotParticipan_And_DuringEvent = ({
   id,
   userId,
@@ -463,8 +463,6 @@ const UserNotParticipan_And_DuringEvent = ({
         userId: userId as string,
         category: "join_and_confirm",
       });
-
-      //   console.log("[RES JOIN & CONFIRMATION EVENT]", response);
 
       if (!response.success) {
         Toast.show({
@@ -493,6 +491,62 @@ const UserNotParticipan_And_DuringEvent = ({
 
         <ButtonCustom onPress={() => handlerSubmit()} isLoading={isLoading}>
           Join & Konfirmasi
+        </ButtonCustom>
+      </TamplateBox>
+    </>
+  );
+};
+
+
+// 🟡 ZONA ACARA BERLANGSUN
+// User sudah terdaftar & Event sedang berlangsung & user harus konfirmasi
+const UserParticipan_And_DuringEvent = ({
+  id,
+  userId,
+  data,
+}: {
+  id: string;
+  userId: string;
+  data: DataEvent;
+}) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const handlerSubmit = async () => {
+    try {
+      setIsLoading(true);
+
+      const response = await apiEventConfirmationAction({
+        id: id as string,
+        userId: userId as string,
+        category: "confirmation",
+      });
+
+      if (!response.success) {
+        Toast.show({
+          type: "error",
+          text1: "Anda gagal konfirmasi",
+        });
+        return;
+      }
+
+      Toast.show({
+        type: "success",
+        text1: "Anda berhasil konfirmasi",
+      });
+      router.navigate(`/(application)/(user)/event/${id}/publish`);
+    } catch (error) {
+      console.log("[ERROR JOIN & CONFIRMATION EVENT]", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  return (
+    <>
+      <TamplateBox data={data}>
+        <TamplateText text="Anda sudah terdaftar sebagai peserta & Event sedang berlangsung. Silahkan konfirmasi kehadiran" />
+
+        <ButtonCustom onPress={() => handlerSubmit()} isLoading={isLoading}>
+          Konfirmasi
         </ButtonCustom>
       </TamplateBox>
     </>

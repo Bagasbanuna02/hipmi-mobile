@@ -48,3 +48,13 @@ export async function apiAdminEventUpdateStatus({
   }
 }
 
+export async function apiAdminEventListOfParticipants({ id }: { id: string }) {
+  try {
+    const response = await apiConfig.get(
+      `/mobile/admin/event/${id}/participants`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

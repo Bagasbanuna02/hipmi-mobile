@@ -196,6 +196,7 @@ const DateTimeInput_Android: React.FC<DateTimeInputProps> = ({
           onChange={handleConfirmTime}
           minimumDate={minimumDate}
           maximumDate={maximumDate}
+          themeVariant="light"
         />
       )}
     </>

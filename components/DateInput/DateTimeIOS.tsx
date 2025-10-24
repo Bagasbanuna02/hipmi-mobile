@@ -145,6 +145,7 @@ const DateTimeInput_IOS: React.FC<DateTimeInputProps> = ({
               onChange={handleConfirm}
               minimumDate={minimumDate}
               maximumDate={maximumDate}
+              themeVariant="light"
             />
           </View>
         </>

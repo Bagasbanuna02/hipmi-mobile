@@ -5,6 +5,7 @@ import {
   BadgeCustom,
   BaseBox,
   DrawerCustom,
+  LoaderCustom,
   MenuDrawerDynamicGrid,
   Spacing,
   StackCustom,
@@ -28,18 +29,15 @@ import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import React, { useCallback } from "react";
 import QRCode from "react-native-qrcode-svg";
+import Toast from "react-native-toast-message";
 
 export default function AdminEventDetail() {
   const { user } = useAuth();
   const { id, status } = useLocalSearchParams();
-
-  console.log("[ID QRCODE]", id);
-  console.log("[STATUS Detail]", status);
   const [openDrawer, setOpenDrawer] = React.useState(false);
-  const newURL = DEEP_LINK_URL
-  console.log("[DEEP LINK URL]", newURL);
 
   const [data, setData] = React.useState<any | null>(null);
+  const [loadData, setLoadData] = React.useState(false);
   const deepLinkURL = `${DEEP_LINK_URL}/--/event/${id}/confirmation?userId=${user?.id}`;
   useFocusEffect(
     useCallback(() => {
@@ -48,17 +46,18 @@ export default function AdminEventDetail() {
   );
   const onLoadData = async () => {
     try {
+      setLoadData(true);
       const response = await apiAdminEventById({
         id: id as string,
       });
-
-      // console.log(`[RES DATA BY ID: ${id}]`, JSON.stringify(response, null, 2));
 
       if (response.success) {
         setData(response.data);
       }
     } catch (error) {
       console.log("[ERROR]", error);
+    } finally {
+      setLoadData(false);
     }
   };
 
@@ -124,11 +123,19 @@ export default function AdminEventDetail() {
         changeStatus: "publish",
       });
 
-      console.log("[RES PUBLISH]", JSON.stringify(response, null, 2));
-
-      if (response.success) {
-        router.back();
+      if (!response.success) {
+        Toast.show({
+          type: "error",
+          text1: "Gagal mempublikasikan event",
+        });
+        return;
       }
+
+      Toast.show({
+        type: "success",
+        text1: "Event berhasil dipublikasikan",
+      });
+      router.back();
     } catch (error) {
       console.log("[ERROR]", error);
     }
@@ -170,15 +177,19 @@ export default function AdminEventDetail() {
           <BaseBox>
             <StackCustom style={{ alignItems: "center" }}>
               <TextCustom bold>QR Code Event</TextCustom>
-              <QRCode
-                value={deepLinkURL}
-                size={200}
-                // logo={require("@/assets/images/logo-hipmi.png")}
-                // logoSize={70}
-                // logoBackgroundColor="transparent"
-                // logoBorderRadius={50}
-                // color="black"
-              />
+              {loadData ? (
+                <LoaderCustom />
+              ) : (
+                <QRCode
+                  value={deepLinkURL}
+                  size={200}
+                  // logo={require("@/assets/images/logo-hipmi.png")}
+                  // logoSize={70}
+                  // logoBackgroundColor="transparent"
+                  // logoBorderRadius={50}
+                  // color="black"
+                />
+              )}
             </StackCustom>
           </BaseBox>
         )}

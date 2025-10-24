@@ -11,29 +11,30 @@ import {
   apiEventGetOne,
   apiEventListOfParticipants,
 } from "@/service/api-client/api-event";
-import { useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
+import dayjs, { Dayjs } from "dayjs";
+import { useFocusEffect, useLocalSearchParams } from "expo-router";
+import _ from "lodash";
+import { useCallback, useState } from "react";
 import { View } from "react-native";
 
 export default function EventListOfParticipants() {
   const { id } = useLocalSearchParams();
-  const [startDate, setStartDate] = useState();
-  const [listData, setListData] = useState([]);
-  const [isLoadData, setIsLoadData] = useState(false);
+  const [startDate, setStartDate] = useState<Dayjs | undefined>();
+  const [listData, setListData] = useState<any[] | null>(null);
+  const [loadtData, setLoadData] = useState(false);
 
-  useEffect(() => {
-    handlerLoadData();
-  }, [id]);
+  useFocusEffect(
+    useCallback(() => {
+      handlerLoadData();
+    }, [id])
+  );
 
   const handlerLoadData = () => {
     try {
-      setIsLoadData(true);
       onLoadData();
       onLoadList();
     } catch (error) {
       console.log("[ERROR]", error);
-    } finally {
-      setIsLoadData(false);
     }
   };
 
@@ -41,7 +42,8 @@ export default function EventListOfParticipants() {
     try {
       const response = await apiEventGetOne({ id: id as string });
       if (response.success) {
-        setStartDate(response.data.tanggal);
+        const date = dayjs(response.data.tanggal);
+        setStartDate(date);
       }
     } catch (error) {
       console.log("[ERROR]", error);
@@ -50,30 +52,36 @@ export default function EventListOfParticipants() {
 
   const onLoadList = async () => {
     try {
+      setLoadData(true);
       const response = await apiEventListOfParticipants({ id: id as string });
+     
       if (response.success) {
         setListData(response.data);
       }
     } catch (error) {
       console.log("[ERROR]", error);
+    } finally {
+      setLoadData(false);
     }
   };
 
   return (
     <ViewWrapper>
-      {isLoadData ? (
+      {loadtData && !listData ? (
         <LoaderCustom />
-      ) : listData.length === 0 ? (
-        <TextCustom align="center">Belum ada peserta</TextCustom>
+      ) : _.isEmpty(listData) ? (
+        <TextCustom align="center" color="gray">
+          Belum ada peserta
+        </TextCustom>
       ) : (
-        listData.map((item: any, index: number) => (
+        listData?.map((item: any, index: number) => (
           <BaseBox key={index}>
             <AvatarUsernameAndOtherComponent
               avatar={item?.User?.Profile?.imageId}
               name={item?.User?.username}
               avatarHref={`/profile/${item?.User?.Profile?.id}`}
               rightComponent={
-                new Date().getTime() > new Date(startDate as any).getTime() ? (
+                startDate && startDate.subtract(1, "hour").diff(dayjs()) < 0 ? (
                   <View
                     style={{
                       justifyContent: "flex-end",
