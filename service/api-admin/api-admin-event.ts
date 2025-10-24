@@ -58,3 +58,5 @@ export async function apiAdminEventListOfParticipants({ id }: { id: string }) {
     throw error;
   }
 }
+
+
