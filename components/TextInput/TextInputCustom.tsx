@@ -1,5 +1,4 @@
-// components/TextInputCustom.tsx
-
+import { GStyles } from "@/styles/global-styles";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import React, { useState } from "react";
 import {
@@ -10,7 +9,6 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import { textInputStyles } from "./textInputStyles";
 
 type IconType = React.ReactNode | string;
 
@@ -25,63 +23,94 @@ type Props = {
   disabled?: boolean;
   borderRadius?: number;
   style?: StyleProp<ViewStyle>;
+  maxLength?: number;
+  containerStyle?: StyleProp<ViewStyle>;
 } & Omit<React.ComponentProps<typeof RNTextInput>, "style">;
 
-export const TextInputCustom = ({
+const TextInputCustom = ({
   iconLeft,
   iconRight,
   label,
   required = false,
-  error = "",
+  error: externalError = "",
   secureTextEntry = false,
   fontColor = "#000",
   disabled = false,
   borderRadius = 8,
   style,
+  keyboardType,
+  onChangeText,
+  maxLength,
+  containerStyle,
   ...rest
 }: Props) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [internalError, setInternalError] = useState("");
 
   // Helper untuk render ikon
   const renderIcon = (icon: IconType) => {
     if (!icon) return null;
     return typeof icon === "string" ? (
-      <Text style={textInputStyles.iconText}>{icon}</Text>
+      <Text style={GStyles.inputIconText}>{icon}</Text>
     ) : (
       icon
     );
   };
 
+  // Validasi email jika keyboardType = email-address
+  const handleTextChange = (text: string) => {
+    if (keyboardType === "email-address") {
+      const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text);
+      if (!isValid) {
+        setInternalError("Masukkan email yang valid");
+      } else {
+        setInternalError("");
+      }
+    }
+
+    // Panggil onChangeText eksternal jika ada
+    if (onChangeText) {
+      onChangeText(text);
+    }
+  };
+
   return (
-    <View style={textInputStyles.container}>
+    <View style={[GStyles.inputContainerArea, containerStyle]}>
       {label && (
-        <Text style={textInputStyles.label}>
+        <Text style={GStyles.inputLabel}>
           {label}
-          {required && <Text style={textInputStyles.required}> *</Text>}
+          {required && <Text style={GStyles.inputRequired}> *</Text>}
         </Text>
       )}
       <View
         style={[
-          textInputStyles.inputContainer,
-          disabled && textInputStyles.disabled,
-          { borderRadius },
-          error ? textInputStyles.errorBorder : null,
           style,
+          { borderRadius },
+          externalError || internalError ? GStyles.inputErrorBorder : null,
+          GStyles.inputContainerInput,
+          disabled && GStyles.disabledBox,
         ]}
       >
         {iconLeft && (
-          <View style={textInputStyles.icon}>{renderIcon(iconLeft)}</View>
+          <View style={GStyles.inputIcon}>{renderIcon(iconLeft)}</View>
         )}
         <RNTextInput
-          style={[textInputStyles.input, { color: fontColor }]}
+          style={[
+            GStyles.inputText,
+            { color: fontColor },
+            disabled && GStyles.inputPlaceholderDisabled, // <-- placeholder saat disabled
+          ]}
           editable={!disabled}
           secureTextEntry={secureTextEntry && !isPasswordVisible}
+          keyboardType={keyboardType}
+          onChangeText={handleTextChange}
+          maxLength={maxLength}
           {...rest}
         />
         {secureTextEntry && (
           <TouchableOpacity
             onPress={() => setIsPasswordVisible((prev) => !prev)}
-            style={textInputStyles.icon}
+            style={GStyles.inputIcon}
           >
             <Ionicons
               name={isPasswordVisible ? "eye-off" : "eye"}
@@ -91,10 +120,17 @@ export const TextInputCustom = ({
           </TouchableOpacity>
         )}
         {iconRight && (
-          <View style={textInputStyles.icon}>{renderIcon(iconRight)}</View>
+          <View style={GStyles.inputIcon}>{renderIcon(iconRight)}</View>
         )}
       </View>
-      {error ? <Text style={textInputStyles.errorMessage}>{error}</Text> : null}
+      {/* Prioritaskan error eksternal */}
+      {externalError || internalError ? (
+        <Text style={GStyles.inputErrorMessage}>
+          {externalError || internalError}
+        </Text>
+      ) : null}
     </View>
   );
 };
+
+export default TextInputCustom;

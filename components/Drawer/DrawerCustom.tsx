@@ -1,0 +1,158 @@
+import React, { useEffect, useRef } from "react";
+import {
+  Animated,
+  PanResponder,
+  StyleSheet,
+  View,
+  InteractionManager,
+} from "react-native";
+
+import { AccentColor, MainColor } from "@/constants/color-palet";
+import { DRAWER_HEIGHT } from "@/constants/constans-value";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+interface DrawerCustomProps {
+  children?: React.ReactNode;
+  height?: number | "auto";
+  isVisible: boolean;
+  drawerAnim?: Animated.Value;
+  closeDrawer: () => void;
+  //   openLogoutAlert: () => void;
+}
+
+/**
+ *
+ * @param drawerAnim
+ * @example   const drawerAnim = useRef(new Animated.Value(DRAWER_HEIGHT)).current; // mulai di luar bawah layar
+ */
+export default function DrawerCustom({
+  children,
+  height,
+  isVisible,
+  drawerAnim,
+  closeDrawer,
+}: //   openLogoutAlert,
+DrawerCustomProps) {
+  const drawerAnima = useRef(
+    new Animated.Value(
+      height === "auto" ? DRAWER_HEIGHT : height || DRAWER_HEIGHT
+    )
+  ).current;
+  // Efek untuk handle open/close drawer
+  useEffect(() => {
+    if (isVisible) {
+      Animated.timing(drawerAnima, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      Animated.timing(drawerAnima, {
+        toValue: height === "auto" ? DRAWER_HEIGHT : height || DRAWER_HEIGHT,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [isVisible, drawerAnim, height, closeDrawer, drawerAnima]);
+
+  const panResponder = useRef(
+    PanResponder.create({
+      onMoveShouldSetPanResponder: (_, gestureState) => {
+        return gestureState.dy > 10; // gesek ke bawah
+      },
+      onPanResponderMove: (_, gestureState) => {
+        const offset = gestureState.dy;
+        if (offset >= 0 && offset <= DRAWER_HEIGHT) {
+          drawerAnima.setValue(offset);
+        }
+      },
+      onPanResponderRelease: (_, gestureState) => {
+        if (gestureState.dy > 200) {
+          InteractionManager.runAfterInteractions(() => {
+            closeDrawer();
+          });
+        } else {
+          Animated.spring(drawerAnima, {
+            toValue: 0,
+            useNativeDriver: true,
+          }).start();
+        }
+      },
+    })
+  ).current;
+
+  if (!isVisible) return null;
+
+  return (
+    <>
+      {/* Overlay Gelap */}
+      <View
+        style={styles.overlay}
+        pointerEvents="auto"
+        onTouchStart={() => {
+          InteractionManager.runAfterInteractions(() => {
+            closeDrawer();
+          });
+        }}
+      />
+
+      {/* Custom Bottom Drawer */}
+      <Animated.View
+        style={[
+          styles.drawer,
+          {
+            height: height === "auto" ? "auto" : height || DRAWER_HEIGHT,
+            transform: [{ translateY: drawerAnima }],
+          },
+        ]}
+        {...panResponder.panHandlers}
+      >
+        <View
+          style={[styles.headerBar, { backgroundColor: MainColor.white }]}
+        />
+
+        {children}
+        {height === "auto" && <SafeAreaView edges={["bottom"]} />}
+      </Animated.View>
+    </>
+  );
+}
+
+const styles = StyleSheet.create({
+  overlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "black",
+    opacity: 0.6,
+    zIndex: 998,
+  },
+  drawer: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: AccentColor.darkblue,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.2,
+    elevation: 5,
+    zIndex: 999,
+  },
+  headerBar: {
+    width: 40,
+    height: 5,
+    backgroundColor: MainColor.white,
+    borderRadius: 5,
+    alignSelf: "center",
+    marginVertical: 10,
+  },
+  menuItem: {
+    padding: 15,
+  },
+});

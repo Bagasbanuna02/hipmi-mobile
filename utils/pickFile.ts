@@ -1,0 +1,117 @@
+import * as ImagePicker from "expo-image-picker";
+import * as DocumentPicker from "expo-document-picker";
+import { Alert } from "react-native";
+
+const ALLOWED_IMAGE_EXTENSIONS = ["jpg", "jpeg", "png"];
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+
+export interface IFileData {
+  uri: string;
+  name: string;
+  size: number;
+}
+
+export type AllowedFileType = "image" | "pdf" | undefined;
+
+export interface PickFileOptions {
+  setImageUri?: (file: IFileData) => void;
+  setPdfUri?: (file: IFileData) => void;
+  allowedType?: AllowedFileType; // <-- Tambahkan prop ini
+}
+
+export default async function pickFile({
+  setImageUri,
+  setPdfUri,
+  allowedType,
+}: PickFileOptions): Promise<void> {
+  if (allowedType === "image") {
+    await pickImage(setImageUri);
+  } else if (allowedType === "pdf") {
+    await pickPdf(setPdfUri);
+  } else {
+    // Mode fleksibel: tampilkan pilihan
+    Alert.alert(
+      "Pilih Jenis File",
+      "Pilih sumber file yang ingin diunggah:",
+      [
+        { text: "Batal", style: "cancel" },
+        { text: "Dokumen (PDF)", onPress: () => pickPdf(setPdfUri) },
+        { text: "Gambar", onPress: () => pickImage(setImageUri) },
+      ],
+      { cancelable: true }
+    );
+  }
+}
+
+// --- Fungsi internal: pickImage ---
+async function pickImage(setImageUri?: (file: IFileData) => void) {
+  const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  if (status !== "granted") {
+    Alert.alert(
+      "Izin Ditolak",
+      "Izinkan akses ke galeri untuk memilih gambar."
+    );
+    return;
+  }
+
+  const result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    allowsEditing: true,
+    aspect: [4, 3],
+    quality: 1,
+  });
+
+  if (result.canceled || !result.assets?.[0]) return;
+
+  const asset = result.assets[0];
+  const uri = asset.uri;
+  const filename = uri.split("/").pop() || `image_${Date.now()}.jpg`;
+  const size = asset.fileSize ?? 0;
+
+  if (size > MAX_FILE_SIZE) {
+    Alert.alert("File Terlalu Besar", "Ukuran maksimal adalah 5MB.");
+    return;
+  }
+
+  const extMatch = /\.(\w+)$/.exec(filename.toLowerCase());
+  const extension = extMatch ? extMatch[1] : "jpg";
+
+  if (!ALLOWED_IMAGE_EXTENSIONS.includes(extension)) {
+    Alert.alert(
+      "Format Tidak Didukung",
+      "Hanya JPG, JPEG, dan PNG yang diperbolehkan."
+    );
+    return;
+  }
+
+  setImageUri?.({ uri, name: filename, size });
+}
+
+// --- Fungsi internal: pickPdf ---
+async function pickPdf(setPdfUri?: (file: IFileData) => void) {
+  const result = await DocumentPicker.getDocumentAsync({
+    type: "application/pdf", // Hanya PDF
+    copyToCacheDirectory: true,
+  });
+
+  if (result.canceled || !result.assets?.[0]) return;
+
+  const asset = result.assets[0];
+  const { uri, name, size } = asset;
+  const filename = name || `document_${Date.now()}.pdf`;
+  const fileSize = size ?? 0;
+
+  if (fileSize > MAX_FILE_SIZE) {
+    Alert.alert("File Terlalu Besar", "Ukuran maksimal adalah 5MB.");
+    return;
+  }
+
+  // Validasi ekstensi (extra safety)
+  const extMatch = /\.(\w+)$/.exec(filename.toLowerCase());
+  if (extMatch?.[1] !== "pdf") {
+    Alert.alert("File Tidak Valid", "Hanya file PDF yang diperbolehkan.");
+    return;
+  }
+
+  setPdfUri?.({ uri, name: filename, size: fileSize });
+}
