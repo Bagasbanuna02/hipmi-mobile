@@ -11,11 +11,23 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { View } from "react-native";
 
-export default function Donation_ProgressSection({ id }: { id: string }) {
+export default function Donation_ProgressSection({
+  id,
+  progres,
+}: {
+  id: string;
+  progres: number;
+}) {
   return (
     <>
       <View>
-        <ProgressCustom size="lg" />
+        <ProgressCustom
+          size="lg"
+          value={progres}
+          label={progres + "%"}
+          animated
+          color="primary"
+        />
         <Spacing />
         <Grid>
           <Grid.Col span={4}>

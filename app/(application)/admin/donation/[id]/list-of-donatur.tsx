@@ -3,6 +3,7 @@ import {
   ActionIcon,
   BadgeCustom,
   CenterCustom,
+  LoaderCustom,
   SelectCustom,
   StackCustom,
   TextCustom,
@@ -23,30 +24,29 @@ import { Divider } from "react-native-paper";
 
 export default function AdminDonasiListOfDonatur() {
   const { id } = useLocalSearchParams();
-  console.log("[ID >>]", id);
   const [listData, setListData] = React.useState<any[] | null>(null);
+  const [loadData, setLoadData] = React.useState(false);
   const [master, setMaster] = React.useState<any[]>([]);
 
-  const [selectStatus, setSelectStatus] = React.useState<
-    "berhasil" | "gagal" | "proses" | "menunggu" | ""
-  >("");
+  const [selectValue, setSelectValue] = React.useState<string | null>(null);
+  const [selectedStatus, setSelectedStatus] = React.useState<string | null>(
+    null
+  );
 
   useFocusEffect(
     React.useCallback(() => {
       onLoadData();
-    }, [id, selectStatus])
+    }, [id, selectValue])
   );
 
   const onLoadData = async () => {
     try {
+      setLoadData(true);
       const response = await apiAdminDonationListOfDonatur({
         id: id as string,
-        status: "" as any,
+        status: selectedStatus as any,
       });
-      console.log(
-        "[LIST OF DONATUR]",
-        JSON.stringify(response, null, 2)
-      );
+      // console.log("[LIST OF DONATUR]", JSON.stringify(response, null, 2));
 
       if (response.success) {
         setListData(response.data);
@@ -54,6 +54,8 @@ export default function AdminDonasiListOfDonatur() {
     } catch (error) {
       console.log("[ERROR]", error);
       setListData([]);
+    } finally {
+      setLoadData(false);
     }
   };
 
@@ -64,7 +66,7 @@ export default function AdminDonasiListOfDonatur() {
   const onLoadMaster = async () => {
     try {
       const response = await apiMasterTransaction();
-     
+
       if (response.success) {
         setMaster(response.data);
       }
@@ -83,15 +85,18 @@ export default function AdminDonasiListOfDonatur() {
             ? []
             : master?.map((item: any) => ({
                 label: item.name,
-                value: item.name
+                value: item.id,
               }))
         }
+        value={selectValue}
         onChange={(value: any) => {
-          console.log("[SELECT STATUS]", value);
-          const statusChooses = _.lowerCase(value);
-          setSelectStatus(statusChooses as any);
+          setSelectValue(value);
+          const nameSelected = master.find((item: any) => item.id === value);
+          const statusChooses = _.lowerCase(nameSelected?.name);
+          setSelectedStatus(statusChooses);
         }}
         styleContainer={{ width: "100%", marginBottom: 0 }}
+        allowClear
       />
     </View>
   );
@@ -102,63 +107,78 @@ export default function AdminDonasiListOfDonatur() {
           <AdminBackButtonAntTitle newComponent={searchComponent} />
         }
       >
-        <GridViewCustomSpan
-          span1={3}
-          span2={5}
-          span3={4}
-          component1={
-            <TextCustom bold align="center">
-              Aksi
-            </TextCustom>
-          }
-          component2={
-            <TextCustom bold align="center">
-              Donatur
-            </TextCustom>
-          }
-          component3={
-            <TextCustom bold align="center">
-              Status
-            </TextCustom>
-          }
-        />
-        <Divider />
         <StackCustom>
-          {listData?.map((item: any, index: number) => (
-            <View key={index}>
-              <GridViewCustomSpan
-                span1={3}
-                span2={5}
-                span3={4}
-                component1={
-                  <CenterCustom>
-                    <ActionIcon
-                      icon={<IconView size={ICON_SIZE_BUTTON} color="black" />}
-                      onPress={() => {
-                        router.push(
-                          `/admin/donation/${id}/berhasil/transaction-detail`
-                        );
-                      }}
-                    />
-                  </CenterCustom>
-                }
-                component2={
-                  <TextCustom bold align="center" truncate>
-                    {item?.Author?.username || "-"}
-                  </TextCustom>
-                }
-                component3={
-                  <BadgeCustom
-                    style={{ alignSelf: "center" }}
-                    color={colorBadgeTransaction({status: item?.DonasiMaster_StatusInvoice?.name})}
-                  >
-                    {item?.DonasiMaster_StatusInvoice?.name}
-                  </BadgeCustom>
-                }
-              />
-              <Divider />
-            </View>
-          ))}
+          <GridViewCustomSpan
+            span1={3}
+            span2={5}
+            span3={4}
+            component1={
+              <TextCustom bold align="center">
+                Aksi
+              </TextCustom>
+            }
+            component2={
+              <TextCustom bold align="center">
+                Donatur
+              </TextCustom>
+            }
+            component3={
+              <TextCustom bold align="center">
+                Status
+              </TextCustom>
+            }
+          />
+          <Divider />
+          <StackCustom>
+            {loadData ? (
+              <LoaderCustom />
+            ) : _.isEmpty(listData) ? (
+              <TextCustom align="center" color="gray">
+                Belum ada data
+              </TextCustom>
+            ) : (
+              listData?.map((item: any, index: number) => (
+                <View key={index}>
+                  <GridViewCustomSpan
+                    span1={3}
+                    span2={5}
+                    span3={4}
+                    component1={
+                      <CenterCustom>
+                        <ActionIcon
+                          icon={
+                            <IconView size={ICON_SIZE_BUTTON} color="black" />
+                          }
+                          onPress={() => {
+                            router.push(
+                              `/admin/donation/${item?.id}/${_.lowerCase(
+                                item?.DonasiMaster_StatusInvoice?.name
+                              )}/transaction-detail`
+                            );
+                          }}
+                        />
+                      </CenterCustom>
+                    }
+                    component2={
+                      <TextCustom bold align="center" truncate>
+                        {item?.Author?.username || "-"}
+                      </TextCustom>
+                    }
+                    component3={
+                      <BadgeCustom
+                        style={{ alignSelf: "center" }}
+                        color={colorBadgeTransaction({
+                          status: item?.DonasiMaster_StatusInvoice?.name,
+                        })}
+                      >
+                        {item?.DonasiMaster_StatusInvoice?.name}
+                      </BadgeCustom>
+                    }
+                  />
+                </View>
+              ))
+            )}
+          </StackCustom>
         </StackCustom>
       </ViewWrapper>
     </>

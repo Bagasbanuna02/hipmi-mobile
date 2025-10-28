@@ -102,7 +102,7 @@ export default function DonasiDetailBeranda() {
             sisaHari={value.sisa}
             reminder={value.reminder}
             data={data}
-            bottomSection={<Donation_ProgressSection id={id as string} />}
+            bottomSection={<Donation_ProgressSection id={id as string} progres={Number(data?.progres) || 0} />}
           />
           <Donation_ComponentInfoFundrising dataAuthor={data?.Author} />
           <Donation_ComponentStoryFunrising

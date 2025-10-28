@@ -9,51 +9,162 @@ import {
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import { GridDetail_4_8 } from "@/components/_ShareComponent/GridDetail_4_8";
-import { MainColor } from "@/constants/color-palet";
-import dayjs from "dayjs";
-import { router, useLocalSearchParams } from "expo-router";
+import {
+  apiAdminDonationInvoiceDetailById,
+  apiAdminDonationInvoiceUpdateById,
+} from "@/service/api-admin/api-admin-donation";
+import { colorBadgeTransaction } from "@/utils/colorBadge";
+import { dateTimeView } from "@/utils/dateTimeView";
+import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
+import _ from "lodash";
+import { useCallback, useState } from "react";
+import Toast from "react-native-toast-message";
 
 export default function AdminDonasiTransactionDetail() {
-  const { id } = useLocalSearchParams();
+  const { id, status } = useLocalSearchParams();
+  console.log("[STATUS]", id, status);
 
-  const buttonAction = (
-    <BoxButtonOnFooter>
-      <ButtonCustom onPress={() => router.back()}>Terima</ButtonCustom>
-    </BoxButtonOnFooter>
+  const [data, setData] = useState<any | null>(null);
+  const [isLoading, setLoading] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id])
   );
+
+  const onLoadData = async () => {
+    try {
+      const response = await apiAdminDonationInvoiceDetailById({
+        id: id as string,
+      });
+
+      console.log("[GET INVOICE BY ID]", JSON.stringify(response, null, 2));
+      if (response.success) {
+        setData(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  };
+
+  const handlerSubmit = async () => {
+    try {
+      setLoading(true);
+      const newData = {
+        donationId: data?.donasiId,
+        nominal: data?.nominal,
+      };
+
+      const response = await apiAdminDonationInvoiceUpdateById({
+        id: id as string,
+        data: newData,
+        status: "berhasil",
+      });
+
+      console.log("[UPDATE INVOICE]", JSON.stringify(response, null, 2));
+
+      if (!response.success) {
+        Toast.show({
+          type: "error",
+          text1: response.message,
+        });
+        return;
+      }
+      Toast.show({
+        type: "success",
+        text1: response.message,
+      });
+      router.back();
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const buttonAction = () => {
+    if (data && data?.DonasiMaster_StatusInvoice?.name === "Menunggu") {
+      return null;
+    }
+
+    if (data && data?.DonasiMaster_StatusInvoice?.name === "Proses") {
+      return (
+        <BoxButtonOnFooter>
+          <ButtonCustom
+            isLoading={isLoading}
+            onPress={() => {
+              handlerSubmit();
+            }}
+          >
+            Terima donasi
+          </ButtonCustom>
+        </BoxButtonOnFooter>
+      );
+    }
+
+    return (
+      <BoxButtonOnFooter>
+        <ButtonCustom disabled>
+           {data?.DonasiMaster_StatusInvoice?.name}
+        </ButtonCustom>
+      </BoxButtonOnFooter>
+    );
+  };
 
   const listData = [
     {
       label: "Donatur",
-      value: "Bagas Banuna",
+      value: (data && data?.Author?.username) || "-",
     },
     {
       label: "Bank",
-      value: "BCA",
+      value: (data && data?.MasterBank?.namaBank) || "-",
     },
     {
       label: "Jumlah Donasi",
-      value: "Rp. 1.000.000",
+      value: `Rp. ${
+        (data && data?.nominal && formatCurrencyDisplay(data?.nominal)) || "-"
+      }`,
     },
     {
       label: "Status",
-      value: <BadgeCustom color={MainColor.green}>Berhasil</BadgeCustom>,
+      value:
+        (data && data?.DonasiMaster_StatusInvoice?.name && (
+          <BadgeCustom
+            color={colorBadgeTransaction({
+              status: data?.DonasiMaster_StatusInvoice?.name as any,
+            })}
+          >
+            {_.startCase(
+              (data?.DonasiMaster_StatusInvoice?.name as any) || "-"
+            )}
+          </BadgeCustom>
+        )) ||
+        "-",
     },
     {
       label: "Tanggal",
-      value: dayjs().format("DD-MM-YYYY HH:mm:ss"),
+      value: (data && dateTimeView({ date: data?.createdAt })) || "-",
     },
     {
       label: "Bukti Transfer",
-      value: (
-        <ButtonCustom
-          onPress={() =>
-            router.push(`/(application)/(image)/preview-image/${id}`)
-          }
-        >
-          Cek
-        </ButtonCustom>
-      ),
+      value:
+        (data && data?.imageId && (
+          <ButtonCustom
+            onPress={() =>
+              router.push(
+                `/(application)/(image)/preview-image/${data?.imageId}`
+              )
+            }
+          >
+            Cek
+          </ButtonCustom>
+        )) ||
+        "-",
     },
   ];
 
@@ -61,7 +172,7 @@ export default function AdminDonasiTransactionDetail() {
     <>
       <ViewWrapper
         headerComponent={<AdminBackButtonAntTitle title="Detail Transaksi" />}
-        footerComponent={buttonAction}
+        footerComponent={buttonAction()}
       >
         <BaseBox>
           <StackCustom>

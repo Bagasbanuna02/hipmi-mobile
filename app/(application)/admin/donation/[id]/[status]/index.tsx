@@ -38,6 +38,7 @@ export default function AdminDonationDetail() {
   const [openDrawer, setOpenDrawer] = React.useState(false);
 
   const [data, setData] = React.useState<any | null>(null);
+  const [countDonatur, setCountDonatur] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(false);
 
   useFocusEffect(
@@ -55,7 +56,8 @@ export default function AdminDonationDetail() {
       console.log("[RES GET BY ID]", JSON.stringify(response, null, 2));
 
       if (response.success) {
-        setData(response.data);
+        setData(response.data.donasi);
+        setCountDonatur(response.data.donatur);
       }
     } catch (error) {
       console.log("[ERROR]", error);
@@ -108,12 +110,16 @@ export default function AdminDonationDetail() {
       value: `Rp ${(data && data?.totalPencairan) || 0}`,
     },
     {
-      label: "Sisa Dana",
-      value: `Rp ${(data && data?.terkumpul - data?.totalPencairan) || 0}`,
+      label: "Sisa Dana Masuk",
+      value: `Rp ${
+        (data &&
+          formatCurrencyDisplay(data?.terkumpul - data?.totalPencairan)) ||
+        0
+      }`,
     },
     {
       label: "Akumulasi Pencairan",
-      value: `${(data && data?.totalPencairan) || 0} kali`,
+      value: `${(data && data?.akumulasiPencairan) || 0} kali`,
     },
     {
       label: "Bank Tujuan",
@@ -196,7 +202,7 @@ export default function AdminDonationDetail() {
                     />
                   ))}
                 </StackCustom>
-                
+
                 <ButtonCustom
                   iconLeft={
                     <Ionicons name="cash-outline" size={ICON_SIZE_BUTTON} />
@@ -211,16 +217,33 @@ export default function AdminDonationDetail() {
             </BaseBox>
 
             <BaseBox>
-              <ProgressCustom size="lg" />
+              <ProgressCustom
+                size="lg"
+                value={Number(data?.progres) || 0}
+                showLabel={true}
+                label={data?.progres + "%"}
+                animated
+                color="primary"
+              />
               <Spacing />
+
+            
               <StackCustom gap={"xs"}>
                 <GridDetail_4_8
                   label={<TextCustom bold>Jumlah Donatur</TextCustom>}
-                  value={<TextCustom>0 orang</TextCustom>}
+                  value={
+                    <TextCustom>
+                      {countDonatur ? countDonatur : 0} orang
+                    </TextCustom>
+                  }
                 />
                 <GridDetail_4_8
                   label={<TextCustom bold>Dana Terkumpul</TextCustom>}
-                  value={<TextCustom>Rp 0</TextCustom>}
+                  value={
+                    <TextCustom>
+                      Rp {formatCurrencyDisplay(data?.terkumpul || 0)}
+                    </TextCustom>
+                  }
                 />
               </StackCustom>
             </BaseBox>
