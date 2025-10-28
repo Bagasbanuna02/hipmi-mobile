@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   ActionIcon,
   AlertDefaultSystem,
@@ -18,96 +19,146 @@ import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButt
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
 import AdminButtonReview from "@/components/_ShareComponent/Admin/ButtonReview";
 import { GridDetail_4_8 } from "@/components/_ShareComponent/GridDetail_4_8";
-import { MainColor } from "@/constants/color-palet";
+import ReportBox from "@/components/Box/ReportBox";
 import { ICON_SIZE_BUTTON, TEXT_SIZE_LARGE } from "@/constants/constans-value";
 import AdminDonation_BoxOfDonationStory from "@/screens/Admin/Donation/BoxOfDonationStory";
+import { funUpdateStatusDonation } from "@/screens/Admin/Donation/funDonationUpdateStatus";
+import { apiAdminDonationDetailById } from "@/service/api-admin/api-admin-donation";
+import { colorBadgeStatus } from "@/utils/colorBadge";
+import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
 import { Ionicons } from "@expo/vector-icons";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import React from "react";
 import { View } from "react-native";
+import Toast from "react-native-toast-message";
 
 export default function AdminDonationDetail() {
   const { id, status } = useLocalSearchParams();
   const [openDrawer, setOpenDrawer] = React.useState(false);
 
-  const colorBadge = () => {
-    if (status === "publish") {
-      return MainColor.green;
-    } else if (status === "review") {
-      return MainColor.orange;
-    } else if (status === "reject") {
-      return MainColor.red;
-    } else {
-      return MainColor.placeholder;
+  const [data, setData] = React.useState<any | null>(null);
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      onLoadData();
+    }, [id])
+  );
+
+  const onLoadData = async () => {
+    try {
+      const response = await apiAdminDonationDetailById({
+        id: id as string,
+      });
+
+      console.log("[RES GET BY ID]", JSON.stringify(response, null, 2));
+
+      if (response.success) {
+        setData(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+      setData(null);
     }
   };
 
   const listData = [
     {
       label: "Penggalang Dana",
-      value: `Bagas Banuna ${id}`,
+      value: (data && data?.Author?.username) || "-",
     },
     {
       label: "Judul",
-      value: `Donasi Lorem ipsum dolor sit amet, consectetur adipisicing elit.`,
+      value: (data && data?.title) || "-",
     },
     {
       label: "Status",
-      value: (
-        <BadgeCustom color={colorBadge()}>
-          {_.startCase(status as string)}
-        </BadgeCustom>
-      ),
+      value:
+        data && data?.DonasiMaster_Status?.name ? (
+          <BadgeCustom
+            color={colorBadgeStatus({ status: data?.DonasiMaster_Status?.name })}
+          >
+            {_.startCase(data?.DonasiMaster_Status?.name)}
+          </BadgeCustom>
+        ) : (
+          "-"
+        ),
     },
     {
       label: "Durasi",
-      value: "30 Hari",
+      value: (data && data?.DonasiMaster_Durasi?.name) + " hari" || "-",
     },
     {
       label: "Target Dana",
-      value: "Rp 10.000.000",
+      value:
+        data && data?.target
+          ? `Rp. ${formatCurrencyDisplay(data?.target)}`
+          : "-",
     },
     {
       label: "Kategori",
-      value: "Kategori Donasi",
+      value: (data && data?.DonasiMaster_Ketegori?.name) || "-",
     },
-    // {
-    //   label: "Total Donatur",
-    //   value: "-",
-    // },
-    // {
-    //   label: "Progress",
-    //   value: "0 %",
-    // },
-    // {
-    //   label: "Dana Terkumpul",
-    //   value: "Rp 0",
-    // },
   ];
 
   const listPencarianDana = [
     {
       label: "Total Dana Dicairkan",
-      value: "Rp 0",
+      value: `Rp ${(data && data?.totalPencairan) || 0}`,
     },
     {
       label: "Sisa Dana",
-      value: "Rp 0",
+      value: `Rp ${(data && data?.terkumpul - data?.totalPencairan) || 0}`,
     },
     {
       label: "Akumulasi Pencairan",
-      value: "0 kali",
+      value: `${(data && data?.totalPencairan) || 0} kali`,
     },
     {
       label: "Bank Tujuan",
-      value: "BNI",
+      value: (data && data?.namaBank) || "-",
     },
     {
       label: "Nomor Rekening",
-      value: "123456789",
+      value: (data && data?.rekening) || "-",
     },
   ];
+
+  const handleReport = async ({
+    changeStatus,
+  }: {
+    changeStatus: "publish" | "review" | "reject";
+  }) => {
+    try {
+      setIsLoading(true);
+      const response = await funUpdateStatusDonation({
+        id: id as string,
+        changeStatus,
+        data: data,
+      });
+
+      if (!response.success) {
+        Toast.show({
+          type: "error",
+          text1: "Update status gagal",
+        });
+
+        return;
+      }
+
+      Toast.show({
+        type: "success",
+        text1: "Update status berhasil",
+      });
+
+      router.back();
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const rightComponent = (
     <ActionIcon
@@ -117,8 +168,6 @@ export default function AdminDonationDetail() {
       }}
     />
   );
-
-
 
   return (
     <>
@@ -147,6 +196,7 @@ export default function AdminDonationDetail() {
                     />
                   ))}
                 </StackCustom>
+                
                 <ButtonCustom
                   iconLeft={
                     <Ionicons name="cash-outline" size={ICON_SIZE_BUTTON} />
@@ -179,7 +229,7 @@ export default function AdminDonationDetail() {
 
         <BaseBox>
           <StackCustom>
-            <DummyLandscapeImage />
+            <DummyLandscapeImage imageId={data?.imageId || ""} />
             {listData.map((item, i) => (
               <GridDetail_4_8
                 key={i}
@@ -190,27 +240,33 @@ export default function AdminDonationDetail() {
           </StackCustom>
         </BaseBox>
 
+        <AdminDonation_BoxOfDonationStory data={data?.CeritaDonasi as any} />
+
+        {data &&
+          data?.catatan &&
+          (status === "review" || status === "reject") && (
+            <ReportBox text={data?.catatan} />
+          )}
+
         {status === "review" && (
           <StackCustom>
-            <AdminDonation_BoxOfDonationStory />
-
             <AdminButtonReview
+              isLoading={isLoading}
               onPublish={() => {
                 AlertDefaultSystem({
                   title: "Publish",
                   message: "Apakah anda yakin ingin mempublikasikan data ini?",
                   textLeft: "Batal",
                   textRight: "Ya",
-                  onPressLeft: () => {
-                    router.back();
-                  },
                   onPressRight: () => {
-                    router.back();
+                    handleReport({ changeStatus: "publish" });
                   },
                 });
               }}
               onReject={() => {
-                router.push(`/admin/donation/${id}/reject-input`);
+                router.push(
+                  `/admin/donation/${id}/reject-input?status=${status}`
+                );
               }}
             />
           </StackCustom>
@@ -218,12 +274,12 @@ export default function AdminDonationDetail() {
 
         {status === "reject" && (
           <StackCustom>
-            <AdminDonation_BoxOfDonationStory />
-
             <AdminButtonReject
               title="Tambah Catatan"
               onReject={() => {
-                router.push(`/admin/donation/${id}/reject-input`);
+                router.push(
+                  `/admin/donation/${id}/reject-input?status=${status}`
+                );
               }}
             />
           </StackCustom>

@@ -16,20 +16,19 @@ import Donation_ComponentInfoFundrising from "@/screens/Donation/ComponentInfoFu
 import Donation_ComponentStoryFunrising from "@/screens/Donation/ComponentStoryFunrising";
 import Donation_ProgressSection from "@/screens/Donation/ProgressSection";
 import { apiDonationGetOne } from "@/service/api-client/api-donation";
+import { countDownAndCondition } from "@/utils/countDownAndCondition";
 import {
   router,
   Stack,
   useFocusEffect,
   useLocalSearchParams,
 } from "expo-router";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function DonasiDetailBeranda() {
   const { user } = useAuth();
   const { id } = useLocalSearchParams();
-  console.log("ID ", id);
   const [openDrawer, setOpenDrawer] = useState(false);
-
   const [data, setData] = useState<any>();
 
   useFocusEffect(
@@ -45,21 +44,41 @@ export default function DonasiDetailBeranda() {
         category: "permanent",
       });
 
-      console.log("[RES GET ONE]", JSON.stringify(response.data, null, 2));
-
       setData(response.data);
     } catch (error) {
       console.log("[ERROR]", error);
     }
   };
 
+  const [value, setValue] = useState({
+    sisa: 0,
+    reminder: false,
+  });
+
+  useEffect(() => {
+    updateCountDown();
+  }, [data]);
+
+  const updateCountDown = () => {
+    const countDown = countDownAndCondition({
+      duration: data?.DonasiMaster_Durasi?.name,
+      publishTime: data?.publishTime,
+    });
+
+    setValue({
+      sisa: countDown.durationDay,
+      reminder: countDown.reminder,
+    });
+  };
+
   const buttonSection = (
     <>
       <BoxButtonOnFooter>
         <ButtonCustom
+          disabled={value?.reminder}
           onPress={() => router.navigate(`/donation/${id}/(transaction-flow)`)}
         >
-          Donasi
+          {value?.reminder ? "Waktu berakhir" : "Donasi"}
         </ButtonCustom>
       </BoxButtonOnFooter>
     </>
@@ -80,6 +99,8 @@ export default function DonasiDetailBeranda() {
       <ViewWrapper footerComponent={buttonSection}>
         <StackCustom>
           <Donation_ComponentBoxDetailData
+            sisaHari={value.sisa}
+            reminder={value.reminder}
             data={data}
             bottomSection={<Donation_ProgressSection id={id as string} />}
           />

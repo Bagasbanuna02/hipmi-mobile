@@ -14,7 +14,6 @@ import { useState, useCallback } from "react";
 
 export default function AdminDonation() {
   const [data, setData] = useState<any | null>(null);
-  const [loadData, setLoadData] = useState<boolean>(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -24,7 +23,7 @@ export default function AdminDonation() {
 
   const onLoadData = async () => {
     try {
-      setLoadData(true);
+
       const response = await apiAdminDonation({
         category: "dashboard",
       });
@@ -37,9 +36,7 @@ export default function AdminDonation() {
     } catch (error) {
       console.log("[ERROR]", error);
       setData([]);
-    } finally {
-      setLoadData(false);
-    }
+    } 
   };
 
   const listData = [

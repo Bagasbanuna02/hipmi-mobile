@@ -6,7 +6,11 @@ import {
   DummyLandscapeImage,
 } from "@/components";
 
-export default function AdminDonation_BoxOfDonationStory() {
+export default function AdminDonation_BoxOfDonationStory({
+  data,
+}: {
+  data: any;
+}) {
   return (
     <>
       <BaseBox>
@@ -14,19 +18,9 @@ export default function AdminDonation_BoxOfDonationStory() {
         <Spacing />
 
         <StackCustom>
-          <TextCustom>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem magni
-            perspiciatis eius ipsam provident, impedit, fugiat aliquid nobis
-            pariatur asperiores fuga quidem temporibus labore, molestias
-            perferendis optio ipsum. Praesentium, tempore?
-          </TextCustom>
-          <DummyLandscapeImage />
-          <TextCustom>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem magni
-            perspiciatis eius ipsam provident, impedit, fugiat aliquid nobis
-            pariatur asperiores fuga quidem temporibus labore, molestias
-            perferendis optio ipsum. Praesentium, tempore?
-          </TextCustom>
+          <TextCustom>{(data && data?.pembukaan) || "-"}</TextCustom>
+          <DummyLandscapeImage imageId={data?.imageId || "-"} />
+          <TextCustom>{(data && data?.cerita) || "-"}</TextCustom>
         </StackCustom>
       </BaseBox>
     </>

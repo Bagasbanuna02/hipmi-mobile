@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  ActionIcon,
-  AlertDefaultSystem,
-  BadgeCustom,
-  BaseBox,
-  DrawerCustom,
-  LoaderCustom,
-  MenuDrawerDynamicGrid,
-  Spacing,
-  StackCustom,
-  TextCustom,
-  ViewWrapper,
+    ActionIcon,
+    AlertDefaultSystem,
+    BadgeCustom,
+    BaseBox,
+    DrawerCustom,
+    LoaderCustom,
+    MenuDrawerDynamicGrid,
+    Spacing,
+    StackCustom,
+    TextCustom,
+    ViewWrapper,
 } from "@/components";
 import { IconDot, IconList } from "@/components/_Icon/IconComponent";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
@@ -23,7 +23,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { funUpdateStatusEvent } from "@/screens/Admin/Event/funUpdateStatus";
 import { apiAdminEventById } from "@/service/api-admin/api-admin-event";
 import { DEEP_LINK_URL } from "@/service/api-config";
-import { colorBadge } from "@/utils/colorBadge";
+import { colorBadgeStatus } from "@/utils/colorBadge";
 import { dateTimeView } from "@/utils/dateTimeView";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
@@ -74,7 +74,7 @@ export default function AdminEventDetail() {
       label: "Status",
       value:
         (data && (
-          <BadgeCustom color={colorBadge({ status: status as string })}>
+          <BadgeCustom color={colorBadgeStatus({ status: status as string })}>
             {_.startCase(status as string)}
           </BadgeCustom>
         )) ||

@@ -1,11 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   BaseBox,
-  Grid,
   DummyLandscapeImage,
+  Grid,
+  ProgressCustom,
   StackCustom,
   TextCustom,
-  ProgressCustom,
 } from "@/components";
+import { countDownAndCondition } from "@/utils/countDownAndCondition";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 
 export default function Donation_BoxPublish({
@@ -15,6 +18,27 @@ export default function Donation_BoxPublish({
   id: string;
   data: any;
 }) {
+  const [value, setValue] = useState({
+    sisa: 0,
+    reminder: false,
+  });
+
+  useEffect(() => {
+    updateCountDown();
+  }, [data]);
+
+  const updateCountDown = () => {
+    const countDown = countDownAndCondition({
+      duration: data?.durasiDonasi,
+      publishTime: data?.publishTime,
+    });
+
+    setValue({
+      sisa: countDown.durationDay,
+      reminder: countDown.reminder,
+    });
+  };
+
   return (
     <>
       <BaseBox paddingTop={7} paddingBottom={7} href={`/donation/${id}`}>
@@ -36,7 +60,13 @@ export default function Donation_BoxPublish({
                   {data?.title || "-"}
                 </TextCustom>
                 <TextCustom size="small">
-                  Sisa hari: {data?.durasiDonasi || 0}
+                  {value.reminder ? (
+                    <TextCustom bold color="red">
+                      Waktu berakhir
+                    </TextCustom>
+                  ) : (
+                    <TextCustom>Sisa hari: {value.sisa}</TextCustom>
+                  )}
                 </TextCustom>
               </View>
               <ProgressCustom
