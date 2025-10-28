@@ -1,9 +1,9 @@
 import {
   BaseBox,
-  StackCustom,
   DummyLandscapeImage,
-  TextCustom,
   Grid,
+  StackCustom,
+  TextCustom,
 } from "@/components";
 import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
 import React from "react";
@@ -12,10 +12,15 @@ import { View } from "react-native";
 export default function Donation_ComponentBoxDetailData({
   bottomSection,
   data,
+  sisaHari,
+  reminder,
 }: {
   bottomSection?: React.ReactNode;
   data: any;
+  sisaHari: number;
+  reminder: boolean;
 }) {
+
   return (
     <>
       <BaseBox>
@@ -25,9 +30,13 @@ export default function Donation_ComponentBoxDetailData({
             <TextCustom bold size="large">
               {data?.title || "-"}
             </TextCustom>
-            <TextCustom size="small">
-              Durasi: {data?.DonasiMaster_Durasi?.name || "-"}
-            </TextCustom>
+            {reminder ? (
+              <TextCustom bold color="red">
+                Waktu berakhir
+              </TextCustom>
+            ) : (
+              <TextCustom>Sisa hari: {sisaHari}</TextCustom>
+            )}
           </View>
 
           <Grid>

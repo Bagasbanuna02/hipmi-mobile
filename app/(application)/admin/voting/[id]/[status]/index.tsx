@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  AlertDefaultSystem,
-  BadgeCustom,
-  BaseBox,
-  CircleContainer,
-  Grid,
-  Spacing,
-  StackCustom,
-  TextCustom,
-  ViewWrapper,
+    AlertDefaultSystem,
+    BadgeCustom,
+    BaseBox,
+    CircleContainer,
+    Grid,
+    Spacing,
+    StackCustom,
+    TextCustom,
+    ViewWrapper,
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
@@ -18,7 +18,7 @@ import ReportBox from "@/components/Box/ReportBox";
 import { MainColor } from "@/constants/color-palet";
 import funUpdateStatusVoting from "@/screens/Admin/Voting/funUpdateStatus";
 import { apiAdminVotingById } from "@/service/api-admin/api-admin-voting";
-import { colorBadge } from "@/utils/colorBadge";
+import { colorBadgeStatus } from "@/utils/colorBadge";
 import { dateTimeView } from "@/utils/dateTimeView";
 import { Entypo } from "@expo/vector-icons";
 import dayjs from "dayjs";
@@ -68,7 +68,7 @@ export default function AdminVotingDetail() {
       label: "Status",
       value:
         data && data?.Voting_Status?.name ? (
-          <BadgeCustom color={colorBadge({ status: status as string })}>
+          <BadgeCustom color={colorBadgeStatus({ status: status as string })}>
             {status === "history" ? "Riwayat" : _.startCase(status as string)}
           </BadgeCustom>
         ) : (

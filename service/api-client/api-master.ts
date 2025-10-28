@@ -157,3 +157,14 @@ export async function apiMasterDonation({
     throw error;
   }
 }
+
+// ================== END MASTER DONATION ================== //
+
+export async function apiMasterTransaction() {
+  try {
+    const response = await apiConfig.get(`/mobile/master/transaction-status`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
