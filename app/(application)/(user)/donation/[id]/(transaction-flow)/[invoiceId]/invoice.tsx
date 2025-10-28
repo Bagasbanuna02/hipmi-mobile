@@ -122,7 +122,7 @@ export default function DonationInvoice() {
                     }}
                   >
                     <TextCustom size="xlarge" bold color="yellow">
-                      {data?.DonasiMaster_Bank?.norek}
+                      {data?.MasterBank?.norek}
                     </TextCustom>
                   </Grid.Col>
                   <Grid.Col
@@ -131,7 +131,7 @@ export default function DonationInvoice() {
                       alignItems: "flex-end",
                     }}
                   >
-                    <CopyButton textToCopy={data?.DonasiMaster_Bank?.norek} />
+                    <CopyButton textToCopy={data?.MasterBank?.norek} />
                   </Grid.Col>
                 </Grid>
               </BaseBox>

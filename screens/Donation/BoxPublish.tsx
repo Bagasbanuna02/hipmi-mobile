@@ -70,9 +70,12 @@ export default function Donation_BoxPublish({
                 </TextCustom>
               </View>
               <ProgressCustom
-                label={data?.progres + "%" || "0%"}
-                value={data?.progres || 0}
                 size="lg"
+                value={Number(data?.progres) || 0}
+                showLabel={true}
+                label={data?.progres + "%"}
+                animated
+                color="primary"
               />
               {/* <TextCustom>
                  Terkumpul : Rp 300.000

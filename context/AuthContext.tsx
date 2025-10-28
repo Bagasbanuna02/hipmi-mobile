@@ -91,14 +91,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setToken(token);
         await AsyncStorage.setItem("authToken", token);
 
-        const responseUser = await apiConfig.get(
-          `/mobile?token=${token}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const responseUser = await apiConfig.get(`/mobile?token=${token}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const dataUser = responseUser.data.data;
 
         setUser(dataUser);
@@ -147,9 +144,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       await AsyncStorage.setItem("userData", JSON.stringify(dataUser));
       return dataUser;
     } catch (error: any) {
-      throw new Error(
-        error.response?.data?.message || "Gagal mengambil data user"
-      );
+      console.log(error.response?.data?.message + "user" || "Gagal mengambil data user");
     } finally {
       setIsLoading(false);
     }
