@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   BaseBox,
   ButtonCustom,
@@ -7,27 +8,53 @@ import {
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import { GridDetail_4_8 } from "@/components/_ShareComponent/GridDetail_4_8";
-import dayjs from "dayjs";
-import { router, useLocalSearchParams } from "expo-router";
+import { apiAdminDonationDisbursementOfFundsListById } from "@/service/api-admin/api-admin-donation";
+import { dateTimeView } from "@/utils/dateTimeView";
+import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
+import React, { useCallback } from "react";
 
 export default function AdminDonationDetailDisbursementOfFunds() {
   const { id } = useLocalSearchParams();
+  const [data, setData] = React.useState<any | null>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [id])
+  );
+
+  const onLoadData = async () => {
+    try {
+      const response = await apiAdminDonationDisbursementOfFundsListById({
+        id: id as string,
+        category: "get-one",
+      });
+
+      if (response.success) {
+        setData(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  };
+
   const listData = [
     {
       label: "Nominal",
-      value: "Rp 1.000.000",
+      value: `Rp ${(data && formatCurrencyDisplay(data?.nominalCair)) || 0}`,
     },
     {
       label: "Tanggal",
-      value: dayjs().format("DD-MM-YYYY HH:mm"),
+      value: dateTimeView({ date: data?.createdAt }),
     },
     {
       label: "Judul",
-      value: `Judul Pencairan Dana ${id}`,
+      value: (data && data?.title) || "-",
     },
     {
       label: "Deskripsi",
-      value: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque velit eos facere a dicta nemo repellendus harum laboriosam quos, earum reprehenderit. Nisi sapiente, quo earum quis alias ullam temporibus quidem.`,
+      value: (data && data?.deskripsi) || "-",
     },
   ];
   return (
@@ -39,7 +66,7 @@ export default function AdminDonationDetailDisbursementOfFunds() {
       >
         <BaseBox>
           <StackCustom>
-            {listData.map((item, index) => (
+            {listData?.map((item, index) => (
               <GridDetail_4_8
                 key={index}
                 label={<TextCustom bold>{item.label}</TextCustom>}
@@ -51,7 +78,7 @@ export default function AdminDonationDetailDisbursementOfFunds() {
 
         <ButtonCustom
           onPress={() =>
-            router.push(`/(application)/(image)/preview-image/${id}`)
+            router.push(`/(application)/(image)/preview-image/${data?.imageId}`)
           }
         >
           Cek Bukti Transaksi

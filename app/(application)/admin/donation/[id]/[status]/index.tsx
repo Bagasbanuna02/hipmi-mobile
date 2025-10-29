@@ -53,8 +53,6 @@ export default function AdminDonationDetail() {
         id: id as string,
       });
 
-      console.log("[RES GET BY ID]", JSON.stringify(response, null, 2));
-
       if (response.success) {
         setData(response.data.donasi);
         setCountDonatur(response.data.donatur);
@@ -79,7 +77,9 @@ export default function AdminDonationDetail() {
       value:
         data && data?.DonasiMaster_Status?.name ? (
           <BadgeCustom
-            color={colorBadgeStatus({ status: data?.DonasiMaster_Status?.name })}
+            color={colorBadgeStatus({
+              status: data?.DonasiMaster_Status?.name,
+            })}
           >
             {_.startCase(data?.DonasiMaster_Status?.name)}
           </BadgeCustom>
@@ -107,7 +107,7 @@ export default function AdminDonationDetail() {
   const listPencarianDana = [
     {
       label: "Total Dana Dicairkan",
-      value: `Rp ${(data && data?.totalPencairan) || 0}`,
+      value: `Rp ${(data && formatCurrencyDisplay(data?.totalPencairan)) || 0}`,
     },
     {
       label: "Sisa Dana Masuk",
@@ -207,7 +207,15 @@ export default function AdminDonationDetail() {
                   iconLeft={
                     <Ionicons name="cash-outline" size={ICON_SIZE_BUTTON} />
                   }
+                  disabled={data?.terkumpul - data?.totalPencairan <= 0}
                   onPress={() => {
+                    if (data?.terkumpul - data?.totalPencairan <= 0) {
+                      Toast.show({
+                        type: "error",
+                        text1: "Tidak ada dana yang tersisa",
+                      });
+                      return;
+                    }
                     router.push(`/admin/donation/${id}/disbursement-of-funds`);
                   }}
                 >
@@ -227,7 +235,6 @@ export default function AdminDonationDetail() {
               />
               <Spacing />
 
-            
               <StackCustom gap={"xs"}>
                 <GridDetail_4_8
                   label={<TextCustom bold>Jumlah Donatur</TextCustom>}
