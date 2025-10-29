@@ -103,3 +103,52 @@ export async function apiAdminDonationInvoiceUpdateById({
     throw error;
   }
 }
+
+export async function apiAdminDonationListOfDonaturById({
+  id,
+}: {
+  id: string;
+}) {
+  try {
+    const response = await apiConfig.get(`/mobile/donation/${id}/donatur`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiAdminDonationDisbursementOfFundsCreated({
+  id,
+  data,
+}: {
+  id: string;
+  data: any;
+}) {
+  try {
+    const response = await apiConfig.post(
+      `/mobile/admin/donation/${id}/disbursement`,
+      {
+        data: data,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiAdminDonationDisbursementOfFundsListById({
+  id,
+  category,
+}: {
+  id: string;
+  category: "get-all" | "get-one"
+}) {
+  try {
+    const response = await apiConfig.get(`/mobile/admin/donation/${id}/disbursement?category=${category}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+

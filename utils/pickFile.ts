@@ -13,19 +13,28 @@ export interface IFileData {
 
 export type AllowedFileType = "image" | "pdf" | undefined;
 
+export type AspectRatio = [number, number];
+
 export interface PickFileOptions {
   setImageUri?: (file: IFileData) => void;
   setPdfUri?: (file: IFileData) => void;
   allowedType?: AllowedFileType; // <-- Tambahkan prop ini
+  aspectRatio?: AspectRatio;
 }
 
 export default async function pickFile({
   setImageUri,
   setPdfUri,
   allowedType,
+  aspectRatio,
 }: PickFileOptions): Promise<void> {
   if (allowedType === "image") {
-    await pickImage(setImageUri);
+    if (aspectRatio) {
+      await pickImage(setImageUri, aspectRatio);
+    } else {
+      // Jika tidak, tawarkan pilihan rasio (default [4,3])
+      showAspectRatioChoice(setImageUri);
+    }
   } else if (allowedType === "pdf") {
     await pickPdf(setPdfUri);
   } else {
@@ -36,15 +45,45 @@ export default async function pickFile({
       [
         { text: "Batal", style: "cancel" },
         { text: "Dokumen (PDF)", onPress: () => pickPdf(setPdfUri) },
-        { text: "Gambar", onPress: () => pickImage(setImageUri) },
+        { text: "Gambar", onPress: () => pickImage(setImageUri, aspectRatio) },
       ],
       { cancelable: true }
     );
   }
 }
 
+function showAspectRatioChoice(setImageUri?: (file: IFileData) => void) {
+  Alert.alert(
+    "Pilih Rasio Gambar",
+    "Pilih rasio crop yang diinginkan:",
+    [
+      { text: "Batal", style: "cancel" },
+      {
+        text: "1:1 (Kotak)",
+        onPress: () => pickImage(setImageUri, [1, 1]),
+      },
+      // {
+      //   text: "4:3 (Default)",
+      //   onPress: () => pickImage(setImageUri, [4, 3]),
+      // },
+      // {
+      //   text: "9:16 (Landscape)",
+      //   onPress: () => pickImage(setImageUri, [9, 16]),
+      // },
+      {
+        text: "3:4 (Potret)",
+        onPress: () => pickImage(setImageUri, [3, 4]),
+      },
+    ],
+    { cancelable: true }
+  );
+}
+
 // --- Fungsi internal: pickImage ---
-async function pickImage(setImageUri?: (file: IFileData) => void) {
+async function pickImage(
+  setImageUri?: (file: IFileData) => void,
+  aspectRatio: AspectRatio = [4, 3] // Default [4, 3]
+) {
   const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
   if (status !== "granted") {
     Alert.alert(
@@ -57,7 +96,7 @@ async function pickImage(setImageUri?: (file: IFileData) => void) {
   const result = await ImagePicker.launchImageLibraryAsync({
     mediaTypes: ImagePicker.MediaTypeOptions.Images,
     allowsEditing: true,
-    aspect: [4, 3],
+    aspect: aspectRatio, // 🎯 Gunakan rasio dinamis
     quality: 1,
   });
 

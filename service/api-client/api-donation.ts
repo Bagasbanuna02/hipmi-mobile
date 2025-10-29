@@ -255,3 +255,16 @@ export async function apiDonationDeleteNews({ id }: { id: string }) {
     throw error;
   }
 }
+
+export async function apiDonationDisbursementOfFundsListById({
+  id,
+}: {
+  id: string;
+}) {
+  try {
+    const response = await apiConfig.get(`/mobile/donation/${id}/disbursement`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
