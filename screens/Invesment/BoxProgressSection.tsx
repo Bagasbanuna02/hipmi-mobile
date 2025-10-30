@@ -7,7 +7,7 @@ export default function Invesment_BoxProgressSection({progress, status}: {progre
           <BaseBox>
             <StackCustom>
               <TextCustom bold>Progress Saham</TextCustom>
-              <ProgressCustom label={progress + "%"} value={progress} size="lg" />
+              <ProgressCustom label={(progress || 0) + "%"} value={progress || 0} size="lg" />
             </StackCustom>
           </BaseBox>
         )}

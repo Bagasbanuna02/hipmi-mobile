@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   ActionIcon,
   AlertDefaultSystem,
@@ -11,7 +12,7 @@ import {
   Spacing,
   StackCustom,
   TextCustom,
-  ViewWrapper
+  ViewWrapper,
 } from "@/components";
 import { IconProspectus } from "@/components/_Icon";
 import { IconDot, IconList } from "@/components/_Icon/IconComponent";
@@ -19,74 +20,140 @@ import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButt
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
 import AdminButtonReview from "@/components/_ShareComponent/Admin/ButtonReview";
 import { GridDetail_4_8 } from "@/components/_ShareComponent/GridDetail_4_8";
+import ReportBox from "@/components/Box/ReportBox";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
-import { router, useLocalSearchParams } from "expo-router";
+import {
+  apiAdminInvestasiUpdateByStatus,
+  apiAdminInvestmentDetailById,
+} from "@/service/api-admin/api-admin-investment";
+import { colorBadgeStatus } from "@/utils/colorBadge";
+import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import React from "react";
+import Toast from "react-native-toast-message";
 
 export default function AdminInvestmentDetail() {
   const { id, status } = useLocalSearchParams();
   const [openDrawer, setOpenDrawer] = React.useState(false);
 
-  const colorBadge = () => {
-    if (status === "publish") {
-      return MainColor.green;
-    } else if (status === "review") {
-      return MainColor.orange;
-    } else if (status === "reject") {
-      return MainColor.red;
-    } else {
-      return MainColor.placeholder;
+  const [data, setData] = React.useState<any | null>(null);
+  const [isLoading, setLoading] = React.useState(false);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      onLoadData();
+    }, [id])
+  );
+
+  const onLoadData = async () => {
+    try {
+      const response = await apiAdminInvestmentDetailById({ id: id as string });
+      console.log("[DATA]", JSON.stringify(response, null, 2));
+      if (response.success) {
+        setData(response.data);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
   const listData = [
     {
       label: "Username",
-      value: `Bagas Banuna ${id}`,
+      value: (data && data?.author?.username) || "-",
     },
     {
       label: "Judul",
-      value: `Donasi Lorem ipsum dolor sit amet, consectetur adipisicing elit.`,
+      value: (data && data?.title) || "-",
     },
     {
       label: "Status",
-      value: (
-        <BadgeCustom color={colorBadge()}>
-          {_.startCase(status as string)}
-        </BadgeCustom>
-      ),
+      value:
+        data && data?.MasterStatusInvestasi?.name ? (
+          <BadgeCustom
+            color={colorBadgeStatus({
+              status: data?.MasterStatusInvestasi?.name as string,
+            })}
+          >
+            {_.startCase(data?.MasterStatusInvestasi?.name as string)}
+          </BadgeCustom>
+        ) : (
+          "-"
+        ),
     },
     {
       label: "Dana Dibutuhkan",
-      value: "Rp 10.000.000",
+      value: `Rp. ${
+        (data && data?.targetDana && formatCurrencyDisplay(data?.targetDana)) ||
+        "-"
+      }`,
     },
     {
       label: "Harga Perlembar",
-      value: "Rp 2500",
+      value: `Rp. ${
+        (data &&
+          data?.hargaLembar &&
+          formatCurrencyDisplay(data?.hargaLembar)) ||
+        "-"
+      }`,
     },
     {
       label: "Total Lembar",
-      value: "2490 lembar",
+      value:
+        (data &&
+          data?.totalLembar &&
+          formatCurrencyDisplay(data?.totalLembar)) ||
+        "-",
     },
     {
       label: "ROI",
-      value: "4 %",
+      value: `${(data && data?.roi && data?.roi) || 0} %`,
     },
     {
       label: "Pembagian Deviden",
-      value: "3 bulan",
+      value: (data && data?.MasterPembagianDeviden?.name) + " bulan" || "-",
     },
     {
       label: "Jadwal Pembagian",
-      value: "Selamanya",
+      value: (data && data?.MasterPeriodeDeviden?.name) || "-",
     },
     {
       label: "Pencarian Investor",
-      value: "30 Hari",
+      value: (data && data?.MasterPencarianInvestor?.name) + " hari" || "-",
     },
   ];
+
+  const handlerSubmitPublish = async () => {
+    try {
+      setLoading(true);
+      const response = await apiAdminInvestasiUpdateByStatus({
+        id: id as string,
+        status: "publish",
+        data: data,
+      });
+
+      console.log("[RESPONSE]", JSON.stringify(response, null, 2));
+      if (!response.success) {
+        Toast.show({
+          type: "error",
+          text1: "Gagal mempublikasikan data",
+        });
+        return;
+      }
+
+      Toast.show({
+        type: "success",
+        text1: "Berhasil mempublikasikan data",
+      });
+      router.replace(`/admin/investment/publish/status`);
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const rightComponent = (
     <ActionIcon
@@ -126,7 +193,7 @@ export default function AdminInvestmentDetail() {
 
         <BaseBox>
           <StackCustom>
-            <DummyLandscapeImage />
+            <DummyLandscapeImage imageId={data?.imageId} />
             {listData.map((item, i) => (
               <GridDetail_4_8
                 key={i}
@@ -150,7 +217,9 @@ export default function AdminInvestmentDetail() {
                     />
                   }
                   onPress={() => {
-                    router.push(`/(application)/(file)/${id}`);
+                    router.push(
+                      `/(application)/(file)/${data?.prospektusFileId}`
+                    );
                   }}
                 >
                   Preview
@@ -161,46 +230,66 @@ export default function AdminInvestmentDetail() {
               label={<TextCustom bold>File Dokumen</TextCustom>}
               value={
                 <StackCustom>
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <ButtonCustom
-                      key={i}
-                      iconLeft={
-                        <IconProspectus
-                          size={ICON_SIZE_BUTTON}
-                          color={MainColor.darkblue}
-                        />
-                      }
-                      onPress={() => {
-                        router.push(`/(application)/(file)/${id}`);
-                      }}
-                    >
-                      Dokumen {i + 1}
-                    </ButtonCustom>
-                  ))}
+                  {_.isEmpty(data?.DokumenInvestasi) ? (
+                    <TextCustom align="center">-</TextCustom>
+                  ) : (
+                    data?.DokumenInvestasi?.map((item: any, index: number) => {
+                      const titleFix = item?.title?.substring(0, 10) || "";
+
+                      return (
+                        <ButtonCustom
+                          key={item.id || index} // ✅ pastikan key unik
+                          iconLeft={
+                            <IconProspectus
+                              size={ICON_SIZE_BUTTON}
+                              color={MainColor.darkblue}
+                            />
+                          }
+                          onPress={() => {
+                            router.push(
+                              `/(application)/(file)/${item?.fileId}`
+                            );
+                          }}
+                        >
+                          <TextCustom color="black" truncate>
+                            {titleFix}...
+                          </TextCustom>
+                        </ButtonCustom>
+                      );
+                    })
+                  )}
                 </StackCustom>
               }
             />
           </StackCustom>
         </BaseBox>
 
+        {data &&
+          data?.catatan &&
+          (status === "review" || status === "reject") && (
+            <ReportBox text={data?.catatan} />
+          )}
+
         {status === "review" && (
           <AdminButtonReview
+            isLoading={isLoading}
             onPublish={() => {
               AlertDefaultSystem({
                 title: "Publish",
                 message: "Apakah anda yakin ingin mempublikasikan data ini?",
                 textLeft: "Batal",
                 textRight: "Ya",
-                onPressLeft: () => {
-                  router.back();
-                },
                 onPressRight: () => {
-                  router.back();
+                  handlerSubmitPublish();
                 },
               });
             }}
             onReject={() => {
-              router.push(`/admin/investment/${id}/reject-input`);
+              router.push(
+                `/admin/investment/${id}/reject-input?status=${_.lowerCase(
+                  data?.MasterStatusInvestasi?.name
+                )}`
+              );
             }}
           />
         )}

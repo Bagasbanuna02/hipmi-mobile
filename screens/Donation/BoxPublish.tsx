@@ -22,7 +22,7 @@ export default function Donation_BoxPublish({
     sisa: 0,
     reminder: false,
   });
-
+  
   useEffect(() => {
     updateCountDown();
   }, [data]);

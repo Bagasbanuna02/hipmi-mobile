@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   BadgeCustom,
   BaseBox,
@@ -9,12 +10,38 @@ import {
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import { GridDetail_4_8 } from "@/components/_ShareComponent/GridDetail_4_8";
-import { MainColor } from "@/constants/color-palet";
-import dayjs from "dayjs";
-import { router, useLocalSearchParams } from "expo-router";
+import { apiAdminInvestmentGetOneInvoiceById } from "@/service/api-admin/api-admin-investment";
+import { colorBadgeTransaction } from "@/utils/colorBadge";
+import { dateTimeView } from "@/utils/dateTimeView";
+import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
+import { useCallback, useState } from "react";
 
 export default function AdminInvestmentTransactionDetail() {
   const { id } = useLocalSearchParams();
+  console.log("[ID]", id);
+
+  const [data, setData] = useState<any | null>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [id])
+  );
+
+  const onLoadData = async () => {
+    try {
+      const response = await apiAdminInvestmentGetOneInvoiceById({
+        id: id as string,
+      });
+      console.log("[RESPONSE]", JSON.stringify(response, null, 2));
+      if (response.success) {
+        setData(response.data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  };
 
   const buttonAction = (
     <BoxButtonOnFooter>
@@ -25,30 +52,41 @@ export default function AdminInvestmentTransactionDetail() {
   const listData = [
     {
       label: "Investor",
-      value: "Bagas Banuna",
+      value: data?.Author?.username || "-",
     },
     {
       label: "Bank",
-      value: "BCA",
+      value: data?.MasterBank?.namaBank || "-",
     },
     {
       label: "Jumlah Investasi",
-      value: "Rp. 1.000.000",
+      value: `Rp. ${formatCurrencyDisplay(data?.nominal) || "-"}`,
     },
     {
       label: "Status",
-      value: <BadgeCustom color={MainColor.green}>Berhasil</BadgeCustom>,
+      value:
+        data && data?.StatusInvoice?.name ? (
+          <BadgeCustom
+            color={colorBadgeTransaction({
+              status: data?.StatusInvoice?.name,
+            })}
+          >
+            {data?.StatusInvoice?.name}
+          </BadgeCustom>
+        ) : (
+          "-"
+        ),
     },
     {
       label: "Tanggal",
-      value: dayjs().format("DD-MM-YYYY HH:mm:ss"),
+      value: data && dateTimeView({ date: data?.createdAt }) || "-",
     },
     {
       label: "Bukti Transfer",
       value: (
         <ButtonCustom
           onPress={() =>
-            router.push(`/(application)/(image)/preview-image/${id}`)
+            router.push(`/(application)/(image)/preview-image/${data?.imageId}`)
           }
         >
           Cek
@@ -60,7 +98,9 @@ export default function AdminInvestmentTransactionDetail() {
   return (
     <>
       <ViewWrapper
-        headerComponent={<AdminBackButtonAntTitle title="Detail Transaksi Investor" />}
+        headerComponent={
+          <AdminBackButtonAntTitle title="Detail Transaksi Investor" />
+        }
         footerComponent={buttonAction}
       >
         <BaseBox>
