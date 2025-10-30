@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   AlertDefaultSystem,
   BoxButtonOnFooter,
@@ -6,15 +7,83 @@ import {
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
-import { router, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import { apiAdminInvestasiUpdateByStatus, apiAdminInvestmentDetailById } from "@/service/api-admin/api-admin-investment";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
+import { useCallback, useState } from "react";
+import Toast from "react-native-toast-message";
 
 export default function AdminInvestmentRejectInput() {
-  const { id } = useLocalSearchParams();
-  const [value, setValue] = useState(id as string);
+  const { id, status } = useLocalSearchParams();
+  console.log("[STATUS]", status);
+  const [value, setValue] = useState<any | null>(null);
+  const [isLoading , setLoading] = useState(false)
+
+    useFocusEffect(
+      useCallback(() => {
+        onLoadData();
+      }, [id])
+    );
+  
+    const onLoadData = async () => {
+      try {
+        const response = await apiAdminInvestmentDetailById({ id: id as string });
+        console.log("[DATA]", JSON.stringify(response, null, 2));
+        if (response.success) {
+          setValue(response.data?.catatan);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+  const handlerSubmit = async () => {
+    if (!value) {
+      Toast.show({
+        type: "error",
+        text1: "Harap masukan alasan penolakan",
+      });
+      return;
+    }
+
+    try {
+      setLoading(true)
+      const response = await apiAdminInvestasiUpdateByStatus({
+        id: id as string,
+        status: "reject",
+        data: value,
+      });
+
+      console.log("[RESPONSE]", JSON.stringify(response, null, 2));
+
+      if (!response.success) {
+        Toast.show({
+          type: "error",
+          text1: "Gagal melakukan report",
+        });
+        return;
+      }
+
+      Toast.show({
+        type: "success",
+        text1: "Berhasil melakukan report",
+      });
+
+      if (status === "review") {
+        router.replace(`/admin/investment/reject/status`);
+      } else {
+        router.back();
+      }
+    } catch (error) {
+      console.error(["ERROR"], error);
+    } finally {
+      setLoading(false)
+    }
+  };
+
   const buttonSubmit = (
     <BoxButtonOnFooter>
       <AdminButtonReject
+        isLoading={isLoading}
         title="Reject"
         onReject={() =>
           AlertDefaultSystem({
@@ -22,12 +91,8 @@ export default function AdminInvestmentRejectInput() {
             message: "Apakah anda yakin ingin menolak data ini?",
             textLeft: "Batal",
             textRight: "Ya",
-            onPressLeft: () => {
-              router.back();
-            },
             onPressRight: () => {
-              console.log("value:", value);
-              router.replace(`/admin/investment/reject/status`);
+              handlerSubmit();
             },
           })
         }
@@ -39,7 +104,9 @@ export default function AdminInvestmentRejectInput() {
     <>
       <ViewWrapper
         footerComponent={buttonSubmit}
-        headerComponent={<AdminBackButtonAntTitle title="Penolakan Investasi" />}
+        headerComponent={
+          <AdminBackButtonAntTitle title="Penolakan Investasi" />
+        }
       >
         <TextAreaCustom
           value={value}

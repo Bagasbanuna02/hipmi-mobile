@@ -8,6 +8,7 @@ import {
   TextCustom,
   ViewWrapper,
 } from "@/components";
+import NoDataText from "@/components/_ShareComponent/NoDataText";
 import API_STRORAGE from "@/constants/base-url-api-strorage";
 import DUMMY_IMAGE from "@/constants/dummy-image-value";
 import { apiInvestmentGetAll } from "@/service/api-client/api-investment";
@@ -52,7 +53,7 @@ export default function InvestmentBursa() {
       {loadingList ? (
         <LoaderCustom />
       ) : _.isEmpty(list) ? (
-        <TextCustom>Belum ada data</TextCustom>
+        <NoDataText />
       ) : (
         list?.map((item: any, index: number) => (
           <BaseBox

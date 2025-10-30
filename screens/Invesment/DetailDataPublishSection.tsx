@@ -7,6 +7,7 @@ import React from "react";
 import Invesment_BoxDetailDataSection from "./BoxDetailDataSection";
 import Invesment_BoxProgressSection from "./BoxProgressSection";
 import Investment_ButtonStatusSection from "./ButtonStatusSection";
+import ReportBox from "@/components/Box/ReportBox";
 
 export default function Invesment_DetailDataPublishSection({
   status,
@@ -23,6 +24,9 @@ export default function Invesment_DetailDataPublishSection({
   return (
     <>
       <StackCustom gap={"sm"}>
+        {data && data?.catatan && (status === "draft" || status === "reject") && (
+          <ReportBox text={data?.catatan} />
+        )}
         <Invesment_BoxProgressSection progress={data?.progress} status={status as string} />
         <Invesment_BoxDetailDataSection
           title={data?.title}
