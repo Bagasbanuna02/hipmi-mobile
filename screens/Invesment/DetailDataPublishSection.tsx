@@ -1,13 +1,15 @@
-import { Spacing, StackCustom } from "@/components";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { ButtonCustom, Spacing, StackCustom, TextCustom } from "@/components";
 import {
   listDataNotPublishInvesment,
   listDataPublishInvesment,
 } from "@/lib/dummy-data/investment/dummy-data-not-publish";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Invesment_BoxDetailDataSection from "./BoxDetailDataSection";
 import Invesment_BoxProgressSection from "./BoxProgressSection";
 import Investment_ButtonStatusSection from "./ButtonStatusSection";
 import ReportBox from "@/components/Box/ReportBox";
+import { countDownAndCondition } from "@/utils/countDownAndCondition";
 
 export default function Invesment_DetailDataPublishSection({
   status,
@@ -20,14 +22,39 @@ export default function Invesment_DetailDataPublishSection({
   bottomSection?: React.ReactNode;
   buttonSection?: React.ReactNode;
 }) {
+  const [value, setValue] = useState({
+    sisa: 0,
+    reminder: false,
+  });
+
+  useEffect(() => {
+    updateCountDown();
+  }, [data]);
+
+  const updateCountDown = () => {
+    const countDown = countDownAndCondition({
+      duration: data?.durasiDonasi,
+      publishTime: data?.publishTime,
+    });
+
+    setValue({
+      sisa: countDown.durationDay,
+      reminder: countDown.reminder,
+    });
+  };
 
   return (
     <>
       <StackCustom gap={"sm"}>
-        {data && data?.catatan && (status === "draft" || status === "reject") && (
-          <ReportBox text={data?.catatan} />
-        )}
-        <Invesment_BoxProgressSection progress={data?.progress} status={status as string} />
+        {data &&
+          data?.catatan &&
+          (status === "draft" || status === "reject") && (
+            <ReportBox text={data?.catatan} />
+          )}
+        <Invesment_BoxProgressSection
+          progress={data?.progress}
+          status={status as string}
+        />
         <Invesment_BoxDetailDataSection
           title={data?.title}
           author={data?.author}
@@ -39,11 +66,18 @@ export default function Invesment_DetailDataPublishSection({
           }
           bottomSection={bottomSection}
         />
-        <Investment_ButtonStatusSection
-          id={data?.id}
-          status={status as string}
-          buttonPublish={buttonSection}
-        />
+
+        {value.reminder ? (
+          <ButtonCustom disabled>
+            Periode Investasi Berakhir
+          </ButtonCustom>
+        ) : (
+          <Investment_ButtonStatusSection
+            id={data?.id}
+            status={status as string}
+            buttonPublish={buttonSection}
+          />
+        )}
       </StackCustom>
       <Spacing />
     </>
