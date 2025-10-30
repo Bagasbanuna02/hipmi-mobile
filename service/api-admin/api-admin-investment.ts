@@ -52,3 +52,37 @@ export async function apiAdminInvestasiUpdateByStatus({
     throw error;
   }
 }
+
+export async function apiAdminInvestmentListOfInvestor({
+  id,
+  status,
+}: {
+  id: string;
+  status: "berhasil" | "gagal" | "proses" | "menunggu" | null;
+}) {
+  const query = status && status !== null ? `?status=${status}` : "";
+
+  try {
+    const response = await apiConfig.get(
+      `/mobile/admin/investment/${id}/investor${query}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiAdminInvestmentGetOneInvoiceById({
+  id,
+}: {
+  id: string;
+}) {
+  try {
+    const response = await apiConfig.get(
+      `/mobile/admin/investment/${id}/invoice`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

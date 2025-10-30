@@ -1,25 +1,14 @@
 import {
-  BaseBox,
   FloatingButton,
-  Grid,
   LoaderCustom,
-  ProgressCustom,
-  StackCustom,
-  TextCustom,
-  ViewWrapper,
+  ViewWrapper
 } from "@/components";
 import NoDataText from "@/components/_ShareComponent/NoDataText";
-import API_STRORAGE from "@/constants/base-url-api-strorage";
-import DUMMY_IMAGE from "@/constants/dummy-image-value";
 import Investment_BoxBerandaSection from "@/screens/Invesment/BoxBerandaSection";
 import { apiInvestmentGetAll } from "@/service/api-client/api-investment";
-import { Ionicons } from "@expo/vector-icons";
-import dayjs from "dayjs";
-import { Image } from "expo-image";
 import { router, useFocusEffect } from "expo-router";
 import _ from "lodash";
 import { useCallback, useState } from "react";
-import { View } from "react-native";
 
 export default function InvestmentBursa() {
   const [list, setList] = useState<any[] | null>(null);

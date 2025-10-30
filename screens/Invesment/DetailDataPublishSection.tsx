@@ -1,15 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ButtonCustom, Spacing, StackCustom, TextCustom } from "@/components";
+import { ButtonCustom, Spacing, StackCustom } from "@/components";
+import ReportBox from "@/components/Box/ReportBox";
 import {
   listDataNotPublishInvesment,
   listDataPublishInvesment,
 } from "@/lib/dummy-data/investment/dummy-data-not-publish";
+import { countDownAndCondition } from "@/utils/countDownAndCondition";
 import React, { useEffect, useState } from "react";
 import Invesment_BoxDetailDataSection from "./BoxDetailDataSection";
 import Invesment_BoxProgressSection from "./BoxProgressSection";
 import Investment_ButtonStatusSection from "./ButtonStatusSection";
-import ReportBox from "@/components/Box/ReportBox";
-import { countDownAndCondition } from "@/utils/countDownAndCondition";
 
 export default function Invesment_DetailDataPublishSection({
   status,

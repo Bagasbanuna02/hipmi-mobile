@@ -1,16 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  BaseBox,
-  Grid,
-  StackCustom,
-  TextCustom,
-  ProgressCustom,
+    BaseBox,
+    Grid,
+    ProgressCustom,
+    StackCustom,
+    TextCustom,
 } from "@/components";
 import API_STRORAGE from "@/constants/base-url-api-strorage";
 import DUMMY_IMAGE from "@/constants/dummy-image-value";
 import { countDownAndCondition } from "@/utils/countDownAndCondition";
 import { Ionicons } from "@expo/vector-icons";
-import dayjs from "dayjs";
 import { Image } from "expo-image";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
