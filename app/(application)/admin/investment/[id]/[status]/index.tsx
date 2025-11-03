@@ -50,7 +50,7 @@ export default function AdminInvestmentDetail() {
   const onLoadData = async () => {
     try {
       const response = await apiAdminInvestmentDetailById({ id: id as string });
-      console.log("[DATA]", JSON.stringify(response, null, 2));
+      console.log("[GETONE INVEST]", JSON.stringify(response, null, 2));
       if (response.success) {
         setData(response.data);
       }
@@ -134,7 +134,7 @@ export default function AdminInvestmentDetail() {
         data: data,
       });
 
-      console.log("[RESPONSE]", JSON.stringify(response, null, 2));
+      // console.log("[GET ON INVEST]", JSON.stringify(response, null, 2));
       if (!response.success) {
         Toast.show({
           type: "error",
@@ -181,11 +181,13 @@ export default function AdminInvestmentDetail() {
             <StackCustom gap={"xs"}>
               <GridDetail_4_8
                 label={<TextCustom bold>Sisa Saham</TextCustom>}
-                value={<TextCustom>2490 lembar</TextCustom>}
+                value={
+                  <TextCustom>{data && formatCurrencyDisplay(data?.sisaLembar)} lembar</TextCustom>
+                }
               />
               <GridDetail_4_8
                 label={<TextCustom bold>Validasi Transaksi</TextCustom>}
-                value={<TextCustom>4 Transaksi</TextCustom>}
+                value={<TextCustom>{data && formatCurrencyDisplay(data?.lembarTerbeli)} Transaksi</TextCustom>}
               />
             </StackCustom>
           </BaseBox>

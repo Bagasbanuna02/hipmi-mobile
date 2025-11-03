@@ -8,6 +8,7 @@ import {
   TextCustom,
   ViewWrapper,
 } from "@/components";
+import NoDataText from "@/components/_ShareComponent/NoDataText";
 import { useAuth } from "@/hooks/use-auth";
 import { apiInvestmentGetInvoice } from "@/service/api-client/api-investment";
 import { GStyles } from "@/styles/global-styles";
@@ -74,7 +75,7 @@ export default function InvestmentTransaction() {
       {loadList ? (
         <LoaderCustom />
       ) : _.isEmpty(list) ? (
-        <TextCustom>Tidak ada data</TextCustom>
+        <NoDataText/>
       ) : (
         list.map((item: any, i: number) => (
           <BaseBox
