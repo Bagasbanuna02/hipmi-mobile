@@ -86,3 +86,28 @@ export async function apiAdminInvestmentGetOneInvoiceById({
     throw error;
   }
 }
+
+export async function apiAdminInvestmentUpdateInvoice({
+  id,
+  category,
+  data,
+}: {
+  id: string;
+  category: "deny" | "accept";
+  data: {
+    investasiId: string;
+    lembarTerbeli: number;
+  };
+}) {
+  try {
+    const response = await apiConfig.put(
+      `/mobile/admin/investment/${id}/invoice?category=${category}`,
+      {
+        data: data,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
