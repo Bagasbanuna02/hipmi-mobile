@@ -50,7 +50,7 @@ export default function AdminInvestmentDetail() {
   const onLoadData = async () => {
     try {
       const response = await apiAdminInvestmentDetailById({ id: id as string });
-      console.log("[GETONE INVEST]", JSON.stringify(response, null, 2));
+      // console.log("[GETONE INVEST]", JSON.stringify(response, null, 2));
       if (response.success) {
         setData(response.data);
       }
@@ -176,18 +176,28 @@ export default function AdminInvestmentDetail() {
       >
         {status === "publish" && (
           <BaseBox>
-            <ProgressCustom size="lg" />
+            <ProgressCustom
+              label={data && `${data.progress}%` || "0%"}
+              value={data && data.progress || 0}
+              size="lg"
+            />
             <Spacing />
             <StackCustom gap={"xs"}>
               <GridDetail_4_8
                 label={<TextCustom bold>Sisa Saham</TextCustom>}
                 value={
-                  <TextCustom>{data && formatCurrencyDisplay(data?.sisaLembar)} lembar</TextCustom>
+                  <TextCustom>
+                    {data && formatCurrencyDisplay(data && data?.sisaLembar)} lembar
+                  </TextCustom>
                 }
               />
               <GridDetail_4_8
                 label={<TextCustom bold>Validasi Transaksi</TextCustom>}
-                value={<TextCustom>{data && formatCurrencyDisplay(data?.lembarTerbeli)} Transaksi</TextCustom>}
+                value={
+                  <TextCustom>
+                    {data && data?.Investasi_Invoice.length} Proses
+                  </TextCustom>
+                }
               />
             </StackCustom>
           </BaseBox>

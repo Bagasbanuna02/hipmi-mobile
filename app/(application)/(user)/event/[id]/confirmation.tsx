@@ -261,17 +261,17 @@ export default function UserEventConfirmation() {
       <Stack.Screen
         options={{
           title: "Konfirmasi Event",
-          headerLeft: () => (
-            <Ionicons
-              name="arrow-back"
-              size={20}
-              color={MainColor.yellow}
-              onPress={() =>
-                router.navigate("/(application)/(user)/event/create")
-              }
-            />
-          ),
-        }}
+          // headerLeft: () => (
+          //   <Ionicons
+          //     name="arrow-back"
+          //     size={20}
+          //     color={MainColor.yellow}
+          //     onPress={() =>
+          //       router.navigate("/(application)/(user)/event/create")
+          //     }
+          //   />
+          // ),
+        }} 
       />
       <ViewWrapper>{handlerReturn()}</ViewWrapper>
     </>

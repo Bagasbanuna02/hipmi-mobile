@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
+  AlertDefaultSystem,
   BadgeCustom,
   BaseBox,
   ButtonCustom,
   Spacing,
   StackCustom,
   TextCustom,
-  ViewWrapper
+  ViewWrapper,
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import { GridDetail_4_8 } from "@/components/_ShareComponent/GridDetail_4_8";
@@ -25,8 +26,6 @@ import Toast from "react-native-toast-message";
 
 export default function AdminInvestmentTransactionDetail() {
   const { id } = useLocalSearchParams();
-  console.log("[ID]", id);
-
   const [data, setData] = useState<any | null>(null);
   const [isLoading, setLoading] = useState<boolean>(false);
 
@@ -41,7 +40,7 @@ export default function AdminInvestmentTransactionDetail() {
       const response = await apiAdminInvestmentGetOneInvoiceById({
         id: id as string,
       });
-      console.log("[RESPONSE]", JSON.stringify(response, null, 2));
+      // console.log("[RESPONSE]", JSON.stringify(response, null, 2));
       if (response.success) {
         setData(response.data);
       }
@@ -121,7 +120,7 @@ export default function AdminInvestmentTransactionDetail() {
         },
       });
 
-      console.log("[RESPONSE SUBMIT]", JSON.stringify(response, null, 2));
+      // console.log("[RESPONSE SUBMIT]", JSON.stringify(response, null, 2));
 
       if (!response.success) {
         Toast.show({
@@ -158,8 +157,16 @@ export default function AdminInvestmentTransactionDetail() {
               backgroundColor={MainColor.red}
               textColor="white"
               onPress={() => {
-                handlerSubmit({
-                  category: "deny",
+                AlertDefaultSystem({
+                  title: "Konfirmasi transaksi",
+                  message: "Apakah anda yakin ingin menolak transaksi ini?",
+                  textLeft: "Tidak",
+                  textRight: "Ya",
+                  onPressRight: () => {
+                    handlerSubmit({
+                      category: "deny",
+                    });
+                  },
                 });
               }}
             >
@@ -170,8 +177,16 @@ export default function AdminInvestmentTransactionDetail() {
             <ButtonCustom
               isLoading={isLoading}
               onPress={() => {
-                handlerSubmit({
-                  category: "accept",
+                AlertDefaultSystem({
+                  title: "Konfirmasi transaksi",
+                  message: "Apakah anda yakin ingin menyetujui transaksi ini?",
+                  textLeft: "Tidak",
+                  textRight: "Ya",
+                  onPressRight: () => {
+                    handlerSubmit({
+                      category: "accept",
+                    });
+                  },
                 });
               }}
             >

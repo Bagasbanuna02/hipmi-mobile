@@ -108,7 +108,9 @@ export default function InvestmentInvest() {
                 <TextCustom>Sisa Lembar Saham</TextCustom>
               </Grid.Col>
               <Grid.Col span={6} style={{ alignItems: "flex-end" }}>
-                <TextCustom>{data?.sisaLembar || "-"}</TextCustom>
+                <TextCustom>
+                  {data && formatCurrencyDisplay(data?.sisaLembar) || "-"}
+                </TextCustom>
               </Grid.Col>
             </Grid>
             <Grid>
@@ -116,7 +118,9 @@ export default function InvestmentInvest() {
                 <TextCustom>Harga Per Lembar</TextCustom>
               </Grid.Col>
               <Grid.Col span={6} style={{ alignItems: "flex-end" }}>
-                <TextCustom>{data?.hargaLembar || "-"}</TextCustom>
+                <TextCustom>
+                  {data && formatCurrencyDisplay(data?.hargaLembar) || "-"}
+                </TextCustom>
               </Grid.Col>
             </Grid>
             <Grid>
