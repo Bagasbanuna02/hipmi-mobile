@@ -128,9 +128,19 @@ export async function apiInvestmentDeleteDocument({ id }: { id: string }) {
   }
 }
 
-export async function apiInvestmentGetAll() {
+export async function apiInvestmentGetAll({
+  category,
+  authorId,
+}: {
+  category: "my-holding" | "bursa";
+  authorId?: string;
+}) {
   try {
-    const response = await apiConfig.get(`/mobile/investment`);
+    const response = await apiConfig.get(
+      `/mobile/investment?category=${category}${
+        authorId ? `&authorId=${authorId}` : ""
+      }`
+    );
     return response.data;
   } catch (error) {
     throw error;
@@ -241,3 +251,17 @@ export async function apiInvestmentDeleteNews({ id }: { id: string }) {
     throw error;
   }
 }
+
+export async function apiInvestmentGetInvestorById({
+  id,
+}: {
+  id: string;
+}) {
+  try {
+    const response = await apiConfig.get(`/mobile/investment/${id}/investor`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+  

@@ -23,7 +23,9 @@ export default function InvestmentBursa() {
   const onLoadList = async () => {
     try {
       setLoadingList(true);
-      const response = await apiInvestmentGetAll();
+      const response = await apiInvestmentGetAll({
+        category: "bursa"
+      });
       // console.log("[DATA LIST]", JSON.stringify(response.data, null, 2));
       setList(response.data);
     } catch (error) {

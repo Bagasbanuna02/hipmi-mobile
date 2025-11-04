@@ -36,7 +36,7 @@ const listDataNotPublishInvesment = ({ data }: { data: any }) => [
 const listDataPublishInvesment = ({ data }: { data: any }) => [
   {
     label: "Investor",
-    value: data?.investor,
+    value: data?.Investasi_Invoice.length || "-",
   },
   {
     label: "Target Dana",

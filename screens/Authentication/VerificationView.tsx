@@ -10,6 +10,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { OtpInput } from "react-native-otp-entry";
+import { ActivityIndicator } from "react-native-paper";
 import Toast from "react-native-toast-message";
 
 export default function VerificationView() {
@@ -18,21 +19,40 @@ export default function VerificationView() {
   const [codeOtp, setCodeOtp] = useState<string>("");
   const [inputOtp, setInputOtp] = useState<string>("");
   const [userNumber, setUserNumber] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [recodeOtp, setRecodeOtp] = useState<boolean>(false);
 
   // --- Context ---
-  const { validateOtp, isLoading } = useAuth();
+  const { validateOtp, isLoading, loginWithNomor } = useAuth();
 
   useEffect(() => {
     onLoadCheckCodeOtp();
-  }, []);
+  }, [recodeOtp]);
 
   async function onLoadCheckCodeOtp() {
+    setRecodeOtp(false);
     const kodeId = await AsyncStorage.getItem("kode_otp");
     const response = await apiCheckCodeOtp({ kodeId: kodeId as string });
-    console.log("Response check code otp >>", JSON.stringify(response.otp, null, 2));
+    console.log(
+      "Response check code otp >>",
+      JSON.stringify(response.otp, null, 2)
+    );
     setCodeOtp(response.otp);
     setUserNumber(response.nomor);
   }
+
+  const handlerResendOtp = async () => {
+    try {
+      setLoading(true);
+      await loginWithNomor(nomor as string);
+      setRecodeOtp(true);
+    } catch (error) {
+      console.log("Error check code otp", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   const handleVerification = async () => {
     const codeOtpNumber = parseInt(codeOtp);
@@ -109,17 +129,28 @@ export default function VerificationView() {
                 onTextChange={(otp: string) => setInputOtp(otp)}
               />
               <Spacing height={30} />
-              <Text style={GStyles.textLabel}>
-                Tidak menerima kode ?{" "}
-                <Text style={GStyles.textLabel}>Kirim Ulang</Text>
-              </Text>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text style={GStyles.textLabel}>Tidak menerima kode ? </Text>
+                {loading ? (
+                  <ActivityIndicator size={10} color={MainColor.yellow} />
+                ) : (
+                  <Text
+                    style={GStyles.textLabel}
+                    onPress={() => {
+                      handlerResendOtp();
+                    }}
+                  >
+                    Kirim Ulang
+                  </Text>
+                )}
+              </View>
             </View>
             <Spacing height={30} />
           </View>
 
           <ButtonCustom
             isLoading={isLoading}
-            disabled={codeOtp === ""}
+            disabled={codeOtp === "" || recodeOtp === true}
             backgroundColor={MainColor.yellow}
             textColor={MainColor.black}
             onPress={() => handleVerification()}

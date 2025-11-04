@@ -1,29 +1,56 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
-    BackButton,
-    BaseBox,
-    DotButton,
-    DrawerCustom,
-    Grid,
-    MenuDrawerDynamicGrid,
-    StackCustom,
-    TextCustom,
-    ViewWrapper,
+  BackButton,
+  BaseBox,
+  DotButton,
+  DrawerCustom,
+  Grid,
+  MenuDrawerDynamicGrid,
+  StackCustom,
+  TextCustom,
+  ViewWrapper,
 } from "@/components";
 import { IconDocument, IconEdit, IconNews } from "@/components/_Icon";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_MEDIUM } from "@/constants/constans-value";
+import { useAuth } from "@/hooks/use-auth";
 import Invesment_ComponentBoxOnBottomDetail from "@/screens/Invesment/ComponentBoxOnBottomDetail";
 import Invesment_DetailDataPublishSection from "@/screens/Invesment/DetailDataPublishSection";
+import { apiInvestmentGetInvoice } from "@/service/api-client/api-investment";
+import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
-import { router, Stack, useLocalSearchParams } from "expo-router";
+import { router, Stack, useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export default function InvestmentDetailHolding() {
+  const { user } = useAuth();
   const { id, status } = useLocalSearchParams();
   const [openDrawerDraft, setOpenDrawerDraft] = useState(false);
   const [openDrawerPublish, setOpenDrawerPublish] = useState(false);
+    const [data, setData] = useState<any>(null);
+  
+    useFocusEffect(
+      useCallback(() => {
+        onLoadData();
+      }, [id, status])
+    );
+  
+    const onLoadData = async () => {
+      try {
+        const response = await apiInvestmentGetInvoice({
+          id: id as string,
+          authorId: user?.id,
+          category: "invoice",
+        });
+  
+        console.log("[DATA]", JSON.stringify(response.data, null, 2));
+        setData(response.data);
+      } catch (error) {
+        console.log("[ERROR]", error);
+      }
+    };
 
   const handlePressDraft = (item: IMenuDrawerItem) => {
     console.log("PATH >> ", item.path);
@@ -39,7 +66,8 @@ export default function InvestmentDetailHolding() {
 
   const bottomSection = (
     <Invesment_ComponentBoxOnBottomDetail
-      id={id as string}
+      prospectusId={id as string}
+      id={data?.Investasi?.id as string}
       status={"publish"}
     />
   );
@@ -64,10 +92,12 @@ export default function InvestmentDetailHolding() {
           <StackCustom gap={"xs"}>
             <Grid>
               <Grid.Col span={6}>
-                <TextCustom bold>Nila Transaksi</TextCustom>
+                <TextCustom bold>Nilai Transaksi</TextCustom>
               </Grid.Col>
               <Grid.Col span={6}>
-                <TextCustom bold>Rp. 7.500.000</TextCustom>
+                <TextCustom bold>
+                  Rp. {data ? formatCurrencyDisplay(data?.nominal) : ""}
+                </TextCustom>
               </Grid.Col>
             </Grid>
             <Grid>
@@ -75,12 +105,16 @@ export default function InvestmentDetailHolding() {
                 <TextCustom bold>Saham Terbeli</TextCustom>
               </Grid.Col>
               <Grid.Col span={6}>
-                <TextCustom bold>300 Lembar</TextCustom>
+                <TextCustom bold>
+                  {data ? data?.lembarTerbeli : ""} Lembar
+                </TextCustom>
               </Grid.Col>
             </Grid>
           </StackCustom>
         </BaseBox>
+
         <Invesment_DetailDataPublishSection
+          data={data && data?.Investasi}
           status={"publish"}
           bottomSection={bottomSection}
         />
