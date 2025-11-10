@@ -2,7 +2,7 @@
 require('dotenv').config();
 
 export default {
-  name: 'HIPMI BADUNG',
+  name: 'HIPMI Badung Connect',
   slug: 'hipmi-mobile',
   version: '1.0.0',
   orientation: 'portrait',
