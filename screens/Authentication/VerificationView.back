@@ -14,96 +14,85 @@ import { ActivityIndicator } from "react-native-paper";
 import Toast from "react-native-toast-message";
 
 export default function VerificationView() {
-  const { nomor } = useLocalSearchParams<{ nomor: string }>();
+  const { nomor } = useLocalSearchParams();
 
+  const [codeOtp, setCodeOtp] = useState<string>("");
   const [inputOtp, setInputOtp] = useState<string>("");
   const [userNumber, setUserNumber] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [recodeOtp, setRecodeOtp] = useState<boolean>(false);
 
-  // 🔑 DETEKSI MODE REVIEW (HANYA UNTUK NOMOR DEMO & PRODUCTION)
-  const isReviewMode =
-    typeof window !== "undefined" && // pastikan di browser/production
-    process.env.NODE_ENV === "production" &&
-    nomor === "6282340374412";
-
   // --- Context ---
-  const { validateOtp, isLoading } = useAuth();
+  const { validateOtp, isLoading, loginWithNomor } = useAuth();
 
   useEffect(() => {
-    setUserNumber(nomor?.replace(/^\+/, "") || "");
-
-    if (!isReviewMode) {
-      // Hanya jalankan logika OTP normal jika BUKAN review mode
-      onLoadCheckCodeOtp();
-    }
-
-    console.log("[NODE_ENV]:", process.env.NODE_ENV);
-    console.log("[isReviewMode]:", isReviewMode);
-    console.log("[nomor]:", nomor);
-  }, [recodeOtp, isReviewMode]);
+    onLoadCheckCodeOtp();
+  }, [recodeOtp]);
 
   async function onLoadCheckCodeOtp() {
     setRecodeOtp(false);
     const kodeId = await AsyncStorage.getItem("kode_otp");
-    if (!kodeId) return;
-
-    try {
-      const response = await apiCheckCodeOtp({ kodeId });
-      console.log(
-        "Response check code otp >>",
-        JSON.stringify(response.otp, null, 2)
-      );
-      // Kita tidak perlu simpan codeOtp di state karena verifikasi dilakukan di backend
-      // Cukup simpan nomor
-    } catch (error) {
-      console.log("Error check code otp", error);
-    }
+    const response = await apiCheckCodeOtp({ kodeId: kodeId as string });
+    console.log(
+      "Response check code otp >>",
+      JSON.stringify(response.otp, null, 2)
+    );
+    setCodeOtp(response.otp);
+    setUserNumber(response.nomor);
   }
 
   const handlerResendOtp = async () => {
-    if (isReviewMode) {
-      // Di review mode, tidak perlu kirim ulang — OTP tetap 1234
-      Toast.show({ type: "info", text1: "OTP demo: 1234" });
-      return;
-    }
-
     try {
       setLoading(true);
-      // ❌ Kamu tidak punya nomor di sini, jadi pastikan `nomor` tersedia
-      // Sebaiknya simpan nomor saat login, atau gunakan dari `useLocalSearchParams`
-      router.setParams({ nomor }); // opsional
+      await loginWithNomor(nomor as string);
+      setRecodeOtp(true);
     } catch (error) {
-      console.log("Error resend OTP", error);
+      console.log("Error check code otp", error);
     } finally {
       setLoading(false);
     }
   };
 
+
   const handleVerification = async () => {
-    if (isReviewMode) {
-      // ✅ VERIFIKASI OTOMATIS UNTUK APPLE REVIEW
-      if (inputOtp === "1234") {
-        try {
-          const response = await validateOtp(nomor as string);
-          router.replace(response);
-        } catch (error) {
-          console.log("Error verification", error);
-          Toast.show({ type: "error", text1: "Gagal verifikasi" });
-        }
-      } else {
-        Toast.show({ type: "error", text1: "Kode OTP tidak sesuai" });
-      }
+    const codeOtpNumber = parseInt(codeOtp);
+    const inputOtpNumber = parseInt(inputOtp);
+
+    if (inputOtpNumber !== codeOtpNumber) {
+      Toast.show({
+        type: "error",
+        text1: "Kode OTP tidak sesuai",
+      });
+
       return;
     }
 
-    // 🔁 VERIFIKASI NORMAL (untuk pengguna sungguhan)
     try {
       const response = await validateOtp(nomor as string);
-      router.replace(response);
+      return router.replace(response);
+
+      // if (response.success) {
+      //   await userData(response.token);
+
+      //   if (response.active) {
+      //     if (response.roleId === "1") {
+      //       return "/(application)/(user)/home";
+      //     } else {
+      //       return "/(application)/admin/dashboard";
+      //     }
+      //   } else {
+      //     return "/(application)/(user)/waiting-room";
+      //   }
+      // } else {
+      //   Toast.show({
+      //     type: "info",
+      //     text1: "Anda belum terdaftar",
+      //     text2: "Silahkan daftar terlebih dahulu",
+      //   });
+      //   return `/register?nomor=${nomor}`;
+      // }
     } catch (error) {
       console.log("Error verification", error);
-      Toast.show({ type: "error", text1: "Gagal verifikasi" });
     }
   };
 
@@ -117,11 +106,11 @@ export default function VerificationView() {
               <Spacing height={30} />
               <Text style={GStyles.textLabel}>Masukan 4 digit kode otp</Text>
               <Text style={GStyles.textLabel}>
-                Yang dikirim ke +{userNumber}
+                Yang di kirim ke +{userNumber}
               </Text>
               <Spacing height={30} />
               <OtpInput
-                disabled={isReviewMode ? false : false} // tetap aktif
+                disabled={codeOtp === ""}
                 numberOfDigits={4}
                 theme={{
                   pinCodeContainerStyle: {
@@ -141,12 +130,17 @@ export default function VerificationView() {
               />
               <Spacing height={30} />
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Text style={GStyles.textLabel}>Tidak menerima kode?</Text>
+                <Text style={GStyles.textLabel}>Tidak menerima kode ? </Text>
                 {loading ? (
                   <ActivityIndicator size={10} color={MainColor.yellow} />
                 ) : (
-                  <Text style={GStyles.textLabel} onPress={handlerResendOtp}>
-                    {" Kirim Ulang"}
+                  <Text
+                    style={GStyles.textLabel}
+                    onPress={() => {
+                      handlerResendOtp();
+                    }}
+                  >
+                    Kirim Ulang
                   </Text>
                 )}
               </View>
@@ -156,10 +150,10 @@ export default function VerificationView() {
 
           <ButtonCustom
             isLoading={isLoading}
-            disabled={inputOtp.length < 4}
+            disabled={codeOtp === "" || recodeOtp === true}
             backgroundColor={MainColor.yellow}
             textColor={MainColor.black}
-            onPress={handleVerification}
+            onPress={() => handleVerification()}
           >
             Verifikasi
           </ButtonCustom>
