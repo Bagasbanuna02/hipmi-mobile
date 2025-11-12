@@ -3,7 +3,7 @@ import axios, { AxiosInstance } from "axios";
 import Constants from "expo-constants";
 export const BASE_URL = Constants.expoConfig?.extra?.BASE_URL;
 export const API_BASE_URL = Constants.expoConfig?.extra?.API_BASE_URL;
-export const DEEP_LINK_URL = Constants.expoConfig?.extra?.DEEP_LINK_URL;
+export const DEEP_LINK_URL = Constants.expoConfig?.extra?.DEEP_LINK_URL || 'hipmimobile://';
 
 export const apiConfig: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
