@@ -11,3 +11,4 @@ Exp: open ios/HIPMIBADUNG.xcworkspace
 
 ### Other
 perubahan versi : npm version patch
+
