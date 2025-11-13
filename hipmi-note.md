@@ -11,4 +11,5 @@ Exp: open ios/HIPMIBADUNG.xcworkspace
 
 ### Other
 perubahan versi : npm version patch
-
+ios: bunx expo prebuild --platform ios
+android: bunx expo prebuild --platform android

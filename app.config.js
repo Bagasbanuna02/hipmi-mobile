@@ -4,7 +4,7 @@ require("dotenv").config();
 export default {
   name: "HIPMI Badung Connect",
   slug: "hipmi-mobile",
-  version: "1.0.0",
+  version: "1.0.1",
   orientation: "portrait",
   icon: "./assets/images/icon.png",
   scheme: "hipmimobile",
@@ -18,6 +18,7 @@ export default {
       ITSAppUsesNonExemptEncryption: false,
     },
     associatedDomains: ["applinks:cld-dkr-staging-hipmi.wibudev.com"],
+    buildNumber: "4",
   },
 
   android: {
@@ -27,6 +28,7 @@ export default {
     },
     edgeToEdgeEnabled: true,
     package: "com.bip.hipmimobileapp",
+    versionCode: 4,
     // softwareKeyboardLayoutMode: 'resize', // option: untuk mengatur keyboard pada room chst collaboration
     intentFilters: [
       {
@@ -36,7 +38,7 @@ export default {
           {
             scheme: "https",
             host: "cld-dkr-staging-hipmi.wibudev.com",
-            pathPrefix: "/app",
+            pathPrefix: "/",
           },
         ],
         category: ["BROWSABLE", "DEFAULT"],

@@ -38,7 +38,7 @@ export default function AdminEventDetail() {
 
   const [data, setData] = React.useState<any | null>(null);
   const [loadData, setLoadData] = React.useState(false);
-  const deepLinkURL = `${DEEP_LINK_URL}/--/event/${id}/confirmation?userId=${user?.id}`;
+  const deepLinkURL = `${DEEP_LINK_URL}/event/${id}/confirmation?userId=${user?.id}`;
   useFocusEffect(
     useCallback(() => {
       onLoadData();
