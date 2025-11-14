@@ -190,6 +190,8 @@ export default function AdminEventDetail() {
                   // color="black"
                 />
               )}
+
+              <TextCustom align="center">{deepLinkURL}</TextCustom>
             </StackCustom>
           </BaseBox>
         )}

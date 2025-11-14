@@ -18,7 +18,7 @@ export default {
       ITSAppUsesNonExemptEncryption: false,
     },
     associatedDomains: ["applinks:cld-dkr-staging-hipmi.wibudev.com"],
-    buildNumber: "4",
+    buildNumber: "5",
   },
 
   android: {
@@ -28,7 +28,7 @@ export default {
     },
     edgeToEdgeEnabled: true,
     package: "com.bip.hipmimobileapp",
-    versionCode: 4,
+    versionCode: 2,
     // softwareKeyboardLayoutMode: 'resize', // option: untuk mengatur keyboard pada room chst collaboration
     intentFilters: [
       {
