@@ -1,6 +1,8 @@
 import { AlertDefaultSystem } from "@/components";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import MenuDrawerDynamicGrid from "@/components/Drawer/MenuDrawerDynamicGird";
+import { useAuth } from "@/hooks/use-auth";
+import { openBrowser } from "@/utils/openBrower";
 import { router } from "expo-router";
 
 export default function Profile_MenuDrawerSection({
@@ -13,7 +15,8 @@ export default function Profile_MenuDrawerSection({
   logout: () => Promise<void>;
 }) {
   const handlePress = (item: IMenuDrawerItem) => {
-    if (item.label === "Keluar") {
+    // console.log("ITEM >> ", item);
+    if (item.value === "logout") {
       //   console.log("Logout clicked");
       // setShowLogoutAlert(true);
       AlertDefaultSystem({
@@ -27,6 +30,9 @@ export default function Profile_MenuDrawerSection({
         },
         onPressLeft: () => setIsDrawerOpen(false),
       });
+    } else if (item.value === "delete-account") {
+      console.log("PATH >> ", item.path);
+      openBrowser(item.path as any);
     } else {
       console.log("PATH >> ", item.path);
       router.push(item.path as any);
@@ -43,6 +49,7 @@ export default function Profile_MenuDrawerSection({
           label: item.label,
           path: item.path as any,
           color: item.color,
+          value: item.value,
         }))}
         columns={4} // Ubah ke 2 jika ingin 2 kolom per baris
         onPressItem={(item) => handlePress(item as any)}

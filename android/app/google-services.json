@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "608461535079",
+    "project_id": "hipmi-badung-connect",
+    "storage_bucket": "hipmi-badung-connect.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:608461535079:android:4ff12ddc283fb3746761c2",
+        "android_client_info": {
+          "package_name": "com.bip.hipmimobileapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiDtIk3Q9zffFwIdJ5cjqY7e4390JGSkM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

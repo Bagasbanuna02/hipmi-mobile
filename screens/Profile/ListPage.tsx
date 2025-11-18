@@ -1,6 +1,7 @@
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import { AccentColor, MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_MEDIUM } from "@/constants/constans-value";
+import { useAuth } from "@/hooks/use-auth";
 import { Ionicons } from "@expo/vector-icons";
 
 export const drawerItemsProfile = ({
@@ -10,6 +11,8 @@ export const drawerItemsProfile = ({
   id: string;
   isAdmin: boolean;
 }) => {
+  const { user } = useAuth();
+
   const adminItems: IMenuDrawerItem[] = [
     {
       icon: (
@@ -21,6 +24,7 @@ export const drawerItemsProfile = ({
       ),
       label: "Edit profile",
       path: `/(application)/profile/${id}/edit`,
+      value: "edit-profile",
     },
     {
       icon: (
@@ -32,6 +36,7 @@ export const drawerItemsProfile = ({
       ),
       label: "Ubah foto profile",
       path: `/(application)/profile/${id}/update-photo`,
+      value: "update-photo",
     },
     {
       icon: (
@@ -43,6 +48,7 @@ export const drawerItemsProfile = ({
       ),
       label: "Ubah latar belakang",
       path: `/(application)/profile/${id}/update-background`,
+      value: "update-background",
     },
     {
       icon: (
@@ -54,6 +60,7 @@ export const drawerItemsProfile = ({
       ),
       label: "Tambah portofolio",
       path: `/(application)/portofolio/${id}/create`,
+      value: "create-portofolio",
     },
     {
       icon: (
@@ -65,6 +72,20 @@ export const drawerItemsProfile = ({
       ),
       label: "Dashboard Admin",
       path: `/(application)/admin/dashboard`,
+      value: "dashboard-admin",
+    },
+    {
+      icon: (
+        <Ionicons
+          name="trash"
+          size={ICON_SIZE_MEDIUM}
+          color={AccentColor.white}
+        />
+      ),
+      label: "Hapus Akun",
+      color: MainColor.red,
+      path: `https://cld-dkr-staging-hipmi.wibudev.com/delete-account?phone=${user?.nomor}`,
+      value: "delete-account",
     },
     {
       icon: (
@@ -77,6 +98,7 @@ export const drawerItemsProfile = ({
       label: "Keluar",
       color: MainColor.red,
       path: "",
+      value: "logout",
     },
   ];
 
@@ -91,6 +113,7 @@ export const drawerItemsProfile = ({
       ),
       label: "Edit profile",
       path: `/(application)/profile/${id}/edit`,
+      value: "edit-profile",
     },
     {
       icon: (
@@ -102,6 +125,7 @@ export const drawerItemsProfile = ({
       ),
       label: "Ubah foto profile",
       path: `/(application)/profile/${id}/update-photo`,
+      value: "update-photo",
     },
     {
       icon: (
@@ -113,6 +137,7 @@ export const drawerItemsProfile = ({
       ),
       label: "Ubah latar belakang",
       path: `/(application)/profile/${id}/update-background`,
+      value: "update-background",
     },
     {
       icon: (
@@ -124,6 +149,20 @@ export const drawerItemsProfile = ({
       ),
       label: "Tambah portofolio",
       path: `/(application)/portofolio/${id}/create`,
+      value: "create-portofolio",
+    },
+    {
+      icon: (
+        <Ionicons
+          name="trash"
+          size={ICON_SIZE_MEDIUM}
+          color={AccentColor.white}
+        />
+      ),
+      label: "Hapus Akun",
+      color: MainColor.red,
+      path: `https://cld-dkr-staging-hipmi.wibudev.com/delete-account?phone=${user?.nomor}`,
+      value: "delete-account",
     },
     {
       icon: (
@@ -136,6 +175,7 @@ export const drawerItemsProfile = ({
       label: "Keluar",
       color: MainColor.red,
       path: "",
+      value: "logout",
     },
   ];
 

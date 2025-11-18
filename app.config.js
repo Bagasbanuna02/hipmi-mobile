@@ -18,7 +18,7 @@ export default {
       ITSAppUsesNonExemptEncryption: false,
     },
     associatedDomains: ["applinks:cld-dkr-staging-hipmi.wibudev.com"],
-    buildNumber: "5",
+    buildNumber: "7",
   },
 
   android: {
@@ -55,6 +55,7 @@ export default {
 
   plugins: [
     "expo-router",
+    "expo-notifications",
     "expo-web-browser",
     [
       "expo-splash-screen",

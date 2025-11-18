@@ -1,7 +1,8 @@
 // utils/notifications.ts
-import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
+import * as Device from 'expo-device';
+
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -13,7 +14,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export async function registerForPushNotificationsAsync() {
+export default async function registerForPushNotificationsAsync() {
   if (!Device.isDevice) {
     console.warn("Push notifications don't work on simulator");
     return null;
