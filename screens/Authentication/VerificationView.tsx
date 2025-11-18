@@ -5,6 +5,7 @@ import { MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
 import { apiCheckCodeOtp } from "@/service/api-config";
 import { GStyles } from "@/styles/global-styles";
+import { registerForPushNotificationsAsync } from "@/utils/notifications";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
@@ -28,7 +29,7 @@ export default function VerificationView() {
     nomor === "6282340374412";
 
   // --- Context ---
-  const { validateOtp, isLoading } = useAuth();
+  const { validateOtp, isLoading, loginWithNomor } = useAuth();
 
   useEffect(() => {
     setUserNumber(nomor?.replace(/^\+/, "") || "");
@@ -70,6 +71,9 @@ export default function VerificationView() {
 
     try {
       setLoading(true);
+      await loginWithNomor(nomor as string);
+      setRecodeOtp(true);
+
       // ❌ Kamu tidak punya nomor di sini, jadi pastikan `nomor` tersedia
       // Sebaiknya simpan nomor saat login, atau gunakan dari `useLocalSearchParams`
       router.setParams({ nomor }); // opsional
@@ -100,6 +104,14 @@ export default function VerificationView() {
     // 🔁 VERIFIKASI NORMAL (untuk pengguna sungguhan)
     try {
       const response = await validateOtp(nomor as string);
+      // registerForPushNotificationsAsync().then((token) => {
+      //   if (token) {
+      //     console.log("Expo Push Token:", token);
+      //     // TODO: Kirim token ke backend kamu
+      //   } else {
+      //     console.log("Failed to get Expo Push Token");
+      //   }
+      // });
       router.replace(response);
     } catch (error) {
       console.log("Error verification", error);

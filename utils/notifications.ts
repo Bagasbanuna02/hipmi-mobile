@@ -4,17 +4,27 @@ import Constants from 'expo-constants';
 import * as Device from 'expo-device';
 
 
+// Notifications.setNotificationHandler({
+//   handleNotification: async () => ({
+//     shouldShowAlert: true,
+//     shouldPlaySound: true,
+//     shouldSetBadge: false,
+//     shouldShowBanner: true,
+//     shouldShowList: true,
+//   }),
+// });
+
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
+    shouldPlaySound: false,
     shouldSetBadge: false,
     shouldShowBanner: true,
     shouldShowList: true,
   }),
 });
 
-export default async function registerForPushNotificationsAsync() {
+
+export async function registerForPushNotificationsAsync() {
   if (!Device.isDevice) {
     console.warn("Push notifications don't work on simulator");
     return null;
