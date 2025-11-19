@@ -84,7 +84,7 @@ export const drawerItemsProfile = ({
       ),
       label: "Hapus Akun",
       color: MainColor.red,
-      path: `https://cld-dkr-staging-hipmi.wibudev.com/delete-account?phone=${user?.nomor}`,
+      path: `/(application)/(user)/delete-account?phone=${user?.nomor}`,
       value: "delete-account",
     },
     {
@@ -161,7 +161,7 @@ export const drawerItemsProfile = ({
       ),
       label: "Hapus Akun",
       color: MainColor.red,
-      path: `https://cld-dkr-staging-hipmi.wibudev.com/delete-account?phone=${user?.nomor}`,
+      path: `/(application)/(user)/delete-account?phone=${user?.nomor}`,
       value: "delete-account",
     },
     {

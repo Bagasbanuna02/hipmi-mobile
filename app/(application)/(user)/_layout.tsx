@@ -11,6 +11,13 @@ export default function UserLayout() {
     <>
       <Stack screenOptions={HeaderStyles}>
         <Stack.Screen
+          name="delete-account"
+          options={{
+            title: "Hapus Akun",
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
           name="waiting-room"
           options={{
             title: "Waiting Room",

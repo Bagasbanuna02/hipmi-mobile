@@ -2,6 +2,7 @@ import { AlertDefaultSystem } from "@/components";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import MenuDrawerDynamicGrid from "@/components/Drawer/MenuDrawerDynamicGird";
 import { useAuth } from "@/hooks/use-auth";
+import { apiDeleteUser } from "@/service/api-client/api-user";
 import { openBrowser } from "@/utils/openBrower";
 import { router } from "expo-router";
 
@@ -14,6 +15,8 @@ export default function Profile_MenuDrawerSection({
   setIsDrawerOpen: (value: boolean) => void;
   logout: () => Promise<void>;
 }) {
+  const { user } = useAuth();
+
   const handlePress = (item: IMenuDrawerItem) => {
     // console.log("ITEM >> ", item);
     if (item.value === "logout") {
@@ -32,7 +35,20 @@ export default function Profile_MenuDrawerSection({
       });
     } else if (item.value === "delete-account") {
       console.log("PATH >> ", item.path);
-      openBrowser(item.path as any);
+      // openBrowser(item.path as any);
+      AlertDefaultSystem({
+        title: "Apakah anda yakin ingin menghapus akun ini?",
+        message:
+          "Semua data yang pernah anda buat akan terhapus secara permanen!",
+        textLeft: "Batal",
+        textRight: "Ya",
+        onPressRight: async () => {
+          router.push(item.path as any);
+
+          setIsDrawerOpen(false);
+        },
+        onPressLeft: () => setIsDrawerOpen(false),
+      });
     } else {
       console.log("PATH >> ", item.path);
       router.push(item.path as any);

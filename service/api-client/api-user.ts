@@ -10,3 +10,7 @@ export async function apiAllUser({ search }: { search: string }) {
   return response.data;
 }
 
+export async function apiDeleteUser({id}:{id: string}) {
+  const response = await apiConfig.delete(`/mobile/user/${id}`);
+  return response.data;
+}
