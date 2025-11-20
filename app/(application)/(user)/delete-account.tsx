@@ -19,6 +19,7 @@ export default function DeleteAccount() {
   const { token, logout, user } = useAuth();
   const { phone } = useLocalSearchParams();
   const [text, setText] = useState("");
+  const [isLoading, setLoading] = useState(false);
 
   const deleteAccount = async () => {
     if (text !== "Delete Account") {
@@ -29,15 +30,38 @@ export default function DeleteAccount() {
     }
 
     AlertDefaultSystem({
-      title: "Apakah anda yakin ingin menghapus akun ini?",
+      title: "Anda yakin akan menghapus akun ini?",
       message:
         "Semua data yang pernah anda buat akan terhapus secara permanen !",
       textLeft: "Batal",
       textRight: "Ya",
       onPressRight: async () => {
-        const response = await apiDeleteUser({ id: user?.id as string });
-        console.log("RESPONSE >> ", response);
-        logout();
+        try {
+          setLoading(true);
+          const response = await apiDeleteUser({ id: user?.id as string });
+
+          if (response.success) {
+            console.log("RESPONSE >> ", response);
+            Toast.show({
+              type: "success",
+              text1: "Akun berhasil dihapus",
+            });
+
+            setTimeout(() => {
+              logout();
+              setLoading(false);
+            }, 2000);
+          } else {
+            Toast.show({
+              type: "error",
+              text1: "Gagal menghapus akun",
+            });
+            setLoading(false);
+          }
+        } catch (error) {
+          console.log("ERROR >> ", error);
+          setLoading(false);
+        }
       },
     });
   };
@@ -73,6 +97,8 @@ export default function DeleteAccount() {
                 backgroundColor="red"
                 textColor="white"
                 onPress={deleteAccount}
+                isLoading={isLoading}
+                disabled={isLoading}
               >
                 Submit
               </ButtonCustom>

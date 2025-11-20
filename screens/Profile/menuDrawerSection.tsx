@@ -39,7 +39,7 @@ export default function Profile_MenuDrawerSection({
       AlertDefaultSystem({
         title: "Apakah anda yakin ingin menghapus akun ini?",
         message:
-          "Semua data yang pernah anda buat akan terhapus secara permanen!",
+          "Pilih 'Ya' untuk masuk ke halaman penghapusan akun",
         textLeft: "Batal",
         textRight: "Ya",
         onPressRight: async () => {
