@@ -16,9 +16,10 @@ export default {
     bundleIdentifier: "com.anonymous.hipmi-mobile",
     infoPlist: {
       ITSAppUsesNonExemptEncryption: false,
+      "NSLocationWhenInUseUsageDescription": "Aplikasi membutuhkan akses lokasi untuk menampilkan peta.",
     },
     associatedDomains: ["applinks:cld-dkr-staging-hipmi.wibudev.com"],
-    buildNumber: "7",
+    buildNumber: "8",
   },
 
   android: {
@@ -75,6 +76,7 @@ export default {
       },
     ],
     "expo-font",
+    "@rnmapbox/maps",
   ],
 
   experiments: {
