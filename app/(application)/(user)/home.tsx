@@ -16,25 +16,32 @@ import { useEffect, useState } from "react";
 
 export default function Application() {
   const { token, user } = useAuth();
-
   const [data, setData] = useState<any>();
-
+  
   useEffect(() => {
     onLoadData();
     checkVersion();
   }, []);
-
+  
   async function onLoadData() {
     const response = await apiUser(user?.id as string);
-    console.log("Response profile >>", JSON.stringify(response?.data?.Profile, null, 2));
-
+    console.log(
+      "[Profile ID]>>",
+      JSON.stringify(response?.data?.Profile.id, null, 2)
+    );
+    
     setData(response.data);
   }
-
+  
   const checkVersion = async () => {
     const response = await apiVersion();
-    console.log("Version >>", JSON.stringify(response.data, null, 2));
+    console.log("[Version] >>", JSON.stringify(response.data, null, 2));
   };
+  
+  if (user && user?.termsOfServiceAccepted === false) {
+    console.log("User is not accept term service");
+    return <Redirect href={`/terms-agreement`} />;
+  }
 
   if (data && data?.active === false) {
     console.log("User is not active");

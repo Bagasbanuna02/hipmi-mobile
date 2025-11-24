@@ -102,7 +102,11 @@ export default function LoginView() {
   }
 
   if (token && token !== "" && isAdmin) {
-    return <Redirect href={"/(application)/admin/dashboard"} />;
+    // Akan di aktifkan jika sudah losos review
+    // return <Redirect href={"/(application)/admin/dashboard"} />;
+
+    // Sementara gunakan ini
+    return <Redirect href={"/(application)/(user)/home"} />;
   }
 
   return (

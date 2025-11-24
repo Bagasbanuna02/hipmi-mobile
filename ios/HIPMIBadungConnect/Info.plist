@@ -53,12 +53,15 @@
       <key>NSAllowsLocalNetworking</key>
       <true/>
     </dict>
-    <key>NSCameraUsageDescription</key>
-    <string>Allow $(PRODUCT_NAME) to access your camera</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>Allow $(PRODUCT_NAME) to access your microphone</string>
+
+    <!-- Photo Library -->
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>Allow $(PRODUCT_NAME) to access your photos</string>
+    <string>Untuk mengunggah dokumen dan media bisnis seperti foto profil, logo usaha, poster lowongan, atau bukti transaksi di berbagai fitur aplikasi: Profile, Portofolio, Job Vacancy, Investasi, dan Donasi.</string>
+
+    <!-- Camera -->
+    <key>NSCameraUsageDescription</key>
+    <string>Untuk mengambil foto langsung saat mengunggah dokumen bisnis seperti foto profil, logo usaha, poster, atau bukti pembayaran di fitur Profile, Portofolio, Job Vacancy, Investasi, dan Donasi.</string>
+
     <key>NSUserActivityTypes</key>
     <array>
       <string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>

@@ -14,4 +14,5 @@ export interface IUser {
   updatedAt?: string | null;
   masterUserRoleId?: string;
   MasterUserRole?: IMasterUserRole;
+  termsOfServiceAccepted?: boolean;
 }

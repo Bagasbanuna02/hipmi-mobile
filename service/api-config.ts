@@ -56,10 +56,22 @@ export async function apiValidationCode({ nomor }: { nomor: string }) {
 export async function apiRegister({
   data,
 }: {
-  data: { nomor: string; username: string };
+  data: { nomor: string; username: string; termsOfServiceAccepted: boolean };
 }) {
   const response = await apiConfig.post(`/auth/register`, {
     data: data,
   });
   return response.data;
 }
+
+export async function apiAcceptTermService({
+  data,
+}: {
+  data: { id: string; termsOfServiceAccepted: boolean };
+}) {
+  const response = await apiConfig.post(`/auth/term-service`, {
+    data: data,
+  });
+  return response.data;
+}
+

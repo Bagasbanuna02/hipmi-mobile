@@ -1,10 +1,13 @@
+import { CheckboxCustom } from "@/components";
 import Spacing from "@/components/_ShareComponent/Spacing";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import ButtonCustom from "@/components/Button/ButtonCustom";
 import TextInputCustom from "@/components/TextInput/TextInputCustom";
 import { MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
+import { BASE_URL } from "@/service/api-config";
 import { GStyles } from "@/styles/global-styles";
+import { openBrowser } from "@/utils/openBrower";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
@@ -14,7 +17,8 @@ import Toast from "react-native-toast-message";
 export default function RegisterView() {
   const { nomor } = useLocalSearchParams();
   const [username, setUsername] = useState("");
-
+  const [term, setTerm] = useState(false);
+  const url = BASE_URL;
   const { registerUser, isLoading } = useAuth();
 
   const validasiData = () => {
@@ -61,6 +65,7 @@ export default function RegisterView() {
     await registerUser({
       nomor: nomor as string,
       username: usernameLower,
+      termsOfServiceAccepted: term,
     });
   }
 
@@ -96,7 +101,39 @@ export default function RegisterView() {
               }
             />
 
-            <ButtonCustom isLoading={isLoading} onPress={handleRegister}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginTop: 16,
+                marginBottom: 16,
+              }}
+            >
+              <CheckboxCustom value={term} onChange={() => setTerm(!term)} />
+
+              <Text style={GStyles.textLabel}>
+                Saya setuju dengan{" "}
+                <Text
+                  style={{
+                    color: MainColor.yellow,
+                    textDecorationLine: "underline",
+                  }}
+                  onPress={() => {
+                    const toUrl = `${url}/terms-of-service.html`;
+                    openBrowser(toUrl);
+                  }}
+                >
+                  Syarat & Ketentuan
+                </Text>{" "}
+                yang melarang konten tidak pantas dan perilaku merugikan.
+              </Text>
+            </View>
+
+            <ButtonCustom
+              disabled={!term}
+              isLoading={isLoading}
+              onPress={handleRegister}
+            >
               Daftar
             </ButtonCustom>
           </View>

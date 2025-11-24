@@ -24,6 +24,7 @@ type AuthContextType = {
   registerUser: (userData: {
     username: string;
     nomor: string;
+    termsOfServiceAccepted: boolean;
   }) => Promise<void>;
   userData: (token: string) => Promise<any>;
 };
@@ -154,10 +155,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const registerUser = async (userData: {
     username: string;
     nomor: string;
+    termsOfServiceAccepted: boolean;
   }) => {
     setIsLoading(true);
     try {
       const response = await apiRegister({ data: userData });
+      console.log("response", response);
 
       const { token } = response;
       if (!response.success) {
