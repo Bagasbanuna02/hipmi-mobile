@@ -223,6 +223,7 @@ export default function ForumDetail() {
       >
         <Forum_MenuDrawerBerandaSection
           id={dataId}
+          authorUsername={data?.Author?.username as string}
           status={status}
           setIsDrawerOpen={() => {
             setOpenDrawer(false);

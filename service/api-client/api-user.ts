@@ -14,3 +14,25 @@ export async function apiDeleteUser({id}:{id: string}) {
   const response = await apiConfig.delete(`/mobile/user/${id}`);
   return response.data;
 }
+
+export async function apiForumBlockUser({
+  data,
+}: {
+  data: {
+    // Id yang di blokir
+    blockedId: string;
+    // Id yang melakukan blokir
+    blockerId: string;
+    menuFeature: "Event" | "Forum";
+  };
+}) {
+  console.log("[FETCH API]", data);
+  try {
+    const response = await apiConfig.post(`/mobile/block-user`, {
+      data: data,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

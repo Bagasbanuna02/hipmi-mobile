@@ -17,6 +17,8 @@ import { useEffect, useState } from "react";
 export default function Application() {
   const { token, user } = useAuth();
   const [data, setData] = useState<any>();
+
+  console.log("[User] >>", JSON.stringify(user?.id, null, 2));
   
   useEffect(() => {
     onLoadData();

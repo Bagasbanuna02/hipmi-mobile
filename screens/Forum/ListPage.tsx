@@ -22,6 +22,7 @@ const drawerItemsForumBerandaForAuthor = ({
     ),
     label: "Edit posting",
     path: `/forum/${id}/edit`,
+    values: "edit"
   },
   {
     icon:
@@ -34,6 +35,7 @@ const drawerItemsForumBerandaForAuthor = ({
     label: status === "Open" ? "Tutup forum" : "Buka forum",
     path: "",
     color: status === "Open" ? MainColor.orange : MainColor.green,
+    value: "status"
   },
   {
     icon: (
@@ -42,10 +44,11 @@ const drawerItemsForumBerandaForAuthor = ({
     label: "Hapus",
     path: "",
     color: MainColor.red,
+    value: "delete"
   },
 ];
 
-const drawerItemsForumBerandaForNonAuthor = ({ id }: { id: string }) => [
+const drawerItemsForumBerandaForNonAuthor = ({ id, username }: { id: string; username: string }) => [
   {
     icon: (
       <Ionicons name="flag" size={ICON_SIZE_SMALL} color={MainColor.white} />
@@ -53,6 +56,16 @@ const drawerItemsForumBerandaForNonAuthor = ({ id }: { id: string }) => [
     label: "Laporkan diskusi",
     // color: MainColor.white,
     path: `/forum/${id}/report-posting`,
+    value: "report"
+  },
+  {
+    icon: (
+      <Ionicons name="ban" size={ICON_SIZE_SMALL} color={MainColor.white} />
+    ),
+    label: `Blockir @${username}`,
+    color: MainColor.red,
+    path: `/forum/${id}/report-posting`,
+    value: "block"
   },
 ];
 
@@ -64,6 +77,7 @@ const drawerItemsForumComentarForAuthor = ({ id }: { id: string }) => [
     label: "Hapus",
     color: MainColor.red,
     path: "",
+    value: "delete"
   },
 ];
 
@@ -75,5 +89,6 @@ const drawerItemsForumComentarForNonAuthor = ({ id }: { id: string }) => [
     label: "Laporkan",
     // color: MainColor.white,
     path: `/forum/${id}/report-commentar`,
+    value: "report"
   },
 ];

@@ -1,5 +1,17 @@
 import { apiConfig } from "../api-config";
 
+// ================== START MASTER ================== //
+export async function apiMasterAppCategory() {
+  try {
+    const response = await apiConfig.get(`/mobile/master/app-category`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+// ================== END MASTER ================== //
+
 // ================== START MASTER PORTFOLIO ================== //
 export async function apiMasterBidangBisnis() {
   try {
