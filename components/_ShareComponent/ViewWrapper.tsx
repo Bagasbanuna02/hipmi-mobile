@@ -11,6 +11,7 @@ import {
   View,
   StyleProp,
   ViewStyle,
+  ScrollViewProps,
 } from "react-native";
 import { NativeSafeAreaViewProps, SafeAreaView } from "react-native-safe-area-context";
 
@@ -23,6 +24,7 @@ interface ViewWrapperProps {
   hideFooter?: boolean;
   edgesFooter?: NativeSafeAreaViewProps["edges"];
   style?: StyleProp<ViewStyle>;
+  refreshControl?: ScrollViewProps["refreshControl"];
 }
 
 /**
@@ -40,6 +42,7 @@ const ViewWrapper = ({
   hideFooter = false,
   edgesFooter =[],
   style,
+  refreshControl,
 }: ViewWrapperProps) => {
   const assetBackground = require("../../assets/images/main-background.png");
 
@@ -57,6 +60,7 @@ const ViewWrapper = ({
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
           keyboardShouldPersistTaps="handled"
+          refreshControl={refreshControl}
         >
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={{ flex: 1 }}>

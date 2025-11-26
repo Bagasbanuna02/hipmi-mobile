@@ -14,13 +14,22 @@ export async function apiForumCreate({ data }: { data: any }) {
 export async function apiForumGetAll({
   search,
   authorId,
+  userLoginId,
+  category,
+  page,
 }: {
-  search: string;
+  search?: string;
   authorId?: string;
+  userLoginId?: string;
+  category: "beranda" | "forumku";
+  page?: string;
 }) {
-  const authorQuery = authorId ? `?authorId=${authorId}` : "";
-  const searchQuery = search ? `?search=${search}` : "";
-  const query = search ? searchQuery : authorQuery;
+  const categoryQuery = `?category=${category}`;
+  const authorQuery = authorId ? `&authorId=${authorId}` : "";
+  const userLoginQuery = userLoginId ? `&userLoginId=${userLoginId}` : "";
+  const searchQuery = search ? `&search=${search}` : "";
+  const pageQuery = page ? `&page=${page}` : "";
+  const query = `${categoryQuery}${authorQuery}${userLoginQuery}${searchQuery}${pageQuery}`;
 
   try {
     const response = await apiConfig.get(`/mobile/forum${query}`);

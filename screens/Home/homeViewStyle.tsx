@@ -59,9 +59,28 @@ export const stylesHome = StyleSheet.create({
     borderWidth: 2,
     borderColor: AccentColor.blue,
   },
+  gridItemInactive: {
+    width: "46%",
+    height: "100%",
+    aspectRatio: 1,
+    backgroundColor: MainColor.darkblue,
+    borderRadius: 8,
+    padding: 16,
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 8,
+    borderWidth: 2,
+    borderColor: AccentColor.blue,
+    opacity: 0.7,
+  },
   gridLabel: {
     marginTop: 8,
     color: "white",
+    fontWeight: "bold",
+  },
+  gridLabelInactive: {
+    marginTop: 8,
+    color: "gray",
     fontWeight: "bold",
   },
   jobVacancyContainer: {
