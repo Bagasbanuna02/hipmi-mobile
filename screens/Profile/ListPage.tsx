@@ -65,6 +65,18 @@ export const drawerItemsProfile = ({
     {
       icon: (
         <Ionicons
+          name="list-circle"
+          size={ICON_SIZE_MEDIUM}
+          color={AccentColor.white}
+        />
+      ),
+      label: "Blocked List",
+      path: `/(application)/profile/${id}/blocked-list`,
+      value: "blocked-list",
+    },
+    {
+      icon: (
+        <Ionicons
           name="settings"
           size={ICON_SIZE_MEDIUM}
           color={AccentColor.white}
@@ -150,6 +162,18 @@ export const drawerItemsProfile = ({
       label: "Tambah portofolio",
       path: `/(application)/portofolio/${id}/create`,
       value: "create-portofolio",
+    },
+     {
+      icon: (
+        <Ionicons
+          name="list-circle"
+          size={ICON_SIZE_MEDIUM}
+          color={AccentColor.white}
+        />
+      ),
+      label: "Blocked List",
+      path: `/(application)/profile/${id}/blocked-list`,
+      value: "blocked-list",
     },
     {
       icon: (

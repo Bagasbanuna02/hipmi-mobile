@@ -33,6 +33,16 @@ export default function ProfileLayout() {
           name="create"
           options={{ title: "Buat Profile", headerBackVisible: false }}
         />
+
+        <Stack.Screen
+          name="[id]/blocked-list"
+          options={{ title: "Blocked List", headerLeft: () => <BackButton /> }}
+        />
+
+        <Stack.Screen
+          name="[id]/detail-blocked"
+          options={{ title: "Detail Blokir", headerLeft: () => <BackButton /> }}
+        />
       </Stack>
     </>
   );

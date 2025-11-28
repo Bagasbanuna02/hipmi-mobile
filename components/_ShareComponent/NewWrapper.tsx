@@ -40,8 +40,8 @@ interface StaticModeProps extends BaseProps {
 
 interface ListModeProps extends BaseProps {
   children?: never;
-  listData: any[];
-  renderItem: FlatListProps<any>["renderItem"];
+  listData?: any[];
+  renderItem?: FlatListProps<any>["renderItem"];
   onEndReached?: () => void;
   // ✅ Gunakan tipe yang kompatibel dengan FlatList
   ListHeaderComponent?: React.ReactElement | null;

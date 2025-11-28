@@ -16,7 +16,7 @@ export const GStyles = StyleSheet.create({
   // =============== Main Styles =============== //
   container: {
     flex: 1,
-    paddingInline: PADDING_LARGE,
+    paddingInline: PADDING_MEDIUM,
     paddingBlock: PADDING_EXTRA_SMALL,
     backgroundColor: MainColor.darkblue,
   },
