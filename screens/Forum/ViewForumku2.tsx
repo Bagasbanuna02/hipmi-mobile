@@ -207,7 +207,7 @@ export default function View_Forumku2() {
         ListHeaderComponent={randerHeaderComponent()}
         ListFooterComponent={ListFooterComponent}
         ListEmptyComponent={
-          _.isEmpty(listData) ? <SkeletonListComponent /> : <EmptyComponent />
+          loading && _.isEmpty(listData) ? <SkeletonListComponent /> : <EmptyComponent />
         }
       />
     </>

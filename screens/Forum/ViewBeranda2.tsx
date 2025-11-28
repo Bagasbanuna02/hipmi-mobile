@@ -203,10 +203,9 @@ export default function Forum_ViewBeranda2() {
           />
         }
         onEndReached={loadMore}
-        // ListHeaderComponent={ListHeaderComponent}
         ListFooterComponent={ListFooterComponent}
         ListEmptyComponent={
-          _.isEmpty(listData) ? <SkeletonListComponent /> : <EmptyComponent />
+         loading && _.isEmpty(listData) ? <SkeletonListComponent /> : <EmptyComponent />
         }
         // ------------------------
       />

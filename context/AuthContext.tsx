@@ -145,7 +145,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       await AsyncStorage.setItem("userData", JSON.stringify(dataUser));
       return dataUser;
     } catch (error: any) {
-      console.log(error.response?.data?.message + "user" || "Gagal mengambil data user");
+      console.log("[LOAD USER DATA]",error.response?.data?.message + "user" || "Gagal mengambil data user");
     } finally {
       setIsLoading(false);
     }
