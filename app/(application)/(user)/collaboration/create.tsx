@@ -155,7 +155,7 @@ export default function CollaborationCreate() {
           <TextAreaCustom
             required
             label="Keuntungan Proyek"
-            placeholder="Masukan keuntungan proyek"
+            placeholder="Masukan keuntungan proyek, contoh: Meningkatkan relasi bisnis , menjamin kualitas produk, meningkatkan kinerja dan lain lain"
             showCount
             maxLength={1000}
             value={data?.benefit}

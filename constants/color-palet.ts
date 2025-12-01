@@ -45,3 +45,23 @@ export const AdminColor = {
 // Warna Asli: #002e59
 // Warna Lebih Gelap: #001f3b
 // Warna Tergelap: #001323
+
+
+export const PlaceholderColor = {
+  light: {
+    text: "#000",
+    placeholder: "#666",
+    border: "#ccc",
+    background: "#fff",
+    error: "#d00",
+    icon: "#555",
+  },
+  dark: {
+    text: "#fff",
+    placeholder: "#aaa",
+    border: "#444",
+    background: "#1a1a1a",
+    error: "#ff4d4d",
+    icon: "#ccc",
+  },
+};

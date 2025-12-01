@@ -110,13 +110,14 @@ export default function EventCreate() {
       const response = await apiEventCreate(newData);
       console.log("Response", JSON.stringify(response, null, 2));
 
-      router.navigate("/event/status");
+      router.replace("/event/status");
     } catch (error) {
       console.log(error);
     } finally {
       setIsLoading(false);
     }
   };
+  
 
   const buttonSubmit = (
     <ButtonCustom
@@ -191,7 +192,7 @@ export default function EventCreate() {
             placeholder="Masukkan deskripsi event"
             required
             showCount
-            maxLength={1000}
+            value={data?.deskripsi || ""}
             onChangeText={(value: any) =>
               setData({ ...data, deskripsi: value })
             }

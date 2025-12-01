@@ -64,14 +64,18 @@ export default function Profile() {
   };
 
   const onLoadPortofolio = async (id: string) => {
-    const response = await apiGetPortofolio({ id: id });
-    const lastTwoByDate = response.data
-      .sort(
-        (a: any, b: any) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      ) // urut desc
-      .slice(0, 2);
-    setListPortofolio(lastTwoByDate);
+    try {
+      const response = await apiGetPortofolio({ id: id });
+      const lastTwoByDate = response.data
+        .sort(
+          (a: any, b: any) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        ) // urut desc
+        .slice(0, 2);
+      setListPortofolio(lastTwoByDate);
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
   };
 
   return (

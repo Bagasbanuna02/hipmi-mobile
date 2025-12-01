@@ -1,3 +1,4 @@
+import { AccentColor, MainColor } from "@/constants/color-palet";
 import { GStyles } from "@/styles/global-styles";
 import React, { useEffect, useState } from "react";
 import {
@@ -6,7 +7,9 @@ import {
   Text,
   View,
   ViewStyle,
+  useColorScheme,
 } from "react-native";
+import { PlaceholderColor } from "@/constants/color-palet";
 
 type IconType = React.ReactNode | string;
 
@@ -48,7 +51,7 @@ const TextAreaCustom: React.FC<TextAreaCustomProps> = ({
   minRows = 4,
   maxRows = 6,
   showCount = false,
-  maxLength,
+  maxLength = 1000,
   value,
   onChangeText,
   height = 100,
@@ -77,6 +80,9 @@ const TextAreaCustom: React.FC<TextAreaCustomProps> = ({
       icon
     );
   };
+
+  const colorScheme = useColorScheme();
+  const theme = PlaceholderColor[colorScheme || "light"];
 
   return (
     <View style={[GStyles.inputContainerArea]}>
@@ -109,6 +115,7 @@ const TextAreaCustom: React.FC<TextAreaCustomProps> = ({
             GStyles.textAreaInput,
             { color: fontColor },
           ]}
+          placeholderTextColor={theme.placeholder}
           editable={!disabled}
           value={value as string}
           onChangeText={onChangeText}

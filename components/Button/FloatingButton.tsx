@@ -32,9 +32,10 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
 const styles = StyleSheet.create({
   fab: {
     position: "absolute",
-    margin: 16,
+    margin: "auto",
     right: 0,
-    bottom: 0,
+    // bottom: 10,
+    top: -20,
     backgroundColor: AccentColor.softblue, // Warna Twitter biru
     borderRadius: 50,
     borderColor: AccentColor.blue,

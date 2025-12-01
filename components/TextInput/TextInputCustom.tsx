@@ -1,3 +1,4 @@
+import { PlaceholderColor } from "@/constants/color-palet";
 import { GStyles } from "@/styles/global-styles";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import React, { useState } from "react";
@@ -8,7 +9,9 @@ import {
   TouchableOpacity,
   View,
   ViewStyle,
+  useColorScheme
 } from "react-native";
+
 
 type IconType = React.ReactNode | string;
 
@@ -74,6 +77,9 @@ const TextInputCustom = ({
     }
   };
 
+  const colorScheme = useColorScheme();
+  const theme = PlaceholderColor[colorScheme || "light"];
+
   return (
     <View style={[GStyles.inputContainerArea, containerStyle]}>
       {label && (
@@ -100,12 +106,14 @@ const TextInputCustom = ({
             { color: fontColor },
             disabled && GStyles.inputPlaceholderDisabled, // <-- placeholder saat disabled
           ]}
+          placeholderTextColor={theme.placeholder}
           editable={!disabled}
           secureTextEntry={secureTextEntry && !isPasswordVisible}
           keyboardType={keyboardType}
           onChangeText={handleTextChange}
           maxLength={maxLength}
           {...rest}
+          
         />
         {secureTextEntry && (
           <TouchableOpacity

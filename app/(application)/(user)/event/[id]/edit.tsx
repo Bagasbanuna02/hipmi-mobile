@@ -18,7 +18,7 @@ import {
 import { apiMasterEventType } from "@/service/api-client/api-master";
 import { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 
 export default function EventEdit() {
@@ -55,6 +55,7 @@ export default function EventEdit() {
     try {
       setIsLoadData(true);
       const response = await apiEventGetOne({ id: id as string });
+      console.log("[DATA BY ID]", JSON.stringify(response, null, 2));
       if (response.success) {
         setData(response.data);
         setSelectedDate(new Date(response.data.tanggal));
@@ -209,7 +210,7 @@ export default function EventEdit() {
               minimumDate={new Date(Date.now())}
               label="Tanggal & Waktu Mulai"
               required
-              value={selectedDate as any}
+              value={selectedDate}
               onChange={(date: any) => {
                 setSelectedDate(date as any);
               }}
@@ -254,7 +255,6 @@ export default function EventEdit() {
               placeholder="Masukkan deskripsi event"
               required
               showCount
-              maxLength={100}
               value={data?.deskripsi}
               onChangeText={(value) => setData({ ...data, deskripsi: value })}
             />

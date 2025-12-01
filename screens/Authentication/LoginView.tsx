@@ -65,9 +65,14 @@ export default function LoginView() {
     const isValid = await validateData();
     if (!isValid) return;
 
+    // const callingCode = selectedCountry?.callingCode.replace(/^\+/, "") || "";
+    // const fixNumber = inputValue.replace(/\s+/g, "");
     const callingCode = selectedCountry?.callingCode.replace(/^\+/, "") || "";
-    const fixNumber = inputValue.replace(/\s+/g, "");
+    let fixNumber = inputValue.replace(/\s+/g, "").replace(/^0+/, "");
+
     const realNumber = callingCode + fixNumber;
+
+    console.log("[REALNUMBER]", realNumber);
 
     try {
       setLoading(true);

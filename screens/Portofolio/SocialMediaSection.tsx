@@ -6,16 +6,6 @@ import { Ionicons } from "@expo/vector-icons";
 export default function Portofolio_SocialMediaSection({ data }: { data: any }) {
   const listData = [
     {
-      label: data && data?.facebook ? data.facebook : "-",
-      icon: (
-        <Ionicons
-          name="logo-facebook"
-          size={ICON_SIZE_SMALL}
-          color={MainColor.white}
-        />
-      ),
-    },
-    {
       label: data && data?.tiktok ? data.tiktok : "-",
       icon: (
         <Ionicons
@@ -30,6 +20,16 @@ export default function Portofolio_SocialMediaSection({ data }: { data: any }) {
       icon: (
         <Ionicons
           name="logo-instagram"
+          size={ICON_SIZE_SMALL}
+          color={MainColor.white}
+        />
+      ),
+    },
+    {
+      label: data && data?.facebook ? data.facebook : "-",
+      icon: (
+        <Ionicons
+          name="logo-facebook"
           size={ICON_SIZE_SMALL}
           color={MainColor.white}
         />

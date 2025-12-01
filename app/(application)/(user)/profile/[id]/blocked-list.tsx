@@ -121,7 +121,7 @@ export default function ProfileBlockedList() {
   return (
     <>
       <NewWrapper
-        headerComponent={renderHeader()}
+        // headerComponent={renderHeader()}
         listData={listData}
         renderItem={renderItem}
         onEndReached={loadMore}

@@ -22,9 +22,11 @@ export default function Voting_BoxDetailHasilVotingSection({
           <Grid>
             {listData?.map((item: any, i: number) => (
               <Grid.Col span={12 / listData?.length} style={{ alignItems: "center" }} key={i}>
-                <StackCustom>
+                <StackCustom style={{
+                  alignItems: "center",
+                }}>
                   <CircleContainer value={item?.jumlah} />
-                  <TextCustom align="center" size="small">{item?.value}</TextCustom>
+                  <TextCustom truncate={2} align="center" size="small">{item?.value}</TextCustom>
                 </StackCustom>
               </Grid.Col>
             ))}

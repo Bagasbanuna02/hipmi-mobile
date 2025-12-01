@@ -134,7 +134,7 @@ export default function VotingDetailStatus() {
 
             {data &&
               data?.catatan &&
-              (status === "draft" || status === "rejected") && (
+              (status === "draft" || status === "reject") && (
                 <ReportBox text={data?.catatan} />
               )}
 
