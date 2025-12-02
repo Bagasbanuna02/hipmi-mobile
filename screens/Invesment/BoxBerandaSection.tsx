@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-    BaseBox,
-    Grid,
-    ProgressCustom,
-    StackCustom,
-    TextCustom,
+  BaseBox,
+  Grid,
+  ProgressCustom,
+  StackCustom,
+  TextCustom,
 } from "@/components";
 import API_STRORAGE from "@/constants/base-url-api-strorage";
+import { MainColor } from "@/constants/color-palet";
 import DUMMY_IMAGE from "@/constants/dummy-image-value";
 import { countDownAndCondition } from "@/utils/countDownAndCondition";
 import { Ionicons } from "@expo/vector-icons";
@@ -21,7 +22,7 @@ export default function Investment_BoxBerandaSection({
   id: string;
   data: any;
 }) {
-//   console.log("[DATA By one]", JSON.stringify(data, null, 2));
+  //   console.log("[DATA By one]", JSON.stringify(data, null, 2));
 
   const [value, setValue] = useState({
     sisa: 0,
@@ -31,6 +32,8 @@ export default function Investment_BoxBerandaSection({
   useEffect(() => {
     updateCountDown();
   }, [data]);
+
+  console.log("[DATA BERANDA]", JSON.stringify(data, null, 2));
 
   const updateCountDown = () => {
     const countDown = countDownAndCondition({
@@ -66,8 +69,10 @@ export default function Investment_BoxBerandaSection({
               <TextCustom truncate={2}>{data.title}</TextCustom>
               <ProgressCustom
                 label={`${data.progress}%`}
-                value={data.progress}
+                value={Number(data.progress)}
                 size="lg"
+                animated
+                color="primary"
               />
               {value.reminder ? (
                 <View
@@ -79,13 +84,11 @@ export default function Investment_BoxBerandaSection({
                 >
                   <Ionicons name="alert-circle-outline" size={16} color="red" />
                   <TextCustom truncate color="red" size="small">
-                    Periode Investasi Berakhir
+                    Periode Berakhir
                   </TextCustom>
                 </View>
               ) : (
-                <TextCustom>
-                  Sisa waktu: {value.sisa} hari
-                </TextCustom>
+                <TextCustom>Sisa waktu: {value.sisa} hari</TextCustom>
               )}
             </StackCustom>
           </Grid.Col>

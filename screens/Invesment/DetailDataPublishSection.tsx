@@ -52,7 +52,7 @@ export default function Invesment_DetailDataPublishSection({
             <ReportBox text={data?.catatan} />
           )}
         <Invesment_BoxProgressSection
-          progress={data?.progress}
+          progress={Number(data?.progress)}
           status={status as string}
         />
         <Invesment_BoxDetailDataSection

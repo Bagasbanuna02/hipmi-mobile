@@ -73,7 +73,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsLoading(true);
     try {
       const response = await apiLogin({ nomor: nomor });
-      await AsyncStorage.setItem("kode_otp", response.kodeId);
+      console.log("[RESPONSE AUTH]", JSON.stringify(response));
+
+      if (response.success) {
+        Toast.show({
+          type: "success",
+          text1: "Sukses",
+          text2: "Kode OTP berhasil dikirim",
+        });
+
+        await AsyncStorage.setItem("kode_otp", response.kodeId);
+        router.replace(`/verification?nomor=${nomor}`);
+        return;
+      } else {
+        router.replace(`/register?nomor=${nomor}`);
+        return;
+      }
     } catch (error: any) {
       throw new Error(error.response?.data?.message || "Gagal kirim OTP");
     } finally {
@@ -81,13 +96,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  // const loginWithNomor = async (nomor: string) => {
+  //   setIsLoading(true);
+  //   try {
+  //     const response = await apiLogin({ nomor: nomor });
+  //     await AsyncStorage.setItem("kode_otp", response.kodeId);
+  //   } catch (error: any) {
+  //     throw new Error(error.response?.data?.message || "Gagal kirim OTP");
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
   // --- 2. Validasi OTP & cek user ---
   const validateOtp = async (nomor: string) => {
     try {
       setIsLoading(true);
       const response = await apiValidationCode({ nomor: nomor });
-
       const { token } = response;
+      console.log("[RESPONSE VALIDASI OTP]", JSON.stringify(response, null, 2));
+
       if (response.success) {
         setToken(token);
         await AsyncStorage.setItem("authToken", token);
@@ -104,20 +132,23 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         if (response.active) {
           if (response.roleId === "1") {
-            return "/(application)/(user)/home";
+            router.replace("/(application)/(user)/home");
+            return;
           } else {
-            return "/(application)/admin/dashboard";
+            router.replace("/(application)/admin/dashboard");
+            return;
           }
         } else {
-          return "/(application)/(user)/waiting-room";
+          router.replace("/(application)/(user)/waiting-room");
+          return;
         }
       } else {
         Toast.show({
           type: "info",
-          text1: "Anda belum terdaftar",
-          text2: "Silahkan daftar terlebih dahulu",
+          text1: "Terjadi kesalahan",
+          text2: "Silahkan coba lagi",
         });
-        return `/register?nomor=${nomor}`;
+        return;
       }
     } catch (error: any) {
       console.log("Error validasi otp >>", (error as Error).message || error);
@@ -132,6 +163,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   // --- 3. Ambil data user ---
   const userData = async (token: string) => {
     try {
+      if (!token) {
+        throw new Error("Token tidak ditemukan");
+      }
+
       setIsLoading(true);
       const response = await apiConfig.get(`/mobile?token=${token}`, {
         headers: {
@@ -145,7 +180,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       await AsyncStorage.setItem("userData", JSON.stringify(dataUser));
       return dataUser;
     } catch (error: any) {
-      console.log("[LOAD USER DATA]",error.response?.data?.message + "user" || "Gagal mengambil data user");
+      console.log(
+        "[LOAD USER DATA]",
+        error.response?.data?.message + "user" || "Gagal mengambil data user"
+      );
     } finally {
       setIsLoading(false);
     }
@@ -160,9 +198,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsLoading(true);
     try {
       const response = await apiRegister({ data: userData });
-      console.log("response", response);
+      console.log("[REGISTER FETCH]", JSON.stringify(response, null, 2));
 
-      const { token } = response;
       if (!response.success) {
         Toast.show({
           type: "info",
@@ -173,23 +210,63 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         return;
       }
 
-      setToken(token);
-      await AsyncStorage.setItem("authToken", token);
       Toast.show({
         type: "success",
         text1: "Sukses",
         text2: "Anda berhasil terdaftar",
       });
-      router.replace("/(application)/(user)/waiting-room");
+      router.replace(`/verification?nomor=${userData.nomor}`);
       return;
     } catch (error: any) {
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: error.response?.data?.message || "Gagal mendaftar",
+      });
       console.log("Error register", error);
     } finally {
       setIsLoading(false);
     }
   };
+  // const registerUser = async (userData: {
+  //   username: string;
+  //   nomor: string;
+  //   termsOfServiceAccepted: boolean;
+  // }) => {
+  //   setIsLoading(true);
+  //   try {
+  //     const response = await apiRegister({ data: userData });
+  //     console.log("response", response);
+
+  //     const { token } = response;
+  //     if (!response.success) {
+  //       Toast.show({
+  //         type: "info",
+  //         text1: "Info",
+  //         text2: response.message,
+  //       });
+
+  //       return;
+  //     }
+
+  //     setToken(token);
+  //     await AsyncStorage.setItem("authToken", token);
+  //     Toast.show({
+  //       type: "success",
+  //       text1: "Sukses",
+  //       text2: "Anda berhasil terdaftar",
+  //     });
+  //     router.replace("/(application)/(user)/waiting-room");
+  //     return;
+  //   } catch (error: any) {
+  //     console.log("Error register", error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   // --- 5. Logout ---
+
   const logout = async () => {
     try {
       setIsLoading(true);

@@ -4,9 +4,11 @@ import { router } from "expo-router";
 export default function Investment_ButtonInvestasiSection({
   id,
   isMine,
+  reminder,
 }: {
   id: string;
   isMine: boolean;
+  reminder: boolean;
 }) {
   return (
     <>
@@ -14,11 +16,12 @@ export default function Investment_ButtonInvestasiSection({
         <ButtonCustom disabled>Investasi ini milik Anda</ButtonCustom>
       ) : (
         <ButtonCustom
+          disabled={reminder}
           onPress={() => {
             router.navigate(`/investment/${id}/(transaction-flow)`);
           }}
         >
-          Beli Saham
+          {reminder ? "Periode Investasi Berakhir" : "Beli Saham"}
         </ButtonCustom>
       )}
     </>

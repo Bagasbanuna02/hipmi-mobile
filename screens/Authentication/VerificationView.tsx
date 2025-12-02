@@ -89,8 +89,9 @@ export default function VerificationView() {
       // ✅ VERIFIKASI OTOMATIS UNTUK APPLE REVIEW
       if (inputOtp === "1234") {
         try {
-          const response = await validateOtp(nomor as string);
-          router.replace(response);
+          await validateOtp(nomor as string);
+
+          return;
         } catch (error) {
           console.log("Error verification", error);
           Toast.show({ type: "error", text1: "Gagal verifikasi" });
@@ -103,16 +104,8 @@ export default function VerificationView() {
 
     // 🔁 VERIFIKASI NORMAL (untuk pengguna sungguhan)
     try {
-      const response = await validateOtp(nomor as string);
-      // registerForPushNotificationsAsync().then((token) => {
-      //   if (token) {
-      //     console.log("Expo Push Token:", token);
-      //     // TODO: Kirim token ke backend kamu
-      //   } else {
-      //     console.log("Failed to get Expo Push Token");
-      //   }
-      // });
-      router.replace(response);
+      await validateOtp(nomor as string);
+      return
     } catch (error) {
       console.log("Error verification", error);
       Toast.show({ type: "error", text1: "Gagal verifikasi" });

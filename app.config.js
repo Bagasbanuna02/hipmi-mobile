@@ -19,7 +19,7 @@ export default {
       "NSLocationWhenInUseUsageDescription": "Aplikasi membutuhkan akses lokasi untuk menampilkan peta.",
     },
     associatedDomains: ["applinks:cld-dkr-staging-hipmi.wibudev.com"],
-    buildNumber: "9",
+    buildNumber: "10",
   },
 
   android: {

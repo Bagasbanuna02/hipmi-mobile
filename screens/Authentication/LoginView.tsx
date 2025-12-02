@@ -72,20 +72,11 @@ export default function LoginView() {
 
     const realNumber = callingCode + fixNumber;
 
-    console.log("[REALNUMBER]", realNumber);
-
     try {
       setLoading(true);
-      // const response = await apiLogin({ nomor: realNumber });
-      await loginWithNomor(realNumber);
-
-      Toast.show({
-        type: "success",
-        text1: "Sukses",
-        text2: "Kode OTP berhasil dikirim",
-      });
-
-      router.navigate(`/verification?nomor=${realNumber}`);
+      const response = await loginWithNomor(realNumber);
+      console.log("[RESPONSE UI]", response);
+      
     } catch (error) {
       console.log("Error login", error);
       Toast.show({
@@ -96,6 +87,30 @@ export default function LoginView() {
     } finally {
       setLoading(false);
     }
+
+    // try {
+    //   setLoading(true);
+    //   // const response = await apiLogin({ nomor: realNumber });
+    //  const response =  await loginWithNomor(realNumber);
+    //  console.log("[RESPONSE]", response);
+
+    //   Toast.show({
+    //     type: "success",
+    //     text1: "Sukses",
+    //     text2: "Kode OTP berhasil dikirim",
+    //   });
+
+    //   // router.navigate(`/verification?nomor=${realNumber}`);
+    // } catch (error) {
+    //   console.log("Error login", error);
+    //   Toast.show({
+    //     type: "error",
+    //     text1: "Error",
+    //     text2: error as string,
+    //   });
+    // } finally {
+    //   setLoading(false);
+    // }
   }
 
   if (token && token !== "" && !isUserActive) {

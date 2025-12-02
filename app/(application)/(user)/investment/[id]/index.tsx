@@ -15,6 +15,7 @@ import Investment_ButtonInvestasiSection from "@/screens/Invesment/ButtonInvesta
 import Invesment_ComponentBoxOnBottomDetail from "@/screens/Invesment/ComponentBoxOnBottomDetail";
 import Invesment_DetailDataPublishSection from "@/screens/Invesment/DetailDataPublishSection";
 import { apiInvestmentGetOne } from "@/service/api-client/api-investment";
+import { countDownAndCondition } from "@/utils/countDownAndCondition";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import {
   router,
@@ -23,7 +24,7 @@ import {
   useLocalSearchParams,
 } from "expo-router";
 import _ from "lodash";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function InvestmentDetail() {
   const { user } = useAuth();
@@ -62,6 +63,31 @@ export default function InvestmentDetail() {
     setOpenDrawerPublish(false);
   };
 
+    const [value, setValue] = useState({
+      sisa: 0,
+      reminder: false,
+    });
+  
+    useEffect(() => {
+      updateCountDown();
+    }, [data]);
+
+    console.log("[DATA DETAIL]", JSON.stringify(data, null, 2));
+  
+    const updateCountDown = () => {
+      const countDown = countDownAndCondition({
+        duration: data?.MasterPencarianInvestor.name,
+        publishTime: data?.countDown,
+      });
+  
+      setValue({
+        sisa: countDown.durationDay,
+        reminder: countDown.reminder,
+      });
+    };
+
+
+
   const bottomSection = (
     <Invesment_ComponentBoxOnBottomDetail
       id={id as string}
@@ -71,7 +97,7 @@ export default function InvestmentDetail() {
   );
 
   const buttonSection = (
-    <Investment_ButtonInvestasiSection id={id as string} isMine={user?.id === data?.author?.id} />
+    <Investment_ButtonInvestasiSection id={id as string} isMine={user?.id === data?.author?.id} reminder={value.reminder} />
   );
 
   return (

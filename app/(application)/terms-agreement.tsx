@@ -74,7 +74,7 @@ export default function TermsAgreement() {
     <>
       <Stack.Screen
         options={{
-          title: "Terms Agreement",
+          title: "Terms & Conditions",
         }}
       />
       <ViewWrapper footerComponent={footerComponent}>
@@ -87,6 +87,7 @@ export default function TermsAgreement() {
               alignItems: "center",
               marginTop: 16,
               marginBottom: 16,
+              paddingInline: 10,
             }}
           >
             <CheckboxCustom value={term} onChange={() => setTerm(!term)} />

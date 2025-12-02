@@ -6,6 +6,7 @@ import {
   TextCustom,
   ViewWrapper,
 } from "@/components";
+import { useAuth } from "@/hooks/use-auth";
 import Voting_BoxPublishSection from "@/screens/Voting/BoxPublishSection";
 import { apiVotingGetAll } from "@/service/api-client/api-voting";
 import { router, useFocusEffect } from "expo-router";
@@ -13,6 +14,7 @@ import _ from "lodash";
 import { useCallback, useState } from "react";
 
 export default function VotingBeranda() {
+  const { user } = useAuth();
   const [listData, setListData] = useState<any>([]);
   const [loadingGetData, setLoadingGetData] = useState(false);
   const [search, setSearch] = useState("");
@@ -29,6 +31,7 @@ export default function VotingBeranda() {
       const response = await apiVotingGetAll({
         search,
         category: "beranda",
+        userLoginId: user?.id,
       });
       if (response.success) {
         setListData(response.data);

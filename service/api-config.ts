@@ -20,7 +20,6 @@ apiConfig.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
 
-    // console.log("config", JSON.stringify(config, null, 2));
     return config;
   },
   (error) => {
@@ -29,16 +28,15 @@ apiConfig.interceptors.request.use(
 );
 
 export async function apiVersion() {
-  // console.log("API_BASE_URL", API_BASE_URL);
   const response = await apiConfig.get("/version");
   return response.data;
 }
 
 export async function apiLogin({ nomor }: { nomor: string }) {
-  const response = await apiConfig.post("/auth/login", {
+  const response = await apiConfig.post("/mobile/auth/login", {
     nomor: nomor,
   });
-  return response.data;
+  return response.data;;
 }
 
 export async function apiCheckCodeOtp({ kodeId }: { kodeId: string }) {
@@ -58,7 +56,7 @@ export async function apiRegister({
 }: {
   data: { nomor: string; username: string; termsOfServiceAccepted: boolean };
 }) {
-  const response = await apiConfig.post(`/auth/register`, {
+  const response = await apiConfig.post(`/mobile/auth/register`, {
     data: data,
   });
   return response.data;

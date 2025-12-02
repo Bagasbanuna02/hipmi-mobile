@@ -79,12 +79,14 @@ export async function apiVotingUpdateData({
   }
 }
 
-export async function apiVotingGetAll({ search, category, authorId }: { search?: string, category: "beranda" | "contribution" | "all-history" | "my-history", authorId?: string }) {
+export async function apiVotingGetAll({ search, category, authorId, userLoginId }: { search?: string, category: "beranda" | "contribution" | "all-history" | "my-history", authorId?: string, userLoginId?: string }) {
   try {
+    console.log("userLoginId", userLoginId);
     const categoryQuery = category ? `?category=${category}` : "";
     const searchQuery = search ? `&search=${search}` : "";
     const authorIdQuery = authorId ? `&authorId=${authorId}` : "";
-    const response = await apiConfig.get(`/mobile/voting${categoryQuery}${searchQuery}${authorIdQuery}`);
+    const userLoginIdQuery = userLoginId ? `&userLoginId=${userLoginId}` : "";
+    const response = await apiConfig.get(`/mobile/voting${categoryQuery}${searchQuery}${authorIdQuery}${userLoginIdQuery}`);
     return response.data;
   } catch (error) {
     throw error;

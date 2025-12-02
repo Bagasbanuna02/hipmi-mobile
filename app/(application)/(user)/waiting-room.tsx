@@ -4,6 +4,7 @@ import {
   ButtonCenteredOnly,
   ButtonCustom,
   InformationBox,
+  NewWrapper,
   StackCustom,
   ViewWrapper,
 } from "@/components";
@@ -12,6 +13,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { apiUser } from "@/service/api-client/api-user";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { RefreshControl } from "react-native";
 import Toast from "react-native-toast-message";
 
 export default function WaitingRoom() {
@@ -33,7 +35,7 @@ export default function WaitingRoom() {
         } else {
           Toast.show({
             type: "success",
-            text1: "Akun anda telah aktif", // text2: "Anda berhasil login",
+            text1: "Selamat ! Akun anda telah aktif", // text2: "Anda berhasil login",
           });
           router.replace(`/(application)/(user)/profile/create`);
         }
@@ -82,10 +84,18 @@ export default function WaitingRoom() {
 
   return (
     <>
-      <ViewWrapper footerComponent={logoutButton()}>
+      <NewWrapper
+        footerComponent={logoutButton()}
+        refreshControl={
+          <RefreshControl refreshing={isLoading} onRefresh={handleCheck} />
+        }
+      >
         <StackCustom>
-          <InformationBox text="Permohonan akses Anda sedang dalam proses verifikasi oleh admin. Harap tunggu, Anda akan menerima pemberitahuan melalui Whatsapp setelah disetujui." />
-          <ButtonCenteredOnly
+          <InformationBox
+            text="Akun Anda sedang menunggu aktivasi.
+Silakan tunggu beberapa saat. Untuk memperbarui status, tarik layar ke bawah."
+          />
+          {/* <ButtonCenteredOnly
             isLoading={isLoading}
             onPress={() => {
               handleCheck();
@@ -93,9 +103,9 @@ export default function WaitingRoom() {
             icon="refresh-ccw"
           >
             Check
-          </ButtonCenteredOnly>
+          </ButtonCenteredOnly> */}
         </StackCustom>
-      </ViewWrapper>
+      </NewWrapper>
     </>
   );
 }
