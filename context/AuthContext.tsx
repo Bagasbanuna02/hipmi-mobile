@@ -72,10 +72,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const loginWithNomor = async (nomor: string) => {
     setIsLoading(true);
     try {
+      console.log("[Masuk provider]", nomor);
       const response = await apiLogin({ nomor: nomor });
       console.log("[RESPONSE AUTH]", JSON.stringify(response));
 
+
       if (response.success) {
+        console.log("[Keluar provider]", nomor);
         Toast.show({
           type: "success",
           text1: "Sukses",
@@ -83,10 +86,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         });
 
         await AsyncStorage.setItem("kode_otp", response.kodeId);
-        router.replace(`/verification?nomor=${nomor}`);
+        router.push(`/verification?nomor=${nomor}`);
         return;
       } else {
-        router.replace(`/register?nomor=${nomor}`);
+        router.push(`/register?nomor=${nomor}`);
+        Toast.show({
+          type: "info",
+          text1: "Info",
+          text2: "Silahkan mendaftar",
+        });
         return;
       }
     } catch (error: any) {

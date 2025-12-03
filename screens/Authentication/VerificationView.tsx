@@ -17,6 +17,8 @@ import Toast from "react-native-toast-message";
 export default function VerificationView() {
   const { nomor } = useLocalSearchParams<{ nomor: string }>();
 
+  console.log("[NOMOR]", nomor);
+
   const [inputOtp, setInputOtp] = useState<string>("");
   const [userNumber, setUserNumber] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -52,7 +54,7 @@ export default function VerificationView() {
     try {
       const response = await apiCheckCodeOtp({ kodeId });
       console.log(
-        "Response check code otp >>",
+        "[OTP] >>",
         JSON.stringify(response.otp, null, 2)
       );
       // Kita tidak perlu simpan codeOtp di state karena verifikasi dilakukan di backend

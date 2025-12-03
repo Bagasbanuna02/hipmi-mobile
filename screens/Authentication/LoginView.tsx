@@ -1,3 +1,4 @@
+import { NewWrapper } from "@/components";
 import ButtonCustom from "@/components/Button/ButtonCustom";
 import Spacing from "@/components/_ShareComponent/Spacing";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
@@ -5,9 +6,11 @@ import { MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
 import { apiVersion } from "@/service/api-config";
 import { GStyles } from "@/styles/global-styles";
-import { Redirect, router } from "expo-router";
+import versionBadge from "@/utils/viersionBadge";
+import VersionBadge from "@/utils/viersionBadge";
+import { Redirect } from "expo-router";
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { RefreshControl, Text, View } from "react-native";
 import PhoneInput, { ICountry } from "react-native-international-phone-number";
 import Toast from "react-native-toast-message";
 
@@ -16,6 +19,7 @@ export default function LoginView() {
   const [selectedCountry, setSelectedCountry] = useState<null | ICountry>(null);
   const [inputValue, setInputValue] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
   const { loginWithNomor, token, isAdmin, isUserActive } = useAuth();
 
@@ -25,7 +29,18 @@ export default function LoginView() {
 
   async function onLoadVersion() {
     const res = await apiVersion();
-    setVersion(res.data);
+
+    if (res.success) {
+      setVersion(versionBadge());
+    }
+  }
+
+  async function handleRefresh() {
+    setRefreshing(true);
+    await onLoadVersion();
+    setInputValue("");
+    setLoading(false);
+    setRefreshing(false);
   }
 
   function handleInputValue(phoneNumber: string) {
@@ -65,8 +80,6 @@ export default function LoginView() {
     const isValid = await validateData();
     if (!isValid) return;
 
-    // const callingCode = selectedCountry?.callingCode.replace(/^\+/, "") || "";
-    // const fixNumber = inputValue.replace(/\s+/g, "");
     const callingCode = selectedCountry?.callingCode.replace(/^\+/, "") || "";
     let fixNumber = inputValue.replace(/\s+/g, "").replace(/^0+/, "");
 
@@ -74,9 +87,7 @@ export default function LoginView() {
 
     try {
       setLoading(true);
-      const response = await loginWithNomor(realNumber);
-      console.log("[RESPONSE UI]", response);
-      
+      await loginWithNomor(realNumber);
     } catch (error) {
       console.log("Error login", error);
       Toast.show({
@@ -130,7 +141,12 @@ export default function LoginView() {
   }
 
   return (
-    <ViewWrapper withBackground>
+    <NewWrapper
+      withBackground
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+      }
+    >
       <View style={GStyles.authContainer}>
         <View>
           <View style={GStyles.authContainerTitle}>
@@ -174,6 +190,6 @@ export default function LoginView() {
           Coba
         </ButtonCustom> */}
       </View>
-    </ViewWrapper>
+    </NewWrapper>
   );
 }

@@ -14,6 +14,7 @@ apiConfig.interceptors.request.use(
   async (config) => {
     console.log("API_BASE_URL >>", API_BASE_URL);
     const token = await AsyncStorage.getItem("authToken");
+    // console.log("[TOKEN] >>", token);
     if (token) {
       // config.timeout = 10000;
       config.headers["Content-Type"] = "application/json";
@@ -33,7 +34,7 @@ export async function apiVersion() {
 }
 
 export async function apiLogin({ nomor }: { nomor: string }) {
-  const response = await apiConfig.post("/mobile/auth/login", {
+  const response = await apiConfig.post("/auth/mobile-login", {
     nomor: nomor,
   });
   return response.data;;
@@ -45,7 +46,7 @@ export async function apiCheckCodeOtp({ kodeId }: { kodeId: string }) {
 }
 
 export async function apiValidationCode({ nomor }: { nomor: string }) {
-  const response = await apiConfig.post(`/auth/validasi`, {
+  const response = await apiConfig.post(`/auth/mobile-validasi`, {
     nomor: nomor,
   });
   return response.data;
@@ -56,7 +57,7 @@ export async function apiRegister({
 }: {
   data: { nomor: string; username: string; termsOfServiceAccepted: boolean };
 }) {
-  const response = await apiConfig.post(`/mobile/auth/register`, {
+  const response = await apiConfig.post(`/auth/mobile-register`, {
     data: data,
   });
   return response.data;
