@@ -1,17 +1,23 @@
 import Grid from "@/components/Grid/GridCustom";
 import React from "react";
-import { View } from "react-native";
+import { StyleProp, View, ViewStyle } from "react-native";
 import { Divider } from "react-native-paper";
 
 export default function AdminTableValue({
   value1,
   value2,
   value3,
+  style1,
+  style2,
+  style3,
   bottomLine = false,
 }: {
   value1: React.ReactNode;
   value2: React.ReactNode;
   value3: React.ReactNode;
+  style1?: ViewStyle;
+  style2?: ViewStyle;
+  style3?: ViewStyle;
   bottomLine?: boolean;
 }) {
   return (
@@ -25,6 +31,7 @@ export default function AdminTableValue({
               justifyContent: "center",
               paddingLeft: 10,
               paddingRight: 10,
+              ...style1,
             }}
           >
             {value1}
@@ -36,6 +43,7 @@ export default function AdminTableValue({
               justifyContent: "center",
               paddingLeft: 10,
               paddingRight: 10,
+              ...style2,
             }}
           >
             {value2}
@@ -44,9 +52,10 @@ export default function AdminTableValue({
             span={6}
             style={{
               justifyContent: "center",
-              alignItems: "center",
+              alignItems: "flex-start",
               paddingLeft: 10,
               paddingRight: 10,
+              ...style3,
             }}
           >
             {value3}

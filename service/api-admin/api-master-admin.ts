@@ -167,3 +167,56 @@ export async function apiAdminMasterTypeOfEventUpdate({
 }
 
 // ================== END EVENT ================== //
+
+// ================== START DONATION ================== //
+
+export async function apiAdminMasterDonationCategory() {
+  try {
+    const response = await apiConfig.get(`/mobile/admin/master/donation`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiAdminMasterDonationCategoryById({ id }: { id: string }) {
+  try {
+    const response = await apiConfig.get(`/mobile/admin/master/donation/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiAdminMasterDonationCategoryUpdate({
+  id,
+  data,
+}: {
+  id: string;
+  data: any;
+}) {
+  try {
+    const response = await apiConfig.put(
+      `/mobile/admin/master/donation/${id}`,
+      {
+        data: data,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiAdminMasterDonationCategoryCreate({ data }: { data: any }) {
+  try {
+    const response = await apiConfig.post(`/mobile/admin/master/donation`, {
+      data: data,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+// ================== END DONATION ================== //
