@@ -19,7 +19,7 @@ import { IconDot, IconList } from "@/components/_Icon/IconComponent";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
 import AdminButtonReview from "@/components/_ShareComponent/Admin/ButtonReview";
-import { GridDetail_4_8 } from "@/components/_ShareComponent/GridDetail_4_8";
+import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
 import ReportBox from "@/components/Box/ReportBox";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
@@ -183,7 +183,7 @@ export default function AdminInvestmentDetail() {
             />
             <Spacing />
             <StackCustom gap={"xs"}>
-              <GridDetail_4_8
+              <GridSpan_4_8
                 label={<TextCustom bold>Sisa Saham</TextCustom>}
                 value={
                   <TextCustom>
@@ -191,7 +191,7 @@ export default function AdminInvestmentDetail() {
                   </TextCustom>
                 }
               />
-              <GridDetail_4_8
+              <GridSpan_4_8
                 label={<TextCustom bold>Validasi Transaksi</TextCustom>}
                 value={
                   <TextCustom>
@@ -207,7 +207,7 @@ export default function AdminInvestmentDetail() {
           <StackCustom>
             <DummyLandscapeImage imageId={data?.imageId} />
             {listData.map((item, i) => (
-              <GridDetail_4_8
+              <GridSpan_4_8
                 key={i}
                 label={<TextCustom bold>{item.label}</TextCustom>}
                 value={<TextCustom>{item.value}</TextCustom>}
@@ -218,7 +218,7 @@ export default function AdminInvestmentDetail() {
 
         <BaseBox>
           <StackCustom>
-            <GridDetail_4_8
+            <GridSpan_4_8
               label={<TextCustom bold>File Prospektus</TextCustom>}
               value={
                 <ButtonCustom
@@ -238,7 +238,7 @@ export default function AdminInvestmentDetail() {
                 </ButtonCustom>
               }
             />
-            <GridDetail_4_8
+            <GridSpan_4_8
               label={<TextCustom bold>File Dokumen</TextCustom>}
               value={
                 <StackCustom>

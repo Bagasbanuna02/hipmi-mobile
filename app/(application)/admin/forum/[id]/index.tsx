@@ -11,7 +11,7 @@ import {
 } from "@/components";
 import { IconDot } from "@/components/_Icon/IconComponent";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
-import { GridDetail_4_8 } from "@/components/_ShareComponent/GridDetail_4_8";
+import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_XLARGE } from "@/constants/constans-value";
 import { apiAdminForumPostingById } from "@/service/api-admin/api-admin-forum";
@@ -103,7 +103,7 @@ export default function AdminForumDetailPosting() {
         <BaseBox>
           <StackCustom gap={"sm"}>
             {listDataAction.map((item, i) => (
-              <GridDetail_4_8
+              <GridSpan_4_8
                 key={i}
                 label={<TextCustom bold>{item.label}</TextCustom>}
                 value={<TextCustom>{item.value}</TextCustom>}

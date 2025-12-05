@@ -1,22 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-    ActionIcon,
-    AlertDefaultSystem,
-    BadgeCustom,
-    BaseBox,
-    DrawerCustom,
-    LoaderCustom,
-    MenuDrawerDynamicGrid,
-    Spacing,
-    StackCustom,
-    TextCustom,
-    ViewWrapper,
+  ActionIcon,
+  AlertDefaultSystem,
+  BadgeCustom,
+  BaseBox,
+  DrawerCustom,
+  LoaderCustom,
+  MenuDrawerDynamicGrid,
+  Spacing,
+  StackCustom,
+  TextCustom,
+  ViewWrapper,
 } from "@/components";
 import { IconDot, IconList } from "@/components/_Icon/IconComponent";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
 import AdminButtonReview from "@/components/_ShareComponent/Admin/ButtonReview";
-import { GridDetail_4_8 } from "@/components/_ShareComponent/GridDetail_4_8";
+import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
 import ReportBox from "@/components/Box/ReportBox";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
 import { useAuth } from "@/hooks/use-auth";
@@ -39,6 +39,11 @@ export default function AdminEventDetail() {
   const [data, setData] = React.useState<any | null>(null);
   const [loadData, setLoadData] = React.useState(false);
   const deepLinkURL = `${DEEP_LINK_URL}/event/${id}/confirmation?userId=${user?.id}`;
+  const deepLinkURLDEV = `${DEEP_LINK_URL}/--/event/${id}/confirmation?userId=${user?.id}`;
+
+  const isDevLink = process.env.NODE_ENV === "development" ? deepLinkURLDEV : deepLinkURL;
+
+
   useFocusEffect(
     useCallback(() => {
       onLoadData();
@@ -156,7 +161,7 @@ export default function AdminEventDetail() {
         <BaseBox>
           <StackCustom>
             {listData.map((item, i) => (
-              <GridDetail_4_8
+              <GridSpan_4_8
                 key={i}
                 label={<TextCustom bold>{item.label}</TextCustom>}
                 value={<TextCustom>{item.value}</TextCustom>}
@@ -181,7 +186,7 @@ export default function AdminEventDetail() {
                 <LoaderCustom />
               ) : (
                 <QRCode
-                  value={deepLinkURL}
+                  value={isDevLink}
                   size={200}
                   // logo={require("@/assets/images/logo-hipmi.png")}
                   // logoSize={70}
@@ -191,7 +196,7 @@ export default function AdminEventDetail() {
                 />
               )}
 
-              <TextCustom align="center">{deepLinkURL}</TextCustom>
+              <TextCustom align="center">{isDevLink}</TextCustom>
             </StackCustom>
           </BaseBox>
         )}

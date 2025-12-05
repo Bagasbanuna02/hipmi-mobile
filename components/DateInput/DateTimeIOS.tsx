@@ -7,7 +7,7 @@ import DateTimePicker, {
 } from "@react-native-community/datetimepicker";
 import dayjs from "dayjs";
 import React, { useState } from "react";
-import { StyleProp, Text, View, ViewStyle } from "react-native";
+import { Button, StyleProp, Text, View, ViewStyle } from "react-native";
 import ClickableCustom from "../Clickable/ClickableCustom";
 import TextCustom from "../Text/TextCustom";
 
@@ -129,24 +129,64 @@ const DateTimeInput_IOS: React.FC<DateTimeInputProps> = ({
               borderWidth: 1,
             }}
           >
-            <View style={{ alignItems: "flex-end" }}>
+            {/* <View style={{ alignItems: "flex-start" }}>
               <Ionicons
                 name="close"
                 size={20}
                 color="black"
-                onPress={() => setShow(false)}
+                onPress={() => {
+                  setShow(false);
+                  setSelectedDate(undefined);
+                }}
               />
-            </View>
+            </View> */}
 
             <DateTimePicker
               value={selectedDate || new Date()}
               mode={"datetime"}
-              display="inline"
+              display="spinner"
               onChange={handleConfirm}
               minimumDate={minimumDate}
               maximumDate={maximumDate}
               themeVariant="light"
             />
+            <View style={{ flexDirection: "row", gap: 10 }}>
+              <ClickableCustom
+                onPress={() => {
+                  setShow(false)
+                  setSelectedDate(undefined)
+                }}
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: 12,
+                  borderRadius: 10,
+                  backgroundColor: MainColor.placeholder,
+                  marginTop: 10,
+                  width: "48%",
+                }}
+              >
+                <TextCustom color="black">Batal</TextCustom>
+              </ClickableCustom>
+
+              <ClickableCustom
+                onPress={() => {
+                  setShow(false)
+                  onChange(selectedDate as any)
+                }}
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: 12,
+                  borderRadius: 10,
+                  backgroundColor: MainColor.darkblue,
+                  marginTop: 10,
+                  width: "48%",
+                }}
+              >
+                <TextCustom>OK</TextCustom>
+              </ClickableCustom>
+            </View>
           </View>
         </>
       )}

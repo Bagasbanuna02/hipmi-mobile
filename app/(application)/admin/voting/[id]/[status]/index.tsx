@@ -1,19 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-    AlertDefaultSystem,
-    BadgeCustom,
-    BaseBox,
-    CircleContainer,
-    Grid,
-    Spacing,
-    StackCustom,
-    TextCustom,
-    ViewWrapper,
+  AlertDefaultSystem,
+  BadgeCustom,
+  BaseBox,
+  CircleContainer,
+  Grid,
+  Spacing,
+  StackCustom,
+  TextCustom,
+  ViewWrapper,
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
 import AdminButtonReview from "@/components/_ShareComponent/Admin/ButtonReview";
-import { GridDetail_4_8 } from "@/components/_ShareComponent/GridDetail_4_8";
+import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
 import ReportBox from "@/components/Box/ReportBox";
 import { MainColor } from "@/constants/color-palet";
 import funUpdateStatusVoting from "@/screens/Admin/Voting/funUpdateStatus";
@@ -169,7 +169,7 @@ export default function AdminVotingDetail() {
         <BaseBox>
           <StackCustom>
             {listData.map((item, i) => (
-              <GridDetail_4_8
+              <GridSpan_4_8
                 key={i}
                 label={<TextCustom bold>{item.label}</TextCustom>}
                 value={<TextCustom>{item.value}</TextCustom>}

@@ -10,7 +10,7 @@ import {
   ViewWrapper,
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
-import { GridDetail_4_8 } from "@/components/_ShareComponent/GridDetail_4_8";
+import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
 import GridTwoView from "@/components/_ShareComponent/GridTwoView";
 import { MainColor } from "@/constants/color-palet";
 import {
@@ -225,7 +225,7 @@ export default function AdminInvestmentTransactionDetail() {
         <BaseBox>
           <StackCustom>
             {listData.map((item, index) => (
-              <GridDetail_4_8
+              <GridSpan_4_8
                 key={index}
                 label={<TextCustom bold>{item.label}</TextCustom>}
                 value={<TextCustom>{item.value}</TextCustom>}

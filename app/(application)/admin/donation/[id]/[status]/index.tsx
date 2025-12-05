@@ -18,7 +18,7 @@ import { IconDot, IconList } from "@/components/_Icon/IconComponent";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
 import AdminButtonReview from "@/components/_ShareComponent/Admin/ButtonReview";
-import { GridDetail_4_8 } from "@/components/_ShareComponent/GridDetail_4_8";
+import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
 import ReportBox from "@/components/Box/ReportBox";
 import { ICON_SIZE_BUTTON, TEXT_SIZE_LARGE } from "@/constants/constans-value";
 import AdminDonation_BoxOfDonationStory from "@/screens/Admin/Donation/BoxOfDonationStory";
@@ -195,7 +195,7 @@ export default function AdminDonationDetail() {
 
                 <StackCustom gap={5}>
                   {listPencarianDana.map((item, i) => (
-                    <GridDetail_4_8
+                    <GridSpan_4_8
                       key={i}
                       label={<TextCustom bold>{item.label}</TextCustom>}
                       value={<TextCustom>{item.value}</TextCustom>}
@@ -236,7 +236,7 @@ export default function AdminDonationDetail() {
               <Spacing />
 
               <StackCustom gap={"xs"}>
-                <GridDetail_4_8
+                <GridSpan_4_8
                   label={<TextCustom bold>Jumlah Donatur</TextCustom>}
                   value={
                     <TextCustom>
@@ -244,7 +244,7 @@ export default function AdminDonationDetail() {
                     </TextCustom>
                   }
                 />
-                <GridDetail_4_8
+                <GridSpan_4_8
                   label={<TextCustom bold>Dana Terkumpul</TextCustom>}
                   value={
                     <TextCustom>
@@ -261,7 +261,7 @@ export default function AdminDonationDetail() {
           <StackCustom>
             <DummyLandscapeImage imageId={data?.imageId || ""} />
             {listData.map((item, i) => (
-              <GridDetail_4_8
+              <GridSpan_4_8
                 key={i}
                 label={<TextCustom bold>{item.label}</TextCustom>}
                 value={<TextCustom>{item.value}</TextCustom>}

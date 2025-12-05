@@ -30,7 +30,7 @@ export default {
     },
     edgeToEdgeEnabled: true,
     package: "com.bip.hipmimobileapp",
-    versionCode: 2,
+    versionCode: 3,
     // softwareKeyboardLayoutMode: 'resize', // option: untuk mengatur keyboard pada room chst collaboration
     intentFilters: [
       {

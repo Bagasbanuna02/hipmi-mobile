@@ -16,7 +16,7 @@ import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButt
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
 import AdminTitleTable from "@/components/_ShareComponent/Admin/TableTitle";
 import AdminTableValue from "@/components/_ShareComponent/Admin/TableValue";
-import { GridDetail_4_8 } from "@/components/_ShareComponent/GridDetail_4_8";
+import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
 import {
@@ -95,11 +95,11 @@ export default function AdminForumReportComment() {
       >
         <BaseBox>
           <StackCustom gap={"sm"}>
-            <GridDetail_4_8
+            <GridSpan_4_8
               label={<TextCustom bold>Username</TextCustom>}
               value={<TextCustom>{data?.Author?.username || "-"}</TextCustom>}
             />
-            <GridDetail_4_8
+            <GridSpan_4_8
               label={<TextCustom bold>Komentar</TextCustom>}
               value={<TextCustom>{data?.komentar || "-"}</TextCustom>}
             />
@@ -208,20 +208,20 @@ export default function AdminForumReportComment() {
         height={"auto"}
       >
         <StackCustom>
-          <GridDetail_4_8
+          <GridSpan_4_8
             label={<TextCustom bold>Pelapor</TextCustom>}
             value={<TextCustom>{selectedReport?.username || "-"}</TextCustom>}
           />
 
           {selectedReport?.kategori && (
             <>
-              <GridDetail_4_8
+              <GridSpan_4_8
                 label={<TextCustom bold>Kategori Report</TextCustom>}
                 value={
                   <TextCustom>{selectedReport?.kategori || "-"}</TextCustom>
                 }
               />
-              <GridDetail_4_8
+              <GridSpan_4_8
                 label={<TextCustom bold>Keterangan</TextCustom>}
                 value={
                   <TextCustom>{selectedReport?.keterangan || "-"}</TextCustom>
@@ -231,7 +231,7 @@ export default function AdminForumReportComment() {
           )}
 
           {selectedReport?.deskripsi && (
-            <GridDetail_4_8
+            <GridSpan_4_8
               label={<TextCustom bold>Deskripsi</TextCustom>}
               value={
                 <TextCustom>{selectedReport?.deskripsi || "-"}</TextCustom>

@@ -1,30 +1,22 @@
 import {
-  ActionIcon,
   BadgeCustom,
-  BaseBox,
   CenterCustom,
   ClickableCustom,
-  DividerCustom,
-  Grid,
   Spacing,
   StackCustom,
   TextCustom,
-  ViewWrapper,
+  ViewWrapper
 } from "@/components";
-import { IconEdit } from "@/components/_Icon";
 import AdminActionIconPlus from "@/components/_ShareComponent/Admin/ActionIconPlus";
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
 import AdminTitlePage from "@/components/_ShareComponent/Admin/TitlePage";
-import { GridView_3_3_6 } from "@/components/_ShareComponent/GridView_3_3_6";
-import { MainColor } from "@/constants/color-palet";
-import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
-import { RefreshControl, View } from "react-native";
-import { Divider, Switch } from "react-native-paper";
-import { router, useFocusEffect } from "expo-router";
-import { useCallback, useEffect, useState } from "react";
+import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
 import { apiAdminMasterDonationCategory } from "@/service/api-admin/api-master-admin";
-import { GridDetail_4_8 } from "@/components/_ShareComponent/GridDetail_4_8";
-import GridTwoView from "@/components/_ShareComponent/GridTwoView";
+import { colorActivationForBadge } from "@/utils/colorActivationForBadge";
+import { router, useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
+import { RefreshControl, View } from "react-native";
+import { Divider } from "react-native-paper";
 
 export default function AdminDonationCategory() {
   const [listData, setListData] = useState<any[]>([]);
@@ -80,14 +72,18 @@ export default function AdminDonationCategory() {
         />
 
         <View>
-          <Grid>
-            <Grid.Col style={{paddingLeft: 10}} span={4}>
+          <GridSpan_4_8
+            label={<TextCustom bold>Status</TextCustom>}
+            value={<TextCustom bold>Kategori</TextCustom>}
+          />
+          {/* <Grid>
+            <Grid.Col style={{ paddingLeft: 10 }} span={4}>
               <TextCustom bold>Status</TextCustom>
             </Grid.Col>
             <Grid.Col span={8}>
               <TextCustom bold>Kategori</TextCustom>
             </Grid.Col>
-          </Grid>
+          </Grid> */}
 
           <Divider />
           <Spacing />
@@ -100,11 +96,22 @@ export default function AdminDonationCategory() {
                 }}
                 key={index}
               >
-                <Grid containerStyle={{ paddingBottom: 10 }}>
-                  <Grid.Col
-                    span={4}
-                    style={{paddingLeft: 10}}
-                     >
+                <GridSpan_4_8
+                  label={
+                    <CenterCustom>
+                      <BadgeCustom
+                        color={colorActivationForBadge({
+                          status: item.active,
+                        })}
+                      >
+                        {item.active ? "Aktif" : "Tidak Aktif"}
+                      </BadgeCustom>
+                    </CenterCustom>
+                  }
+                  value={<TextCustom>{item.name}</TextCustom>}
+                />
+                {/* <Grid containerStyle={{ paddingBottom: 10 }}>
+                  <Grid.Col span={4} style={{ paddingLeft: 10 }}>
                     <CenterCustom>
                       <BadgeCustom
                         color={item.active ? MainColor.green : MainColor.red}
@@ -116,7 +123,7 @@ export default function AdminDonationCategory() {
                   <Grid.Col span={8}>
                     <TextCustom bold>{item.name}</TextCustom>
                   </Grid.Col>
-                </Grid>
+                </Grid> */}
                 <Divider />
               </ClickableCustom>
             ))}

@@ -10,14 +10,17 @@ import {
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import { apiAdminEventListOfParticipants } from "@/service/api-admin/api-admin-event";
+import dayjs, { Dayjs } from "dayjs";
 import { useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
+import { View } from "moti";
 import { useCallback, useState } from "react";
 
 export default function AdminEventListOfParticipants() {
   const { id } = useLocalSearchParams();
   const [listData, setListData] = useState<any[] | null>(null);
   const [loadData, setLoadData] = useState(false);
+  const [startDate, setStartDate] = useState<Dayjs | undefined>();
 
   useFocusEffect(
     useCallback(() => {
@@ -32,8 +35,11 @@ export default function AdminEventListOfParticipants() {
         id: id as string,
       });
 
+      console.log("[DATA]", JSON.stringify(response, null, 2));
+
       if (response.success) {
         setListData(response.data);
+        setStartDate(dayjs(response.data.Event.tanggal));
       }
     } catch (error) {
       console.log("[ERROR]", error);
@@ -41,7 +47,6 @@ export default function AdminEventListOfParticipants() {
       setLoadData(false);
     }
   };
-
 
   return (
     <>
@@ -60,17 +65,35 @@ export default function AdminEventListOfParticipants() {
               <Grid>
                 <Grid.Col span={6}>
                   <StackCustom gap={"sm"}>
-                    <TextCustom bold truncate>{item?.User?.username}</TextCustom>
+                    <TextCustom bold truncate>
+                      {item?.User?.username}
+                    </TextCustom>
                     <TextCustom>+{item?.User?.nomor}</TextCustom>
                   </StackCustom>
                 </Grid.Col>
                 <Grid.Col span={6} style={{ justifyContent: "center" }}>
-                  <BadgeCustom
-                    style={{ alignSelf: "flex-end" }}
-                    color={item?.isPresent ? "green" : "red"}
-                  >
-                    {item?.isPresent ? "Hadir" : "Tidak Hadir"}
-                  </BadgeCustom>
+                  {startDate &&
+                  startDate.subtract(1, "hour").diff(dayjs()) < 0 ? (
+                    <BadgeCustom
+                      style={{ alignSelf: "flex-end" }}
+                      color={item?.isPresent ? "green" : "red"}
+                    >
+                      {item?.isPresent ? "Hadir" : "Tidak Hadir"}
+                    </BadgeCustom>
+                  ) : (
+                    <View
+                      style={{
+                        justifyContent: "flex-end",
+                      }}
+                    >
+                      <BadgeCustom
+                        style={{ alignSelf: "flex-end" }}
+                        color="gray"
+                      >
+                        -
+                      </BadgeCustom>
+                    </View>
+                  )}
                 </Grid.Col>
               </Grid>
             </BaseBox>
