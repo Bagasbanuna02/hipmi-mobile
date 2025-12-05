@@ -5,9 +5,12 @@ import {
   TextAreaCustom,
   ViewWrapper,
 } from "@/components";
+import AlertWarning from "@/components/Alert/AlertWarning";
 import { apiForumGetOne, apiForumUpdate } from "@/service/api-client/api-forum";
+import { isBadContent } from "@/utils/badWordsIndonesia";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
+import { Alert } from "react-native";
 import Toast from "react-native-toast-message";
 
 export default function ForumEdit() {
@@ -43,6 +46,12 @@ export default function ForumEdit() {
       });
       return;
     }
+
+    if (isBadContent(text)) {
+      AlertWarning({});
+      return;
+    }
+
     try {
       setIsLoading(true);
       const response = await apiForumUpdate({

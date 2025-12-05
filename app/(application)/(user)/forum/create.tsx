@@ -2,12 +2,15 @@ import {
   BoxButtonOnFooter,
   ButtonCustom,
   TextAreaCustom,
-  ViewWrapper,
+  ViewWrapper
 } from "@/components";
+import AlertWarning from "@/components/Alert/AlertWarning";
 import { useAuth } from "@/hooks/use-auth";
 import { apiForumCreate } from "@/service/api-client/api-forum";
+import { isBadContent } from "@/utils/badWordsIndonesia";
 import { router } from "expo-router";
 import { useState } from "react";
+import { Alert } from "react-native";
 import Toast from "react-native-toast-message";
 
 export default function ForumCreate() {
@@ -16,11 +19,16 @@ export default function ForumCreate() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handlerSubmit = async () => {
+    
+    if (isBadContent(text)) {
+      AlertWarning({})
+      return;
+    }
+    
     const newData = {
       diskusi: text,
       authorId: user?.id,
     };
-
     try {
       setIsLoading(true);
       const response = await apiForumCreate({ data: newData });

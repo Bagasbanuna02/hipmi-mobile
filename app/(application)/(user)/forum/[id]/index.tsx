@@ -7,6 +7,7 @@ import {
   TextCustom,
   ViewWrapper,
 } from "@/components";
+import AlertWarning from "@/components/Alert/AlertWarning";
 import { useAuth } from "@/hooks/use-auth";
 import Forum_CommentarBoxSection from "@/screens/Forum/CommentarBoxSection";
 import Forum_BoxDetailSection from "@/screens/Forum/DiscussionBoxSection";
@@ -18,9 +19,11 @@ import {
   apiForumGetOne,
   apiForumUpdateStatus,
 } from "@/service/api-client/api-forum";
+import { isBadContent } from "@/utils/badWordsIndonesia";
 import { useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import { useCallback, useEffect, useState } from "react";
+import { Alert } from "react-native";
 
 interface CommentProps {
   id: string;
@@ -110,11 +113,15 @@ export default function ForumDetail() {
 
   // Create Commentar
   const handlerCreateCommentar = async () => {
+    if (isBadContent(text)) {
+      AlertWarning({});
+      return;
+    }
+    
     const newData = {
       comment: text,
       authorId: user?.id,
     };
-
     try {
       setLoadingComment(true);
       const response = await apiForumCreateComment({
