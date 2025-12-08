@@ -595,6 +595,13 @@ export default function UserLayout() {
             headerLeft: () => <BackButton />,
           }}
         />
+        <Stack.Screen
+          name="forum/terms"
+          options={{
+            title: "Syarat & Ketentuan Forum",
+            headerLeft: () => <BackButton />,
+          }}
+        />
 
         {/* ========== Maps Section ========= */}
         <Stack.Screen

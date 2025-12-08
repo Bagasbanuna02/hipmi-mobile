@@ -11,35 +11,44 @@ import Home_FeatureSection from "@/screens/Home/topFeatureSection";
 import { apiUser } from "@/service/api-client/api-user";
 import { apiVersion } from "@/service/api-config";
 import { Ionicons } from "@expo/vector-icons";
-import { Redirect, router, Stack } from "expo-router";
-import { useEffect, useState } from "react";
+import { Redirect, router, Stack, useFocusEffect } from "expo-router";
+import { useCallback, useEffect, useState } from "react";
+import { RefreshControl } from "react-native";
 
 export default function Application() {
-  const { token, user } = useAuth();
+  const { token, user, userData } = useAuth();
   const [data, setData] = useState<any>();
+  const [refreshing, setRefreshing] = useState(false);
+  console.log("[User] >>", JSON.stringify(user?.id, null, 2))
 
-  console.log("[User] >>", JSON.stringify(user?.id, null, 2));
-  
-  useEffect(() => {
-    onLoadData();
-    checkVersion();
-  }, []);
-  
+  // ‼️ Untuk cek apakah: 1. user ada, 2. user punya profile, 3. accept temrs of forum nya ada atau tidak
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+      checkVersion();
+      userData(token as string);
+    }, [user?.id, token])
+  );
+
   async function onLoadData() {
     const response = await apiUser(user?.id as string);
-    console.log(
-      "[Profile ID]>>",
-      JSON.stringify(response?.data?.Profile.id, null, 2)
-    );
-    
+    console.log("[Profile ID]>>", JSON.stringify(response?.data?.Profile?.id, null, 2));
+
     setData(response.data);
   }
-  
+
   const checkVersion = async () => {
     const response = await apiVersion();
     console.log("[Version] >>", JSON.stringify(response.data, null, 2));
   };
-  
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    onLoadData();
+    checkVersion();
+    setRefreshing(false);
+  }, []);
+
   if (user && user?.termsOfServiceAccepted === false) {
     console.log("User is not accept term service");
     return <Redirect href={`/terms-agreement`} />;
@@ -83,8 +92,16 @@ export default function Application() {
         }}
       />
       <ViewWrapper
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         footerComponent={
-          <TabSection tabs={tabsHome(data?.Profile?.id as string)} />
+          <TabSection
+            tabs={tabsHome({
+              acceptedForumTermsAt: data?.acceptedForumTermsAt,
+              profileId: data?.Profile?.id,
+            })}
+          />
         }
       >
         <StackCustom>

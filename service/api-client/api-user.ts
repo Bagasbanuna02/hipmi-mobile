@@ -36,3 +36,13 @@ export async function apiForumBlockUser({
     throw error;
   }
 }
+
+export async function apiAcceptForumTerms({category, userId}:{category:"Forum" | "Event", userId: string}) {
+  try {
+    const response = await apiConfig.post(`/mobile/user/${userId}/terms-of-app?category=${category}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+    

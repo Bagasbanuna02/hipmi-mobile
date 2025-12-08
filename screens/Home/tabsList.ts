@@ -1,12 +1,12 @@
 import { ITabs } from "@/components/_Interface/types";
 
-export const tabsHome: any = (profileId: string) => [
+export const tabsHome: any = ({acceptedForumTermsAt, profileId}: {acceptedForumTermsAt: Date, profileId: string}) => [
   {
     id: "forum",
     icon: "chatbubble-ellipses-outline",
     activeIcon: "chatbubble-ellipses",
     label: "Forum",
-    path: "/forum",
+    path: acceptedForumTermsAt ? "/forum" : "/forum/terms",
     isActive: true,
     disabled: false,
   },
