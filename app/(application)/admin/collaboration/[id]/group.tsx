@@ -2,11 +2,13 @@
 import {
   BaseBox,
   Grid,
+  Spacing,
   StackCustom,
   TextCustom,
   ViewWrapper,
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
+import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
 import { apiAdminCollaborationGetById } from "@/service/api-admin/api-admin-collaboration";
 import { useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
@@ -27,6 +29,8 @@ export default function AdminCollaborationGroup() {
         id: id as string,
         category: "group",
       });
+
+      console.log("[DATA]", JSON.stringify(response.data, null, 2));
 
       if (response.success) {
         setData(response.data);
@@ -59,38 +63,33 @@ export default function AdminCollaborationGroup() {
               ))}
             </StackCustom>
           </BaseBox>
+
+          <TextCustom bold>Anggota</TextCustom>
+          <Spacing height={5}/>
           <BaseBox>
             <StackCustom>
-              <TextCustom align="center">Anggota</TextCustom>
+
+              <Grid>
+                <Grid.Col span={6} style={{ justifyContent: "center", paddingRight: 10 }}>
+                  <TextCustom bold>Nomor</TextCustom>
+                </Grid.Col>
+                <Grid.Col span={6} style={{ justifyContent: "center" }}>
+                  <TextCustom bold>Username</TextCustom>
+                </Grid.Col>
+              </Grid>
 
               {data?.ProjectCollaboration_AnggotaRoomChat?.map(
                 (item: any, index: number) => (
-                  <StackCustom key={index} gap={0}>
-                    <Grid>
-                      <Grid.Col
-                        span={4}
-                        style={{ justifyContent: "center", paddingRight: 10 }}
-                      >
-                        <TextCustom bold>Nama</TextCustom>
-                      </Grid.Col>
-                      <Grid.Col span={8} style={{ justifyContent: "center" }}>
-                        <TextCustom>
-                          {item?.User?.Profile?.name || "-"}
-                        </TextCustom>
-                      </Grid.Col>
-                    </Grid>
-                    <Grid>
-                      <Grid.Col
-                        span={4}
-                        style={{ justifyContent: "center", paddingRight: 10 }}
-                      >
-                        <TextCustom bold>Username</TextCustom>
-                      </Grid.Col>
-                      <Grid.Col span={8} style={{ justifyContent: "center" }}>
-                        <TextCustom>{item?.User?.username || "-"}</TextCustom>
-                      </Grid.Col>
-                    </Grid>
-                  </StackCustom>
+                  <Grid key={index}>
+                    <Grid.Col span={6} style={{ justifyContent: "center", paddingRight: 10 }}>
+                      <TextCustom bold truncate>+{item?.User?.nomor || "-"}</TextCustom>
+                    </Grid.Col>
+                    <Grid.Col span={6} style={{ justifyContent: "center" }}>
+                      <TextCustom bold>
+                        {item?.User?.username || "-"}
+                      </TextCustom>
+                    </Grid.Col>
+                  </Grid>
                 )
               )}
             </StackCustom>

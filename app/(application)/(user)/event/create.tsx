@@ -145,7 +145,7 @@ export default function EventCreate() {
               label: item.name,
               value: item.id,
             }))}
-            value={data?.eventMaster_TipeAcaraId || ""}
+            value={data?.eventMaster_TipeAcaraId || null}
             onChange={(value: any) =>
               setData({ ...data, eventMaster_TipeAcaraId: value })
             }

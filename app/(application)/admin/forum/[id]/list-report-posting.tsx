@@ -4,6 +4,7 @@ import {
   AlertDefaultSystem,
   BadgeCustom,
   BaseBox,
+  CenterCustom,
   DrawerCustom,
   LoaderCustom,
   MenuDrawerDynamicGrid,
@@ -18,6 +19,7 @@ import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage"
 import AdminTitleTable from "@/components/_ShareComponent/Admin/TableTitle";
 import AdminTableValue from "@/components/_ShareComponent/Admin/TableValue";
 import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
+import { GridSpan_NewComponent } from "@/components/_ShareComponent/GridSpan_NewComponent";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
 import {
@@ -28,6 +30,7 @@ import {
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import { useCallback, useState } from "react";
+import { View } from "react-native";
 import { Divider } from "react-native-paper";
 import Toast from "react-native-toast-message";
 
@@ -95,14 +98,14 @@ export default function AdminForumReportPosting() {
       >
         <BaseBox>
           <StackCustom gap={"sm"}>
-            <GridSpan_4_8
-              label={<TextCustom bold>Username</TextCustom>}
-              value={<TextCustom>{data?.Author?.username || "-"}</TextCustom>}
+            <GridSpan_NewComponent
+              text1={<TextCustom bold>Username</TextCustom>}
+              text2={<TextCustom>{data?.Author?.username || "-"}</TextCustom>}
             />
 
-            <GridSpan_4_8
-              label={<TextCustom bold>Status</TextCustom>}
-              value={
+            <GridSpan_NewComponent
+              text1={<TextCustom bold>Status</TextCustom>}
+              text2={
                 data && data?.ForumMaster_StatusPosting?.status ? (
                   <BadgeCustom
                     color={
@@ -121,19 +124,23 @@ export default function AdminForumReportPosting() {
               }
             />
 
-            <GridSpan_4_8
-              label={<TextCustom bold>Postingan</TextCustom>}
-              value={<TextCustom>{data?.diskusi || "-"}</TextCustom>}
+            <GridSpan_NewComponent
+              text1={<TextCustom bold>Postingan</TextCustom>}
+              text2={<TextCustom>{data?.diskusi || "-"}</TextCustom>}
             />
           </StackCustom>
         </BaseBox>
 
         <AdminComp_BoxTitle title="Daftar Report Posting" />
         <StackCustom gap={"sm"}>
-          <AdminTitleTable
-            title1="Aksi"
-            title2="Pelapor"
-            title3="Kategori Report"
+          <GridSpan_NewComponent
+            text1={
+              <TextCustom bold align="center">
+                Aksi
+              </TextCustom>
+            }
+            text2={<TextCustom bold>Pelapor</TextCustom>}
+            text3={<TextCustom bold>Kategori Report</TextCustom>}
           />
           <Divider />
           {loadListReport ? (
@@ -144,34 +151,41 @@ export default function AdminForumReportPosting() {
             </TextCustom>
           ) : (
             listReport?.map((item: any, index: number) => (
-              <AdminTableValue
-                key={index}
-                value1={
-                  <ActionIcon
-                    icon={<IconView size={ICON_SIZE_BUTTON} color="black" />}
-                    onPress={() => {
-                      setOpenDrawerAction(true);
-                      setSelectedReport({
-                        id: item?.id,
-                        username: item?.User?.username,
-                        kategori: item?.ForumMaster_KategoriReport?.title,
-                        keterangan: item?.ForumMaster_KategoriReport?.deskripsi,
-                        deskripsi: item?.deskripsi,
-                      });
-                    }}
-                  />
-                }
-                value2={
-                  <TextCustom truncate={1}>
-                    {item?.User?.username || "-"}
-                  </TextCustom>
-                }
-                value3={
-                  <TextCustom truncate={2} align="center">
-                    {item?.ForumMaster_KategoriReport?.title || "-"}
-                  </TextCustom>
-                }
-              />
+              <View key={index}>
+                <GridSpan_NewComponent
+                  text1={
+                    <CenterCustom>
+                      <ActionIcon
+                        icon={
+                          <IconView size={ICON_SIZE_BUTTON} color="black" />
+                        }
+                        onPress={() => {
+                          setOpenDrawerAction(true);
+                          setSelectedReport({
+                            id: item?.id,
+                            username: item?.User?.username,
+                            kategori: item?.ForumMaster_KategoriReport?.title,
+                            keterangan:
+                              item?.ForumMaster_KategoriReport?.deskripsi,
+                            deskripsi: item?.deskripsi,
+                          });
+                        }}
+                      />
+                    </CenterCustom>
+                  }
+                  text2={
+                    <TextCustom truncate>
+                      {item?.User?.username || "-"}
+                    </TextCustom>
+                  }
+                  text3={
+                    <TextCustom truncate={2}>
+                      {item?.ForumMaster_KategoriReport?.title || "-"}
+                    </TextCustom>
+                  }
+                />
+                <Divider />
+              </View>
             ))
           )}
         </StackCustom>

@@ -1,17 +1,14 @@
 import {
-  ActionIcon,
+  ClickableCustom,
   LoaderCustom,
   StackCustom,
   TextCustom,
   ViewWrapper
 } from "@/components";
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
-import AdminTitleTable from "@/components/_ShareComponent/Admin/TableTitle";
-import AdminTableValue from "@/components/_ShareComponent/Admin/TableValue";
 import AdminTitlePage from "@/components/_ShareComponent/Admin/TitlePage";
-import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
+import { GridSpan_NewComponent } from "@/components/_ShareComponent/GridSpan_NewComponent";
 import { apiAdminCollaboration } from "@/service/api-admin/api-admin-collaboration";
-import { Octicons } from "@expo/vector-icons";
 import { router, useFocusEffect } from "expo-router";
 import _ from "lodash";
 import { useCallback, useState } from "react";
@@ -34,7 +31,7 @@ export default function AdminCollaborationGroup() {
       const response = await apiAdminCollaboration({
         category: "group",
       });
-      
+
       if (response.success) {
         setList(response.data);
       }
@@ -51,10 +48,19 @@ export default function AdminCollaborationGroup() {
         <StackCustom>
           <AdminComp_BoxTitle title="Group" />
           <>
-            <AdminTitleTable
-              title1="Aksi"
-              title2="Jumlah peserta"
-              title3="Nama group"
+            <GridSpan_NewComponent
+              span1={6}
+              span2={6}
+              text1={
+                <TextCustom bold truncate align="center">
+                  Jumlah Anggota
+                </TextCustom>
+              }
+              text2={
+                <TextCustom bold truncate>
+                  Nama Group
+                </TextCustom>
+              }
             />
             <Divider />
 
@@ -67,31 +73,27 @@ export default function AdminCollaborationGroup() {
             ) : (
               list?.map((item: any, index: number) => (
                 <View key={index}>
-                  <AdminTableValue
-                    value1={
-                      <ActionIcon
-                        icon={
-                          <Octicons
-                            name="eye"
-                            size={ICON_SIZE_BUTTON}
-                            color="black"
-                          />
-                        }
-                        onPress={() => {
-                          router.push(`/admin/collaboration/${item.id}/group`);
-                        }}
-                      />
-                    }
-                    value2={
-                      <TextCustom truncate={1}>
-                        {item?.ProjectCollaboration_AnggotaRoomChat?.length ||
-                          "-"}
-                      </TextCustom>
-                    }
-                    value3={
-                      <TextCustom truncate={2}>{item?.name || "-"}</TextCustom>
-                    }
-                  />
+                  <ClickableCustom
+                    onPress={() => {
+                      router.push(`/admin/collaboration/${item.id}/group`);
+                    }}
+                  >
+                    <GridSpan_NewComponent
+                      span1={6}
+                      span2={6}
+                      text1={
+                        <TextCustom truncate={1} align="center">
+                          {item?.ProjectCollaboration_AnggotaRoomChat?.length ||
+                            "-"}
+                        </TextCustom>
+                      }
+                      text2={
+                        <TextCustom truncate={2}>
+                          {item?.name || "-"}
+                        </TextCustom>
+                      }
+                    />
+                  </ClickableCustom>
                 </View>
               ))
             )}

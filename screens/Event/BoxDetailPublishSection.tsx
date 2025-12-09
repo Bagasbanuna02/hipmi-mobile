@@ -50,7 +50,7 @@ export default function Event_BoxDetailPublishSection({
               <Grid.Col span={4}>
                 <TextCustom bold>{item.title}</TextCustom>
               </Grid.Col>
-              <Grid.Col span={8}>
+              <Grid.Col span={8} style={{ paddingLeft: 10 }}>
                 <TextCustom>{item.value}</TextCustom>
               </Grid.Col>
             </Grid>

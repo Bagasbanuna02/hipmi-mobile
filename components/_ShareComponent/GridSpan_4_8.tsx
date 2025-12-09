@@ -1,8 +1,8 @@
 import { Grid } from "@/components";
 
 export const GridSpan_4_8 = ({
-  label,
-  value,
+  label: text1,
+  value: text2,
 }: {
   label: React.ReactNode;
   value: React.ReactNode;
@@ -17,10 +17,10 @@ export const GridSpan_4_8 = ({
           paddingLeft: 8,
         }}
       >
-        {label}
+        {text1}
       </Grid.Col>
       <Grid.Col span={8} style={{ justifyContent: "center", paddingRight: 8 }}>
-        {value}
+        {text2}
       </Grid.Col>
     </Grid>
   );

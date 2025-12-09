@@ -76,7 +76,7 @@ export default function PortofolioCreate() {
   function handleInputValue(phoneNumber: string) {
     setInputValue(phoneNumber);
     const callingCode = selectedCountry?.callingCode.replace(/^\+/, "") || "";
-    const fixNumber = inputValue.replace(/\s+/g, "");
+    let fixNumber = inputValue.replace(/\s+/g, "").replace(/^0+/, "");
     const realNumber = callingCode + fixNumber;
     setData({ ...data, tlpn: realNumber });
   }

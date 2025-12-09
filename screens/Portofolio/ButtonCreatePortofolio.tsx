@@ -55,10 +55,6 @@ export default function Portofolio_ButtonCreate({
   };
 
   const handleCreatePortofolio = async () => {
-    console.log(
-      "Data sub bidang >>",
-      JSON.stringify(subBidangSelected, null, 2)
-    );
     if (!validaasiData()) {
       Toast.show({
         type: "info",

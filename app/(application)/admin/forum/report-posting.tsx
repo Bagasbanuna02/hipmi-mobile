@@ -1,24 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   ActionIcon,
+  ClickableCustom,
   Divider,
   LoaderCustom,
   SearchInput,
   StackCustom,
   TextCustom,
-  ViewWrapper
+  ViewWrapper,
 } from "@/components";
 import { IconView } from "@/components/_Icon/IconComponent";
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
 import AdminTitleTable from "@/components/_ShareComponent/Admin/TableTitle";
 import AdminTableValue from "@/components/_ShareComponent/Admin/TableValue";
 import AdminTitlePage from "@/components/_ShareComponent/Admin/TitlePage";
+import { GridSpan_NewComponent } from "@/components/_ShareComponent/GridSpan_NewComponent";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
 import { apiAdminForum } from "@/service/api-admin/api-admin-forum";
 import { router, useFocusEffect } from "expo-router";
 import _ from "lodash";
 import { useCallback, useState } from "react";
+import { View } from "react-native";
 
 export default function AdminForumReportPosting() {
   const [listData, setListData] = useState<any[] | null>(null);
@@ -67,46 +70,51 @@ export default function AdminForumReportPosting() {
           rightComponent={rightComponent}
         />
 
-        <StackCustom gap={"sm"}>
-          <AdminTitleTable title1="Aksi" title2="Pelapor" title3="Postingan" />
-
-          <Divider />
+        <GridSpan_NewComponent
+          text1={
+            <TextCustom bold truncate>
+              Username
+            </TextCustom>
+          }
+          text2={
+            <TextCustom bold truncate>
+              Postingan
+            </TextCustom>
+          }
+        />
+        <Divider />
+        <StackCustom>
           {loadList ? (
             <LoaderCustom />
           ) : _.isEmpty(listData) ? (
-            <TextCustom  align="center" color="gray">
+            <TextCustom align="center" color="gray">
               Belum ada data
             </TextCustom>
           ) : (
             listData?.map((item: any, index: number) => (
-              <AdminTableValue
-                key={index}
-                value1={
-                  <ActionIcon
-                    icon={
-                      <IconView
-                        size={ICON_SIZE_BUTTON}
-                        color={MainColor.black}
-                      />
+              <View key={index}>
+                <ClickableCustom
+                  onPress={() => {
+                    router.push(
+                      `/admin/forum/${item?.Forum_Posting?.id}/list-report-posting`
+                    );
+                  }}
+                >
+                  <GridSpan_NewComponent
+                    text1={
+                      <TextCustom truncate={1}>
+                        {item?.User?.username || "-"}
+                      </TextCustom>
                     }
-                    onPress={() => {
-                      router.push(
-                        `/admin/forum/${item?.Forum_Posting?.id}/list-report-posting`
-                      );
-                    }}
+                    text2={
+                      <TextCustom truncate={1}>
+                        {item?.Forum_Posting?.diskusi || "-"}
+                      </TextCustom>
+                    }
                   />
-                }
-                value2={
-                  <TextCustom truncate={1}>
-                    {item?.User?.username || "-"}
-                  </TextCustom>
-                }
-                value3={
-                  <TextCustom truncate={2} align="center">
-                    {item?.Forum_Posting?.diskusi || "-"}
-                  </TextCustom>
-                }
-              />
+                </ClickableCustom>
+                <Divider />
+              </View>
             ))
           )}
         </StackCustom>

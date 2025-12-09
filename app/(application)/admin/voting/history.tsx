@@ -91,7 +91,7 @@ export default function AdminVotingHistory() {
               }
               value2={<TextCustom truncate={1}>{item?.Author?.username || "-"}</TextCustom>}
               value3={
-                <TextCustom align="center" truncate={2}>
+                <TextCustom truncate={2}>
                   {item?.title || "-"}
                 </TextCustom>
               }

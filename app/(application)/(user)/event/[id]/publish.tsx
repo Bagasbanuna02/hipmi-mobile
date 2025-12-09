@@ -71,8 +71,6 @@ export default function EventDetailPublish() {
     }
   }
 
-  console.log("[participans]", isParticipant);
-
   const handlePress = (item: IMenuDrawerItem) => {
     console.log("PATH ", item.path);
     router.navigate(item.path as any);
@@ -139,7 +137,7 @@ export default function EventDetailPublish() {
     <>
       <Stack.Screen
         options={{
-          title: `Event publish`,
+          title: `Event Publish`,
           headerLeft: () => <LeftButtonCustom />,
           headerRight: () => <DotButton onPress={() => setOpenDrawer(true)} />,
         }}

@@ -87,7 +87,7 @@ const SelectCustom: React.FC<SelectProps> = ({
               borderRadius,
               flexDirection: "row",
               alignItems: "center",
-              paddingHorizontal: 10,
+              // paddingHorizontal: 0,
               height: 50,
             },
 

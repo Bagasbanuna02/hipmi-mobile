@@ -244,7 +244,7 @@ export default function PortofolioEdit() {
 
   const handleSubmitUpdate = async () => {
     const callingCode = selectedCountry?.callingCode.replace(/^\+/, "") || "";
-    const fixNumber = data.tlpn.replace(/\s+/g, "");
+    let fixNumber = data.tlpn.replace(/\s+/g, "").replace(/^0+/, "");
     const realNumber = callingCode + fixNumber;
 
     const newData: IFormData = {

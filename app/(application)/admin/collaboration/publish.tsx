@@ -1,6 +1,8 @@
 import {
   ActionIcon,
+  ClickableCustom,
   LoaderCustom,
+  Spacing,
   StackCustom,
   TextCustom,
   ViewWrapper,
@@ -9,6 +11,7 @@ import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage"
 import AdminTitleTable from "@/components/_ShareComponent/Admin/TableTitle";
 import AdminTableValue from "@/components/_ShareComponent/Admin/TableValue";
 import AdminTitlePage from "@/components/_ShareComponent/Admin/TitlePage";
+import { GridSpan_NewComponent } from "@/components/_ShareComponent/GridSpan_NewComponent";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
 import { apiAdminCollaboration } from "@/service/api-admin/api-admin-collaboration";
 import { Octicons } from "@expo/vector-icons";
@@ -51,11 +54,7 @@ export default function AdminCollaborationPublish() {
         <StackCustom>
           <AdminComp_BoxTitle title="Publish" />
 
-          <AdminTitleTable
-            title1="Aksi"
-            title2="Username"
-            title3="Judul Proyek"
-          />
+          <GridSpan_NewComponent text1={<TextCustom bold>Username</TextCustom>} text2={<TextCustom bold>Judul Proyek</TextCustom>} />
           {/* <Spacing height={10} /> */}
           <Divider />
 
@@ -68,32 +67,26 @@ export default function AdminCollaborationPublish() {
           ) : (
             list?.map((item: any, index: number) => (
               <View key={index}>
-                <AdminTableValue
-                  value1={
-                    <ActionIcon
-                      icon={
-                        <Octicons
-                          name="eye"
-                          size={ICON_SIZE_BUTTON}
-                          color="black"
-                        />
-                      }
-                      onPress={() => {
-                        router.push(`/admin/collaboration/${item?.id}/publish`);
-                      }}
-                    />
-                  }
-                  value2={
-                    <TextCustom align="center" truncate={1}>
-                      {item?.Author?.username || "-"}{" "}
-                    </TextCustom>
-                  }
-                  value3={
-                    <TextCustom align="center" truncate={2}>
-                      {item?.title || "-"}
-                    </TextCustom>
-                  }
-                />
+                <ClickableCustom
+                  onPress={() => {
+                    router.push(`/admin/collaboration/${item?.id}/publish`);
+                  }}
+                >
+                  <GridSpan_NewComponent
+                    text1={
+                      <TextCustom truncate={1}>
+                        {item?.Author?.username || "-"}{" "}
+                      </TextCustom>
+                    }
+                    text2={
+                      <TextCustom truncate={2}>
+                        {item?.title || "-"}
+                      </TextCustom>
+                    }
+                  />
+                </ClickableCustom>
+                <Spacing height={8}/>
+                <Divider/>
               </View>
             ))
           )}

@@ -103,7 +103,7 @@ export default function AdminVotingStatus() {
                   </TextCustom>
                 }
                 value3={
-                  <TextCustom align="center" truncate={2}>
+                  <TextCustom truncate={2}>
                     {item?.title || "-"}
                   </TextCustom>
                 }

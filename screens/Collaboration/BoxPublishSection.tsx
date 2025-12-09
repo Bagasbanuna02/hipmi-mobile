@@ -25,7 +25,7 @@ function Collaboration_BoxPublishSection({
             name={data?.Author?.username || "Username"}
             rightComponent={rightComponentAvatar}
             avatar={data?.Author?.Profile?.imageId}
-            withBottomLine
+            // withBottomLine
           />
 
           <StackCustom style={{paddingBlock: 10}}>
