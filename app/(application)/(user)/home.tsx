@@ -19,7 +19,7 @@ export default function Application() {
   const { token, user, userData } = useAuth();
   const [data, setData] = useState<any>();
   const [refreshing, setRefreshing] = useState(false);
-  console.log("[User] >>", JSON.stringify(user?.id, null, 2))
+  console.log("[User] >>", JSON.stringify(user?.id, null, 2));
 
   // ‼️ Untuk cek apakah: 1. user ada, 2. user punya profile, 3. accept temrs of forum nya ada atau tidak
   useFocusEffect(
@@ -32,7 +32,10 @@ export default function Application() {
 
   async function onLoadData() {
     const response = await apiUser(user?.id as string);
-    console.log("[Profile ID]>>", JSON.stringify(response?.data?.Profile?.id, null, 2));
+    console.log(
+      "[Profile ID]>>",
+      JSON.stringify(response?.data?.Profile?.id, null, 2)
+    );
 
     setData(response.data);
   }
@@ -81,6 +84,7 @@ export default function Application() {
           ),
           headerRight: () => (
             <Ionicons
+              disabled={true}
               name="notifications"
               size={20}
               color={MainColor.yellow}

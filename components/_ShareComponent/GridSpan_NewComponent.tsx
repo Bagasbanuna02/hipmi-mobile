@@ -22,7 +22,7 @@ export const GridSpan_NewComponent = ({
         style={{
           justifyContent: "flex-start",
           paddingRight: 5,
-          paddingLeft: 5,
+          paddingLeft: 3,
         }}
       >
         {text1}

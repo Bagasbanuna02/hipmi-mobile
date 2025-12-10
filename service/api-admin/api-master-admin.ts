@@ -60,10 +60,20 @@ export async function apiAdminMasterBusinessField() {
   }
 }
 
-export async function apiAdminMasterBusinessFieldById({ id }: { id: string }) {
+export async function apiAdminMasterBusinessFieldById({
+  id,
+  subBidangId,
+  category,
+}: {
+  id: string;
+  subBidangId?: string | null;
+  category: "bidang" | "sub-bidang" | "all";
+}) {
+  const queryCategory = category ? `?category=${category}` : "";
+  const querySubBidang = subBidangId ? `&subBidangId=${subBidangId}` : "";
   try {
     const response = await apiConfig.get(
-      `/mobile/admin/master/business-field/${id}`
+      `/mobile/admin/master/business-field/${id}${queryCategory}${querySubBidang}`
     );
     return response.data;
   } catch (error) {
@@ -74,13 +84,15 @@ export async function apiAdminMasterBusinessFieldById({ id }: { id: string }) {
 export async function apiAdminMasterBusinessFieldUpdate({
   id,
   data,
+  category,
 }: {
   id: string;
   data: any;
+  category: "bidang" | "sub-bidang";
 }) {
   try {
     const response = await apiConfig.put(
-      `/mobile/admin/master/business-field/${id}`,
+      `/mobile/admin/master/business-field/${id}?category=${category}`,
       {
         data: data,
       }
@@ -179,7 +191,11 @@ export async function apiAdminMasterDonationCategory() {
   }
 }
 
-export async function apiAdminMasterDonationCategoryById({ id }: { id: string }) {
+export async function apiAdminMasterDonationCategoryById({
+  id,
+}: {
+  id: string;
+}) {
   try {
     const response = await apiConfig.get(`/mobile/admin/master/donation/${id}`);
     return response.data;
@@ -208,7 +224,11 @@ export async function apiAdminMasterDonationCategoryUpdate({
   }
 }
 
-export async function apiAdminMasterDonationCategoryCreate({ data }: { data: any }) {
+export async function apiAdminMasterDonationCategoryCreate({
+  data,
+}: {
+  data: any;
+}) {
   try {
     const response = await apiConfig.post(`/mobile/admin/master/donation`, {
       data: data,

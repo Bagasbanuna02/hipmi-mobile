@@ -76,7 +76,7 @@ export default function SuperAdmin_ListUser() {
             </TextCustom>
           }
           component2={
-            <TextCustom align="center" bold>
+            <TextCustom bold>
               Username
             </TextCustom>
           }

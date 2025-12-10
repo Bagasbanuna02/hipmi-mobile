@@ -73,11 +73,7 @@ export default function AdminUserAccess() {
               Aksi
             </TextCustom>
           }
-          component2={
-            <TextCustom align="center" bold>
-              Username
-            </TextCustom>
-          }
+          component2={<TextCustom bold>Username</TextCustom>}
           component3={
             <TextCustom align="center" bold>
               Status Akses

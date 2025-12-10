@@ -15,7 +15,7 @@ export default function Home_FeatureSection() {
       name: "Collaboration",
       icon: <Ionicons name="share" size={48} color="gray" />,
       onPress: () => router.push("/(application)/(user)/collaboration/(tabs)"),
-      status: "active",
+      status: "inactive",
     },
     {
       name: "Voting",

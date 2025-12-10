@@ -75,7 +75,7 @@ const listPage = [
   },
   {
     id: "2",
-    label: "Bidang Bisnis",
+    label: "Bidang & Sub Bidang",
     value: "business",
   },
   {

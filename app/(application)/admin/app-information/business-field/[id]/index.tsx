@@ -1,22 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  BoxButtonOnFooter,
-  ButtonCustom,
+  ActionIcon,
+  BaseBox,
+  CenterCustom,
+  LoaderCustom,
+  Spacing,
   StackCustom,
   TextCustom,
-  TextInputCustom,
   ViewWrapper,
 } from "@/components";
+import { IconEdit } from "@/components/_Icon";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
+import { GridSpan_NewComponent } from "@/components/_ShareComponent/GridSpan_NewComponent";
 import { MainColor } from "@/constants/color-palet";
-import {
-  apiAdminMasterBusinessFieldById,
-  apiAdminMasterBusinessFieldUpdate,
-} from "@/service/api-admin/api-master-admin";
+import { apiAdminMasterBusinessFieldById } from "@/service/api-admin/api-master-admin";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
-import { Switch } from "react-native-paper";
-import Toast from "react-native-toast-message";
+import { Divider } from "react-native-paper";
 
 export default function AdminAppInformation_BusinessFieldDetail() {
   const { id } = useLocalSearchParams();
@@ -33,7 +33,10 @@ export default function AdminAppInformation_BusinessFieldDetail() {
     try {
       const response = await apiAdminMasterBusinessFieldById({
         id: id as string,
+        category: "all",
       });
+
+      console.log("Response >>", JSON.stringify(response, null, 2));
 
       setData(response.data);
     } catch (error) {
@@ -42,73 +45,89 @@ export default function AdminAppInformation_BusinessFieldDetail() {
     }
   };
 
-  const handlerSubmit = async () => {
-    if (!data.name) {
-      Toast.show({
-        type: "error",
-        text1: "Lengkapi Data",
-      });
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      const response = await apiAdminMasterBusinessFieldUpdate({
-        id: id as string,
-        data: data,
-      });
-
-      if (!response.success) {
-        Toast.show({
-          type: "error",
-          text1: "Gagal update data",
-        });
-        return;
-      }
-
-      Toast.show({
-        type: "success",
-        text1: "Data berhasil di update",
-      });
-      router.back();
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const buttonSubmit = (
-    <BoxButtonOnFooter>
-      <ButtonCustom
-        disabled={!data?.name}
-        isLoading={isLoading}
-        onPress={() => handlerSubmit()}
-      >
-        Update
-      </ButtonCustom>
-    </BoxButtonOnFooter>
-  );
   return (
     <>
-      <ViewWrapper footerComponent={buttonSubmit}>
+      <ViewWrapper>
         <StackCustom>
-          <AdminBackButtonAntTitle title="Update Bidang Bisnis" />
+          <AdminBackButtonAntTitle title="Detail Bidang & Sub Bidang" />
 
-          <TextInputCustom
-            label="Nama Bidang Bisnis"
-            placeholder="Masukan Nama Bidang Bisnis"
-            required
-            value={data?.name}
-            onChangeText={(value) => setData({ ...data, name: value })}
-          />
+          {!data ? (
+            <LoaderCustom />
+          ) : (
+            <StackCustom gap={"xs"}>
+              <TextCustom bold>Nama Bidang</TextCustom>
+              <Spacing height={5} />
+              <BaseBox>
+                <StackCustom gap={"xs"}>
+                  <TextCustom bold>
+                    Status: {data?.bidang?.active ? "Aktif" : "Tidak Aktif"}
+                  </TextCustom>
+                  <GridSpan_NewComponent
+                    span1={10}
+                    span2={2}
+                    text1={
+                      <TextCustom bold size={"large"}>
+                        {data?.bidang?.name}
+                      </TextCustom>
+                    }
+                    text2={
+                      <CenterCustom>
+                        <ActionIcon
+                          icon={<IconEdit size={16} color={MainColor.black} />}
+                          onPress={() =>
+                            router.push(
+                              `/admin/app-information/business-field/${id}/bidang-update`
+                            )
+                          }
+                        />
+                      </CenterCustom>
+                    }
+                  />
+                </StackCustom>
+              </BaseBox>
+              {/* <Divider /> */}
+              <Spacing height={5} />
 
-          <TextCustom>Status Aktivasi</TextCustom>
-          <Switch
-            color={MainColor.yellow}
-            value={data?.active}
-            onValueChange={(value) => setData({ ...data, active: value })}
-          />
+              <TextCustom bold>Sub Bidang Bisnis</TextCustom>
+              <Spacing height={5} />
+
+              {data?.subBidang?.map((item: any, index: number) => (
+                <BaseBox key={index}>
+                  <StackCustom gap={0}>
+                    <TextCustom bold>
+                      Status: {item?.isActive ? "Aktif" : "Tidak Aktif"}
+                    </TextCustom>
+
+                    <GridSpan_NewComponent
+                      span1={10}
+                      span2={2}
+                      text1={
+                        <TextCustom bold size={"large"}>
+                          {item.name}
+                        </TextCustom>
+                      }
+                      text2={
+                        <CenterCustom>
+                          <ActionIcon
+                            icon={
+                              <IconEdit size={16} color={MainColor.black} />
+                            }
+                            onPress={() =>
+                              router.push(
+                                `/admin/app-information/business-field/${item?.id}/sub-bidang-update`
+                              )
+                            }
+                          />
+                        </CenterCustom>
+                      }
+                    />
+                  </StackCustom>
+                </BaseBox>
+              ))}
+            </StackCustom>
+          )}
+
+          {/* <TextCustom>{JSON.stringify(data, null, 2)}</TextCustom> */}
         </StackCustom>
       </ViewWrapper>
     </>

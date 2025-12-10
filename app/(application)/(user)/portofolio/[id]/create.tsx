@@ -31,9 +31,9 @@ import {
 import pickImage from "@/utils/pickImage";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import { useLocalSearchParams } from "expo-router";
+import { useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import PhoneInput, { ICountry } from "react-native-international-phone-number";
 import { Avatar } from "react-native-paper";
@@ -85,10 +85,12 @@ export default function PortofolioCreate() {
     setSelectedCountry(country);
   }
 
-  useEffect(() => {
-    onLoadMaster();
-    onLoadMasterSubBidangBisnis();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      onLoadMaster();
+      onLoadMasterSubBidangBisnis();
+    }, [])
+  );
 
   const onLoadMaster = async () => {
     try {
