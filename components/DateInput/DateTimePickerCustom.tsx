@@ -23,6 +23,9 @@ const DateTimePickerCustom: React.FC<Props> = ({
   minimumDate,
   disabled = false,
 }) => {
+
+  console.log("Date Android Comp", value)
+
   return (
     <>
       {Platform.OS === "ios" ? (
@@ -47,6 +50,9 @@ const DateTimePickerCustom: React.FC<Props> = ({
           maximumDate={maximumDate}
           minimumDate={minimumDate}
           disabled={disabled}
+          value={value as DateTimePickerEvent | Date | null | any}
+
+
         />
       )}
     </>

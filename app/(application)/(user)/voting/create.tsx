@@ -110,7 +110,7 @@ export default function VotingCreate() {
       <StackCustom gap={"xs"}>
         <TextInputCustom
           label="Judul Voting"
-          placeholder="MasukanJudul Voting"
+          placeholder="Masukan Judul Voting"
           required
           value={data.title}
           onChangeText={(value: any) => setData({ ...data, title: value })}

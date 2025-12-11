@@ -87,7 +87,7 @@ export default function Application() {
               disabled={true}
               name="notifications"
               size={20}
-              color={MainColor.yellow}
+              color={MainColor.placeholder}
               onPress={() => {
                 router.push("/notifications");
               }}

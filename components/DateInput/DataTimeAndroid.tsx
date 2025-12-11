@@ -53,6 +53,8 @@ const DateTimeInput_Android: React.FC<DateTimeInputProps> = ({
   const [selectedDate, setSelectedDate] = useState<Date>(value as any);
   const [selectedTime, setSelectedTime] = useState<Date>(value as any);
 
+  console.log("Date Android", value)
+
   // Fungsi untuk menggabungkan tanggal dan waktu
   const combineDateAndTime = useCallback((date: Date, time: Date): Date => {
     const combined = new Date(date);

@@ -28,7 +28,7 @@ export default function Event_BoxPublishSection({
           <AvatarUsernameAndOtherComponent
             avatarHref={`/profile/${data?.Author?.Profile?.id}`}
             name={data?.Author?.username || "-"}
-            rightComponent={rightComponentAvatar}
+            // rightComponent={rightComponentAvatar}
             avatar={data?.Author?.Profile?.imageId || ""}
           />
           <TextCustom truncate bold>
