@@ -14,12 +14,14 @@ export default {
   ios: {
     supportsTablet: true,
     bundleIdentifier: "com.anonymous.hipmi-mobile",
+    googleServicesFile: "./ios/HIPMIBadungConnect/GoogleService-Info.plist",
     infoPlist: {
       ITSAppUsesNonExemptEncryption: false,
-      "NSLocationWhenInUseUsageDescription": "Aplikasi membutuhkan akses lokasi untuk menampilkan peta.",
+      NSLocationWhenInUseUsageDescription:
+        "Aplikasi membutuhkan akses lokasi untuk menampilkan peta.",
     },
     associatedDomains: ["applinks:cld-dkr-staging-hipmi.wibudev.com"],
-    buildNumber: "14",
+    buildNumber: "15",
   },
 
   android: {
@@ -56,7 +58,6 @@ export default {
 
   plugins: [
     "expo-router",
-    "expo-notifications",
     "expo-web-browser",
     [
       "expo-splash-screen",
@@ -77,6 +78,15 @@ export default {
     ],
     "expo-font",
     "@rnmapbox/maps",
+    "@react-native-firebase/app",
+    [
+      "expo-notifications",
+      {
+        icon: "./assets/images/icon.png",
+        color: "#ffffff",
+        iosDisplayInForeground: true,
+      },
+    ],
   ],
 
   experiments: {
