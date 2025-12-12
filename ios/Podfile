@@ -51,6 +51,7 @@ target 'HIPMIBadungConnect' do
     :privacy_file_aggregation_enabled => podfile_properties['apple.privacyManifestAggregationEnabled'] != 'false',
   )
 
+  pod 'Firebase'
   pod 'Firebase/Messaging'
 
   # @generated begin post_installer - expo prebuild (DO NOT MODIFY) sync-4092f82b887b5b9edb84642c2a56984d69b9a403
