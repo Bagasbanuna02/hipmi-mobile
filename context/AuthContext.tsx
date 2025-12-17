@@ -4,6 +4,7 @@ import {
   apiRegister,
   apiValidationCode,
 } from "@/service/api-config";
+import { apiDeviceTokenDeleted } from "@/service/api-device-token";
 import { IUser } from "@/types/User";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
@@ -282,7 +283,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setUser(null);
       await AsyncStorage.removeItem("authToken");
       await AsyncStorage.removeItem("userData");
-      setIsLoading(false);
+      await apiDeviceTokenDeleted({userId: user?.id as any})
 
       Toast.show({
         type: "success",

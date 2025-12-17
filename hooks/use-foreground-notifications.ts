@@ -1,5 +1,7 @@
 import { useEffect } from "react";
-import messaging, {
+import {
+  getMessaging,
+  onMessage,
   FirebaseMessagingTypes,
 } from "@react-native-firebase/messaging";
 
@@ -10,7 +12,9 @@ export function useForegroundNotifications(
   onMessageReceived: (message: RemoteMessage) => void
 ) {
   useEffect(() => {
-    const unsubscribe = messaging().onMessage((remoteMessage) => {
+    const messaging = getMessaging();
+
+    const unsubscribe = onMessage(messaging, (remoteMessage) => {
       console.log(
         "🔔 Notifikasi diterima saat app aktif:",
         JSON.stringify(remoteMessage, null, 2)

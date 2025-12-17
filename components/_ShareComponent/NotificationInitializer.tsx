@@ -1,6 +1,5 @@
 // src/components/NotificationInitializer.tsx
 import { useEffect } from "react";
-import messaging from "@react-native-firebase/messaging";
 import { useForegroundNotifications } from "@/hooks/use-foreground-notifications";
 import { useNotificationStore } from "@/hooks/use-notification-store";
 import type { FirebaseMessagingTypes } from "@react-native-firebase/messaging";
@@ -8,12 +7,12 @@ import { useAuth } from "@/hooks/use-auth";
 import { Platform } from "react-native";
 import * as Device from "expo-device";
 import * as Application from "expo-application";
-import { apiDeviceRegisterToken } from "@/service/api-notifications";
-
+import { apiDeviceRegisterToken } from "@/service/api-device-token";
+import messaging from "@react-native-firebase/messaging";
 
 export default function NotificationInitializer() {
   // Setup handler notifikasi
-  const { user } = useAuth(); // dari AuthContext
+  const { user, logout } = useAuth(); // dari AuthContext
   const { addNotification } = useNotificationStore();
 
   // Ambil token FCM (opsional, hanya untuk log)
@@ -23,10 +22,6 @@ export default function NotificationInitializer() {
       return;
     }
 
-    // if (user?.id) {
-    //   syncDeviceToken({ userId: user.id });
-    // }
-
     const registerDeviceToken = async () => {
       try {
         // 1. Minta izin & ambil FCM token
@@ -35,6 +30,10 @@ export default function NotificationInitializer() {
         if (authStatus === messaging.AuthorizationStatus.AUTHORIZED) {
           const token = await messaging().getToken();
           console.log("✅ FCM Token:", token);
+          if (!token) {
+            logout();
+            return;
+          }
         } else {
           console.warn("Izin notifikasi ditolak");
           return;
@@ -47,30 +46,24 @@ export default function NotificationInitializer() {
 
         // 2. Ambil info device
         const platform = Platform.OS; // "ios" | "android"
-        // ? await Device.getUdid()
-        // : "unknown";
         const model = Device.modelName || "unknown";
-        const appVersion =
-          (Application.nativeApplicationVersion || "unknown") +
-          "-" +
-          (Application.nativeBuildVersion || "unknown");
-        const deviceId =
-          Device.osInternalBuildId || Device.modelName + "-" + Date.now();
+        const appVersion = (Application.nativeApplicationVersion || "unknown") + "-" + (Application.nativeBuildVersion || "unknown");
+        const deviceId = Device.osInternalBuildId || Device.modelName + "-" + Date.now();
 
-        console.log(
-          "📱 Device info:",
-          JSON.stringify(
-            {
-              fcmToken,
-              platform,
-              deviceId,
-              model,
-              appVersion,
-            },
-            null,
-            2
-          )
-        );
+        // console.log(
+        //   "📱 Device info:",
+        //   JSON.stringify(
+        //     {
+        //       fcmToken,
+        //       platform,
+        //       deviceId,
+        //       model,
+        //       appVersion,
+        //     },
+        //     null,
+        //     2
+        //   )
+        // );
 
         // 3. Kirim ke backend
         await apiDeviceRegisterToken({

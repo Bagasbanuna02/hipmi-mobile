@@ -8,7 +8,7 @@ import { MainColor } from "@/constants/color-palet";
 export default function HeaderBell() {
   const { notifications } = useNotificationStore();
   const unreadCount = notifications.filter((n) => !n.read).length;
-  console.log("NOTIF:", JSON.stringify(notifications, null, 2));
+  // console.log("NOTIF:", JSON.stringify(notifications, null, 2));
 
   return (
     <View style={{ position: "relative" }}>
