@@ -8,7 +8,14 @@ import { Platform } from "react-native";
 import * as Device from "expo-device";
 import * as Application from "expo-application";
 import { apiDeviceRegisterToken } from "@/service/api-device-token";
-import messaging from "@react-native-firebase/messaging";
+import messaging, {
+  isSupported,
+  requestPermission,
+  getToken,
+  AuthorizationStatus,
+} from "@react-native-firebase/messaging";
+
+// ✅ Modular imports (sesuai v22+)
 
 export default function NotificationInitializer() {
   // Setup handler notifikasi
@@ -24,48 +31,40 @@ export default function NotificationInitializer() {
 
     const registerDeviceToken = async () => {
       try {
-        // 1. Minta izin & ambil FCM token
-        if (!messaging().isSupported()) return;
-        const authStatus = await messaging().requestPermission();
-        if (authStatus === messaging.AuthorizationStatus.AUTHORIZED) {
-          const token = await messaging().getToken();
-          console.log("✅ FCM Token:", token);
-          if (!token) {
-            logout();
-            return;
-          }
-        } else {
-          console.warn("Izin notifikasi ditolak");
+        // ✅ Dapatkan instance messaging
+        const messagingInstance = messaging();
+
+        // ✅ Gunakan instance sebagai argumen
+        const supported = await isSupported(messagingInstance);
+        if (!supported) {
+          console.log("‼️ FCM tidak didukung");
           return;
-        }
-        const fcmToken = await messaging().getToken();
-        if (!fcmToken) {
-          console.warn("Gagal mendapatkan FCM token");
+        };
+
+        const authStatus = await requestPermission(messagingInstance);
+        if (authStatus !== AuthorizationStatus.AUTHORIZED) {
+          console.warn("Izin telah ditolak");
           return;
         }
 
-        // 2. Ambil info device
+        const fcmToken = await getToken(messagingInstance);
+        if (!fcmToken) {
+          logout();
+          return;
+        }
+
+        console.log("✅ FCM Token:", fcmToken);
+
         const platform = Platform.OS; // "ios" | "android"
         const model = Device.modelName || "unknown";
-        const appVersion = (Application.nativeApplicationVersion || "unknown") + "-" + (Application.nativeBuildVersion || "unknown");
-        const deviceId = Device.osInternalBuildId || Device.modelName + "-" + Date.now();
+        const appVersion =
+          (Application.nativeApplicationVersion || "unknown") +
+          "-" +
+          (Application.nativeBuildVersion || "unknown");
+        const deviceId =
+          Device.osInternalBuildId || Device.modelName + "-" + Date.now();
 
-        // console.log(
-        //   "📱 Device info:",
-        //   JSON.stringify(
-        //     {
-        //       fcmToken,
-        //       platform,
-        //       deviceId,
-        //       model,
-        //       appVersion,
-        //     },
-        //     null,
-        //     2
-        //   )
-        // );
-
-        // 3. Kirim ke backend
+        // Kirim ke backend
         await apiDeviceRegisterToken({
           data: {
             fcmToken,
@@ -102,7 +101,7 @@ export default function NotificationInitializer() {
     }
 
     console.log("📥 Menambahkan ke store:", { title, body, safeData });
-    addNotification({ title, body, data: safeData });
+    addNotification({ title, body, data: safeData , type: "notification",  });
     console.log("✅ Notifikasi ditambahkan ke state");
   };
 

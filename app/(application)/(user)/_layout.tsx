@@ -1,4 +1,6 @@
 import { BackButton } from "@/components";
+import { IconPlus } from "@/components/_Icon";
+import { IconDot } from "@/components/_Icon/IconComponent";
 import LeftButtonCustom from "@/components/Button/BackButton";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
@@ -56,6 +58,12 @@ export default function UserLayout() {
           options={{
             title: "Notifikasi",
             headerLeft: () => <BackButton />,
+            headerRight: () => (
+              <IconPlus
+                color={MainColor.yellow}
+                onPress={() => router.push("/test-notifications")}
+              />
+            ),
           }}
         />
 

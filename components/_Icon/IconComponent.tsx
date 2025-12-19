@@ -98,13 +98,14 @@ export const IconView = ({
   );
 };
 
-export const IconDot = ({ size, color }: { size?: number; color?: string }) => {
+export const IconDot = ({ size, color, onPress }: { size?: number; color?: string , onPress?: () => void}) => {
   return (
     <>
       <Ionicons
         name="ellipsis-vertical"
         size={size || ICON_SIZE_MEDIUM}
         color={color || MainColor.darkblue}
+        onPress={onPress}
       />
     </>
   );

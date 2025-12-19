@@ -3,7 +3,6 @@
 import { ButtonCustom, StackCustom, ViewWrapper } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
-import { useNotificationStore } from "@/hooks/use-notification-store";
 import Home_BottomFeatureSection from "@/screens/Home/bottomFeatureSection";
 import HeaderBell from "@/screens/Home/HeaderBell";
 import Home_ImageSection from "@/screens/Home/imageSection";
@@ -14,8 +13,8 @@ import { apiUser } from "@/service/api-client/api-user";
 import { apiVersion } from "@/service/api-config";
 import { Ionicons } from "@expo/vector-icons";
 import { Redirect, router, Stack, useFocusEffect } from "expo-router";
-import { useCallback, useEffect, useState } from "react";
-import { RefreshControl, Text, View } from "react-native";
+import { useCallback, useState } from "react";
+import { RefreshControl } from "react-native";
 
 export default function Application() {
   const { token, user, userData } = useAuth();
@@ -99,7 +98,9 @@ export default function Application() {
         }
       >
         <StackCustom>
-          {/* <ButtonCustom onPress={() => router.push("./test-notifications")}>Test Notif</ButtonCustom> */}
+          {/* <ButtonCustom onPress={() => router.push("./test-notifications")}>
+            Test Notif
+          </ButtonCustom> */}
 
           <Home_ImageSection />
 

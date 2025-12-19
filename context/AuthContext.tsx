@@ -140,13 +140,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         await AsyncStorage.setItem("userData", JSON.stringify(dataUser));
 
         if (response.active) {
-          if (response.roleId === "1") {
-            router.replace("/(application)/(user)/home");
-            return;
-          } else {
-            router.replace("/(application)/admin/dashboard");
-            return;
-          }
+          // if (response.roleId === "1") {
+          //   router.replace("/(application)/(user)/home");
+          //   return;
+          // } else {
+          //   router.replace("/(application)/admin/dashboard");
+          //   return;
+          // }
+          router.replace("/(application)/(user)/home");
+          return
         } else {
           router.replace("/(application)/(user)/waiting-room");
           return;

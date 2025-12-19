@@ -1,13 +1,13 @@
 // components/HeaderBell.tsx
-import { Ionicons } from "@expo/vector-icons";
-import { View, Text } from "react-native";
-import { router } from "expo-router";
-import { useNotificationStore } from "@/hooks/use-notification-store";
 import { MainColor } from "@/constants/color-palet";
+import { useNotificationStore } from "@/hooks/use-notification-store";
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import { useEffect } from "react";
+import { Text, View } from "react-native";
 
 export default function HeaderBell() {
-  const { notifications } = useNotificationStore();
-  const unreadCount = notifications.filter((n) => !n.read).length;
+  const { notifications , unreadCount} = useNotificationStore();
   // console.log("NOTIF:", JSON.stringify(notifications, null, 2));
 
   return (

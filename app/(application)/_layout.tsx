@@ -1,15 +1,26 @@
 import { BackButton } from "@/components";
+import NotificationInitializer from "@/components/Notification/NotificationInitializer";
+import { NotificationProvider } from "@/hooks/use-notification-store";
 import { HeaderStyles } from "@/styles/header-styles";
 import { Stack } from "expo-router";
 
 export default function ApplicationLayout() {
   return (
     <>
+      <NotificationProvider>
+        <NotificationInitializer />
+        <ApplicationStack />
+      </NotificationProvider>
+    </>
+  );
+}
+
+function ApplicationStack() {
+  return (
+    <>
       <Stack screenOptions={HeaderStyles}>
         <Stack.Screen name="(user)" options={{ headerShown: false }} />
         <Stack.Screen name="admin" options={{ headerShown: false }} />
-        
-        
 
         {/* Take Picture */}
         <Stack.Screen

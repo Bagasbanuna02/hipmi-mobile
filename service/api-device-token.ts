@@ -18,10 +18,7 @@ export async function apiDeviceRegisterToken({
     const response = await apiConfig.post(`/mobile/auth/device-tokens`, {
       data: data,
     });
-    console.log(
-      "Device token registered:",
-      JSON.stringify(response.data, null, 2)
-    );
+
     return response.data;
   } catch (error) {
     console.error("Failed to register device token:", error);

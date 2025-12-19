@@ -6,10 +6,9 @@ import {
 } from "@/components";
 import { useAuth } from "@/hooks/use-auth";
 import { apiGetAllTokenDevice } from "@/service/api-device-token";
-import {
-  apiNotificationsSend,
-} from "@/service/api-notifications";
+import { apiNotificationsSend } from "@/service/api-notifications";
 import { useEffect, useState } from "react";
+import Toast from "react-native-toast-message";
 
 export default function TestNotification() {
   const { user } = useAuth();
@@ -39,7 +38,18 @@ export default function TestNotification() {
       },
     });
 
-    console.log("[RES SEND NOTIF]", JSON.stringify(response.data, null, 2));
+    if (response.success) {
+      console.log("[RES SEND NOTIF]", JSON.stringify(response, null, 2));
+      Toast.show({
+        type: "success",
+        text1: "Notifikasi berhasil dikirim",
+      });
+    } else {
+      Toast.show({
+        type: "error",
+        text1: "Gagal mengirim notifikasi",
+      });
+    }
   };
 
   return (
