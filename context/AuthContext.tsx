@@ -10,6 +10,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { createContext, useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
+import * as Device from "expo-device";
 
 // --- Types ---
 type AuthContextType = {
@@ -76,7 +77,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       console.log("[Masuk provider]", nomor);
       const response = await apiLogin({ nomor: nomor });
       console.log("[RESPONSE AUTH]", JSON.stringify(response));
-
 
       if (response.success) {
         console.log("[Keluar provider]", nomor);
@@ -148,7 +148,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           //   return;
           // }
           router.replace("/(application)/(user)/home");
-          return
+          return;
         } else {
           router.replace("/(application)/(user)/waiting-room");
           return;
@@ -283,9 +283,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setIsLoading(true);
       setToken(null);
       setUser(null);
+
+      const deviceId = Device.osInternalBuildId || Device.modelName || "unknown";
+
       await AsyncStorage.removeItem("authToken");
       await AsyncStorage.removeItem("userData");
-      await apiDeviceTokenDeleted({userId: user?.id as any})
+      await apiDeviceTokenDeleted({ userId: user?.id as any, deviceId });
 
       Toast.show({
         type: "success",

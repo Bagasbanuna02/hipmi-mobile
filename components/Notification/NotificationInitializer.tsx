@@ -39,7 +39,7 @@ export default function NotificationInitializer() {
         if (!supported) {
           console.log("‼️ FCM tidak didukung");
           return;
-        };
+        }
 
         const authStatus = await requestPermission(messagingInstance);
         if (authStatus !== AuthorizationStatus.AUTHORIZED) {
@@ -62,7 +62,7 @@ export default function NotificationInitializer() {
           "-" +
           (Application.nativeBuildVersion || "unknown");
         const deviceId =
-          Device.osInternalBuildId || Device.modelName + "-" + Date.now();
+          Device.osInternalBuildId || Device.modelName || "unknown";
 
         // Kirim ke backend
         await apiDeviceRegisterToken({
@@ -101,7 +101,7 @@ export default function NotificationInitializer() {
     }
 
     console.log("📥 Menambahkan ke store:", { title, body, safeData });
-    addNotification({ title, body, data: safeData , type: "notification",  });
+    addNotification({ title, body, data: safeData, type: "notification" });
     console.log("✅ Notifikasi ditambahkan ke state");
   };
 

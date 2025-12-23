@@ -1,10 +1,22 @@
 import { apiConfig } from "./api-config";
 
 type NotificationProp = {
-  fcmToken: string;
   title: string;
-  body: Object;
-  userLoginId?: string;
+  body: string;
+  userLoginId: string;
+  appId?: string;
+  status?: string;
+  type?: "announcement" | "trigger";
+  deepLink?: string;
+  kategoriApp?:
+    | "JOB"
+    | "VOTING"
+    | "EVENT"
+    | "DONASI"
+    | "INVESTASI"
+    | "COLLABORATION"
+    | "FORUM"
+    | "ACCESS"; // Untuk trigger akses user;
 };
 
 export async function apiNotificationsSend({
@@ -44,11 +56,13 @@ export async function apiGetNotificationsById({
   }
 }
 
-export async function apiNotificationUnreadCount({ id }: { id: string }) {
+export async function apiNotificationUnreadCount({ id, role }: { id: string, role: "user" | "admin" }) {
   try {
     const response = await apiConfig.get(
-      `/mobile/notification/${id}/unread-count`
+      `/mobile/notification/${id}/unread-count?role=${role}`
     );
+
+    console.log("Response Unread Count", response.data);
     return response.data;
   } catch (error) {
     throw error;

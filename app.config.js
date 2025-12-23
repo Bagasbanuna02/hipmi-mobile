@@ -21,7 +21,7 @@ export default {
         "Aplikasi membutuhkan akses lokasi untuk menampilkan peta.",
     },
     associatedDomains: ["applinks:cld-dkr-staging-hipmi.wibudev.com"],
-    buildNumber: "16",
+    buildNumber: "17",
   },
 
   android: {

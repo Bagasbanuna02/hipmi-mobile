@@ -15,6 +15,7 @@ import {
   ICON_SIZE_XLARGE,
 } from "@/constants/constans-value";
 import { useAuth } from "@/hooks/use-auth";
+import AdminNotificationBell from "@/screens/Admin/AdminNotificationBell";
 import {
   adminListMenu,
   superAdminListMenu,
@@ -192,11 +193,12 @@ export default function AdminLayout() {
                 label: "Notifikasi",
                 value: "notification",
                 icon: (
-                  <Ionicons
-                    name="notifications"
-                    size={ICON_SIZE_SMALL}
-                    color={MainColor.white}
-                  />
+                  // <Ionicons
+                  //   name="notifications"
+                  //   size={ICON_SIZE_SMALL}
+                  //   color={MainColor.white}
+                  // />
+                  <AdminNotificationBell/>
                 ),
                 path: "/admin/notification",
               },

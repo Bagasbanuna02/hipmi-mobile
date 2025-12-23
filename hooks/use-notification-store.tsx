@@ -70,6 +70,7 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
     try {
       const count = await apiNotificationUnreadCount({
         id: user?.id as any,
+        role: user?.masterUserRoleId as any
       }); // ← harus return number
       const result = count.data;
       console.log("📖 Unread count:", result);
@@ -105,8 +106,10 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
     try {
       const count = await apiNotificationUnreadCount({
         id: user?.id as any,
+        role: user?.masterUserRoleId as any,
       }); // ← harus return number
       const result = count.data;
+      console.log("📖 Unread count sync:", result);
       setUnreadCount(result);
     } catch (error) {
       console.warn("⚠️ Gagal sync unread count:", error);

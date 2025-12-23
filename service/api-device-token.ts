@@ -26,10 +26,10 @@ export async function apiDeviceRegisterToken({
   }
 }
 
-export async function apiDeviceTokenDeleted({ userId }: { userId: string }) {
+export async function apiDeviceTokenDeleted({ userId, deviceId }: { userId: string, deviceId: string }) {
   try {
     const response = await apiConfig.delete(
-      `/mobile/auth/device-tokens/${userId}`
+      `/mobile/auth/device-tokens/${userId}?deviceId=${deviceId}`
     );
     console.log("Device token deleted:", response.data);
     return response.data;

@@ -1,27 +1,20 @@
 // components/HeaderBell.tsx
 import { MainColor } from "@/constants/color-palet";
-import { useAuth } from "@/hooks/use-auth";
+import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import { useNotificationStore } from "@/hooks/use-notification-store";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Text, View } from "react-native";
 
-export default function HeaderBell() {
+export default function AdminNotificationBell() {
   const { unreadCount } = useNotificationStore();
-  const { user } = useAuth();
-
-  const pathDetector =
-    user?.masterUserRoleId === "1" ? "/notifications" : "/admin/notification";
 
   return (
     <View style={{ position: "relative" }}>
       <Ionicons
         name="notifications"
-        size={20}
-        color={MainColor.yellow}
-        onPress={() => {
-          router.push(pathDetector);
-        }}
+        size={ICON_SIZE_SMALL}
+        color={MainColor.white}
       />
       {unreadCount > 0 && (
         <View

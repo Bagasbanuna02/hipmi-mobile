@@ -3,6 +3,7 @@
 import { ButtonCustom, StackCustom, ViewWrapper } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
+import { useNotificationStore } from "@/hooks/use-notification-store";
 import Home_BottomFeatureSection from "@/screens/Home/bottomFeatureSection";
 import HeaderBell from "@/screens/Home/HeaderBell";
 import Home_ImageSection from "@/screens/Home/imageSection";
@@ -20,12 +21,16 @@ export default function Application() {
   const { token, user, userData } = useAuth();
   const [data, setData] = useState<any>();
   const [refreshing, setRefreshing] = useState(false);
+  const { syncUnreadCount } = useNotificationStore();
+
+
 
   useFocusEffect(
     useCallback(() => {
       onLoadData();
       checkVersion();
       userData(token as string);
+      syncUnreadCount()
     }, [user?.id, token])
   );
 
@@ -98,9 +103,9 @@ export default function Application() {
         }
       >
         <StackCustom>
-          {/* <ButtonCustom onPress={() => router.push("./test-notifications")}>
+          <ButtonCustom onPress={() => router.push("./test-notifications")}>
             Test Notif
-          </ButtonCustom> */}
+          </ButtonCustom>
 
           <Home_ImageSection />
 
