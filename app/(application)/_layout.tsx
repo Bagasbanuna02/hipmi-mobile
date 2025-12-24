@@ -1,4 +1,5 @@
 import { BackButton } from "@/components";
+import BackgroundNotificationHandler from "@/components/Notification/BackgroundNotificationHandler";
 import NotificationInitializer from "@/components/Notification/NotificationInitializer";
 import { NotificationProvider } from "@/hooks/use-notification-store";
 import { HeaderStyles } from "@/styles/header-styles";
@@ -9,6 +10,7 @@ export default function ApplicationLayout() {
     <>
       <NotificationProvider>
         <NotificationInitializer />
+        <BackgroundNotificationHandler />
         <ApplicationStack />
       </NotificationProvider>
     </>

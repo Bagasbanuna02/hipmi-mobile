@@ -6,7 +6,8 @@ import {
   StackCustom,
   TextCustom,
 } from "@/components";
-import { AccentColor } from "@/constants/color-palet";
+import { IconPlus } from "@/components/_Icon";
+import { AccentColor, MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
 import { useNotificationStore } from "@/hooks/use-notification-store";
 import { apiGetNotificationsById } from "@/service/api-notifications";
@@ -17,7 +18,9 @@ import { useCallback, useState } from "react";
 import { RefreshControl, View } from "react-native";
 
 const selectedCategory = (value: string) => {
-  const category = listOfcategoriesAppNotification.find((c) => c.value === value);
+  const category = listOfcategoriesAppNotification.find(
+    (c) => c.value === value
+  );
   return category?.label;
 };
 
@@ -104,7 +107,12 @@ export default function AdminNotification() {
         options={{
           title: "Admin Notifikasi",
           headerLeft: () => <BackButton />,
-          headerRight: () => <></>,
+          headerRight: () => (
+            <IconPlus
+              color={MainColor.yellow}
+              onPress={() => router.push("/test-notifications")}
+            />
+          ),
         }}
       />
 

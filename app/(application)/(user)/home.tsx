@@ -103,9 +103,9 @@ export default function Application() {
         }
       >
         <StackCustom>
-          <ButtonCustom onPress={() => router.push("./test-notifications")}>
+          {/* <ButtonCustom onPress={() => router.push("./test-notifications")}>
             Test Notif
-          </ButtonCustom>
+          </ButtonCustom> */}
 
           <Home_ImageSection />
 
