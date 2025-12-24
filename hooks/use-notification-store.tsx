@@ -1,5 +1,9 @@
 // hooks/useNotificationStore.ts
 import {
+  apiNotificationMarkAsRead,
+  apiNotificationUnreadCount,
+} from "@/service/api-notifications";
+import {
   createContext,
   ReactNode,
   useContext,
@@ -7,10 +11,6 @@ import {
   useState,
 } from "react";
 import { useAuth } from "./use-auth";
-import {
-  apiGetNotificationsById,
-  apiNotificationUnreadCount,
-} from "@/service/api-notifications";
 
 type AppNotification = {
   id: string;
@@ -19,7 +19,7 @@ type AppNotification = {
   data?: Record<string, string>;
   isRead: boolean;
   timestamp: number;
-  type: "notification" | "trigger";
+  type: "announcement" | "trigger";
   // untuk id dari setiap kategori app
   appId?: string;
   kategoriApp?:
@@ -70,7 +70,7 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
     try {
       const count = await apiNotificationUnreadCount({
         id: user?.id as any,
-        role: user?.masterUserRoleId as any
+        role: user?.masterUserRoleId as any,
       }); // ← harus return number
       const result = count.data;
       console.log("📖 Unread count:", result);
@@ -96,10 +96,22 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
     setUnreadCount((prev) => prev + 1);
   };
 
-  const markAsRead = (id: string) => {
-    setNotifications((prev) =>
-      prev.map((n) => (n.id === id ? { ...n, isRead: true } : n))
-    );
+  const markAsRead = async (id: string) => {
+    try {
+      const response = await apiNotificationMarkAsRead({ id });
+      console.log("🚀 Response Mark As Read:", response);
+
+      if (response.success) {
+        const cloneNotifications = [...notifications];
+        const index = cloneNotifications.findIndex((n) => n?.data?.id === id);
+        if (index !== -1) {
+          cloneNotifications[index].isRead = true;
+          setNotifications(cloneNotifications);
+        }
+      }
+    } catch (error) {
+      console.error("Gagal mark as read:", error);
+    }
   };
 
   const syncUnreadCount = async () => {

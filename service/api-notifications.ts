@@ -1,3 +1,4 @@
+import { TypeNotificationCategoryApp } from "@/types/type-notification-category";
 import { apiConfig } from "./api-config";
 
 type NotificationProp = {
@@ -8,15 +9,7 @@ type NotificationProp = {
   status?: string;
   type?: "announcement" | "trigger";
   deepLink?: string;
-  kategoriApp?:
-    | "JOB"
-    | "VOTING"
-    | "EVENT"
-    | "DONASI"
-    | "INVESTASI"
-    | "COLLABORATION"
-    | "FORUM"
-    | "ACCESS"; // Untuk trigger akses user;
+  kategoriApp?: TypeNotificationCategoryApp
 };
 
 export async function apiNotificationsSend({
@@ -40,7 +33,7 @@ export async function apiGetNotificationsById({
   category,
 }: {
   id: string;
-  category: "count-as-unread" | "all";
+  category: TypeNotificationCategoryApp
 }) {
   console.log("ID", id);
   console.log("Category", category);
@@ -63,6 +56,16 @@ export async function apiNotificationUnreadCount({ id, role }: { id: string, rol
     );
 
     console.log("Response Unread Count", response.data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+export async function apiNotificationMarkAsRead({id}: {id: string}) {
+  try {
+    const response = await apiConfig.put(`/mobile/notification/${id}`);
     return response.data;
   } catch (error) {
     throw error;

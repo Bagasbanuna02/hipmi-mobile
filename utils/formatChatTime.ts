@@ -17,7 +17,7 @@ export const formatChatTime = (date: string | Date): string => {
 
   // Jika hari ini
   if (messageDate.isSame(now, 'day')) {
-    return messageDate.format('HH.mm'); // contoh: "14.30"
+    return messageDate.format('HH:mm'); // contoh: "14.30"
   }
 
   // Jika kemarin
@@ -31,5 +31,5 @@ export const formatChatTime = (date: string | Date): string => {
   }
 
   // Lebih dari seminggu lalu → tampilkan tanggal
-  return messageDate.format('D MMM YYYY'); // contoh: "12 Mei 2024"
+  return messageDate.format('D MMM YYYY HH:mm'); // contoh: "12 Mei 2024 14:30"
 };

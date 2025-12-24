@@ -17,14 +17,14 @@ export default function TestNotification() {
     console.log("[Data Dikirim]", data);
     const response = await apiNotificationsSend({
       data: {
-        title: "Test dari Backend (App Router)!",
+        title: "Test Notification !!",
         body: data,
         userLoginId: user?.id || "",
         appId: "hipmi",
         status: "publish",
-        kategoriApp: "EVENT",
+        kategoriApp: "JOB",
         type: "announcement",
-        deepLink: "event/23189913801",
+        deepLink: "/job/cmhjz8u3h0005cfaxezyeilrr",
       },
     });
 

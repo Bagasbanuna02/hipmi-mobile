@@ -101,7 +101,7 @@ export default function NotificationInitializer() {
     }
 
     console.log("📥 Menambahkan ke store:", { title, body, safeData });
-    addNotification({ title, body, data: safeData, type: "notification" });
+    addNotification({ title, body, data: safeData, type: "announcement" });
     console.log("✅ Notifikasi ditambahkan ke state");
   };
 
