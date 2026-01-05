@@ -8,7 +8,9 @@ export type TypeNotificationCategoryApp =
   | "FORUM"
   | "ACCESS";
 
-  export const listOfcategoriesAppNotification = [
+export type TypeOfTilteCategoryApp = "Pendaftaran User Baru" | "Other" | string;
+
+export const listOfcategoriesAppNotification = [
   { value: "event", label: "Event" },
   { value: "job", label: "Job" },
   { value: "voting", label: "Voting" },

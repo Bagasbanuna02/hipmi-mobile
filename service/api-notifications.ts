@@ -1,8 +1,8 @@
-import { TypeNotificationCategoryApp } from "@/types/type-notification-category";
+import { TypeNotificationCategoryApp, TypeOfTilteCategoryApp } from "@/types/type-notification-category";
 import { apiConfig } from "./api-config";
 
 type NotificationProp = {
-  title: string;
+  title: TypeOfTilteCategoryApp;
   body: string;
   userLoginId: string;
   appId?: string;
