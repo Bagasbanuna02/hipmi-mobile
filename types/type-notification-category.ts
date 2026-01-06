@@ -1,3 +1,16 @@
+export type NotificationProp = {
+  title: TypeOfTilteCategoryApp | string
+  body: string;
+  userLoginId?: string;
+  appId?: string;
+  status?: string;
+  type?: "announcement" | "trigger";
+  deepLink?: string;
+  kategoriApp?: TypeNotificationCategoryApp
+};
+
+
+
 export type TypeNotificationCategoryApp =
   | "EVENT"
   | "JOB"
@@ -6,9 +19,9 @@ export type TypeNotificationCategoryApp =
   | "INVESTASI"
   | "COLLABORATION"
   | "FORUM"
-  | "ACCESS";
+  | "OTHER";
 
-export type TypeOfTilteCategoryApp = "Pendaftaran User Baru" | "Other" | string;
+export type TypeOfTilteCategoryApp = "Pendaftaran User Baru" | "Other"
 
 export const listOfcategoriesAppNotification = [
   { value: "event", label: "Event" },
@@ -18,4 +31,5 @@ export const listOfcategoriesAppNotification = [
   { value: "investasi", label: "Investasi" },
   { value: "forum", label: "Forum" },
   { value: "collaboration", label: "Collaboration" },
+  { value: "other", label: "Lainnya" },
 ];

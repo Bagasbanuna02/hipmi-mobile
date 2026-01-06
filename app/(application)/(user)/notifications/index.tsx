@@ -3,9 +3,10 @@ import {
   NewWrapper,
   ScrollableCustom,
   StackCustom,
-  TextCustom
+  TextCustom,
 } from "@/components";
 import ListSkeletonComponent from "@/components/_ShareComponent/ListSkeletonComponent";
+import NoDataText from "@/components/_ShareComponent/NoDataText";
 import { AccentColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
 import { useNotificationStore } from "@/hooks/use-notification-store";
@@ -13,11 +14,14 @@ import { apiGetNotificationsById } from "@/service/api-notifications";
 import { listOfcategoriesAppNotification } from "@/types/type-notification-category";
 import { formatChatTime } from "@/utils/formatChatTime";
 import { router, useFocusEffect } from "expo-router";
+import _ from "lodash";
 import { useCallback, useState } from "react";
 import { RefreshControl, View } from "react-native";
 
 const selectedCategory = (value: string) => {
-  const category = listOfcategoriesAppNotification.find((c) => c.value === value);
+  const category = listOfcategoriesAppNotification.find(
+    (c) => c.value === value
+  );
   return category?.label;
 };
 
@@ -83,7 +87,8 @@ export default function Notifications() {
         id: user?.id as any,
         category: activeCategory as any,
       });
-      // console.log("Response Notification", JSON.stringify(response, null, 2));
+
+      console.log("Response Notification", JSON.stringify(response, null, 2));
       if (response.success) {
         setListData(response.data);
       } else {
@@ -120,7 +125,9 @@ export default function Notifications() {
       }
     >
       {loading ? (
-        <ListSkeletonComponent/>
+        <ListSkeletonComponent />
+      ) : _.isEmpty(listData) ? (
+        <NoDataText text="Belum ada notifikasi" />
       ) : (
         listData.map((e, i) => (
           <View key={i}>

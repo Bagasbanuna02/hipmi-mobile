@@ -7,10 +7,10 @@ import {
 import { apiDeviceTokenDeleted } from "@/service/api-device-token";
 import { IUser } from "@/types/User";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Device from "expo-device";
 import { router } from "expo-router";
 import { createContext, useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
-import * as Device from "expo-device";
 
 // --- Types ---
 type AuthContextType = {
@@ -105,18 +105,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  // const loginWithNomor = async (nomor: string) => {
-  //   setIsLoading(true);
-  //   try {
-  //     const response = await apiLogin({ nomor: nomor });
-  //     await AsyncStorage.setItem("kode_otp", response.kodeId);
-  //   } catch (error: any) {
-  //     throw new Error(error.response?.data?.message || "Gagal kirim OTP");
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
   // --- 2. Validasi OTP & cek user ---
   const validateOtp = async (nomor: string) => {
     try {
@@ -209,7 +197,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsLoading(true);
     try {
       const response = await apiRegister({ data: userData });
-      console.log("[REGISTER FETCH]", JSON.stringify(response, null, 2));
 
       if (!response.success) {
         Toast.show({
@@ -239,42 +226,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setIsLoading(false);
     }
   };
-  // const registerUser = async (userData: {
-  //   username: string;
-  //   nomor: string;
-  //   termsOfServiceAccepted: boolean;
-  // }) => {
-  //   setIsLoading(true);
-  //   try {
-  //     const response = await apiRegister({ data: userData });
-  //     console.log("response", response);
-
-  //     const { token } = response;
-  //     if (!response.success) {
-  //       Toast.show({
-  //         type: "info",
-  //         text1: "Info",
-  //         text2: response.message,
-  //       });
-
-  //       return;
-  //     }
-
-  //     setToken(token);
-  //     await AsyncStorage.setItem("authToken", token);
-  //     Toast.show({
-  //       type: "success",
-  //       text1: "Sukses",
-  //       text2: "Anda berhasil terdaftar",
-  //     });
-  //     router.replace("/(application)/(user)/waiting-room");
-  //     return;
-  //   } catch (error: any) {
-  //     console.log("Error register", error);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
+ 
 
   // --- 5. Logout ---
 
@@ -284,7 +236,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setToken(null);
       setUser(null);
 
-      const deviceId = Device.osInternalBuildId || Device.modelName || "unknown";
+      const deviceId =
+        Device.osInternalBuildId || Device.modelName || "unknown";
 
       await AsyncStorage.removeItem("authToken");
       await AsyncStorage.removeItem("userData");

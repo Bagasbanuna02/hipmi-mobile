@@ -1,12 +1,10 @@
 import {
   AlertDefaultSystem,
   BoxButtonOnFooter,
-  ButtonCenteredOnly,
   ButtonCustom,
   InformationBox,
   NewWrapper,
-  StackCustom,
-  ViewWrapper,
+  StackCustom
 } from "@/components";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
 import { useAuth } from "@/hooks/use-auth";

@@ -9,15 +9,21 @@ import {
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import GridTwoView from "@/components/_ShareComponent/GridTwoView";
+import { useAuth } from "@/hooks/use-auth";
+import { routeUser } from "@/lib/routeApp";
 import {
   apiAdminUserAccessGetById,
   apiAdminUserAccessUpdateStatus,
 } from "@/service/api-admin/api-admin-user-access";
+import {
+  apiNotificationsSendById
+} from "@/service/api-notifications";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
 import Toast from "react-native-toast-message";
 
 export default function AdminUserAccessDetail() {
+  const { user } = useAuth();
   const { id } = useLocalSearchParams();
   const [data, setData] = useState<any | null>(null);
   const [loadData, setLoadData] = useState(false);
@@ -33,6 +39,7 @@ export default function AdminUserAccessDetail() {
     try {
       setLoadData(true);
       const response = await apiAdminUserAccessGetById({ id: id as string });
+      console.log("[DATA]", JSON.stringify(response.data, null, 2));
 
       setData(response.data);
     } catch (error) {
@@ -48,6 +55,7 @@ export default function AdminUserAccessDetail() {
       const response = await apiAdminUserAccessUpdateStatus({
         id: id as string,
         active: !data?.active,
+        category: "access",
       });
 
       if (!response.success) {
@@ -61,6 +69,21 @@ export default function AdminUserAccessDetail() {
         type: "success",
         text1: "Update aktifasi berhasil ",
       });
+
+      if (data.active === false) {
+        await apiNotificationsSendById({
+          data: {
+            title: "Akun anda telah diaktifkan",
+            body: "Selamat menjelajahi HIConnect",
+            userLoginId: user?.id || "",
+            kategoriApp: "OTHER",
+            type: "announcement",
+            deepLink: routeUser.home,
+          },
+          id: id as string,
+        });
+      }
+
       router.back();
     } catch (error) {
       console.log("[ERROR UPDATE STATUS]", error);

@@ -1,16 +1,8 @@
-import { TypeNotificationCategoryApp, TypeOfTilteCategoryApp } from "@/types/type-notification-category";
+import {
+  NotificationProp,
+  TypeNotificationCategoryApp
+} from "@/types/type-notification-category";
 import { apiConfig } from "./api-config";
-
-type NotificationProp = {
-  title: TypeOfTilteCategoryApp;
-  body: string;
-  userLoginId: string;
-  appId?: string;
-  status?: string;
-  type?: "announcement" | "trigger";
-  deepLink?: string;
-  kategoriApp?: TypeNotificationCategoryApp
-};
 
 export async function apiNotificationsSend({
   data,
@@ -28,12 +20,30 @@ export async function apiNotificationsSend({
   }
 }
 
+export async function apiNotificationsSendById({
+  data,
+  id,
+}: {
+  data: NotificationProp;
+  id: string;
+}) {
+  try {
+    const response = await apiConfig.post(`/mobile/notification/${id}`, {
+      data: data,
+    });
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function apiGetNotificationsById({
   id,
   category,
 }: {
   id: string;
-  category: TypeNotificationCategoryApp
+  category: TypeNotificationCategoryApp;
 }) {
   console.log("ID", id);
   console.log("Category", category);
@@ -49,7 +59,13 @@ export async function apiGetNotificationsById({
   }
 }
 
-export async function apiNotificationUnreadCount({ id, role }: { id: string, role: "user" | "admin" }) {
+export async function apiNotificationUnreadCount({
+  id,
+  role,
+}: {
+  id: string;
+  role: "user" | "admin";
+}) {
   try {
     const response = await apiConfig.get(
       `/mobile/notification/${id}/unread-count?role=${role}`
@@ -62,8 +78,7 @@ export async function apiNotificationUnreadCount({ id, role }: { id: string, rol
   }
 }
 
-
-export async function apiNotificationMarkAsRead({id}: {id: string}) {
+export async function apiNotificationMarkAsRead({ id }: { id: string }) {
   try {
     const response = await apiConfig.put(`/mobile/notification/${id}`);
     return response.data;

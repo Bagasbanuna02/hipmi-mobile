@@ -31,7 +31,7 @@ export async function apiDeviceTokenDeleted({ userId, deviceId }: { userId: stri
     const response = await apiConfig.delete(
       `/mobile/auth/device-tokens/${userId}?deviceId=${deviceId}`
     );
-    console.log("Device token deleted:", response.data);
+
     return response.data;
   } catch (error) {
     console.error("Failed to delete device token:", error);
@@ -42,7 +42,7 @@ export async function apiDeviceTokenDeleted({ userId, deviceId }: { userId: stri
 export async function apiGetAllTokenDevice() {
   try {
     const response = await apiConfig.get(`/mobile/auth/device-tokens`);
-    console.log("Device token deleted:", response.data);
+
     return response.data;
   } catch (error) {
     console.error("Failed to delete device token:", error);

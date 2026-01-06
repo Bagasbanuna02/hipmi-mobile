@@ -48,6 +48,7 @@ export default function SuperAdminDetail() {
       const response = await apiAdminUserAccessUpdateStatus({
         id: id as string,
         role: data?.masterUserRoleId === "2" ? "user" : "admin",
+        category: "role"
       });
 
       if (!response.success) {

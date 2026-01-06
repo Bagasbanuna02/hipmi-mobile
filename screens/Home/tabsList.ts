@@ -1,6 +1,13 @@
 import { ITabs } from "@/components/_Interface/types";
+import { Platform } from "react-native";
 
-export const tabsHome: any = ({acceptedForumTermsAt, profileId}: {acceptedForumTermsAt: Date, profileId: string}) => [
+export const tabsHome: any = ({
+  acceptedForumTermsAt,
+  profileId,
+}: {
+  acceptedForumTermsAt: Date;
+  profileId: string;
+}) => [
   {
     id: "forum",
     icon: "chatbubble-ellipses-outline",
@@ -25,8 +32,8 @@ export const tabsHome: any = ({acceptedForumTermsAt, profileId}: {acceptedForumT
     activeIcon: "map",
     label: "Maps",
     path: "/maps",
-    isActive: true,
-    disabled: false,
+    isActive: Platform.OS === "ios" ? true : false,
+    disabled: Platform.OS === "ios" ? false : true,
   },
   {
     id: "profile",

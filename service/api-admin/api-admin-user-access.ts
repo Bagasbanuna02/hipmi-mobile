@@ -28,13 +28,15 @@ export const apiAdminUserAccessUpdateStatus = async ({
   id,
   active,
   role,
+  category,
 }: {
   id: string;
   active?: boolean;
   role?: "user" | "admin" | "super_admin";
+  category: "access" | "role";
 }) => {
   try {
-    const response = await apiConfig.put(`/mobile/admin/user/${id}`, {
+    const response = await apiConfig.put(`/mobile/admin/user/${id}?category=${category}`, {
       data: {
         active,
         role,
