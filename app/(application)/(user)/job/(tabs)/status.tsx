@@ -9,14 +9,17 @@ import {
 import { useAuth } from "@/hooks/use-auth";
 import { dummyMasterStatus } from "@/lib/dummy-data/_master/status";
 import { apiJobGetByStatus } from "@/service/api-client/api-job";
-import { useFocusEffect } from "expo-router";
+import { useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import { useCallback, useState } from "react";
 
 export default function JobStatus() {
   const { user } = useAuth();
+  const { status } = useLocalSearchParams<{ status?: string }>();
+  console.log("STATUS", status);
+
   const [activeCategory, setActiveCategory] = useState<string | null>(
-    "publish"
+    status || "publish"
   );
   const [listData, setListData] = useState<any[]>([]);
   const [isLoadList, setIsLoadList] = useState(false);
@@ -60,25 +63,29 @@ export default function JobStatus() {
   );
 
   return (
-    <ViewWrapper headerComponent={scrollComponent} hideFooter>
-      {isLoadList ? (
-        <LoaderCustom />
-      ) : _.isEmpty(listData) ? (
-        <TextCustom align="center">Tidak ada data {activeCategory}</TextCustom>
-      ) : (
-        listData.map((e, i) => (
-          <BaseBox
-            key={i}
-            paddingTop={20}
-            paddingBottom={20}
-            href={`/job/${e?.id}/${activeCategory}/detail`}
-          >
-            <TextCustom align="center" bold truncate size="large">
-              {e?.title}
-            </TextCustom>
-          </BaseBox>
-        ))
-      )}
-    </ViewWrapper>
+    <>
+      <ViewWrapper headerComponent={scrollComponent} hideFooter>
+        {isLoadList ? (
+          <LoaderCustom />
+        ) : _.isEmpty(listData) ? (
+          <TextCustom align="center">
+            Tidak ada data {activeCategory}
+          </TextCustom>
+        ) : (
+          listData.map((e, i) => (
+            <BaseBox
+              key={i}
+              paddingTop={20}
+              paddingBottom={20}
+              href={`/job/${e?.id}/${activeCategory}/detail`}
+            >
+              <TextCustom align="center" bold truncate size="large">
+                {e?.title}
+              </TextCustom>
+            </BaseBox>
+          ))
+        )}
+      </ViewWrapper>
+    </>
   );
 }

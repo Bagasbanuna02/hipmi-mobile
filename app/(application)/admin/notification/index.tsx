@@ -7,6 +7,8 @@ import {
   TextCustom,
 } from "@/components";
 import { IconPlus } from "@/components/_Icon";
+import ListSkeletonComponent from "@/components/_ShareComponent/ListSkeletonComponent";
+import NoDataText from "@/components/_ShareComponent/NoDataText";
 import { AccentColor, MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
 import { useNotificationStore } from "@/hooks/use-notification-store";
@@ -14,6 +16,7 @@ import { apiGetNotificationsById } from "@/service/api-notifications";
 import { listOfcategoriesAppNotification } from "@/types/type-notification-category";
 import { formatChatTime } from "@/utils/formatChatTime";
 import { router, Stack, useFocusEffect } from "expo-router";
+import _ from "lodash";
 import { useCallback, useState } from "react";
 import { RefreshControl, View } from "react-native";
 
@@ -66,6 +69,7 @@ export default function AdminNotification() {
   const [activeCategory, setActiveCategory] = useState<string | null>("event");
   const [listData, setListData] = useState<any[]>([]);
   const [refreshing, setRefreshing] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handlePress = (item: any) => {
     setActiveCategory(item.value);
@@ -80,6 +84,7 @@ export default function AdminNotification() {
 
   const fecthData = async () => {
     try {
+      setLoading(true);
       const response = await apiGetNotificationsById({
         id: user?.id as any,
         category: activeCategory as any,
@@ -92,6 +97,8 @@ export default function AdminNotification() {
       }
     } catch (error) {
       console.log("Error Notification", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -132,11 +139,20 @@ export default function AdminNotification() {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        {listData.map((e, i) => (
-          <View key={i}>
-            <BoxNotification data={e} activeCategory={activeCategory as any} />
-          </View>
-        ))}
+        {loading ? (
+          <ListSkeletonComponent />
+        ) : _.isEmpty(listData) ? (
+          <NoDataText text="Belum ada notifikasi" />
+        ) : (
+          listData.map((e, i) => (
+            <View key={i}>
+              <BoxNotification
+                data={e}
+                activeCategory={activeCategory as any}
+              />
+            </View>
+          ))
+        )}
       </NewWrapper>
     </>
   );

@@ -13,7 +13,7 @@ import { useNotificationStore } from "@/hooks/use-notification-store";
 import { apiGetNotificationsById } from "@/service/api-notifications";
 import { listOfcategoriesAppNotification } from "@/types/type-notification-category";
 import { formatChatTime } from "@/utils/formatChatTime";
-import { router, useFocusEffect } from "expo-router";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import { useCallback, useState } from "react";
 import { RefreshControl, View } from "react-native";
@@ -25,6 +25,19 @@ const selectedCategory = (value: string) => {
   return category?.label;
 };
 
+const fixPath = ({
+  deepLink,
+  categoryApp,
+}: {
+  deepLink: string;
+  categoryApp: string;
+}) => {
+  const fixPath =
+    deepLink + "&from=notifications&category=" + _.lowerCase(categoryApp);
+
+  return fixPath;
+};
+
 const BoxNotification = ({
   data,
   activeCategory,
@@ -32,18 +45,28 @@ const BoxNotification = ({
   data: any;
   activeCategory: string | null;
 }) => {
+  // console.log("DATA NOTIFICATION", JSON.stringify(data, null, 2));
   const { markAsRead } = useNotificationStore();
   return (
     <>
       <BaseBox
         backgroundColor={data.isRead ? AccentColor.darkblue : AccentColor.blue}
         onPress={() => {
-          console.log(
-            "Notification >",
-            selectedCategory(activeCategory as string)
-          );
-          router.push(data.deepLink);
-          markAsRead(data.id);
+          // console.log(
+          //   "Notification >",
+          //   selectedCategory(activeCategory as string)
+          // );
+          const newPath = fixPath({
+            deepLink: data.deepLink,
+            categoryApp: data.kategoriApp,
+          });
+
+          router.replace(newPath as any);
+          selectedCategory(activeCategory as string);
+
+          if (!data.isRead) {
+            markAsRead(data.id);
+          }
         }}
       >
         <StackCustom>
@@ -64,7 +87,10 @@ const BoxNotification = ({
 
 export default function Notifications() {
   const { user } = useAuth();
-  const [activeCategory, setActiveCategory] = useState<string | null>("event");
+  const { category } = useLocalSearchParams<{ category?: string }>();
+  const [activeCategory, setActiveCategory] = useState<string | null>(
+    category || "event"
+  );
   const [listData, setListData] = useState<any[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);

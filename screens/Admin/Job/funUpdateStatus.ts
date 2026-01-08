@@ -7,7 +7,7 @@ const funUpdateStatusJob = async ({
 }: {
   id: string;
   changeStatus: "publish" | "review" | "reject";
-  data?: string;
+  data?: any;
 }) => {
   try {
     const response = await apiAdminJobUpdate({

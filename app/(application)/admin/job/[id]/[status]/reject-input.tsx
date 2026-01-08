@@ -15,7 +15,10 @@ import Toast from "react-native-toast-message";
 
 export default function AdminJobRejectInput() {
   const { id, status } = useLocalSearchParams();
-  const [data, setData] = useState<any | null>(null);
+  const [data, setData] = useState({
+    catatan: "",
+    senderId: ""
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   useFocusEffect(
@@ -48,7 +51,7 @@ export default function AdminJobRejectInput() {
       const response = await funUpdateStatusJob({
         id: id as string,
         changeStatus,
-        data: data,
+        data: data ,
       });
 
       if (!response.success) {
@@ -102,8 +105,8 @@ export default function AdminJobRejectInput() {
         headerComponent={<AdminBackButtonAntTitle title="Penolakan Job" />}
       >
         <TextAreaCustom
-          value={data}
-          onChangeText={setData}
+          value={data?.catatan}
+          onChangeText={(text) => setData({ ...data, catatan: text })}
           placeholder="Masukan alasan"
           required
           showCount

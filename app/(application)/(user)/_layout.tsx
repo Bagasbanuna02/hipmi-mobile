@@ -519,7 +519,8 @@ export default function UserLayout() {
           name="job/(tabs)"
           options={{
             title: "Job Vacancy",
-            headerLeft: () => <BackButton path="/home" />,
+            // headerLeft: () => <BackButton path="/home" />,
+            // Note: headerLeft di pindahkan ke Tabs Layout
           }}
         />
         <Stack.Screen

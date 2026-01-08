@@ -74,7 +74,7 @@ export default function JobDetailStatus() {
             <StackCustom gap={"xs"}>
               {data &&
                 data?.catatan &&
-                (status === "draft" || status === "rejected") && (
+                (status === "draft" || status === "reject") && (
                   <ReportBox text={data?.catatan} />
                 )}
                 

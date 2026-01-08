@@ -12,10 +12,12 @@ const LeftButtonCustom = ({
   path,
   icon = "arrow-back",
   iconCustom,
+  onPress,
 }: {
   path?: Href;
   icon?: React.ReactNode | any;
   iconCustom?: React.ReactNode;
+  onPress?: () => void;
 }) => {
   return (
     <>
@@ -26,7 +28,7 @@ const LeftButtonCustom = ({
           name={icon}
           size={20}
           color={MainColor.yellow}
-          onPress={() => (path ? router.replace(path) : router.back())}
+          onPress={() => (onPress ? onPress() : path ? router.replace(path) : router.back())}
         />
       )}
     </>

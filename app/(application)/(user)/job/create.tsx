@@ -19,7 +19,7 @@ import { useState } from "react";
 import Toast from "react-native-toast-message";
 
 export default function JobCreate() {
-  const nextUrl = "/(application)/(user)/job/(tabs)/status";
+  const nextUrl = "/(application)/(user)/job/(tabs)/status?status=review";
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState<string | null>(null);
