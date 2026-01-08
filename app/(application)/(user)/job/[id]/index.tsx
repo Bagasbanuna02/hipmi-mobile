@@ -25,6 +25,8 @@ export default function JobDetail() {
       setIsLoading(true);
       const response = await apiJobGetOne({ id: id as string });
 
+      console.log("DATA", JSON.stringify(response.data, null,2));
+
       setData(response.data);
     } catch (error) {
       console.log("[ERROR]", error);

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   BaseBox,
   NewWrapper,
@@ -32,10 +33,18 @@ const fixPath = ({
   deepLink: string;
   categoryApp: string;
 }) => {
-  const fixPath =
-    deepLink + "&from=notifications&category=" + _.lowerCase(categoryApp);
+  if (categoryApp === "OTHER") {
+    return deepLink;
+  }
 
-  return fixPath;
+  const separator = deepLink.includes("?") ? "&" : "?";
+
+  const fixedPath =
+    `${deepLink}${separator}from=notifications&category=${_.lowerCase(categoryApp)}`;
+
+  console.log("Fix Path", fixedPath);
+
+  return fixedPath;
 };
 
 const BoxNotification = ({
@@ -114,7 +123,6 @@ export default function Notifications() {
         category: activeCategory as any,
       });
 
-      console.log("Response Notification", JSON.stringify(response, null, 2));
       if (response.success) {
         setListData(response.data);
       } else {

@@ -17,7 +17,12 @@ export default function Home_BottomFeatureSection() {
       });
 
       // console.log("[DATA JOB]", JSON.stringify(response.data, null, 2));
-      const result = response.data.slice(-2);
+      const result = response.data
+        .sort(
+          (a: any, b: any) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        )
+        .slice(0, 2);
       setListData(result);
     } catch (error) {
       console.log("[ERROR]", error);

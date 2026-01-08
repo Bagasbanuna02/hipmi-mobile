@@ -139,7 +139,9 @@ const ButtonnDot = ({
   isUserCheck: boolean;
   logout: () => Promise<void>;
 }) => {
-  const isId = id === undefined || id === null;
+  console.log("[ID] >>", id);
+
+  const isId = id === undefined || id === "undefined";
 
   if (isId) {
     return (

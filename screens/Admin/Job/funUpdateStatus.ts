@@ -7,13 +7,17 @@ const funUpdateStatusJob = async ({
 }: {
   id: string;
   changeStatus: "publish" | "review" | "reject";
-  data?: any;
+  data: {
+    catatan?: string;
+    senderId: string;
+  };
 }) => {
   try {
+    const fixData = data;
     const response = await apiAdminJobUpdate({
       id: id,
       status: changeStatus as any,
-      data: data,
+      data: fixData as any,
     });
 
     return response;

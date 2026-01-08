@@ -15,6 +15,7 @@ import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
 import AdminButtonReview from "@/components/_ShareComponent/Admin/ButtonReview";
 import ReportBox from "@/components/Box/ReportBox";
 import { MainColor } from "@/constants/color-palet";
+import { useAuth } from "@/hooks/use-auth";
 import funUpdateStatusJob from "@/screens/Admin/Job/funUpdateStatus";
 import { apiAdminJobGetById } from "@/service/api-admin/api-admin-job";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
@@ -23,8 +24,10 @@ import { useCallback, useState } from "react";
 import Toast from "react-native-toast-message";
 
 export default function AdminJobDetailStatus() {
+  const { user } = useAuth();
   const { id, status } = useLocalSearchParams();
   const [data, setData] = useState<any | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -92,6 +95,9 @@ export default function AdminJobDetailStatus() {
       const response = await funUpdateStatusJob({
         id: id as string,
         changeStatus,
+        data: {
+          senderId: user?.id as string,
+        },
       });
 
       if (!response.success) {
@@ -142,12 +148,15 @@ export default function AdminJobDetailStatus() {
           </StackCustom>
         </BaseBox>
 
-        {data && data?.catatan && (status === "reject" || status === "review") && (
-          <ReportBox text={data?.catatan}/>
-        )}
+        {data &&
+          data?.catatan &&
+          (status === "reject" || status === "review") && (
+            <ReportBox text={data?.catatan} />
+          )}
 
         {status === "review" && (
           <AdminButtonReview
+            isLoading={isLoading}
             onPublish={() => {
               AlertDefaultSystem({
                 title: "Publish",
@@ -156,6 +165,7 @@ export default function AdminJobDetailStatus() {
                 textRight: "Ya",
                 onPressRight: () => {
                   handleUpdate({ changeStatus: "publish" });
+                  setIsLoading(true);
                 },
               });
             }}

@@ -89,7 +89,7 @@ export default function AdminNotification() {
         id: user?.id as any,
         category: activeCategory as any,
       });
-      // console.log("Response Notification", JSON.stringify(response, null, 2));
+      
       if (response.success) {
         setListData(response.data);
       } else {

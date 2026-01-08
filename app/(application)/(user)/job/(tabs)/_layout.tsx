@@ -1,13 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { BackButton } from "@/components";
 import { IconHome, IconStatus } from "@/components/_Icon";
 import { TabsStyles } from "@/styles/tabs-styles";
 import { Ionicons } from "@expo/vector-icons";
 import {
-  Stack,
+  router,
   Tabs,
   useLocalSearchParams,
-  router,
-  useNavigation,
+  useNavigation
 } from "expo-router";
 import { useLayoutEffect } from "react";
 
@@ -31,7 +31,7 @@ export default function JobTabsLayout() {
               if (from) {
                 router.replace(`/${from}` as any);
               } else {
-                router.back();
+                router.navigate("/home");
               }
             }
           }}
