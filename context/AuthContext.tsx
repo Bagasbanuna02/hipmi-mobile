@@ -2,6 +2,7 @@ import {
   apiConfig,
   apiLogin,
   apiRegister,
+  apiUpdatedTermCondition,
   apiValidationCode,
 } from "@/service/api-config";
 import { apiDeviceTokenDeleted } from "@/service/api-device-token";
@@ -29,6 +30,7 @@ type AuthContextType = {
     termsOfServiceAccepted: boolean;
   }) => Promise<void>;
   userData: (token: string) => Promise<any>;
+  acceptedTerms: (nomor: string) => Promise<any>;
 };
 
 // --- Create Context ---
@@ -74,28 +76,32 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const loginWithNomor = async (nomor: string) => {
     setIsLoading(true);
     try {
-      console.log("[Masuk provider]", nomor);
       const response = await apiLogin({ nomor: nomor });
-      console.log("[RESPONSE AUTH]", JSON.stringify(response));
+      console.log("[RESPONSE AUTH]", JSON.stringify(response, null, 2));
 
       if (response.success) {
-        console.log("[Keluar provider]", nomor);
-        Toast.show({
-          type: "success",
-          text1: "Sukses",
-          text2: "Kode OTP berhasil dikirim",
-        });
+        if (response.isAcceptTerms) {
+          Toast.show({
+            type: "success",
+            text1: "Sukses",
+            text2: "Kode OTP berhasil dikirim",
+          });
 
-        await AsyncStorage.setItem("kode_otp", response.kodeId);
-        router.push(`/verification?nomor=${nomor}`);
-        return;
+          await AsyncStorage.setItem("kode_otp", response.kodeId);
+          router.push(`/verification?nomor=${nomor}`);
+          return;
+        } else {
+          router.push(`/eula?nomor=${nomor}`);
+          return;
+        }
       } else {
-        router.push(`/register?nomor=${nomor}`);
-        Toast.show({
-          type: "info",
-          text1: "Info",
-          text2: "Silahkan mendaftar",
-        });
+        router.push(`/eula?nomor=${nomor}`);
+
+        // Toast.show({
+        //   type: "info",
+        //   text1: "Info",
+        //   text2: "Silahkan mendaftar",
+        // });
         return;
       }
     } catch (error: any) {
@@ -226,7 +232,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setIsLoading(false);
     }
   };
- 
 
   // --- 5. Logout ---
 
@@ -256,6 +261,31 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const acceptedTerms = async (nomor: string) => {
+    try {
+      setIsLoading(true);
+      const response = await apiUpdatedTermCondition({ nomor: nomor });
+
+      if (response.success) {
+        router.replace(`/verification?nomor=${nomor}`);
+      } else {
+        if (response.status === 404) {
+          router.replace(`/register?nomor=${nomor}`);
+        } else {
+          Toast.show({
+            type: "error",
+            text1: "Error",
+            text2: response.message,
+          });
+        }
+      }
+    } catch (error) {
+      console.log("Error accept terms", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <>
       <AuthContext.Provider
@@ -271,6 +301,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           logout,
           registerUser,
           userData,
+          acceptedTerms,
         }}
       >
         {children}

@@ -74,3 +74,10 @@ export async function apiAcceptTermService({
   return response.data;
 }
 
+
+export async function apiUpdatedTermCondition({nomor}: {nomor: string}) {
+  const response = await apiConfig.post(`/auth/mobile-eula`, {
+    nomor: nomor,
+  });
+  return response.data;
+}

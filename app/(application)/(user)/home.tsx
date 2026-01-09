@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ButtonCustom, StackCustom, ViewWrapper } from "@/components";
+import { StackCustom, ViewWrapper } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
 import { useNotificationStore } from "@/hooks/use-notification-store";
@@ -23,14 +23,12 @@ export default function Application() {
   const [refreshing, setRefreshing] = useState(false);
   const { syncUnreadCount } = useNotificationStore();
 
-
-
   useFocusEffect(
     useCallback(() => {
       onLoadData();
       checkVersion();
       userData(token as string);
-      syncUnreadCount()
+      syncUnreadCount();
     }, [user?.id, token])
   );
 
@@ -56,10 +54,10 @@ export default function Application() {
     setRefreshing(false);
   }, []);
 
-  if (user && user?.termsOfServiceAccepted === false) {
-    console.log("User is not accept term service");
-    return <Redirect href={`/terms-agreement`} />;
-  }
+  // if (user && user?.termsOfServiceAccepted === false) {
+  //   console.log("User is not accept term service");
+  //   return <Redirect href={`/terms-agreement`} />;
+  // }
 
   if (data && data?.active === false) {
     console.log("User is not active");

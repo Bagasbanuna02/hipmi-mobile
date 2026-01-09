@@ -15,6 +15,7 @@ export default function AppRoot() {
           name="index"
           options={{ title: "", headerBackVisible: false }}
         />
+        <Stack.Screen name="eula" options={{ title: "Terms & Conditions", headerBackVisible: false }} />
         <Stack.Screen name="+not-found" options={{ title: "" }} />
         <Stack.Screen
           name="verification"
