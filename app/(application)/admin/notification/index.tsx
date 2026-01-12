@@ -114,12 +114,12 @@ export default function AdminNotification() {
         options={{
           title: "Admin Notifikasi",
           headerLeft: () => <BackButton />,
-          headerRight: () => (
-            <IconPlus
-              color={MainColor.yellow}
-              onPress={() => router.push("/test-notifications")}
-            />
-          ),
+          // headerRight: () => (
+          //   <IconPlus
+          //     color={MainColor.yellow}
+          //     onPress={() => router.push("/test-notifications")}
+          //   />
+          // ),
         }}
       />
 

@@ -58,12 +58,12 @@ export default function UserLayout() {
           options={{
             title: "Notifikasi",
             headerLeft: () => <BackButton />,
-            headerRight: () => (
-              <IconPlus
-                color={MainColor.yellow}
-                onPress={() => router.push("/test-notifications")}
-              />
-            ),
+            // headerRight: () => (
+            //   <IconPlus
+            //     color={MainColor.yellow}
+            //     onPress={() => router.push("/test-notifications")}
+            //   />
+            // ),
           }}
         />
 
