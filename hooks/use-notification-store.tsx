@@ -40,6 +40,7 @@ type NotificationContextType = {
     notif: Omit<AppNotification, "id" | "isRead" | "timestamp">
   ) => void;
   markAsRead: (id: string) => void;
+  markAsReadAll: (id: string) => void;
   syncUnreadCount: () => Promise<void>;
 };
 
@@ -48,6 +49,7 @@ const NotificationContext = createContext<NotificationContextType>({
   unreadCount: 0,
   addNotification: () => {},
   markAsRead: () => {},
+  markAsReadAll: () => {},
   syncUnreadCount: async () => {},
 });
 
@@ -98,7 +100,7 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
 
   const markAsRead = async (id: string) => {
     try {
-      const response = await apiNotificationMarkAsRead({ id });
+      const response = await apiNotificationMarkAsRead({ id, category: "one" });
       console.log("🚀 Response Mark As Read:", response);
 
       if (response.success) {
@@ -113,6 +115,25 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
       console.error("Gagal mark as read:", error);
     }
   };
+
+  const markAsReadAll = async (id: string) => {
+    try {
+      const response = await apiNotificationMarkAsRead({ id, category: "all" });
+      console.log("🚀 Response Mark As Read All:", response);
+
+      if (response.success) {
+        const cloneNotifications = [...notifications];
+        const index = cloneNotifications.findIndex((n) => n?.data?.id === id);
+        if (index !== -1) {
+          cloneNotifications[index].isRead = true;
+          setNotifications(cloneNotifications);
+        }
+      }
+    } catch (error) {
+      console.error("Gagal mark as read:", error);
+    }
+  };
+
 
   const syncUnreadCount = async () => {
     try {
@@ -133,8 +154,9 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
       value={{
         notifications,
         addNotification,
-        markAsRead,
         unreadCount,
+        markAsRead,
+        markAsReadAll,
         syncUnreadCount,
       }}
     >

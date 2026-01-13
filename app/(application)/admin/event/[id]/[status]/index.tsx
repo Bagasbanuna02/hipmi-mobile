@@ -126,6 +126,7 @@ export default function AdminEventDetail() {
       const response = await funUpdateStatusEvent({
         id: id as string,
         changeStatus: "publish",
+        data: {catatan: "", senderId: user?.id as string}
       });
 
       if (!response.success) {

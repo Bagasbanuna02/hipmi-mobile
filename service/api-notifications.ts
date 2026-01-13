@@ -1,6 +1,6 @@
 import {
   NotificationProp,
-  TypeNotificationCategoryApp
+  TypeNotificationCategoryApp,
 } from "@/types/type-notification-category";
 import { apiConfig } from "./api-config";
 
@@ -78,9 +78,22 @@ export async function apiNotificationUnreadCount({
   }
 }
 
-export async function apiNotificationMarkAsRead({ id }: { id: string }) {
+/**
+ * @param id | notification id atau user id
+ * @param category | "all" | "one" , jika "all" id yang harus di masukan adalah user id, jika "one" id yang harus di masukan adalah notification id
+ * @type {string}
+ */
+export async function apiNotificationMarkAsRead({
+  id,
+  category,
+}: {
+  id: string;
+  category: "all" | "one";
+}) {
   try {
-    const response = await apiConfig.put(`/mobile/notification/${id}`);
+    const response = await apiConfig.put(
+      `/mobile/notification/${id}?category=${category}`
+    );
     return response.data;
   } catch (error) {
     throw error;

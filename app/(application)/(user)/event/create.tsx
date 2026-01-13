@@ -14,7 +14,7 @@ import { apiEventCreate } from "@/service/api-client/api-event";
 import { apiMasterEventType } from "@/service/api-client/api-master";
 import { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import { router } from "expo-router";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 
 interface EventCreateProps {

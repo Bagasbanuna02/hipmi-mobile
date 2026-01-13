@@ -7,6 +7,7 @@ import {
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
+import { useAuth } from "@/hooks/use-auth";
 import { funUpdateStatusEvent } from "@/screens/Admin/Event/funUpdateStatus";
 import { apiAdminEventById } from "@/service/api-admin/api-admin-event";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
@@ -14,9 +15,13 @@ import { useCallback, useState } from "react";
 import Toast from "react-native-toast-message";
 
 export default function AdminEventRejectInput() {
+  const { user } = useAuth();
   const { id, status } = useLocalSearchParams();
 
-  const [data, setData] = useState<any>("");
+  const [data, setData] = useState<any>({
+    catatan: "",
+    senderId: "",
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   useFocusEffect(
@@ -45,10 +50,16 @@ export default function AdminEventRejectInput() {
   }) => {
     try {
       setIsLoading(true);
+
+      const newData = {
+        catatan: data,
+        senderId: user?.id as string,
+      };
+
       const response = await funUpdateStatusEvent({
         id: id as string,
         changeStatus,
-        data: data,
+        data: newData,
       });
 
       if (!response.success) {

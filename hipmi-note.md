@@ -13,3 +13,13 @@ Exp: open ios/HIPMIBADUNG.xcworkspace
 perubahan versi : npm version patch
 ios: bunx expo prebuild --platform ios
 android: bunx expo prebuild --platform android
+
+### Android
+adb devices : cek device yang terhubung
+Note: izinkan perangkat dulu agar statusnya tidak unauthorized
+
+adb install android/app/build/outputs/apk/debug/app-debug.apk : install apk ke device
+Note:
+Gunakan flag -s (serial) di perintah adb untuk menentukan target 
+adb -s <0G52319V261040B2 ini adalah id nya> install android/app/build/outputs/apk/debug/app-debug.apk
+

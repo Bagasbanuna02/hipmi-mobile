@@ -49,7 +49,8 @@ export default function NotificationInitializer() {
 
         const fcmToken = await getToken(messagingInstance);
         if (!fcmToken) {
-          logout();
+           console.warn("Tidak bisa mendapatkan FCM token");
+          // logout();
           return;
         }
 

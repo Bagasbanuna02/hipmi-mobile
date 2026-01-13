@@ -53,7 +53,9 @@ export default function UserLayout() {
         />
 
         {/* ========== Notification Section ========= */}
-        <Stack.Screen
+
+        {/* DIPINDAH DI FILE NOTIFICATION USER */}
+        {/* <Stack.Screen
           name="notifications/index"
           options={{
             title: "Notifikasi",
@@ -65,18 +67,21 @@ export default function UserLayout() {
             //   />
             // ),
           }}
-        />
+        /> */}
 
         {/* ========== Event Section ========= */}
+
         <Stack.Screen
           name="event/(tabs)"
           options={{
             title: "Event",
-            headerLeft: () => (
-              <LeftButtonCustom path="/(application)/(user)/home" />
-            ),
+            // NOTE: DIPINDAH DI FILE /Event/(Tabs)/_layout.tsx
+            // headerLeft: () => (
+            //   <LeftButtonCustom path="/(application)/(user)/home" />
+            // ),
           }}
         />
+
         <Stack.Screen
           name="event/create"
           options={{
@@ -520,7 +525,7 @@ export default function UserLayout() {
           options={{
             title: "Job Vacancy",
             // headerLeft: () => <BackButton path="/home" />,
-            // Note: headerLeft di pindahkan ke Tabs Layout
+            // NOTE: headerLeft di pindahkan ke Tabs Layout
           }}
         />
         <Stack.Screen

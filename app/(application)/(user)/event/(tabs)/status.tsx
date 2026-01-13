@@ -11,15 +11,17 @@ import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { useAuth } from "@/hooks/use-auth";
 import { dummyMasterStatus } from "@/lib/dummy-data/_master/status";
 import { apiEventGetByStatus } from "@/service/api-client/api-event";
-import { useFocusEffect } from "expo-router";
+import { useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import { useCallback, useState } from "react";
 
 export default function EventStatus() {
   const { user } = useAuth();
+  const { status } = useLocalSearchParams<{ status?: string }>();
+
   const id = user?.id || "";
   const [activeCategory, setActiveCategory] = useState<string | null>(
-    "publish"
+    status || "publish"
   );
   const [listData, setListData] = useState([]);
   const [loadingGetData, setLoadingGetData] = useState(false);
@@ -73,7 +75,7 @@ export default function EventStatus() {
         listData.map((item: any, i) => (
           <BoxWithHeaderSection
             key={i}
-            href={`/event/${item.id }/${activeCategory}/detail-event`}
+            href={`/event/${item.id}/${activeCategory}/detail-event`}
           >
             <StackCustom gap={"xs"}>
               <Grid>

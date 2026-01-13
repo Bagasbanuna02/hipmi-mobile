@@ -1,20 +1,26 @@
 import {
+  AlertDefaultSystem,
   BackButton,
   BaseBox,
+  DrawerCustom,
+  MenuDrawerDynamicGrid,
   NewWrapper,
   ScrollableCustom,
   StackCustom,
   TextCustom,
 } from "@/components";
 import { IconPlus } from "@/components/_Icon";
+import { IconDot } from "@/components/_Icon/IconComponent";
 import ListSkeletonComponent from "@/components/_ShareComponent/ListSkeletonComponent";
 import NoDataText from "@/components/_ShareComponent/NoDataText";
 import { AccentColor, MainColor } from "@/constants/color-palet";
+import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import { useAuth } from "@/hooks/use-auth";
 import { useNotificationStore } from "@/hooks/use-notification-store";
 import { apiGetNotificationsById } from "@/service/api-notifications";
 import { listOfcategoriesAppNotification } from "@/types/type-notification-category";
 import { formatChatTime } from "@/utils/formatChatTime";
+import { Ionicons } from "@expo/vector-icons";
 import { router, Stack, useFocusEffect } from "expo-router";
 import _ from "lodash";
 import { useCallback, useState } from "react";
@@ -70,6 +76,9 @@ export default function AdminNotification() {
   const [listData, setListData] = useState<any[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false);
+
+  const { markAsReadAll } = useNotificationStore();
 
   const handlePress = (item: any) => {
     setActiveCategory(item.value);
@@ -89,7 +98,7 @@ export default function AdminNotification() {
         id: user?.id as any,
         category: activeCategory as any,
       });
-      
+
       if (response.success) {
         setListData(response.data);
       } else {
@@ -114,12 +123,12 @@ export default function AdminNotification() {
         options={{
           title: "Admin Notifikasi",
           headerLeft: () => <BackButton />,
-          // headerRight: () => (
-          //   <IconPlus
-          //     color={MainColor.yellow}
-          //     onPress={() => router.push("/test-notifications")}
-          //   />
-          // ),
+          headerRight: () => (
+            <IconDot
+              color={MainColor.yellow}
+              onPress={() => setOpenDrawer(true)}
+            />
+          ),
         }}
       />
 
@@ -154,6 +163,51 @@ export default function AdminNotification() {
           ))
         )}
       </NewWrapper>
+
+      <DrawerCustom
+        isVisible={openDrawer}
+        closeDrawer={() => setOpenDrawer(false)}
+        height={"auto"}
+      >
+        <MenuDrawerDynamicGrid
+          data={[
+            {
+              label: "Tandai Semua Dibaca",
+              value: "read-all",
+              icon: (
+                <Ionicons
+                  name="reader-outline"
+                  size={ICON_SIZE_SMALL}
+                  color={MainColor.white}
+                />
+              ),
+              path: "",
+            },
+          ]}
+          onPressItem={(item: any) => {
+            console.log("Item", item.value);
+            if (item.value === "read-all") {
+              AlertDefaultSystem({
+                title: "Tandai Semua Dibaca",
+                message:
+                  "Apakah Anda yakin ingin menandai semua notifikasi dibaca?",
+                textLeft: "Batal",
+                textRight: "Ya",
+                onPressRight: () => {
+                  markAsReadAll(user?.id as any);
+                  const data = _.cloneDeep(listData);
+                  data.forEach((e) => {
+                    e.isRead = true;
+                  });
+                  setListData(data);
+                  onRefresh();
+                  setOpenDrawer(false);
+                },
+              });
+            }
+          }}
+        />
+      </DrawerCustom>
     </>
   );
 }

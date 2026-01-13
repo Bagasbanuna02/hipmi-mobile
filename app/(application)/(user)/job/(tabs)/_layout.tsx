@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { BackButton } from "@/components";
 import { IconHome, IconStatus } from "@/components/_Icon";
+import BackButtonFromNotification from "@/components/Button/BackButtonFromNotification";
 import { TabsStyles } from "@/styles/tabs-styles";
 import { Ionicons } from "@expo/vector-icons";
 import {
@@ -23,19 +24,7 @@ export default function JobTabsLayout() {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
-        <BackButton
-          onPress={() => {
-            if (from === "notifications") {
-              router.replace(`/notifications?category=${category}`);
-            } else {
-              if (from) {
-                router.replace(`/${from}` as any);
-              } else {
-                router.navigate("/home");
-              }
-            }
-          }}
-        />
+       <BackButtonFromNotification from={from as string} category={category as string} />
       ),
     });
   }, [from, router, navigation]);
