@@ -16,6 +16,7 @@ import Donation_ComponentBoxDetailData from "@/screens/Donation/ComponentBoxDeta
 import Donation_ComponentStoryFunrising from "@/screens/Donation/ComponentStoryFunrising";
 import Donation_ProgressSection from "@/screens/Donation/ProgressSection";
 import { apiDonationGetOne } from "@/service/api-client/api-donation";
+import { countDownAndCondition } from "@/utils/countDownAndCondition";
 import { FontAwesome6 } from "@expo/vector-icons";
 import {
   router,
@@ -24,7 +25,7 @@ import {
   useLocalSearchParams,
 } from "expo-router";
 import _ from "lodash";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function DonasiDetailStatus() {
   const { id, status } = useLocalSearchParams();
@@ -58,6 +59,27 @@ export default function DonasiDetailStatus() {
     setOpenDrawer(false);
   };
 
+  const [value, setValue] = useState({
+    sisa: 0,
+    reminder: false,
+  });
+
+  useEffect(() => {
+    updateCountDown();
+  }, [data]);
+
+  const updateCountDown = () => {
+    const countDown = countDownAndCondition({
+      duration: data?.DonasiMaster_Durasi?.name,
+      publishTime: data?.publishTime,
+    });
+
+    setValue({
+      sisa: countDown.durationDay,
+      reminder: countDown.reminder,
+    });
+  };
+
   return (
     <>
       <Stack.Screen
@@ -74,10 +96,15 @@ export default function DonasiDetailStatus() {
       />
       <ViewWrapper>
         <Donation_ComponentBoxDetailData
+          sisaHari={value.sisa}
+          reminder={value.reminder}
           data={data}
           bottomSection={
             status === "publish" && (
-              <Donation_ProgressSection id={id as string} />
+              <Donation_ProgressSection
+                id={id as string}
+                progres={Number(data?.progres) || 0}
+              />
             )
           }
         />

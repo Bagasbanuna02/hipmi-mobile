@@ -63,30 +63,28 @@ export default function InvestmentDetail() {
     setOpenDrawerPublish(false);
   };
 
-    const [value, setValue] = useState({
-      sisa: 0,
-      reminder: false,
+  const [value, setValue] = useState({
+    sisa: 0,
+    reminder: false,
+  });
+
+  useEffect(() => {
+    updateCountDown();
+  }, [data]);
+
+  console.log("[DATA DETAIL]", JSON.stringify(data, null, 2));
+
+  const updateCountDown = () => {
+    const countDown = countDownAndCondition({
+      duration: data?.MasterPencarianInvestor.name,
+      publishTime: data?.countDown,
     });
-  
-    useEffect(() => {
-      updateCountDown();
-    }, [data]);
 
-    console.log("[DATA DETAIL]", JSON.stringify(data, null, 2));
-  
-    const updateCountDown = () => {
-      const countDown = countDownAndCondition({
-        duration: data?.MasterPencarianInvestor.name,
-        publishTime: data?.countDown,
-      });
-  
-      setValue({
-        sisa: countDown.durationDay,
-        reminder: countDown.reminder,
-      });
-    };
-
-
+    setValue({
+      sisa: countDown.durationDay,
+      reminder: countDown.reminder,
+    });
+  };
 
   const bottomSection = (
     <Invesment_ComponentBoxOnBottomDetail
@@ -97,7 +95,11 @@ export default function InvestmentDetail() {
   );
 
   const buttonSection = (
-    <Investment_ButtonInvestasiSection id={id as string} isMine={user?.id === data?.author?.id} reminder={value.reminder} />
+    <Investment_ButtonInvestasiSection
+      id={id as string}
+      isMine={user?.id === data?.author?.id}
+      reminder={value.reminder}
+    />
   );
 
   return (

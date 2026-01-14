@@ -24,8 +24,6 @@ const DateTimePickerCustom: React.FC<Props> = ({
   disabled = false,
 }) => {
 
-  console.log("Date Android Comp", value)
-
   return (
     <>
       {Platform.OS === "ios" ? (

@@ -41,8 +41,8 @@ export default function AdminEventDetail() {
   const deepLinkURL = `${DEEP_LINK_URL}/event/${id}/confirmation?userId=${user?.id}`;
   const deepLinkURLDEV = `${DEEP_LINK_URL}/--/event/${id}/confirmation?userId=${user?.id}`;
 
-  const isDevLink = process.env.NODE_ENV === "development" ? deepLinkURLDEV : deepLinkURL;
-
+  const isDevLink =
+    process.env.NODE_ENV === "development" ? deepLinkURLDEV : deepLinkURL;
 
   useFocusEffect(
     useCallback(() => {
@@ -126,7 +126,7 @@ export default function AdminEventDetail() {
       const response = await funUpdateStatusEvent({
         id: id as string,
         changeStatus: "publish",
-        data: {catatan: "", senderId: user?.id as string}
+        data: { catatan: "", senderId: user?.id as string },
       });
 
       if (!response.success) {
