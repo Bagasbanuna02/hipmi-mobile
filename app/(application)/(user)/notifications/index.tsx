@@ -78,7 +78,7 @@ const BoxNotification = ({
             categoryApp: data.kategoriApp,
           });
 
-          router.replace(newPath as any);
+          router.navigate(newPath as any);
           selectedCategory(activeCategory as string);
 
           if (!data.isRead) {

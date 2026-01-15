@@ -78,23 +78,6 @@ export default function EventCreate() {
       return;
     }
 
-    // if (selectedDate) {
-    //   console.log("Tanggal yang dipilih:", selectedDate);
-    //   console.log(`ISO Format ${Platform.OS}:`, selectedDate.toString());
-
-    //   // Kirim ke API atau proses lanjutan
-    // } else {
-    //   console.log("Tanggal belum dipilih");
-    // }
-
-    // if (selectedEndDate) {
-    //   console.log("Tanggal yang dipilih:", selectedEndDate);
-    //   console.log(`ISO Format ${Platform.OS}:`, selectedEndDate.toString());
-    //   // Kirim ke API atau proses lanjutan
-    // } else {
-    //   console.log("Tanggal berakhir belum dipilih");
-    // }
-
     try {
       setIsLoading(true);
 
@@ -110,7 +93,7 @@ export default function EventCreate() {
       const response = await apiEventCreate(newData);
       console.log("Response", JSON.stringify(response, null, 2));
 
-      router.replace("/event/status");
+      router.replace("/event/status?status=review");
     } catch (error) {
       console.log(error);
     } finally {

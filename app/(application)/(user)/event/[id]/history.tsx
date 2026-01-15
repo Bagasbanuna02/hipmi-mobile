@@ -56,7 +56,7 @@ export default function EventDetailHistory() {
       <DrawerCustom
         isVisible={openDrawer}
         closeDrawer={() => setOpenDrawer(false)}
-        height={250}
+        height={"auto"}
       >
         <MenuDrawerDynamicGrid
           data={menuDrawerPublishEvent({ id: id as string })}

@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   AlertDefaultSystem,
+  BackButton,
   ButtonCustom,
   DotButton,
   DrawerCustom,
-  LoaderCustom,
   MenuDrawerDynamicGrid,
   ViewWrapper,
 } from "@/components";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
+import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 import LeftButtonCustom from "@/components/Button/BackButton";
 import { useAuth } from "@/hooks/use-auth";
 import Event_BoxDetailPublishSection from "@/screens/Event/BoxDetailPublishSection";
@@ -18,6 +19,7 @@ import {
   apiEventGetOne,
   apiEventJoin,
 } from "@/service/api-client/api-event";
+import dayjs from "dayjs";
 import {
   router,
   Stack,
@@ -34,7 +36,9 @@ export default function EventDetailPublish() {
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [isLoadingJoin, setIsLoadingJoin] = useState(false);
 
-  const [data, setData] = useState();
+  const now = new Date().toISOString();
+
+  const [data, setData] = useState<any>();
   const [isParticipant, setIsParticipant] = useState<boolean | null>(null);
 
   useFocusEffect(
@@ -108,7 +112,17 @@ export default function EventDetailPublish() {
     }
   };
 
-  const footerButton = () => {
+  if (
+    id &&
+    data &&
+    data?.tanggalSelesai &&
+    dayjs(data?.tanggalSelesai).isBefore(now)
+  ) {
+    console.log("Event sudah selesai");
+    return router.replace(`/event/${id}/history`);
+  }
+
+  const FooterButton = () => {
     return (
       <>
         <ButtonCustom
@@ -138,17 +152,17 @@ export default function EventDetailPublish() {
       <Stack.Screen
         options={{
           title: `Event Publish`,
-          headerLeft: () => <LeftButtonCustom />,
+          headerLeft: () => <BackButton onPress={() => router.back()} />,
           headerRight: () => <DotButton onPress={() => setOpenDrawer(true)} />,
         }}
       />
       <ViewWrapper>
         {isLoadingData ? (
-          <LoaderCustom />
+          <CustomSkeleton height={400} />
         ) : (
           <Event_BoxDetailPublishSection
             data={data}
-            footerButton={footerButton()}
+            footerButton={FooterButton()}
           />
         )}
       </ViewWrapper>
