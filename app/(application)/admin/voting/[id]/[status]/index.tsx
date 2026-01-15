@@ -16,6 +16,7 @@ import AdminButtonReview from "@/components/_ShareComponent/Admin/ButtonReview";
 import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
 import ReportBox from "@/components/Box/ReportBox";
 import { MainColor } from "@/constants/color-palet";
+import { useAuth } from "@/hooks/use-auth";
 import funUpdateStatusVoting from "@/screens/Admin/Voting/funUpdateStatus";
 import { apiAdminVotingById } from "@/service/api-admin/api-admin-voting";
 import { colorBadgeStatus } from "@/utils/colorBadge";
@@ -29,6 +30,7 @@ import { List } from "react-native-paper";
 import Toast from "react-native-toast-message";
 
 export default function AdminVotingDetail() {
+  const { user } = useAuth();
   const { id, status } = useLocalSearchParams();
   const [data, setData] = useState<any | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -139,6 +141,10 @@ export default function AdminVotingDetail() {
       const response = await funUpdateStatusVoting({
         id: id as string,
         changeStatus,
+        data: {
+          senderId: user?.id as string,
+          catatan: "",
+        },
       });
 
       if (!response.success) {

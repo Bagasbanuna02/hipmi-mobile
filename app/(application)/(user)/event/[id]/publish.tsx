@@ -21,22 +21,22 @@ import {
 } from "@/service/api-client/api-event";
 import dayjs from "dayjs";
 import {
+  Redirect,
   router,
   Stack,
   useFocusEffect,
   useLocalSearchParams,
 } from "expo-router";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 
 export default function EventDetailPublish() {
-  const { id } = useLocalSearchParams();
+  const now = new Date().toISOString();
   const { user } = useAuth();
+  const { id } = useLocalSearchParams();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [isLoadingJoin, setIsLoadingJoin] = useState(false);
-
-  const now = new Date().toISOString();
 
   const [data, setData] = useState<any>();
   const [isParticipant, setIsParticipant] = useState<boolean | null>(null);
@@ -58,8 +58,6 @@ export default function EventDetailPublish() {
           id: id as string,
           userId: user?.id as string,
         });
-
-        console.log("[RES CHECK PARTICIPANTS]", responseCheckParticipants);
 
         if (
           responseCheckParticipants.success &&
@@ -112,14 +110,21 @@ export default function EventDetailPublish() {
     }
   };
 
-  if (
-    id &&
-    data &&
-    data?.tanggalSelesai &&
-    dayjs(data?.tanggalSelesai).isBefore(now)
-  ) {
-    console.log("Event sudah selesai");
-    return router.replace(`/event/${id}/history`);
+  const isEventFinished =
+    id && data?.tanggalSelesai && dayjs(data.tanggalSelesai).isBefore(now);
+
+  useEffect(() => {
+    if (isEventFinished) {
+      router.replace(`/(application)/(user)/event/${id}/history`);
+    }
+  }, [isEventFinished, id]);
+
+  if (isEventFinished) {
+    return (
+      <ViewWrapper>
+        <CustomSkeleton />
+      </ViewWrapper>
+    );
   }
 
   const FooterButton = () => {

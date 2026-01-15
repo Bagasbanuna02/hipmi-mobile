@@ -7,6 +7,7 @@ import {
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
+import { useAuth } from "@/hooks/use-auth";
 import funUpdateStatusVoting from "@/screens/Admin/Voting/funUpdateStatus";
 import { apiAdminVotingById } from "@/service/api-admin/api-admin-voting";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
@@ -14,6 +15,7 @@ import { useCallback, useState } from "react";
 import Toast from "react-native-toast-message";
 
 export default function AdminVotingRejectInput() {
+  const { user } = useAuth()
   const { id, status } = useLocalSearchParams();
   const [data, setData] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -48,7 +50,10 @@ export default function AdminVotingRejectInput() {
       const response = await funUpdateStatusVoting({
         id: id as string,
         changeStatus,
-        data: data,
+        data: {
+          catatan: data,
+          senderId: user?.id as string,
+        },
       });
 
       if (!response.success) {

@@ -1,5 +1,5 @@
 import { apiAdminEventUpdateStatus } from "@/service/api-admin/api-admin-event";
-import { RejectedData } from "@/types/type-collect-other";
+import { typeRejectedData } from "@/types/type-collect-other";
 
 export const funUpdateStatusEvent = async ({
   id,
@@ -8,7 +8,7 @@ export const funUpdateStatusEvent = async ({
 }: {
   id: string;
   changeStatus: "publish" | "review" | "reject";
-  data?: RejectedData;
+  data?: typeRejectedData;
 }) => {
   try {
     console.log("[DATA]", data);

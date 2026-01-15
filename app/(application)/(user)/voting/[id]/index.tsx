@@ -13,6 +13,7 @@ import {
 } from "@/components";
 import { IconArchive, IconContribution } from "@/components/_Icon";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
+import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 import { useAuth } from "@/hooks/use-auth";
 import Voting_BoxDetailHasilVotingSection from "@/screens/Voting/BoxDetailHasilVotingSection";
 import { Voting_BoxDetailPublishSection } from "@/screens/Voting/BoxDetailPublishSection";
@@ -22,13 +23,14 @@ import {
   apiVotingUpdateData,
 } from "@/service/api-client/api-voting";
 import { today } from "@/utils/dateTimeView";
+import dayjs from "dayjs";
 import {
   router,
   Stack,
   useFocusEffect,
   useLocalSearchParams,
 } from "expo-router";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 
 export default function VotingDetail() {
@@ -118,6 +120,23 @@ export default function VotingDetail() {
     router.navigate(item.path as any);
     setOpenDrawerPublish(false);
   };
+
+  const now = new Date().toISOString();
+  const isEventFinished = id && data?.akhirVote && dayjs(data.akhirVote).isBefore(now);
+
+  useEffect(() => {
+    if (isEventFinished) {
+      router.replace(`/(application)/(user)/voting/${id}/history`);
+    }
+  }, [isEventFinished, id]);
+
+  if (isEventFinished) {
+    return (
+      <ViewWrapper>
+        <CustomSkeleton />
+      </ViewWrapper>
+    );
+  }
 
   return (
     <>

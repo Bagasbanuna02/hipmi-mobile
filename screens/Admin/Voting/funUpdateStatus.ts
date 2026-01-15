@@ -1,4 +1,5 @@
 import { apiAdminVotingUpdateStatus } from "@/service/api-admin/api-admin-voting";
+import { typeRejectedData } from "@/types/type-collect-other";
 
 const funUpdateStatusVoting = async ({
   id,
@@ -7,7 +8,7 @@ const funUpdateStatusVoting = async ({
 }: {
   id: string;
   changeStatus: "publish" | "review" | "reject";
-  data?: string;
+  data?: typeRejectedData;
 }) => {
   try {
     const response = await apiAdminVotingUpdateStatus({

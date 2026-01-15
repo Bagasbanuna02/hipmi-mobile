@@ -12,15 +12,17 @@ import { useAuth } from "@/hooks/use-auth";
 import { dummyMasterStatus } from "@/lib/dummy-data/_master/status";
 import { apiVotingGetByStatus } from "@/service/api-client/api-voting";
 import { dateTimeView } from "@/utils/dateTimeView";
-import { useFocusEffect } from "expo-router";
+import { useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import { useCallback, useState } from "react";
 
 export default function VotingStatus() {
   const { user } = useAuth();
+  const { status } = useLocalSearchParams<{ status?: string }>();
+
   const id = user?.id || "";
   const [activeCategory, setActiveCategory] = useState<string | null>(
-    "publish"
+    status || "publish"
   );
 
   const [listData, setListData] = useState([]);
@@ -86,8 +88,14 @@ export default function VotingStatus() {
                 style={{ width: "70%", alignSelf: "center" }}
                 variant="light"
               >
-                {item?.awalVote && dateTimeView({date: item?.awalVote, withoutTime: true})} -{" "}
-                {item?.akhirVote && dateTimeView({date: item?.akhirVote, withoutTime: true})}
+                {item?.awalVote &&
+                  dateTimeView({
+                    date: item?.awalVote,
+                    withoutTime: true,
+                  })}{" "}
+                -{" "}
+                {item?.akhirVote &&
+                  dateTimeView({ date: item?.akhirVote, withoutTime: true })}
               </BadgeCustom>
             </StackCustom>
           </BaseBox>

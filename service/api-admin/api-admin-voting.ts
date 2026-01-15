@@ -1,3 +1,4 @@
+import { typeRejectedData } from "@/types/type-collect-other";
 import { apiConfig } from "../api-config";
 
 export async function apiAdminVoting({
@@ -32,7 +33,7 @@ export async function apiAdminVotingUpdateStatus({
   status,
 }: {
   id: string;
-  data?: string;
+  data?: typeRejectedData;
   status: "publish" | "review" | "reject";
 }) {
   try {
