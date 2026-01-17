@@ -19,34 +19,20 @@ import {
   apiForumGetOne,
   apiForumUpdateStatus,
 } from "@/service/api-client/api-forum";
+import { TypeForum_CommentProps } from "@/types/type-forum";
 import { isBadContent } from "@/utils/badWordsIndonesia";
 import { useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import { useCallback, useEffect, useState } from "react";
-import { Alert } from "react-native";
 
-interface CommentProps {
-  id: string;
-  isActive: boolean;
-  komentar: string;
-  createdAt: Date;
-  authorId: string;
-  Author: {
-    id: string;
-    username: string;
-    Profile: {
-      id: string;
-      imageId: string;
-    };
-  };
-}
+
 
 export default function ForumDetail() {
   const { id } = useLocalSearchParams();
   const { user } = useAuth();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [data, setData] = useState<any | null>(null);
-  const [listComment, setListComment] = useState<CommentProps[] | null>(null);
+  const [listComment, setListComment] = useState<TypeForum_CommentProps[] | null>(null);
   const [isLoadingComment, setLoadingComment] = useState(false);
 
   // Status
@@ -122,6 +108,7 @@ export default function ForumDetail() {
       comment: text,
       authorId: user?.id,
     };
+    
     try {
       setLoadingComment(true);
       const response = await apiForumCreateComment({

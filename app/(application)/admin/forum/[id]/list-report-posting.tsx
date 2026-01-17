@@ -16,12 +16,11 @@ import { IconDot, IconView } from "@/components/_Icon/IconComponent";
 import { IconTrash } from "@/components/_Icon/IconTrash";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
-import AdminTitleTable from "@/components/_ShareComponent/Admin/TableTitle";
-import AdminTableValue from "@/components/_ShareComponent/Admin/TableValue";
 import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
 import { GridSpan_NewComponent } from "@/components/_ShareComponent/GridSpan_NewComponent";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
+import { useAuth } from "@/hooks/use-auth";
 import {
   apiAdminForumDeactivatePosting,
   apiAdminForumListReportPostingById,
@@ -35,6 +34,7 @@ import { Divider } from "react-native-paper";
 import Toast from "react-native-toast-message";
 
 export default function AdminForumReportPosting() {
+  const { user } = useAuth();
   const { id } = useLocalSearchParams();
   const [openDrawerPage, setOpenDrawerPage] = useState(false);
   const [openDrawerAction, setOpenDrawerAction] = useState(false);
@@ -215,6 +215,9 @@ export default function AdminForumReportPosting() {
               onPressRight: async () => {
                 const response = await apiAdminForumDeactivatePosting({
                   id: id as string,
+                  data: {
+                    senderId: user?.id as string,
+                  },
                 });
 
                 if (!response.success) {

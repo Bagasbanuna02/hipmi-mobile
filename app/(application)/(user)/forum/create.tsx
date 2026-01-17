@@ -2,15 +2,14 @@ import {
   BoxButtonOnFooter,
   ButtonCustom,
   TextAreaCustom,
-  ViewWrapper
+  ViewWrapper,
 } from "@/components";
 import AlertWarning from "@/components/Alert/AlertWarning";
 import { useAuth } from "@/hooks/use-auth";
 import { apiForumCreate } from "@/service/api-client/api-forum";
-import { isBadContent } from "@/utils/badWordsIndonesia";
+import { censorText, isBadContent } from "@/utils/badWordsIndonesia";
 import { router } from "expo-router";
 import { useState } from "react";
-import { Alert } from "react-native";
 import Toast from "react-native-toast-message";
 
 export default function ForumCreate() {
@@ -19,16 +18,22 @@ export default function ForumCreate() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handlerSubmit = async () => {
-    
-    if (isBadContent(text)) {
-      AlertWarning({})
+    if (text.trim() === "") {
+      AlertWarning({
+        title: "Lengkapi Data",
+        description: "Postingan tidak boleh kosong",
+      });
       return;
     }
-    
+
+    // Bisa di sensor atau return dan tidak bisa di post
+    const cencorContent = censorText(text)
+
     const newData = {
-      diskusi: text,
+      diskusi: cencorContent,
       authorId: user?.id,
     };
+
     try {
       setIsLoading(true);
       const response = await apiForumCreate({ data: newData });
@@ -50,6 +55,7 @@ export default function ForumCreate() {
   const buttonFooter = (
     <BoxButtonOnFooter>
       <ButtonCustom
+        disabled={!text.trim() || isLoading}
         isLoading={isLoading}
         onPress={() => {
           handlerSubmit();

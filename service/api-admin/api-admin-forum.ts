@@ -81,9 +81,17 @@ export async function apiAdminForumListReportPostingById({
   }
 }
 
-export async function apiAdminForumDeactivatePosting({ id }: { id: string }) {
+export async function apiAdminForumDeactivatePosting({
+  id,
+  data,
+}: {
+  id: string;
+  data: { senderId: string };
+}) {
   try {
-    const response = await apiConfig.put(`/mobile/admin/forum/${id}`);
+    const response = await apiConfig.put(`/mobile/admin/forum/${id}`, {
+      data: data,
+    });
     return response.data;
   } catch (error) {
     throw error;

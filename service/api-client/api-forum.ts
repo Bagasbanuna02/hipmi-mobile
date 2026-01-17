@@ -119,3 +119,12 @@ export async function apiForumDeleteComment({ id }: { id: string }) {
     throw error;
   }
 }
+
+export async function  apiForumGetReportPosting({id}: {id:string}) {
+   try {
+    const response = await apiConfig.get(`/mobile/forum/${id}/preview-report-posting`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
