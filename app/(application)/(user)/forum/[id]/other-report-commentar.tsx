@@ -6,7 +6,7 @@ import {
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
-import { apiForumCreateReportCommentar } from "@/service/api-client/api-master";
+import { apiForumCreateReportCommentar } from "@/service/api-client/api-forum";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import Toast from "react-native-toast-message";

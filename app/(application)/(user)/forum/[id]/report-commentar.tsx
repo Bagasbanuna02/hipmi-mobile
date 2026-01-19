@@ -8,7 +8,8 @@ import {
 import { AccentColor, MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
 import Forum_ReportListSection from "@/screens/Forum/ReportListSection";
-import { apiForumCreateReportCommentar, apiMasterForumReportList } from "@/service/api-client/api-master";
+import { apiForumCreateReportCommentar } from "@/service/api-client/api-forum";
+import { apiMasterForumReportList } from "@/service/api-client/api-master";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState, useEffect } from "react";
 import Toast from "react-native-toast-message";

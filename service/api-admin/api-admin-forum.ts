@@ -57,9 +57,19 @@ export async function apiAdminForumListReportCommentById({
   }
 }
 
-export async function apiAdminForumDeactivateComment({ id }: { id: string }) {
+export async function apiAdminForumDeactivateComment({
+  id,
+  data,
+}: {
+  id: string;
+  data: { senderId: string };
+}) {
+
+  console.log("data", data)
   try {
-    const response = await apiConfig.put(`/mobile/admin/forum/${id}/comment`);
+    const response = await apiConfig.put(`/mobile/admin/forum/${id}/comment`, {
+      data: data,
+    });
     return response.data;
   } catch (error) {
     throw error;

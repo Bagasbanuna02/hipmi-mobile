@@ -8,12 +8,12 @@ import {
 import ListSkeletonComponent from "@/components/_ShareComponent/ListSkeletonComponent";
 import NoDataText from "@/components/_ShareComponent/NoDataText";
 import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
-import { apiForumGetReportPosting } from "@/service/api-client/api-forum";
+import { apiForumGetReportComment } from "@/service/api-client/api-forum";
 import { useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import { useCallback, useState } from "react";
 
-export default function ForumPreviewReportPosting() {
+export default function ForumPreviewReportComment() {
   const { id } = useLocalSearchParams();
   const [data, setData] = useState<any | null>(null);
   const [listData, setListData] = useState<any | null>(null);
@@ -29,9 +29,9 @@ export default function ForumPreviewReportPosting() {
   const onLoadData = async (id: string) => {
     try {
       setLoading(true);
-      const response = await apiForumGetReportPosting({ id });
+      const response = await apiForumGetReportComment({ id });
       setData(response.data);
-      setListData(response?.data?.Forum_ReportPosting);
+      setListData(response?.data?.Forum_ReportKomentar);
     } catch (error) {
       console.log("[ERROR]", error);
     } finally {
@@ -44,14 +44,14 @@ export default function ForumPreviewReportPosting() {
       <NewWrapper>
         <StackCustom>
           <TextCustom color="red" bold>
-            Postingan anda telah melanggar aturan forum ! Admin mengambil
+            Komentar anda telah melanggar aturan forum ! Admin mengambil
             tindakan untuk menghapus komentar anda!
           </TextCustom>
           {loading ? (
             <CustomSkeleton height={100} />
           ) : (
             <BaseBox>
-              <TextCustom>"{data?.diskusi ? data?.diskusi : "-"}"</TextCustom>
+              <TextCustom>"{data?.komentar ? data?.komentar : "-"}"</TextCustom>
             </BaseBox>
           )}
         </StackCustom>
@@ -65,24 +65,24 @@ export default function ForumPreviewReportPosting() {
         ) : _.isEmpty(listData) ? (
           <NoDataText />
         ) : (
-          listData?.map((e: any) => (
-            <BaseBox key={e?.id}>
-              {e?.deskripsi ? (
-                <StackCustom gap={"sm"}>
-                  <TextCustom bold>Laporan Lainnya</TextCustom>
-                  <TextCustom>{e?.deskripsi}</TextCustom>
-                </StackCustom>
-              ) : (
-                <StackCustom gap={"sm"}>
-                  <TextCustom bold>
-                    {e?.ForumMaster_KategoriReport?.title}
-                  </TextCustom>
-                  <TextCustom>
-                    {e?.ForumMaster_KategoriReport?.deskripsi}
-                  </TextCustom>
-                </StackCustom>
-              )}
-            </BaseBox>
+          listData?.map((e: any, index: number) => (
+             <BaseBox key={index}>
+                {e?.deskripsi ? (
+                  <StackCustom gap={"sm"}>
+                    <TextCustom bold>Laporan Lainnya</TextCustom>
+                    <TextCustom>{e?.deskripsi}</TextCustom>
+                  </StackCustom>
+                ) : (
+                  <StackCustom gap={"sm"}>
+                    <TextCustom bold>
+                      {e?.ForumMaster_KategoriReport?.title}
+                    </TextCustom>
+                    <TextCustom>
+                      {e?.ForumMaster_KategoriReport?.deskripsi}
+                    </TextCustom>
+                  </StackCustom>
+                )}
+              </BaseBox>
           ))
         )}
       </NewWrapper>

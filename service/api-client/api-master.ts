@@ -77,46 +77,6 @@ export async function apiMasterForumReportList() {
 
 // ================== END MASTER FORUM ================== //
 
-export async function apiForumCreateReportPosting({
-  id,
-  data,
-}: {
-  id: string;
-  data: any;
-}) {
-  try {
-    const response = await apiConfig.post(
-      `/mobile/forum/${id}/report-posting`,
-      {
-        data: data,
-      }
-    );
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-}
-
-export async function apiForumCreateReportCommentar({
-  id,
-  data,
-}: {
-  id: string;
-  data: any;
-}) {
-  try {
-    const response = await apiConfig.post(
-      `/mobile/forum/${id}/report-commentar`,
-      {
-        data: data,
-      }
-    );
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-}
-
 // ================== START MASTER INVESTMENT ================== //
 
 export async function apiMasterInvestment({

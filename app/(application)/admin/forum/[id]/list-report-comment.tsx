@@ -15,12 +15,11 @@ import { IconDot, IconView } from "@/components/_Icon/IconComponent";
 import { IconTrash } from "@/components/_Icon/IconTrash";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
-import AdminTitleTable from "@/components/_ShareComponent/Admin/TableTitle";
-import AdminTableValue from "@/components/_ShareComponent/Admin/TableValue";
 import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
 import { GridSpan_NewComponent } from "@/components/_ShareComponent/GridSpan_NewComponent";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
+import { useAuth } from "@/hooks/use-auth";
 import {
   apiAdminForumCommentById,
   apiAdminForumDeactivateComment,
@@ -35,6 +34,7 @@ import Toast from "react-native-toast-message";
 
 export default function AdminForumReportComment() {
   const { id } = useLocalSearchParams();
+  const { user } = useAuth();
   const [data, setData] = useState<any | null>(null);
   const [listReport, setListReport] = useState<any[] | null>(null);
   const [loadList, setLoadList] = useState(false);
@@ -111,9 +111,13 @@ export default function AdminForumReportComment() {
 
         <AdminComp_BoxTitle title="Daftar Report Komentar" />
 
-        <StackCustom  gap={"sm"}>
+        <StackCustom gap={"sm"}>
           <GridSpan_NewComponent
-            text1={<TextCustom bold align="center">Aksi</TextCustom>}
+            text1={
+              <TextCustom bold align="center">
+                Aksi
+              </TextCustom>
+            }
             text2={<TextCustom bold>Pelapor</TextCustom>}
             text3={<TextCustom bold>Kategori Report</TextCustom>}
           />
@@ -129,22 +133,24 @@ export default function AdminForumReportComment() {
               <View key={index}>
                 <GridSpan_NewComponent
                   text1={
-                   <CenterCustom>
-                     <ActionIcon
-                      icon={<IconView size={ICON_SIZE_BUTTON} color="black" />}
-                      onPress={() => {
-                        setOpenDrawerAction(true);
-                        setSelectedReport({
-                          id: item.id,
-                          username: item.User?.username,
-                          kategori: item.ForumMaster_KategoriReport?.title,
-                          keterangan:
-                            item.ForumMaster_KategoriReport?.deskripsi,
-                          deskripsi: item.deskripsi,
-                        });
-                      }}
-                    />
-                   </CenterCustom>
+                    <CenterCustom>
+                      <ActionIcon
+                        icon={
+                          <IconView size={ICON_SIZE_BUTTON} color="black" />
+                        }
+                        onPress={() => {
+                          setOpenDrawerAction(true);
+                          setSelectedReport({
+                            id: item.id,
+                            username: item.User?.username,
+                            kategori: item.ForumMaster_KategoriReport?.title,
+                            keterangan:
+                              item.ForumMaster_KategoriReport?.deskripsi,
+                            deskripsi: item.deskripsi,
+                          });
+                        }}
+                      />
+                    </CenterCustom>
                   }
                   text2={
                     <TextCustom truncate={1}>
@@ -188,15 +194,18 @@ export default function AdminForumReportComment() {
               onPressRight: async () => {
                 const deleteComment = await apiAdminForumDeactivateComment({
                   id: id as string,
+                  data: {
+                    senderId: user?.id as string,
+                  },
                 });
 
-                if (!deleteComment.success) {
-                  Toast.show({
-                    type: "error",
-                    text1: "Komentar gagal dihapus",
-                  });
-                  return;
-                }
+                // if (!deleteComment.success) {
+                //   Toast.show({
+                //     type: "error",
+                //     text1: "Komentar gagal dihapus",
+                //   });
+                //   return;
+                // }
 
                 setOpenDrawer(false);
                 Toast.show({

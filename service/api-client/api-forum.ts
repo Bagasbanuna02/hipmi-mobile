@@ -128,3 +128,53 @@ export async function  apiForumGetReportPosting({id}: {id:string}) {
     throw error;
   }
 }
+
+export async function  apiForumGetReportComment({id}: {id:string}) {
+   try {
+    const response = await apiConfig.get(`/mobile/forum/${id}/preview-report-comment`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+export async function apiForumCreateReportPosting({
+  id,
+  data,
+}: {
+  id: string;
+  data: any;
+}) {
+  try {
+    const response = await apiConfig.post(
+      `/mobile/forum/${id}/report-posting`,
+      {
+        data: data,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiForumCreateReportCommentar({
+  id,
+  data,
+}: {
+  id: string;
+  data: any;
+}) {
+  try {
+    const response = await apiConfig.post(
+      `/mobile/forum/${id}/report-commentar`,
+      {
+        data: data,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

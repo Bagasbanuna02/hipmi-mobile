@@ -73,7 +73,7 @@ export default function AdminForumReportPosting() {
         <GridSpan_NewComponent
           text1={
             <TextCustom bold truncate>
-              Username
+              Pelapor
             </TextCustom>
           }
           text2={

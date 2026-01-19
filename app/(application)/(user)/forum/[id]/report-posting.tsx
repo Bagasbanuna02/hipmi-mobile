@@ -9,8 +9,8 @@ import {
 import { AccentColor, MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
 import Forum_ReportListSection from "@/screens/Forum/ReportListSection";
+import { apiForumCreateReportPosting } from "@/service/api-client/api-forum";
 import {
-  apiForumCreateReportPosting,
   apiMasterForumReportList,
 } from "@/service/api-client/api-master";
 import { router, useLocalSearchParams } from "expo-router";

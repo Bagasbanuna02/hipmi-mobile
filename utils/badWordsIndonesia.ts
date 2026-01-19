@@ -5,11 +5,11 @@ const badWordsIndonesia = [
   'anjing', 'babi', 'bangsat', 'bodoh', 'goblok', 'idiot', 'jancok', 'jembut', 'kampret',
   'kontol', 'memek', 'ngentot', 'peler', 'puki', 'sialan', 'tai', 'tolol', 'wibu',
   'anjingg', 'babbii', 'bangsaat', 'gobllokk', 'jancokk', 'kontoll', 'memekk', 'ngentott',
-  'pelerr', 'puuki', 'sialann', 'taii', 'tololl', 'wibuu',
+  'pelerr', 'puuki', 'sialann', 'taii', 'tololl', 'wibuu', 'cicing',
 
   // 🔥 Kata Sindiran & Penghinaan
   'bego', 'dungu', 'edan', 'gila', 'goblog', 'kampang', 'kampret', 'keparat', 'lonte',
-  'main mata', 'monyet', 'najis', 'ngeyel', 'ngibul', 'ngomong seenaknya', 'ngurangin',
+  'monyet', 'najis', 'ngeyel', 'ngibul', 'ngomong seenaknya', 'ngurangin',
   'ngutang', 'ngurusin urusan orang', 'pemalas', 'pengecut', 'penipu', 'sinting',
   'begoo', 'dunguu', 'goblogg', 'kampangg', 'keparatt', 'lontee', 'monyyet', 'najiss',
   'ngeyell', 'ngibull', 'ngomongg seenaknya', 'nguranginn', 'ngutangg', 'pemalass',
@@ -23,18 +23,17 @@ const badWordsIndonesia = [
 
   // 💸 Kata Spam / Promosi Ilegal
   'judi', 'togel', 'slot', 'casino', 'poker', 'qq', 'bandar', 'agen', 'link', 'wa',
-  'whatsapp', 'telepon', 'nomor', 'hp', 'sms', 'grup', 'join', 'daftar', 'bonus',
-  'deposit', 'withdraw', 'uang', 'duit', 'rp', 'ratusan', 'juta', 'milyar',
+  'deposit', 'withdraw',
   'judii', 'togell', 'slotss', 'casinoo', 'pokerr', 'qqq', 'bandarr', 'agenn', 'linkk',
-  'waa', 'whatsappp', 'teleponn', 'nomorr', 'hpp', 'smss', 'grupp', 'jooin', 'daftarr',
-  'bonuss', 'depositt', 'withdraww', 'uangs', 'duitt', 'rpp', 'ratusann', 'jutaa', 'milyarr',
+  'waa',
+  'depositt', 'withdraww', 'rpp',
 
   // 🧩 Variasi Penulisan (Bypass Filter)
   'a*njing', 'b*b*i', 'b*ngsat', 'g*blok', 'k*nt*l', 'm*m*k', 'n*g*nt*t', 'p*l*r',
-  't*i', 't*l*l', 'j*n*c*k', 'j*m*b*t', 'k*m*p*r*t', 's*i*l*a*n', 'w*b*u',
+  't*i', 't*l*l', 'j*n*c*k', 'j*m*b*t', 'k*m*p*r*t', 's*i*l*a*n', 'w*b*u', 
   'a.n.j.i.n.g', 'b.a.b.i', 'b.a.n.g.s.a.t', 'g.o.b.l.o.k', 'k.o.n.t.o.l', 'm.e.m.e.k',
   'n.g.e.n.t.o.t', 'p.e.l.e.r', 't.a.i', 't.o.l.o.l', 'j.a.n.c.o.k', 'j.e.m.b.u.t',
-  'k.a.m.p.r.e.t', 's.i.a.l.a.n', 'w.i.b.u',
+  'k.a.m.p.r.e.t', 's.i.a.l.a.n', 'w.i.b.u', 'c.i.c.i.n.g',
 
   // 📱 Variasi dengan Angka & Simbol
   '4nj1ng', 'b4b1', 'b4ngs4t', 'g0bl0k', 'k0nt0l', 'm3m3k', 'ng3nt0t', 'p3l3r',
@@ -43,8 +42,6 @@ const badWordsIndonesia = [
   'p3l3rr', 't4ii', 't0l0ll', 'j4nc0kk', 'j3mbutt', 'k4mpr3tt', 's14l4nn', 'w1buu',
 
   // 🗣️ Kata yang Sering Digunakan dalam Konteks Negatif
-  'dasar', 'kamu', 'kau', 'lu', 'lo', 'gue', 'gua', 'kita', 'kami', 'mereka',
-  'dasarr', 'kamuu', 'kauu', 'luu', 'loo', 'guee', 'guua', 'kitaa', 'kamii', 'merekaa',
   'dasar bodoh', 'dasar goblok', 'dasar bangsat', 'dasar idiot', 'dasar sialan',
   'dasar bego', 'dasar dungu', 'dasar edan', 'dasar gila', 'dasar sinting',
   'dasar pemalas', 'dasar pengecut', 'dasar penipu', 'dasar najis', 'dasar kampret',

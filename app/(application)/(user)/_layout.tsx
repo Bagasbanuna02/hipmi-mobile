@@ -616,15 +616,20 @@ export default function UserLayout() {
             headerLeft: () => <BackButton />,
           }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="forum/[id]/preview-report-posting"
           options={{
-            title: "Preview Laporan Diskusi",
+            title: "Laporan Postingan",
             headerLeft: () => <BackButton />,
           }}
         />
-
-
+        <Stack.Screen
+          name="forum/[id]/preview-report-comment"
+          options={{
+            title: "Laporan Komentar",
+            headerLeft: () => <BackButton />,
+          }}
+        />
 
         {/* ========== Maps Section ========= */}
         <Stack.Screen
