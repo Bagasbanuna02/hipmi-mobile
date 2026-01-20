@@ -167,7 +167,7 @@ export default function InvestmentCreate() {
           text1: "Berhasil",
           text2: response.message,
         });
-        router.replace("/investment/portofolio");
+        router.replace("/investment/portofolio?status=review");
       } else {
         Toast.show({
           type: "error",
@@ -224,7 +224,6 @@ export default function InvestmentCreate() {
           onPress={() => {
             pickFile({
               setPdfUri: ({ uri, name, size }) => {
-
                 setPdf({ uri, name, size });
               },
               allowedType: "pdf",
@@ -357,7 +356,11 @@ export default function InvestmentCreate() {
         )}
 
         <Spacing />
-        <ButtonCustom isLoading={isLoading} onPress={() => handleSubmit()}>
+        <ButtonCustom
+          disabled={isLoading}
+          isLoading={isLoading}
+          onPress={() => handleSubmit()}
+        >
           Simpan
         </ButtonCustom>
       </StackCustom>

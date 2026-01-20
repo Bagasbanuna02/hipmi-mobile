@@ -7,34 +7,39 @@ import {
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
-import { apiAdminInvestasiUpdateByStatus, apiAdminInvestmentDetailById } from "@/service/api-admin/api-admin-investment";
+import { useAuth } from "@/hooks/use-auth";
+import {
+  apiAdminInvestasiUpdateByStatus,
+  apiAdminInvestmentDetailById,
+} from "@/service/api-admin/api-admin-investment";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
 import Toast from "react-native-toast-message";
 
 export default function AdminInvestmentRejectInput() {
+  const { user } = useAuth();
   const { id, status } = useLocalSearchParams();
   console.log("[STATUS]", status);
   const [value, setValue] = useState<any | null>(null);
-  const [isLoading , setLoading] = useState(false)
+  const [isLoading, setLoading] = useState(false);
 
-    useFocusEffect(
-      useCallback(() => {
-        onLoadData();
-      }, [id])
-    );
-  
-    const onLoadData = async () => {
-      try {
-        const response = await apiAdminInvestmentDetailById({ id: id as string });
-        console.log("[DATA]", JSON.stringify(response, null, 2));
-        if (response.success) {
-          setValue(response.data?.catatan);
-        }
-      } catch (error) {
-        console.log(error);
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [id])
+  );
+
+  const onLoadData = async () => {
+    try {
+      const response = await apiAdminInvestmentDetailById({ id: id as string });
+      console.log("[DATA]", JSON.stringify(response, null, 2));
+      if (response.success) {
+        setValue(response.data?.catatan);
       }
-    };
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handlerSubmit = async () => {
     if (!value) {
@@ -45,12 +50,23 @@ export default function AdminInvestmentRejectInput() {
       return;
     }
 
+    if (!user?.id) {
+      Toast.show({
+        type: "error",
+        text1: "User tidak ditemukan",
+      });
+      return;
+    }
+
     try {
-      setLoading(true)
+      setLoading(true);
       const response = await apiAdminInvestasiUpdateByStatus({
         id: id as string,
         status: "reject",
-        data: value,
+        data: {
+          catatan: value,
+          senderId: user?.id as string,
+        },
       });
 
       console.log("[RESPONSE]", JSON.stringify(response, null, 2));
@@ -76,7 +92,7 @@ export default function AdminInvestmentRejectInput() {
     } catch (error) {
       console.error(["ERROR"], error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
