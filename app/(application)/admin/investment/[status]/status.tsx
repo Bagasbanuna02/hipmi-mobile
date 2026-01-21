@@ -22,8 +22,6 @@ import { Divider } from "react-native-paper";
 
 export default function AdminInvestmentStatus() {
   const { status } = useLocalSearchParams();
-  console.log("[STATUS]", status);
-
   const [listData, setListData] = React.useState<any[] | null>(null);
   const [loadData, setLoadingData] = React.useState(false);
   const [search, setSearch] = React.useState("");
@@ -41,7 +39,7 @@ export default function AdminInvestmentStatus() {
         category: status as "publish" | "review" | "reject",
         search,
       });
-      console.log("[LIST DATA]", JSON.stringify(response, null, 2));
+
       if (response.success) {
         setListData(response.data);
       }

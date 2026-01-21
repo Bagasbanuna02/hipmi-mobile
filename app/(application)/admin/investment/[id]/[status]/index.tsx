@@ -20,6 +20,7 @@ import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButt
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
 import AdminButtonReview from "@/components/_ShareComponent/Admin/ButtonReview";
 import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
+import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 import ReportBox from "@/components/Box/ReportBox";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
@@ -28,6 +29,7 @@ import {
   apiAdminInvestmentDetailById,
 } from "@/service/api-admin/api-admin-investment";
 import { colorBadgeStatus } from "@/utils/colorBadge";
+import { countDownAndCondition } from "@/utils/countDownAndCondition";
 import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
@@ -40,90 +42,40 @@ export default function AdminInvestmentDetail() {
 
   const [data, setData] = React.useState<any | null>(null);
   const [isLoading, setLoading] = React.useState(false);
+  const [remind, setRemind] = React.useState({
+    sisa: 0,
+    reminder: false,
+  });
 
   useFocusEffect(
     React.useCallback(() => {
       onLoadData();
-    }, [id])
+    }, [id]),
   );
 
   const onLoadData = async () => {
     try {
       const response = await apiAdminInvestmentDetailById({ id: id as string });
-      // console.log("[GETONE INVEST]", JSON.stringify(response, null, 2));
       if (response.success) {
         setData(response.data);
+
+        const duration = response?.data?.MasterPencarianInvestor?.name;
+        const publishTime = response?.data?.countDown;
+
+        const countDown = countDownAndCondition({
+          duration: duration,
+          publishTime: publishTime
+        });
+
+        setRemind({
+          sisa: countDown.durationDay,
+          reminder: countDown.reminder,
+        });
       }
     } catch (error) {
-      console.log(error);
+      console.log("Error", error);
     }
   };
-
-  const listData = [
-    {
-      label: "Username",
-      value: (data && data?.author?.username) || "-",
-    },
-    {
-      label: "Judul",
-      value: (data && data?.title) || "-",
-    },
-    {
-      label: "Status",
-      value:
-        data && data?.MasterStatusInvestasi?.name ? (
-          <BadgeCustom
-            color={colorBadgeStatus({
-              status: data?.MasterStatusInvestasi?.name as string,
-            })}
-          >
-            {_.startCase(data?.MasterStatusInvestasi?.name as string)}
-          </BadgeCustom>
-        ) : (
-          "-"
-        ),
-    },
-    {
-      label: "Dana Dibutuhkan",
-      value: `Rp. ${
-        (data && data?.targetDana && formatCurrencyDisplay(data?.targetDana)) ||
-        "-"
-      }`,
-    },
-    {
-      label: "Harga Perlembar",
-      value: `Rp. ${
-        (data &&
-          data?.hargaLembar &&
-          formatCurrencyDisplay(data?.hargaLembar)) ||
-        "-"
-      }`,
-    },
-    {
-      label: "Total Lembar",
-      value:
-        (data &&
-          data?.totalLembar &&
-          formatCurrencyDisplay(data?.totalLembar)) ||
-        "-",
-    },
-    {
-      label: "ROI",
-      value: `${(data && data?.roi && data?.roi) || 0} %`,
-    },
-    {
-      label: "Pembagian Deviden",
-      value: (data && data?.MasterPembagianDeviden?.name) + " bulan" || "-",
-    },
-    {
-      label: "Jadwal Pembagian",
-      value: (data && data?.MasterPeriodeDeviden?.name) || "-",
-    },
-    {
-      label: "Pencarian Investor",
-      value: (data && data?.MasterPencarianInvestor?.name) + " hari" || "-",
-    },
-  ];
 
   const handlerSubmitPublish = async () => {
     try {
@@ -134,7 +86,6 @@ export default function AdminInvestmentDetail() {
         data: data,
       });
 
-      // console.log("[GET ON INVEST]", JSON.stringify(response, null, 2));
       if (!response.success) {
         Toast.show({
           type: "error",
@@ -164,6 +115,16 @@ export default function AdminInvestmentDetail() {
     />
   );
 
+  if (!data) {
+    return (
+      <>
+        <ViewWrapper>
+          <CustomSkeleton height={200} />
+        </ViewWrapper>
+      </>
+    );
+  }
+
   return (
     <>
       <ViewWrapper
@@ -177,8 +138,8 @@ export default function AdminInvestmentDetail() {
         {status === "publish" && (
           <BaseBox>
             <ProgressCustom
-              label={data && `${data.progress}%` || "0%"}
-              value={data && data.progress || 0}
+              label={(data && `${data.progress}%`) || "0%"}
+              value={(data && data.progress) || 0}
               size="lg"
             />
             <Spacing />
@@ -187,7 +148,8 @@ export default function AdminInvestmentDetail() {
                 label={<TextCustom bold>Sisa Saham</TextCustom>}
                 value={
                   <TextCustom>
-                    {data && formatCurrencyDisplay(data && data?.sisaLembar)} lembar
+                    {data && formatCurrencyDisplay(data && data?.sisaLembar)}{" "}
+                    lembar
                   </TextCustom>
                 }
               />
@@ -206,13 +168,15 @@ export default function AdminInvestmentDetail() {
         <BaseBox>
           <StackCustom>
             <DummyLandscapeImage imageId={data?.imageId} />
-            {listData.map((item, i) => (
-              <GridSpan_4_8
-                key={i}
-                label={<TextCustom bold>{item.label}</TextCustom>}
-                value={<TextCustom>{item.value}</TextCustom>}
-              />
-            ))}
+            {listData({ data: data, reminder: remind.reminder })?.map(
+              (item, i) => (
+                <GridSpan_4_8
+                  key={i}
+                  label={<TextCustom bold>{item.label}</TextCustom>}
+                  value={<TextCustom>{item.value}</TextCustom>}
+                />
+              ),
+            )}
           </StackCustom>
         </BaseBox>
 
@@ -230,7 +194,7 @@ export default function AdminInvestmentDetail() {
                   }
                   onPress={() => {
                     router.push(
-                      `/(application)/(file)/${data?.prospektusFileId}`
+                      `/(application)/(file)/${data?.prospektusFileId}`,
                     );
                   }}
                 >
@@ -259,7 +223,7 @@ export default function AdminInvestmentDetail() {
                           }
                           onPress={() => {
                             router.push(
-                              `/(application)/(file)/${item?.fileId}`
+                              `/(application)/(file)/${item?.fileId}`,
                             );
                           }}
                         >
@@ -299,8 +263,8 @@ export default function AdminInvestmentDetail() {
             onReject={() => {
               router.push(
                 `/admin/investment/${id}/reject-input?status=${_.lowerCase(
-                  data?.MasterStatusInvestasi?.name
-                )}`
+                  data?.MasterStatusInvestasi?.name,
+                )}`,
               );
             }}
           />
@@ -343,3 +307,67 @@ export default function AdminInvestmentDetail() {
     </>
   );
 }
+
+const listData = ({ data, reminder }: { data: any; reminder: boolean }) => [
+  {
+    label: "Username",
+    value: (data && data?.author?.username) || "-",
+  },
+  {
+    label: "Judul",
+    value: (data && data?.title) || "-",
+  },
+  {
+    label: "Status",
+    value:
+      data && data?.MasterStatusInvestasi?.name ? (
+        <BadgeCustom
+          color={colorBadgeStatus({
+            status: reminder ? "periode berakhir" : "publish",
+          })}
+        >
+          {reminder
+            ? "Periode Berakhir"
+            : _.startCase(data?.MasterStatusInvestasi?.name as string)}
+        </BadgeCustom>
+      ) : (
+        "-"
+      ),
+  },
+  {
+    label: "Dana Dibutuhkan",
+    value: `Rp. ${
+      (data && data?.targetDana && formatCurrencyDisplay(data?.targetDana)) ||
+      "-"
+    }`,
+  },
+  {
+    label: "Harga Perlembar",
+    value: `Rp. ${
+      (data && data?.hargaLembar && formatCurrencyDisplay(data?.hargaLembar)) ||
+      "-"
+    }`,
+  },
+  {
+    label: "Total Lembar",
+    value:
+      (data && data?.totalLembar && formatCurrencyDisplay(data?.totalLembar)) ||
+      "-",
+  },
+  {
+    label: "ROI",
+    value: `${(data && data?.roi && data?.roi) || 0} %`,
+  },
+  {
+    label: "Pembagian Deviden",
+    value: (data && data?.MasterPembagianDeviden?.name) + " bulan" || "-",
+  },
+  {
+    label: "Jadwal Pembagian",
+    value: (data && data?.MasterPeriodeDeviden?.name) || "-",
+  },
+  {
+    label: "Pencarian Investor",
+    value: (data && data?.MasterPencarianInvestor?.name) + " hari" || "-",
+  },
+];

@@ -27,7 +27,6 @@ import Toast from "react-native-toast-message";
 
 export default function InvestmentInvoice() {
   const { id } = useLocalSearchParams();
-  console.log("[ID]", id);
   const [data, setData] = useState<any>({});
   const [image, setImage] = useState<IFileData>({
     name: "",
@@ -49,7 +48,6 @@ export default function InvestmentInvoice() {
         category: "invoice",
       });
 
-      console.log("[RES INVOICE]", JSON.stringify(response.data, null, 2));
       setData(response.data);
     } catch (error) {
       console.log("[ERROR]", error);
@@ -63,8 +61,6 @@ export default function InvestmentInvoice() {
         dirId: DIRECTORY_ID.investasi_bukti_transfer,
         imageUri: image?.uri,
       });
-
-      console.log("[RESPONSE UPLOAD IMAGE]", responseUploadImage);
 
       if (!responseUploadImage?.data?.id) {
         Toast.show({
@@ -83,10 +79,6 @@ export default function InvestmentInvoice() {
       });
 
       if (response.success) {
-        console.log(
-          "[RESPONSE UPDATE]",
-          JSON.stringify(response.data, null, 2)
-        );
         Toast.show({
           type: "success",
           text1: "Berhasil mengunggah bukti transfer",
@@ -210,7 +202,6 @@ export default function InvestmentInvoice() {
                   pickFile({
                     allowedType: "image",
                     setImageUri(file: any) {
-                      console.log("[IMAGE]", file);
                       setImage(file);
                     },
                   });
@@ -224,7 +215,7 @@ export default function InvestmentInvoice() {
 
           <ButtonCustom
             isLoading={isLoading}
-            disabled={!image}
+            disabled={!image || isLoading}
             onPress={() => {
               handlerSubmitUpdate();
             }}

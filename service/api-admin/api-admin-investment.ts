@@ -98,6 +98,7 @@ export async function apiAdminInvestmentUpdateInvoice({
   data: {
     investasiId: string;
     lembarTerbeli: number;
+    senderId: string
   };
 }) {
   try {
