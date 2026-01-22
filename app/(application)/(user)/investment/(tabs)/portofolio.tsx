@@ -9,14 +9,16 @@ import { useAuth } from "@/hooks/use-auth";
 import { dummyMasterStatus } from "@/lib/dummy-data/_master/status";
 import Investment_StatusBox from "@/screens/Invesment/StatusBox";
 import { apiInvestmentGetByStatus } from "@/service/api-client/api-investment";
-import { useFocusEffect } from "expo-router";
+import { useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import { useCallback, useState } from "react";
 
 export default function InvestmentPortofolio() {
   const { user } = useAuth();
+  const { status } = useLocalSearchParams<{ status?: string }>();
+
   const [activeCategory, setActiveCategory] = useState<string | null>(
-    "publish"
+    status || "publish"
   );
 
   const [listData, setListData] = useState<any[]>([]);

@@ -1,3 +1,4 @@
+import { typeRejectedData } from "@/types/type-collect-other";
 import { apiConfig } from "../api-config";
 
 export async function apiAdminInvestment({
@@ -38,7 +39,7 @@ export async function apiAdminInvestasiUpdateByStatus({
 }: {
   id: string;
   status: "publish" | "review" | "reject";
-  data: any;
+  data: typeRejectedData;
 }) {
   try {
     const response = await apiConfig.put(
@@ -97,6 +98,7 @@ export async function apiAdminInvestmentUpdateInvoice({
   data: {
     investasiId: string;
     lembarTerbeli: number;
+    senderId: string
   };
 }) {
   try {

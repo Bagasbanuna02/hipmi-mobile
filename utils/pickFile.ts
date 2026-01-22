@@ -1,6 +1,6 @@
 import * as ImagePicker from "expo-image-picker";
 import * as DocumentPicker from "expo-document-picker";
-import { Alert } from "react-native";
+import { Alert, Platform } from "react-native";
 
 const ALLOWED_IMAGE_EXTENSIONS = ["jpg", "jpeg", "png"];
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
@@ -33,22 +33,52 @@ export default async function pickFile({
       await pickImage(setImageUri, aspectRatio);
     } else {
       // Jika tidak, tawarkan pilihan rasio (default [4,3])
-      showAspectRatioChoice(setImageUri);
+      // 🚀 Hanya tampilkan pilihan rasio di ANDROID
+      if (Platform.OS === "android") {
+        showAspectRatioChoice(setImageUri);
+      } else {
+        // iOS: langsung buka galeri dengan default [4, 3]
+        await pickImage(setImageUri, [4, 3]);
+      }
     }
   } else if (allowedType === "pdf") {
     await pickPdf(setPdfUri);
   } else {
     // Mode fleksibel: tampilkan pilihan
-    Alert.alert(
-      "Pilih Jenis File",
-      "Pilih sumber file yang ingin diunggah:",
-      [
-        { text: "Batal", style: "cancel" },
-        { text: "Dokumen (PDF)", onPress: () => pickPdf(setPdfUri) },
-        { text: "Gambar", onPress: () => pickImage(setImageUri, aspectRatio) },
-      ],
-      { cancelable: true }
-    );
+    // Alert.alert(
+    //   "Pilih Jenis File",
+    //   "Pilih sumber file yang ingin diunggah:",
+    //   [
+    //     { text: "Batal", style: "cancel" },
+    //     { text: "Dokumen (PDF)", onPress: () => pickPdf(setPdfUri) },
+    //     { text: "Gambar", onPress: () => pickImage(setImageUri, aspectRatio) },
+    //   ],
+    //   { cancelable: true }
+    // );
+    if (Platform.OS === "android") {
+      Alert.alert(
+        "Pilih Jenis File",
+        "Pilih sumber file yang ingin diunggah:",
+        [
+          { text: "Batal", style: "cancel" },
+          { text: "Dokumen (PDF)", onPress: () => pickPdf(setPdfUri) },
+          { text: "Gambar", onPress: () => showAspectRatioChoice(setImageUri) },
+        ],
+        { cancelable: true }
+      );
+    } else {
+      // iOS: Langsung pakai default [4,3] untuk gambar
+      Alert.alert(
+        "Pilih Jenis File",
+        "Pilih sumber file yang ingin diunggah:",
+        [
+          { text: "Batal", style: "cancel" },
+          { text: "Dokumen (PDF)", onPress: () => pickPdf(setPdfUri) },
+          { text: "Gambar", onPress: () => pickImage(setImageUri, [4, 3]) },
+        ],
+        { cancelable: true }
+      );
+    }
   }
 }
 

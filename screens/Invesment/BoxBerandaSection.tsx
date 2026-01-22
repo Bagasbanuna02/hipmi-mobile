@@ -7,7 +7,6 @@ import {
   TextCustom,
 } from "@/components";
 import API_STRORAGE from "@/constants/base-url-api-strorage";
-import { MainColor } from "@/constants/color-palet";
 import DUMMY_IMAGE from "@/constants/dummy-image-value";
 import { countDownAndCondition } from "@/utils/countDownAndCondition";
 import { Ionicons } from "@expo/vector-icons";
@@ -22,8 +21,6 @@ export default function Investment_BoxBerandaSection({
   id: string;
   data: any;
 }) {
-  //   console.log("[DATA By one]", JSON.stringify(data, null, 2));
-
   const [value, setValue] = useState({
     sisa: 0,
     reminder: false,
@@ -32,8 +29,6 @@ export default function Investment_BoxBerandaSection({
   useEffect(() => {
     updateCountDown();
   }, [data]);
-
-  console.log("[DATA BERANDA]", JSON.stringify(data, null, 2));
 
   const updateCountDown = () => {
     const countDown = countDownAndCondition({

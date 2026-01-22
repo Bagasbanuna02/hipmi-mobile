@@ -13,6 +13,7 @@ import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButt
 import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
 import GridTwoView from "@/components/_ShareComponent/GridTwoView";
 import { MainColor } from "@/constants/color-palet";
+import { useAuth } from "@/hooks/use-auth";
 import {
   apiAdminInvestmentGetOneInvoiceById,
   apiAdminInvestmentUpdateInvoice,
@@ -25,6 +26,7 @@ import { useCallback, useState } from "react";
 import Toast from "react-native-toast-message";
 
 export default function AdminInvestmentTransactionDetail() {
+  const { user } = useAuth();
   const { id } = useLocalSearchParams();
   const [data, setData] = useState<any | null>(null);
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -32,7 +34,7 @@ export default function AdminInvestmentTransactionDetail() {
   useFocusEffect(
     useCallback(() => {
       onLoadData();
-    }, [id])
+    }, [id]),
   );
 
   const onLoadData = async () => {
@@ -40,7 +42,6 @@ export default function AdminInvestmentTransactionDetail() {
       const response = await apiAdminInvestmentGetOneInvoiceById({
         id: id as string,
       });
-      // console.log("[RESPONSE]", JSON.stringify(response, null, 2));
       if (response.success) {
         setData(response.data);
       }
@@ -92,7 +93,7 @@ export default function AdminInvestmentTransactionDetail() {
           <ButtonCustom
             onPress={() =>
               router.push(
-                `/(application)/(image)/preview-image/${data?.imageId}`
+                `/(application)/(image)/preview-image/${data?.imageId}`,
               )
             }
           >
@@ -109,6 +110,13 @@ export default function AdminInvestmentTransactionDetail() {
   }: {
     category: "accept" | "deny";
   }) => {
+    if (!user?.id) {
+      Toast.show({
+        type: "error",
+        text1: "Gagal update status transaksi",
+      });
+      return;
+    }
     try {
       setLoading(true);
       const response = await apiAdminInvestmentUpdateInvoice({
@@ -117,10 +125,9 @@ export default function AdminInvestmentTransactionDetail() {
         data: {
           investasiId: data?.investasiId,
           lembarTerbeli: data?.lembarTerbeli,
+          senderId: user?.id as any,
         },
       });
-
-      // console.log("[RESPONSE SUBMIT]", JSON.stringify(response, null, 2));
 
       if (!response.success) {
         Toast.show({
@@ -153,6 +160,7 @@ export default function AdminInvestmentTransactionDetail() {
           styleRight={{ paddingLeft: 10 }}
           leftIcon={
             <ButtonCustom
+              disabled={isLoading}
               isLoading={isLoading}
               backgroundColor={MainColor.red}
               textColor="white"
@@ -175,6 +183,7 @@ export default function AdminInvestmentTransactionDetail() {
           }
           rightIcon={
             <ButtonCustom
+              disabled={isLoading}
               isLoading={isLoading}
               onPress={() => {
                 AlertDefaultSystem({
@@ -198,8 +207,8 @@ export default function AdminInvestmentTransactionDetail() {
     } else if (data?.StatusInvoice?.name === "Gagal") {
       return (
         <>
-          <ButtonCustom textColor="red" onPress={() => router.back()}>
-            Gagal
+          <ButtonCustom disabled onPress={() => router.back()}>
+            Transaksi telah gagal
           </ButtonCustom>
         </>
       );
