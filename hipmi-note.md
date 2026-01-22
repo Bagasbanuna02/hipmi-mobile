@@ -18,7 +18,7 @@ android: bunx expo prebuild --platform android
 adb devices : cek device yang terhubung
 Note: izinkan perangkat dulu agar statusnya tidak unauthorized
 
-adb install android/app/build/outputs/apk/debug/app-debug.apk : install apk ke device
+adb install android/app/build/outputs/apk/debug/app-debug.apk : install apk ke device / emulator
 Note:
 Gunakan flag -s (serial) di perintah adb untuk menentukan target 
 adb -s <0G52319V261040B2 ini adalah id nya> install android/app/build/outputs/apk/debug/app-debug.apk

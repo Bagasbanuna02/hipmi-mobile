@@ -36,7 +36,7 @@ export default function ProfileLayout() {
 
         <Stack.Screen
           name="[id]/blocked-list"
-          options={{ title: "Blocked List", headerLeft: () => <BackButton /> }}
+          options={{ title: "Daftar Blokir", headerLeft: () => <BackButton /> }}
         />
 
         <Stack.Screen

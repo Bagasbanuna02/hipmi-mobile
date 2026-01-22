@@ -70,7 +70,7 @@ export const drawerItemsProfile = ({
           color={AccentColor.white}
         />
       ),
-      label: "Blocked List",
+      label: "Daftar Blokir",
       path: `/(application)/profile/${id}/blocked-list`,
       value: "blocked-list",
     },

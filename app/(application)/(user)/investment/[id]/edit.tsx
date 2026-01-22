@@ -18,10 +18,7 @@ import {
   apiInvestmentUpdateData,
 } from "@/service/api-client/api-investment";
 import { apiMasterInvestment } from "@/service/api-client/api-master";
-import {
-  deleteFileService,
-  uploadFileService,
-} from "@/service/upload-service";
+import { deleteFileService, uploadFileService } from "@/service/upload-service";
 import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
 import pickFile from "@/utils/pickFile";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
@@ -70,7 +67,7 @@ export default function InvestmentEdit() {
     useCallback(() => {
       onLoadMaster();
       onLoadData();
-    }, [id])
+    }, [id]),
   );
 
   const onLoadMaster = async () => {
@@ -178,7 +175,7 @@ export default function InvestmentEdit() {
       const responseUpdate = await apiInvestmentUpdateData({
         id: id as string,
         data: newData,
-        category: "data"
+        category: "data",
       });
 
       if (responseUpdate.success) {
@@ -256,6 +253,7 @@ export default function InvestmentEdit() {
         />
 
         <TextInputCustom
+          disabled
           required
           placeholder="0"
           label="Total Lembar"

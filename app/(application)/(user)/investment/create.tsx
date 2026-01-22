@@ -54,7 +54,7 @@ export default function InvestmentCreate() {
   useFocusEffect(
     useCallback(() => {
       onLoadMaster();
-    }, [])
+    }, []),
   );
 
   const onLoadMaster = async () => {
@@ -264,6 +264,7 @@ export default function InvestmentCreate() {
 
         <StackCustom gap={0}>
           <TextInputCustom
+            disabled
             required
             placeholder="0"
             label="Total Lembar"

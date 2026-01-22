@@ -115,7 +115,11 @@ export default function InvestmentAddNews() {
           onChangeText={(value) => setData({ ...data, deskripsi: value })}
         />
 
-        <ButtonCustom isLoading={isLoading} onPress={handlerSubmit}>
+        <ButtonCustom
+          disabled={!data.title || !data.deskripsi || isLoading}
+          isLoading={isLoading}
+          onPress={handlerSubmit}
+        >
           Simpan
         </ButtonCustom>
       </StackCustom>
