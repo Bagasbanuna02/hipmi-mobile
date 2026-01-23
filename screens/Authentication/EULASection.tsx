@@ -12,9 +12,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { AccentColor, MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
 
-export default function EULAView() {
+
+export default function EULASection({ nomor, onSetModalVisible }: { nomor: string, onSetModalVisible: (visible: boolean) => void }) {
   const { acceptedTerms } = useAuth();
-  const { nomor } = useLocalSearchParams();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isAtBottom, setIsAtBottom] = useState(false);
   const scrollViewRef = useRef<ScrollView>(null);
@@ -29,15 +29,18 @@ export default function EULAView() {
   };
 
   const handleAccept = async () => {
+    // console.log("Accept terms", nomor);
+    // onSetModalVisible(false);
     try {
       if (!isAtBottom) return;
 
       setIsLoading(true);
-      // await acceptedTerms(nomor as string);
+      await acceptedTerms(nomor as string, onSetModalVisible);
     } catch (error) {
       console.log("Error accept terms", error);
     } finally {
       setIsLoading(false);
+      
     }
   };
 
@@ -250,6 +253,8 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     borderRadius: 8,
     alignItems: "center",
+    width: 200,
+    alignSelf: "center",
   },
   buttonText: {
     color: "#fff",

@@ -1,25 +1,31 @@
-import { NewWrapper } from "@/components";
+import { NewWrapper, TextCustom } from "@/components";
 import ButtonCustom from "@/components/Button/ButtonCustom";
+import ModalReactNative from "@/components/Modal/ModalReactNative";
 import Spacing from "@/components/_ShareComponent/Spacing";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
-import { apiVersion } from "@/service/api-config";
+import { apiVersion, BASE_URL } from "@/service/api-config";
 import { GStyles } from "@/styles/global-styles";
+import { openBrowser } from "@/utils/openBrower";
 import versionBadge from "@/utils/viersionBadge";
 import VersionBadge from "@/utils/viersionBadge";
 import { Redirect } from "expo-router";
 import { useEffect, useState } from "react";
-import { RefreshControl, Text, View } from "react-native";
+import { Modal, RefreshControl, Text, View } from "react-native";
 import PhoneInput, { ICountry } from "react-native-international-phone-number";
 import Toast from "react-native-toast-message";
+import EULASection from "./EULASection";
 
 export default function LoginView() {
+  const url = BASE_URL;
   const [version, setVersion] = useState<string>("");
   const [selectedCountry, setSelectedCountry] = useState<null | ICountry>(null);
   const [inputValue, setInputValue] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [numberToEULA, setNumberToEULA] = useState<string>("");
 
   const { loginWithNomor, token, isAdmin, isUserActive } = useAuth();
 
@@ -84,10 +90,17 @@ export default function LoginView() {
     let fixNumber = inputValue.replace(/\s+/g, "").replace(/^0+/, "");
 
     const realNumber = callingCode + fixNumber;
+    
 
     try {
       setLoading(true);
-      await loginWithNomor(realNumber);
+      const loginRes = await loginWithNomor(realNumber);
+
+      if (!loginRes) {
+        setModalVisible(true);
+      }
+
+      setNumberToEULA(realNumber);
     } catch (error) {
       console.log("Error login", error);
       Toast.show({
@@ -98,30 +111,6 @@ export default function LoginView() {
     } finally {
       setLoading(false);
     }
-
-    // try {
-    //   setLoading(true);
-    //   // const response = await apiLogin({ nomor: realNumber });
-    //  const response =  await loginWithNomor(realNumber);
-    //  console.log("[RESPONSE]", response);
-
-    //   Toast.show({
-    //     type: "success",
-    //     text1: "Sukses",
-    //     text2: "Kode OTP berhasil dikirim",
-    //   });
-
-    //   // router.navigate(`/verification?nomor=${realNumber}`);
-    // } catch (error) {
-    //   console.log("Error login", error);
-    //   Toast.show({
-    //     type: "error",
-    //     text1: "Error",
-    //     text2: error as string,
-    //   });
-    // } finally {
-    //   setLoading(false);
-    // }
   }
 
   if (token && token !== "" && !isUserActive) {
@@ -148,6 +137,7 @@ export default function LoginView() {
       }
     >
       <View style={GStyles.authContainer}>
+      
         <View>
           <View style={GStyles.authContainerTitle}>
             <Text style={GStyles.authSubTitle}>WELCOME TO</Text>
@@ -185,11 +175,41 @@ export default function LoginView() {
         <ButtonCustom onPress={handleLogin} isLoading={loading}>
           Login
         </ButtonCustom>
-        <Spacing />
-        {/* <ButtonCustom onPress={() => router.navigate("/(application)/coba")}>
-          Coba
+        <Spacing height={50} />
+
+        {/* <ButtonCustom
+          onPress={() => {
+            setModalVisible(true);
+            console.log("Show modal", modalVisible);
+          }}
+        >
+          Show Modal
         </ButtonCustom> */}
+        {/* <CheckboxCustom value={term} onChange={() => setTerm(!term)} /> */}
+
+        <Text
+          style={{ ...GStyles.textLabel, textAlign: "center", fontSize: 12 }}
+        >
+          Dengan menggunakan aplikasi ini, Anda telah menyetujui{" "}
+          <Text
+            style={{
+              color: MainColor.yellow,
+              textDecorationLine: "underline",
+            }}
+            onPress={() => {
+              const toUrl = `${url}/terms-of-service.html`;
+              openBrowser(toUrl);
+            }}
+          >
+            Syarat & Ketentuan
+          </Text>{" "}
+          dan seluruh kebijakan privasi yang berlaku.
+        </Text>
       </View>
+
+      <ModalReactNative isVisible={modalVisible}>
+        <EULASection nomor={numberToEULA || ""} onSetModalVisible={setModalVisible} />
+      </ModalReactNative>
     </NewWrapper>
   );
 }

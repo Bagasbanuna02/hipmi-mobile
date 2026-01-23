@@ -21,7 +21,7 @@ type AuthContextType = {
   isAuthenticated: boolean;
   isAdmin: boolean;
   isUserActive: boolean;
-  loginWithNomor: (nomor: string) => Promise<void>;
+  loginWithNomor: (nomor: string) => Promise<boolean>;
   validateOtp: (nomor: string) => Promise<any>;
   logout: () => Promise<void>;
   registerUser: (userData: {
@@ -30,12 +30,12 @@ type AuthContextType = {
     termsOfServiceAccepted: boolean;
   }) => Promise<void>;
   userData: (token: string) => Promise<any>;
-  acceptedTerms: (nomor: string) => Promise<any>;
+  acceptedTerms: (nomor: string, onSetModalVisible: (visible: boolean) => void) => Promise<any>;
 };
 
 // --- Create Context ---
 export const AuthContext = createContext<AuthContextType | undefined>(
-  undefined
+  undefined,
 );
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -79,31 +79,35 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const response = await apiLogin({ nomor: nomor });
       console.log("[RESPONSE AUTH]", JSON.stringify(response, null, 2));
 
-      if (response.success) {
-        if (response.isAcceptTerms) {
-          Toast.show({
-            type: "success",
-            text1: "Sukses",
-            text2: "Kode OTP berhasil dikirim",
-          });
-
-          await AsyncStorage.setItem("kode_otp", response.kodeId);
-          router.push(`/verification?nomor=${nomor}`);
-          return;
-        } else {
-          router.push(`/eula?nomor=${nomor}`);
-          return;
-        }
+      if (response.success && response.isAcceptTerms) {
+       
+        await AsyncStorage.setItem("kode_otp", response.kodeId);
+        router.push(`/verification?nomor=${nomor}`);
+        return true;
       } else {
-        router.push(`/eula?nomor=${nomor}`);
-
-        // Toast.show({
-        //   type: "info",
-        //   text1: "Info",
-        //   text2: "Silahkan mendaftar",
-        // });
-        return;
+        // router.push(`/eula?nomor=${nomor}`);
+        return false;
       }
+
+      // if (response.success) {
+      //   if (response.isAcceptTerms) {
+      //     Toast.show({
+      //       type: "success",
+      //       text1: "Sukses",
+      //       text2: "Kode OTP berhasil dikirim",
+      //     });
+
+      //     await AsyncStorage.setItem("kode_otp", response.kodeId);
+      //     router.push(`/verification?nomor=${nomor}`);
+      //     return false
+      //   } else {
+      //     // router.push(`/eula?nomor=${nomor}`);
+      //     return true
+      //   }
+      // } else {
+      //   router.push(`/eula?nomor=${nomor}`);
+      //   return true;
+      // }
     } catch (error: any) {
       throw new Error(error.response?.data?.message || "Gagal kirim OTP");
     } finally {
@@ -158,7 +162,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     } catch (error: any) {
       console.log("Error validasi otp >>", (error as Error).message || error);
       throw new Error(
-        error.response?.data?.message || "OTP salah atau user tidak ditemukan"
+        error.response?.data?.message || "OTP salah atau user tidak ditemukan",
       );
     } finally {
       setIsLoading(false);
@@ -187,7 +191,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     } catch (error: any) {
       console.log(
         "[LOAD USER DATA]",
-        error.response?.data?.message + "user" || "Gagal mengambil data user"
+        error.response?.data?.message + "user" || "Gagal mengambil data user",
       );
     } finally {
       setIsLoading(false);
@@ -261,7 +265,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const acceptedTerms = async (nomor: string) => {
+  // --- 6. Accept Terms ---
+  const acceptedTerms = async (nomor: string, onSetModalVisible: (visible: boolean) => void) => {
     try {
       setIsLoading(true);
       const response = await apiUpdatedTermCondition({ nomor: nomor });
@@ -283,6 +288,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       console.log("Error accept terms", error);
     } finally {
       setIsLoading(false);
+      // onSetModalVisible(false);
     }
   };
 
