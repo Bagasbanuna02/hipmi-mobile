@@ -103,7 +103,7 @@ export default function DonationCreateStory() {
         type: "success",
         text1: "Donasi berhasil disimpan",
       });
-      router.replace("/donation/status");
+      router.replace("/donation/status?status=review");
     } catch (error) {
       console.log("[ERROR]", error);
     } finally {

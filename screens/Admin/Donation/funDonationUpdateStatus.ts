@@ -1,4 +1,5 @@
 import { apiAdminDonationUpdateStatus } from "@/service/api-admin/api-admin-donation";
+import { typeRejectedData } from "@/types/type-collect-other";
 
 export const funUpdateStatusDonation = async ({
   id,
@@ -7,7 +8,7 @@ export const funUpdateStatusDonation = async ({
 }: {
   id: string;
   changeStatus: "publish" | "review" | "reject";
-  data?: string;
+  data?: typeRejectedData;
 }) => {
   try {
     const response = await apiAdminDonationUpdateStatus({

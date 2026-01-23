@@ -9,14 +9,16 @@ import { useAuth } from "@/hooks/use-auth";
 import { dummyMasterStatus } from "@/lib/dummy-data/_master/status";
 import Donasi_BoxStatus from "@/screens/Donation/BoxStatus";
 import { apiDonationGetByStatus } from "@/service/api-client/api-donation";
-import { useFocusEffect } from "expo-router";
+import { useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import { useCallback, useState } from "react";
 
 export default function DonationStatus() {
   const { user } = useAuth();
+  const { status } = useLocalSearchParams<{ status?: string }>();
+
   const [activeCategory, setActiveCategory] = useState<string | null>(
-    "publish"
+    status || "publish",
   );
   const [listData, setListData] = useState<any[] | null>(null);
   const [loadList, setLoadList] = useState(false);
@@ -24,7 +26,7 @@ export default function DonationStatus() {
   useFocusEffect(
     useCallback(() => {
       onLoadList();
-    }, [activeCategory])
+    }, [activeCategory]),
   );
 
   const onLoadList = async () => {

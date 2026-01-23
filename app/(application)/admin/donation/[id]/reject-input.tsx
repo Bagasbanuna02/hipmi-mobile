@@ -7,15 +7,15 @@ import {
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
+import { useAuth } from "@/hooks/use-auth";
 import { funUpdateStatusDonation } from "@/screens/Admin/Donation/funDonationUpdateStatus";
-import {
-  apiAdminDonationDetailById
-} from "@/service/api-admin/api-admin-donation";
+import { apiAdminDonationDetailById } from "@/service/api-admin/api-admin-donation";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import React from "react";
 import Toast from "react-native-toast-message";
 
 export default function AdminDonationRejectInput() {
+  const { user } = useAuth();
   const { id, status } = useLocalSearchParams();
 
   const [data, setData] = React.useState<any | null>(null);
@@ -24,7 +24,7 @@ export default function AdminDonationRejectInput() {
   useFocusEffect(
     React.useCallback(() => {
       onLoadData();
-    }, [id])
+    }, [id]),
   );
 
   const onLoadData = async () => {
@@ -48,11 +48,23 @@ export default function AdminDonationRejectInput() {
     changeStatus: "publish" | "review" | "reject";
   }) => {
     try {
+      if (!user?.id) {
+        Toast.show({
+          type: "error",
+          text1: "User tidak ditemukan",
+        });
+
+        return;
+      }
+
       setIsLoading(true);
       const response = await funUpdateStatusDonation({
         id: id as string,
         changeStatus,
-        data: data,
+        data: {
+          senderId: user?.id as string,
+          catatan: data,
+        },
       });
 
       if (!response.success) {
@@ -61,7 +73,7 @@ export default function AdminDonationRejectInput() {
           text1: "Report gagal",
         });
 
-        return
+        return;
       }
 
       Toast.show({

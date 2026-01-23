@@ -1,3 +1,4 @@
+import { typeRejectedData } from "@/types/type-collect-other";
 import { apiConfig } from "../api-config";
 
 export async function apiAdminDonation({
@@ -33,7 +34,7 @@ export async function apiAdminDonationUpdateStatus({
 }: {
   id: string;
   changeStatus: "publish" | "review" | "reject";
-  data?: string;
+  data?: typeRejectedData;
 }) {
   try {
     const response = await apiConfig.put(

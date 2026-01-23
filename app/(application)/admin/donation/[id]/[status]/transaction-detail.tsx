@@ -1,4 +1,5 @@
 import {
+  AlertDefaultSystem,
   BadgeCustom,
   BaseBox,
   BoxButtonOnFooter,
@@ -9,6 +10,7 @@ import {
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
+import { useAuth } from "@/hooks/use-auth";
 import {
   apiAdminDonationInvoiceDetailById,
   apiAdminDonationInvoiceUpdateById,
@@ -22,6 +24,7 @@ import { useCallback, useState } from "react";
 import Toast from "react-native-toast-message";
 
 export default function AdminDonasiTransactionDetail() {
+  const { user } = useAuth();
   const { id, status } = useLocalSearchParams();
   console.log("[STATUS]", id, status);
 
@@ -33,7 +36,7 @@ export default function AdminDonasiTransactionDetail() {
       onLoadData();
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id])
+    }, [id]),
   );
 
   const onLoadData = async () => {
@@ -57,6 +60,7 @@ export default function AdminDonasiTransactionDetail() {
       const newData = {
         donationId: data?.donasiId,
         nominal: data?.nominal,
+        senderId: user?.id,
       };
 
       const response = await apiAdminDonationInvoiceUpdateById({
@@ -97,7 +101,15 @@ export default function AdminDonasiTransactionDetail() {
           <ButtonCustom
             isLoading={isLoading}
             onPress={() => {
-              handlerSubmit();
+              AlertDefaultSystem({
+                title: "Konfirmasi transaksi",
+                message: "Apakah anda yakin ingin menyetujui transaksi ini?",
+                textLeft: "Tidak",
+                textRight: "Ya",
+                onPressRight: () => {
+                  handlerSubmit();
+                },
+              });
             }}
           >
             Terima donasi
@@ -109,7 +121,7 @@ export default function AdminDonasiTransactionDetail() {
     return (
       <BoxButtonOnFooter>
         <ButtonCustom disabled>
-           {data?.DonasiMaster_StatusInvoice?.name}
+          {data?.DonasiMaster_StatusInvoice?.name}
         </ButtonCustom>
       </BoxButtonOnFooter>
     );
@@ -140,7 +152,7 @@ export default function AdminDonasiTransactionDetail() {
             })}
           >
             {_.startCase(
-              (data?.DonasiMaster_StatusInvoice?.name as any) || "-"
+              (data?.DonasiMaster_StatusInvoice?.name as any) || "-",
             )}
           </BadgeCustom>
         )) ||
@@ -157,7 +169,7 @@ export default function AdminDonasiTransactionDetail() {
           <ButtonCustom
             onPress={() =>
               router.push(
-                `/(application)/(image)/preview-image/${data?.imageId}`
+                `/(application)/(image)/preview-image/${data?.imageId}`,
               )
             }
           >
