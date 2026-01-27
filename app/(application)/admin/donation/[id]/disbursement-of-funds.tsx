@@ -14,7 +14,11 @@ import {
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import DIRECTORY_ID from "@/constants/directory-id";
-import { apiAdminDonationDetailById, apiAdminDonationDisbursementOfFundsCreated } from "@/service/api-admin/api-admin-donation";
+import { useAuth } from "@/hooks/use-auth";
+import {
+  apiAdminDonationDetailById,
+  apiAdminDonationDisbursementOfFundsCreated,
+} from "@/service/api-admin/api-admin-donation";
 import { uploadFileService } from "@/service/upload-service";
 import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
 import pickFile from "@/utils/pickFile";
@@ -25,7 +29,7 @@ import Toast from "react-native-toast-message";
 
 export default function AdminDonationDisbursementOfFunds() {
   const { id } = useLocalSearchParams();
-
+  const { user } = useAuth();
   const [data, setData] = React.useState<any | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -40,7 +44,7 @@ export default function AdminDonationDisbursementOfFunds() {
   useFocusEffect(
     React.useCallback(() => {
       onLoadData();
-    }, [id])
+    }, [id]),
   );
 
   const onLoadData = async () => {
@@ -94,6 +98,7 @@ export default function AdminDonationDisbursementOfFunds() {
 
       const newData = {
         ...value,
+        authorId: user?.id,
         imageId: imageId,
       };
 

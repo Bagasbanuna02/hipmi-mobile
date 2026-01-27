@@ -10,21 +10,32 @@ import {
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import { LOCAL_STORAGE_KEY } from "@/constants/local-storage-key";
+import { useAuth } from "@/hooks/use-auth";
 import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
+import Toast from "react-native-toast-message";
 
 export default function InvestmentInputDonation() {
+  const { user } = useAuth();
   const { id } = useLocalSearchParams();
   const [nominal, setNominal] = useState<number>(0);
 
   const handlerSubmit = async () => {
+    if (!user?.id) {
+      Toast.show({
+        type: "error",
+        text1: "User tidak ditemukan",
+      });
+
+      return;
+    }
     try {
       await AsyncStorage.setItem(
         LOCAL_STORAGE_KEY.transactionDonation,
-        JSON.stringify({ nominal: nominal.toString() })
+        JSON.stringify({ nominal: nominal.toString() }),
       );
       router.replace(`/donation/${id}/select-bank`);
     } catch (error) {

@@ -26,7 +26,6 @@ export default function DonationBeranda() {
       const response = await apiDonationGetAll({
         category: "beranda"
       });
-      console.log("[RES GET ALL]", JSON.stringify(response.data, null, 2));
 
       setList(response.data);
     } catch (error) {

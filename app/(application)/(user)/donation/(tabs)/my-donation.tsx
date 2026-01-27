@@ -16,6 +16,7 @@ import { Href, router, useFocusEffect } from "expo-router";
 import _ from "lodash";
 import { useCallback, useState } from "react";
 import { View } from "react-native";
+import Toast from "react-native-toast-message";
 
 export default function DonationMyDonation() {
   const { user } = useAuth();
@@ -25,20 +26,25 @@ export default function DonationMyDonation() {
   useFocusEffect(
     useCallback(() => {
       onLoadData();
-    }, [user?.id])
+    }, [user?.id]),
   );
 
   const onLoadData = async () => {
+    if (!user?.id) {
+      Toast.show({
+        type: "error",
+        text1: "Load data gagal, user tidak ditemukan",
+      });
+      return;
+    }
+
     try {
       setLoadList(true);
       const response = await apiDonationGetAll({
         category: "my-donation",
         authorId: user?.id,
       });
-      console.log(
-        "[RES GET MY DONATION]",
-        JSON.stringify(response.data, null, 2)
-      );
+      
 
       setList(response.data);
     } catch (error) {
