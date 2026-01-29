@@ -102,9 +102,9 @@ export async function apiForumCreateComment({
   }
 }
 
-export async function apiForumGetComment({ id }: { id: string }) {
+export async function apiForumGetComment({ id, page = "1" }: { id: string, page?: string }) {
   try {
-    const response = await apiConfig.get(`/mobile/forum/${id}/comment`);
+    const response = await apiConfig.get(`/mobile/forum/${id}/comment?page=${page}`);
     return response.data;
   } catch (error) {
     throw error;

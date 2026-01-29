@@ -127,8 +127,6 @@ export default function LoginView() {
     return <Redirect href={"/(application)/(user)/home"} />;
   }
 
-  console.log("load term", loadingTerm);
-
   return (
     <NewWrapper
       withBackground
