@@ -1,18 +1,16 @@
-import { NewWrapper, TextCustom } from "@/components";
+import { NewWrapper } from "@/components";
 import ButtonCustom from "@/components/Button/ButtonCustom";
 import ModalReactNative from "@/components/Modal/ModalReactNative";
 import Spacing from "@/components/_ShareComponent/Spacing";
-import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
 import { apiVersion, BASE_URL } from "@/service/api-config";
 import { GStyles } from "@/styles/global-styles";
 import { openBrowser } from "@/utils/openBrower";
 import versionBadge from "@/utils/viersionBadge";
-import VersionBadge from "@/utils/viersionBadge";
 import { Redirect } from "expo-router";
 import { useEffect, useState } from "react";
-import { Modal, RefreshControl, Text, View } from "react-native";
+import { RefreshControl, Text, View } from "react-native";
 import PhoneInput, { ICountry } from "react-native-international-phone-number";
 import Toast from "react-native-toast-message";
 import EULASection from "./EULASection";
@@ -26,6 +24,7 @@ export default function LoginView() {
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [numberToEULA, setNumberToEULA] = useState<string>("");
+  const [loadingTerm, setLoadingTerm] = useState<boolean>(false);
 
   const { loginWithNomor, token, isAdmin, isUserActive } = useAuth();
 
@@ -90,7 +89,6 @@ export default function LoginView() {
     let fixNumber = inputValue.replace(/\s+/g, "").replace(/^0+/, "");
 
     const realNumber = callingCode + fixNumber;
-    
 
     try {
       setLoading(true);
@@ -129,6 +127,8 @@ export default function LoginView() {
     return <Redirect href={"/(application)/(user)/home"} />;
   }
 
+  console.log("load term", loadingTerm);
+
   return (
     <NewWrapper
       withBackground
@@ -137,7 +137,6 @@ export default function LoginView() {
       }
     >
       <View style={GStyles.authContainer}>
-      
         <View>
           <View style={GStyles.authContainerTitle}>
             <Text style={GStyles.authSubTitle}>WELCOME TO</Text>
@@ -172,20 +171,14 @@ export default function LoginView() {
 
         <Spacing />
 
-        <ButtonCustom onPress={handleLogin} isLoading={loading}>
+        <ButtonCustom
+          onPress={handleLogin}
+          disabled={loadingTerm}
+          isLoading={loading || loadingTerm}
+        >
           Login
         </ButtonCustom>
         <Spacing height={50} />
-
-        {/* <ButtonCustom
-          onPress={() => {
-            setModalVisible(true);
-            console.log("Show modal", modalVisible);
-          }}
-        >
-          Show Modal
-        </ButtonCustom> */}
-        {/* <CheckboxCustom value={term} onChange={() => setTerm(!term)} /> */}
 
         <Text
           style={{ ...GStyles.textLabel, textAlign: "center", fontSize: 12 }}
@@ -208,7 +201,11 @@ export default function LoginView() {
       </View>
 
       <ModalReactNative isVisible={modalVisible}>
-        <EULASection nomor={numberToEULA || ""} onSetModalVisible={setModalVisible} />
+        <EULASection
+          nomor={numberToEULA || ""}
+          onSetModalVisible={setModalVisible}
+          setLoadingTerm={setLoadingTerm}
+        />
       </ModalReactNative>
     </NewWrapper>
   );

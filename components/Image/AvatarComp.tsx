@@ -30,7 +30,6 @@ export default function AvatarComp({
   href = `/(application)/(image)/preview-image/${fileId}`,
 }: AvatarCompProps) {
   const dimension = sizeMap[size];
-
   const avatarImage = () => {
     return (
       <Avatar.Image
@@ -54,6 +53,7 @@ export default function AvatarComp({
           onPress={
             href || fileId ? () => router.navigate(href as any) : onPress
           }
+          disabled={!fileId}
         >
           {avatarImage()}
         </TouchableOpacity>

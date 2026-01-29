@@ -30,7 +30,10 @@ type AuthContextType = {
     termsOfServiceAccepted: boolean;
   }) => Promise<void>;
   userData: (token: string) => Promise<any>;
-  acceptedTerms: (nomor: string, onSetModalVisible: (visible: boolean) => void) => Promise<any>;
+  acceptedTerms: (
+    nomor: string,
+    onSetModalVisible: (visible: boolean) => void,
+  ) => Promise<any>;
 };
 
 // --- Create Context ---
@@ -80,34 +83,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       console.log("[RESPONSE AUTH]", JSON.stringify(response, null, 2));
 
       if (response.success && response.isAcceptTerms) {
-       
         await AsyncStorage.setItem("kode_otp", response.kodeId);
         router.push(`/verification?nomor=${nomor}`);
         return true;
       } else {
-        // router.push(`/eula?nomor=${nomor}`);
         return false;
       }
-
-      // if (response.success) {
-      //   if (response.isAcceptTerms) {
-      //     Toast.show({
-      //       type: "success",
-      //       text1: "Sukses",
-      //       text2: "Kode OTP berhasil dikirim",
-      //     });
-
-      //     await AsyncStorage.setItem("kode_otp", response.kodeId);
-      //     router.push(`/verification?nomor=${nomor}`);
-      //     return false
-      //   } else {
-      //     // router.push(`/eula?nomor=${nomor}`);
-      //     return true
-      //   }
-      // } else {
-      //   router.push(`/eula?nomor=${nomor}`);
-      //   return true;
-      // }
     } catch (error: any) {
       throw new Error(error.response?.data?.message || "Gagal kirim OTP");
     } finally {
@@ -266,29 +247,24 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // --- 6. Accept Terms ---
-  const acceptedTerms = async (nomor: string, onSetModalVisible: (visible: boolean) => void) => {
+  const acceptedTerms = async (
+    nomor: string,
+    onSetModalVisible: (visible: boolean) => void,
+  ) => {
     try {
       setIsLoading(true);
       const response = await apiUpdatedTermCondition({ nomor: nomor });
 
       if (response.success) {
-        router.replace(`/verification?nomor=${nomor}`);
+        return `/verification?nomor=${nomor}`;
       } else {
-        if (response.status === 404) {
-          router.replace(`/register?nomor=${nomor}`);
-        } else {
-          Toast.show({
-            type: "error",
-            text1: "Error",
-            text2: response.message,
-          });
-        }
+        return `/register?nomor=${nomor}`;
       }
     } catch (error) {
       console.log("Error accept terms", error);
     } finally {
       setIsLoading(false);
-      // onSetModalVisible(false);
+      onSetModalVisible(false);
     }
   };
 

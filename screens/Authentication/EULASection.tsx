@@ -7,13 +7,21 @@ import {
   StyleSheet,
 } from "react-native";
 import { useState, useRef } from "react";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { router, useLocalSearchParams, useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AccentColor, MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
+import Toast from "react-native-toast-message";
 
-
-export default function EULASection({ nomor, onSetModalVisible }: { nomor: string, onSetModalVisible: (visible: boolean) => void }) {
+export default function EULASection({
+  nomor,
+  onSetModalVisible,
+  setLoadingTerm,
+}: {
+  nomor: string;
+  onSetModalVisible: (visible: boolean) => void;
+  setLoadingTerm: (loading: boolean) => void;
+}) {
   const { acceptedTerms } = useAuth();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isAtBottom, setIsAtBottom] = useState(false);
@@ -35,12 +43,26 @@ export default function EULASection({ nomor, onSetModalVisible }: { nomor: strin
       if (!isAtBottom) return;
 
       setIsLoading(true);
-      await acceptedTerms(nomor as string, onSetModalVisible);
+      const responseAccept = await acceptedTerms(
+        nomor as string,
+        onSetModalVisible,
+      );
+
+      console.log("Accept terms", responseAccept);
+      setLoadingTerm(true);
+
+      setTimeout(() => {
+        router.replace(responseAccept);
+      }, 500);
     } catch (error) {
       console.log("Error accept terms", error);
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: "Terjadi kesalahan saat menerima syarat dan ketentuan",
+      });
     } finally {
       setIsLoading(false);
-      
     }
   };
 

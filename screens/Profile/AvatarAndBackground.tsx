@@ -21,6 +21,7 @@ const AvatarAndBackground = ({
             `/(application)/(image)/preview-image/${backgroundId}`
           );
         }}
+        disabled={!backgroundId}
       >
         <ImageBackground
           source={

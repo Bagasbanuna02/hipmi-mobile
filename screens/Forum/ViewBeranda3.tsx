@@ -2,21 +2,20 @@ import {
   AvatarComp,
   BackButton,
   FloatingButton,
-  SearchInput,
-  TextCustom,
+  SearchInput
 } from "@/components";
 import NewWrapper from "@/components/_ShareComponent/NewWrapper";
-import { useAuth } from "@/hooks/use-auth";
+import { MainColor } from "@/constants/color-palet";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
+import { useAuth } from "@/hooks/use-auth";
+import { usePagination } from "@/hooks/use-pagination";
 import Forum_BoxDetailSection from "@/screens/Forum/DiscussionBoxSection";
 import { apiForumGetAll } from "@/service/api-client/api-forum";
 import { apiUser } from "@/service/api-client/api-user";
 import { router, Stack } from "expo-router";
 import _ from "lodash";
 import { useEffect, useState } from "react";
-import { RefreshControl, View } from "react-native";
-import { MainColor } from "@/constants/color-palet";
-import { usePagination } from "@/hooks/use-pagination";
+import { RefreshControl, TouchableOpacity, View } from "react-native";
 
 const PAGE_SIZE = 5;
 
@@ -36,7 +35,7 @@ export default function Forum_ViewBeranda3() {
   const pagination = usePagination({
     fetchFunction: async (page, searchQuery) => {
       if (!user?.id) return { data: [] };
-      
+
       return await apiForumGetAll({
         category: "beranda",
         search: searchQuery || "",
@@ -51,16 +50,17 @@ export default function Forum_ViewBeranda3() {
   });
 
   // Generate komponen (menggantikan 40+ lines code!)
-  const { ListEmptyComponent, ListFooterComponent } = createPaginationComponents({
-    loading: pagination.loading,
-    refreshing: pagination.refreshing,
-    listData: pagination.listData,
-    searchQuery: search,
-    emptyMessage: "Tidak ada diskusi",
-    emptySearchMessage: "Tidak ada hasil pencarian",
-    skeletonCount: 5,
-    skeletonHeight: 150,
-  });
+  const { ListEmptyComponent, ListFooterComponent } =
+    createPaginationComponents({
+      loading: pagination.loading,
+      refreshing: pagination.refreshing,
+      listData: pagination.listData,
+      searchQuery: search,
+      emptyMessage: "Tidak ada diskusi",
+      emptySearchMessage: "Tidak ada hasil pencarian",
+      skeletonCount: 5,
+      skeletonHeight: 150,
+    });
 
   // Render item forum
   const renderForumItem = ({ item }: { item: any }) => (
@@ -74,11 +74,11 @@ export default function Forum_ViewBeranda3() {
     />
   );
 
-//   const ListHeaderComponent = (
-//     <View style={{ paddingVertical: 8, alignItems: "center" }}>
-//       <TextCustom>Diskusi Terbaru</TextCustom>
-//     </View>
-//   );
+  //   const ListHeaderComponent = (
+  //     <View style={{ paddingVertical: 8, alignItems: "center" }}>
+  //       <TextCustom>Diskusi Terbaru</TextCustom>
+  //     </View>
+  //   );
 
   return (
     <>
@@ -87,11 +87,15 @@ export default function Forum_ViewBeranda3() {
           title: "Forum",
           headerLeft: () => <BackButton />,
           headerRight: () => (
-            <AvatarComp
-              fileId={dataUser?.Profile?.imageId}
-              size="base"
-              href={`/forum/${user?.id}/forumku`}
-            />
+            <TouchableOpacity
+              onPress={() => router.navigate(`/forum/${user?.id}/forumku`)}
+            >
+              <AvatarComp
+                fileId={dataUser?.Profile?.imageId}
+                size="base"
+                href={`/forum/${user?.id}/forumku`}
+              />
+            </TouchableOpacity>
           ),
         }}
       />
