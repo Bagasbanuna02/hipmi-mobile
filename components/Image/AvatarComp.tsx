@@ -52,7 +52,7 @@ export default function AvatarComp({
         <TouchableOpacity
           activeOpacity={0.9}
           onPress={
-            href && fileId ? () => router.navigate(href as any) : onPress
+            href || fileId ? () => router.navigate(href as any) : onPress
           }
         >
           {avatarImage()}

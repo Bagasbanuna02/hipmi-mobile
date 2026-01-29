@@ -5,7 +5,7 @@ export default function NotFoundScreen() {
   return (
     <>
       <Stack.Screen
-        options={{ headerShown: false, headerLeft: () => <BackButton /> }}
+        options={{ headerShown: true, title: "", headerLeft: () => <BackButton /> }}
       />
       <ViewWrapper>
         <StackCustom
@@ -17,7 +17,7 @@ export default function NotFoundScreen() {
             404
           </TextCustom>
           <TextCustom size="large" bold>
-            Sorry, File Not Found
+            Sorry, Page Not Found
           </TextCustom>
         </StackCustom>
       </ViewWrapper>

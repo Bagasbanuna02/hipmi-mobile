@@ -1,3 +1,4 @@
+import { BackButton } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { Stack } from "expo-router";
 
@@ -15,8 +16,18 @@ export default function AppRoot() {
           name="index"
           options={{ title: "", headerBackVisible: false }}
         />
-        <Stack.Screen name="eula" options={{ title: "Terms & Conditions", headerBackVisible: false }} />
-        <Stack.Screen name="+not-found" options={{ title: "" }} />
+        <Stack.Screen
+          name="eula"
+          options={{ title: "Terms & Conditions", headerBackVisible: false }}
+        />
+        {/* CEK PADA FILE */}
+        {/* <Stack.Screen
+          options={{
+            headerShown: true,
+            title: "",
+            headerLeft: () => <BackButton />,
+          }}
+        /> */}
         <Stack.Screen
           name="verification"
           options={{ title: "", headerBackVisible: false }}
