@@ -1,5 +1,5 @@
 import { BaseBox, Grid, TextCustom } from "@/components";
-import { MainColor } from "@/constants/color-palet";
+import { AccentColor, MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -8,7 +8,7 @@ export default function Portofolio_BoxView({ data }: { data: any }) {
   return (
     <>
       <BaseBox
-        style={{ backgroundColor: MainColor.darkblue }}
+        style={{ backgroundColor: AccentColor.blue}}
         onPress={() => {
           router.push(`/portofolio/${data?.id}`);
         }}

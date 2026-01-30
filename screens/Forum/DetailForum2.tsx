@@ -5,6 +5,7 @@ import {
   LoaderCustom,
   NewWrapper,
   Spacing,
+  StackCustom,
   TextAreaCustom,
   TextCustom,
   TextInputCustom,
@@ -111,7 +112,6 @@ export default function DetailForum2() {
 
   // Create Commentar
   const handlerCreateCommentar = async () => {
-
     const cencorContent = censorText(text);
 
     const newData = {
@@ -155,7 +155,10 @@ export default function DetailForum2() {
   const headerComponent = () =>
     // Box Posting
     !data ? (
-      <CustomSkeleton height={200} />
+      <StackCustom>
+        <CustomSkeleton height={200} />
+        <CustomSkeleton height={100} />
+      </StackCustom>
     ) : (
       <>
         {/* Area Posting */}
@@ -199,10 +202,7 @@ export default function DetailForum2() {
     );
 
   // Render individual comment item
-  const renderCommentItem = ({ item }: { item: TypeForum_CommentProps }) =>
-    !data && !commentPagination.listData ? (
-      <ListSkeletonComponent />
-    ) : (
+  const renderCommentItem = ({ item }: { item: TypeForum_CommentProps }) =>(
       <Forum_CommentarBoxSection
         key={item.id}
         data={item}
@@ -212,7 +212,21 @@ export default function DetailForum2() {
           setCommentAuthorId(value.setCommentAuthorId);
         }}
       />
-    );
+  )
+    // !data || !commentPagination.listData ? (
+    //   // <ListSkeletonComponent height={120} />
+    //   <LoaderCustom />
+    // ) : (
+    //   <Forum_CommentarBoxSection
+    //     key={item.id}
+    //     data={item}
+    //     onSetData={(value) => {
+    //       setCommentId(value.setCommentId);
+    //       setOpenDrawerCommentar(value.setOpenDrawer);
+    //       setCommentAuthorId(value.setCommentAuthorId);
+    //     }}
+    //   />
+    // );
 
   // Generate pagination components using helper
   const { ListEmptyComponent, ListFooterComponent } =

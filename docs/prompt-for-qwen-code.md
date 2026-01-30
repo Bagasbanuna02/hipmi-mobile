@@ -1,8 +1,16 @@
 <!-- Start Penerapan Pagination -->
-Terapkan pagination pada file: screens/Forum/DetailForum.tsx
-Component yang digunakan: hooks/use-pagination.tsx dan helpers/paginationHelpers.tsx
 
-Perbaiki fetch pada file: service/api-client/api-forum.ts
+File utama: screens/Notification/ScreenNotification.tsx
+Fun fecth: apiGetNotificationsById
+File fetch: service/api-notifications.ts
+File komponen wrapper: components/_ShareComponent/NewWrapper.tsx
+
+Terapkan pagination pada file "File utama"
+Analisa juga file "File utama" , jika belum menggunakan NewWrapper pada file "File komponen wrapper" , maka terapkan juga dan ganti wrapper lama yaitu komponen ViewWrapper
+
+Komponen pagination yang digunaka berada pada file hooks/use-pagination.tsx dan helpers/paginationHelpers.tsx
+
+Perbaiki fetch "Fun fecth" , pada file "File fetch"
 Jika tidak ada props page maka tambahkan props page dan default page: "1"
 
 Gunakan bahasa indonesia pada cli agar saya mudah membacanya.

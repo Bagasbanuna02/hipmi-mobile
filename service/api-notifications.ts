@@ -41,16 +41,19 @@ export async function apiNotificationsSendById({
 export async function apiGetNotificationsById({
   id,
   category,
+  page = "1",
 }: {
   id: string;
   category: TypeNotificationCategoryApp;
+  page?: string;
 }) {
   console.log("ID", id);
   console.log("Category", category);
+  console.log("Page", page);
 
   try {
     const response = await apiConfig.get(
-      `/mobile/notification/${id}?category=${category}`
+      `/mobile/notification/${id}?category=${category}&page=${page}`
     );
 
     return response.data;

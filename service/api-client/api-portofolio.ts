@@ -12,9 +12,9 @@ export async function apiPortofolioCreate({ data }: { data: any }) {
   }
 }
 
-export async function apiGetPortofolio({ id }: { id: string }) {
+export async function apiGetPortofolio({ id, page = "1" }: { id: string; page?: string }) {
   try {
-    const response = await apiConfig.get(`/mobile/portofolio?id=${id}`);
+    const response = await apiConfig.get(`/mobile/portofolio?id=${id}&page=${page}`);
 
     return response.data;
   } catch (error) {

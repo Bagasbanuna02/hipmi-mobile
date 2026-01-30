@@ -102,7 +102,7 @@ export default function Forum_ViewBeranda3() {
 
       <NewWrapper
         headerComponent={
-          <View style={{ paddingHorizontal: 16, paddingTop: 8 }}>
+          <View style={{  paddingTop: 8 }}>
             <SearchInput
               placeholder="Cari topik diskusi"
               onChangeText={_.debounce((text) => setSearch(text), 500)}

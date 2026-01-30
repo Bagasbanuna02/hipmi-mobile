@@ -7,6 +7,7 @@ import {
   CenterCustom,
   Grid,
   InformationBox,
+  NewWrapper,
   SelectCustom,
   Spacing,
   StackCustom,
@@ -120,7 +121,7 @@ export default function PortofolioCreate() {
   };
 
   return (
-    <ViewWrapper
+    <NewWrapper
       footerComponent={
         <Portofolio_ButtonCreate
           id={id as string}
@@ -357,8 +358,8 @@ export default function PortofolioCreate() {
             setDataMedsos({ ...dataMedsos, youtube: value })
           }
         />
-        <Spacing />
+        {/* <Spacing /> */}
       </StackCustom>
-    </ViewWrapper>
+    </NewWrapper>
   );
 }

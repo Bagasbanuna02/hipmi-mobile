@@ -4,14 +4,15 @@ import {
   BoxButtonOnFooter,
   ButtonCustom,
   CenterCustom,
+  NewWrapper,
   SelectCustom,
   Spacing,
   StackCustom,
   TextAreaCustom,
   TextCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
+import ListSkeletonComponent from "@/components/_ShareComponent/ListSkeletonComponent";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_XLARGE } from "@/constants/constans-value";
 import {
@@ -238,7 +239,7 @@ export default function PortofolioEdit() {
     return !dataArray.some(
       (item: any) =>
         !item.MasterSubBidangBisnis.id ||
-        item.MasterSubBidangBisnis.id.trim() === ""
+        item.MasterSubBidangBisnis.id.trim() === "",
     );
   }
 
@@ -319,16 +320,16 @@ export default function PortofolioEdit() {
   if (!bidangBisnis || !subBidangBisnis) {
     return (
       <>
-        <ViewWrapper>
-          <ActivityIndicator size="large" color={MainColor.yellow} />
-        </ViewWrapper>
+        <NewWrapper>
+          <ListSkeletonComponent height={80} />
+        </NewWrapper>
       </>
     );
   }
 
   return (
     <>
-      <ViewWrapper footerComponent={buttonUpdate}>
+      <NewWrapper footerComponent={buttonUpdate}>
         <StackCustom gap={"xs"}>
           <TextInputCustom
             required
@@ -471,7 +472,7 @@ export default function PortofolioEdit() {
           />
           <Spacing />
         </StackCustom>
-      </ViewWrapper>
+      </NewWrapper>
     </>
   );
 }

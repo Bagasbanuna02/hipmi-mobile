@@ -12,7 +12,7 @@ export default function Profile_PortofolioSection({
 }) {
   return (
     <>
-      <BaseBox>
+      <BaseBox >
         <View>
           <TextCustom bold size="large" align="center">
             Portofolio
