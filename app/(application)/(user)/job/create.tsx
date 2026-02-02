@@ -1,13 +1,14 @@
 import {
+  BoxButtonOnFooter,
   ButtonCenteredOnly,
   ButtonCustom,
   InformationBox,
   LandscapeFrameUploaded,
+  NewWrapper,
   Spacing,
   StackCustom,
   TextAreaCustom,
-  TextInputCustom,
-  ViewWrapper
+  TextInputCustom
 } from "@/components";
 import DIRECTORY_ID from "@/constants/directory-id";
 import { useAuth } from "@/hooks/use-auth";
@@ -99,16 +100,17 @@ export default function JobCreate() {
   const buttonSubmit = () => {
     return (
       <>
-        <ButtonCustom isLoading={isLoading} onPress={() => handlerOnSubmit()}>
-          Simpan
-        </ButtonCustom>
-        <Spacing />
+        <BoxButtonOnFooter>
+          <ButtonCustom isLoading={isLoading} onPress={() => handlerOnSubmit()}>
+            Simpan
+          </ButtonCustom>
+        </BoxButtonOnFooter>
       </>
     );
   };
 
   return (
-    <ViewWrapper>
+    <NewWrapper footerComponent={buttonSubmit()}>
       <StackCustom gap={"xs"}>
         <InformationBox text="Poster atau gambar lowongan kerja bersifat opsional, tidak wajib untuk dimasukkan dan upload lah gambar yang sesuai dengan deskripsi lowongan kerja." />
 
@@ -160,9 +162,7 @@ export default function JobCreate() {
           value={data.deskripsi}
           onChangeText={(value) => setData({ ...data, deskripsi: value })}
         />
-
-        {buttonSubmit()}
       </StackCustom>
-    </ViewWrapper>
+    </NewWrapper>
   );
 }

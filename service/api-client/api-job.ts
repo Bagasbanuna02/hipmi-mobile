@@ -14,12 +14,14 @@ export async function apiJobCreate(data: any) {
 export async function apiJobGetByStatus({
   authorId,
   status,
+  page = "1",
 }: {
   authorId: string;
   status: string;
+  page?: string;
 }) {
   try {
-    const response = await apiConfig.get(`/mobile/job/${authorId}/${status}`);
+    const response = await apiConfig.get(`/mobile/job/${authorId}/${status}?page=${page}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -63,10 +65,12 @@ export async function apiJobGetAll({
   search,
   category,
   authorId,
+  page = "1",
 }: {
   search?: string;
   category: "archive" | "beranda";
   authorId?: string;
+  page?: string;
 }) {
   try {
     let categoryText = category ? `?category=${category}` : "";
@@ -74,8 +78,9 @@ export async function apiJobGetAll({
       categoryText = `?category=${category}&authorId=${authorId}`;
     }
     const searchText = search ? `&search=${search}` : "";
+    const pageText = `&page=${page}`;
     const response = await apiConfig.get(
-      `/mobile/job${categoryText}${searchText}`
+      `/mobile/job${categoryText}${searchText}${pageText}`
     );
     return response.data;
   } catch (error) {

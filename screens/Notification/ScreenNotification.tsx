@@ -136,6 +136,7 @@ export default function ScreenNotification() {
   );
 
   const handlePress = (item: any) => {
+    console.log("ITEM", item.value);
     setActiveCategory(item.value);
     // Reset and load first page when category changes
     pagination.reset();
