@@ -1,12 +1,13 @@
 import {
+  BoxButtonOnFooter,
   ButtonCustom,
+  NewWrapper,
   SelectCustom,
   Spacing,
   StackCustom,
   TextAreaCustom,
   TextCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
 import DateTimePickerCustom from "@/components/DateInput/DateTimePickerCustom";
 import { useAuth } from "@/hooks/use-auth";
@@ -100,7 +101,6 @@ export default function EventCreate() {
       setIsLoading(false);
     }
   };
-  
 
   const buttonSubmit = (
     <ButtonCustom
@@ -112,7 +112,9 @@ export default function EventCreate() {
 
   return (
     <>
-      <ViewWrapper>
+      <NewWrapper
+        footerComponent={<BoxButtonOnFooter>{buttonSubmit}</BoxButtonOnFooter>}
+      >
         <StackCustom gap={"xs"}>
           <TextInputCustom
             placeholder="Masukkan nama event"
@@ -121,24 +123,15 @@ export default function EventCreate() {
             onChangeText={(value: any) => setData({ ...data, title: value })}
           />
 
-          <SelectCustom
-            label="Tipe Event"
-            placeholder="Pilih tipe event"
-            data={listTypeEvent.map((item: any) => ({
-              label: item.name,
-              value: item.id,
-            }))}
-            value={data?.eventMaster_TipeAcaraId || null}
-            onChange={(value: any) =>
-              setData({ ...data, eventMaster_TipeAcaraId: value })
-            }
-          />
-
-          <TextInputCustom
-            label="Lokasi"
-            placeholder="Masukkan lokasi event"
+          <TextAreaCustom
+            label="Deskripsi"
+            placeholder="Masukkan deskripsi event"
             required
-            onChangeText={(value: any) => setData({ ...data, lokasi: value })}
+            showCount
+            value={data?.deskripsi || ""}
+            onChangeText={(value: any) =>
+              setData({ ...data, deskripsi: value })
+            }
           />
 
           <DateTimePickerCustom
@@ -168,22 +161,28 @@ export default function EventCreate() {
               </TextCustom>
             )}
             <Spacing />
+            <SelectCustom
+              label="Tipe Event"
+              placeholder="Pilih tipe event"
+              data={listTypeEvent.map((item: any) => ({
+                label: item.name,
+                value: item.id,
+              }))}
+              value={data?.eventMaster_TipeAcaraId || null}
+              onChange={(value: any) =>
+                setData({ ...data, eventMaster_TipeAcaraId: value })
+              }
+            />
+
+            <TextInputCustom
+              label="Lokasi"
+              placeholder="Masukkan lokasi event"
+              required
+              onChangeText={(value: any) => setData({ ...data, lokasi: value })}
+            />
           </StackCustom>
-
-          <TextAreaCustom
-            label="Deskripsi"
-            placeholder="Masukkan deskripsi event"
-            required
-            showCount
-            value={data?.deskripsi || ""}
-            onChangeText={(value: any) =>
-              setData({ ...data, deskripsi: value })
-            }
-          />
-
-          {buttonSubmit}
         </StackCustom>
-      </ViewWrapper>
+      </NewWrapper>
     </>
   );
 }

@@ -1,7 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
+  BoxButtonOnFooter,
   ButtonCustom,
   LoaderCustom,
+  NewWrapper,
   SelectCustom,
   Spacing,
   StackCustom,
@@ -10,6 +12,7 @@ import {
   TextInputCustom,
   ViewWrapper,
 } from "@/components";
+import ListSkeletonComponent from "@/components/_ShareComponent/ListSkeletonComponent";
 import DateTimePickerCustom from "@/components/DateInput/DateTimePickerCustom";
 import {
   apiEventGetOne,
@@ -48,7 +51,7 @@ export default function EventEdit() {
   useFocusEffect(
     useCallback(() => {
       onLoadData();
-    }, [id])
+    }, [id]),
   );
 
   async function onLoadData() {
@@ -100,6 +103,15 @@ export default function EventEdit() {
     const startDate = new Date(selectedDate as any);
     const endDate = new Date(selectedEndDate as any);
 
+    if (!startDate) {
+      Toast.show({
+        type: "info",
+        text1: "Info",
+        text2: "Tanggal mulai tidak valid",
+      });
+      return false;
+    }
+
     if (startDate >= endDate) {
       Toast.show({
         type: "info",
@@ -146,7 +158,7 @@ export default function EventEdit() {
 
   const validateDateRange = (
     selectedDate: string | Date,
-    selectedEndDate: string | Date
+    selectedEndDate: string | Date,
   ): { isValid: boolean; error?: string } => {
     const startDate = new Date(selectedDate);
     const endDate = new Date(selectedEndDate);
@@ -174,9 +186,19 @@ export default function EventEdit() {
 
   return (
     <>
-      <ViewWrapper>
+      <NewWrapper
+        footerComponent={
+          <BoxButtonOnFooter>
+            <ButtonCustom
+              isLoading={isLoading}
+              title="Update"
+              onPress={handlerSubmit}
+            />
+          </BoxButtonOnFooter>
+        }
+      >
         {isLoadData ? (
-          <LoaderCustom />
+          <ListSkeletonComponent />
         ) : (
           <StackCustom gap={"xs"}>
             <TextInputCustom
@@ -186,26 +208,15 @@ export default function EventEdit() {
               value={data?.title}
               onChangeText={(value) => setData({ ...data, title: value })}
             />
-            <SelectCustom
-              label="Tipe Event"
-              placeholder="Pilih tipe event"
-              data={listTypeEvent.map((item: any) => ({
-                label: item.name,
-                value: item.id,
-              }))}
-              value={data?.eventMaster_TipeAcaraId || ""}
-              onChange={(value) => {
-                console.log(value);
-                setData({ ...data, eventMaster_TipeAcaraId: value });
-              }}
-            />
-            <TextInputCustom
-              label="Lokasi"
-              placeholder="Masukkan lokasi event"
+            <TextAreaCustom
+              label="Deskripsi"
+              placeholder="Masukkan deskripsi event"
               required
-              value={data?.lokasi}
-              onChangeText={(value) => setData({ ...data, lokasi: value })}
+              showCount
+              value={data?.deskripsi}
+              onChangeText={(value) => setData({ ...data, deskripsi: value })}
             />
+
             <DateTimePickerCustom
               minimumDate={new Date(Date.now())}
               label="Tanggal & Waktu Mulai"
@@ -233,7 +244,7 @@ export default function EventEdit() {
                   {
                     validateDateRange(
                       selectedDate as any,
-                      selectedEndDate as any
+                      selectedEndDate as any,
                     ).error
                   }
                 </TextCustom>
@@ -242,31 +253,37 @@ export default function EventEdit() {
                   {
                     validateDateRange(
                       selectedDate as any,
-                      selectedEndDate as any
+                      selectedEndDate as any,
                     ).error
                   }
                 </TextCustom>
               )}
-              <Spacing />
+              {/* <Spacing /> */}
             </StackCustom>
 
-            <TextAreaCustom
-              label="Deskripsi"
-              placeholder="Masukkan deskripsi event"
-              required
-              showCount
-              value={data?.deskripsi}
-              onChangeText={(value) => setData({ ...data, deskripsi: value })}
+            <SelectCustom
+              label="Tipe Event"
+              placeholder="Pilih tipe event"
+              data={listTypeEvent.map((item: any) => ({
+                label: item.name,
+                value: item.id,
+              }))}
+              value={data?.eventMaster_TipeAcaraId || ""}
+              onChange={(value) => {
+                console.log(value);
+                setData({ ...data, eventMaster_TipeAcaraId: value });
+              }}
             />
-
-            <ButtonCustom
-              isLoading={isLoading}
-              title="Update"
-              onPress={handlerSubmit}
+            <TextInputCustom
+              label="Lokasi"
+              placeholder="Masukkan lokasi event"
+              required
+              value={data?.lokasi}
+              onChangeText={(value) => setData({ ...data, lokasi: value })}
             />
           </StackCustom>
         )}
-      </ViewWrapper>
+      </NewWrapper>
     </>
   );
 }

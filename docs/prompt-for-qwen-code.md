@@ -1,9 +1,10 @@
 <!-- Start Penerapan Pagination -->
 
-File utama: screens/Admin/Notification-Admin/ScreenNotificationAdmin2.tsx
-Fun fecth: apiGetNotificationsById
-File fetch: service/api-notifications.ts
+File utama: screens/Event/ScreenHistory.tsx
+Fun fecth: apiEventGetAll
+File fetch: service/api-client/api-event.ts
 File komponen wrapper: components/_ShareComponent/NewWrapper.tsx
+File refrensi: screens/Job/MainViewStatus2.tsx
 
 Terapkan pagination pada file "File utama"
 Analisa juga file "File utama" , jika belum menggunakan NewWrapper pada file "File komponen wrapper" , maka terapkan juga dan ganti wrapper lama yaitu komponen ViewWrapper
@@ -12,6 +13,8 @@ Komponen pagination yang digunaka berada pada file hooks/use-pagination.tsx dan 
 
 Perbaiki fetch "Fun fecth" , pada file "File fetch"
 Jika tidak ada props page maka tambahkan props page dan default page: "1"
+
+Anda bisa menggunakan refrensi dari "File refrensi" jika butuh pemahaman dengan tipe fitur yang sama
 
 Gunakan bahasa indonesia pada cli agar saya mudah membacanya.
 

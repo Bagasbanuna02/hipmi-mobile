@@ -14,12 +14,14 @@ export async function apiEventCreate(data: any) {
 export async function apiEventGetByStatus({
   id,
   status,
+  page = "1",
 }: {
   id: string;
   status: string;
+  page?: string;
 }) {
   try {
-    const response = await apiConfig.get(`/mobile/event/${id}/${status}`);
+    const response = await apiConfig.get(`/mobile/event/${id}/${status}?page=${page}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -79,15 +81,18 @@ export async function apiEventDelete({ id }: { id: string }) {
 export async function apiEventGetAll({
   category,
   userId,
+  page = "1",
 }: {
   category?: "beranda" | "contribution" | "all-history" | "my-history";
   userId?: string;
+  page?: string;
 }) {
   try {
     const categoryEvent = category ? `?category=${category}` : "";
     const userIdCreator = userId ? `&userId=${userId}` : "";
+    const pageParam = `&page=${page}`;
     const response = await apiConfig.get(
-      `/mobile/event${categoryEvent}${userIdCreator}`
+      `/mobile/event${categoryEvent}${userIdCreator}${pageParam}`
     );
     return response.data;
   } catch (error) {
