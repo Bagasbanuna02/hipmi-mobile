@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {
   AlertDefaultSystem,
   BackButton,
@@ -10,82 +9,58 @@ import {
   StackCustom,
   TextCustom,
 } from "@/components";
+import { IconPlus } from "@/components/_Icon";
 import { IconDot } from "@/components/_Icon/IconComponent";
-import ListSkeletonComponent from "@/components/_ShareComponent/ListSkeletonComponent";
-import NoDataText from "@/components/_ShareComponent/NoDataText";
 import { AccentColor, MainColor } from "@/constants/color-palet";
-import { ICON_SIZE_SMALL, PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
+import { ICON_SIZE_SMALL } from "@/constants/constans-value";
+import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { useAuth } from "@/hooks/use-auth";
 import { useNotificationStore } from "@/hooks/use-notification-store";
 import { usePagination } from "@/hooks/use-pagination";
-import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { apiGetNotificationsById } from "@/service/api-notifications";
 import { listOfcategoriesAppNotification } from "@/types/type-notification-category";
 import { formatChatTime } from "@/utils/formatChatTime";
 import { Ionicons } from "@expo/vector-icons";
-import { router, Stack, useFocusEffect, useLocalSearchParams } from "expo-router";
+import { router, Stack, useFocusEffect } from "expo-router";
 import _ from "lodash";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { RefreshControl, View } from "react-native";
+
+const PAGE_SIZE = 10;
 
 const selectedCategory = (value: string) => {
   const category = listOfcategoriesAppNotification.find(
-    (c) => c.value === value
+    (c) => c.value === value,
   );
   return category?.label;
-};
-
-const fixPath = ({
-  deepLink,
-  categoryApp,
-}: {
-  deepLink: string;
-  categoryApp: string;
-}) => {
-  if (categoryApp === "OTHER") {
-    return deepLink;
-  }
-
-  const separator = deepLink.includes("?") ? "&" : "?";
-
-  const fixedPath = `${deepLink}${separator}from=notifications&category=${_.lowerCase(
-    categoryApp
-  )}`;
-
-  console.log("Fix Path", fixedPath);
-
-  return fixedPath;
 };
 
 const BoxNotification = ({
   data,
   activeCategory,
+  setListData,
 }: {
   data: any;
   activeCategory: string | null;
+  setListData: (data: any) => void;
 }) => {
-  // console.log("DATA NOTIFICATION", JSON.stringify(data, null, 2));
   const { markAsRead } = useNotificationStore();
   return (
     <>
       <BaseBox
         backgroundColor={data.isRead ? AccentColor.darkblue : AccentColor.blue}
         onPress={() => {
-          // console.log(
-          //   "Notification >",
-          //   selectedCategory(activeCategory as string)
-          // );
-          const newPath = fixPath({
-            deepLink: data.deepLink,
-            categoryApp: data.kategoriApp,
-          });
-
-          router.navigate(newPath as any);
-          selectedCategory(activeCategory as string);
-
-          if (!data.isRead) {
-            markAsRead(data.id);
-          }
+          console.log(
+            "Notification >",
+            selectedCategory(activeCategory as string),
+          );
+          router.push(data.deepLink);
+          markAsRead(data.id);
+          setListData((prev: any) =>
+            prev.map((item: any) =>
+              item.id === data.id ? { ...item, isRead: true } : item,
+            ),
+          );
         }}
       >
         <StackCustom>
@@ -104,71 +79,63 @@ const BoxNotification = ({
   );
 };
 
-export default function ScreenNotification() {
+export default function Admin_ScreenNotification2() {
   const { user } = useAuth();
-  const { category } = useLocalSearchParams<{ category?: string }>();
-  const [activeCategory, setActiveCategory] = useState<string | null>(
-    category || "event"
-  );
+  const [activeCategory, setActiveCategory] = useState<string | null>("event");
   const [openDrawer, setOpenDrawer] = useState(false);
 
   const { markAsReadAll } = useNotificationStore();
 
-  // Initialize pagination for notifications
+  // Setup pagination
   const pagination = usePagination({
     fetchFunction: async (page) => {
+      if (!user?.id) return { data: [] };
+
       return await apiGetNotificationsById({
-        id: user?.id as string,
+        id: user?.id as any,
         category: activeCategory as any,
-        page: String(page), // API expects string
+        page: String(page),
       });
     },
-    pageSize: PAGINATION_DEFAULT_TAKE,
-    dependencies: [activeCategory],
+    pageSize: PAGE_SIZE,
+    dependencies: [user?.id, activeCategory],
+    onError: (error) =>
+      console.error("[ERROR] Fetch admin notifications:", error),
   });
 
-  useFocusEffect(
-    useCallback(() => {
-      // Reset and load first page when category changes
-      pagination.reset();
-      pagination.onRefresh();
-    }, [activeCategory])
-  );
+  // Generate komponen
+  const { ListEmptyComponent, ListFooterComponent } =
+    createPaginationComponents({
+      loading: pagination.loading,
+      refreshing: pagination.refreshing,
+      listData: pagination.listData,
+      emptyMessage: "Belum ada notifikasi",
+      skeletonCount: 5,
+      skeletonHeight: 100,
+    });
 
-  const handlePress = (item: any) => {
-    console.log("ITEM", item.value);
-    setActiveCategory(item.value);
-    // Reset and load first page when category changes
-    pagination.reset();
-    pagination.onRefresh();
-  };
-
-  // Render individual notification item
-  const renderItem = ({ item }: { item: any }) => (
+  // Render item notification
+  const renderNotificationItem = ({ item }: { item: any }) => (
     <View key={item.id}>
       <BoxNotification
         data={item}
         activeCategory={activeCategory as any}
+        setListData={pagination.setListData}
       />
     </View>
   );
 
-  // Generate pagination components using helper
-  const { ListEmptyComponent, ListFooterComponent } = createPaginationComponents({
-    loading: pagination.loading,
-    refreshing: pagination.refreshing,
-    listData: pagination.listData,
-    isInitialLoad: pagination.isInitialLoad,
-    emptyMessage: "Belum ada notifikasi",
-    skeletonCount: 5,
-    skeletonHeight: 100,
-  });
+  const handlePress = (item: any) => {
+    setActiveCategory(item.value);
+    // Reset pagination saat kategori berubah
+    pagination.reset();
+  };
 
   return (
     <>
-     <Stack.Screen
+      <Stack.Screen
         options={{
-          title: "Notifikasi",
+          title: "Admin Notifikasi",
           headerLeft: () => <BackButton />,
           headerRight: () => (
             <IconDot
@@ -192,16 +159,18 @@ export default function ScreenNotification() {
           />
         }
         listData={pagination.listData}
-        renderItem={renderItem}
+        renderItem={renderNotificationItem}
         refreshControl={
           <RefreshControl
+            tintColor={MainColor.yellow}
+            colors={[MainColor.yellow]}
             refreshing={pagination.refreshing}
             onRefresh={pagination.onRefresh}
           />
         }
         onEndReached={pagination.loadMore}
-        ListFooterComponent={ListFooterComponent}
         ListEmptyComponent={ListEmptyComponent}
+        ListFooterComponent={ListFooterComponent}
       />
 
       <DrawerCustom
@@ -235,8 +204,11 @@ export default function ScreenNotification() {
                 textRight: "Ya",
                 onPressRight: () => {
                   markAsReadAll(user?.id as any);
-                  // Reset and refresh data after marking all as read
-                  pagination.reset();
+                  const data = _.cloneDeep(pagination.listData);
+                  data.forEach((e) => {
+                    e.isRead = true;
+                  });
+                  pagination.setListData(data);
                   pagination.onRefresh();
                   setOpenDrawer(false);
                 },

@@ -1,22 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  BaseBox,
-  ScrollableCustom,
-  TextCustom,
-  ViewWrapper,
-} from "@/components";
+import { BaseBox, ScrollableCustom, TextCustom } from "@/components";
+import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { MainColor } from "@/constants/color-palet";
+import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { useAuth } from "@/hooks/use-auth";
 import { usePagination } from "@/hooks/use-pagination";
 import { dummyMasterStatus } from "@/lib/dummy-data/_master/status";
 import { apiJobGetByStatus } from "@/service/api-client/api-job";
 import { useFocusEffect, useLocalSearchParams } from "expo-router";
-import _ from "lodash";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { RefreshControl, View } from "react-native";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
-import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 
 export default function Job_MainViewStatus2() {
   const { user } = useAuth();
@@ -24,7 +18,7 @@ export default function Job_MainViewStatus2() {
   console.log("STATUS", status);
 
   const [activeCategory, setActiveCategory] = useState<string | null>(
-    status || "publish"
+    status || "publish",
   );
 
   // Setup pagination
@@ -44,14 +38,15 @@ export default function Job_MainViewStatus2() {
   });
 
   // Generate komponen
-  const { ListEmptyComponent, ListFooterComponent } = createPaginationComponents({
-    loading: pagination.loading,
-    refreshing: pagination.refreshing,
-    listData: pagination.listData,
-    emptyMessage: `Tidak ada data ${activeCategory}`,
-    skeletonCount: PAGINATION_DEFAULT_TAKE,
-    skeletonHeight: 100,
-  });
+  const { ListEmptyComponent, ListFooterComponent } =
+    createPaginationComponents({
+      loading: pagination.loading,
+      refreshing: pagination.refreshing,
+      listData: pagination.listData,
+      emptyMessage: `Tidak ada data ${activeCategory}`,
+      skeletonCount: PAGINATION_DEFAULT_TAKE,
+      skeletonHeight: 100,
+    });
 
   // Render item job
   const renderJobItem = ({ item }: { item: any }) => (
@@ -66,6 +61,14 @@ export default function Job_MainViewStatus2() {
       </TextCustom>
     </BaseBox>
   );
+
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     // Reset and load first page when category changes
+  //     pagination.reset();
+  //     // pagination.onRefresh();
+  //   }, [activeCategory]),
+  // );
 
   const handlePress = (item: any) => {
     setActiveCategory(item.value);
@@ -87,11 +90,7 @@ export default function Job_MainViewStatus2() {
 
   return (
     <NewWrapper
-      headerComponent={
-        <View style={{ paddingTop: 8 }}>
-          {scrollComponent}
-        </View>
-      }
+      headerComponent={<View style={{ paddingTop: 8 }}>{scrollComponent}</View>}
       listData={pagination.listData}
       renderItem={renderJobItem}
       refreshControl={

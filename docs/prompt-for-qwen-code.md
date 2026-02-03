@@ -1,8 +1,8 @@
 <!-- Start Penerapan Pagination -->
 
-File utama: screens/Job/ScreenArchive2.tsx
-Fun fecth: apiJobGetByStatus
-File fetch: service/api-client/api-job.ts
+File utama: screens/Admin/Notification-Admin/ScreenNotificationAdmin2.tsx
+Fun fecth: apiGetNotificationsById
+File fetch: service/api-notifications.ts
 File komponen wrapper: components/_ShareComponent/NewWrapper.tsx
 
 Terapkan pagination pada file "File utama"
