@@ -1,8 +1,8 @@
 <!-- ===================== Start Penerapan Pagination ===================== -->
 
-File utama: screens/Event/ScreenListOfParticipants.tsx
-Function fecth: apiEventListOfParticipants
-File function fetch: service/api-client/api-event.ts
+File utama: screens/Voting/ScreenStatus.tsx
+Function fecth: apiVotingGetByStatus
+File function fetch: service/api-client/api-voting.ts
 File komponen wrapper: components/_ShareComponent/NewWrapper.tsx
 
 Terapkan pagination pada file "File utama"
@@ -15,8 +15,8 @@ Jika tidak ada props page maka tambahkan props page dan default page: "1"
 
 Gunakan bahasa indonesia pada cli agar saya mudah membacanya.
 
-<!-- File refrensi: screens/Job/MainViewStatus2.tsx
-Anda bisa menggunakan refrensi dari "File refrensi" jika butuh pemahaman dengan tipe fitur yang sama -->
+File refrensi: screens/Event/ScreenStatus.tsx
+Anda bisa menggunakan refrensi dari "File refrensi" jika butuh pemahaman dengan tipe fitur yang sama
 
 <!-- ===================== End Penerapan Pagination ===================== -->
 

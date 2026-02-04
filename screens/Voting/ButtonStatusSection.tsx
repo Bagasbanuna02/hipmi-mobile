@@ -36,7 +36,7 @@ export default function Voting_ButtonStatusSection({
               type: "success",
               text1: response.message,
             });
-            router.back();
+            router.replace(`/voting/${id}/draft/detail`);
           } else {
             Toast.show({
               type: "info",
@@ -73,7 +73,7 @@ export default function Voting_ButtonStatusSection({
               type: "success",
               text1: response.message,
             });
-            router.back();
+            router.replace(`/voting/${id}/review/detail`);
           } else {
             Toast.show({
               type: "info",
@@ -110,7 +110,7 @@ export default function Voting_ButtonStatusSection({
               type: "success",
               text1: response.message,
             });
-            router.back();
+            router.replace(`/voting/${id}/draft/detail`);
           } else {
             Toast.show({
               type: "info",

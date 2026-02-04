@@ -18,6 +18,7 @@ export const GStyles = StyleSheet.create({
     flex: 1,
     paddingInline: PADDING_MEDIUM,
     paddingTop: PADDING_EXTRA_SMALL,
+    paddingBottom: 5,
     // paddingBlock: PADDING_EXTRA_SMALL,
     backgroundColor: MainColor.darkblue,
   },

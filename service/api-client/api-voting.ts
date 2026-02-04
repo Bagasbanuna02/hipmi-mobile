@@ -14,12 +14,14 @@ export async function apiVotingCreate(data: any) {
 export async function apiVotingGetByStatus({
   id,
   status,
+  page = "1",
 }: {
   id: string;
   status: string;
+  page?: string;
 }) {
   try {
-    const response = await apiConfig.get(`/mobile/voting/${id}/${status}`);
+    const response = await apiConfig.get(`/mobile/voting/${id}/${status}?page=${page}`);
     return response.data;
   } catch (error) {
     throw error;

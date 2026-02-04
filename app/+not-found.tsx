@@ -1,11 +1,21 @@
 import { BackButton, StackCustom, TextCustom, ViewWrapper } from "@/components";
-import { Stack } from "expo-router";
+import { router, Stack } from "expo-router";
 
 export default function NotFoundScreen() {
+  // Setelah (dengan penanganan):
+      const handleBack = () => {
+       if (router.canGoBack()) {
+         router.back();
+       } else {
+         // Alternatif action ketika tidak bisa kembali
+         router.replace('/'); // atau navigasi ke halaman default
+       }
+     };
+
   return (
     <>
       <Stack.Screen
-        options={{ headerShown: true, title: "", headerLeft: () => <BackButton /> }}
+        options={{ headerShown: true, title: "", headerLeft: () => <BackButton onPress={() => handleBack()} /> }}
       />
       <ViewWrapper>
         <StackCustom

@@ -3,11 +3,12 @@ import {
   BoxButtonOnFooter,
   ButtonCustom,
   CenterCustom,
+  NewWrapper,
   Spacing,
   StackCustom,
   TextAreaCustom,
   TextInputCustom,
-  ViewWrapper
+  ViewWrapper,
 } from "@/components";
 import DateTimePickerCustom from "@/components/DateInput/DateTimePickerCustom";
 import { MainColor } from "@/constants/color-palet";
@@ -79,7 +80,9 @@ export default function VotingCreate() {
           type: "success",
           text1: "Data berhasil disimpan",
         });
-        router.replace("/(application)/(user)/voting/(tabs)/status?status=review");
+        router.replace(
+          "/(application)/(user)/voting/(tabs)/status?status=review",
+        );
       } else {
         Toast.show({
           type: "error",
@@ -106,7 +109,7 @@ export default function VotingCreate() {
   };
 
   return (
-    <ViewWrapper footerComponent={buttonSubmit()}>
+    <NewWrapper footerComponent={buttonSubmit()}>
       <StackCustom gap={"xs"}>
         <TextInputCustom
           label="Judul Voting"
@@ -142,7 +145,6 @@ export default function VotingCreate() {
           }
         />
 
-
         {listVote.map((item, index) => (
           <TextInputCustom
             key={index}
@@ -153,8 +155,8 @@ export default function VotingCreate() {
             onChangeText={(value: any) =>
               setListVote(
                 listVote.map((item, i) =>
-                  i === index ? { ...item, value } : item
-                )
+                  i === index ? { ...item, value } : item,
+                ),
               )
             }
           />
@@ -198,6 +200,6 @@ export default function VotingCreate() {
 
         <Spacing />
       </StackCustom>
-    </ViewWrapper>
+    </NewWrapper>
   );
 }
