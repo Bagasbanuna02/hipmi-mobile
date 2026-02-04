@@ -23,3 +23,4 @@ Gunakan bahasa indonesia pada cli agar saya mudah membacanya.
 <!-- Start Penerapan NewWrapper -->
 Terapkan NewWrapper pada file: screens/Forum/DetailForum.tsx
 Component yang digunakan: components/_ShareComponent/NewWrapper.tsx , karena ini adalah halaman detail saya ingin anda fokus pada props pada NewWrapper. Seperti 
+<!--  -->

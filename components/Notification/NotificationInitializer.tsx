@@ -51,7 +51,6 @@ export default function NotificationInitializer() {
         if (!fcmToken) {
            console.warn("Tidak bisa mendapatkan FCM token");
           // logout();
-          return;
         }
 
         console.log("✅ FCM Token:", fcmToken);

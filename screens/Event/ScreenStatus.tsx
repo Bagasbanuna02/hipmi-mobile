@@ -26,7 +26,7 @@ export default function Event_ScreenStatus() {
 
   const id = user?.id || "";
   const [activeCategory, setActiveCategory] = useState<string | null>(
-    status || "publish"
+    status || "publish",
   );
 
   // Setup pagination
@@ -46,14 +46,15 @@ export default function Event_ScreenStatus() {
   });
 
   // Generate komponen
-  const { ListEmptyComponent, ListFooterComponent } = createPaginationComponents({
-    loading: pagination.loading,
-    refreshing: pagination.refreshing,
-    listData: pagination.listData,
-    emptyMessage: `Tidak ada data ${activeCategory}`,
-    skeletonCount: 5,
-    skeletonHeight: 100,
-  });
+  const { ListEmptyComponent, ListFooterComponent } =
+    createPaginationComponents({
+      loading: pagination.loading,
+      refreshing: pagination.refreshing,
+      listData: pagination.listData,
+      emptyMessage: `Tidak ada data ${activeCategory}`,
+      skeletonCount: 5,
+      skeletonHeight: 100,
+    });
 
   // Render item event
   const renderEventItem = ({ item }: { item: any }) => (
@@ -100,11 +101,8 @@ export default function Event_ScreenStatus() {
 
   return (
     <NewWrapper
-      headerComponent={
-        <View style={{ paddingTop: 8 }}>
-          {tabsComponent}
-        </View>
-      }
+      hideFooter
+      headerComponent={<View style={{ paddingTop: 8 }}>{tabsComponent}</View>}
       listData={pagination.listData}
       renderItem={renderEventItem}
       refreshControl={

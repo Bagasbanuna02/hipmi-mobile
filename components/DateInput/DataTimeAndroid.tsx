@@ -1,4 +1,3 @@
-
 // DateTimeInput.tsx
 import { MainColor } from "@/constants/color-palet";
 import { GStyles } from "@/styles/global-styles";
@@ -7,7 +6,14 @@ import DateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
 import React, { useCallback, useState } from "react";
-import { Pressable, StyleProp, Text, View, ViewStyle } from "react-native";
+import {
+  Keyboard,
+  Pressable,
+  StyleProp,
+  Text,
+  View,
+  ViewStyle,
+} from "react-native";
 import Grid from "../Grid/GridCustom";
 import TextCustom from "../Text/TextCustom";
 
@@ -53,7 +59,7 @@ const DateTimeInput_Android: React.FC<DateTimeInputProps> = ({
   const [selectedDate, setSelectedDate] = useState<Date>(value as any);
   const [selectedTime, setSelectedTime] = useState<Date>(value as any);
 
-  console.log("Date Android", value)
+  console.log("Date Android", value);
 
   // Fungsi untuk menggabungkan tanggal dan waktu
   const combineDateAndTime = useCallback((date: Date, time: Date): Date => {
@@ -62,7 +68,7 @@ const DateTimeInput_Android: React.FC<DateTimeInputProps> = ({
       time.getHours(),
       time.getMinutes(),
       time.getSeconds(),
-      time.getMilliseconds()
+      time.getMilliseconds(),
     );
     return combined;
   }, []);
@@ -92,10 +98,12 @@ const DateTimeInput_Android: React.FC<DateTimeInputProps> = ({
   };
 
   const toggleDatePicker = () => {
+    Keyboard.dismiss();
     setShowDate(!showDate);
   };
 
   const toggleTimePicker = () => {
+    Keyboard.dismiss();
     setShowTime(!showTime);
   };
 
