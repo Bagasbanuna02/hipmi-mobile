@@ -117,9 +117,16 @@ export async function apiEventJoin({
   }
 }
 
-export async function apiEventListOfParticipants({ id }: { id?: string }) {
+export async function apiEventListOfParticipants({
+  id,
+  page = "1"
+}: {
+  id?: string;
+  page?: string;
+}) {
   try {
-    const response = await apiConfig.get(`/mobile/event/${id}/participants`);
+    const pageParam = page ? `?page=${page}` : "";
+    const response = await apiConfig.get(`/mobile/event/${id}/participants${pageParam}`);
     return response.data;
   } catch (error) {
     throw error;

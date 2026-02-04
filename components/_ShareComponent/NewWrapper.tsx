@@ -101,12 +101,14 @@ const NewWrapper = (props: NewWrapperProps) => {
             renderItem={listProps.renderItem}
             keyExtractor={
               listProps.keyExtractor ||
-              ((item) => {
+              ((item, index) => {
                 if (item.id == null) {
                   console.warn("Item tanpa 'id':", item);
-                  return `fallback-${JSON.stringify(item)}`;
+                  return `fallback-${index}-${JSON.stringify(item)}`;
                 }
-                return String(item.id);
+
+                // Gabungkan ID dengan indeks untuk mencegah duplikasi
+                return `${String(item.id)}-${index}`;
               })
             }
           

@@ -2,7 +2,7 @@ import {
   AvatarComp,
   BackButton,
   FloatingButton,
-  SearchInput
+  SearchInput,
 } from "@/components";
 import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { MainColor } from "@/constants/color-palet";
@@ -101,8 +101,9 @@ export default function Forum_ViewBeranda3() {
       />
 
       <NewWrapper
+        hideFooter
         headerComponent={
-          <View style={{  paddingTop: 8 }}>
+          <View style={{ paddingTop: 8 }}>
             <SearchInput
               placeholder="Cari topik diskusi"
               onChangeText={_.debounce((text) => setSearch(text), 500)}

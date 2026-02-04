@@ -7,18 +7,15 @@ import {
   TextCustom,
 } from "@/components";
 import NewWrapper from "@/components/_ShareComponent/NewWrapper";
-import { MainColor } from "@/constants/color-palet";
+import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { useAuth } from "@/hooks/use-auth";
 import { usePagination } from "@/hooks/use-pagination";
 import { dummyMasterStatus } from "@/lib/dummy-data/_master/status";
 import { apiEventGetByStatus } from "@/service/api-client/api-event";
-import { useFocusEffect, useLocalSearchParams } from "expo-router";
-import _ from "lodash";
+import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { RefreshControl, View } from "react-native";
-
-const PAGE_SIZE = 10;
 
 export default function Event_ScreenStatus() {
   const { user } = useAuth();
@@ -40,7 +37,7 @@ export default function Event_ScreenStatus() {
         page: String(page),
       });
     },
-    pageSize: PAGE_SIZE,
+    pageSize: PAGINATION_DEFAULT_TAKE,
     dependencies: [id, activeCategory],
     onError: (error) => console.error("[ERROR] Fetch event by status:", error),
   });
@@ -52,7 +49,7 @@ export default function Event_ScreenStatus() {
       refreshing: pagination.refreshing,
       listData: pagination.listData,
       emptyMessage: `Tidak ada data ${activeCategory}`,
-      skeletonCount: 5,
+      skeletonCount: PAGINATION_DEFAULT_TAKE,
       skeletonHeight: 100,
     });
 

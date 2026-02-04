@@ -31,7 +31,7 @@ export default function Event_ButtonStatusSection({
               type: "success",
               text1: response.message,
             });
-            router.back();
+            router.replace(`/event/(tabs)/status?status=draft`);
           } else {
             Toast.show({
               type: "info",
@@ -65,7 +65,7 @@ export default function Event_ButtonStatusSection({
               type: "success",
               text1: response.message,
             });
-            router.back();
+            router.replace(`/event/(tabs)/status?status=review`);
           } else {
             Toast.show({
               type: "info",
@@ -99,7 +99,7 @@ export default function Event_ButtonStatusSection({
               type: "success",
               text1: response.message,
             });
-            router.back();
+            router.replace(`/event/(tabs)/status?status=draft`);
           } else {
             Toast.show({
               type: "info",

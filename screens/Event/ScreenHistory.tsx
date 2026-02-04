@@ -2,6 +2,7 @@
 import { ButtonCustom, Spacing, TextCustom } from "@/components";
 import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { AccentColor, MainColor } from "@/constants/color-palet";
+import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { useAuth } from "@/hooks/use-auth";
 import { usePagination } from "@/hooks/use-pagination";
@@ -11,8 +12,6 @@ import { dateTimeView } from "@/utils/dateTimeView";
 import _ from "lodash";
 import { useState } from "react";
 import { RefreshControl, View } from "react-native";
-
-const PAGE_SIZE = 5;
 
 export default function Event_ScreenHistory() {
   const [activeCategory, setActiveCategory] = useState<string | null>("all");
@@ -27,25 +26,26 @@ export default function Event_ScreenHistory() {
         page: String(page),
       });
     },
-    pageSize: PAGE_SIZE,
+    pageSize: PAGINATION_DEFAULT_TAKE,
     dependencies: [user?.id, activeCategory],
     onError: (error) => console.error("[ERROR] Fetch event history:", error),
   });
 
   // Generate komponen
-  const { ListEmptyComponent, ListFooterComponent } = createPaginationComponents({
-    loading: pagination.loading,
-    refreshing: pagination.refreshing,
-    listData: pagination.listData,
-    emptyMessage: "Belum ada riwayat",
-    skeletonCount: 5,
-    skeletonHeight: 100,
-  });
+  const { ListEmptyComponent, ListFooterComponent } =
+    createPaginationComponents({
+      loading: pagination.loading,
+      refreshing: pagination.refreshing,
+      listData: pagination.listData,
+      emptyMessage: "Belum ada riwayat",
+      skeletonCount: PAGINATION_DEFAULT_TAKE,
+      skeletonHeight: 100,
+    });
 
   // Render item event
   const renderEventItem = ({ item }: { item: any }) => (
     <Event_BoxPublishSection
-      key={item.id}
+      key={item && item?.id}
       data={item}
       rightComponentAvatar={
         <TextCustom>

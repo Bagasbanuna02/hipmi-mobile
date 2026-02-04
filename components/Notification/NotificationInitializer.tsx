@@ -49,7 +49,7 @@ export default function NotificationInitializer() {
 
         const fcmToken = await getToken(messagingInstance);
         if (!fcmToken) {
-           console.warn("Tidak bisa mendapatkan FCM token");
+           console.log("Tidak bisa mendapatkan FCM token");
           // logout();
         }
 
