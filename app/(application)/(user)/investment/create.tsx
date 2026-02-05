@@ -1,18 +1,19 @@
 import {
   BaseBox,
+  BoxButtonOnFooter,
   ButtonCenteredOnly,
   ButtonCustom,
   CenterCustom,
   InformationBox,
   LandscapeFrameUploaded,
-  LoaderCustom,
+  NewWrapper,
   SelectCustom,
   Spacing,
   StackCustom,
   TextCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
+import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 import { MainColor } from "@/constants/color-palet";
 import DIRECTORY_ID from "@/constants/directory-id";
 import { useAuth } from "@/hooks/use-auth";
@@ -184,7 +185,19 @@ export default function InvestmentCreate() {
 
   //   const [coba, setCoba] = useState("");
   return (
-    <ViewWrapper>
+    <NewWrapper
+      footerComponent={
+        <BoxButtonOnFooter>
+          <ButtonCustom
+            disabled={isLoading}
+            isLoading={isLoading}
+            onPress={() => handleSubmit()}
+          >
+            Simpan
+          </ButtonCustom>
+        </BoxButtonOnFooter>
+      }
+    >
       <StackCustom gap={"xs"}>
         <InformationBox text="Gambar investasi bisa berupa ilustrasi, poster atau foto terkait investasi." />
         <LandscapeFrameUploaded image={image as string} />
@@ -264,7 +277,9 @@ export default function InvestmentCreate() {
 
         <StackCustom gap={0}>
           <TextInputCustom
-            disabled
+            iconLeft="Rp."
+            // disabled
+            editable={false}
             required
             placeholder="0"
             label="Total Lembar"
@@ -291,7 +306,7 @@ export default function InvestmentCreate() {
         />
 
         {loadingMaster ? (
-          <LoaderCustom />
+          <CustomSkeleton height={50} />
         ) : (
           <SelectCustom
             required
@@ -313,7 +328,7 @@ export default function InvestmentCreate() {
         )}
 
         {loadingMaster ? (
-          <LoaderCustom />
+          <CustomSkeleton height={50} />
         ) : (
           <SelectCustom
             required
@@ -335,7 +350,7 @@ export default function InvestmentCreate() {
         )}
 
         {loadingMaster ? (
-          <LoaderCustom />
+          <CustomSkeleton height={50} />
         ) : (
           <SelectCustom
             required
@@ -357,15 +372,8 @@ export default function InvestmentCreate() {
         )}
 
         <Spacing />
-        <ButtonCustom
-          disabled={isLoading}
-          isLoading={isLoading}
-          onPress={() => handleSubmit()}
-        >
-          Simpan
-        </ButtonCustom>
       </StackCustom>
-      <Spacing height={50} />
-    </ViewWrapper>
+      {/* <Spacing height={50} /> */}
+    </NewWrapper>
   );
 }

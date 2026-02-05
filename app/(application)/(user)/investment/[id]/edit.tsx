@@ -1,15 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
+  BoxButtonOnFooter,
   ButtonCenteredOnly,
   ButtonCustom,
   InformationBox,
   LandscapeFrameUploaded,
   LoaderCustom,
+  NewWrapper,
   SelectCustom,
   Spacing,
   StackCustom,
-  TextInputCustom,
-  ViewWrapper,
+  TextInputCustom
 } from "@/components";
 import API_STRORAGE from "@/constants/base-url-api-strorage";
 import DIRECTORY_ID from "@/constants/directory-id";
@@ -198,7 +199,15 @@ export default function InvestmentEdit() {
   };
 
   return (
-    <ViewWrapper>
+    <NewWrapper
+      footerComponent={
+        <BoxButtonOnFooter>
+          <ButtonCustom isLoading={isLoading} onPress={handleSubmitUpdate}>
+            Simpan
+          </ButtonCustom>
+        </BoxButtonOnFooter>
+      }
+    >
       <StackCustom gap={"xs"}>
         <InformationBox text="Gambar investasi bisa berupa ilustrasi, poster atau foto terkait investasi." />
         <LandscapeFrameUploaded
@@ -253,7 +262,8 @@ export default function InvestmentEdit() {
         />
 
         <TextInputCustom
-          disabled
+          iconLeft="Rp."
+          // disabled
           required
           placeholder="0"
           label="Total Lembar"
@@ -339,11 +349,7 @@ export default function InvestmentEdit() {
         )}
 
         <Spacing />
-        <ButtonCustom isLoading={isLoading} onPress={handleSubmitUpdate}>
-          Simpan
-        </ButtonCustom>
       </StackCustom>
-      <Spacing height={50} />
-    </ViewWrapper>
+    </NewWrapper>
   );
 }
