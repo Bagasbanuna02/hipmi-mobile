@@ -25,3 +25,7 @@ Anda bisa menggunakan refrensi dari "File refrensi" jika butuh pemahaman dengan 
 Terapkan NewWrapper pada file: screens/Forum/DetailForum.tsx
 Component yang digunakan: components/_ShareComponent/NewWrapper.tsx , karena ini adalah halaman detail saya ingin anda fokus pada props pada NewWrapper. Seperti 
 <!--  -->
+
+Bantu saya untuk memperbaiki logika path yang ada di dalam file "screens/Admin/Notification-Admin/ScreenNotificationAdmin2.tsx" , pada function fixPath
+Saya ingin jika didalam deeplink ada "/admin/..." contoh "/admin/event/review/status" maka path yang akan di redirect adalah "/admin/event/review/status"
+jika tidak maka terapkan sesuai dengan logika yang sudah ada

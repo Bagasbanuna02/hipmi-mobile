@@ -52,6 +52,9 @@ const fixPath = ({
     return deepLink;
   }
 
+  console.log("Category App", categoryApp);
+  console.log("Deep Link", deepLink);
+
   const separator = deepLink.includes("?") ? "&" : "?";
 
   const fixedPath = `${deepLink}${separator}from=notifications&category=${_.lowerCase(
@@ -83,8 +86,8 @@ const BoxNotification = ({
             categoryApp: data.kategoriApp,
           });
 
-          router.navigate(newPath as any);
           selectedCategory(activeCategory as string);
+          router.navigate(newPath as any);
 
           if (!data.isRead) {
             markAsRead(data.id);
@@ -112,7 +115,7 @@ const BoxNotification = ({
   );
 };
 
-export default function ScreenNotification() {
+export default function ScreenNotification_V2() {
   const { user } = useAuth();
   const { category } = useLocalSearchParams<{ category?: string }>();
   const [activeCategory, setActiveCategory] = useState<string | null>(
@@ -140,7 +143,7 @@ export default function ScreenNotification() {
   // useFocusEffect(
   //   useCallback(() => {
   //     // Reset and load first page when category changes
-  //     pagination.reset();
+
   //     pagination.onRefresh();
   //   }, [activeCategory]),
   // );
@@ -171,7 +174,7 @@ export default function ScreenNotification() {
       listData: pagination.listData,
       isInitialLoad: pagination.isInitialLoad,
       emptyMessage: "Belum ada notifikasi",
-      skeletonCount: 5,
+      skeletonCount: PAGINATION_DEFAULT_TAKE,
       skeletonHeight: 100,
     });
 
@@ -237,7 +240,6 @@ export default function ScreenNotification() {
             },
           ]}
           onPressItem={(item: any) => {
-            // console.log("Item", item.value);
             if (item.value === "read-all") {
               AlertDefaultSystem({
                 title: "Tandai Semua Dibaca",

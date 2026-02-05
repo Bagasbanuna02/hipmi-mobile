@@ -47,9 +47,8 @@ export async function apiGetNotificationsById({
   category: TypeNotificationCategoryApp;
   page?: string;
 }) {
-  console.log("ID", id);
+
   console.log("Category", category);
-  console.log("Page", page);
 
   try {
     const response = await apiConfig.get(

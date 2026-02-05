@@ -12,7 +12,7 @@ import {
 import { IconPlus } from "@/components/_Icon";
 import { IconDot } from "@/components/_Icon/IconComponent";
 import { AccentColor, MainColor } from "@/constants/color-palet";
-import { ICON_SIZE_SMALL } from "@/constants/constans-value";
+import { ICON_SIZE_SMALL, PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { useAuth } from "@/hooks/use-auth";
 import { useNotificationStore } from "@/hooks/use-notification-store";
@@ -26,13 +26,42 @@ import _ from "lodash";
 import { useState } from "react";
 import { RefreshControl, View } from "react-native";
 
-const PAGE_SIZE = 10;
-
 const selectedCategory = (value: string) => {
   const category = listOfcategoriesAppNotification.find(
     (c) => c.value === value,
   );
   return category?.label;
+};
+
+const fixPath = ({
+  deepLink,
+  categoryApp,
+}: {
+  deepLink: string;
+  categoryApp: string;
+}) => {
+  // Jika categoryApp adalah "OTHER", kembalikan deepLink tanpa perubahan
+  if (categoryApp === "OTHER") {
+    return deepLink;
+  }
+
+  // Jika dalam deepLink terdapat "/admin/", kembalikan path tersebut tanpa modifikasi tambahan
+  if (deepLink.includes("/admin/")) {
+    return deepLink;
+  }
+
+  console.log("Category App", categoryApp);
+  console.log("Deep Link", deepLink);
+
+  const separator = deepLink.includes("?") ? "&" : "?";
+
+  const fixedPath = `${deepLink}${separator}from=notifications&category=${_.lowerCase(
+    categoryApp,
+  )}`;
+
+  console.log("Fix Path", fixedPath);
+
+  return fixedPath;
 };
 
 const BoxNotification = ({
@@ -50,17 +79,22 @@ const BoxNotification = ({
       <BaseBox
         backgroundColor={data.isRead ? AccentColor.darkblue : AccentColor.blue}
         onPress={() => {
-          console.log(
-            "Notification >",
-            selectedCategory(activeCategory as string),
-          );
-          router.push(data.deepLink);
-          markAsRead(data.id);
-          setListData((prev: any) =>
-            prev.map((item: any) =>
-              item.id === data.id ? { ...item, isRead: true } : item,
-            ),
-          );
+          const newPath = fixPath({
+            deepLink: data.deepLink,
+            categoryApp: data.kategoriApp,
+          });
+
+          selectedCategory(activeCategory as string);
+          router.navigate(newPath as any);
+
+          if (!data.isRead) {
+            markAsRead(data.id);
+            setListData((prev: any) =>
+              prev.map((item: any) =>
+                item.id === data.id ? { ...item, isRead: true } : item,
+              ),
+            );
+          }
         }}
       >
         <StackCustom>
@@ -97,7 +131,7 @@ export default function Admin_ScreenNotification2() {
         page: String(page),
       });
     },
-    pageSize: PAGE_SIZE,
+    pageSize: PAGINATION_DEFAULT_TAKE,
     dependencies: [user?.id, activeCategory],
     onError: (error) =>
       console.error("[ERROR] Fetch admin notifications:", error),
@@ -110,7 +144,7 @@ export default function Admin_ScreenNotification2() {
       refreshing: pagination.refreshing,
       listData: pagination.listData,
       emptyMessage: "Belum ada notifikasi",
-      skeletonCount: 5,
+      skeletonCount: PAGINATION_DEFAULT_TAKE,
       skeletonHeight: 100,
     });
 
