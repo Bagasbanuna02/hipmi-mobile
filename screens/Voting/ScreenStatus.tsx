@@ -8,17 +8,18 @@ import {
 } from "@/components";
 import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { MainColor } from "@/constants/color-palet";
+import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { useAuth } from "@/hooks/use-auth";
 import { usePagination } from "@/hooks/use-pagination";
 import { dummyMasterStatus } from "@/lib/dummy-data/_master/status";
 import { apiVotingGetByStatus } from "@/service/api-client/api-voting";
 import { dateTimeView } from "@/utils/dateTimeView";
-import { useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import { useFocusEffect, useLocalSearchParams } from "expo-router";
+import { useCallback, useState } from "react";
 import { RefreshControl, View } from "react-native";
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 6
 
 export default function Voting_ScreenStatus() {
   const { user } = useAuth();
@@ -40,7 +41,7 @@ export default function Voting_ScreenStatus() {
         page: String(page),
       });
     },
-    pageSize: PAGE_SIZE,
+    pageSize: PAGINATION_DEFAULT_TAKE,
     dependencies: [id, activeCategory],
     onError: (error) => console.error("[ERROR] Fetch voting by status:", error),
   });
@@ -90,6 +91,12 @@ export default function Voting_ScreenStatus() {
     // Reset pagination saat kategori berubah
     pagination.reset();
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      pagination.onRefresh();
+    }, [activeCategory])
+  );
 
   const scrollComponent = (
     <ScrollableCustom

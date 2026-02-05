@@ -20,6 +20,9 @@ export default function Job_ButtonStatusSection({
   onSetLoading: (value: boolean) => void;
   isArchive?: boolean;
 }) {
+  const path : any =(status: string) => {
+    return  `/job/(tabs)/status?status=${status}`
+  }
   const handleBatalkanReview = () => {
     AlertDefaultSystem({
       title: "Batalkan Review",
@@ -39,7 +42,7 @@ export default function Job_ButtonStatusSection({
               type: "success",
               text1: response.message,
             });
-            router.back();
+            router.replace(path("draft"));
           } else {
             Toast.show({
               type: "info",
@@ -76,14 +79,14 @@ export default function Job_ButtonStatusSection({
               type: "success",
               text1: response.message,
             });
-            router.back();
+            router.replace(path("review"));
           } else {
             Toast.show({
               type: "info",
               text1: "Info",
               text2: response.message,
             });
-            router.back();
+            router.back()
           }
         } catch (error) {
           console.log("[ERROR]", error);
@@ -113,14 +116,14 @@ export default function Job_ButtonStatusSection({
               type: "success",
               text1: response.message,
             });
-            router.back();
+            router.replace(path("draft"));
           } else {
             Toast.show({
               type: "info",
               text1: "Info",
               text2: response.message,
             });
-            router.back();
+            router. back();
           }
         } catch (error) {
           console.log("[ERROR]", error);

@@ -62,19 +62,17 @@ export default function Job_MainViewStatus2() {
     </BaseBox>
   );
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     // Reset and load first page when category changes
-  //     pagination.reset();
-  //     // pagination.onRefresh();
-  //   }, [activeCategory]),
-  // );
-
   const handlePress = (item: any) => {
     setActiveCategory(item.value);
     // Reset pagination saat kategori berubah
     pagination.reset();
   };
+  
+  useFocusEffect(
+    useCallback(() => {
+      pagination.onRefresh();
+    }, [activeCategory])
+  );
 
   const scrollComponent = (
     <ScrollableCustom

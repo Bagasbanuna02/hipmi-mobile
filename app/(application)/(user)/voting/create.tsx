@@ -80,9 +80,7 @@ export default function VotingCreate() {
           type: "success",
           text1: "Data berhasil disimpan",
         });
-        router.replace(
-          "/(application)/(user)/voting/(tabs)/status?status=review",
-        );
+        router.replace("/voting/(tabs)/status?status=review");
       } else {
         Toast.show({
           type: "error",

@@ -51,8 +51,6 @@ export default function VotingDetailStatus() {
       setLoadingGetData(true);
       const response = await apiVotingGetOne({ id: id as string });
 
-      console.log("[DATA BY ID]", JSON.stringify(response, null, 2));
-
       if (response.success) {
         setData(response.data);
       }

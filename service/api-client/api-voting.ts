@@ -81,14 +81,15 @@ export async function apiVotingUpdateData({
   }
 }
 
-export async function apiVotingGetAll({ search, category, authorId, userLoginId }: { search?: string, category: "beranda" | "contribution" | "all-history" | "my-history", authorId?: string, userLoginId?: string }) {
+export async function apiVotingGetAll({ search, category, authorId, userLoginId, page = "1" }: { search?: string, category: "beranda" | "contribution" | "all-history" | "my-history", authorId?: string, userLoginId?: string, page?: string }) {
   try {
     console.log("userLoginId", userLoginId);
     const categoryQuery = category ? `?category=${category}` : "";
     const searchQuery = search ? `&search=${search}` : "";
     const authorIdQuery = authorId ? `&authorId=${authorId}` : "";
     const userLoginIdQuery = userLoginId ? `&userLoginId=${userLoginId}` : "";
-    const response = await apiConfig.get(`/mobile/voting${categoryQuery}${searchQuery}${authorIdQuery}${userLoginIdQuery}`);
+    const pageQuery = `&page=${page}`;
+    const response = await apiConfig.get(`/mobile/voting${categoryQuery}${searchQuery}${authorIdQuery}${userLoginIdQuery}${pageQuery}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -110,15 +111,17 @@ export async function apiVotingContribution({
   id,
   authorId,
   category,
+  page = "1",
 }: {
   id: string;
   authorId: string;
   category: "list" | "checked";
+  page?: string;
 }) {
   const query =
     category === "list"
-      ? "?category=list"
-      : `?category=checked&authorId=${authorId}`;
+      ? `?category=list&page=${page}`
+      : `?category=checked&authorId=${authorId}&page=${page}`;
   try {
     const response = await apiConfig.get(
       `/mobile/voting/${id}/contribution${query}`

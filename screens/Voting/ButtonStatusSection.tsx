@@ -3,7 +3,7 @@ import {
   apiVotingDelete,
   apiVotingUpdateStatus,
 } from "@/service/api-client/api-voting";
-import { router } from "expo-router";
+import { RelativePathString, router } from "expo-router";
 import Toast from "react-native-toast-message";
 
 export default function Voting_ButtonStatusSection({
@@ -17,6 +17,10 @@ export default function Voting_ButtonStatusSection({
   isLoading: boolean;
   onSetLoading: (value: boolean) => void;
 }) {
+  const path: any = (status: string) => {
+    return `/voting/(tabs)/status?status=${status}`;
+  };
+
   const handleBatalkanReview = () => {
     AlertDefaultSystem({
       title: "Batalkan Review",
@@ -34,9 +38,9 @@ export default function Voting_ButtonStatusSection({
           if (response?.success) {
             Toast.show({
               type: "success",
-              text1: response.message,
+              text1: "Berhasil batalkan review",
             });
-            router.replace(`/voting/${id}/draft/detail`);
+            router.replace(path("draft"));
           } else {
             Toast.show({
               type: "info",
@@ -71,9 +75,9 @@ export default function Voting_ButtonStatusSection({
           if (response?.success) {
             Toast.show({
               type: "success",
-              text1: response.message,
+              text1: "Berhasil ajukan review",
             });
-            router.replace(`/voting/${id}/review/detail`);
+            router.replace(path("review"));
           } else {
             Toast.show({
               type: "info",
@@ -108,9 +112,9 @@ export default function Voting_ButtonStatusSection({
           if (response?.success) {
             Toast.show({
               type: "success",
-              text1: response.message,
+              text1: "Berhasil edit kembali",
             });
-            router.replace(`/voting/${id}/draft/detail`);
+            router.replace(path("draft"));
           } else {
             Toast.show({
               type: "info",
@@ -135,31 +139,31 @@ export default function Voting_ButtonStatusSection({
       textLeft: "Batal",
       textRight: "Hapus",
       onPressRight: async () => {
-       try {
-        onSetLoading(true);
-         const response = await apiVotingDelete({
-           id: id as string,
-         });
+        try {
+          onSetLoading(true);
+          const response = await apiVotingDelete({
+            id: id as string,
+          });
 
-         if (response?.success) {
-           Toast.show({
-             type: "success",
-             text1: response.message,
-           });
-           router.back();
-         } else {
-           Toast.show({
-             type: "info",
-             text1: "Info",
-             text2: response.message,
-           });
-           router.back();
-         }
-       } catch (error) {
-         console.log("[ERROR]", error);
-       } finally {
-         onSetLoading(false);
-       }
+          if (response?.success) {
+            Toast.show({
+              type: "success",
+              text1: "Berhasil hapus data",
+            });
+            router.back();
+          } else {
+            Toast.show({
+              type: "info",
+              text1: "Info",
+              text2: response.message,
+            });
+            router.back();
+          }
+        } catch (error) {
+          console.log("[ERROR]", error);
+        } finally {
+          onSetLoading(false);
+        }
       },
     });
   };

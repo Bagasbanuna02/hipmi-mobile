@@ -1,7 +1,7 @@
 <!-- ===================== Start Penerapan Pagination ===================== -->
 
-File utama: screens/Voting/ScreenStatus.tsx
-Function fecth: apiVotingGetByStatus
+File utama: screens/Voting/ScreenListOfContributor.tsx
+Function fecth: apiVotingContribution
 File function fetch: service/api-client/api-voting.ts
 File komponen wrapper: components/_ShareComponent/NewWrapper.tsx
 
@@ -15,7 +15,8 @@ Jika tidak ada props page maka tambahkan props page dan default page: "1"
 
 Gunakan bahasa indonesia pada cli agar saya mudah membacanya.
 
-File refrensi: screens/Event/ScreenStatus.tsx
+<!-- Additional Prompt -->
+File refrensi: app/(application)/(user)/event/[id]/list-of-participants.tsx
 Anda bisa menggunakan refrensi dari "File refrensi" jika butuh pemahaman dengan tipe fitur yang sama
 
 <!-- ===================== End Penerapan Pagination ===================== -->

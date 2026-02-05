@@ -5,13 +5,14 @@ import {
   ButtonCustom,
   CenterCustom,
   LoaderCustom,
+  NewWrapper,
   Spacing,
   StackCustom,
   TextAreaCustom,
   TextCustom,
-  TextInputCustom,
-  ViewWrapper,
+  TextInputCustom
 } from "@/components";
+import ListSkeletonComponent from "@/components/_ShareComponent/ListSkeletonComponent";
 import DateTimePickerCustom from "@/components/DateInput/DateTimePickerCustom";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_XLARGE } from "@/constants/constans-value";
@@ -34,7 +35,7 @@ interface IEditData {
   Voting_DaftarNamaVote?: [
     {
       value?: string;
-    }
+    },
   ];
 }
 
@@ -47,7 +48,7 @@ export default function VotingEdit() {
   useFocusEffect(
     useCallback(() => {
       onLoadData();
-    }, [id])
+    }, [id]),
   );
 
   const onLoadData = async () => {
@@ -188,9 +189,9 @@ export default function VotingEdit() {
   };
 
   return (
-    <ViewWrapper footerComponent={buttonSubmit()}>
+    <NewWrapper footerComponent={buttonSubmit()}>
       {loadingGetData ? (
-        <LoaderCustom />
+        <ListSkeletonComponent />
       ) : (
         <StackCustom gap={"xs"}>
           <TextInputCustom
@@ -210,7 +211,7 @@ export default function VotingEdit() {
             onChangeText={(text) => setData({ ...data, deskripsi: text })}
           />
 
-          <Spacing />
+
 
           <DateTimePickerCustom
             minimumDate={new Date(Date.now())}
@@ -255,7 +256,7 @@ export default function VotingEdit() {
                 }
               </TextCustom>
             )}
-            <Spacing />
+
           </StackCustom>
 
           {data?.Voting_DaftarNamaVote?.map((item: any, index: number) => (
@@ -270,7 +271,7 @@ export default function VotingEdit() {
                   ...(data as any),
                   Voting_DaftarNamaVote: data?.Voting_DaftarNamaVote?.map(
                     (item: any, i: any) =>
-                      i === index ? { ...item, value } : item
+                      i === index ? { ...item, value } : item,
                   ),
                 })
               }
@@ -327,6 +328,6 @@ export default function VotingEdit() {
           <Spacing />
         </StackCustom>
       )}
-    </ViewWrapper>
+    </NewWrapper>
   );
 }

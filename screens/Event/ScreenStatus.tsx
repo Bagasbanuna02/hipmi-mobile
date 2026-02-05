@@ -13,8 +13,8 @@ import { useAuth } from "@/hooks/use-auth";
 import { usePagination } from "@/hooks/use-pagination";
 import { dummyMasterStatus } from "@/lib/dummy-data/_master/status";
 import { apiEventGetByStatus } from "@/service/api-client/api-event";
-import { useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import { useFocusEffect, useLocalSearchParams } from "expo-router";
+import { useCallback, useState } from "react";
 import { RefreshControl, View } from "react-native";
 
 export default function Event_ScreenStatus() {
@@ -83,6 +83,12 @@ export default function Event_ScreenStatus() {
     // Reset pagination saat kategori berubah
     pagination.reset();
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      pagination.onRefresh();
+    }, [activeCategory])
+  );
 
   const tabsComponent = (
     <ScrollableCustom
