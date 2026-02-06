@@ -16,10 +16,7 @@ export default function Investment_BoxDetailDocument({
         <Grid>
           <Grid.Col span={leftIcon ? 10 : 12}>
             <ClickableCustom onPress={() => router.push(href as any)}>
-              <TextCustom truncate>
-                {title ||
-                  `Judul Dokumen: Lorem, ipsum dolor sit amet consectetur adipisicing elit.`}
-              </TextCustom>
+              <TextCustom truncate>{title || "-"}</TextCustom>
             </ClickableCustom>
           </Grid.Col>
           {leftIcon && <Grid.Col span={2}>{leftIcon}</Grid.Col>}

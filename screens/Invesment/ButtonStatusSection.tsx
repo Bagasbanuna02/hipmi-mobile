@@ -16,6 +16,9 @@ export default function Investment_ButtonStatusSection({
   status: string;
   buttonPublish?: React.ReactNode;
 }) {
+  const path : any= (status: string) => {
+    return `/investment/(tabs)/portofolio?status=${status}`;
+  };
   const [isLoading, setIsLoading] = useState(false);
   const handleBatalkanReview = () => {
     AlertDefaultSystem({
@@ -30,13 +33,13 @@ export default function Investment_ButtonStatusSection({
             id: id as string,
             status: "draft",
           });
-          console.log("[RESPONSE]", JSON.stringify(response, null, 2));
+
           if (response.success) {
             Toast.show({
               type: "success",
               text1: "Berhasil Batalkan Review",
             });
-            router.back();
+            router.replace(path("draft"));
           } else {
             Toast.show({
               type: "error",
@@ -65,13 +68,13 @@ export default function Investment_ButtonStatusSection({
             id: id as string,
             status: "review",
           });
-          console.log("[RESPONSE]", JSON.stringify(response, null, 2));
+
           if (response.success) {
             Toast.show({
               type: "success",
               text1: "Berhasil Ajukan Review",
             });
-            router.back();
+            router.replace(path("review"));
           } else {
             Toast.show({
               type: "error",
@@ -100,13 +103,13 @@ export default function Investment_ButtonStatusSection({
             id: id as string,
             status: "draft",
           });
-          console.log("[RESPONSE]", JSON.stringify(response, null, 2));
+
           if (response.success) {
             Toast.show({
               type: "success",
               text1: "Berhasil Update Status",
             });
-            router.back();
+            router.replace(path("draft"));
           } else {
             Toast.show({
               type: "error",
@@ -134,8 +137,6 @@ export default function Investment_ButtonStatusSection({
           const response = await apiInvestmentDelete({
             id: id as string,
           });
-
-          console.log("[RESPONSE DELETE]", JSON.stringify(response, null, 2));
 
           if (response.success) {
             Toast.show({

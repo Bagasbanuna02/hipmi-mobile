@@ -14,13 +14,15 @@ export async function apiInvestmentCreate({ data }: { data: any }) {
 export async function apiInvestmentGetByStatus({
   authorId,
   status,
+  page = "1",
 }: {
   authorId: string;
   status: string;
+  page?: string;
 }) {
   try {
     const response = await apiConfig.get(
-      `/mobile/investment/${authorId}/${status}`
+      `/mobile/investment/${authorId}/${status}?page=${page}`
     );
     return response.data;
   } catch (error) {
@@ -103,13 +105,15 @@ export async function apiInvestmentUpsertDocument({
 export async function apiInvestmentGetDocument({
   id,
   category,
+  page = "1",
 }: {
   id: string;
   category: "one-document" | "all-document";
+  page?: string;
 }) {
   try {
     const response = await apiConfig.get(
-      `/mobile/investment/${id}/document?category=${category}`
+      `/mobile/investment/${id}/document?category=${category}&page=${page}`
     );
     return response.data;
   } catch (error) {
@@ -131,15 +135,17 @@ export async function apiInvestmentDeleteDocument({ id }: { id: string }) {
 export async function apiInvestmentGetAll({
   category,
   authorId,
+  page = "1",
 }: {
   category: "my-holding" | "bursa";
   authorId?: string;
+  page?: string;
 }) {
   try {
     const response = await apiConfig.get(
       `/mobile/investment?category=${category}${
         authorId ? `&authorId=${authorId}` : ""
-      }`
+      }&page=${page}`
     );
     return response.data;
   } catch (error) {
@@ -168,16 +174,19 @@ export async function apiInvestmentGetInvoice({
   id,
   authorId,
   category,
+  page = "1",
 }: {
   id?: string;
   authorId?: string;
   category: "my-invest" | "transaction" | "invoice";
+  page?: string;
 }) {
   const categoryQuery = `?category=${category}`;
   const authorIdQuery = authorId ? `&authorId=${authorId}` : "";
+  const pageQuery = `&page=${page}`;
   try {
     const response = await apiConfig.get(
-      `/mobile/investment/${id}/invoice${categoryQuery}${authorIdQuery}`
+      `/mobile/investment/${id}/invoice${categoryQuery}${authorIdQuery}${pageQuery}`
     );
     return response.data;
   } catch (error) {

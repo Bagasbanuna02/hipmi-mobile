@@ -29,7 +29,6 @@ export default function ProfileDetailBlocked() {
 
   const fetchData = async () => {
     const response = await apiGetBlockedById({ id: String(id) });
-    // console.log("[RESPONSE >>]", JSON.stringify(response, null, 2));
     setData(response.data);
   };
 

@@ -1,8 +1,8 @@
 <!-- ===================== Start Penerapan Pagination ===================== -->
 
-File utama: screens/Voting/ScreenListOfContributor.tsx
-Function fecth: apiVotingContribution
-File function fetch: service/api-client/api-voting.ts
+File utama: screens/Invesment/ScreenTransaction.tsx
+Function fecth: apiInvestmentGetInvoice
+File function fetch: service/api-client/api-investment.ts
 File komponen wrapper: components/_ShareComponent/NewWrapper.tsx
 
 Terapkan pagination pada file "File utama"
@@ -16,7 +16,7 @@ Jika tidak ada props page maka tambahkan props page dan default page: "1"
 Gunakan bahasa indonesia pada cli agar saya mudah membacanya.
 
 <!-- Additional Prompt -->
-File refrensi: app/(application)/(user)/event/[id]/list-of-participants.tsx
+File refrensi: screens/Event/ScreenStatus.tsx
 Anda bisa menggunakan refrensi dari "File refrensi" jika butuh pemahaman dengan tipe fitur yang sama
 
 <!-- ===================== End Penerapan Pagination ===================== -->
@@ -29,3 +29,7 @@ Component yang digunakan: components/_ShareComponent/NewWrapper.tsx , karena ini
 Bantu saya untuk memperbaiki logika path yang ada di dalam file "screens/Admin/Notification-Admin/ScreenNotificationAdmin2.tsx" , pada function fixPath
 Saya ingin jika didalam deeplink ada "/admin/..." contoh "/admin/event/review/status" maka path yang akan di redirect adalah "/admin/event/review/status"
 jika tidak maka terapkan sesuai dengan logika yang sudah ada
+
+Bagaimana menangani bug berikut pada file berikut: screens/Invesment/Document/ScreenRecap.tsx 
+Ini adalah halaman yang memiliki fungsi pagination , saya membuat data dummy dimana menghasilkan data urut 1-9, saya mencoba memuat halaman setiap page nya 4 saja untuk percobaan.
+Saat awal muncul komponent box dengan data 9 - 6, kemudian saya hapus data ke 8 . lalu saya coba scroll ke bawah seharusnya angka akan tetap urut 9, 7, 6, 5, 4 ... 1. Tapi dalam case ini setelah 8 di hapus kemudian saya scroll box ke 5 tidak muncul saat di scroll. Apakah anda mengerti maksud saya ?

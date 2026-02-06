@@ -56,7 +56,6 @@ export default function InvestmentSelectBank() {
         });
 
         if (response.success) {
-          console.log("[RESPONSE >>]", response);
           const invoiceId = response.data.id;
 
           const delStorage = await AsyncStorage.removeItem(
