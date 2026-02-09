@@ -1,4 +1,5 @@
 import {
+  BoxButtonOnFooter,
   ButtonCenteredOnly,
   ButtonCustom,
   InformationBox,
@@ -8,8 +9,8 @@ import {
   Spacing,
   StackCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
+import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import DIRECTORY_ID from "@/constants/directory-id";
 import { apiDonationCreate } from "@/service/api-client/api-donation";
 import { apiMasterDonation } from "@/service/api-client/api-master";
@@ -43,7 +44,7 @@ export default function DonationCreate() {
   useFocusEffect(
     useCallback(() => {
       onLoadList();
-    }, [])
+    }, []),
   );
 
   const onLoadList = async () => {
@@ -125,7 +126,24 @@ export default function DonationCreate() {
   };
 
   return (
-    <ViewWrapper>
+    <NewWrapper
+      hideFooter
+      footerComponent={
+        <>
+          <BoxButtonOnFooter>
+            <ButtonCustom
+              isLoading={isLoading}
+              onPress={() => {
+                handlerSubmit();
+                // router.push(`/donation/create-story?id=${"dasdsadsa"}`);
+              }}
+            >
+              Selanjutnya
+            </ButtonCustom>
+          </BoxButtonOnFooter>
+        </>
+      }
+    >
       <StackCustom gap={"xs"}>
         <InformationBox text="Lengkapi semua data di bawah untuk selanjutnya mengisi cerita penggalangan dana." />
 
@@ -201,20 +219,8 @@ export default function DonationCreate() {
             onChange={(value: any) => setData({ ...data, durasiId: value })}
           />
         )}
-
-        <Spacing />
-        <ButtonCustom
-          isLoading={isLoading}
-          onPress={() => {
-            handlerSubmit();
-            // router.push(`/donation/create-story?id=${"dasdsadsa"}`);
-          }}
-        >
-          Selanjutnya
-        </ButtonCustom>
-        <Spacing />
       </StackCustom>
       <Spacing />
-    </ViewWrapper>
+    </NewWrapper>
   );
 }

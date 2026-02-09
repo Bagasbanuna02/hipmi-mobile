@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
+  BoxButtonOnFooter,
   ButtonCenteredOnly,
   ButtonCustom,
   InformationBox,
@@ -8,8 +9,8 @@ import {
   StackCustom,
   TextAreaCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
+import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import DIRECTORY_ID from "@/constants/directory-id";
 import { useAuth } from "@/hooks/use-auth";
 import {
@@ -112,7 +113,23 @@ export default function DonationCreateStory() {
   };
 
   return (
-    <ViewWrapper>
+    <NewWrapper
+      hideFooter
+      footerComponent={
+        <>
+         <BoxButtonOnFooter>
+           <ButtonCustom
+            isLoading={isLoading}
+            onPress={() => {
+              handlerSubmit();
+            }}
+          >
+            Simpan
+          </ButtonCustom>
+         </BoxButtonOnFooter>
+        </>
+      }
+    >
       <StackCustom gap={"xs"}>
         <InformationBox text="Cerita Anda adalah kunci untuk menginspirasi kebaikan. Jelaskan dengan jujur dan jelas tujuan penggalangan dana ini agar calon donatur memahami dampak positif yang dapat mereka wujudkan melalui kontribusi mereka." />
         <TextAreaCustom
@@ -166,18 +183,8 @@ export default function DonationCreateStory() {
           value={data.rekening}
           onChangeText={(value) => setData({ ...data, rekening: value })}
         />
-
-        <Spacing />
-        <ButtonCustom
-          isLoading={isLoading}
-          onPress={() => {
-            handlerSubmit();
-          }}
-        >
-          Simpan
-        </ButtonCustom>
       </StackCustom>
       <Spacing />
-    </ViewWrapper>
+    </NewWrapper>
   );
 }

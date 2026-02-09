@@ -12,11 +12,13 @@ import { View } from "react-native";
 export default function Donation_ComponentBoxDetailData({
   bottomSection,
   data,
+  showSisaHari = true,
   sisaHari,
   reminder,
 }: {
   bottomSection?: React.ReactNode;
   data: any;
+  showSisaHari?: boolean;
   sisaHari: number;
   reminder: boolean;
 }) {
@@ -34,9 +36,9 @@ export default function Donation_ComponentBoxDetailData({
               <TextCustom bold color="red">
                 Waktu berakhir
               </TextCustom>
-            ) : (
+            ) : showSisaHari ? (
               <TextCustom>Sisa hari: {sisaHari}</TextCustom>
-            )}
+            ) : null}
           </View>
 
           <Grid>

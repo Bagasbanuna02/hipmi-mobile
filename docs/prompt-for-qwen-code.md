@@ -1,14 +1,14 @@
 <!-- ===================== Start Penerapan Pagination ===================== -->
 
-File source: app/(application)/(user)/investment/[id]/(news)/list-of-news.tsx
-Folder tujuan: screens/Invesment
-Nama file utama: ScreenListOfNews.tsx
+File source: app/(application)/(user)/donation/(tabs)/status.tsx
+Folder tujuan: screens/Donation
+Nama file utama: ScreenStatus.tsx
 
-Buat file baru pada "Folder tujuan" dengan nama "Nama file utama" dan ubah nama function menjadi "Investment_ScreenListOfNews" kemudian clean code, import dan panggil function tersebut pada file "File source" 
+Buat file baru pada "Folder tujuan" dengan nama "Nama file utama" dan ubah nama function menjadi "Donation_ScreenStatus" kemudian clean code, import dan panggil function tersebut pada file "File source" 
 Selanjutnya terapkan pagination pada file "Nama file utama"
 
-Function fecth: apiInvestmentGetNews
-File function fetch: service/api-client/api-investment.ts
+Function fecth: apiDonationGetByStatus
+File function fetch: service/api-client/api-donation.ts
 File komponen wrapper: components/_ShareComponent/NewWrapper.tsx
 
 Terapkan pagination pada file "Nama file utama"
@@ -18,7 +18,6 @@ Komponen pagination yang digunaka berada pada file hooks/use-pagination.tsx dan 
 
 Perbaiki fetch "Function fecth" , pada file "File function fetch"
 Jika tidak ada props page maka tambahkan props page dan default page: "1"
-
 
 Gunakan bahasa indonesia pada cli agar saya mudah membacanya.
 
@@ -47,9 +46,9 @@ Gunakan bahasa indonesia pada cli agar saya mudah membacanya.
 <!-- ===================== End Penerapan NewWrapper ===================== -->
 
 <!-- Start Penerapan NewWrapper -->
-Terapkan NewWrapper pada file: screens/Forum/DetailForum.tsx
-Component yang digunakan: components/_ShareComponent/NewWrapper.tsx , karena ini adalah halaman detail saya ingin anda fokus pada props pada NewWrapper. Seperti 
-<!--  -->
+Terapkan NewWrapper pada file: app/(application)/(user)/donation/create.tsx
+Component yang digunakan: components/_ShareComponent/NewWrapper.tsx 
+<!-- End Penerapan NewWrapper -->
 
 Bantu saya untuk memperbaiki logika path yang ada di dalam file "screens/Admin/Notification-Admin/ScreenNotificationAdmin2.tsx" , pada function fixPath
 Saya ingin jika didalam deeplink ada "/admin/..." contoh "/admin/event/review/status" maka path yang akan di redirect adalah "/admin/event/review/status"

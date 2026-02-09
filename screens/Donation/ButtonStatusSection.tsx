@@ -16,6 +16,9 @@ export default function Donation_ButtonStatusSection({
 }) {
   const [isLoading, setLoading] = useState(false);
   const [isLoadingDelete, setLoadingDelete] = useState(false);
+  const path: any = (status: string) => {
+    return `/donation/(tabs)/status?status=${status}`;
+  };
   const handleBatalkanReview = async () => {
     AlertDefaultSystem({
       title: "Batalkan Review",
@@ -43,7 +46,7 @@ export default function Donation_ButtonStatusSection({
             text1: response.message,
           });
 
-          router.back();
+          router.push(path("draft"));
         } catch (error) {
           console.log("[ERROR]", error);
         } finally {
@@ -80,7 +83,7 @@ export default function Donation_ButtonStatusSection({
             text1: response.message,
           });
 
-          router.back();
+          router.replace(path("review"));
         } catch (error) {
           console.log("[ERROR]", error);
         } finally {
@@ -117,7 +120,7 @@ export default function Donation_ButtonStatusSection({
             text1: response.message,
           });
 
-          router.back();
+          router.replace(path("draft"));
         } catch (error) {
           console.log("[ERROR]", error);
         } finally {

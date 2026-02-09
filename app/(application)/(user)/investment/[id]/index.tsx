@@ -72,7 +72,6 @@ export default function InvestmentDetail() {
     updateCountDown();
   }, [data]);
 
-  console.log("[DATA DETAIL]", JSON.stringify(data, null, 2));
 
   const updateCountDown = () => {
     const countDown = countDownAndCondition({

@@ -37,7 +37,7 @@ export default function DonasiDetailStatus() {
   useFocusEffect(
     useCallback(() => {
       onLoadData();
-    }, [id])
+    }, [id]),
   );
 
   const onLoadData = async () => {
@@ -99,6 +99,7 @@ export default function DonasiDetailStatus() {
           sisaHari={value.sisa}
           reminder={value.reminder}
           data={data}
+          showSisaHari={status === "publish" ? true : false}
           bottomSection={
             status === "publish" && (
               <Donation_ProgressSection

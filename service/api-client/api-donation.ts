@@ -40,16 +40,19 @@ export async function apiDonationGetOne({
 export async function apiDonationGetByStatus({
   authorId,
   status,
+  page = "1",
 }: {
   authorId: string;
   status: string;
+  page?: string;
 }) {
   const authorQuery = `/${authorId}`;
   const statusQuery = `/${status}`;
+  const pageQuery = `?page=${page}`;
 
   try {
     const response = await apiConfig.get(
-      `/mobile/donation${authorQuery}${statusQuery}`
+      `/mobile/donation${authorQuery}${statusQuery}${pageQuery}`
     );
     return response.data;
   } catch (error) {

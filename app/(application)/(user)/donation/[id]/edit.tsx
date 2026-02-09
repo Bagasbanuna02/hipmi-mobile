@@ -1,10 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
+  BoxButtonOnFooter,
   ButtonCenteredOnly,
   ButtonCustom,
   InformationBox,
   LandscapeFrameUploaded,
   LoaderCustom,
+  NewWrapper,
   SelectCustom,
   Spacing,
   StackCustom,
@@ -60,7 +62,7 @@ export default function DonationEdit() {
     useCallback(() => {
       onLoadData();
       onLoadList();
-    }, [id])
+    }, [id]),
   );
 
   const onLoadData = async () => {
@@ -79,7 +81,6 @@ export default function DonationEdit() {
           imageId: response.data.imageId,
         });
       }
-
     } catch (error) {
       console.log("[ERROR]", error);
     }
@@ -182,7 +183,21 @@ export default function DonationEdit() {
   };
 
   return (
-    <ViewWrapper>
+    <NewWrapper
+      hideFooter
+      footerComponent={
+        <BoxButtonOnFooter>
+          <ButtonCustom
+            isLoading={isLoading}
+            onPress={() => {
+              handlerSubmitUpdate();
+            }}
+          >
+            Update
+          </ButtonCustom>
+        </BoxButtonOnFooter>
+      }
+    >
       <InformationBox text="Lengkapi semua data di bawah untuk selanjutnya mengisi cerita penggalangan dana." />
       {!data || loadList ? (
         <LoaderCustom />
@@ -260,17 +275,9 @@ export default function DonationEdit() {
           />
 
           <Spacing />
-          <ButtonCustom
-            isLoading={isLoading}
-            onPress={() => {
-              handlerSubmitUpdate();
-            }}
-          >
-            Update
-          </ButtonCustom>
         </StackCustom>
       )}
       <Spacing />
-    </ViewWrapper>
+    </NewWrapper>
   );
 }
