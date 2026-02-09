@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Investment_ScreenTransaction from "@/screens/Invesment/ScreenTransaction";
+import Investment_ScreenInvoice from "@/screens/Invesment/ScreenInvoice";
 
 export default function InvestmentInvoice() {
   return (
     <>
-      <Investment_ScreenTransaction />
+      <Investment_ScreenInvoice />
     </>
   );
 }

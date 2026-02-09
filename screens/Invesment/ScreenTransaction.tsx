@@ -65,6 +65,8 @@ export default function Investment_ScreenTransaction() {
   };
 
   const handlePress = ({ id, status }: { id: string; status: string }) => {
+    console.log("ID", id);
+    console.log("Status", status);
     if (status === "menunggu") {
       router.push(`/investment/${id}/(transaction-flow)/invoice`);
     } else if (status === "proses") {

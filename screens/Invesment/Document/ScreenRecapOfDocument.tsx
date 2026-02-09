@@ -4,14 +4,12 @@ import {
   BackButton,
   DotButton,
   DrawerCustom,
-  MenuDrawerDynamicGrid,
-  TextCustom,
+  MenuDrawerDynamicGrid
 } from "@/components";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { IconEdit } from "@/components/_Icon";
-import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
+import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { MainColor } from "@/constants/color-palet";
-import { ICON_SIZE_SMALL } from "@/constants/constans-value";
+import { ICON_SIZE_SMALL, PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { usePagination } from "@/hooks/use-pagination";
 import Investment_BoxDetailDocument from "@/screens/Invesment/Document/RecapBoxDetail";
@@ -26,12 +24,11 @@ import {
   useFocusEffect,
   useLocalSearchParams,
 } from "expo-router";
-import _ from "lodash";
 import { useCallback, useState } from "react";
 import { RefreshControl } from "react-native";
 import Toast from "react-native-toast-message";
 
-export default function Investment_ScreenRecap() {
+export default function Investment_ScreenRecapOfDocument() {
   const { id } = useLocalSearchParams();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerBox, setOpenDrawerBox] = useState(false);

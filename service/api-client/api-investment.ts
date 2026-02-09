@@ -238,13 +238,15 @@ export async function apiInvestmentCreateNews({
 export async function apiInvestmentGetNews({
   id,
   category,
+  page = "1",
 }: {
   id: string;
   category: "all-news" | "one-news";
+  page?: string;
 }) {
   try {
     const response = await apiConfig.get(
-      `/mobile/investment/${id}/news?category=${category}`
+      `/mobile/investment/${id}/news?category=${category}&page=${page}`
     );
     return response.data;
   } catch (error) {
@@ -263,11 +265,13 @@ export async function apiInvestmentDeleteNews({ id }: { id: string }) {
 
 export async function apiInvestmentGetInvestorById({
   id,
+  page = "1",
 }: {
   id: string;
+  page?: string;
 }) {
   try {
-    const response = await apiConfig.get(`/mobile/investment/${id}/investor`);
+    const response = await apiConfig.get(`/mobile/investment/${id}/investor?page=${page}`);
     return response.data;
   } catch (error) {
     throw error;

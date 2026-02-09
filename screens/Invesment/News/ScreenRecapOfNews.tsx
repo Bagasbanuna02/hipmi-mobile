@@ -1,0 +1,110 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import {
+  BackButton,
+  BaseBox,
+  DotButton,
+  DrawerCustom,
+  LoaderCustom,
+  MenuDrawerDynamicGrid,
+  Spacing,
+  TextCustom,
+} from "@/components";
+import { IconPlus } from "@/components/_Icon";
+import NewWrapper from "@/components/_ShareComponent/NewWrapper";
+import { usePagination } from "@/hooks/use-pagination";
+import { apiInvestmentGetNews } from "@/service/api-client/api-investment";
+import { router, Stack, useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
+import { RefreshControl } from "react-native";
+import { createPaginationComponents } from "@/helpers/paginationHelpers";
+import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
+import Investment_BoxNews from "./BoxNews";
+
+interface InvestmentRecapOfNewsProps {
+  investmentId: string;
+}
+
+export default function Investment_ScreenRecapOfNews({
+  investmentId,
+}: InvestmentRecapOfNewsProps) {
+  const [openDrawer, setOpenDrawer] = useState(false);
+
+  const pagination = usePagination({
+    fetchFunction: async (page) => {
+      return await apiInvestmentGetNews({
+        id: investmentId,
+        category: "all-news",
+        page: String(page),
+      });
+    },
+    pageSize: PAGINATION_DEFAULT_TAKE, // Sesuaikan dengan jumlah item per halaman dari API
+    dependencies: [investmentId],
+  });
+
+  useFocusEffect(
+    useCallback(() => {
+      pagination.onRefresh();
+    }, [investmentId]),
+  );
+
+  const renderItem = ({ item, index }: { item: any; index: number }) => (
+    <Investment_BoxNews key={index} item={item} />
+  );
+
+  const { ListEmptyComponent, ListFooterComponent } =
+    createPaginationComponents({
+      loading: pagination.loading,
+      refreshing: pagination.refreshing,
+      listData: pagination.listData,
+      isInitialLoad: pagination.isInitialLoad,
+      emptyMessage: "Tidak ada berita",
+      skeletonCount: PAGINATION_DEFAULT_TAKE,
+      skeletonHeight: 80,
+    });
+
+  return (
+    <>
+      <Stack.Screen
+        options={{
+          title: "Rekap Berita",
+          headerLeft: () => <BackButton />,
+          headerRight: () => <DotButton onPress={() => setOpenDrawer(true)} />,
+        }}
+      />
+      <NewWrapper
+        hideFooter
+        listData={pagination.listData}
+        renderItem={renderItem}
+        onEndReached={pagination.loadMore}
+        ListEmptyComponent={ListEmptyComponent}
+        ListFooterComponent={ListFooterComponent}
+        refreshControl={
+          <RefreshControl
+            refreshing={pagination.refreshing}
+            onRefresh={pagination.onRefresh}
+          />
+        }
+      />
+
+      <DrawerCustom
+        isVisible={openDrawer}
+        closeDrawer={() => setOpenDrawer(false)}
+        height={"auto"}
+      >
+        <MenuDrawerDynamicGrid
+          data={[
+            {
+              label: "Tambah Berita",
+              path: `/investment/${investmentId}/add-news`,
+              icon: <IconPlus />,
+            },
+          ]}
+          onPressItem={(item) => {
+            router.push(item.path as any);
+            setOpenDrawer(false);
+          }}
+        />
+      </DrawerCustom>
+    </>
+  );
+}
