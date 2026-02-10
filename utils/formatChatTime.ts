@@ -31,5 +31,5 @@ export const formatChatTime = (date: string | Date): string => {
   }
 
   // Lebih dari 7 hari lalu
-  return messageDate.format('DD - MM - YYYY, HH.mm'); // "05 - 11 - 2025, 14.00"
+  return messageDate.format('DD/MM/YYYY, HH.mm'); // "05/11/2025, 14.00"
 };

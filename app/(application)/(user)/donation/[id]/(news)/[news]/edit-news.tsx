@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
+  BoxButtonOnFooter,
   ButtonCenteredOnly,
   ButtonCustom,
   InformationBox,
@@ -31,7 +32,7 @@ export default function DonationEditNews() {
   useFocusEffect(
     useCallback(() => {
       onLoadData();
-    }, [news])
+    }, [news]),
   );
 
   const onLoadData = async () => {
@@ -104,7 +105,21 @@ export default function DonationEditNews() {
   };
 
   return (
-    <ViewWrapper>
+    <ViewWrapper
+      footerComponent={
+        <BoxButtonOnFooter>
+          <ButtonCustom
+            disabled={!data?.title || !data?.deskripsi}
+            isLoading={isLoading}
+            onPress={() => {
+              handlerSubmitUpdate();
+            }}
+          >
+            Update
+          </ButtonCustom>
+        </BoxButtonOnFooter>
+      }
+    >
       <StackCustom gap={"xs"}>
         <InformationBox text="Upload gambar bersifat opsional untuk melengkapi kabar terkait donasi Anda." />
         <LandscapeFrameUploaded
@@ -148,15 +163,6 @@ export default function DonationEditNews() {
         />
 
         <Spacing />
-        <ButtonCustom
-          disabled={!data?.title || !data?.deskripsi}
-          isLoading={isLoading}
-          onPress={() => {
-            handlerSubmitUpdate();
-          }}
-        >
-          Update
-        </ButtonCustom>
       </StackCustom>
       <Spacing />
     </ViewWrapper>

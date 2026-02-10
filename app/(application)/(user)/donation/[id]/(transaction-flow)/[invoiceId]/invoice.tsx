@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   BaseBox,
+  BoxButtonOnFooter,
   ButtonCenteredOnly,
   ButtonCustom,
   Grid,
@@ -35,7 +36,7 @@ export default function DonationInvoice() {
   useFocusEffect(
     useCallback(() => {
       onLoadData();
-    }, [invoiceId])
+    }, [invoiceId]),
   );
 
   const onLoadData = async () => {
@@ -100,7 +101,22 @@ export default function DonationInvoice() {
 
   return (
     <>
-      <ViewWrapper>
+      <ViewWrapper
+        hideFooter
+        footerComponent={
+          <BoxButtonOnFooter>
+            <ButtonCustom
+              disabled={!image}
+              isLoading={isLoading}
+              onPress={() => {
+                handlerUpdateInvoice();
+              }}
+            >
+              Simpan
+            </ButtonCustom>
+          </BoxButtonOnFooter>
+        }
+      >
         <StackCustom>
           <InformationBox
             text={`Mohon transfer donasi anda ke rekening dibawah`}
@@ -204,16 +220,6 @@ export default function DonationInvoice() {
               </ButtonCenteredOnly>
             </StackCustom>
           </BaseBox>
-
-          <ButtonCustom
-            disabled={!image}
-            isLoading={isLoading}
-            onPress={() => {
-              handlerUpdateInvoice();
-            }}
-          >
-            Simpan
-          </ButtonCustom>
         </StackCustom>
         <Spacing />
       </ViewWrapper>

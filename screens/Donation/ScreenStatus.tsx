@@ -1,28 +1,29 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  LoaderCustom,
-  ScrollableCustom,
-  TextCustom,
-} from "@/components";
+import { ScrollableCustom } from "@/components";
 import NewWrapper from "@/components/_ShareComponent/NewWrapper";
+import { MainColor } from "@/constants/color-palet";
+import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
+import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { useAuth } from "@/hooks/use-auth";
+import { usePagination } from "@/hooks/use-pagination";
 import { dummyMasterStatus } from "@/lib/dummy-data/_master/status";
 import Donasi_BoxStatus from "@/screens/Donation/BoxStatus";
-import { usePagination } from "@/hooks/use-pagination";
 import { apiDonationGetByStatus } from "@/service/api-client/api-donation";
 import { useFocusEffect } from "expo-router";
-import _ from "lodash";
 import { useCallback, useState } from "react";
 import { RefreshControl } from "react-native";
-import { createPaginationComponents } from "@/helpers/paginationHelpers";
 
 interface DonationStatusProps {
   initialStatus?: string;
 }
 
-export default function Donation_ScreenStatus({ initialStatus = "publish" }: DonationStatusProps) {
+export default function Donation_ScreenStatus({
+  initialStatus = "publish",
+}: DonationStatusProps) {
   const { user } = useAuth();
-  const [activeCategory, setActiveCategory] = useState<string | null>(initialStatus);
+  const [activeCategory, setActiveCategory] = useState<string | null>(
+    initialStatus,
+  );
 
   const pagination = usePagination({
     fetchFunction: async (page) => {
@@ -32,18 +33,19 @@ export default function Donation_ScreenStatus({ initialStatus = "publish" }: Don
         page: String(page),
       });
     },
-    pageSize: 5, // Sesuaikan dengan jumlah item per halaman dari API
+    pageSize: PAGINATION_DEFAULT_TAKE, // Sesuaikan dengan jumlah item per halaman dari API
     dependencies: [user?.id, activeCategory],
   });
 
   useFocusEffect(
     useCallback(() => {
       pagination.onRefresh();
-    }, [user?.id, activeCategory])
+    }, [user?.id, activeCategory]),
   );
 
   const handlePress = (item: any) => {
     setActiveCategory(item.value);
+    pagination.reset();
   };
 
   const scrollComponent = (
@@ -59,21 +61,19 @@ export default function Donation_ScreenStatus({ initialStatus = "publish" }: Don
   );
 
   const renderItem = ({ item, index }: { item: any; index: number }) => (
-    <Donasi_BoxStatus
-      data={item}
-      status={activeCategory as string}
-    />
+    <Donasi_BoxStatus data={item} status={activeCategory as string} />
   );
 
-  const { ListEmptyComponent, ListFooterComponent } = createPaginationComponents({
-    loading: pagination.loading,
-    refreshing: pagination.refreshing,
-    listData: pagination.listData,
-    isInitialLoad: pagination.isInitialLoad,
-    emptyMessage: `Tidak ada data ${activeCategory}`,
-    skeletonCount: 5,
-    skeletonHeight: 200,
-  });
+  const { ListEmptyComponent, ListFooterComponent } =
+    createPaginationComponents({
+      loading: pagination.loading,
+      refreshing: pagination.refreshing,
+      listData: pagination.listData,
+      isInitialLoad: pagination.isInitialLoad,
+      emptyMessage: `Tidak ada data ${activeCategory}`,
+      skeletonCount: 5,
+      skeletonHeight: 120,
+    });
 
   return (
     <NewWrapper
@@ -83,9 +83,11 @@ export default function Donation_ScreenStatus({ initialStatus = "publish" }: Don
       ListEmptyComponent={ListEmptyComponent}
       ListFooterComponent={ListFooterComponent}
       refreshControl={
-        <RefreshControl 
-          refreshing={pagination.refreshing} 
-          onRefresh={pagination.onRefresh} 
+        <RefreshControl
+          refreshing={pagination.refreshing}
+          onRefresh={pagination.onRefresh}
+          tintColor={MainColor.yellow}
+          colors={[MainColor.yellow]}
         />
       }
       hideFooter

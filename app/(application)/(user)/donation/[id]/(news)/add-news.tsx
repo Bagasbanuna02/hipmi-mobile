@@ -1,8 +1,10 @@
 import {
+  BoxButtonOnFooter,
   ButtonCenteredOnly,
   ButtonCustom,
   InformationBox,
   LandscapeFrameUploaded,
+  NewWrapper,
   Spacing,
   StackCustom,
   TextAreaCustom,
@@ -53,7 +55,7 @@ export default function DonationAddNews() {
           text1: "Gagal menambah berita",
         });
 
-        return
+        return;
       }
 
       Toast.show({
@@ -70,7 +72,21 @@ export default function DonationAddNews() {
   };
 
   return (
-    <ViewWrapper>
+    <NewWrapper
+      footerComponent={
+        <BoxButtonOnFooter>
+          <ButtonCustom
+            disabled={!data.title || !data.deskripsi}
+            isLoading={isLoading}
+            onPress={() => {
+              handlerSubmit();
+            }}
+          >
+            Simpan
+          </ButtonCustom>
+        </BoxButtonOnFooter>
+      }
+    >
       <StackCustom gap={"xs"}>
         <InformationBox text="Upload gambar bersifat opsional untuk melengkapi kabar terkait donasi Anda." />
         <LandscapeFrameUploaded image={image?.uri} />
@@ -116,17 +132,7 @@ export default function DonationAddNews() {
         />
 
         <Spacing />
-        <ButtonCustom
-          disabled={!data.title || !data.deskripsi}
-          isLoading={isLoading}
-          onPress={() => {
-            handlerSubmit();
-          }}
-        >
-          Simpan
-        </ButtonCustom>
       </StackCustom>
-      <Spacing />
-    </ViewWrapper>
+    </NewWrapper>
   );
 }

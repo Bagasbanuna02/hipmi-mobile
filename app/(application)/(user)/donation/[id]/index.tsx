@@ -6,10 +6,12 @@ import {
   DotButton,
   DrawerCustom,
   MenuDrawerDynamicGrid,
+  NewWrapper,
   StackCustom,
   ViewWrapper,
 } from "@/components";
 import { IconNews } from "@/components/_Icon";
+import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 import { useAuth } from "@/hooks/use-auth";
 import Donation_ComponentBoxDetailData from "@/screens/Donation/ComponentBoxDetailData";
 import Donation_ComponentInfoFundrising from "@/screens/Donation/ComponentInfoFundrising";
@@ -34,7 +36,7 @@ export default function DonasiDetailBeranda() {
   useFocusEffect(
     useCallback(() => {
       onLoadData();
-    }, [id])
+    }, [id]),
   );
 
   const onLoadData = async () => {
@@ -75,10 +77,10 @@ export default function DonasiDetailBeranda() {
     <>
       <BoxButtonOnFooter>
         <ButtonCustom
-          disabled={value?.reminder}
+          disabled={value?.reminder || !data}
           onPress={() => router.navigate(`/donation/${id}/(transaction-flow)`)}
         >
-          {value?.reminder ? "Waktu berakhir" : "Donasi"}
+          {!data ? "Loading..." : value?.reminder ? "Waktu berakhir" : "Donasi"}
         </ButtonCustom>
       </BoxButtonOnFooter>
     </>
@@ -96,21 +98,30 @@ export default function DonasiDetailBeranda() {
             ) : null,
         }}
       />
-      <ViewWrapper footerComponent={buttonSection}>
-        <StackCustom>
-          <Donation_ComponentBoxDetailData
-            sisaHari={value.sisa}
-            reminder={value.reminder}
-            data={data}
-            bottomSection={<Donation_ProgressSection id={id as string} progres={Number(data?.progres) || 0} />}
-          />
-          <Donation_ComponentInfoFundrising dataAuthor={data?.Author} />
-          <Donation_ComponentStoryFunrising
-            id={id as string}
-            dataStory={data?.CeritaDonasi}
-          />
-        </StackCustom>
-      </ViewWrapper>
+      <NewWrapper footerComponent={buttonSection}>
+        {!data ? (
+          <CustomSkeleton height={400} />
+        ) : (
+          <StackCustom>
+            <Donation_ComponentBoxDetailData
+              sisaHari={value.sisa}
+              reminder={value.reminder}
+              data={data}
+              bottomSection={
+                <Donation_ProgressSection
+                  id={id as string}
+                  progres={Number(data?.progres) || 0}
+                />
+              }
+            />
+            <Donation_ComponentInfoFundrising dataAuthor={data?.Author} />
+            <Donation_ComponentStoryFunrising
+              id={id as string}
+              dataStory={data?.CeritaDonasi}
+            />
+          </StackCustom>
+        )}
+      </NewWrapper>
 
       <DrawerCustom
         isVisible={openDrawer}

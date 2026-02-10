@@ -4,11 +4,12 @@ import {
   DotButton,
   DrawerCustom,
   MenuDrawerDynamicGrid,
+  NewWrapper,
   Spacing,
-  ViewWrapper,
 } from "@/components";
 import { IconEdit, IconNews } from "@/components/_Icon";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
+import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import Donation_ButtonStatusSection from "@/screens/Donation/ButtonStatusSection";
@@ -26,13 +27,14 @@ import {
 } from "expo-router";
 import _ from "lodash";
 import { useCallback, useEffect, useState } from "react";
+import { RefreshControl } from "react-native";
 
 export default function DonasiDetailStatus() {
   const { id, status } = useLocalSearchParams();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerPublish, setOpenDrawerPublish] = useState(false);
-
-  const [data, setData] = useState<any>();
+  const [refreshing, setRefreshing] = useState(false);
+  const [data, setData] = useState<any | null>(null);
 
   useFocusEffect(
     useCallback(() => {
@@ -80,6 +82,17 @@ export default function DonasiDetailStatus() {
     });
   };
 
+  const onRefresh = useCallback(() => {
+    try {
+      setRefreshing(true);
+      onLoadData();
+    } catch (error) {
+      console.log("Error refresh");
+    } finally {
+      setRefreshing(false);
+    }
+  }, []);
+
   return (
     <>
       <Stack.Screen
@@ -94,32 +107,50 @@ export default function DonasiDetailStatus() {
             ) : null,
         }}
       />
-      <ViewWrapper>
-        <Donation_ComponentBoxDetailData
-          sisaHari={value.sisa}
-          reminder={value.reminder}
-          data={data}
-          showSisaHari={status === "publish" ? true : false}
-          bottomSection={
-            status === "publish" && (
-              <Donation_ProgressSection
+      <NewWrapper
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={MainColor.yellow}
+            colors={[MainColor.yellow]}
+          />
+        }
+      >
+        {!data ? (
+          <CustomSkeleton height={400} />
+        ) : (
+          <>
+            <Donation_ComponentBoxDetailData
+              sisaHari={value.sisa}
+              reminder={value.reminder}
+              data={data}
+              showSisaHari={status === "publish" ? true : false}
+              bottomSection={
+                status === "publish" && (
+                  <Donation_ProgressSection
+                    id={id as string}
+                    progres={Number(data?.progres) || 0}
+                  />
+                )
+              }
+            />
+            <Donation_ComponentStoryFunrising
+              id={id as string}
+              dataStory={data?.CeritaDonasi}
+            />
+            <Spacing />
+            {data && (
+              <Donation_ButtonStatusSection
                 id={id as string}
-                progres={Number(data?.progres) || 0}
+                status={status as string}
               />
-            )
-          }
-        />
-        <Donation_ComponentStoryFunrising
-          id={id as string}
-          dataStory={data?.CeritaDonasi}
-        />
-        <Spacing />
-        <Donation_ButtonStatusSection
-          id={id as string}
-          status={status as string}
-        />
-        <Spacing />
-      </ViewWrapper>
+            )}
+
+            <Spacing />
+          </>
+        )}
+      </NewWrapper>
 
       <DrawerCustom
         isVisible={openDrawer}

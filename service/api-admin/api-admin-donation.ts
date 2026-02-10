@@ -52,15 +52,18 @@ export async function apiAdminDonationUpdateStatus({
 export async function apiAdminDonationListOfDonatur({
   id,
   status,
+  page = "1"
 }: {
   id: string;
   status: "berhasil" | "gagal" | "proses" | "menunggu" | null;
+  page?: string;
 }) {
-  const query = status && status !== null ? `?status=${status}` : "";
+  const statusQuery = status && status !== null ? `&status=${status}` : "";
+  const pageQuery = `&page=${page}`;
 
   try {
     const response = await apiConfig.get(
-      `/mobile/admin/donation/${id}/donatur${query}`
+      `/mobile/admin/donation/${id}/donatur?${statusQuery}${pageQuery}`
     );
     return response.data;
   } catch (error) {
@@ -99,19 +102,6 @@ export async function apiAdminDonationInvoiceUpdateById({
         data: data,
       }
     );
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-}
-
-export async function apiAdminDonationListOfDonaturById({
-  id,
-}: {
-  id: string;
-}) {
-  try {
-    const response = await apiConfig.get(`/mobile/donation/${id}/donatur`);
     return response.data;
   } catch (error) {
     throw error;

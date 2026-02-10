@@ -13,6 +13,7 @@ import {
   TextInputCustom,
   ViewWrapper,
 } from "@/components";
+import ListSkeletonComponent from "@/components/_ShareComponent/ListSkeletonComponent";
 import API_IMAGE from "@/constants/api-storage";
 import DIRECTORY_ID from "@/constants/directory-id";
 import {
@@ -200,7 +201,7 @@ export default function DonationEdit() {
     >
       <InformationBox text="Lengkapi semua data di bawah untuk selanjutnya mengisi cerita penggalangan dana." />
       {!data || loadList ? (
-        <LoaderCustom />
+        <ListSkeletonComponent />
       ) : (
         <StackCustom gap={"xs"}>
           <TextInputCustom

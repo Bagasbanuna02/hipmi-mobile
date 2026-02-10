@@ -109,14 +109,17 @@ export async function apiDonationUpdateData({
 export async function apiDonationGetAll({
   category,
   authorId,
+  page = "1"
 }: {
   category: "beranda" | "my-donation";
   authorId?: string;
+  page?: string;
 }) {
   const authorQuery = authorId ? `&authorId=${authorId}` : "";
+  const pageQuery = `&page=${page}`;
   try {
     const response = await apiConfig.get(
-      `/mobile/donation?category=${category}${authorQuery}`
+      `/mobile/donation?category=${category}${authorQuery}${pageQuery}`
     );
     return response.data;
   } catch (error) {
@@ -219,13 +222,15 @@ export async function apiDonationCreateNews({
 export async function apiDonationGetNewsById({
   id,
   category,
+  page = "1"
 }: {
   id: string;
   category: "get-all" | "get-one";
+  page?: string;
 }) {
   try {
     const response = await apiConfig.get(
-      `/mobile/donation/${id}/news?category=${category}`
+      `/mobile/donation/${id}/news?category=${category}&page=${page}`
     );
     return response.data;
   } catch (error) {
@@ -261,11 +266,28 @@ export async function apiDonationDeleteNews({ id }: { id: string }) {
 
 export async function apiDonationDisbursementOfFundsListById({
   id,
+  page = "1"
 }: {
   id: string;
+  page?: string;
 }) {
   try {
-    const response = await apiConfig.get(`/mobile/donation/${id}/disbursement`);
+    const response = await apiConfig.get(`/mobile/donation/${id}/disbursement?page=${page}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function apiDonationListOfDonaturById({
+  id,
+  page = "1"
+}: {
+  id: string;
+  page?: string;
+}) {
+  try {
+    const response = await apiConfig.get(`/mobile/donation/${id}/donatur?page=${page}`);
     return response.data;
   } catch (error) {
     throw error;

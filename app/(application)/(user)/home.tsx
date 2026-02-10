@@ -29,14 +29,14 @@ export default function Application() {
       checkVersion();
       userData(token as string);
       syncUnreadCount();
-    }, [user?.id, token])
+    }, [user?.id, token]),
   );
 
   async function onLoadData() {
     const response = await apiUser(user?.id as string);
     console.log(
       "[Profile ID]>>",
-      JSON.stringify(response?.data?.Profile?.id, null, 2)
+      JSON.stringify(response?.data?.Profile?.id, null, 2),
     );
 
     setData(response.data);
@@ -89,7 +89,12 @@ export default function Application() {
       />
       <ViewWrapper
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={MainColor.yellow}
+            colors={[MainColor.yellow]}
+          />
         }
         footerComponent={
           <TabSection
