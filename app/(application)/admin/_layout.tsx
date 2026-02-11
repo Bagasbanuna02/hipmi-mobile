@@ -8,6 +8,7 @@ import {
 } from "@/components";
 import DrawerAdmin from "@/components/Drawer/DrawerAdmin";
 import NavbarMenu from "@/components/Drawer/NavbarMenu";
+import NavbarMenu_V2 from "@/components/Drawer/NavbarMenu_V2";
 import { AccentColor, MainColor } from "@/constants/color-palet";
 import {
   ICON_SIZE_MEDIUM,
@@ -20,6 +21,10 @@ import {
   adminListMenu,
   superAdminListMenu,
 } from "@/screens/Admin/listPageAdmin";
+import {
+  adminListMenu_V2,
+  superAdminListMenu_V2,
+} from "@/screens/Admin/listPageAdmin_V2";
 import { GStyles } from "@/styles/global-styles";
 import { FontAwesome6, Ionicons } from "@expo/vector-icons";
 import { router, Stack } from "expo-router";
@@ -140,11 +145,20 @@ export default function AdminLayout() {
             style={{ alignSelf: "flex-end" }}
           />
 
-          <NavbarMenu
+          {/* <NavbarMenu
             items={
               user?.masterUserRoleId === "2"
                 ? adminListMenu
                 : superAdminListMenu
+            }
+            onClose={() => setOpenDrawerNavbar(false)}
+          /> */}
+
+          <NavbarMenu_V2
+            items={
+              user?.masterUserRoleId === "2"
+                ? adminListMenu_V2
+                : superAdminListMenu_V2
             }
             onClose={() => setOpenDrawerNavbar(false)}
           />
@@ -198,7 +212,7 @@ export default function AdminLayout() {
                   //   size={ICON_SIZE_SMALL}
                   //   color={MainColor.white}
                   // />
-                  <AdminNotificationBell/>
+                  <AdminNotificationBell />
                 ),
                 path: "/admin/notification",
               },

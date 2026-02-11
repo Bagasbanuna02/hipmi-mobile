@@ -60,6 +60,7 @@ import SearchInput from "./_ShareComponent/SearchInput";
 import DummyLandscapeImage from "./_ShareComponent/DummyLandscapeImage";
 import GridComponentView from "./_ShareComponent/GridSectionView";
 import NewWrapper from "./_ShareComponent/NewWrapper";
+import BasicWrapper from "./_ShareComponent/BasicWrapper";
 // Progress
 import ProgressCustom from "./Progress/ProgressCustom";
 // Loader
@@ -121,6 +122,7 @@ export {
   GridComponentView,
   Spacing,
   NewWrapper,
+  BasicWrapper,
   // Stack
   StackCustom,
   TabBarBackground,

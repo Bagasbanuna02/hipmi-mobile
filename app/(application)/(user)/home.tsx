@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { StackCustom, ViewWrapper } from "@/components";
+import { BasicWrapper, StackCustom, ViewWrapper } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
 import { useNotificationStore } from "@/hooks/use-notification-store";
@@ -61,13 +61,30 @@ export default function Application() {
 
   if (data && data?.active === false) {
     console.log("User is not active");
-    return <Redirect href={`/waiting-room`} />;
+    return (
+      <BasicWrapper>
+        <Redirect href={`/waiting-room`} />
+      </BasicWrapper>
+    );
   }
 
   if (data && data?.Profile === null) {
     console.log("Profile is null");
-    return <Redirect href={`/profile/create`} />;
+    return (
+      <BasicWrapper>
+        <Redirect href={`/profile/create`} />
+      </BasicWrapper>
+    );
   }
+
+  // if (data && data?.masterUserRoleId !== "1") {
+  //   console.log("User is not admin");
+  //   return (
+  //     <BasicWrapper>
+  //       <Redirect href={`/admin/dashboard`} />
+  //     </BasicWrapper>
+  //   );
+  // }
 
   return (
     <>

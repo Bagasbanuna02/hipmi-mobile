@@ -87,3 +87,35 @@ Setelah itu jalankan perintah ini: git commit -m "
 <Berikan semua catatan perubahan pada branch ini, tampilan pada saya dan pastikan dalam bahasa indonesia. Saya akan cek baru saya akan berikan perintah push>
 "
 Setelah itu jalankan perintah ini: git push origin "Branch"
+
+
+
+<!-- Start Random Prompt -->
+
+Saya memiliki case pada file ini: @components/Drawer/NavbarMenu.tsx  
+Pada file ini saya ingin jika saat pindah halaman ( ke detail contoh : /user-access/[id]/index.tsx) maka navbar tetap menandai menu yang sedang aktif, tapi yang terjadi sekarang jika masuk ke detail maka warnanya hilang karena tidak mendeteksi halaman tersebut.
+Apakah anda paham maksud saya ?
+
+
+Ya, dalam fitur yang anda perbaharui masih terjadi bug. Saya akan berikan case nya secara perlahan
+Saat klik sebuah menu maka sub menu akan terbuka
+Saat klik sub menu maka sub menu maka akan menuju ke halaman sesuai path
+Dalam bug diawal tadi untuk menu yang aktif jika masuk ke detail memang terselesaikan. Tapi muncul bug baru jika menu tersebut memiliki sub menu dan jika sub menu tersebut di klik (kecuali dashboard) yang aktif adalah bagian sub menu dashbaord dan sub menu yang kita klik, tapi jika sub menu yang di klik adalah dashboard maka semau sub menu aktif. Apakah anda mengerti maksud dari pernyataan saya ? Jika masih kurang paham saya bisa berikan masukan yang lain
+
+Masih terjadi bug, mengapa saat klik menu yang memiliki dashboard maka sub menu dashboard dan sub menu yang kita klik menjadi aktif ?
+
+<!-- End Random Prompt -->
+
+
+export interface NavbarItem_V2 {
+  label: string;
+  icon?: keyof typeof Ionicons.glyphMap;
+  color?: string;
+  link?: string;
+  links?: {
+    label: string;
+    link: string;
+    detailPattern?: string;
+  }[];
+  initiallyOpened?: boolean;
+}
