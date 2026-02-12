@@ -28,7 +28,7 @@ interface NavbarMenuProps {
   onClose?: () => void;
 }
 
-export default function NavbarMenu({ items, onClose }: NavbarMenuProps) {
+export default function NavbarMenuBackup({ items, onClose }: NavbarMenuProps) {
   const pathname = usePathname();
   const [activeLink, setActiveLink] = useState<string | null>(null);
   const [openKeys, setOpenKeys] = useState<string[]>([]); // Untuk kontrol dropdown
@@ -37,110 +37,45 @@ export default function NavbarMenu({ items, onClose }: NavbarMenuProps) {
   const normalizePath = (path: string) => path.replace(/\/+$/, "");
   const normalizedPathname = pathname ? normalizePath(pathname) : "";
 
-  // Fungsi untuk mengecek apakah path cocok dengan item menu
-  // Ini akan mengecek kecocokan eksak atau pola path
-  const isActivePath = (itemPath: string | undefined): boolean => {
-    if (!itemPath || !normalizedPathname) return false;
-    
-    // Cocokan eksak
-    if (normalizePath(itemPath) === normalizedPathname) return true;
-    
-    // Cocokan pola path seperti /user-access/[id]/index dengan /user-access/index
-    // atau /donation/[id]/detail dengan /donation/index
-    const normalizedItemPath = normalizePath(itemPath);
-    
-    // Jika path item adalah bagian dari path saat ini (prefix match)
-    if (normalizedPathname.startsWith(normalizedItemPath + '/')) return true;
-    
-    // Jika path saat ini adalah bagian dari path item (misalnya /user-access/detail cocok dengan /user-access)
-    if (normalizedItemPath.startsWith(normalizedPathname + '/')) return true;
-    
-    // Jika path item adalah bagian dari path saat ini tanpa id (misalnya /user-access/[id]/index cocok dengan /user-access/index)
-    const itemParts = normalizedItemPath.split('/');
-    const currentParts = normalizedPathname.split('/');
-    
-    // Jika panjangnya sama dan hanya berbeda di bagian dinamis [id]
-    if (itemParts.length === currentParts.length) {
-      let match = true;
-      for (let i = 0; i < itemParts.length; i++) {
-        // Jika bagian path item adalah placeholder [id], abaikan
-        if (itemParts[i].startsWith('[') && itemParts[i].endsWith(']')) continue;
-        
-        // Jika bagian path saat ini adalah ID (angka), abaikan
-        if (/^\d+$/.test(currentParts[i])) continue;
-        
-        // Jika tidak cocok dan bukan placeholder atau ID, maka tidak cocok
-        if (itemParts[i] !== currentParts[i]) {
-          match = false;
-          break;
-        }
-      }
-      if (match) return true;
-    }
-    
-    // Tambahkan logika khusus untuk menangani file index.tsx sebagai halaman dashboard
-    // Jika path saat ini adalah versi index dari path item (misalnya /admin/event/index cocok dengan /admin/event)
-    if (normalizedPathname === normalizedItemPath + '/index') return true;
-    
-    return false;
-  };
-
-  // Fungsi untuk menentukan item mana yang paling spesifik aktif
-  // Ini akan memastikan hanya satu item yang aktif pada satu waktu
-  const findMostSpecificActiveItem = (): { parentLabel?: string; subItemLink?: string } | null => {
-    // Cek setiap item menu
-    for (const item of items) {
-      // Jika item memiliki sub-menu
-      if (item.links && item.links.length > 0) {
-        // Urutkan sub-menu berdasarkan panjang path (terpanjang dulu untuk prioritas lebih spesifik)
-        const sortedSubItems = [...item.links].sort((a, b) => {
-          if (a.link && b.link) {
-            return b.link.length - a.link.length; // Urutan menurun (terpanjang dulu)
-          }
-          return 0;
-        });
-        
-        // Cek setiap sub-menu dalam urutan yang telah diurutkan
-        for (const subItem of sortedSubItems) {
-          if (isActivePath(subItem.link)) {
-            return { parentLabel: item.label, subItemLink: subItem.link };
-          }
-        }
-      }
-      
-      // Jika tidak ada sub-menu yang cocok, cek item utama
-      if (isActivePath(item.link)) {
-        return { parentLabel: item.label };
-      }
-    }
-    
-    return null;
-  };
-
-
-  // Hitung item aktif terlebih dahulu
-  const mostSpecificActive = findMostSpecificActiveItem();
-
   // Set activeLink saat pathname berubah
   useEffect(() => {
     if (normalizedPathname) {
       setActiveLink(normalizedPathname);
+      
+      // Temukan menu induk yang sesuai dengan path saat ini dan buka dropdown-nya
+      for (const item of items) {
+        // Cocokkan dengan link langsung
+        if (item.link && normalizedPathname.startsWith(item.link)) {
+          setOpenKeys(prev => {
+            if (!prev.includes(item.label)) {
+              return [...prev, item.label];
+            }
+            return prev;
+          });
+          break; // Hentikan loop setelah menemukan kecocokan pertama
+        }
+        
+        // Cocokkan dengan submenu
+        if (item.links && item.links.length > 0) {
+          const matchingSubItem = item.links.find(link => normalizedPathname.startsWith(link.link));
+          if (matchingSubItem) {
+            setOpenKeys(prev => {
+              if (!prev.includes(item.label)) {
+                return [...prev, item.label];
+              }
+              return prev;
+            });
+            break; // Hentikan loop setelah menemukan kecocokan pertama
+          }
+        }
+      }
     }
-  }, [normalizedPathname]);
-
-  // Fungsi untuk menentukan apakah dropdown harus tetap terbuka
-  // Dropdown tetap terbuka jika salah satu dari sub-menu cocok dengan path saat ini
-  const shouldDropdownBeOpen = (item: NavbarItem): boolean => {
-    if (!normalizedPathname || !item.links || item.links.length === 0) return false;
-    
-    // Cek apakah salah satu sub-menu cocok dengan path saat ini
-    return item.links.some(subItem => isActivePath(subItem.link));
-  };
+  }, [normalizedPathname, items]);
 
   // Toggle dropdown
   const toggleOpen = (label: string) => {
     setOpenKeys((prev) =>
-      prev.includes(label) ? prev.filter((key) => key !== label) : [label]
+      prev.includes(label) ? prev.filter((key) => key !== label) : [...prev, label]
     );
   };
 
@@ -149,7 +84,7 @@ export default function NavbarMenu({ items, onClose }: NavbarMenuProps) {
       style={{
         //  flex: 1,
         //  backgroundColor: MainColor.black,
-        marginBottom: 20,
+        marginBottom: 20, 
       }}
     >
       <ScrollView
@@ -165,21 +100,8 @@ export default function NavbarMenu({ items, onClose }: NavbarMenuProps) {
             onClose={onClose}
             activeLink={activeLink}
             setActiveLink={setActiveLink}
-            isOpen={openKeys.includes(item.label) || shouldDropdownBeOpen(item)}
+            isOpen={openKeys.includes(item.label)}
             toggleOpen={() => toggleOpen(item.label)}
-            isActivePath={isActivePath}
-            isMostSpecificActive={(menuItem) => {
-              if (!mostSpecificActive) return false;
-              
-              // Jika item memiliki sub-menu
-              if (menuItem.links && menuItem.links.length > 0) {
-                // Jika item ini adalah parent dari sub-menu yang aktif, menu utama tidak aktif
-                return false;
-              }
-              
-              // Jika tidak ada sub-menu, hanya periksa kecocokan langsung
-              return mostSpecificActive.parentLabel === menuItem.label && !mostSpecificActive.subItemLink;
-            }}
           />
         ))}
       </ScrollView>
@@ -195,8 +117,6 @@ function MenuItem({
   setActiveLink,
   isOpen,
   toggleOpen,
-  isActivePath,
-  isMostSpecificActive,
 }: {
   item: NavbarItem;
   onClose?: () => void;
@@ -204,40 +124,72 @@ function MenuItem({
   setActiveLink: (link: string | null) => void;
   isOpen: boolean;
   toggleOpen: () => void;
-  isActivePath: (itemPath: string | undefined) => boolean;
-  isMostSpecificActive: (item: NavbarItem) => boolean;
 }) {
-  const isActive = isMostSpecificActive(item);
+  // Cek apakah menu ini atau submenu-nya yang aktif
+  const isActive = activeLink === item.link;
+  
+  // Cek apakah path saat ini cocok dengan salah satu submenu
+  const isSubmenuActive = item.links && item.links.some(subItem => activeLink === subItem.link);
+  
+  // Cek apakah path saat ini adalah detail dari submenu ini (misalnya /admin/event/123/detail)
+  const isDetailPageOfThisMenu = item.links && item.links.length > 0 && activeLink && 
+    item.links.some(link => {
+      const linkPath = link.link.replace(/\/+$/, "");
+      return activeLink.startsWith(linkPath + "/");
+    });
+  
+  // Gabungkan status aktif untuk menentukan apakah menu ini harus aktif
+  const isMenuActive = isActive || isSubmenuActive || isDetailPageOfThisMenu;
+  
   const animatedHeight = useRef(new Animated.Value(0)).current;
 
   // Animasi saat isOpen berubah
   React.useEffect(() => {
+    // Jika ini adalah halaman detail dari menu ini, buka dropdown secara otomatis
+    const shouldAutoOpen = isDetailPageOfThisMenu && !isOpen;
+    
     Animated.timing(animatedHeight, {
-      toValue: isOpen ? (item.links ? item.links.length * 40 : 0) : 0,
+      toValue: (isOpen || isDetailPageOfThisMenu) ? (item.links ? item.links.length * 40 : 0) : 0,
       duration: 200,
       useNativeDriver: false,
     }).start();
-  }, [isOpen, item.links, animatedHeight]);
+    
+    // Jika perlu membuka dropdown otomatis, panggil toggleOpen
+    if (shouldAutoOpen) {
+      toggleOpen();
+    }
+  }, [isOpen, item.links, animatedHeight, isDetailPageOfThisMenu, toggleOpen]);
 
   // Jika ada submenu
   if (item.links && item.links.length > 0) {
     return (
       <View>
         {/* Parent Item */}
-        <TouchableOpacity style={styles.parentItem} onPress={toggleOpen}>
+        <TouchableOpacity
+          style={[
+            styles.parentItem,
+            isMenuActive && styles.parentItemActive,
+          ]}
+          onPress={toggleOpen}
+        >
           <Ionicons
             name={item.icon}
             size={16}
-            color={MainColor.white}
+            color={isMenuActive ? MainColor.yellow : MainColor.white}
             style={styles.icon}
           />
-          <Text style={styles.parentText}>
+          <Text
+            style={[
+              styles.parentText,
+              isMenuActive && { color: MainColor.yellow },
+            ]}
+          >
             {item.label}
           </Text>
           <Ionicons
             name={isOpen ? "chevron-up" : "chevron-down"}
             size={16}
-            color={MainColor.white}
+            color={isMenuActive ? MainColor.yellow : MainColor.white}
           />
         </TouchableOpacity>
 
@@ -259,8 +211,7 @@ function MenuItem({
           ]}
         >
           {item.links.map((subItem, index) => {
-            // Untuk sub-item, kita gunakan logika aktif berdasarkan isActivePath
-            const isSubActive = isActivePath(subItem.link);
+            const isSubActive = activeLink === subItem.link;
             return (
               <TouchableOpacity
                 key={index}
@@ -334,6 +285,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 5,
     justifyContent: "space-between",
+  },
+  parentItemActive: {
+    backgroundColor: AccentColor.blue,
   },
   parentText: {
     flex: 1,

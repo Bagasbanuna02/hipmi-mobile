@@ -146,14 +146,14 @@ export default function AdminLayout() {
             style={{ alignSelf: "flex-end" }}
           />
 
-          {/* <NavbarMenu
+          <NavbarMenu
             items={
               user?.masterUserRoleId === "2"
                 ? adminListMenu
                 : superAdminListMenu
             }
             onClose={() => setOpenDrawerNavbar(false)}
-          /> */}
+          />
 
           {/* <NavbarMenu_V2
             items={
@@ -164,14 +164,14 @@ export default function AdminLayout() {
             onClose={() => setOpenDrawerNavbar(false)}
           /> */}
 
-          <NavbarMenu_V3
+          {/* <NavbarMenu_V3
             items={
               user?.masterUserRoleId === "2"
                 ? adminListMenu_V2
                 : superAdminListMenu_V2
             }
             onClose={() => setOpenDrawerNavbar(false)}
-          />
+          /> */}
         </StackCustom>
       </DrawerAdmin>
 
