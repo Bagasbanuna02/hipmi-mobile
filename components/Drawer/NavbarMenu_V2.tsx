@@ -1,7 +1,7 @@
 import { AccentColor, MainColor } from "@/constants/color-palet";
 import { Ionicons } from "@expo/vector-icons";
 import { router, usePathname } from "expo-router";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
   ScrollView,
@@ -19,7 +19,7 @@ export interface NavbarItem_V2 {
   links?: {
     label: string;
     link: string;
-    detailPattern?: string;
+    detailPattern?: string; // NEW: Pattern untuk match detail pages
   }[];
   initiallyOpened?: boolean;
 }
@@ -45,93 +45,89 @@ export default function NavbarMenu_V2({ items, onClose }: NavbarMenuProps) {
 
     try {
       const newOpenKeys: string[] = [];
-
+      
       // Helper function yang sama dengan di MenuItem
       const checkPathMatch = (linkPath: string, detailPattern?: string) => {
         const normalizedLink = linkPath.replace(/\/+$/, "");
-
+        
         // Exact match
         if (normalizedPathname === normalizedLink) return true;
-
+        
         // Detail pattern match
         if (detailPattern) {
           const patternRegex = new RegExp(
-            "^" + detailPattern.replace(/\*/g, "[^/]+") + "(/.*)?$",
+            "^" + detailPattern.replace(/\*/g, "[^/]+") + "(/.*)?$"
           );
           if (patternRegex.test(normalizedPathname)) {
             return true;
           }
         }
-
+        
         // Detail page match (fallback)
         if (normalizedPathname.startsWith(normalizedLink + "/")) {
-          const remainder = normalizedPathname.substring(
-            normalizedLink.length + 1,
-          );
-          const segments = remainder.split("/").filter((s) => s.length > 0);
-
+          const remainder = normalizedPathname.substring(normalizedLink.length + 1);
+          const segments = remainder.split("/").filter(s => s.length > 0);
+          
           if (segments.length === 0) return false;
-
+          
           const commonWords = [
-            // Event
-            "type-create",
-
-            // Other
-            "detail",
-            "edit",
-            "create",
-            "new",
-            "add",
-            "delete",
-            "view",
-            "publish",
-            "review",
-            "reject",
-            "status",
-            "category",
-            "history",
-            "type-of-event",
-            "posting",
-            "report-posting",
-            "report-comment",
-            "group",
-            "dashboard",
-            "sticker",
-            "active",
-            "inactive",
-            "pending",
-            "transaction-detail",
-            "transaction",
-            "payment",
-            "disbursement",
-            "list-of-investor",
+            // Actions
+            'detail', 'edit', 'create', 'new', 'add', 'delete', 'view', 
+            
+            // Status types
+            'publish', 'review', 'reject', 'status', 'active', 'inactive', 'pending',
+            
+            // General pages
+            'category', 'history', 'dashboard', 'index',
+            
+            // Event specific
+            'type-of-event', 'type-create', 'type-update',
+            
+            // Forum specific
+            'posting', 'report-posting', 'report-comment',
+            
+            // Collaboration
+            'group',
+            
+            // App Information
+            'business-field', 'information-bank', 'sticker',
+            'bidang-update', 'sub-bidang-update',
+            
+            // Transaction/Finance related
+            'transaction-detail', 'transaction', 'payment', 
+            'disbursement-of-funds', 'detail-disbursement-of-funds',
+            'list-disbursement-of-funds',
+            
+            // List pages (CRITICAL!)
+            'list-of-investor', 'list-of-donatur', 'list-of-participants',
+            'list-comment', 'list-report-comment', 'list-report-posting',
+            
+            // Input/Form pages
+            'reject-input',
+            
+            // Category pages
+            'category-create', 'category-update'
           ];
-
-          const hasIdSegment = segments.some((segment) => {
+          
+          const hasIdSegment = segments.some(segment => {
             if (commonWords.includes(segment.toLowerCase())) {
               return false;
             }
-
+            
             const isPureNumber = /^\d+$/.test(segment);
-            const isUUID =
-              /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
-                segment,
-              );
+            const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(segment);
             const hasNumber = /\d/.test(segment);
-            const isAlphanumericId =
-              /^[a-z0-9_-]+$/i.test(segment) &&
-              segment.length <= 50 &&
-              hasNumber;
-
+            const isAlphanumericId = /^[a-z0-9_-]+$/i.test(segment) && segment.length <= 50 && hasNumber;
+            
             return isPureNumber || isUUID || isAlphanumericId;
           });
-
+          
           return hasIdSegment;
         }
-
+        
         return false;
       };
-
+      
       items.forEach((item) => {
         if (item.links && item.links.length > 0) {
           // Check jika ada submenu yang match dengan current path
@@ -154,9 +150,7 @@ export default function NavbarMenu_V2({ items, onClose }: NavbarMenuProps) {
   // Toggle dropdown
   const toggleOpen = (label: string) => {
     setOpenKeys((prev) =>
-      prev.includes(label)
-        ? prev.filter((key) => key !== label)
-        : [...prev, label],
+      prev.includes(label) ? prev.filter((key) => key !== label) : [...prev, label]
     );
   };
 
@@ -171,18 +165,18 @@ export default function NavbarMenu_V2({ items, onClose }: NavbarMenuProps) {
           paddingVertical: 10,
         }}
       >
-        {items && items.length > 0
-          ? items.map((item) => (
-              <MenuItem
-                key={item.label}
-                item={item}
-                onClose={onClose}
-                currentPath={normalizedPathname}
-                isOpen={openKeys.includes(item.label)}
-                toggleOpen={() => toggleOpen(item.label)}
-              />
-            ))
-          : null}
+        {items && items.length > 0 ? (
+          items.map((item) => (
+            <MenuItem
+              key={item.label}
+              item={item}
+              onClose={onClose}
+              currentPath={normalizedPathname}
+              isOpen={openKeys.includes(item.label)}
+              toggleOpen={() => toggleOpen(item.label)}
+            />
+          ))
+        ) : null}
       </ScrollView>
     </View>
   );
@@ -205,121 +199,109 @@ function MenuItem({
   const animatedHeight = useRef(new Animated.Value(0)).current;
 
   // Helper function untuk check apakah path aktif
-  const isPathActive = (
-    linkPath: string | undefined,
-    detailPattern?: string,
-  ) => {
+  const isPathActive = (linkPath: string | undefined, detailPattern?: string) => {
     if (!linkPath) return false;
     const normalizedLink = linkPath.replace(/\/+$/, "");
-
+    
     // 1. Match exact - prioritas tertinggi
     if (currentPath === normalizedLink) return true;
-
+    
     // 2. Jika ada detailPattern, cek pattern dulu
     if (detailPattern) {
-      // detailPattern contoh: "/admin/job/*/review"
+      // detailPattern contoh: "/admin/job/*/review" 
       // akan match dengan:
       // - /admin/job/123/review ✅
       // - /admin/job/123/review/transaction-detail ✅
       // - /admin/job/123/review/anything/nested ✅
       const patternRegex = new RegExp(
-        "^" + detailPattern.replace(/\*/g, "[^/]+") + "(/.*)?$",
+        "^" + detailPattern.replace(/\*/g, "[^/]+") + "(/.*)?$"
       );
       const isMatch = patternRegex.test(currentPath);
-
+      
       // Debug log untuk pattern matching
-      if (
-        currentPath.includes("list-of-investor") ||
-        currentPath.includes("type-create")
-      ) {
-        console.log(
-          "🔍 Pattern Match Check:",
-          JSON.stringify(
-            {
-              currentPath,
-              detailPattern,
-              regex: patternRegex.toString(),
-              isMatch,
-            },
-            null,
-            2,
-          ),
-        );
+      if (currentPath.includes('transaction-detail') || currentPath.includes('disbursement')) {
+        console.log('🔍 Pattern Match Check:', {
+          currentPath,
+          detailPattern,
+          regex: patternRegex.toString(),
+          isMatch
+        });
       }
-
+      
       if (isMatch) {
         return true;
       }
     }
-
+    
     // 3. Match untuk detail pages (fallback)
     if (currentPath.startsWith(normalizedLink + "/")) {
       const remainder = currentPath.substring(normalizedLink.length + 1);
-      const segments = remainder.split("/").filter((s) => s.length > 0);
-
+      const segments = remainder.split("/").filter(s => s.length > 0);
+      
       if (segments.length === 0) return false;
-
+      
       const commonWords = [
-        // Event
-        "type-create",
-        "detail",
-        "edit",
-        "create",
-        "new",
-        "add",
-        "delete",
-        "view",
-        "publish",
-        "review",
-        "reject",
-        "status",
-        "category",
-        "history",
-        "type-of-event",
-        "posting",
-        "report-posting",
-        "report-comment",
-        "group",
-        "dashboard",
-        "sticker",
-        "active",
-        "inactive",
-        "pending",
-        "transaction-detail",
-        "transaction",
-        "payment",
-        "disbursement",
+        // Actions
+        'detail', 'edit', 'create', 'new', 'add', 'delete', 'view', 
+        
+        // Status types
+        'publish', 'review', 'reject', 'status', 'active', 'inactive', 'pending',
+        
+        // General pages
+        'category', 'history', 'dashboard', 'index',
+        
+        // Event specific
+        'type-of-event', 'type-create', 'type-update',
+        
+        // Forum specific
+        'posting', 'report-posting', 'report-comment',
+        
+        // Collaboration
+        'group',
+        
+        // App Information
+        'business-field', 'information-bank', 'sticker',
+        'bidang-update', 'sub-bidang-update',
+        
+        // Transaction/Finance related
+        'transaction-detail', 'transaction', 'payment', 
+        'disbursement-of-funds', 'detail-disbursement-of-funds',
+        'list-disbursement-of-funds',
+        
+        // List pages (CRITICAL!)
+        'list-of-investor', 'list-of-donatur', 'list-of-participants',
+        'list-comment', 'list-report-comment', 'list-report-posting',
+        
+        // Input/Form pages
+        'reject-input',
+        
+        // Category pages
+        'category-create', 'category-update'
       ];
-
-      const hasIdSegment = segments.some((segment) => {
+      
+      const hasIdSegment = segments.some(segment => {
         if (commonWords.includes(segment.toLowerCase())) {
           return false;
         }
-
+        
         const isPureNumber = /^\d+$/.test(segment);
-        const isUUID =
-          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
-            segment,
-          );
+        const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(segment);
         const hasNumber = /\d/.test(segment);
-        const isAlphanumericId =
-          /^[a-z0-9_-]+$/i.test(segment) && segment.length <= 50 && hasNumber;
-
+        const isAlphanumericId = /^[a-z0-9_-]+$/i.test(segment) && segment.length <= 50 && hasNumber;
+        
         return isPureNumber || isUUID || isAlphanumericId;
       });
-
+      
       return hasIdSegment;
     }
-
+    
     return false;
   };
 
   // Check apakah menu item ini atau submenu-nya yang aktif
   const isActive = isPathActive(item.link);
   const hasActiveSubmenu =
-    item.links?.some((subItem) =>
-      isPathActive(subItem.link, subItem.detailPattern),
-    ) || false;
+    item.links?.some((subItem) => isPathActive(subItem.link, subItem.detailPattern)) || false;
 
   // Animasi saat isOpen berubah
   useEffect(() => {
@@ -332,6 +314,13 @@ function MenuItem({
 
   // Jika ada submenu
   if (item.links && item.links.length > 0) {
+    // PRE-CALCULATE semua active states untuk submenu
+    const submenuActiveStates = item.links.map(subItem => ({
+      subItem,
+      isActive: isPathActive(subItem.link, subItem.detailPattern),
+      pathLength: subItem.link.length
+    }));
+
     return (
       <View>
         {/* Parent Item */}
@@ -377,71 +366,62 @@ function MenuItem({
             },
           ]}
         >
-          {item.links.map((subItem, index) => {
-            const isSubActive = isPathActive(
-              subItem.link,
-              subItem.detailPattern,
-            );
-
-            // CRITICAL FIX: Jika submenu ini aktif, cek apakah ada submenu lain yang LEBIH PANJANG dan juga aktif
-            // Jika ada yang lebih panjang dan aktif, maka yang pendek TIDAK AKTIF
-            const hasMoreSpecificMatch = item.links!.some((otherSubItem) => {
-              if (otherSubItem.link === subItem.link) return false; // Skip self
-
-              const otherIsActive = isPathActive(
-                otherSubItem.link,
-                otherSubItem.detailPattern,
-              );
-              const isOtherLonger =
-                otherSubItem.link.length > subItem.link.length;
-
-              // Debug log
-              if (isSubActive && otherIsActive) {
-                console.log(
-                  "🔍 CONFLICT DETECTED:",
-                  JSON.stringify(
-                    {
-                      current: subItem.label,
-                      currentPath: subItem.link,
-                      currentLength: subItem.link.length,
-                      other: otherSubItem.label,
-                      otherPath: otherSubItem.link,
-                      otherLength: otherSubItem.link.length,
-                      isOtherLonger,
-                      currentURL: currentPath,
-                    },
-                    null,
-                    2,
-                  ),
-                );
+          {submenuActiveStates.map(({ subItem, isActive: isSubActive, pathLength }, index) => {
+            
+            // CRITICAL FIX: Cek apakah ada submenu lain yang LEBIH PANJANG dan juga aktif
+            const hasMoreSpecificMatch = submenuActiveStates.some(other => {
+              if (other.subItem.link === subItem.link) return false; // Skip self
+              
+              const isOtherLonger = other.pathLength > pathLength;
+              
+              // Debug log untuk Dashboard
+              if (subItem.label === "Dashboard" && isSubActive) {
+                console.log(`🔎 Dashboard checking against ${other.subItem.label}:`, {
+                  dashboardLink: subItem.link,
+                  dashboardLength: pathLength,
+                  otherLabel: other.subItem.label,
+                  otherLink: other.subItem.link,
+                  otherPattern: other.subItem.detailPattern,
+                  otherLength: other.pathLength,
+                  otherIsActive: other.isActive,
+                  isOtherLonger,
+                  willDisableDashboard: other.isActive && isOtherLonger,
+                  currentURL: currentPath
+                });
               }
-
-              // Jika submenu lain JUGA aktif DAN lebih panjang (lebih spesifik),
-              // maka submenu yang pendek ini TIDAK boleh aktif
-              return otherIsActive && isOtherLonger;
+              
+              // Conflict log
+              if (isSubActive && other.isActive) {
+                console.log('🔍 CONFLICT DETECTED:', {
+                  current: subItem.label,
+                  currentPath: subItem.link,
+                  currentLength: pathLength,
+                  other: other.subItem.label,
+                  otherPath: other.subItem.link,
+                  otherLength: other.pathLength,
+                  isOtherLonger,
+                  shouldDisableCurrent: isOtherLonger,
+                  currentURL: currentPath
+                });
+              }
+              
+              return other.isActive && isOtherLonger;
             });
-
-            // Final decision: aktif HANYA jika match DAN tidak ada yang lebih spesifik
+            
+            // Final decision
             const finalIsActive = isSubActive && !hasMoreSpecificMatch;
-
-            // Debug final decision
+            
+            // Debug final
             if (isSubActive) {
-              console.log(
-                "✅ Active check:",
-                JSON.stringify(
-                  {
-                    label: subItem.label,
-                    link: subItem.link,
-                    isSubActive,
-                    hasMoreSpecificMatch,
-                    finalIsActive,
-                  },
-                  null,
-                  2,
-                ),
-              );
+              console.log('✅ Active check:', {
+                label: subItem.label,
+                link: subItem.link,
+                isSubActive,
+                hasMoreSpecificMatch,
+                finalIsActive
+              });
             }
-
+            
             return (
               <TouchableOpacity
                 key={index}

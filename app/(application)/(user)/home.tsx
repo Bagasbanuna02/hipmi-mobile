@@ -77,14 +77,14 @@ export default function Application() {
     );
   }
 
-  // if (data && data?.masterUserRoleId !== "1") {
-  //   console.log("User is not admin");
-  //   return (
-  //     <BasicWrapper>
-  //       <Redirect href={`/admin/dashboard`} />
-  //     </BasicWrapper>
-  //   );
-  // }
+  if (data && data?.masterUserRoleId !== "1") {
+    console.log("User is not admin");
+    return (
+      <BasicWrapper>
+        <Redirect href={`/admin/dashboard`} />
+      </BasicWrapper>
+    );
+  }
 
   return (
     <>
