@@ -104,18 +104,39 @@ Dalam bug diawal tadi untuk menu yang aktif jika masuk ke detail memang terseles
 
 Masih terjadi bug, mengapa saat klik menu yang memiliki dashboard maka sub menu dashboard dan sub menu yang kita klik menjadi aktif ?
 
+Nama file: NavbarMenu_V2.tsx
+Source component: components/Drawer/NavbarMenu_V2.tsx
+Struktur file admin: docs/admin-folder-structure.md
+
+Saya mengalami bug pada file "Nama file" , saya ingin jika saat pindah halaman ( ke detail contoh : app/(application)/admin/investment/[id]/list-of-investor.tsx) maka navbar tetap menandai menu yang sedang aktif, tapi yang terjadi sekarang jika masuk ke detail maka warnanya mendeteksi dashboard padahal sedang di detail investor pada source: app/(application)/admin/investment/[id]/list-of-investor.tsx
+Jika anda butuh membaca struktur file admin maka anda bisa membaca file pada "Struktur file admin"
+
+
+
+
+Error terjadi pada code berikut:
+  items.forEach(parentItem => {
+      if (parentItem.links && parentItem.links.length > 0) {
+        parentItem.links.forEach(link => {
+          const linkPath = link.link.replace(/\/+$/, "");
+          if (currentPath.startsWith(linkPath + "/") && linkPath.length > longestMatchLength) {
+            longestMatchLength = linkPath.length;
+            mostRelevantParent = parentItem.label;
+          }
+        });
+      }
+    });
+    
+
+BUG MASIH TERJADI ! Coba perbaiki perlahan , gunakan semua data dan pengetahuan meksimaln anda agar kode ini berhasil tanpa bug ! 
+1: Jika user masuk lebih dalam ke detail padahal bukan menu dashboard yang di pilih, CUKUP AKTIFKAN MENU YANG DI PILIH SAJA DENGAN MEMBUKA FUNGSI DROPDOWN DAN TIDAK USAH AKTIFKAN SUB MENUNYAN , INGAT ! CUKUP MENU NYA SAJA YANG AKTIF
+
+
+ Pastikan request saya terselesaikan dan error berikut clear:
+- Cannot rede block-scoped variable 'hasActiveSubmenuOnDetailPage'.  
+- Block-scoped variable 'isOnDetailPage' used before its declaration.
+- Variable 'isOnDetailPage' is used before being assigned.
+- Cannot redeclare block-scoped variable 'hasActiveSubmenuOnDetailPage'.
+Gunakan bahasa indonesia pada cli agar saya mudah membacanya.eclar
 <!-- End Random Prompt -->
 
-
-export interface NavbarItem_V2 {
-  label: string;
-  icon?: keyof typeof Ionicons.glyphMap;
-  color?: string;
-  link?: string;
-  links?: {
-    label: string;
-    link: string;
-    detailPattern?: string;
-  }[];
-  initiallyOpened?: boolean;
-}

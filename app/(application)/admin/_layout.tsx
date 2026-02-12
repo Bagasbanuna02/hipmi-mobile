@@ -9,6 +9,7 @@ import {
 import DrawerAdmin from "@/components/Drawer/DrawerAdmin";
 import NavbarMenu from "@/components/Drawer/NavbarMenu";
 import NavbarMenu_V2 from "@/components/Drawer/NavbarMenu_V2";
+import NavbarMenu_V3 from "@/components/Drawer/NavbarMenu_V3";
 import { AccentColor, MainColor } from "@/constants/color-palet";
 import {
   ICON_SIZE_MEDIUM,
@@ -154,7 +155,16 @@ export default function AdminLayout() {
             onClose={() => setOpenDrawerNavbar(false)}
           /> */}
 
-          <NavbarMenu_V2
+          {/* <NavbarMenu_V2
+            items={
+              user?.masterUserRoleId === "2"
+                ? adminListMenu_V2
+                : superAdminListMenu_V2
+            }
+            onClose={() => setOpenDrawerNavbar(false)}
+          /> */}
+
+          <NavbarMenu_V3
             items={
               user?.masterUserRoleId === "2"
                 ? adminListMenu_V2
