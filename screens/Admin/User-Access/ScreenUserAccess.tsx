@@ -5,20 +5,18 @@ import {
   Grid,
   SearchInput,
   StackCustom,
-  TextCustom
+  TextCustom,
 } from "@/components";
 import AdminBasicBox from "@/components/_ShareComponent/Admin/AdminBasicBox";
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
 import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { MainColor } from "@/constants/color-palet";
-import {
-  PAGINATION_DEFAULT_TAKE
-} from "@/constants/constans-value";
+import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { usePagination } from "@/hooks/use-pagination";
 import { apiAdminUserAccessGetAll } from "@/service/api-admin/api-admin-user-access";
-import { router } from "expo-router";
-import { useState } from "react";
+import { router, useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
 import { RefreshControl } from "react-native";
 
 export function Admin_ScreenUserAccess() {
@@ -53,6 +51,12 @@ export function Admin_ScreenUserAccess() {
       skeletonHeight: 100,
       isInitialLoad: pagination.isInitialLoad,
     });
+
+  useFocusEffect(
+    useCallback(() => {
+      pagination.onRefresh();
+    }, []),
+  );
 
   const rightComponent = () => {
     return (

@@ -24,8 +24,8 @@ export default function AdminComp_BoxTitle({
         style={{
           backgroundColor: AccentColor.darkblue,
           borderColor: AccentColor.blue,
-
-          padding: 10,
+          paddingBlock: 5,
+          paddingInline: 10,
           borderWidth: 1,
           borderRadius: 10,
         }}

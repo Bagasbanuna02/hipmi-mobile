@@ -60,24 +60,48 @@ Gunakan bahasa indonesia pada cli agar saya mudah membacanya.eclar
 <!-- End Random Prompt -->
 
 <!-- START Prompt Admin Refactoring -->
-File source: app/(application)/admin/user-access/index.tsx
-Folder tujuan: screens/Admin/User-Access
-Nama file utama: ScreenUserAccess.tsx
-Nama function utama: Admin_ScreenUserAccess
+<!-- Pindah kode ke Screen Component -->
+File source: app/(application)/admin/app-information/business-field/[id]/index.tsx
+Folder tujuan: screens/Admin/App-Information
+Nama file utama: ScreenBusinessFieldDetail.tsx
+Nama function utama: Admin_ScreenBusinessFieldDetail
 File komponen wrapper: components/_ShareComponent/NewWrapper.tsx
-Function fecth: apiAdminUserAccessGetAll
-File function fetch: service/api-admin/api-admin-user-access.ts
 
 Buat file baru pada "Folder tujuan" dengan nama "Nama file utama" dan ubah nama function menjadi "Nama function utama" kemudian clean code, import dan panggil function tersebut pada file "File source" 
-
 Analisa juga file "Nama file utama" , jika belum menggunakan NewWrapper pada file "File komponen wrapper" , maka terapkan juga dan ganti wrapper lama yaitu komponen ViewWrapper
 
+
+<!-- Penerapan Pagination -->
+Function fecth: apiAdminMasterBank
+File function fetch: service/api-admin/api-master-admin.ts
+
 Terapkan pagination pada file "Nama file utama"
-
 Komponen pagination yang digunaka berada pada file hooks/use-pagination.tsx dan helpers/paginationHelpers.tsx
-
 Perbaiki fetch "Function fecth" , pada file "File function fetch"
 Jika tidak ada props page maka tambahkan props page dan default page: "1"
 
+
+
 Gunakan bahasa indonesia pada cli agar saya mudah membacanya.
 <!-- END Prompt Admin Refactoring -->
+
+<!-- Use Prompt Now -->
+Terapkan NewWrapper pada file: screens/Admin/App-Information/InformationBankSection.tsx
+Component yang digunakan: components/_ShareComponent/NewWrapper.tsx 
+
+Function fecth: apiAdminMasterBank
+File function fetch: service/api-admin/api-master-admin.ts
+
+Terapkan pagination pada file "Nama file utama"
+Komponen pagination yang digunaka berada pada file hooks/use-pagination.tsx dan helpers/paginationHelpers.tsx
+Perbaiki fetch "Function fecth" , pada file "File function fetch"
+Jika tidak ada props page maka tambahkan props page dan default page: "1" ( string )
+<!-- Baru -->
+File Utama: screens/Admin/App-Information/InformationBankSection.tsx
+Terapkan FlatList dan pagination pada file "File Utama"
+Komponen pagination yang digunaka berada pada file hooks/use-pagination.tsx dan helpers/paginationHelpers.tsx
+Function fecth: apiAdminMasterBank
+File function fetch: service/api-admin/api-master-admin.ts
+Jika tidak ada props page maka tambahkan props page dan default page: "1" ( string )
+Jika butuh refrensi FlatList bisa lihat pada  file components/_ShareComponent/NewWrapper.tsx
+<!-- END Use Prompt Now -->

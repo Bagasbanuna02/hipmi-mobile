@@ -1,9 +1,11 @@
 import { apiConfig } from "../api-config";
 
 // ================== START MASTER BANK ================== //
-export async function apiAdminMasterBank() {
+export async function apiAdminMasterBank({ page = "1" }: { page?: string }) {
   try {
-    const response = await apiConfig.get(`/mobile/admin/master/bank`);
+    const response = await apiConfig.get(
+      `/mobile/admin/master/bank?page=${page}`,
+    );
     return response.data;
   } catch (error) {
     throw error;
@@ -51,9 +53,15 @@ export async function apiAdminMasterBankCreate({ data }: { data: any }) {
 
 // ================== START BUSINNES FIELD ================== //
 
-export async function apiAdminMasterBusinessField() {
+export async function apiAdminMasterBusinessField({
+  page = "1",
+}: {
+  page: string;
+}) {
   try {
-    const response = await apiConfig.get(`/mobile/admin/master/business-field`);
+    const response = await apiConfig.get(
+      `/mobile/admin/master/business-field?page=${page}`,
+    );
     return response.data;
   } catch (error) {
     throw error;
@@ -64,16 +72,19 @@ export async function apiAdminMasterBusinessFieldById({
   id,
   subBidangId,
   category,
+  page = "1"
 }: {
   id: string;
   subBidangId?: string | null;
-  category: "bidang" | "sub-bidang" | "all";
+  category: "bidang" | "sub-bidang" | "all" | "only-sub-bidang" 
+  page?: string
 }) {
   const queryCategory = category ? `?category=${category}` : "";
   const querySubBidang = subBidangId ? `&subBidangId=${subBidangId}` : "";
+  const queryPage = page ? `&page=${page}` : "";
   try {
     const response = await apiConfig.get(
-      `/mobile/admin/master/business-field/${id}${queryCategory}${querySubBidang}`
+      `/mobile/admin/master/business-field/${id}${queryCategory}${querySubBidang}${queryPage}`,
     );
     return response.data;
   } catch (error) {
@@ -95,7 +106,7 @@ export async function apiAdminMasterBusinessFieldUpdate({
       `/mobile/admin/master/business-field/${id}?category=${category}`,
       {
         data: data,
-      }
+      },
     );
     return response.data;
   } catch (error) {
@@ -113,7 +124,7 @@ export async function apiAdminMasterBusinessFieldCreate({
       `/mobile/admin/master/business-field`,
       {
         data: data,
-      }
+      },
     );
     return response.data;
   } catch (error) {
@@ -139,7 +150,7 @@ export async function apiEventCreateTypeOfEvent({ data }: { data: string }) {
       `/mobile/admin/master/type-of-event`,
       {
         data: data,
-      }
+      },
     );
     return response.data;
   } catch (error) {
@@ -150,7 +161,7 @@ export async function apiEventCreateTypeOfEvent({ data }: { data: string }) {
 export async function apiAdminMasterTypeOfEventGetOne({ id }: { id: string }) {
   try {
     const response = await apiConfig.get(
-      `/mobile/admin/master/type-of-event/${id}`
+      `/mobile/admin/master/type-of-event/${id}`,
     );
     return response.data;
   } catch (error) {
@@ -170,7 +181,7 @@ export async function apiAdminMasterTypeOfEventUpdate({
       `/mobile/admin/master/type-of-event/${id}`,
       {
         data: data,
-      }
+      },
     );
     return response.data;
   } catch (error) {
@@ -216,7 +227,7 @@ export async function apiAdminMasterDonationCategoryUpdate({
       `/mobile/admin/master/donation/${id}`,
       {
         data: data,
-      }
+      },
     );
     return response.data;
   } catch (error) {
@@ -240,3 +251,27 @@ export async function apiAdminMasterDonationCategoryCreate({
 }
 
 // ================== END DONATION ================== //
+
+// ================== START FECTH APP INFORMATION ================== //
+
+export async function apiFetchAdminMasterAppInformation({
+  page = "1",
+  category,
+}: {
+  page: string;
+  category?: "bank" | "business" | string
+}) {
+  if (category === "bank") {
+    const response = await apiAdminMasterBank({ page });
+    // TODO: implement bank logic
+    return response;
+  } else if (category === "business") {
+    const response = await apiAdminMasterBusinessField({ page });
+    // TODO: implement business logic
+    return response
+  } else {
+    throw new Error("Category is required");
+  }
+}
+
+// ================== END FECTH APP INFORMATION ================== //
