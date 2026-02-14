@@ -2,6 +2,7 @@
 import {
   AlertDefaultSystem,
   BoxButtonOnFooter,
+  NewWrapper,
   TextAreaCustom,
   ViewWrapper,
 } from "@/components";
@@ -100,7 +101,7 @@ export default function AdminJobRejectInput() {
 
   return (
     <>
-      <ViewWrapper
+      <NewWrapper
         footerComponent={buttonSubmit}
         headerComponent={<AdminBackButtonAntTitle title="Penolakan Job" />}
       >
@@ -112,7 +113,7 @@ export default function AdminJobRejectInput() {
           showCount
           maxLength={1000}
         />
-      </ViewWrapper>
+      </NewWrapper>
     </>
   );
 }

@@ -61,10 +61,10 @@ Gunakan bahasa indonesia pada cli agar saya mudah membacanya.eclar
 
 <!-- START Prompt Admin Refactoring -->
 <!-- Pindah kode ke Screen Component -->
-File source: app/(application)/admin/app-information/business-field/[id]/index.tsx
-Folder tujuan: screens/Admin/App-Information
-Nama file utama: ScreenBusinessFieldDetail.tsx
-Nama function utama: Admin_ScreenBusinessFieldDetail
+File source: app/(application)/admin/job/[status]/status.tsx
+Folder tujuan: screens/Admin/Job
+Nama file utama: ScreenJobStatus.tsx
+Nama function utama: Admin_ScreenJobStatus
 File komponen wrapper: components/_ShareComponent/NewWrapper.tsx
 
 Buat file baru pada "Folder tujuan" dengan nama "Nama file utama" dan ubah nama function menjadi "Nama function utama" kemudian clean code, import dan panggil function tersebut pada file "File source" 
@@ -72,15 +72,14 @@ Analisa juga file "Nama file utama" , jika belum menggunakan NewWrapper pada fil
 
 
 <!-- Penerapan Pagination -->
-Function fecth: apiAdminMasterBank
-File function fetch: service/api-admin/api-master-admin.ts
+Function fecth: apiAdminJob
+File function fetch: service/api-admin/api-admin-job.ts
 
 Terapkan pagination pada file "Nama file utama"
 Komponen pagination yang digunaka berada pada file hooks/use-pagination.tsx dan helpers/paginationHelpers.tsx
 Perbaiki fetch "Function fecth" , pada file "File function fetch"
-Jika tidak ada props page maka tambahkan props page dan default page: "1"
-
-
+Jika tidak ada props page maka tambahkan props page dan default page: "1" ( string )
+Kemudian rapikan code nya pisah komponen seperti render item dan lainnya agar lebih rapi dan di dalam return panggil komponen tersebut
 
 Gunakan bahasa indonesia pada cli agar saya mudah membacanya.
 <!-- END Prompt Admin Refactoring -->

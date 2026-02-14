@@ -5,6 +5,7 @@ import {
   BaseBox,
   DummyLandscapeImage,
   Grid,
+  NewWrapper,
   Spacing,
   StackCustom,
   TextCustom,
@@ -120,7 +121,7 @@ export default function AdminJobDetailStatus() {
 
   return (
     <>
-      <ViewWrapper
+      <NewWrapper
         headerComponent={<AdminBackButtonAntTitle title={`Detail Data`} />}
       >
         <BaseBox>
@@ -184,7 +185,7 @@ export default function AdminJobDetailStatus() {
           />
         )}
         <Spacing />
-      </ViewWrapper>
+      </NewWrapper>
     </>
   );
 }
