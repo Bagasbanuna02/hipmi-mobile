@@ -197,7 +197,7 @@ export default function AdminEventDetail() {
                 />
               )}
 
-              <TextCustom align="center">{isDevLink}</TextCustom>
+              {/* <TextCustom align="center">{isDevLink}</TextCustom> */}
             </StackCustom>
           </BaseBox>
         )}

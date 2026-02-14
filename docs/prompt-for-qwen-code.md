@@ -22,8 +22,8 @@ Jika tidak ada props page maka tambahkan props page dan default page: "1"
 Gunakan bahasa indonesia pada cli agar saya mudah membacanya.
 
 <!-- Additional Prompt -->
-File refrensi: screens/Donation/ScreenListOfNews.tsx
-Anda bisa menggunakan refrensi dari "File refrensi" jika butuh pemahaman dengan tipe fitur yang sama
+File refrensi: screens/Admin/Event/ScreenEventStatus.tsx
+Anda bisa menggunakan refrensi dari "File refrensi" jika butuh pemahaman dengan tipe fitur yang hampir sama
 
 <!-- ===================== End Penerapan Pagination ` ===================== -->
 
@@ -61,10 +61,10 @@ Gunakan bahasa indonesia pada cli agar saya mudah membacanya.eclar
 
 <!-- START Prompt Admin Refactoring -->
 <!-- Pindah kode ke Screen Component -->
-File source: app/(application)/admin/job/[status]/status.tsx
-Folder tujuan: screens/Admin/Job
-Nama file utama: ScreenJobStatus.tsx
-Nama function utama: Admin_ScreenJobStatus
+File source: app/(application)/admin/event/[id]/list-of-participants.tsx
+Folder tujuan: screens/Admin/Event
+Nama file utama: ScreenEventListOfParticipants.tsx
+Nama function utama: Admin_ScreenEventListOfParticipants
 File komponen wrapper: components/_ShareComponent/NewWrapper.tsx
 
 Buat file baru pada "Folder tujuan" dengan nama "Nama file utama" dan ubah nama function menjadi "Nama function utama" kemudian clean code, import dan panggil function tersebut pada file "File source" 
@@ -72,8 +72,8 @@ Analisa juga file "Nama file utama" , jika belum menggunakan NewWrapper pada fil
 
 
 <!-- Penerapan Pagination -->
-Function fecth: apiAdminJob
-File function fetch: service/api-admin/api-admin-job.ts
+Function fecth: apiAdminEventListOfParticipants
+File function fetch: service/api-admin/api-admin-event.ts
 
 Terapkan pagination pada file "Nama file utama"
 Komponen pagination yang digunaka berada pada file hooks/use-pagination.tsx dan helpers/paginationHelpers.tsx
