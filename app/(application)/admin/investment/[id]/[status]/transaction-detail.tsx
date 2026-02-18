@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  AlertDefaultSystem,
-  BadgeCustom,
-  BaseBox,
-  ButtonCustom,
-  Spacing,
-  StackCustom,
-  TextCustom,
-  ViewWrapper,
+    AlertDefaultSystem,
+    BadgeCustom,
+    BaseBox,
+    ButtonCustom,
+    Spacing,
+    StackCustom,
+    TextCustom,
+    ViewWrapper,
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
@@ -15,8 +15,8 @@ import GridTwoView from "@/components/_ShareComponent/GridTwoView";
 import { MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
 import {
-  apiAdminInvestmentGetOneInvoiceById,
-  apiAdminInvestmentUpdateInvoice,
+    apiAdminInvestmentGetOneInvoiceById,
+    apiAdminInvestmentUpdateInvoice,
 } from "@/service/api-admin/api-admin-investment";
 import { colorBadgeTransaction } from "@/utils/colorBadge";
 import { dateTimeView } from "@/utils/dateTimeView";
@@ -158,7 +158,7 @@ export default function AdminInvestmentTransactionDetail() {
           spanRight={6}
           styleLeft={{ paddingRight: 10 }}
           styleRight={{ paddingLeft: 10 }}
-          leftIcon={
+          leftItem={
             <ButtonCustom
               disabled={isLoading}
               isLoading={isLoading}
@@ -181,7 +181,7 @@ export default function AdminInvestmentTransactionDetail() {
               Tolak
             </ButtonCustom>
           }
-          rightIcon={
+          rightItem={
             <ButtonCustom
               disabled={isLoading}
               isLoading={isLoading}

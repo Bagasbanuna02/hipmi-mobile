@@ -135,9 +135,9 @@ export async function apiAdminMasterBusinessFieldCreate({
 // ================== END BUSINNES FIELD ================== //
 
 // ================== START EVENT ================== //
-export async function apiAdminMasterTypeOfEvent() {
+export async function apiAdminMasterTypeOfEvent({ page = "1" }: { page?: string }) {
   try {
-    const response = await apiConfig.get(`/mobile/admin/master/type-of-event`);
+    const response = await apiConfig.get(`/mobile/admin/master/type-of-event?page=${page}`);
     return response.data;
   } catch (error) {
     throw error;

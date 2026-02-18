@@ -1,17 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  BoxButtonOnFooter,
-  ButtonCustom,
-  LoaderCustom,
-  StackCustom,
-  TextCustom,
-  ViewWrapper,
+    BoxButtonOnFooter,
+    ButtonCustom,
+    LoaderCustom,
+    StackCustom,
+    TextCustom,
+    ViewWrapper,
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import GridTwoView from "@/components/_ShareComponent/GridTwoView";
 import {
-  apiAdminUserAccessGetById,
-  apiAdminUserAccessUpdateStatus,
+    apiAdminUserAccessGetById,
+    apiAdminUserAccessUpdateStatus,
 } from "@/service/api-admin/api-admin-user-access";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
@@ -26,7 +26,7 @@ export default function SuperAdminDetail() {
   useFocusEffect(
     useCallback(() => {
       onLoadData();
-    }, [id])
+    }, [id]),
   );
 
   const onLoadData = async () => {
@@ -48,7 +48,7 @@ export default function SuperAdminDetail() {
       const response = await apiAdminUserAccessUpdateStatus({
         id: id as string,
         role: data?.masterUserRoleId === "2" ? "user" : "admin",
-        category: "role"
+        category: "role",
       });
 
       if (!response.success) {
@@ -102,8 +102,8 @@ export default function SuperAdminDetail() {
                 key={index}
                 spanLeft={4}
                 spanRight={8}
-                leftIcon={<TextCustom bold>{item?.label}</TextCustom>}
-                rightIcon={<TextCustom>{item?.value}</TextCustom>}
+                leftItem={<TextCustom bold>{item?.label}</TextCustom>}
+                rightItem={<TextCustom>{item?.value}</TextCustom>}
               />
             ))}
           </StackCustom>

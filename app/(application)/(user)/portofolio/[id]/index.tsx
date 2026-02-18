@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  ButtonCustom,
-  DrawerCustom,
-  DummyLandscapeImage,
-  LoaderCustom,
-  Spacing,
-  StackCustom,
-  TextCustom,
+    ButtonCustom,
+    DrawerCustom,
+    DummyLandscapeImage,
+    LoaderCustom,
+    Spacing,
+    StackCustom,
+    TextCustom,
 } from "@/components";
 import LeftButtonCustom from "@/components/Button/BackButton";
 import GridTwoView from "@/components/_ShareComponent/GridTwoView";
@@ -49,7 +49,7 @@ export default function Portofolio() {
     useCallback(() => {
       onLoadData(id as string);
       onLoadUserByToken();
-    }, [id])
+    }, [id]),
   );
 
   async function onLoadData(id: string) {
@@ -144,27 +144,27 @@ export default function Portofolio() {
           <GridTwoView
             spanLeft={2}
             spanRight={10}
-            leftIcon={
+            leftItem={
               <FontAwesome
                 name="building-o"
                 size={ICON_SIZE_SMALL}
                 color="white"
               />
             }
-            rightIcon={<TextCustom>{data?.BusinessMaps?.namePin}</TextCustom>}
+            rightItem={<TextCustom>{data?.BusinessMaps?.namePin}</TextCustom>}
           />
 
           <GridTwoView
             spanLeft={2}
             spanRight={10}
-            leftIcon={
+            leftItem={
               <Ionicons
                 name="list-outline"
                 size={ICON_SIZE_SMALL}
                 color="white"
               />
             }
-            rightIcon={
+            rightItem={
               <TextCustom>{data?.MasterBidangBisnis?.name}</TextCustom>
             }
           />
@@ -172,26 +172,26 @@ export default function Portofolio() {
           <GridTwoView
             spanLeft={2}
             spanRight={10}
-            leftIcon={
+            leftItem={
               <Ionicons
                 name="call-outline"
                 size={ICON_SIZE_SMALL}
                 color="white"
               />
             }
-            rightIcon={<TextCustom>{data?.tlpn}</TextCustom>}
+            rightItem={<TextCustom>{data?.tlpn}</TextCustom>}
           />
           <GridTwoView
             spanLeft={2}
             spanRight={10}
-            leftIcon={
+            leftItem={
               <Ionicons
                 name="location-outline"
                 size={ICON_SIZE_SMALL}
                 color="white"
               />
             }
-            rightIcon={<TextCustom>{data?.alamatKantor}</TextCustom>}
+            rightItem={<TextCustom>{data?.alamatKantor}</TextCustom>}
           />
 
           <Spacing />

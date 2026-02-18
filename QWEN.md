@@ -35,6 +35,7 @@ hipmi-mobile/
 │   └── ...
 ├── assets/                 # Images, icons, and static assets
 ├── constants/              # Constants and configuration values
+├── helpers/                # Helper functions (pagination, etc.)
 ├── hooks/                  # Custom React hooks
 ├── lib/                    # Utility libraries
 ├── navigation/             # Navigation configuration
@@ -49,6 +50,8 @@ hipmi-mobile/
 - Node.js (with bun as the package manager)
 - Expo CLI
 - iOS Simulator or Android Emulator (for native builds)
+- Android Studio (for Android builds)
+- Xcode (for iOS builds, macOS only)
 
 ### Setup and Development
 
@@ -76,28 +79,79 @@ hipmi-mobile/
    bun run lint
    ```
 
-### Environment Variables
-The application uses environment variables defined in the app.config.js file:
+### Build Commands
+
+#### EAS Build (Production)
+```bash
+# Production build
+eas build --profile production
+
+# Preview build
+eas build --profile preview
+
+# Development build
+eas build --profile development
+```
+
+#### Local Native Builds
+```bash
+# Generate native folders (iOS & Android)
+npx expo prebuild
+
+# iOS specific
+bunx expo prebuild --platform ios
+open ios/HIPMIBADUNG.xcworkspace
+
+# Android specific
+bunx expo prebuild --platform android
+```
+
+#### Version Management
+```bash
+# Patch version update
+npm version patch
+```
+
+### Android Debugging
+```bash
+# List connected devices
+adb devices
+
+# Install APK to device/emulator
+adb install android/app/build/outputs/apk/debug/app-debug.apk
+
+# Install to specific device
+adb -s <device_id> install android/app/build/outputs/apk/debug/app-debug.apk
+```
+
+## Environment Variables
+
+The application uses environment variables defined in the `app.config.js` file:
 - `API_BASE_URL`: Base URL for API endpoints
 - `BASE_URL`: Base application URL
 - `DEEP_LINK_URL`: URL for deep linking functionality
 
-### EAS Build Configuration
+Create a `.env` file in the project root with these variables.
+
+## EAS Build Configuration
+
 The project uses Expo Application Services (EAS) for building and deploying:
-- Development builds with development client
-- Preview builds for internal distribution
-- Production builds for app stores
+- **Development**: Development builds with development client
+- **Preview**: Internal distribution builds (APK for Android)
+- **Production**: App store builds (App Bundle for Android, IPA for iOS)
+
+Configuration is in `eas.json`.
 
 ## Features and Functionality
 
-The application appears to include several key modules:
-- **Authentication**: Login, registration, and verification flows
-- **Admin Panel**: Administrative functions
+The application includes several key modules:
+- **Authentication**: Login with phone number, OTP verification, registration, terms acceptance
+- **Admin Panel**: Administrative functions for managing content and users
 - **Collaboration**: Tools for member collaboration
 - **Events**: Event management and calendar
 - **Forum**: Discussion forums
 - **Maps**: Location-based services with Mapbox integration
-- **Donations**: Donation functionality
+- **Donations**: Donation functionality with fund disbursement tracking
 - **Job Board**: Employment opportunities
 - **Investment**: Investment-related features
 - **Voting**: Voting systems
@@ -109,18 +163,50 @@ The application appears to include several key modules:
 ### Coding Standards
 - TypeScript is used throughout the project for type safety
 - Component-based architecture with reusable components
-- Context API for state management
+- Context API for state management (AuthContext)
 - File-based routing with Expo Router
 - Consistent naming conventions using camelCase for variables and PascalCase for components
+- Path aliases: `@/*` maps to project root
+
+### Architecture Patterns
+
+#### Screen Components
+- Screen components are stored in `/screens` directory organized by feature
+- Route files in `/app` import and use screen components
+- Example pattern:
+  ```tsx
+  // app/some-route.tsx
+  import SomeScreen from "@/screens/Feature/ScreenSome";
+  
+  export default function SomeRoute() {
+    return <SomeScreen />;
+  }
+  ```
+
+#### Wrapper Components
+- `NewWrapper` component is used for consistent screen layouts
+- Located at `components/_ShareComponent/NewWrapper.tsx`
+
+#### Pagination Pattern
+- Use `hooks/use-pagination.tsx` and `helpers/paginationHelpers.tsx`
+- Helper functions: `createSkeletonList`, `createEmptyState`, `createLoadingFooter`, `createPaginationComponents`
+- API functions should accept `page` parameter (default: "1")
+
+### API Service Structure
+- Base API configuration: `service/api-config.ts`
+- Client APIs: `service/api-client/`
+- Admin APIs: `service/api-admin/`
+- All API calls use axios with interceptors for auth token injection
 
 ### Testing
 - Linting is configured with ESLint
-- Standard Expo linting configuration is used
+- Standard Expo linting configuration
 
 ### Security
 - Firebase is integrated for authentication and messaging
 - Camera and location permissions are properly configured
 - Deep linking is secured with app domain associations
+- Auth tokens stored in AsyncStorage
 
 ## Key Dependencies
 
@@ -133,6 +219,9 @@ The application appears to include several key modules:
 - `react-native-toast-message`: Toast notifications
 - `react-native-otp-entry`: OTP input components
 - `react-native-qrcode-svg`: QR code generation
+- `axios`: HTTP client for API calls
+- `lodash`: Utility library
+- `moti`: Animation library
 
 ### Development Dependencies
 - `@types/*`: TypeScript type definitions
@@ -142,28 +231,52 @@ The application appears to include several key modules:
 ## Platform Support
 
 The application is configured to support:
-- **iOS**: With tablet support and proper permissions
-- **Android**: With adaptive icons and intent filters for deep linking
+- **iOS**: 
+  - Bundle identifier: `com.anonymous.hipmi-mobile`
+  - Supports tablets
+  - Build number: 21
+  - Google Services integration
+  - Associated domains for deep linking
+- **Android**: 
+  - Package name: `com.bip.hipmimobileapp`
+  - Version code: 4
+  - Adaptive icons
+  - Edge-to-edge display enabled
+  - Intent filters for HTTPS deep linking
 - **Web**: Static output configuration for web deployment
 
 ## Special Configurations
 
-### iOS Configuration
-- Bundle identifier: `com.anonymous.hipmi-mobile`
-- Supports tablets
-- Google Services integration
-- Location permission handling
-- Associated domains for deep linking
-
-### Android Configuration
-- Package name: `com.bip.hipmimobileapp`
-- Adaptive icons
-- Edge-to-edge display enabled
-- Intent filters for HTTPS deep linking
-- Google Services integration
+### Deep Linking
+- Scheme: `hipmimobile://`
+- Associated domains: `applinks:cld-dkr-staging-hipmi.wibudev.com`
+- Configured for both iOS and Android
 
 ### Maps Integration
 The application uses Mapbox for mapping functionality with the `@rnmapbox/maps` plugin.
 
 ### Push Notifications
 Firebase Cloud Messaging is integrated for push notifications with proper configuration for both iOS and Android platforms.
+
+### Camera
+Camera permissions configured for both iOS and Android with microphone access for recording.
+
+## Common Development Tasks
+
+### Adding a New Screen
+1. Create screen component in appropriate `/screens` subdirectory
+2. Add route in `/app` directory if needed
+3. Configure navigation in `AppRoot.tsx` if custom header is needed
+
+### Adding API Endpoint
+1. Add function in appropriate service file (`service/api-client/` or `service/api-admin/`)
+2. Use `apiConfig` axios instance for requests
+3. Include proper error handling
+
+### Refactoring Pattern (from docs/prompt-for-qwen-code.md)
+When moving code from route files to screen components:
+1. Create new file in `screens/<Feature>/` directory
+2. Rename function with prefix (e.g., `Admin_`, `Donation_`)
+3. Use `NewWrapper` component for consistent layout
+4. Apply pagination helpers if displaying lists
+5. Import and call from original route file

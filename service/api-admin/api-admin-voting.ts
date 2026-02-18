@@ -4,13 +4,15 @@ import { apiConfig } from "../api-config";
 export async function apiAdminVoting({
   category,
   search,
+  page = "1",
 }: {
   category: "dashboard" | "history" | "publish" | "review" | "report";
   search?: string;
+  page?: string;
 }) {
   try {
     const response = await apiConfig.get(
-      `/mobile/admin/voting?category=${category}&search=${search}`
+      `/mobile/admin/voting?category=${category}&search=${search}&page=${page}`
     );
     return response.data;
   } catch (error) {

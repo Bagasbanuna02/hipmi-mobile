@@ -4,15 +4,15 @@ import Grid from "../Grid/GridCustom";
 export default function GridTwoView({
   spanLeft = 6,
   spanRight = 6,
-  leftIcon,
-  rightIcon,
+  leftItem,
+  rightItem,
   styleLeft,
   styleRight,
 }: {
   spanLeft?: number;
   spanRight?: number;
-  leftIcon?: React.ReactNode;
-  rightIcon?: React.ReactNode;
+  leftItem?: React.ReactNode;
+  rightItem?: React.ReactNode;
   styleLeft?: ViewStyle;
   styleRight?: ViewStyle;
 }) {
@@ -24,13 +24,13 @@ export default function GridTwoView({
         span={spanLeft}
         style={styleLeft ? { ...baseStyle, ...styleLeft } : baseStyle}
       >
-        {leftIcon}
+        {leftItem}
       </Grid.Col>
       <Grid.Col
         span={spanRight}
         style={styleRight ? { ...baseStyle, ...styleRight } : baseStyle}
       >
-        {rightIcon}
+        {rightItem}
       </Grid.Col>
     </Grid>
   );

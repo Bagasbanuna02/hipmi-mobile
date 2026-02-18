@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  BaseBox,
-  BoxButtonOnFooter,
-  ButtonCustom,
-  Grid,
-  StackCustom,
-  TextCustom,
-  ViewWrapper,
+    BaseBox,
+    BoxButtonOnFooter,
+    ButtonCustom,
+    Grid,
+    StackCustom,
+    TextCustom,
+    ViewWrapper,
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import GridTwoView from "@/components/_ShareComponent/GridTwoView";
@@ -22,7 +22,7 @@ export default function AdminCollaborationPublish() {
   useFocusEffect(
     useCallback(() => {
       handlerLoadData();
-    }, [status])
+    }, [status]),
   );
 
   const handlerLoadData = async () => {
@@ -78,16 +78,16 @@ export default function AdminCollaborationPublish() {
           </StackCustom>
         </BaseBox>
 
-      {data?.report && (
-        <BaseBox>
-          <GridTwoView
-            spanLeft={4}
-            spanRight={8}
-            leftIcon={<TextCustom bold>Catatan report</TextCustom>}
-            rightIcon={<TextCustom>{data?.report}</TextCustom>}
-          />
-        </BaseBox>
-      )}
+        {data?.report && (
+          <BaseBox>
+            <GridTwoView
+              spanLeft={4}
+              spanRight={8}
+              leftItem={<TextCustom bold>Catatan report</TextCustom>}
+              rightItem={<TextCustom>{data?.report}</TextCustom>}
+            />
+          </BaseBox>
+        )}
       </ViewWrapper>
     </>
   );

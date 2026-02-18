@@ -1,4 +1,13 @@
-import { ButtonCustom, DrawerCustom, DummyLandscapeImage, Grid, Spacing, StackCustom, TextCustom, ViewWrapper } from "@/components";
+import {
+    ButtonCustom,
+    DrawerCustom,
+    DummyLandscapeImage,
+    Grid,
+    Spacing,
+    StackCustom,
+    TextCustom,
+    ViewWrapper,
+} from "@/components";
 import GridTwoView from "@/components/_ShareComponent/GridTwoView";
 import API_IMAGE from "@/constants/api-storage";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
@@ -45,7 +54,7 @@ export default function AdminMaps() {
   useFocusEffect(
     useCallback(() => {
       handlerLoadList();
-    }, [])
+    }, []),
   );
 
   const handlerLoadList = async () => {
@@ -144,52 +153,52 @@ export default function AdminMaps() {
           <GridTwoView
             spanLeft={2}
             spanRight={10}
-            leftIcon={
+            leftItem={
               <FontAwesome
                 name="building-o"
                 size={ICON_SIZE_SMALL}
                 color="white"
               />
             }
-            rightIcon={<TextCustom>{selected.namePin}</TextCustom>}
+            rightItem={<TextCustom>{selected.namePin}</TextCustom>}
           />
 
           <GridTwoView
             spanLeft={2}
             spanRight={10}
-            leftIcon={
+            leftItem={
               <Ionicons
                 name="list-outline"
                 size={ICON_SIZE_SMALL}
                 color="white"
               />
             }
-            rightIcon={<TextCustom>{selected.bidangBisnis}</TextCustom>}
+            rightItem={<TextCustom>{selected.bidangBisnis}</TextCustom>}
           />
 
           <GridTwoView
             spanLeft={2}
             spanRight={10}
-            leftIcon={
+            leftItem={
               <Ionicons
                 name="call-outline"
                 size={ICON_SIZE_SMALL}
                 color="white"
               />
             }
-            rightIcon={<TextCustom>+{selected.nomorTelepon}</TextCustom>}
+            rightItem={<TextCustom>+{selected.nomorTelepon}</TextCustom>}
           />
           <GridTwoView
             spanLeft={2}
             spanRight={10}
-            leftIcon={
+            leftItem={
               <Ionicons
                 name="location-outline"
                 size={ICON_SIZE_SMALL}
                 color="white"
               />
             }
-            rightIcon={<TextCustom>{selected.alamatBisnis}</TextCustom>}
+            rightItem={<TextCustom>{selected.alamatBisnis}</TextCustom>}
           />
 
           <Grid>

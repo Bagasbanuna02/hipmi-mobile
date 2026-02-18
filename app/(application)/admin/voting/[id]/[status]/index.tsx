@@ -5,6 +5,7 @@ import {
   BaseBox,
   CircleContainer,
   Grid,
+  NewWrapper,
   Spacing,
   StackCustom,
   TextCustom,
@@ -13,7 +14,7 @@ import {
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
 import AdminButtonReview from "@/components/_ShareComponent/Admin/ButtonReview";
-import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
+import GridTwoView from "@/components/_ShareComponent/GridTwoView";
 import ReportBox from "@/components/Box/ReportBox";
 import { MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
@@ -40,7 +41,7 @@ export default function AdminVotingDetail() {
   useFocusEffect(
     useCallback(() => {
       onLoadData();
-    }, [id])
+    }, [id]),
   );
 
   const onLoadData = async () => {
@@ -169,26 +170,28 @@ export default function AdminVotingDetail() {
 
   return (
     <>
-      <ViewWrapper
+      <NewWrapper
+        hideFooter
         headerComponent={<AdminBackButtonAntTitle title={`Detail Data`} />}
       >
         <BaseBox>
           <StackCustom>
             {listData.map((item, i) => (
-              <GridSpan_4_8
+              <GridTwoView
                 key={i}
-                label={<TextCustom bold>{item.label}</TextCustom>}
-                value={<TextCustom>{item.value}</TextCustom>}
+                spanLeft={5}
+                spanRight={7}
+                leftItem={<TextCustom bold>{item.label}</TextCustom>}
+                rightItem={<TextCustom>{item.value}</TextCustom>}
               />
             ))}
           </StackCustom>
         </BaseBox>
 
-        {status === "publish" ||
-          (status === "history" && (
-            <BaseBox>
-              <TextCustom bold align="center">
-                Hasil Voting
+        {(status === "publish" || status === "history") && (
+          <BaseBox>
+            <TextCustom bold align="center">
+              Hasil Voting
               </TextCustom>
               <Spacing />
               <Grid>
@@ -209,11 +212,11 @@ export default function AdminVotingDetail() {
                         </TextCustom>
                       </StackCustom>
                     </Grid.Col>
-                  )
+                  ),
                 )}
               </Grid>
             </BaseBox>
-          ))}
+          )}
 
         {data &&
           data?.catatan &&
@@ -250,7 +253,7 @@ export default function AdminVotingDetail() {
           />
         )}
         <Spacing />
-      </ViewWrapper>
+      </NewWrapper>
     </>
   );
 }

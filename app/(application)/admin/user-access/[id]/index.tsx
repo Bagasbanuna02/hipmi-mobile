@@ -1,18 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  BoxButtonOnFooter,
-  ButtonCustom,
-  LoaderCustom,
-  StackCustom,
-  TextCustom,
-  ViewWrapper,
+    BoxButtonOnFooter,
+    ButtonCustom,
+    LoaderCustom,
+    StackCustom,
+    TextCustom,
+    ViewWrapper,
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import GridTwoView from "@/components/_ShareComponent/GridTwoView";
 import { useAuth } from "@/hooks/use-auth";
 import {
-  apiAdminUserAccessGetById,
-  apiAdminUserAccessUpdateStatus,
+    apiAdminUserAccessGetById,
+    apiAdminUserAccessUpdateStatus,
 } from "@/service/api-admin/api-admin-user-access";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
@@ -28,7 +28,7 @@ export default function AdminUserAccessDetail() {
   useFocusEffect(
     useCallback(() => {
       onLoadData();
-    }, [id])
+    }, [id]),
   );
 
   const onLoadData = async () => {
@@ -102,8 +102,8 @@ export default function AdminUserAccessDetail() {
                 key={index}
                 spanLeft={4}
                 spanRight={8}
-                leftIcon={<TextCustom bold>{item?.label}</TextCustom>}
-                rightIcon={<TextCustom>{item?.value}</TextCustom>}
+                leftItem={<TextCustom bold>{item?.label}</TextCustom>}
+                rightItem={<TextCustom>{item?.value}</TextCustom>}
               />
             ))}
           </StackCustom>

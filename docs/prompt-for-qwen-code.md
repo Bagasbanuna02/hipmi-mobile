@@ -53,18 +53,12 @@ Terapkan NewWrapper pada file: app/(application)/(user)/donation/create.tsx
 Component yang digunakan: components/_ShareComponent/NewWrapper.tsx 
 <!-- End Penerapan NewWrapper -->
 
-<!-- Start Random Prompt -->
-
-
-Gunakan bahasa indonesia pada cli agar saya mudah membacanya.eclar
-<!-- End Random Prompt -->
-
 <!-- START Prompt Admin Refactoring -->
 <!-- Pindah kode ke Screen Component -->
-File source: app/(application)/admin/event/[id]/list-of-participants.tsx
-Folder tujuan: screens/Admin/Event
-Nama file utama: ScreenEventListOfParticipants.tsx
-Nama function utama: Admin_ScreenEventListOfParticipants
+File source: app/(application)/admin/event/type-of-event.tsx
+Folder tujuan: screens/Admin/Voting
+Nama file utama: ScreenEventTypeOfEvent.tsx
+Nama function utama: Admin_ScreenEventTypeOfEvent
 File komponen wrapper: components/_ShareComponent/NewWrapper.tsx
 
 Buat file baru pada "Folder tujuan" dengan nama "Nama file utama" dan ubah nama function menjadi "Nama function utama" kemudian clean code, import dan panggil function tersebut pada file "File source" 
@@ -72,8 +66,8 @@ Analisa juga file "Nama file utama" , jika belum menggunakan NewWrapper pada fil
 
 
 <!-- Penerapan Pagination -->
-Function fecth: apiAdminEventListOfParticipants
-File function fetch: service/api-admin/api-admin-event.ts
+Function fecth: apiAdminMasterTypeOfEvent
+File function fetch: service/api-admin/api-master-admin.ts
 
 Terapkan pagination pada file "Nama file utama"
 Komponen pagination yang digunaka berada pada file hooks/use-pagination.tsx dan helpers/paginationHelpers.tsx
@@ -83,6 +77,10 @@ Kemudian rapikan code nya pisah komponen seperti render item dan lainnya agar le
 
 Gunakan bahasa indonesia pada cli agar saya mudah membacanya.
 <!-- END Prompt Admin Refactoring -->
+
+<!-- Additional -->
+File refrensi: screens/Admin/Event/ScreenVotingStatus.tsx
+Anda bisa menggunakan refrensi dari "File refrensi" jika butuh pemahaman dengan tipe fitur yang hampir sama
 
 <!-- Use Prompt Now -->
 Terapkan NewWrapper pada file: screens/Admin/App-Information/InformationBankSection.tsx
@@ -95,6 +93,8 @@ Terapkan pagination pada file "Nama file utama"
 Komponen pagination yang digunaka berada pada file hooks/use-pagination.tsx dan helpers/paginationHelpers.tsx
 Perbaiki fetch "Function fecth" , pada file "File function fetch"
 Jika tidak ada props page maka tambahkan props page dan default page: "1" ( string )
+
+
 <!-- Baru -->
 File Utama: screens/Admin/App-Information/InformationBankSection.tsx
 Terapkan FlatList dan pagination pada file "File Utama"
