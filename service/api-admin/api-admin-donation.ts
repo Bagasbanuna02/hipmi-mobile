@@ -4,13 +4,15 @@ import { apiConfig } from "../api-config";
 export async function apiAdminDonation({
   category,
   search,
+  page = "1",
 }: {
   category: "dashboard" | "publish" | "review" | "reject";
   search?: string;
+  page?: string;
 }) {
   try {
     const response = await apiConfig.get(
-      `/mobile/admin/donation?category=${category}&search=${search}`
+      `/mobile/admin/donation?category=${category}&search=${search}&page=${page}`
     );
     return response.data;
   } catch (error) {
@@ -131,12 +133,16 @@ export async function apiAdminDonationDisbursementOfFundsCreated({
 export async function apiAdminDonationDisbursementOfFundsListById({
   id,
   category,
+  page = "1",
 }: {
   id: string;
-  category: "get-all" | "get-one"
+  category: "get-all" | "get-one";
+  page?: string;
 }) {
   try {
-    const response = await apiConfig.get(`/mobile/admin/donation/${id}/disbursement?category=${category}`);
+    const response = await apiConfig.get(
+      `/mobile/admin/donation/${id}/disbursement?category=${category}&page=${page}`
+    );
     return response.data;
   } catch (error) {
     throw error;

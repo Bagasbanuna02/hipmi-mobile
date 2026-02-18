@@ -193,9 +193,9 @@ export async function apiAdminMasterTypeOfEventUpdate({
 
 // ================== START DONATION ================== //
 
-export async function apiAdminMasterDonationCategory() {
+export async function apiAdminMasterDonationCategory({ page = "1" }: { page?: string }) {
   try {
-    const response = await apiConfig.get(`/mobile/admin/master/donation`);
+    const response = await apiConfig.get(`/mobile/admin/master/donation?page=${page}`);
     return response.data;
   } catch (error) {
     throw error;

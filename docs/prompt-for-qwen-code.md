@@ -55,10 +55,10 @@ Component yang digunakan: components/_ShareComponent/NewWrapper.tsx
 
 <!-- START Prompt Admin Refactoring -->
 <!-- Pindah kode ke Screen Component -->
-File source: app/(application)/admin/event/type-of-event.tsx
-Folder tujuan: screens/Admin/Voting
-Nama file utama: ScreenEventTypeOfEvent.tsx
-Nama function utama: Admin_ScreenEventTypeOfEvent
+File source: app/(application)/admin/donation/[id]/list-disbursement-of-funds.tsx
+Folder tujuan: screens/Admin/Donation
+Nama file utama: ScreenDonationListDisbursementOfFunds.tsx
+Nama function utama: Admin_ScreenDonationListDisbursementOfFunds
 File komponen wrapper: components/_ShareComponent/NewWrapper.tsx
 
 Buat file baru pada "Folder tujuan" dengan nama "Nama file utama" dan ubah nama function menjadi "Nama function utama" kemudian clean code, import dan panggil function tersebut pada file "File source" 
@@ -66,8 +66,8 @@ Analisa juga file "Nama file utama" , jika belum menggunakan NewWrapper pada fil
 
 
 <!-- Penerapan Pagination -->
-Function fecth: apiAdminMasterTypeOfEvent
-File function fetch: service/api-admin/api-master-admin.ts
+Function fecth: apiAdminDonationDisbursementOfFundsListById
+File function fetch: service/api-admin/api-admin-donation.ts
 
 Terapkan pagination pada file "Nama file utama"
 Komponen pagination yang digunaka berada pada file hooks/use-pagination.tsx dan helpers/paginationHelpers.tsx
@@ -75,12 +75,15 @@ Perbaiki fetch "Function fecth" , pada file "File function fetch"
 Jika tidak ada props page maka tambahkan props page dan default page: "1" ( string )
 Kemudian rapikan code nya pisah komponen seperti render item dan lainnya agar lebih rapi dan di dalam return panggil komponen tersebut
 
+
 Gunakan bahasa indonesia pada cli agar saya mudah membacanya.
 <!-- END Prompt Admin Refactoring -->
 
 <!-- Additional -->
-File refrensi: screens/Admin/Event/ScreenVotingStatus.tsx
+File refrensi: screens/Admin/Voting/ScreenEventTypeOfEvent.tsx
 Anda bisa menggunakan refrensi dari "File refrensi" jika butuh pemahaman dengan tipe fitur yang hampir sama
+
+Untuk refrensi tampilan Box bisa anda gunakan dari file: screens/Admin/Donation/BoxDonationCategory.tsx dan buatkan komponen yang mirip untuk list of donatur dengan nama file: BoxDonationListOfDonatur.tsx
 
 <!-- Use Prompt Now -->
 Terapkan NewWrapper pada file: screens/Admin/App-Information/InformationBankSection.tsx
@@ -95,7 +98,7 @@ Perbaiki fetch "Function fecth" , pada file "File function fetch"
 Jika tidak ada props page maka tambahkan props page dan default page: "1" ( string )
 
 
-<!-- Baru -->
+<!-- Create FlatList -->
 File Utama: screens/Admin/App-Information/InformationBankSection.tsx
 Terapkan FlatList dan pagination pada file "File Utama"
 Komponen pagination yang digunaka berada pada file hooks/use-pagination.tsx dan helpers/paginationHelpers.tsx
@@ -103,4 +106,12 @@ Function fecth: apiAdminMasterBank
 File function fetch: service/api-admin/api-master-admin.ts
 Jika tidak ada props page maka tambahkan props page dan default page: "1" ( string )
 Jika butuh refrensi FlatList bisa lihat pada  file components/_ShareComponent/NewWrapper.tsx
+
+<!-- Create Box -->
+File Utama: screens/Admin/Donation/Admin_ScreenDonationStatus.tsx
+Folder tujuan: screens/Admin/Donation
+Buat box component baru pada file "File Utama" di bagian renderItem, 
+
+<!-- END Create Box -->
+
 <!-- END Use Prompt Now -->

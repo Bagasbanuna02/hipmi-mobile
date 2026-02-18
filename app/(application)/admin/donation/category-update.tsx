@@ -30,7 +30,6 @@ export default function AdminDonationCategoryUpdate() {
       const response = await apiAdminMasterDonationCategoryById({
         id: id as any,
       });
-      console.log(JSON.stringify(response.data, null, 2));
 
       setData(response.data);
     };
@@ -44,10 +43,9 @@ export default function AdminDonationCategoryUpdate() {
         id: id as any,
         data: data,
       });
-      console.log(JSON.stringify(response.data, null, 2));
       router.back();
     } catch (error) {
-      console.log(error);
+      console.log("Error update category:", error);
     } finally {
       setIsLoading(false);
     }

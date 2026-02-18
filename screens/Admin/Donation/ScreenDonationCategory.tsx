@@ -3,23 +3,23 @@ import AdminActionIconPlus from "@/components/_ShareComponent/Admin/ActionIconPl
 import AdminBasicBox from "@/components/_ShareComponent/Admin/AdminBasicBox";
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
 import GridTwoView from "@/components/_ShareComponent/GridTwoView";
-import { GridViewCustomSpan } from "@/components/_ShareComponent/GridViewCustomSpan";
 import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { usePagination } from "@/hooks/use-pagination";
-import { apiAdminMasterTypeOfEvent } from "@/service/api-admin/api-master-admin";
+import { apiAdminMasterDonationCategory } from "@/service/api-admin/api-master-admin";
 import { router, useFocusEffect } from "expo-router";
 import { useCallback, useMemo, useState } from "react";
 import { RefreshControl, View } from "react-native";
+import Admin_BoxDonationCategory from "./BoxDonationCategory";
 
-export function Admin_ScreenEventTypeOfEvent() {
+export function Admin_ScreenDonationCategory() {
   const [search, setSearch] = useState<string>("");
 
   // Gunakan hook pagination
   const pagination = usePagination({
     fetchFunction: async (page, searchQuery) => {
-      const response = await apiAdminMasterTypeOfEvent({
+      const response = await apiAdminMasterDonationCategory({
         page: String(page),
       });
 
@@ -39,7 +39,7 @@ export function Admin_ScreenEventTypeOfEvent() {
     () => (
       <AdminActionIconPlus
         onPress={() => {
-          router.push(`/admin/event/type-create`);
+          router.push(`/admin/donation/category-create`);
         }}
       />
     ),
@@ -49,71 +49,26 @@ export function Admin_ScreenEventTypeOfEvent() {
   // Header component untuk title
   const headerComponent = useMemo(
     () => (
-      <AdminComp_BoxTitle title="Tipe Acara Event" rightComponent={rightComponent} />
+      <AdminComp_BoxTitle
+        title="Kategori Donasi"
+        rightComponent={rightComponent}
+      />
     ),
     [rightComponent],
-  );
-
-  // Render header tabel (Aksi, Status, Tipe Acara)
-  const renderTableHeader = useMemo(
-    () => (
-      <>
-        <GridViewCustomSpan
-          span1={2}
-          span2={5}
-          span3={5}
-          component1={
-            <TextCustom bold align="center">
-              Aksi
-            </TextCustom>
-          }
-          component2={
-            <TextCustom bold align="center">
-              Status
-            </TextCustom>
-          }
-          component3={<TextCustom bold>Tipe Acara</TextCustom>}
-        />
-      </>
-    ),
-    [],
-  );
-
-  // Render item untuk daftar tipe event (mengikuti pattern InformationBankSection)
-  const renderItem = useCallback(
-    ({ item, index }: { item: any; index: number }) => (
-      <AdminBasicBox
-        onPress={() => {
-          router.push(`/admin/event/type-update?id=${item.id}`);
-        }}
-        style={{ marginHorizontal: 10, marginVertical: 5 }}
-      >
-        <GridTwoView
-          leftItem={<TextCustom bold>{item?.name || "-"}</TextCustom>}
-          rightItem={
-            <View>
-              {item?.active ? (
-                <BadgeCustom color="green">Aktif</BadgeCustom>
-              ) : (
-                <BadgeCustom color="red">Tidak Aktif</BadgeCustom>
-              )}
-            </View>
-          }
-          spanLeft={8}
-          spanRight={4}
-          styleRight={{
-            alignItems: "flex-end",
-          }}
-        />
-      </AdminBasicBox>
-    ),
-    [],
   );
 
   useFocusEffect(
     useCallback(() => {
       pagination.onRefresh();
     }, []),
+  );
+
+  // Render item untuk daftar kategori donasi
+  const renderItem = useCallback(
+    ({ item, index }: { item: any; index: number }) => (
+      <Admin_BoxDonationCategory key={index} item={item} />
+    ),
+    [],
   );
 
   // Buat komponen-komponen pagination
@@ -127,7 +82,7 @@ export function Admin_ScreenEventTypeOfEvent() {
       emptySearchMessage: "Tidak ada hasil pencarian",
       isInitialLoad: pagination.isInitialLoad,
       skeletonCount: PAGINATION_DEFAULT_TAKE,
-      skeletonHeight: 100,
+      skeletonHeight: 80,
     });
 
   return (

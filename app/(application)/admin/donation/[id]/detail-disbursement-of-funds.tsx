@@ -42,19 +42,19 @@ export default function AdminDonationDetailDisbursementOfFunds() {
   const listData = [
     {
       label: "Nominal",
-      value: `Rp ${(data && formatCurrencyDisplay(data?.nominalCair)) || 0}`,
+      value: `Rp ${data ? formatCurrencyDisplay(data?.nominalCair) : 0}`,
     },
     {
       label: "Tanggal",
-      value: dateTimeView({ date: data?.createdAt }),
+      value: data ? dateTimeView({ date: data?.createdAt }) : "-",
     },
     {
       label: "Judul",
-      value: (data && data?.title) || "-",
+      value: data ? data?.title : "-",
     },
     {
       label: "Deskripsi",
-      value: (data && data?.deskripsi) || "-",
+      value: data ? data?.deskripsi : "-",
     },
   ];
   return (
