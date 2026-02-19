@@ -55,10 +55,10 @@ Component yang digunakan: components/_ShareComponent/NewWrapper.tsx
 
 <!-- START Prompt Admin Refactoring -->
 <!-- Pindah kode ke Screen Component -->
-File source: app/(application)/admin/investment/[id]/list-of-investor.tsx
-Folder tujuan: screens/Admin/Investment
-Nama file utama: ScreenInvestmentListOfInvestor.tsx
-Nama function utama: Admin_ScreenInvestmentListOfInvestor
+File source: app/(application)/admin/forum/[id]/list-report-posting.tsx
+Folder tujuan: screens/Admin/Forum
+Nama file utama: ScreenForumDetailReportPosting.tsx
+Nama function utama: Admin_ScreenForumDetailReportPosting
 File komponen wrapper: components/_ShareComponent/NewWrapper.tsx
 
 Buat file baru pada "Folder tujuan" dengan nama "Nama file utama" dan ubah nama function menjadi "Nama function utama" kemudian clean code, import dan panggil function tersebut pada file "File source" 
@@ -66,8 +66,8 @@ Analisa juga file "Nama file utama" , jika belum menggunakan NewWrapper pada fil
 
 
 <!-- Penerapan Pagination -->
-Function fecth: apiAdminInvestmentListOfInvestor
-File function fetch: service/api-admin/api-admin-investment.ts
+Function fecth: apiAdminForumListReportPostingById
+File function fetch: service/api-admin/api-admin-forum.ts
 
 Terapkan pagination pada file "Nama file utama"
 Komponen pagination yang digunaka berada pada file hooks/use-pagination.tsx dan helpers/paginationHelpers.tsx
@@ -80,10 +80,13 @@ Gunakan bahasa indonesia pada cli agar saya mudah membacanya.
 <!-- END Prompt Admin Refactoring -->
 
 <!-- Additional -->
-File refrensi: screens/Admin/Donation/ScreenDonationListOfDonatur.tsx
+File refrensi: screens/Admin/Forum/ScreenForumReportPosting.tsx
 Anda bisa menggunakan refrensi dari "File refrensi" jika butuh pemahaman dengan tipe fitur yang hampir sama
 
 Untuk refrensi tampilan Box bisa anda gunakan dari file: screens/Admin/Donation/BoxDonationListOfDonatur.tsx dan buatkan komponen yang mirip untuk list of donatur dengan nama file: BoxDonationListOfInvestor.tsx
+
+
+
 
 <!-- Use Prompt Now -->
 Terapkan NewWrapper pada file: screens/Admin/App-Information/InformationBankSection.tsx

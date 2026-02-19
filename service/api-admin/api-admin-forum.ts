@@ -3,13 +3,15 @@ import { apiConfig } from "../api-config";
 export async function apiAdminForum({
   category,
   search,
+  page = "1",
 }: {
   category: "dashboard" | "posting" | "report_posting" | "report_comment";
   search?: string;
+  page?: string;
 }) {
   try {
     const response = await apiConfig.get(
-      `/mobile/admin/forum?category=${category}&search=${search}`
+      `/mobile/admin/forum?category=${category}&search=${search}&page=${page}`
     );
     return response.data;
   } catch (error) {
@@ -78,12 +80,14 @@ export async function apiAdminForumDeactivateComment({
 
 export async function apiAdminForumListReportPostingById({
   id,
+  page = "1",
 }: {
   id: string;
+  page?: string;
 }) {
   try {
     const response = await apiConfig.get(
-      `/mobile/admin/forum/${id}/report-posting`
+      `/mobile/admin/forum/${id}/report-posting?page=${page}`
     );
     return response.data;
   } catch (error) {
