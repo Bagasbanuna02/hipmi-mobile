@@ -60,7 +60,7 @@ export default function AdminInvestmentTransactionDetail() {
       value: (data && data?.MasterBank?.namaBank) || "-",
     },
     {
-      label: "Jumlah Investasi",
+      label: "Nominal",
       value: (data && `Rp. ${formatCurrencyDisplay(data?.nominal)}`) || "-",
     },
     {

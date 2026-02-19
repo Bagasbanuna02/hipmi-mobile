@@ -4,14 +4,16 @@ import { apiConfig } from "../api-config";
 export async function apiAdminInvestment({
   category,
   search,
+  page = "1",
 }: {
   category: "dashboard" | "publish" | "review" | "reject";
   search?: string;
+  page?: string;
 }) {
   const propsQuery =
     category === "dashboard"
-      ? `category=${category}`
-      : `category=${category}&search=${search}`;
+      ? `category=${category}&page=${page}`
+      : `category=${category}&search=${search}&page=${page}`;
 
   try {
     const response = await apiConfig.get(
@@ -57,15 +59,23 @@ export async function apiAdminInvestasiUpdateByStatus({
 export async function apiAdminInvestmentListOfInvestor({
   id,
   status,
+  page = "1",
 }: {
   id: string;
   status: "berhasil" | "gagal" | "proses" | "menunggu" | null;
+  page?: string;
 }) {
-  const query = status && status !== null ? `?status=${status}` : "";
+  const queryParams = new URLSearchParams();
+  
+  if (status && status !== null) {
+    queryParams.append("status", status);
+  }
+  
+  queryParams.append("page", page);
 
   try {
     const response = await apiConfig.get(
-      `/mobile/admin/investment/${id}/investor${query}`
+      `/mobile/admin/investment/${id}/investor?${queryParams.toString()}`
     );
     return response.data;
   } catch (error) {

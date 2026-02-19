@@ -72,16 +72,16 @@ const adminListMenu: NavbarItem[] = [
       { label: "Report Komentar", link: "/admin/forum/report-comment" },
     ],
   },
-  {
-    label: "Collaboration",
-    icon: "people",
-    links: [
-      { label: "Dashboard", link: "/admin/collaboration" },
-      { label: "Publish", link: "/admin/collaboration/publish" },
-      { label: "Group", link: "/admin/collaboration/group" },
-      { label: "Reject", link: "/admin/collaboration/reject" },
-    ],
-  },
+  // {
+  //   label: "Collaboration",
+  //   icon: "people",
+  //   links: [
+  //     { label: "Dashboard", link: "/admin/collaboration" },
+  //     { label: "Publish", link: "/admin/collaboration/publish" },
+  //     { label: "Group", link: "/admin/collaboration/group" },
+  //     { label: "Reject", link: "/admin/collaboration/reject" },
+  //   ],
+  // },
   { label: "Maps", icon: "map", link: "/admin/maps" },
   {
     label: "App Information",
@@ -165,16 +165,16 @@ const superAdminListMenu: NavbarItem[] = [
       { label: "Report Komentar", link: "/admin/forum/report-comment" },
     ],
   },
-  {
-    label: "Collaboration",
-    icon: "people",
-    links: [
-      { label: "Dashboard", link: "/admin/collaboration" },
-      { label: "Publish", link: "/admin/collaboration/publish" },
-      { label: "Group", link: "/admin/collaboration/group" },
-      { label: "Reject", link: "/admin/collaboration/reject" },
-    ],
-  },
+  // {
+  //   label: "Collaboration",
+  //   icon: "people",
+  //   links: [
+  //     { label: "Dashboard", link: "/admin/collaboration" },
+  //     { label: "Publish", link: "/admin/collaboration/publish" },
+  //     { label: "Group", link: "/admin/collaboration/group" },
+  //     { label: "Reject", link: "/admin/collaboration/reject" },
+  //   ],
+  // },
   { label: "Maps", icon: "map", link: "/admin/maps" },
   {
     label: "App Information",

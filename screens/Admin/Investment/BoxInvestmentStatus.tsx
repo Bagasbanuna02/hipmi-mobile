@@ -5,21 +5,21 @@ import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
 import { router } from "expo-router";
 import { View } from "react-native";
 
-interface BoxDonationStatusProps {
+interface BoxInvestmentStatusProps {
   item: any;
   status?: string;
 }
 
-export default function Admin_BoxDonationStatus({
+export default function Admin_BoxInvestmentStatus({
   item,
   status,
-}: BoxDonationStatusProps) {
+}: BoxInvestmentStatusProps) {
   return (
     <>
       <AdminBasicBox
         style={{ marginHorizontal: 10, marginVertical: 5 }}
         onPress={() => {
-          router.push(`/admin/donation/${item.id}/${status}`);
+          router.push(`/admin/investment/${item.id}/${status}`);
         }}
       >
         <StackCustom gap={0}>
@@ -33,7 +33,7 @@ export default function Admin_BoxDonationStatus({
             label={<TextCustom>Durasi</TextCustom>}
             value={
               <TextCustom>
-                {item?.DonasiMaster_Durasi?.name || "-"} hari
+                {item?.MasterPencarianInvestor?.name || "-"} hari
               </TextCustom>
             }
           />
@@ -41,8 +41,8 @@ export default function Admin_BoxDonationStatus({
             label={<TextCustom>Target Dana</TextCustom>}
             value={
               <TextCustom>
-                {item?.target
-                  ? `Rp ${formatCurrencyDisplay(item?.target)}`
+                {item?.targetDana
+                  ? `Rp ${formatCurrencyDisplay(item?.targetDana)}`
                   : "-"}
               </TextCustom>
             }

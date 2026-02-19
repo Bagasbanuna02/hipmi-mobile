@@ -20,6 +20,7 @@ import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButt
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
 import AdminButtonReview from "@/components/_ShareComponent/Admin/ButtonReview";
 import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
+import GridTwoView from "@/components/_ShareComponent/GridTwoView";
 import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 import ReportBox from "@/components/Box/ReportBox";
 import { MainColor } from "@/constants/color-palet";
@@ -182,9 +183,9 @@ export default function AdminInvestmentDetail() {
 
         <BaseBox>
           <StackCustom>
-            <GridSpan_4_8
-              label={<TextCustom bold>File Prospektus</TextCustom>}
-              value={
+            <GridTwoView
+              leftItem={<TextCustom bold>File Prospektus</TextCustom>}
+              rightItem={
                 <ButtonCustom
                   iconLeft={
                     <IconProspectus
@@ -202,9 +203,10 @@ export default function AdminInvestmentDetail() {
                 </ButtonCustom>
               }
             />
-            <GridSpan_4_8
-              label={<TextCustom bold>File Dokumen</TextCustom>}
-              value={
+            <GridTwoView
+
+              leftItem={<TextCustom bold>File Dokumen</TextCustom>}
+              rightItem={
                 <StackCustom>
                   {_.isEmpty(data?.DokumenInvestasi) ? (
                     <TextCustom align="center">-</TextCustom>

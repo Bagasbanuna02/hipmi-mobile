@@ -55,10 +55,10 @@ Component yang digunakan: components/_ShareComponent/NewWrapper.tsx
 
 <!-- START Prompt Admin Refactoring -->
 <!-- Pindah kode ke Screen Component -->
-File source: app/(application)/admin/donation/[id]/list-disbursement-of-funds.tsx
-Folder tujuan: screens/Admin/Donation
-Nama file utama: ScreenDonationListDisbursementOfFunds.tsx
-Nama function utama: Admin_ScreenDonationListDisbursementOfFunds
+File source: app/(application)/admin/investment/[id]/list-of-investor.tsx
+Folder tujuan: screens/Admin/Investment
+Nama file utama: ScreenInvestmentListOfInvestor.tsx
+Nama function utama: Admin_ScreenInvestmentListOfInvestor
 File komponen wrapper: components/_ShareComponent/NewWrapper.tsx
 
 Buat file baru pada "Folder tujuan" dengan nama "Nama file utama" dan ubah nama function menjadi "Nama function utama" kemudian clean code, import dan panggil function tersebut pada file "File source" 
@@ -66,8 +66,8 @@ Analisa juga file "Nama file utama" , jika belum menggunakan NewWrapper pada fil
 
 
 <!-- Penerapan Pagination -->
-Function fecth: apiAdminDonationDisbursementOfFundsListById
-File function fetch: service/api-admin/api-admin-donation.ts
+Function fecth: apiAdminInvestmentListOfInvestor
+File function fetch: service/api-admin/api-admin-investment.ts
 
 Terapkan pagination pada file "Nama file utama"
 Komponen pagination yang digunaka berada pada file hooks/use-pagination.tsx dan helpers/paginationHelpers.tsx
@@ -80,10 +80,10 @@ Gunakan bahasa indonesia pada cli agar saya mudah membacanya.
 <!-- END Prompt Admin Refactoring -->
 
 <!-- Additional -->
-File refrensi: screens/Admin/Voting/ScreenEventTypeOfEvent.tsx
+File refrensi: screens/Admin/Donation/ScreenDonationListOfDonatur.tsx
 Anda bisa menggunakan refrensi dari "File refrensi" jika butuh pemahaman dengan tipe fitur yang hampir sama
 
-Untuk refrensi tampilan Box bisa anda gunakan dari file: screens/Admin/Donation/BoxDonationCategory.tsx dan buatkan komponen yang mirip untuk list of donatur dengan nama file: BoxDonationListOfDonatur.tsx
+Untuk refrensi tampilan Box bisa anda gunakan dari file: screens/Admin/Donation/BoxDonationListOfDonatur.tsx dan buatkan komponen yang mirip untuk list of donatur dengan nama file: BoxDonationListOfInvestor.tsx
 
 <!-- Use Prompt Now -->
 Terapkan NewWrapper pada file: screens/Admin/App-Information/InformationBankSection.tsx
@@ -108,9 +108,10 @@ Jika tidak ada props page maka tambahkan props page dan default page: "1" ( stri
 Jika butuh refrensi FlatList bisa lihat pada  file components/_ShareComponent/NewWrapper.tsx
 
 <!-- Create Box -->
-File Utama: screens/Admin/Donation/Admin_ScreenDonationStatus.tsx
-Folder tujuan: screens/Admin/Donation
-Buat box component baru pada file "File Utama" di bagian renderItem, 
+File Utama: screens/Admin/Investment/ScreenInvestmentStatus.tsx
+Folder tujuan: screens/Admin/Investment
+Reffrensi: screens/Admin/Donation/BoxDonationStatus.tsx
+Buatkan box component baru pada file "File Utama" di bagian renderItem agar lebih rapi buat file baru dengan nama BoxInvestmentStatus.tsx
 
 <!-- END Create Box -->
 
