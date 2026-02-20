@@ -77,14 +77,14 @@ export default function Application() {
     );
   }
 
-  if (data && data?.masterUserRoleId !== "1") {
-    console.log("User is not admin");
-    return (
-      <BasicWrapper>
-        <Redirect href={`/admin/dashboard`} />
-      </BasicWrapper>
-    );
-  }
+  // if (data && data?.masterUserRoleId !== "1") {
+  //   console.log("User is not admin");
+  //   return (
+  //     <BasicWrapper>
+  //       <Redirect href={`/admin/dashboard`} />
+  //     </BasicWrapper>
+  //   );
+  // }
 
   return (
     <>
@@ -115,6 +115,7 @@ export default function Application() {
         }
         footerComponent={
           <TabSection
+
             tabs={tabsHome({
               acceptedForumTermsAt: data?.acceptedForumTermsAt,
               profileId: data?.Profile?.id,

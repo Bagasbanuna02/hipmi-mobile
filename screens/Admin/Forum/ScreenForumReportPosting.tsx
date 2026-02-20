@@ -1,14 +1,14 @@
 import { SearchInput, StackCustom, TextCustom } from "@/components";
 import AdminBasicBox from "@/components/_ShareComponent/Admin/AdminBasicBox";
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
-import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
+import GridTwoView from "@/components/_ShareComponent/GridTwoView";
 import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { MainColor } from "@/constants/color-palet";
 import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { usePagination } from "@/hooks/use-pagination";
 import { apiAdminForum } from "@/service/api-admin/api-admin-forum";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { useCallback, useMemo, useState } from "react";
 import { RefreshControl } from "react-native";
 
@@ -25,6 +25,7 @@ export function Admin_ScreenForumReportPosting() {
       });
 
       if (response.success) {
+
         return { data: response.data };
       } else {
         return { data: [] };
@@ -34,6 +35,12 @@ export function Admin_ScreenForumReportPosting() {
     searchQuery: search,
     dependencies: [],
   });
+
+  useFocusEffect(
+    useCallback(() => {
+      pagination.onRefresh();
+    }, []),
+  );
 
   // Komponen search input
   const searchComponent = useMemo(
@@ -72,17 +79,21 @@ export function Admin_ScreenForumReportPosting() {
         }}
       >
         <StackCustom gap={0}>
-          <GridSpan_4_8
-            label={<TextCustom>Pelapor</TextCustom>}
-            value={
+          <GridTwoView
+            spanLeft={5}
+            spanRight={7}
+            leftItem={<TextCustom>Jumlah Report</TextCustom>}
+            rightItem={
               <TextCustom truncate={1}>
-                {item?.User?.username || "-"}
+                {item?.count|| "-"}
               </TextCustom>
             }
           />
-          <GridSpan_4_8
-            label={<TextCustom>Postingan</TextCustom>}
-            value={
+          <GridTwoView
+            spanLeft={5}
+            spanRight={7}
+            leftItem={<TextCustom>Postingan</TextCustom>}
+            rightItem={
               <TextCustom truncate={2}>
                 {item?.Forum_Posting?.diskusi || "-"}
               </TextCustom>

@@ -20,16 +20,16 @@ import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { useAuth } from "@/hooks/use-auth";
 import { usePagination } from "@/hooks/use-pagination";
 import {
-  apiAdminForumDeactivatePosting,
-  apiAdminForumListReportPostingById,
-  apiAdminForumPostingById,
+  apiAdminForumCommentById,
+  apiAdminForumDeactivateComment,
+  apiAdminForumListReportCommentById,
 } from "@/service/api-admin/api-admin-forum";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useMemo, useState } from "react";
 import { RefreshControl } from "react-native";
 import Toast from "react-native-toast-message";
 
-export function Admin_ScreenForumDetailReportPosting() {
+export function Admin_ScreenForumDetailReportComment() {
   const { user } = useAuth();
   const { id } = useLocalSearchParams();
   const [openDrawerPage, setOpenDrawerPage] = useState(false);
@@ -43,17 +43,17 @@ export function Admin_ScreenForumDetailReportPosting() {
     deskripsi: "",
   });
 
-  // Load data postingan saat screen fokus
+  // Load data komentar saat screen fokus
   useFocusEffect(
     useCallback(() => {
-      onLoadDataPosting();
+      onLoadDataKomentar();
     }, [id]),
   );
 
-  // Pagination untuk list report
+  // Pagination untuk list report comment
   const pagination = usePagination({
     fetchFunction: async (page) => {
-      const response = await apiAdminForumListReportPostingById({
+      const response = await apiAdminForumListReportCommentById({
         id: id as string,
         page: String(page),
       });
@@ -67,10 +67,11 @@ export function Admin_ScreenForumDetailReportPosting() {
     dependencies: [id],
   });
 
-  const onLoadDataPosting = async () => {
+  const onLoadDataKomentar = async () => {
     try {
-      const response = await apiAdminForumPostingById({
+      const response = await apiAdminForumCommentById({
         id: id as string,
+        category: "get-one",
       });
 
       if (response.success) {
@@ -81,7 +82,7 @@ export function Admin_ScreenForumDetailReportPosting() {
     }
   };
 
-  // Render item untuk daftar report
+  // Render item untuk daftar report comment
   const renderItem = useCallback(
     ({ item, index }: { item: any; index: number }) => (
       <AdminBasicBox
@@ -129,11 +130,11 @@ export function Admin_ScreenForumDetailReportPosting() {
     [],
   );
 
-  // Header component dengan detail postingan
+  // Header component dengan back button dan menu
   const headerComponent = useMemo(
     () => (
       <AdminBackButtonAntTitle
-        title="Detail Report Posting"
+        title="Report Komentar"
         rightComponent={
           <ActionIcon
             icon={<IconDot size={16} color={MainColor.darkblue} />}
@@ -145,25 +146,18 @@ export function Admin_ScreenForumDetailReportPosting() {
     [],
   );
 
-  // Detail postingan component
+  // Detail komentar component
   const ListHeader = useMemo(
     () => (
       <AdminBasicBox>
-        <StackCustom gap={0}>
-          <GridTwoView
-            spanLeft={5}
-            spanRight={7}
-            leftItem={<TextCustom bold>Username</TextCustom>}
-            rightItem={
-              <TextCustom>{data ? data?.Author?.username : "-"}</TextCustom>
-            }
+        <StackCustom gap={"sm"}>
+          <GridSpan_4_8
+            label={<TextCustom bold>Username</TextCustom>}
+            value={<TextCustom>{data?.Author?.username || "-"}</TextCustom>}
           />
-
-          <GridTwoView
-            spanLeft={5}
-            spanRight={7}
-            leftItem={<TextCustom bold>Postingan</TextCustom>}
-            rightItem={<TextCustom>{data ? data?.diskusi : "-"}</TextCustom>}
+          <GridSpan_4_8
+            label={<TextCustom bold>Komentar</TextCustom>}
+            value={<TextCustom>{data?.komentar || "-"}</TextCustom>}
           />
         </StackCustom>
       </AdminBasicBox>
@@ -177,7 +171,7 @@ export function Admin_ScreenForumDetailReportPosting() {
       loading: pagination.loading,
       refreshing: pagination.refreshing,
       listData: pagination.listData,
-      emptyMessage: "Belum ada report",
+      emptyMessage: "Belum ada report komentar",
       emptySearchMessage: "Tidak ada hasil pencarian",
       isInitialLoad: pagination.isInitialLoad,
       skeletonCount: PAGINATION_DEFAULT_TAKE,
@@ -204,7 +198,7 @@ export function Admin_ScreenForumDetailReportPosting() {
         }
       />
 
-      {/* Drawer untuk menu halaman (hapus posting) */}
+      {/* Drawer untuk menu halaman (hapus komentar) */}
       <DrawerCustom
         isVisible={openDrawerPage}
         closeDrawer={() => setOpenDrawerPage(false)}
@@ -214,7 +208,7 @@ export function Admin_ScreenForumDetailReportPosting() {
           data={[
             {
               icon: <IconTrash />,
-              label: "Hapus Posting",
+              label: "Hapus Komentar",
               value: "delete",
               path: "",
               color: MainColor.red,
@@ -222,12 +216,12 @@ export function Admin_ScreenForumDetailReportPosting() {
           ]}
           onPressItem={(item) => {
             AlertDefaultSystem({
-              title: "Hapus Posting",
-              message: "Apakah Anda yakin ingin menghapus posting ini?",
+              title: "Hapus Komentar",
+              message: "Apakah Anda yakin ingin menghapus komentar ini?",
               textLeft: "Batal",
               textRight: "Hapus",
               onPressRight: async () => {
-                const response = await apiAdminForumDeactivatePosting({
+                const response = await apiAdminForumDeactivateComment({
                   id: id as string,
                   data: {
                     senderId: user?.id as string,
@@ -237,7 +231,7 @@ export function Admin_ScreenForumDetailReportPosting() {
                 if (!response.success) {
                   Toast.show({
                     type: "error",
-                    text1: "Posting gagal dihapus",
+                    text1: "Komentar gagal dihapus",
                   });
                   return;
                 }
@@ -245,7 +239,7 @@ export function Admin_ScreenForumDetailReportPosting() {
                 setOpenDrawerPage(false);
                 Toast.show({
                   type: "success",
-                  text1: "Posting berhasil dihapus",
+                  text1: "Komentar berhasil dihapus",
                 });
                 router.back();
               },
@@ -254,6 +248,7 @@ export function Admin_ScreenForumDetailReportPosting() {
         />
       </DrawerCustom>
 
+      {/* Drawer untuk detail report comment */}
       <DrawerCustom
         isVisible={openDrawerAction}
         closeDrawer={() => setOpenDrawerAction(false)}

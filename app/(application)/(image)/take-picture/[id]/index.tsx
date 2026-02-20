@@ -105,7 +105,7 @@ export default function TakePicture() {
           </Pressable>
 
           <Pressable onPress={pickImage}>
-            <AntDesign name="folderopen" size={32} color="white" />
+            <AntDesign name="folder-open" size={32} color="white" />
           </Pressable>
         </View>
       </View>

@@ -1,16 +1,15 @@
 import { SearchInput, StackCustom, TextCustom } from "@/components";
 import AdminBasicBox from "@/components/_ShareComponent/Admin/AdminBasicBox";
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
-import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
+import GridTwoView from "@/components/_ShareComponent/GridTwoView";
 import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { usePagination } from "@/hooks/use-pagination";
 import { apiAdminForum } from "@/service/api-admin/api-admin-forum";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { useCallback, useMemo, useState } from "react";
 import { RefreshControl } from "react-native";
-import { Divider } from "react-native-paper";
 
 export function Admin_ScreenForumReportComment() {
   const [search, setSearch] = useState("");
@@ -25,7 +24,6 @@ export function Admin_ScreenForumReportComment() {
       });
 
       if (response.success) {
-        console.log("CEK", JSON.stringify(response.data, null, 2));
         return { data: response.data };
       } else {
         return { data: [] };
@@ -35,6 +33,12 @@ export function Admin_ScreenForumReportComment() {
     searchQuery: search,
     dependencies: [],
   });
+
+  useFocusEffect(
+    useCallback(() => {
+      pagination.onRefresh();
+    }, []),
+  );
 
   // Komponen search input
   const searchComponent = useMemo(
@@ -73,47 +77,27 @@ export function Admin_ScreenForumReportComment() {
         }}
       >
         <StackCustom gap={0}>
-          <GridSpan_4_8
-            label={<TextCustom>Pelapor</TextCustom>}
-            value={
-              <TextCustom truncate={1}>
-                {item?.User?.username || "-"}
+           <GridTwoView
+            spanLeft={5}
+            spanRight={7}
+            leftItem={<TextCustom>Jumlah Report</TextCustom>}
+            rightItem={
+              <TextCustom truncate={2}>
+                {item?.count || "-"}
               </TextCustom>
             }
           />
-          <GridSpan_4_8
-            label={<TextCustom>Komentar</TextCustom>}
-            value={
-              <TextCustom truncate={2}>
-                {item?.Forum_Komentar?.komentar || "-"}
-              </TextCustom>
-            }
-          />
-          {item?.deskripsi ?
-         <GridSpan_4_8
-            label={<TextCustom>Deskripsi</TextCustom>}
-            value={
-              <TextCustom truncate={2}>
-                {item?.deskripsi|| "-"}
-              </TextCustom>
-            }
-          />   :  <GridSpan_4_8
-            label={<TextCustom>Jenis Laporan</TextCustom>}
-            value={
-              <TextCustom truncate={2}>
-                {item?.ForumMaster_KategoriReport?.title || "-"}
-              </TextCustom>
-            }
-          />
-        }
-          {/* <GridSpan_4_8
-            label={<TextCustom>Jenis Laporan</TextCustom>}
-            value={
-              <TextCustom truncate={2}>
-                {item?.ForumMaster_KategoriReport?.title || "-"}
-              </TextCustom>
-            }
-          /> */}
+
+            <GridTwoView
+              spanLeft={5}
+              spanRight={7}
+              leftItem={<TextCustom>Komentar</TextCustom>}
+              rightItem={
+                <TextCustom truncate={2}>
+                  {item?.Forum_Komentar?.komentar || "-"}
+                </TextCustom>
+              }
+            />
         </StackCustom>
       </AdminBasicBox>
     ),

@@ -30,13 +30,15 @@ export async function apiAdminForumPostingById({ id }: { id: string }) {
 export async function apiAdminForumCommentById({
   id,
   category,
+  page = "1",
 }: {
   id: string;
   category: "get-all" | "get-one";
+  page?: string;
 }) {
   try {
     const response = await apiConfig.get(
-      `/mobile/admin/forum/${id}/comment?category=${category}`
+      `/mobile/admin/forum/${id}/comment?category=${category}&page=${page}`
     );
     return response.data;
   } catch (error) {
@@ -46,12 +48,14 @@ export async function apiAdminForumCommentById({
 
 export async function apiAdminForumListReportCommentById({
   id,
+  page = "1",
 }: {
   id: string;
+  page?: string;
 }) {
   try {
     const response = await apiConfig.get(
-      `/mobile/admin/forum/${id}/report-comment`
+      `/mobile/admin/forum/${id}/report-comment?page=${page}`
     );
     return response.data;
   } catch (error) {

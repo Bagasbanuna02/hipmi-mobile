@@ -26,7 +26,7 @@ export default function AdminForumDetailPosting() {
   useFocusEffect(
     useCallback(() => {
       onLoadData();
-    }, [id])
+    }, [id]),
   );
 
   const onLoadData = async () => {
@@ -72,6 +72,10 @@ export default function AdminForumDetailPosting() {
       label: "Total Report",
       value: data?.JumlahReportPosting || 0,
     },
+    {
+      label: "Postingan",
+      value: (data && data?.diskusi) || "-",
+    },
   ];
 
   return (
@@ -109,13 +113,6 @@ export default function AdminForumDetailPosting() {
                 value={<TextCustom>{item.value}</TextCustom>}
               />
             ))}
-          </StackCustom>
-        </BaseBox>
-
-        <BaseBox>
-          <StackCustom gap={"sm"}>
-            <TextCustom bold>Postingan</TextCustom>
-            <TextCustom>{(data && data?.diskusi) || "-"}</TextCustom>
           </StackCustom>
         </BaseBox>
       </ViewWrapper>

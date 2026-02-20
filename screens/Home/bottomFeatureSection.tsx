@@ -6,6 +6,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { stylesHome } from "./homeViewStyle";
 import { router, useFocusEffect } from "expo-router";
 import { apiJobGetAll } from "@/service/api-client/api-job";
+import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 
 export default function Home_BottomFeatureSection() {
   const [listData, setListData] = useState<any>([]);
@@ -34,6 +35,10 @@ export default function Home_BottomFeatureSection() {
       onLoadData();
     }, [])
   );
+
+  if (!listData || listData.length === 0) {
+    return <CustomSkeleton height={200}/>
+  }
 
   return (
     <>
