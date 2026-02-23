@@ -1,28 +1,42 @@
-import { TextCustom, ViewWrapper } from "@/components";
-import Mapbox from "@rnmapbox/maps";
-import { View } from "react-native";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 
-// Nonaktifkan telemetry (opsional, untuk privasi)
-Mapbox.setTelemetryEnabled(false);
+// Cek versi >= 10.x gunakan ini
+import { MapView, Camera, PointAnnotation } from "@maplibre/maplibre-react-native";
 
-// Gunakan style OSM gratis
-const MAP_STYLE_URL = "https://tiles.stadiamaps.com/styles/osm_bright.json";
+const MAP_STYLE = "https://tiles.openfreemap.org/styles/liberty";
 
-// Atau gunakan MapLibre default:
-// const MAP_STYLE_URL = 'https://demotiles.maplibre.org/style.json';
+
 export default function MapsView2() {
   return (
-    <>
-      <ViewWrapper>
-      <View style={{ flex: 1 }}>
-          <Mapbox.MapView style={{ flex: 1 }}>
-          <Mapbox.Camera
-            centerCoordinate={[115.2126, -8.65]} // Bali
-            zoomLevel={12}
-          />
-        </Mapbox.MapView>
-      </View>
-      </ViewWrapper>
-    </>
+    <View style={styles.container}>
+      <MapView
+        style={styles.map}
+        mapStyle={MAP_STYLE}
+      >
+        <Camera
+          zoomLevel={12}
+          centerCoordinate={[115.1756897, -8.737109]}
+        />
+
+        <PointAnnotation
+          id="marker-1"
+          coordinate={[115.1756897, -8.737109]}
+        >
+          <View style={styles.marker} />
+        </PointAnnotation>
+      </MapView>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: { flex: 1 },
+  map: { flex: 1 },
+  marker: {
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    backgroundColor: "red",
+  },
+});

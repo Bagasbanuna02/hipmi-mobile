@@ -33,8 +33,10 @@ export const tabsHome: any = ({
     activeIcon: "map",
     label: "Maps",
     path: "/maps",
-    isActive: Platform.OS === "ios" ? true : false,
-    disabled: Platform.OS === "ios" ? false : true,
+    // isActive: Platform.OS === "ios" ? true : false,
+    // disabled: Platform.OS === "ios" ? false : true,
+    isActive: true,
+    disabled: false,
   },
   {
     id: "profile",

@@ -87,6 +87,7 @@ export default {
         iosDisplayInForeground: true,
       },
     ],
+    "@maplibre/maplibre-react-native",
   ],
 
   experiments: {

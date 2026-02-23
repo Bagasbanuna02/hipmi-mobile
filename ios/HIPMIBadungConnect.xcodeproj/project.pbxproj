@@ -150,6 +150,8 @@
 				1A2B5C8B77E56B3325ADC6E7 /* [CP] Embed Pods Frameworks */,
 				AECA4AD2A3DFA75F552CA1F1 /* [CP] Copy Pods Resources */,
 				58D7AF30081BAAEFD090045C /* [CP-User] [RNFB] Core Configuration */,
+				7A7548934A6A4A868E76F842 /* Remove signature files (Xcode workaround) */,
+				87DB85593ECE4622BCF1F332 /* Remove signature files (Xcode workaround) */,
 			);
 			buildRules = (
 			);
@@ -414,6 +416,40 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HIPMIBadungConnect/Pods-HIPMIBadungConnect-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		7A7548934A6A4A868E76F842 /* Remove signature files (Xcode workaround) */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			name = "Remove signature files (Xcode workaround)";
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			shellPath = /bin/sh;
+			shellScript = "
+          echo \"Remove signature files (Xcode workaround)\";
+          rm -rf \"$CONFIGURATION_BUILD_DIR/MapLibre.xcframework-ios.signature\";
+        ";
+		};
+		87DB85593ECE4622BCF1F332 /* Remove signature files (Xcode workaround) */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			name = "Remove signature files (Xcode workaround)";
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			shellPath = /bin/sh;
+			shellScript = "
+          echo \"Remove signature files (Xcode workaround)\";
+          rm -rf \"$CONFIGURATION_BUILD_DIR/MapLibre.xcframework-ios.signature\";
+        ";
 		};
 /* End PBXShellScriptBuildPhase section */
 

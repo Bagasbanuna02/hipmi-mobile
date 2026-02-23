@@ -56,6 +56,9 @@ target 'HIPMIBadungConnect' do
 
   # @generated begin post_installer - expo prebuild (DO NOT MODIFY) sync-4092f82b887b5b9edb84642c2a56984d69b9a403
   post_install do |installer|
+# @generated begin @maplibre/maplibre-react-native:post-install - expo prebuild (DO NOT MODIFY) sync-6e76c80af0d70c0003d06822dd59b7c729fca472
+    $MLRN.post_install(installer)
+# @generated end @maplibre/maplibre-react-native:post-install
     # @generated begin @rnmapbox/maps-post_installer - expo prebuild (DO NOT MODIFY) sync-c4e8f90e96f6b6c6ea9241dd7b52ab5f57f7bf36
     $RNMapboxMaps.post_install(installer)
     # @generated end @rnmapbox/maps-post_installer
