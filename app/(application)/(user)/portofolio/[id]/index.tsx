@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-    ButtonCustom,
-    DrawerCustom,
-    DummyLandscapeImage,
-    LoaderCustom,
-    Spacing,
-    StackCustom,
-    TextCustom,
+  ButtonCustom,
+  DrawerCustom,
+  DummyLandscapeImage,
+  LoaderCustom,
+  Spacing,
+  StackCustom,
+  TextCustom,
 } from "@/components";
 import LeftButtonCustom from "@/components/Button/BackButton";
 import GridTwoView from "@/components/_ShareComponent/GridTwoView";
@@ -94,11 +94,14 @@ export default function Portofolio() {
               data={data}
               listSubBidang={data?.Portofolio_BidangDanSubBidangBisnis as any[]}
             />
-            <Portofolio_BusinessLocation
-              data={data?.BusinessMaps}
-              imageId={data?.logoId}
-              setOpenDrawerLocation={setOpenDrawerLocation}
-            />
+            {data?.BusinessMaps && (
+              <Portofolio_BusinessLocation
+                data={data?.BusinessMaps}
+                imageId={data?.logoId}
+                setOpenDrawerLocation={setOpenDrawerLocation}
+              />
+            )}
+
             <Portofolio_SocialMediaSection
               data={data?.Portofolio_MediaSosial}
             />
@@ -135,10 +138,12 @@ export default function Portofolio() {
         closeDrawer={() => setOpenDrawerLocation(false)}
         height={"auto"}
       >
-        <DummyLandscapeImage
-          height={200}
-          imageId={data?.BusinessMaps?.imageId}
-        />
+        {data?.BusinessMaps?.imageId && (
+          <DummyLandscapeImage
+            height={200}
+            imageId={data?.BusinessMaps?.imageId}
+          />
+        )}
         <Spacing />
         <StackCustom gap={"xs"}>
           <GridTwoView

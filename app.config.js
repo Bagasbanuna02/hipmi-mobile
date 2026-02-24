@@ -77,7 +77,6 @@ export default {
       },
     ],
     "expo-font",
-    "@rnmapbox/maps",
     "@react-native-firebase/app",
     [
       "expo-notifications",
