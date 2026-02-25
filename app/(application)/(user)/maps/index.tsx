@@ -1,8 +1,4 @@
-import { BackButton } from "@/components";
-import MapsView from "@/screens/Maps/MapsView";
 import MapsView2 from "@/screens/Maps/MapsView2";
-import { Stack } from "expo-router";
-import { Platform, Text, View } from "react-native";
 
 export interface LocationItem {
   id: string | number;
@@ -21,8 +17,8 @@ export default function Maps() {
           headerLeft: () => <BackButton />,
         }}
         /> */}
-        {Platform.OS === "ios" ? <MapsView /> : <MapsView2 />}
-      {/* <MapsView2 /> */}
+      {/* {Platform.OS === "ios" ? <MapsView /> : <MapsView2 />} */}
+      <MapsView2 />
       {/* <View style={{ flex: 1, backgroundColor: "gray" }}><Text style={{ color: "white" }}>Map disabled</Text></View> */}
     </>
   );

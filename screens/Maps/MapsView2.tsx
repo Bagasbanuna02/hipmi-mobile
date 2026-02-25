@@ -10,20 +10,8 @@ import {
   MapView,
   PointAnnotation,
 } from "@maplibre/maplibre-react-native";
-import { router, useFocusEffect } from "expo-router";
-import {
-  DrawerCustom,
-  DummyLandscapeImage,
-  Spacing,
-  StackCustom,
-  TextCustom,
-  Grid,
-  ButtonCustom,
-} from "@/components";
-import GridTwoView from "@/components/_ShareComponent/GridTwoView";
-import { ICON_SIZE_SMALL } from "@/constants/constans-value";
-import { openInDeviceMaps } from "@/utils/openInDeviceMaps";
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import { useFocusEffect } from "expo-router";
+import DrawerMaps from "./DrawerMaps";
 
 const MAP_STYLE = "https://tiles.openfreemap.org/styles/liberty";
 
@@ -146,92 +134,11 @@ export default function MapsView2() {
         </MapView>
       </View>
 
-      <DrawerCustom
-        isVisible={openDrawer}
-        closeDrawer={() => setOpenDrawer(false)}
-        height={"auto"}
-      >
-        <DummyLandscapeImage height={200} imageId={selected.imageId} />
-        <Spacing />
-        <StackCustom gap={"xs"}>
-          <GridTwoView
-            spanLeft={2}
-            spanRight={10}
-            leftItem={
-              <FontAwesome
-                name="building-o"
-                size={ICON_SIZE_SMALL}
-                color="white"
-              />
-            }
-            rightItem={<TextCustom>{selected.namePin}</TextCustom>}
-          />
-
-          <GridTwoView
-            spanLeft={2}
-            spanRight={10}
-            leftItem={
-              <Ionicons
-                name="list-outline"
-                size={ICON_SIZE_SMALL}
-                color="white"
-              />
-            }
-            rightItem={<TextCustom>{selected.bidangBisnis}</TextCustom>}
-          />
-
-          <GridTwoView
-            spanLeft={2}
-            spanRight={10}
-            leftItem={
-              <Ionicons
-                name="call-outline"
-                size={ICON_SIZE_SMALL}
-                color="white"
-              />
-            }
-            rightItem={<TextCustom>{selected.nomorTelepon}</TextCustom>}
-          />
-          <GridTwoView
-            spanLeft={2}
-            spanRight={10}
-            leftItem={
-              <Ionicons
-                name="location-outline"
-                size={ICON_SIZE_SMALL}
-                color="white"
-              />
-            }
-            rightItem={<TextCustom>{selected.alamatBisnis}</TextCustom>}
-          />
-
-          <Grid>
-            <Grid.Col span={6} style={{ paddingRight: 10 }}>
-              <ButtonCustom
-                onPress={() => {
-                  setOpenDrawer(false);
-                  router.push(`/portofolio/${selected.portofolioId}`);
-                }}
-              >
-                Detail
-              </ButtonCustom>
-            </Grid.Col>
-            <Grid.Col span={6} style={{ paddingLeft: 10 }}>
-              <ButtonCustom
-                onPress={() => {
-                  openInDeviceMaps({
-                    latitude: selected.latitude,
-                    longitude: selected.longitude,
-                    title: selected.namePin,
-                  });
-                }}
-              >
-                Buka Maps
-              </ButtonCustom>
-            </Grid.Col>
-          </Grid>
-        </StackCustom>
-      </DrawerCustom>
+      <DrawerMaps
+        openDrawer={openDrawer}
+        setOpenDrawer={setOpenDrawer}
+        selected={selected}
+      />
     </>
   );
 }
