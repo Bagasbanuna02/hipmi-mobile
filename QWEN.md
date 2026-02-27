@@ -10,7 +10,7 @@ HIPMI Mobile is a cross-platform mobile application built with Expo and React Na
 - **Architecture**: File-based routing with Expo Router
 - **State Management**: Context API (AuthContext)
 - **UI Components**: React Native Paper, custom components
-- **Maps Integration**: Mapbox Maps for React Native
+- **Maps Integration**: Maplibre Maps for React Native (`@maplibre/maplibre-react-native` v10.4.2)
 - **Push Notifications**: React Native Firebase Messaging
 - **Build System**: Metro bundler
 - **Package Manager**: Bun
@@ -381,8 +381,8 @@ apiConfig.interceptors.request.use(async (config) => {
 - Push Notifications (FCM)
 - Configured for both iOS and Android
 
-### Mapbox
-- Map integration via `@rnmapbox/maps`
+### Maplibre
+- Map integration via `@maplibre/maplibre-react-native`
 - Location permissions configured
 
 ### Deep Linking
@@ -475,10 +475,34 @@ rm -rf node_modules bun.lock
 bun install
 ```
 
+### iOS Maplibre Crash Fix
+
+When using Maplibre MapView on iOS, prevent "Attempt to recycle a mounted view" crash:
+
+1. **Always render PointAnnotation** (not conditional)
+2. **Use opacity for visibility** instead of conditional rendering
+3. **Avoid key prop changes** that force remounting
+
+```typescript
+// ✅ GOOD: Stable PointAnnotation
+<PointAnnotation
+  coordinate={annotationCoordinate}  // Always rendered
+  ...
+>
+  <View style={{ opacity: selectedLocation ? 1 : 0 }}>
+    <SelectedLocationMarker />
+  </View>
+</PointAnnotation>
+
+// ❌ BAD: Conditional rendering causes crash
+{selectedLocation && (
+  <PointAnnotation coordinate={selectedLocation} ... />
+)}
+```
+
 ## Documentation Files
 
 - `docs/CHANGE_LOG.md` - Change log for recent updates
-- `docs/COMMIT_NOTES.md` - Commit notes and guidelines
 - `docs/hipmi-note.md` - Build and deployment notes
 - `docs/prompt-for-qwen-code.md` - Development prompts and patterns
 
@@ -488,3 +512,4 @@ bun install
 - [React Native Documentation](https://reactnative.dev/)
 - [Expo Router Documentation](https://docs.expo.dev/router/introduction/)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
+- [Maplibre React Native](https://github.com/maplibre/maplibre-react-native)

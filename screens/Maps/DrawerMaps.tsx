@@ -40,8 +40,12 @@ export default function DrawerMaps({
       closeDrawer={() => setOpenDrawer(false)}
       height={"auto"}
     >
-      <DummyLandscapeImage height={200} imageId={selected.imageId} />
-      <Spacing />
+      {selected.imageId && (
+        <>
+          <DummyLandscapeImage height={200} imageId={selected.imageId} />
+          <Spacing />
+        </>
+      )}
       <StackCustom gap={"xs"}>
         <GridTwoView
           spanLeft={2}
