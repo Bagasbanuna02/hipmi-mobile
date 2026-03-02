@@ -9,7 +9,7 @@ import { apiJobGetAll } from "@/service/api-client/api-job";
 import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 
 export default function Home_BottomFeatureSection() {
-  const [listData, setListData] = useState<any>([]);
+  const [listData, setListData] = useState<any[] | null>(null);
 
   const onLoadData = async () => {
     try {
@@ -17,7 +17,7 @@ export default function Home_BottomFeatureSection() {
         category: "beranda",
       });
 
-      // console.log("[DATA JOB]", JSON.stringify(response.data, null, 2));
+      console.log("[DATA JOB]", JSON.stringify(response.data, null, 2));
       const result = response.data
         .sort(
           (a: any, b: any) =>
@@ -36,7 +36,7 @@ export default function Home_BottomFeatureSection() {
     }, [])
   );
 
-  if (!listData || listData.length === 0) {
+  if (listData === null) {
     return <CustomSkeleton height={200}/>
   }
 
@@ -54,7 +54,7 @@ export default function Home_BottomFeatureSection() {
 
           <View style={stylesHome.vacancyList}>
             {/* Vacancy Item 1 */}
-            {listData.map((item: any, index: number) => (
+            {listData?.map((item: any, index: number) => (
               <View style={stylesHome.vacancyItem} key={index}>
                 <View style={stylesHome.vacancyDetails}>
                   <TextCustom bold color="yellow" truncate size="large">

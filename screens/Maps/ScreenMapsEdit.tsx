@@ -9,6 +9,9 @@ import {
   TextInputCustom,
   ViewWrapper,
 } from "@/components";
+import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
+import { MapSelectedPlatform } from "@/components/Map/MapSelectedPlatform";
+import MapSelectedV2 from "@/components/Map/MapSelectedV2";
 import API_IMAGE from "@/constants/api-storage";
 import DIRECTORY_ID from "@/constants/directory-id";
 import { apiMapsGetOne, apiMapsUpdate } from "@/service/api-client/api-maps";
@@ -16,8 +19,7 @@ import { uploadFileService } from "@/service/upload-service";
 import pickFile, { IFileData } from "@/utils/pickFile";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
-import { StyleSheet, View } from "react-native";
-import MapView, { LatLng, Marker } from "react-native-maps";
+import { LatLng } from "react-native-maps";
 import Toast from "react-native-toast-message";
 
 const defaultRegion = {
@@ -43,7 +45,7 @@ export function Maps_ScreenMapsEdit() {
   useFocusEffect(
     useCallback(() => {
       onLoadData();
-    }, [id])
+    }, [id]),
   );
 
   const onLoadData = async () => {
@@ -64,10 +66,14 @@ export function Maps_ScreenMapsEdit() {
     }
   };
 
-  const handleMapPress = (event: any) => {
-    const { latitude, longitude } = event.nativeEvent.coordinate;
-    const location = { latitude, longitude };
-    setSelectedLocation(location);
+  const handleLocationSelect = (location: LatLng | [number, number]) => {
+    if (Array.isArray(location)) {
+      // Android format: [longitude, latitude]
+      setSelectedLocation({ latitude: location[1], longitude: location[0] });
+    } else {
+      // iOS format: LatLng
+      setSelectedLocation(location);
+    }
   };
 
   const handleSubmit = async () => {
@@ -149,51 +155,41 @@ export function Maps_ScreenMapsEdit() {
     </BoxButtonOnFooter>
   );
 
+  const initialRegion =
+    data?.latitude && data?.longitude
+      ? {
+          latitude: Number(data?.latitude),
+          longitude: Number(data?.longitude),
+          latitudeDelta: 0.1,
+          longitudeDelta: 0.1,
+        }
+      : defaultRegion;
+
   return (
     <ViewWrapper footerComponent={buttonFooter}>
       <InformationBox text="Tentukan lokasi pin map dengan menekan pada map." />
 
-      <View style={[styles.container, { height: 400 }]}>
-        <MapView
-          style={styles.map}
-          initialRegion={
-            data?.latitude && data?.longitude
-              ? {
-                  latitude: data?.latitude,
-                  longitude: data?.longitude,
-                  latitudeDelta: 0.1,
-                  longitudeDelta: 0.1,
-                }
-              : defaultRegion
-          }
-          onPress={handleMapPress}
-          showsUserLocation={true}
-          showsMyLocationButton={true}
-          loadingEnabled={true}
-          loadingIndicatorColor="#666"
-          loadingBackgroundColor="#f0f0f0"
-        >
-          {selectedLocation ? (
-            <Marker
-              coordinate={selectedLocation}
-              title="Lokasi Dipilih"
-              description={`Lat: ${selectedLocation.latitude.toFixed(
-                6
-              )}, Lng: ${selectedLocation.longitude.toFixed(6)}`}
-              pinColor="red"
-            />
-          ) : (
-            <Marker
-              coordinate={defaultRegion}
-              title="Lokasi Dipilih"
-              description={`Lat: ${defaultRegion.latitude.toFixed(
-                6
-              )}, Lng: ${defaultRegion.longitude.toFixed(6)}`}
-              pinColor="red"
-            />
-          )}
-        </MapView>
-      </View>
+      {/* <MapSelectedPlatform
+        initialRegion={initialRegion}
+        selectedLocation={selectedLocation}
+        onLocationSelect={handleLocationSelect}
+        height={400}
+      /> */}
+
+      {!data || !data.latitude || !data.longitude ? (
+        <CustomSkeleton height={200} />
+      ) : (
+        <MapSelectedV2
+          selectedLocation={[data.longitude, data.latitude]}
+          onLocationSelect={(location: [number, number]) => {
+            setData({
+              ...data,
+              longitude: location[0],
+              latitude: location[1],
+            });
+          }}
+        />
+      )}
 
       <TextInputCustom
         required
@@ -230,16 +226,3 @@ export function Maps_ScreenMapsEdit() {
     </ViewWrapper>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    backgroundColor: "#f5f5f5",
-    overflow: "hidden",
-    borderRadius: 8,
-    marginBottom: 20,
-  },
-  map: {
-    flex: 1,
-  },
-});

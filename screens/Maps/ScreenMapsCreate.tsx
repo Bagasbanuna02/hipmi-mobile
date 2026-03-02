@@ -20,7 +20,6 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { LatLng } from "react-native-maps";
 import Toast from "react-native-toast-message";
-import MapSelected from "@/components/Map/MapSelected";
 
 /**
  * Screen untuk create maps
@@ -150,14 +149,9 @@ export function Maps_ScreenMapsCreate() {
       <InformationBox text="Tentukan lokasi pin map dengan menekan pada map." />
 
       <BaseBox>
-        {/* <MapSelected
-          selectedLocation={selectedLocation as any}
-          setSelectedLocation={setSelectedLocation}
-        /> */}
         <MapSelectedPlatform
           selectedLocation={selectedLocation}
           onLocationSelect={(location) => {
-            // Set location (auto handle LatLng format)
             setSelectedLocation(location as LatLng);
           }}
           height={300}

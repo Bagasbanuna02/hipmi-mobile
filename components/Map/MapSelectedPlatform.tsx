@@ -1,7 +1,6 @@
 import { Platform } from "react-native";
 import MapSelected from "./MapSelected";
-import { MapSelectedV2 } from "./MapSelectedV2";
-import { Region } from "./MapSelectedV2";
+import MapSelectedV2 from "./MapSelectedV2";
 import { LatLng } from "react-native-maps";
 
 /**
@@ -58,18 +57,18 @@ export function MapSelectedPlatform({
   showsMyLocationButton = true,
 }: MapSelectedPlatformProps) {
   // iOS: Gunakan react-native-maps
-  if (Platform.OS === "ios") {
-    return (
-      <MapSelected
-        initialRegion={initialRegion}
-        selectedLocation={(selectedLocation as LatLng) || { latitude: 0, longitude: 0 }}
-        setSelectedLocation={(location: LatLng) => {
-          onLocationSelect(location);
-        }}
-        height={height}
-      />
-    );
-  }
+  // if (Platform.OS === "ios") {
+  //   return (
+  //     <MapSelected
+  //       initialRegion={initialRegion}
+  //       selectedLocation={(selectedLocation as LatLng) || { latitude: 0, longitude: 0 }}
+  //       setSelectedLocation={(location: LatLng) => {
+  //         onLocationSelect(location);
+  //       }}
+  //       height={height}
+  //     />
+  //   );
+  // }
 
   // Android: Gunakan MapLibre
   // Konversi dari LatLng ke [longitude, latitude] jika perlu
@@ -81,7 +80,6 @@ export function MapSelectedPlatform({
 
   return (
     <MapSelectedV2
-      initialRegion={initialRegion as Region}
       selectedLocation={androidLocation}
       onLocationSelect={(location: [number, number]) => {
         // Konversi dari [longitude, latitude] ke LatLng untuk konsistensi
@@ -92,8 +90,8 @@ export function MapSelectedPlatform({
         onLocationSelect(latLng);
       }}
       height={height}
-      showUserLocation={showUserLocation}
-      showsMyLocationButton={showsMyLocationButton}
+      // showUserLocation={showUserLocation}
+      // showsMyLocationButton={showsMyLocationButton}
     />
   );
 }

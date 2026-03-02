@@ -1,125 +1,119 @@
-import React, { useCallback, useMemo, useRef } from "react";
-import {
-  StyleSheet,
-  View,
-  ViewStyle,
-  StyleProp,
-} from "react-native";
-import { MainColor } from "@/constants/color-palet";
+import React, { useCallback, useRef, useEffect, useState } from "react";
+import { StyleSheet, View, ActivityIndicator } from "react-native";
 import {
   MapView,
   Camera,
   PointAnnotation,
 } from "@maplibre/maplibre-react-native";
+import * as Location from "expo-location";
 
-const DEFAULT_MAP_STYLE = "https://tiles.openfreemap.org/styles/liberty";
+const MAP_STYLE = "https://tiles.openfreemap.org/styles/liberty";
+const DEBOUNCE_MS = 800;
 
-export interface Region {
-  latitude: number;
-  longitude: number;
-  latitudeDelta: number;
-  longitudeDelta: number;
-}
-
-export interface MapSelectedV2Props {
-  initialRegion?: Region;
+interface Props {
   selectedLocation?: [number, number];
   onLocationSelect?: (location: [number, number]) => void;
   height?: number;
-  style?: StyleProp<ViewStyle>;
-  mapViewStyle?: StyleProp<ViewStyle>;
-  showUserLocation?: boolean;
-  showsMyLocationButton?: boolean;
-  mapStyle?: string;
-  zoomLevel?: number;
-}
-
-// ✅ Marker simple tanpa Animated — hapus pulse animation
-function SelectedLocationMarker({
-  color = MainColor.darkblue,
-}: {
-  size?: number;
-  color?: string;
-}) {
-  return (
-    <View style={styles.markerContainer}>
-      <View style={[styles.markerRing, { borderColor: color }]} />
-      <View style={[styles.markerDot, { backgroundColor: color }]} />
-    </View>
-  );
 }
 
 export function MapSelectedV2({
-  initialRegion,
   selectedLocation,
   onLocationSelect,
   height = 400,
-  style = styles.container,
-  mapViewStyle = styles.map,
-  mapStyle,
-  zoomLevel = 12,
-}: MapSelectedV2Props) {
-  const defaultRegion = useMemo(
-    () => ({
-      latitude: -8.737109,
-      longitude: 115.1756897,
-      latitudeDelta: 0.1,
-      longitudeDelta: 0.1,
-    }),
-    [],
+}: Props) {
+  const lastTapRef = useRef<number>(0);
+  const cameraRef = useRef<any>(null);
+
+  const [userLocation, setUserLocation] = useState<[number, number] | null>(
+    null,
   );
+  const [isLoadingLocation, setIsLoadingLocation] = useState(true);
 
-  const region = initialRegion || defaultRegion;
+  // ✅ Ambil lokasi user saat pertama mount
+  useEffect(() => {
+    (async () => {
+      try {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") {
+          console.log("Permission lokasi ditolak");
+          setIsLoadingLocation(false);
+          return;
+        }
 
-  // ✅ Simpan initial center — TIDAK berubah saat user tap
-  const initialCenter = useRef<[number, number]>([
-    region.longitude,
-    region.latitude,
-  ]);
+        const location = await Location.getCurrentPositionAsync({
+          accuracy: Location.Accuracy.Balanced,
+        });
+
+        const coords: [number, number] = [
+          location.coords.longitude,
+          location.coords.latitude,
+        ];
+
+        setUserLocation(coords);
+
+        // ✅ Fly ke posisi user jika belum ada selectedLocation
+        if (!selectedLocation && cameraRef.current) {
+          cameraRef.current.flyTo(coords, 1000);
+        }
+      } catch (error) {
+        console.log("Gagal ambil lokasi:", error);
+      } finally {
+        setIsLoadingLocation(false);
+      }
+    })();
+  }, [isLoadingLocation]);
 
   const handleMapPress = useCallback(
     (event: any) => {
-      const coordinate = event?.geometry?.coordinates || event?.coordinates;
-      if (coordinate && Array.isArray(coordinate) && coordinate.length === 2) {
-        console.log("[MapSelectedV2] coordinate", coordinate);
-        onLocationSelect?.([coordinate[0], coordinate[1]]);
-      }
+      const now = Date.now();
+      if (now - lastTapRef.current < DEBOUNCE_MS) return;
+      lastTapRef.current = now;
+
+      const coords = event?.geometry?.coordinates;
+      if (!coords || coords.length < 2) return;
+
+      onLocationSelect?.([coords[0], coords[1]]);
     },
     [onLocationSelect],
   );
 
+  // Center awal kamera:
+  // 1. Jika ada selectedLocation → pakai itu
+  // 2. Jika ada userLocation → pakai itu
+  // 3. Fallback → Bali
+  const initialCenter: [number, number] = selectedLocation ??
+    userLocation ?? [115.1756897, -8.737109];
+
   return (
-    <View style={[style, { height }]} collapsable={false}>
+    <View style={{ height, width: "100%" }}>
+      {/* Loading indicator saat fetch lokasi */}
+      {isLoadingLocation && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="small" color="#0a1f44" />
+        </View>
+      )}
+
       <MapView
-        style={mapViewStyle}
-        mapStyle={mapStyle || DEFAULT_MAP_STYLE}
+        style={StyleSheet.absoluteFillObject}
+        mapStyle={MAP_STYLE}
         onPress={handleMapPress}
         logoEnabled={false}
-        compassEnabled={true}
-        compassViewPosition={2}
-        compassViewMargins={{ x: 10, y: 10 }}
-        scrollEnabled={true}
-        zoomEnabled={true}
-        rotateEnabled={true}
-        pitchEnabled={false}
       >
-        {/* ✅ Camera hanya set sekali di awal, tidak reactive ke selectedLocation */}
         <Camera
+          ref={cameraRef}
           defaultSettings={{
-            centerCoordinate: initialCenter.current,
-            zoomLevel: zoomLevel,
+            centerCoordinate: initialCenter,
+            zoomLevel: 14,
           }}
         />
 
-        {/* ✅ Hanya render PointAnnotation jika ada selectedLocation */}
-        {/* ✅ Key statis — tidak pernah unmount/remount */}
         {selectedLocation && (
           <PointAnnotation
             id="selected-location"
             key="selected-location"
             coordinate={selectedLocation}
           >
-            <SelectedLocationMarker />
+            <View style={styles.dot} />
           </PointAnnotation>
         )}
       </MapView>
@@ -128,36 +122,28 @@ export function MapSelectedV2({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    backgroundColor: "#f5f5f5",
-    overflow: "hidden",
-    borderRadius: 8,
+  dot: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: "#0a1f44",
+    borderWidth: 2,
+    borderColor: "#fff",
   },
-  map: {
-    flex: 1,
-  },
-  markerContainer: {
-    width: 40,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  // ✅ Ring statis pengganti pulse animation
-  markerRing: {
+  loadingOverlay: {
     position: "absolute",
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    borderWidth: 2,
-    opacity: 0.4,
-  },
-  markerDot: {
-    width: 16,
-    height: 16,
-    borderRadius: 8,
-    borderWidth: 2,
-    borderColor: "#FFFFFF",
+    top: 10,
+    alignSelf: "center",
+    zIndex: 10,
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
   },
 });
 
