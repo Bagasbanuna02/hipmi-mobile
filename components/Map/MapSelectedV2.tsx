@@ -81,6 +81,7 @@ export function MapSelectedV2({
     (event: any) => {
       const coordinate = event?.geometry?.coordinates || event?.coordinates;
       if (coordinate && Array.isArray(coordinate) && coordinate.length === 2) {
+        console.log("[MapSelectedV2] coordinate", coordinate);
         onLocationSelect?.([coordinate[0], coordinate[1]]);
       }
     },

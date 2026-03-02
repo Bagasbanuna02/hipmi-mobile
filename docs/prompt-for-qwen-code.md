@@ -111,10 +111,12 @@ Jika tidak ada props page maka tambahkan props page dan default page: "1" ( stri
 Jika butuh refrensi FlatList bisa lihat pada  file components/_ShareComponent/NewWrapper.tsx
 
 <!-- Create Box -->
-File Utama: screens/Admin/Investment/ScreenInvestmentStatus.tsx
-Folder tujuan: screens/Admin/Investment
-Reffrensi: screens/Admin/Donation/BoxDonationStatus.tsx
-Buatkan box component baru pada file "File Utama" di bagian renderItem agar lebih rapi buat file baru dengan nama BoxInvestmentStatus.tsx
+File Utama: app/(application)/(user)/maps/[id]/edit.tsx
+Folder tujuan: screens/Maps
+Nama file utama: ScreenMapsEdit.tsx
+Nama function utama: Maps_ScreenMapsEdit
+
+Buatkan file baru pada "Folder tujuan" dengan nama "Nama file utama" dan ubah nama function menjadi "Nama function utama" kemudian clean code, import dan panggil function tersebut pada file "File source" 
 
 <!-- END Create Box -->
 
