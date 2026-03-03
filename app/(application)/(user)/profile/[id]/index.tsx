@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { LoaderCustom } from "@/components";
+import { LoaderCustom, StackCustom } from "@/components";
+import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import LeftButtonCustom from "@/components/Button/BackButton";
 import DrawerCustom from "@/components/Drawer/DrawerCustom";
@@ -43,7 +44,7 @@ export default function Profile() {
       onLoadUserByToken();
       isUserCheck();
       userData(token as string);
-    }, [id, token])
+    }, [id, token]),
   );
 
   const isUserCheck = () => {
@@ -69,7 +70,7 @@ export default function Profile() {
       const lastTwoByDate = response.data
         .sort(
           (a: any, b: any) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
         ) // urut desc
         .slice(0, 2);
       setListPortofolio(lastTwoByDate);
@@ -99,7 +100,10 @@ export default function Profile() {
       {/* Main View */}
       <ViewWrapper>
         {!data || !dataToken ? (
-          <LoaderCustom />
+          <StackCustom>
+            <CustomSkeleton height={400} />
+            <CustomSkeleton height={200} />
+          </StackCustom>
         ) : (
           <>
             <ProfileSection data={data as any} />

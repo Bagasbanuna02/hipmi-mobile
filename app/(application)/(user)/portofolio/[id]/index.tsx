@@ -10,6 +10,7 @@ import {
 } from "@/components";
 import LeftButtonCustom from "@/components/Button/BackButton";
 import GridTwoView from "@/components/_ShareComponent/GridTwoView";
+import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
@@ -64,6 +65,8 @@ export default function Portofolio() {
     setProfileId(response?.data?.Profile?.id);
   };
 
+
+
   return (
     <>
       {/* Header */}
@@ -87,7 +90,10 @@ export default function Portofolio() {
       />
       <ViewWrapper>
         {!data || !profileId ? (
-          <LoaderCustom />
+            <StackCustom>
+            <CustomSkeleton height={400} />
+            <CustomSkeleton height={300} />
+          </StackCustom>
         ) : (
           <StackCustom>
             <Portofolio_Data

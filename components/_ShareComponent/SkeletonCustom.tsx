@@ -49,7 +49,7 @@ const CustomSkeleton: React.FC<CustomSkeletonProps> = ({
           right: 0,
           height: 100,
           backgroundColor: MainColor.soft_darkblue,
-          borderRadius: 4,
+          borderRadius: 1,
         }}
       />
     </View>

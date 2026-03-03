@@ -15,13 +15,14 @@ export async function apiDeviceRegisterToken({
   data: DeviceTokenData;
 }) {
   try {
-    const response = await apiConfig.post(`/mobile/auth/device-tokens`, {
-      data: data,
-    });
+    const response = await apiConfig.post(`/mobile/auth/device-tokens`, data);
 
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Failed to register device token:", error);
+    console.error("Response data:", error?.response?.data);
+    console.error("Response status:", error?.response?.status);
+    console.error("Request payload:", data);
     throw error;
   }
 }

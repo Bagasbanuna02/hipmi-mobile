@@ -77,8 +77,12 @@ export default function NotificationInitializer() {
         });
 
         console.log("✅ Device token berhasil didaftarkan ke backend");
-      } catch (error) {
-        console.error("❌ Gagal mendaftarkan device token:", error);
+      } catch (error: any) {
+        // Log error detail tapi jangan crash aplikasi
+        console.error("❌ Gagal mendaftarkan device token:", error?.message);
+        console.error("Response status:", error?.response?.status);
+        console.error("Response data:", error?.response?.data);
+        // Skip logout - biarkan user tetap bisa pakai app meski notif gagal
       }
     };
 

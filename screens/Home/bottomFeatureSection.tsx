@@ -36,10 +36,6 @@ export default function Home_BottomFeatureSection() {
     }, [])
   );
 
-  if (listData === null) {
-    return <CustomSkeleton height={200}/>
-  }
-
   return (
     <>
       <ClickableCustom onPress={() => router.push("/job")}>
