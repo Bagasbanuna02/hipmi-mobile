@@ -139,8 +139,8 @@ export default function UserSearchMainView_V2() {
       searchQuery: search,
       emptyMessage: "Tidak ada pengguna ditemukan",
       emptySearchMessage: "Tidak ada hasil pencarian",
-      skeletonCount: 5,
-      skeletonHeight: 150,
+      skeletonCount: PAGINATION_DEFAULT_TAKE,
+      skeletonHeight: 100,
       loadingFooterText: "Memuat lebih banyak pengguna...",
       isInitialLoad,
     });

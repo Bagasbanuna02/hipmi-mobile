@@ -9,32 +9,14 @@ import {
     ViewWrapper,
 } from "@/components";
 import GridTwoView from "@/components/_ShareComponent/GridTwoView";
-import API_IMAGE from "@/constants/api-storage";
+import { MapMarker, MapsV2Custom } from "@/components/Map/MapsV2Custom";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import { apiMapsGetAll } from "@/service/api-client/api-maps";
 import { openInDeviceMaps } from "@/utils/openInDeviceMaps";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
-import { Image } from "expo-image";
 import { router, useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
-import { View } from "react-native";
-import MapView, { Marker } from "react-native-maps";
 
-const defaultRegion = {
-  latitude: -8.737109,
-  longitude: 115.1756897,
-  latitudeDelta: 0.1,
-  longitudeDelta: 0.1,
-  height: 300,
-};
-
-export interface LocationItem {
-  id: string | number;
-  latitude: number;
-  longitude: number;
-  name: string;
-  imageId?: string;
-}
 export default function AdminMaps() {
   const [list, setList] = useState<any[] | null>(null);
   const [loadList, setLoadList] = useState(false);
@@ -72,74 +54,30 @@ export default function AdminMaps() {
     }
   };
 
+  const markers: MapMarker[] = list?.map((item) => ({
+    id: item.id,
+    coordinate: [item.longitude, item.latitude] as [number, number],
+    imageId: item.Portofolio?.logoId,
+    onSelected: () => {
+      setOpenDrawer(true);
+      setSelected({
+        id: item?.id,
+        bidangBisnis: item?.Portofolio?.MasterBidangBisnis?.name,
+        nomorTelepon: item?.Portofolio?.tlpn,
+        alamatBisnis: item?.Portofolio?.alamatKantor,
+        namePin: item?.namePin,
+        imageId: item?.imageId,
+        portofolioId: item?.Portofolio?.id,
+        latitude: item?.latitude,
+        longitude: item?.longitude,
+      });
+    },
+  })) || [];
+
   return (
     <>
       <ViewWrapper style={{ paddingInline: 0, paddingBlock: 0 }}>
-        {/* <MapCustom height={"100%"} /> */}
-        <View style={{ flex: 1 }}>
-          {loadList ? (
-            <MapView
-              initialRegion={defaultRegion}
-              style={{
-                width: "100%",
-                height: "100%",
-              }}
-            />
-          ) : (
-            <MapView
-              initialRegion={defaultRegion}
-              style={{
-                width: "100%",
-                height: "100%",
-              }}
-            >
-              {list?.map((item: any, index: number) => {
-                return (
-                  <Marker
-                    key={item?.id}
-                    coordinate={{
-                      latitude: item?.latitude,
-                      longitude: item?.longitude,
-                    }}
-                    title={item?.namePin}
-                    onPress={() => {
-                      setOpenDrawer(true);
-                      setSelected({
-                        id: item?.id,
-                        bidangBisnis:
-                          item?.Portofolio?.MasterBidangBisnis?.name,
-                        nomorTelepon: item?.Portofolio?.tlpn,
-                        alamatBisnis: item?.Portofolio?.alamatKantor,
-                        namePin: item?.namePin,
-                        imageId: item?.imageId,
-                        portofolioId: item?.Portofolio?.id,
-                        latitude: item?.latitude,
-                        longitude: item?.longitude,
-                      });
-                    }}
-                    // Gunakan gambar kustom jika tersedia
-                  >
-                    <View>
-                      <Image
-                        source={{
-                          uri: API_IMAGE.GET({
-                            fileId: item?.Portofolio?.logoId,
-                          }),
-                        }}
-                        style={{
-                          width: 30,
-                          height: 30,
-                          borderRadius: 100,
-                          borderWidth: 1,
-                        }}
-                      />
-                    </View>
-                  </Marker>
-                );
-              })}
-            </MapView>
-          )}
-        </View>
+        <MapsV2Custom markers={markers} />
       </ViewWrapper>
 
       <DrawerCustom
@@ -147,7 +85,9 @@ export default function AdminMaps() {
         closeDrawer={() => setOpenDrawer(false)}
         height={"auto"}
       >
-        <DummyLandscapeImage height={200} imageId={selected.imageId} />
+        {selected.imageId && (
+          <DummyLandscapeImage height={200} imageId={selected.imageId} />
+        )}
         <Spacing />
         <StackCustom gap={"xs"}>
           <GridTwoView

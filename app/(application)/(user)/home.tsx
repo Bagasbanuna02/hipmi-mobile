@@ -12,23 +12,26 @@ import Home_ImageSection from "@/screens/Home/imageSection";
 import TabSection from "@/screens/Home/tabSection";
 import { tabsHome } from "@/screens/Home/tabsList";
 import Home_FeatureSection from "@/screens/Home/topFeatureSection";
+import { apiJobGetAll } from "@/service/api-client/api-job";
 import { apiUser } from "@/service/api-client/api-user";
 import { apiVersion } from "@/service/api-config";
 import { GStyles } from "@/styles/global-styles";
 import { Ionicons } from "@expo/vector-icons";
 import { Redirect, router, Stack, useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
-import { RefreshControl, TouchableOpacity, View } from "react-native";
+import { RefreshControl, View } from "react-native";
 
 export default function Application() {
   const { token, user, userData } = useAuth();
   const [data, setData] = useState<any>();
   const [refreshing, setRefreshing] = useState(false);
   const { syncUnreadCount } = useNotificationStore();
+  const [listData, setListData] = useState<any[] | null>(null);
 
   useFocusEffect(
     useCallback(() => {
       onLoadData();
+      onLoadDataJob();
       checkVersion();
       userData(token as string).catch((error) => {
         console.log("[ERROR userData]", error?.message);
@@ -50,6 +53,29 @@ export default function Application() {
     }
   }
 
+    const onLoadDataJob = async () => {
+    try {
+      const response = await apiJobGetAll({
+        category: "beranda",
+      });
+      const result = response.data
+        .sort(
+          (a: any, b: any) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        )
+        .slice(0, 2);
+      setListData(result);
+    } catch (error) {
+      console.log("[ERROR]", error);
+    } 
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      onLoadData();
+    }, [])
+  );
+
   const checkVersion = async () => {
     try {
       const response = await apiVersion();
@@ -62,12 +88,13 @@ export default function Application() {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     onLoadData();
+    onLoadDataJob();
     checkVersion();
     setRefreshing(false);
   }, []);
 
   if (data && data?.active === false) {
-    console.log("User is not active");
+    console.warn("User is not active");
     return (
       <BasicWrapper>
         <Redirect href={`/waiting-room`} />
@@ -76,7 +103,7 @@ export default function Application() {
   }
 
   if (data && data?.Profile === null) {
-    console.log("Profile is null");
+    console.warn("Profile is null");
     return (
       <BasicWrapper>
         <Redirect href={`/profile/create`} />
@@ -170,7 +197,7 @@ export default function Application() {
           )}
 
           {data ? (
-            <Home_BottomFeatureSection />
+            <Home_BottomFeatureSection listData={listData} />
           ) : (
             <CustomSkeleton height={200} />
           )}

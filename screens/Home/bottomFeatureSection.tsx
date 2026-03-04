@@ -1,41 +1,15 @@
 import { ClickableCustom, TextCustom } from "@/components";
 import Spacing from "@/components/_ShareComponent/Spacing";
-import React, { useCallback, useState } from "react";
+import { router } from "expo-router";
 import { View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { stylesHome } from "./homeViewStyle";
-import { router, useFocusEffect } from "expo-router";
-import { apiJobGetAll } from "@/service/api-client/api-job";
-import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 
-export default function Home_BottomFeatureSection() {
-  const [listData, setListData] = useState<any[] | null>(null);
-
-  const onLoadData = async () => {
-    try {
-      const response = await apiJobGetAll({
-        category: "beranda",
-      });
-
-      console.log("[DATA JOB]", JSON.stringify(response.data, null, 2));
-      const result = response.data
-        .sort(
-          (a: any, b: any) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        )
-        .slice(0, 2);
-      setListData(result);
-    } catch (error) {
-      console.log("[ERROR]", error);
-    }
-  };
-
-  useFocusEffect(
-    useCallback(() => {
-      onLoadData();
-    }, [])
-  );
-
+export default function Home_BottomFeatureSection({
+  listData,
+}: {
+  listData: any[] | null;
+}) {
   return (
     <>
       <ClickableCustom onPress={() => router.push("/job")}>

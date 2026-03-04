@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { LoaderCustom, StackCustom } from "@/components";
+import { NewWrapper, StackCustom } from "@/components";
 import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
-import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import LeftButtonCustom from "@/components/Button/BackButton";
 import DrawerCustom from "@/components/Drawer/DrawerCustom";
 import { MainColor } from "@/constants/color-palet";
@@ -17,8 +16,8 @@ import { GStyles } from "@/styles/global-styles";
 import { IProfile } from "@/types/Type-Profile";
 import { Ionicons } from "@expo/vector-icons";
 import { Stack, useFocusEffect, useLocalSearchParams } from "expo-router";
-import React, { useCallback, useState } from "react";
-import { TouchableOpacity } from "react-native";
+import { useCallback, useState } from "react";
+import { RefreshControl, TouchableOpacity } from "react-native";
 
 export default function Profile() {
   const { id } = useLocalSearchParams();
@@ -26,6 +25,7 @@ export default function Profile() {
   const [data, setData] = useState<IProfile>();
   const [dataToken, setDataToken] = useState<IProfile>();
   const [listPortofolio, setListPortofolio] = useState<any[]>();
+  const [refreshing, setRefreshing] = useState(false);
 
   const { token, logout, isAdmin, user, userData } = useAuth();
 
@@ -55,13 +55,21 @@ export default function Profile() {
   };
 
   const onLoadData = async (id: string) => {
-    const response = await apiProfile({ id: id });
-    setData(response.data);
+    try {
+      const response = await apiProfile({ id: id });
+      setData(response.data);
+    } catch (error) {
+      console.log("[ERROR onLoadData]", error);
+    }
   };
 
   const onLoadUserByToken = async () => {
-    const response = await apiUser(user?.id as string);
-    setDataToken(response?.data?.Profile);
+    try {
+      const response = await apiUser(user?.id as string);
+      setDataToken(response?.data?.Profile);
+    } catch (error) {
+      console.log("[ERROR onLoadUserByToken]", error);
+    }
   };
 
   const onLoadPortofolio = async (id: string) => {
@@ -75,9 +83,19 @@ export default function Profile() {
         .slice(0, 2);
       setListPortofolio(lastTwoByDate);
     } catch (error) {
-      console.log("[ERROR]", error);
+      console.log("[ERROR onLoadPortofolio]", error);
     }
   };
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    onLoadData(id as string);
+    onLoadPortofolio(id as string);
+    onLoadUserByToken();
+    isUserCheck();
+    userData(token as string);
+    setRefreshing(false);
+  }, [id, token]);
 
   return (
     <>
@@ -98,7 +116,16 @@ export default function Profile() {
         }}
       />
       {/* Main View */}
-      <ViewWrapper>
+      <NewWrapper
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={MainColor.yellow}
+            colors={[MainColor.yellow]}
+          />
+        }
+      >
         {!data || !dataToken ? (
           <StackCustom>
             <CustomSkeleton height={400} />
@@ -114,7 +141,7 @@ export default function Profile() {
             />
           </>
         )}
-      </ViewWrapper>
+      </NewWrapper>
 
       {/* Drawer Komponen Eksternal */}
       <DrawerCustom
