@@ -24,7 +24,7 @@ export {
 
 // OS Height
 const OS_ANDROID_HEIGHT = 115
-const OS_IOS_HEIGHT = 80
+const OS_IOS_HEIGHT = 90
 const OS_HEIGHT = Platform.OS === "ios" ? OS_IOS_HEIGHT : OS_ANDROID_HEIGHT
 
 // Text Size

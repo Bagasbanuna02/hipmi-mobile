@@ -53,7 +53,7 @@ export default function Application() {
     }
   }
 
-    const onLoadDataJob = async () => {
+  const onLoadDataJob = async () => {
     try {
       const response = await apiJobGetAll({
         category: "beranda",
@@ -61,21 +61,14 @@ export default function Application() {
       const result = response.data
         .sort(
           (a: any, b: any) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
         )
         .slice(0, 2);
       setListData(result);
     } catch (error) {
       console.log("[ERROR]", error);
-    } 
+    }
   };
-
-  useFocusEffect(
-    useCallback(() => {
-      onLoadData();
-    }, [])
-  );
-
   const checkVersion = async () => {
     try {
       const response = await apiVersion();
