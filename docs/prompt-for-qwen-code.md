@@ -55,10 +55,10 @@ Component yang digunakan: components/_ShareComponent/NewWrapper.tsx
 
 <!-- START Prompt Admin Refactoring -->
 <!-- Pindah kode ke Screen Component -->
-File source: app/(application)/admin/forum/[id]/list-comment.tsx
-Folder tujuan: screens/Admin/Forum
-Nama file utama: ScreenForumListComment.tsx
-Nama function utama: Admin_ScreenForumListComment
+File source: app/(application)/admin/event/[id]/[status]/index.tsx
+Folder tujuan: screens/Admin/Event
+Nama file utama: ScreenEventDetail.tsx
+Nama function utama: Admin_ScreenEventDetail
 File komponen wrapper: components/_ShareComponent/NewWrapper.tsx
 
 Buat file baru pada "Folder tujuan" dengan nama "Nama file utama" dan ubah nama function menjadi "Nama function utama" kemudian clean code, import dan panggil function tersebut pada file "File source" 

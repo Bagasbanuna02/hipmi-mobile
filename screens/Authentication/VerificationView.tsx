@@ -5,7 +5,6 @@ import { MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
 import { apiCheckCodeOtp } from "@/service/api-config";
 import { GStyles } from "@/styles/global-styles";
-import { registerForPushNotificationsAsync } from "@/utils/notifications";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
@@ -16,8 +15,6 @@ import Toast from "react-native-toast-message";
 
 export default function VerificationView() {
   const { nomor } = useLocalSearchParams<{ nomor: string }>();
-
-  console.log("[NOMOR]", nomor);
 
   const [inputOtp, setInputOtp] = useState<string>("");
   const [userNumber, setUserNumber] = useState<string>("");
