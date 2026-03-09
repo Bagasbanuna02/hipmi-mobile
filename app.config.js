@@ -1,6 +1,17 @@
 // app.config.js
 require("dotenv").config();
 
+// const isDev = process.env.NODE_ENV === "development";
+// const isStaging = process.env.NEXT_PUBLIC_ENV === "staging";
+// const isProd = process.env.NEXT_PUBLIC_ENV === "production";
+
+// Domain berdasarkan environment
+// const domain = isDev
+//   ? "localhost:3000"
+//   : isStaging
+//   ? "cld-dkr-hipmi-stg.wibudev.com"
+//   : "hipmi.muku.id"; // Production domain
+
 export default {
   name: "HIPMI Badung Connect",
   slug: "hipmi-mobile",
@@ -20,7 +31,9 @@ export default {
       NSLocationWhenInUseUsageDescription:
         "Aplikasi membutuhkan akses lokasi untuk menampilkan peta.",
     },
-    associatedDomains: ["applinks:cld-dkr-staging-hipmi.wibudev.com"],
+    associatedDomains: [
+      "applinks:cld-dkr-hipmi-stg.wibudev.com",
+    ],
     buildNumber: "3",
   },
 
@@ -41,7 +54,7 @@ export default {
         data: [
           {
             scheme: "https",
-            host: "cld-dkr-staging-hipmi.wibudev.com",
+            host: "cld-dkr-hipmi-stg.wibudev.com",
             pathPrefix: "/",
           },
         ],

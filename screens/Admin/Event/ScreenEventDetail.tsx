@@ -4,13 +4,12 @@ import { IconDot } from "@/components/_Icon/IconComponent";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
 import AdminButtonReview from "@/components/_ShareComponent/Admin/ButtonReview";
-import ReportBox from "@/components/Box/ReportBox";
 import NewWrapper from "@/components/_ShareComponent/NewWrapper";
+import ReportBox from "@/components/Box/ReportBox";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
 import { useAuth } from "@/hooks/use-auth";
 import { funUpdateStatusEvent } from "@/screens/Admin/Event/funUpdateStatus";
 import { apiAdminEventById } from "@/service/api-admin/api-admin-event";
-import { DEEP_LINK_URL } from "@/service/api-config";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useMemo, useState } from "react";
 import Toast from "react-native-toast-message";
@@ -25,10 +24,6 @@ export function Admin_ScreenEventDetail() {
   const [data, setData] = useState<any | null>(null);
   const [loadData, setLoadData] = useState(false);
 
-  const deepLinkURL = `${DEEP_LINK_URL}/event/${id}/confirmation?userId=${user?.id}`;
-  const deepLinkURLDEV = `${DEEP_LINK_URL}/--/event/${id}/confirmation?userId=${user?.id}`;
-  const isDevLink =
-    process.env.NODE_ENV === "development" ? deepLinkURLDEV : deepLinkURL;
 
   useFocusEffect(
     useCallback(() => {
@@ -149,7 +144,7 @@ export function Admin_ScreenEventDetail() {
         )}
 
         {(status === "publish" || status === "history") && (
-          <EventDetailQRCode qrValue={isDevLink} isLoading={loadData} />
+          <EventDetailQRCode userId={user?.id || ""} isLoading={loadData} />
         )}
       </NewWrapper>
 
