@@ -9,7 +9,7 @@ import {
   TextCustom,
   ViewWrapper,
 } from "@/components";
-import { AccentColor, MainColor } from "@/constants/color-palet";
+import { MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
 import {
   apiEventConfirmationAction,
@@ -60,7 +60,7 @@ export default function UserEventConfirmation() {
   useFocusEffect(
     useCallback(() => {
       checkTokenAndDataParticipants() || console.log("Token is null");
-    }, [token, id, user?.id])
+    }, [token, id, user?.id]),
   );
 
   const checkTokenAndDataParticipants = async () => {
@@ -113,7 +113,7 @@ export default function UserEventConfirmation() {
       confirmationStart,
       confirmationEnd,
       null,
-      "[]"
+      "[]",
     );
 
     // --- [4] Status waktu event (untuk pesan UI) ---
@@ -218,9 +218,14 @@ export default function UserEventConfirmation() {
         if (isWithinConfirmationWindow) {
           if (konfirmasi === false) {
             return (
-              <TamplateBox data={data}>
-                <TamplateText text="Konfirmasi Kehadiran" />
-              </TamplateBox>
+              // <TamplateBox data={data}>
+              //   <TamplateText text="Konfirmasi Kehadiran" />
+              // </TamplateBox>
+              <UserParticipan_And_DuringEvent
+                id={data.id}
+                userId={user?.id as string}
+                data={data}
+              />
             );
           }
           return (
@@ -261,17 +266,15 @@ export default function UserEventConfirmation() {
       <Stack.Screen
         options={{
           title: "Konfirmasi Event",
-          // headerLeft: () => (
-          //   <Ionicons
-          //     name="arrow-back"
-          //     size={20}
-          //     color={MainColor.yellow}
-          //     onPress={() =>
-          //       router.navigate("/(application)/(user)/event/create")
-          //     }
-          //   />
-          // ),
-        }} 
+          headerLeft: () => (
+            <Ionicons
+              name="arrow-back"
+              size={20}
+              color={MainColor.yellow}
+              onPress={() => router.navigate("/")}
+            />
+          ),
+        }}
       />
       <ViewWrapper>{handlerReturn()}</ViewWrapper>
     </>
@@ -496,7 +499,6 @@ const UserNotParticipan_And_DuringEvent = ({
     </>
   );
 };
-
 
 // 🟡 ZONA ACARA BERLANGSUN
 // User sudah terdaftar & Event sedang berlangsung & user harus konfirmasi

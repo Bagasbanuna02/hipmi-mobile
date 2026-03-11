@@ -6,7 +6,7 @@
     <string>development</string>
     <key>com.apple.developer.associated-domains</key>
     <array>
-      <string>applinks:cld-dkr-staging-hipmi.wibudev.com</string>
+      <string>applinks:cld-dkr-hipmi-stg.wibudev.com</string>
     </array>
   </dict>
 </plist>

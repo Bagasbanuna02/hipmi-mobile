@@ -4,10 +4,16 @@ import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import { useNotificationStore } from "@/hooks/use-notification-store";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useEffect } from "react";
 import { Text, View } from "react-native";
 
 export default function AdminNotificationBell() {
-  const { unreadCount } = useNotificationStore();
+  const { unreadCount, syncUnreadCount } = useNotificationStore();
+
+  useEffect(() => {
+    console.log("Syncing unread count");
+    syncUnreadCount();
+  }, [syncUnreadCount]);
 
   return (
     <View style={{ position: "relative" }}>

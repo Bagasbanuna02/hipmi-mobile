@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ActionIcon, AlertDefaultSystem } from "@/components";
+import { ActionIcon, AlertDefaultSystem, Spacing } from "@/components";
 import { IconDot } from "@/components/_Icon/IconComponent";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
@@ -16,6 +16,7 @@ import Toast from "react-native-toast-message";
 import { BoxEventDetail } from "./BoxEventDetail";
 import { EventDetailDrawer } from "./EventDetailDrawer";
 import { EventDetailQRCode } from "./EventDetailQRCode";
+import { View } from "react-native";
 
 export function Admin_ScreenEventDetail() {
   const { user } = useAuth();
@@ -23,7 +24,6 @@ export function Admin_ScreenEventDetail() {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [data, setData] = useState<any | null>(null);
   const [loadData, setLoadData] = useState(false);
-
 
   useFocusEffect(
     useCallback(() => {
@@ -135,7 +135,11 @@ export function Admin_ScreenEventDetail() {
     <>
       <NewWrapper
         headerComponent={headerComponent}
-        footerComponent={footerComponent}
+        // footerComponent={
+        //   <View style={{ paddingInline: 8 }}>
+        //     {footerComponent}
+        //   </View>
+        // }
       >
         <BoxEventDetail data={data} status={status as string} />
 
@@ -146,6 +150,9 @@ export function Admin_ScreenEventDetail() {
         {(status === "publish" || status === "history") && (
           <EventDetailQRCode userId={user?.id || ""} isLoading={loadData} />
         )}
+
+        {footerComponent}
+        <Spacing />
       </NewWrapper>
 
       <EventDetailDrawer
