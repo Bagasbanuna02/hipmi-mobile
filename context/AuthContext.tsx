@@ -22,7 +22,7 @@ type AuthContextType = {
   isAdmin: boolean;
   isUserActive: boolean;
   loginWithNomor: (nomor: string) => Promise<boolean>;
-  validateOtp: (nomor: string) => Promise<any>;
+  validateOtp: (nomor: string, code: string) => Promise<any>;
   logout: () => Promise<void>;
   registerUser: (userData: {
     username: string;
@@ -97,10 +97,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // --- 2. Validasi OTP & cek user ---
-  const validateOtp = async (nomor: string) => {
+  const validateOtp = async (nomor: string, code: string) => {
     try {
       setIsLoading(true);
-      const response = await apiValidationCode({ nomor: nomor });
+      const response = await apiValidationCode({ nomor: nomor, code: code });
       const { token } = response;
       console.log("[RESPONSE VALIDASI OTP]", JSON.stringify(response, null, 2));
 

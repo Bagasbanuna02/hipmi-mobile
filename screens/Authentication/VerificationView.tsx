@@ -21,10 +21,10 @@ export default function VerificationView() {
   const [loading, setLoading] = useState<boolean>(false);
   const [recodeOtp, setRecodeOtp] = useState<boolean>(false);
 
-  // 🔑 DETEKSI MODE REVIEW (HANYA UNTUK NOMOR DEMO & PRODUCTION)
+  // 🔑 DETEKSI MODE REVIEW (HANYA UNTUK NOMOR DEMO & DEVELOPMENT BUILD)
+  // Menggunakan Constants.expoConfig untuk mendeteksi development build
   const isReviewMode =
-    typeof window !== "undefined" && // pastikan di browser/production
-    process.env.NODE_ENV === "production" &&
+    process.env.NODE_ENV === "development" &&
     nomor === "6282340374412";
 
   // --- Context ---
@@ -37,10 +37,6 @@ export default function VerificationView() {
       // Hanya jalankan logika OTP normal jika BUKAN review mode
       onLoadCheckCodeOtp();
     }
-
-    console.log("[NODE_ENV]:", process.env.NODE_ENV);
-    console.log("[isReviewMode]:", isReviewMode);
-    console.log("[nomor]:", nomor);
   }, [recodeOtp, isReviewMode]);
 
   async function onLoadCheckCodeOtp() {
@@ -85,29 +81,30 @@ export default function VerificationView() {
 
   const handleVerification = async () => {
     if (isReviewMode) {
-      // ✅ VERIFIKASI OTOMATIS UNTUK APPLE REVIEW
-      if (inputOtp === "1234") {
-        try {
-          await validateOtp(nomor as string);
-
-          return;
-        } catch (error) {
-          console.log("Error verification", error);
-          Toast.show({ type: "error", text1: "Gagal verifikasi" });
-        }
-      } else {
+      // ✅ VERIFIKASI OTOMATIS UNTUK APPLE REVIEW (Development Only)
+      if (inputOtp !== "1234") {
         Toast.show({ type: "error", text1: "Kode OTP tidak sesuai" });
+        return;
       }
-      return;
+      try {
+        await validateOtp(nomor as string, inputOtp);
+        return;
+      } catch (error) {
+        console.log("Error verification", error);
+        Toast.show({ type: "error", text1: "Gagal verifikasi" });
+      }
     }
 
     // 🔁 VERIFIKASI NORMAL (untuk pengguna sungguhan)
     try {
-      await validateOtp(nomor as string);
-      return
-    } catch (error) {
+      await validateOtp(nomor as string, inputOtp);
+      return;
+    } catch (error: any) {
       console.log("Error verification", error);
-      Toast.show({ type: "error", text1: "Gagal verifikasi" });
+      Toast.show({
+        type: "error",
+        text1: error.response?.data?.message || "Gagal verifikasi",
+      });
     }
   };
 

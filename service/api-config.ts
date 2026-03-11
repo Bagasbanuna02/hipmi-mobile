@@ -45,9 +45,16 @@ export async function apiCheckCodeOtp({ kodeId }: { kodeId: string }) {
   return response.data;
 }
 
-export async function apiValidationCode({ nomor }: { nomor: string }) {
+export async function apiValidationCode({
+  nomor,
+  code,
+}: {
+  nomor: string;
+  code: string;
+}) {
   const response = await apiConfig.post(`/auth/mobile-validasi`, {
     nomor: nomor,
+    code: code,
   });
   return response.data;
 }
