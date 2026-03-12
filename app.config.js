@@ -34,7 +34,7 @@ export default {
     associatedDomains: [
       "applinks:cld-dkr-hipmi-stg.wibudev.com",
     ],
-    buildNumber: "4",
+    buildNumber: "5",
   },
 
   android: {

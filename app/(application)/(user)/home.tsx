@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { BasicWrapper, StackCustom, ViewWrapper } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 import { MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
@@ -117,28 +118,36 @@ export default function Application() {
     <>
       <Stack.Screen
         options={{
-          title: `HIPMI`,
-          headerLeft: () =>
-            data ? (
-              <Ionicons
-                name="search"
-                size={20}
-                color={MainColor.yellow}
-                onPress={() => {
-                  router.push("/user-search");
-                }}
-              />
-            ) : (
-              <CustomSkeleton height={30} width={30} radius={100} />
-            ),
-          headerRight: () =>
-            data ? (
-              <HeaderBell />
-            ) : (
-              <CustomSkeleton height={30} width={30} radius={100} />
-            ),
+          header: () => (
+            <AppHeader
+              title="HIPMI"
+              showBack={false}
+              left={
+                data ? (
+                  <Ionicons
+                    name="search"
+                    size={20}
+                    color={MainColor.yellow}
+                    onPress={() => {
+                      router.push("/user-search");
+                    }}
+                  />
+                ) : (
+                  <CustomSkeleton height={30} width={30} radius={100} />
+                )
+              }
+              right={
+                data ? (
+                  <HeaderBell />
+                ) : (
+                  <CustomSkeleton height={30} width={30} radius={100} />
+                )
+              }
+            />
+          ),
         }}
       />
+
       <ViewWrapper
         refreshControl={
           <RefreshControl
