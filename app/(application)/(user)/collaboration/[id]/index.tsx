@@ -9,6 +9,7 @@ import {
   MenuDrawerDynamicGrid,
   ViewWrapper,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { useAuth } from "@/hooks/use-auth";
 import Collaboration_BoxDetailSection from "@/screens/Collaboration/BoxDetailSection";
 import {
@@ -74,10 +75,14 @@ export default function CollaborationDetail() {
     <>
       <Stack.Screen
         options={{
-          title: "Detail Proyek",
-          headerLeft: () => <BackButton />,
-          headerRight: () => (
-            <DotButton onPress={() => setOpenDrawerMenu(true)} />
+          header: () => (
+            <AppHeader
+              title="Detail Proyek"
+              left={<BackButton />}
+              right={
+                <DotButton onPress={() => setOpenDrawerMenu(true)} />
+              }
+            />
           ),
         }}
       />

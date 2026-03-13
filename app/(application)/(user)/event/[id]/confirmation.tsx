@@ -9,6 +9,7 @@ import {
   TextCustom,
   ViewWrapper,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
 import {
@@ -265,13 +266,17 @@ export default function UserEventConfirmation() {
     <>
       <Stack.Screen
         options={{
-          title: "Konfirmasi Event",
-          headerLeft: () => (
-            <Ionicons
-              name="arrow-back"
-              size={20}
-              color={MainColor.yellow}
-              onPress={() => router.navigate("/")}
+          header: () => (
+            <AppHeader
+              title="Konfirmasi Event"
+              left={
+                <Ionicons
+                  name="arrow-back"
+                  size={20}
+                  color={MainColor.yellow}
+                  onPress={() => router.navigate("/")}
+                />
+              }
             />
           ),
         }}

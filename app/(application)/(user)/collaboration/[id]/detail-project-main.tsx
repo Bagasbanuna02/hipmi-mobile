@@ -8,6 +8,7 @@ import {
   Spacing,
   ViewWrapper
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconEdit } from "@/components/_Icon";
 import Collaboration_BoxDetailSection from "@/screens/Collaboration/BoxDetailSection";
 import {
@@ -66,9 +67,13 @@ export default function CollaborationDetailProjectMain() {
     <>
       <Stack.Screen
         options={{
-          title: "Proyek Saya",
-          headerLeft: () => <BackButton />,
-          headerRight: () => <DotButton onPress={() => setOpenDrawer(true)} />,
+          header: () => (
+            <AppHeader
+              title="Proyek Saya"
+              left={<BackButton />}
+              right={<DotButton onPress={() => setOpenDrawer(true)} />}
+            />
+          ),
         }}
       />
       <ViewWrapper>

@@ -6,6 +6,7 @@ import {
   StackCustom,
   TextCustom,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import DrawerAdmin from "@/components/Drawer/DrawerAdmin";
 import NavbarMenu from "@/components/Drawer/NavbarMenu";
 import NavbarMenu_V2 from "@/components/Drawer/NavbarMenu_V2";
@@ -35,11 +36,27 @@ import { useState } from "react";
 export default function AdminLayout() {
   const [openDrawerNavbar, setOpenDrawerNavbar] = useState(false);
   const [openDrawerUser, setOpenDrawerUser] = useState(false);
-  // const [user, setUser] = useState(null);
-
   const { logout, user } = useAuth();
 
   console.log("[USER LAYOUT]", JSON.stringify(user, null, 2));
+
+  const headerLeft = () => (
+    <Ionicons
+      name="menu"
+      size={ICON_SIZE_XLARGE}
+      color={MainColor.white}
+      onPress={() => setOpenDrawerNavbar(true)}
+    />
+  );
+
+  const headerRight = () => (
+    <FontAwesome6
+      name="circle-user"
+      size={ICON_SIZE_MEDIUM}
+      color={MainColor.white}
+      onPress={() => setOpenDrawerUser(true)}
+    />
+  );
 
   return (
     <>
@@ -52,20 +69,33 @@ export default function AdminLayout() {
           contentStyle: {
             borderBottomColor: AccentColor.blue,
           },
-          headerLeft: () => (
-            <Ionicons
-              name="menu"
-              size={ICON_SIZE_XLARGE}
-              color={MainColor.white}
-              onPress={() => setOpenDrawerNavbar(true)}
-            />
-          ),
-          headerRight: () => (
-            <FontAwesome6
-              name="circle-user"
-              size={ICON_SIZE_MEDIUM}
-              color={MainColor.white}
-              onPress={() => setOpenDrawerUser(true)}
+
+          //  headerLeft: () => (
+          //   <Ionicons
+          //     name="menu"
+          //     size={ICON_SIZE_XLARGE}
+          //     color={MainColor.white}
+          //     onPress={() => setOpenDrawerNavbar(true)}
+          //   />
+          // ),
+          // headerRight: () => (
+          //   <FontAwesome6
+          //     name="circle-user"
+          //     size={ICON_SIZE_MEDIUM}
+          //     color={MainColor.white}
+          //     onPress={() => setOpenDrawerUser(true)}
+          //   />
+          // ),
+
+
+
+          
+          header: () => (
+            <AppHeader
+              title="HIPMI DASHBOARD"
+              showBack={false}
+              left={headerLeft()}
+              right={headerRight()}
             />
           ),
         }}

@@ -9,6 +9,7 @@ import {
   StackCustom,
   TextCustom,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconPlus } from "@/components/_Icon";
 import { IconDot } from "@/components/_Icon/IconComponent";
 import ListSkeletonComponent from "@/components/_ShareComponent/ListSkeletonComponent";
@@ -121,12 +122,16 @@ export default function Admin_ScreenNotification() {
     <>
       <Stack.Screen
         options={{
-          title: "Admin Notifikasi",
-          headerLeft: () => <BackButton />,
-          headerRight: () => (
-            <IconDot
-              color={MainColor.yellow}
-              onPress={() => setOpenDrawer(true)}
+          header: () => (
+            <AppHeader
+              title="Admin Notifikasi"
+              left={<BackButton />}
+              right={
+                <IconDot
+                  color={MainColor.yellow}
+                  onPress={() => setOpenDrawer(true)}
+                />
+              }
             />
           ),
         }}

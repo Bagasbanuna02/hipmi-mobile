@@ -9,6 +9,7 @@ import {
   Spacing,
   TextCustom,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconPlus } from "@/components/_Icon";
 import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { usePagination } from "@/hooks/use-pagination";
@@ -66,9 +67,13 @@ export default function Investment_ScreenRecapOfNews({
     <>
       <Stack.Screen
         options={{
-          title: "Rekap Berita",
-          headerLeft: () => <BackButton />,
-          headerRight: () => <DotButton onPress={() => setOpenDrawer(true)} />,
+          header: () => (
+            <AppHeader
+              title="Rekap Berita"
+              left={<BackButton />}
+              right={<DotButton onPress={() => setOpenDrawer(true)} />}
+            />
+          ),
         }}
       />
       <NewWrapper

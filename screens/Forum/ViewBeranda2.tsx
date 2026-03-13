@@ -8,6 +8,7 @@ import {
   StackCustom,
   TextCustom, // ← gunakan NewWrapper yang sudah diperbaiki
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import SkeletonCustom from "@/components/_ShareComponent/SkeletonCustom";
 import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { useAuth } from "@/hooks/use-auth";
@@ -155,13 +156,17 @@ export default function Forum_ViewBeranda2() {
       {/* 🔹 Header Navigation */}
       <Stack.Screen
         options={{
-          title: "Forum",
-          headerLeft: () => <BackButton />,
-          headerRight: () => (
-            <AvatarComp
-              fileId={dataUser?.Profile?.imageId}
-              size="base"
-              href={`/forum/${user?.id}/forumku`}
+          header: () => (
+            <AppHeader
+              title="Forum"
+              left={<BackButton />}
+              right={
+                <AvatarComp
+                  fileId={dataUser?.Profile?.imageId}
+                  size="base"
+                  href={`/forum/${user?.id}/forumku`}
+                />
+              }
             />
           ),
         }}

@@ -11,6 +11,7 @@ import {
 } from "@/components";
 import { IconPlus } from "@/components/_Icon";
 import { IconDot } from "@/components/_Icon/IconComponent";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { AccentColor, MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL, PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
@@ -169,12 +170,16 @@ export default function Admin_ScreenNotification2() {
     <>
       <Stack.Screen
         options={{
-          title: "Admin Notifikasi",
-          headerLeft: () => <BackButton />,
-          headerRight: () => (
-            <IconDot
-              color={MainColor.yellow}
-              onPress={() => setOpenDrawer(true)}
+          // title: "Admin Notifikasi",
+          header: () => (
+            <AppHeader
+              title="Admin Notifikasi"
+              right={
+                <IconDot
+                  color={MainColor.yellow}
+                  onPress={() => setOpenDrawer(true)}
+                />
+              }
             />
           ),
         }}

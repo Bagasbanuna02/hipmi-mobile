@@ -10,6 +10,7 @@ import {
   TextCustom,
   ViewWrapper,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { apiCollaborationGroup } from "@/service/api-client/api-collaboration";
 import { Stack, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useState, useCallback } from "react";
@@ -40,8 +41,7 @@ export default function CollaborationRoomInfo() {
     <>
       <Stack.Screen
         options={{
-          title: `Info`,
-          headerLeft: () => <BackButton />,
+          header: () => <AppHeader title="Info" left={<BackButton />} />,
         }}
       />
 

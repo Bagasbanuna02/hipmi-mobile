@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { NewWrapper, StackCustom } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 import LeftButtonCustom from "@/components/Button/BackButton";
 import DrawerCustom from "@/components/Drawer/DrawerCustom";
@@ -101,18 +102,20 @@ export default function Profile() {
     <>
       <Stack.Screen
         options={{
-          title: `Profile`,
-          headerLeft: () => <LeftButtonCustom />,
-          headerRight: () => (
-            <ButtonnDot
-              id={id as string}
-              openDrawer={openDrawer}
-              isUserCheck={isUserCheck()}
-              logout={logout}
+          header: () => (
+            <AppHeader
+              title="Profile"
+              left={<LeftButtonCustom />}
+              right={
+                <ButtonnDot
+                  id={id as string}
+                  openDrawer={openDrawer}
+                  isUserCheck={isUserCheck()}
+                  logout={logout}
+                />
+              }
             />
           ),
-          headerStyle: GStyles.headerStyle,
-          headerTitleStyle: GStyles.headerTitleStyle,
         }}
       />
       {/* Main View */}

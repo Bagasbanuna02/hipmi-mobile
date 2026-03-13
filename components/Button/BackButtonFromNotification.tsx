@@ -12,14 +12,15 @@ export default function BackButtonFromNotification({
   return (
     <>
       <BackButton
+
         onPress={() => {
           if (from === "notifications") {
-            router.replace(`/notifications?category=${category}`);
+            router.push(`/notifications?category=${category}`);
           } else {
             if (from) {
-              router.replace(`/${from}` as any);
+              router.back();
             } else {
-              router.navigate("/home");
+              router.back();
             }
           }
         }}

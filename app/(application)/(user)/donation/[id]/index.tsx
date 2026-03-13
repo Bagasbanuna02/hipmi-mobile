@@ -10,6 +10,7 @@ import {
   StackCustom,
   ViewWrapper,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconNews } from "@/components/_Icon";
 import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 import { useAuth } from "@/hooks/use-auth";
@@ -90,12 +91,17 @@ export default function DonasiDetailBeranda() {
     <>
       <Stack.Screen
         options={{
-          title: `Detail Donasi`,
-          headerLeft: () => <BackButton />,
-          headerRight: () =>
-            user?.id === data?.Author?.id ? (
-              <DotButton onPress={() => setOpenDrawer(true)} />
-            ) : null,
+          header: () => (
+            <AppHeader
+              title="Detail Donasi"
+              left={<BackButton />}
+              right={
+                user?.id === data?.Author?.id ? (
+                  <DotButton onPress={() => setOpenDrawer(true)} />
+                ) : null
+              }
+            />
+          ),
         }}
       />
       <NewWrapper footerComponent={buttonSection}>

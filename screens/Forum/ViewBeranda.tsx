@@ -7,6 +7,7 @@ import {
   LoaderCustom,
   TextCustom,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { useAuth } from "@/hooks/use-auth";
 import { apiForumGetAll } from "@/service/api-client/api-forum";
 import { apiUser } from "@/service/api-client/api-user";
@@ -54,13 +55,17 @@ export default function Forum_ViewBeranda() {
     <>
       <Stack.Screen
         options={{
-          title: "Forum",
-          headerLeft: () => <BackButton />,
-          headerRight: () => (
-            <AvatarComp
-              fileId={dataUser?.Profile?.imageId}
-              size="base"
-              href={`/forum/${user?.id}/forumku`}
+          header: () => (
+            <AppHeader
+              title="Forum"
+              left={<BackButton />}
+              right={
+                <AvatarComp
+                  fileId={dataUser?.Profile?.imageId}
+                  size="base"
+                  href={`/forum/${user?.id}/forumku`}
+                />
+              }
             />
           ),
         }}

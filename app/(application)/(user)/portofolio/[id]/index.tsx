@@ -8,6 +8,7 @@ import {
   StackCustom,
   TextCustom,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import LeftButtonCustom from "@/components/Button/BackButton";
 import GridTwoView from "@/components/_ShareComponent/GridTwoView";
 import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
@@ -72,20 +73,23 @@ export default function Portofolio() {
       {/* Header */}
       <Stack.Screen
         options={{
-          title: "Portofolio",
-          headerLeft: () => <LeftButtonCustom />,
-          headerRight: () =>
-            data?.Profile?.id !== profileId ? null : (
-              <TouchableOpacity onPress={openDrawer}>
-                <Ionicons
-                  name="ellipsis-vertical"
-                  size={20}
-                  color={MainColor.yellow}
-                />
-              </TouchableOpacity>
-            ),
-          headerStyle: GStyles.headerStyle,
-          headerTitleStyle: GStyles.headerTitleStyle,
+          header: () => (
+            <AppHeader
+              title="Portofolio"
+              left={<LeftButtonCustom />}
+              right={
+                data?.Profile?.id !== profileId ? null : (
+                  <TouchableOpacity onPress={openDrawer}>
+                    <Ionicons
+                      name="ellipsis-vertical"
+                      size={20}
+                      color={MainColor.yellow}
+                    />
+                  </TouchableOpacity>
+                )
+              }
+            />
+          ),
         }}
       />
       <ViewWrapper>

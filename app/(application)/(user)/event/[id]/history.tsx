@@ -6,6 +6,7 @@ import {
   ViewWrapper,
   Spacing,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import LeftButtonCustom from "@/components/Button/BackButton";
 import Event_BoxDetailPublishSection from "@/screens/Event/BoxDetailPublishSection";
@@ -44,9 +45,13 @@ export default function EventDetailHistory() {
     <>
       <Stack.Screen
         options={{
-          title: `Detail riwayat`,
-          headerLeft: () => <LeftButtonCustom />,
-          headerRight: () => <DotButton onPress={() => setOpenDrawer(true)} />,
+          header: () => (
+            <AppHeader
+              title="Detail riwayat"
+              left={<LeftButtonCustom />}
+              right={<DotButton onPress={() => setOpenDrawer(true)} />}
+            />
+          ),
         }}
       />
       <ViewWrapper>

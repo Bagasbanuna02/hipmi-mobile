@@ -11,6 +11,7 @@ import {
   TextCustom,
   ViewWrapper,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconTrash } from "@/components/_Icon/IconTrash";
 import { useAuth } from "@/hooks/use-auth";
 import {
@@ -56,12 +57,17 @@ export default function InvestmentNews() {
     <>
       <Stack.Screen
         options={{
-          title: "Detail Berita",
-          headerLeft: () => <BackButton />,
-          headerRight: () =>
-            user?.id === data?.authorId && (
-              <DotButton onPress={() => setOpenDrawer(true)} />
-            ),
+          header: () => (
+            <AppHeader
+              title="Detail Berita"
+              left={<BackButton />}
+              right={
+                user?.id === data?.authorId && (
+                  <DotButton onPress={() => setOpenDrawer(true)} />
+                )
+              }
+            />
+          ),
         }}
       />
       <ViewWrapper>

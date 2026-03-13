@@ -4,6 +4,7 @@ import {
   FloatingButton,
   SearchInput,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { MainColor } from "@/constants/color-palet";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
@@ -84,18 +85,22 @@ export default function Forum_ViewBeranda3() {
     <>
       <Stack.Screen
         options={{
-          title: "Forum",
-          headerLeft: () => <BackButton />,
-          headerRight: () => (
-            <TouchableOpacity
-              onPress={() => router.navigate(`/forum/${user?.id}/forumku`)}
-            >
-              <AvatarComp
-                fileId={dataUser?.Profile?.imageId}
-                size="base"
-                href={`/forum/${user?.id}/forumku`}
-              />
-            </TouchableOpacity>
+          header: () => (
+            <AppHeader
+              title="Forum"
+              left={<BackButton />}
+              right={
+                <TouchableOpacity
+                  onPress={() => router.navigate(`/forum/${user?.id}/forumku`)}
+                >
+                  <AvatarComp
+                    fileId={dataUser?.Profile?.imageId}
+                    size="base"
+                    href={`/forum/${user?.id}/forumku`}
+                  />
+                </TouchableOpacity>
+              }
+            />
           ),
         }}
       />

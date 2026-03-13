@@ -43,9 +43,10 @@ export default function AppHeader({
           paddingBottom,
         },
       ]}
+      pointerEvents="box-none"
     >
       {/* Header Container dengan absolute positioning untuk title center */}
-      <View style={styles.headerApp}>
+      <View style={styles.headerApp} pointerEvents="box-none">
         {/* Left Section - Absolute Left */}
         <View style={styles.headerLeft}>
           {showBack ? (

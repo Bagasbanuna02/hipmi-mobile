@@ -387,7 +387,7 @@ apiConfig.interceptors.request.use(async (config) => {
 
 ### Deep Linking
 - Scheme: `hipmimobile://`
-- HTTPS: `cld-dkr-staging-hipmi.wibudev.com`
+- HTTPS: `cld-dkr-hipmi-stg.wibudev.com`
 - Configured for both platforms
 
 ### Camera

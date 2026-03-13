@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { BackButton, DrawerCustom, MenuDrawerDynamicGrid } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconPlus } from "@/components/_Icon";
 import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { MainColor } from "@/constants/color-palet";
@@ -52,8 +53,12 @@ export default function Donation_ScreenListOfNews({
     <>
       <Stack.Screen
         options={{
-          title: "Daftar Kabar",
-          headerLeft: () => <BackButton />,
+          header: () => (
+            <AppHeader
+              title="Daftar Kabar"
+              left={<BackButton />}
+            />
+          ),
         }}
       />
       <NewWrapper

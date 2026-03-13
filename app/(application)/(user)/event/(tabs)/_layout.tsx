@@ -4,36 +4,34 @@ import {
   IconHome,
   IconStatus,
 } from "@/components/_Icon";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import BackButtonFromNotification from "@/components/Button/BackButtonFromNotification";
 import { TabsStyles } from "@/styles/tabs-styles";
-import { router, Tabs, useLocalSearchParams, useNavigation } from "expo-router";
-import { useLayoutEffect } from "react";
+import { router, Tabs, useLocalSearchParams } from "expo-router";
 
 export default function EventTabsLayout() {
-  const navigation = useNavigation();
-
   const { from, category } = useLocalSearchParams<{
     from?: string;
     category?: string;
   }>();
 
-  console.log("from", from);
-  console.log("category", category);
-
-  // Atur header secara dinamis
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <BackButtonFromNotification
-          from={from as string}
-          category={category as string}
-        />
-      ),
-    });
-  }, [from, router, navigation]);
-
   return (
-    <Tabs screenOptions={TabsStyles}>
+    <Tabs
+      screenOptions={{
+        ...TabsStyles,
+        header: () => (
+          <AppHeader
+            title="Event"
+            left={
+              <BackButtonFromNotification
+                from={from as string}
+                category={category as string}
+              />
+            }
+          />
+        ),
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{

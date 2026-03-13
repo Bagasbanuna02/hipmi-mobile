@@ -5,6 +5,7 @@ import {
   DrawerCustom,
   MenuDrawerDynamicGrid,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconPlus } from "@/components/_Icon";
 import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
@@ -61,9 +62,13 @@ export default function Donation_ScreenRecapOfNews({
     <>
       <Stack.Screen
         options={{
-          title: "Rekap Kabar",
-          headerLeft: () => <BackButton />,
-          headerRight: () => <DotButton onPress={() => setOpenDrawer(true)} />,
+          header: () => (
+            <AppHeader
+              title="Rekap Kabar"
+              left={<BackButton />}
+              right={<DotButton onPress={() => setOpenDrawer(true)} />}
+            />
+          ),
         }}
       />
       <NewWrapper

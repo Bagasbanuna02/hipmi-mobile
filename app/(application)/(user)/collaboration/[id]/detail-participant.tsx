@@ -6,6 +6,7 @@ import {
   MenuDrawerDynamicGrid,
   ViewWrapper
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import Collaboration_BoxDetailSection from "@/screens/Collaboration/BoxDetailSection";
 import { apiCollaborationGetOne } from "@/service/api-client/api-collaboration";
 import { Ionicons } from "@expo/vector-icons";
@@ -38,10 +39,14 @@ export default function CollaborationDetailParticipant() {
     <>
       <Stack.Screen
         options={{
-          title: "Detail Proyek",
-          headerLeft: () => <BackButton />,
-          headerRight: () => (
-            <DotButton onPress={() => setOpenDrawerParticipant(true)} />
+          header: () => (
+            <AppHeader
+              title="Detail Proyek"
+              left={<BackButton />}
+              right={
+                <DotButton onPress={() => setOpenDrawerParticipant(true)} />
+              }
+            />
           ),
         }}
       />

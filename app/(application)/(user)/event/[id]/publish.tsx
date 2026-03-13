@@ -8,6 +8,7 @@ import {
   MenuDrawerDynamicGrid,
   ViewWrapper,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 import LeftButtonCustom from "@/components/Button/BackButton";
@@ -156,9 +157,13 @@ export default function EventDetailPublish() {
     <>
       <Stack.Screen
         options={{
-          title: `Event Publish`,
-          headerLeft: () => <BackButton onPress={() => router.back()} />,
-          headerRight: () => <DotButton onPress={() => setOpenDrawer(true)} />,
+          header: () => (
+            <AppHeader
+              title="Event Publish"
+              left={<BackButton onPress={() => router.back()} />}
+              right={<DotButton onPress={() => setOpenDrawer(true)} />}
+            />
+          ),
         }}
       />
       <ViewWrapper>

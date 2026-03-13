@@ -7,6 +7,7 @@ import {
   MenuDrawerDynamicGrid,
   TextCustom,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconPlus } from "@/components/_Icon";
 import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { usePagination } from "@/hooks/use-pagination";
@@ -64,9 +65,13 @@ export default function Investment_ScreenListOfNews({
     <>
       <Stack.Screen
         options={{
-          title: "Daftar Berita",
-          headerLeft: () => <BackButton />,
-          //   headerRight: () => <DotButton onPress={() => setOpenDrawer(true)} />,
+          header: () => (
+            <AppHeader
+              title="Daftar Berita"
+              left={<BackButton />}
+              //   headerRight: () => <DotButton onPress={() => setOpenDrawer(true)} />,
+            />
+          ),
         }}
       />
 

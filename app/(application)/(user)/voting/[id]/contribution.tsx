@@ -9,6 +9,7 @@ import {
   Spacing,
   ViewWrapper,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconContribution } from "@/components/_Icon";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import { useAuth } from "@/hooks/use-auth";
@@ -81,10 +82,14 @@ export default function VotingDetailContribution() {
     <>
       <Stack.Screen
         options={{
-          title: "Detail Kontribusi",
-          headerLeft: () => <BackButton />,
-          headerRight: () => (
-            <DotButton onPress={() => setOpenDrawerPublish(true)} />
+          header: () => (
+            <AppHeader
+              title="Detail Kontribusi"
+              left={<BackButton />}
+              right={
+                <DotButton onPress={() => setOpenDrawerPublish(true)} />
+              }
+            />
           ),
         }}
       />

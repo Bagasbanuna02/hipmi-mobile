@@ -9,6 +9,7 @@ import {
   StackCustom,
   ViewWrapper,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconEdit } from "@/components/_Icon";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import ReportBox from "@/components/Box/ReportBox";
@@ -58,12 +59,17 @@ export default function JobDetailStatus() {
     <>
       <Stack.Screen
         options={{
-          title: `Detail`,
-          headerLeft: () => <BackButton />,
-          headerRight: () =>
-            status === "draft" ? (
-              <DotButton onPress={() => setOpenDrawer(true)} />
-            ) : null,
+          header: () => (
+            <AppHeader
+              title="Detail"
+              left={<BackButton />}
+              right={
+                status === "draft" ? (
+                  <DotButton onPress={() => setOpenDrawer(true)} />
+                ) : null
+              }
+            />
+          ),
         }}
       />
       <ViewWrapper>

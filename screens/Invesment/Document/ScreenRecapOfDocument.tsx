@@ -6,6 +6,7 @@ import {
   DrawerCustom,
   MenuDrawerDynamicGrid
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconEdit } from "@/components/_Icon";
 import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { MainColor } from "@/constants/color-palet";
@@ -125,14 +126,18 @@ export default function Investment_ScreenRecapOfDocument() {
     <>
       <Stack.Screen
         options={{
-          title: "Rekap Dokumen",
-          headerLeft: () => <BackButton />,
-          headerRight: () => (
-            <DotButton
-              onPress={() => {
-                setOpenDrawer(true);
-                setOpenDrawerBox(false);
-              }}
+          header: () => (
+            <AppHeader
+              title="Rekap Dokumen"
+              left={<BackButton />}
+              right={
+                <DotButton
+                  onPress={() => {
+                    setOpenDrawer(true);
+                    setOpenDrawerBox(false);
+                  }}
+                />
+              }
             />
           ),
         }}

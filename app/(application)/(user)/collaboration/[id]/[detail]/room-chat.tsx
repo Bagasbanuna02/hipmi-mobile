@@ -1,4 +1,5 @@
 import { BackButton } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import ChatScreen from "@/screens/Collaboration/GroupChatSection";
@@ -12,14 +13,18 @@ export default function CollaborationRoomChat() {
     <>
       <Stack.Screen
         options={{
-          title: `Proyek ${detail}`,
-          headerLeft: () => <BackButton />,
-          headerRight: () => (
-            <Feather
-              name="info"
-              size={ICON_SIZE_SMALL}
-              color={MainColor.yellow}
-              onPress={() => router.push(`/collaboration/${id}/${detail}/info`)}
+          header: () => (
+            <AppHeader
+              title={`Proyek ${detail}`}
+              left={<BackButton />}
+              right={
+                <Feather
+                  name="info"
+                  size={ICON_SIZE_SMALL}
+                  color={MainColor.yellow}
+                  onPress={() => router.push(`/collaboration/${id}/${detail}/info`)}
+                />
+              }
             />
           ),
         }}

@@ -10,6 +10,7 @@ import {
   TextCustom,
   ViewWrapper,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import LeftButtonCustom from "@/components/Button/BackButton";
 import Event_ButtonStatusSection from "@/screens/Event/ButtonStatusSection";
@@ -81,12 +82,17 @@ export default function EventDetailStatus() {
     <>
       <Stack.Screen
         options={{
-          title: `Detail ${status === "publish" ? "" : status}`,
-          headerLeft: () => <LeftButtonCustom />,
-          headerRight: () =>
-            status === "draft" ? (
-              <DotButton onPress={() => setOpenDrawer(true)} />
-            ) : null,
+          header: () => (
+            <AppHeader
+              title={`Detail ${status === "publish" ? "" : status}`}
+              left={<LeftButtonCustom />}
+              right={
+                status === "draft" ? (
+                  <DotButton onPress={() => setOpenDrawer(true)} />
+                ) : null
+              }
+            />
+          ),
         }}
       />
       <ViewWrapper>

@@ -11,6 +11,7 @@ import {
   StackCustom,
   TextCustom,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconDot } from "@/components/_Icon/IconComponent";
 import ListSkeletonComponent from "@/components/_ShareComponent/ListSkeletonComponent";
 import NoDataText from "@/components/_ShareComponent/NoDataText";
@@ -217,12 +218,16 @@ export default function ScreenNotification_V1() {
     <>
       <Stack.Screen
         options={{
-          title: "Notifikasi",
-          headerLeft: () => <BackButton />,
-          headerRight: () => (
-            <IconDot
-              color={MainColor.yellow}
-              onPress={() => setOpenDrawer(true)}
+          header: () => (
+            <AppHeader
+              title="Notifikasi"
+              left={<BackButton />}
+              right={
+                <IconDot
+                  color={MainColor.yellow}
+                  onPress={() => setOpenDrawer(true)}
+                />
+              }
             />
           ),
         }}

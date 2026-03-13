@@ -1,22 +1,21 @@
 import { BackButton } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconPlus } from "@/components/_Icon";
 import { IconDot } from "@/components/_Icon/IconComponent";
 import LeftButtonCustom from "@/components/Button/BackButton";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
-import { HeaderStyles } from "@/styles/header-styles";
 import { Ionicons } from "@expo/vector-icons";
 import { router, Stack } from "expo-router";
 
 export default function UserLayout() {
   return (
     <>
-      <Stack screenOptions={HeaderStyles}>
+      <Stack>
         <Stack.Screen
           name="delete-account"
           options={{
-            title: "Hapus Akun",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Hapus Akun" />,
           }}
         />
         <Stack.Screen
@@ -47,8 +46,7 @@ export default function UserLayout() {
         <Stack.Screen
           name="user-search/index"
           options={{
-            title: "Pencarian Pengguna",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Pencarian Pengguna" />,
           }}
         />
 
@@ -71,10 +69,18 @@ export default function UserLayout() {
 
         {/* ========== Event Section ========= */}
 
+        {/* <Stack.Screen
+          name="event/(tabs)"
+          options={{
+            header: () => <AppHeader title="Event" left={<BackButton path="/home" />} />,
+          }}
+        /> */}
+
         <Stack.Screen
           name="event/(tabs)"
           options={{
             title: "Event",
+            header: () => <AppHeader title="Event" left={<BackButton path="/home" />} />,
             // NOTE: DIPINDAH DI FILE /Event/(Tabs)/_layout.tsx
             // headerLeft: () => (
             //   <LeftButtonCustom path="/(application)/(user)/home" />
@@ -85,32 +91,28 @@ export default function UserLayout() {
         <Stack.Screen
           name="event/create"
           options={{
-            title: "Tambah Event",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Tambah Event" />,
           }}
         />
 
         <Stack.Screen
           name="event/detail/[id]"
           options={{
-            title: "Event Detail",
-            headerLeft: () => <LeftButtonCustom />,
+            header: () => <AppHeader title="Event Detail" left={<LeftButtonCustom />} />,
           }}
         />
 
         <Stack.Screen
           name="event/[id]/edit"
           options={{
-            title: "Edit Event",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Edit Event" />,
           }}
         />
 
         <Stack.Screen
           name="event/[id]/list-of-participants"
           options={{
-            title: "Daftar peserta",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Daftar peserta" />,
           }}
         />
         {/* ========== End Event Section ========= */}
@@ -119,22 +121,19 @@ export default function UserLayout() {
         <Stack.Screen
           name="collaboration/(tabs)"
           options={{
-            title: "Collaboration",
-            headerLeft: () => <BackButton path="/home" />,
+            header: () => <AppHeader title="Collaboration" left={<BackButton path="/home" />} />,
           }}
         />
         <Stack.Screen
           name="collaboration/create"
           options={{
-            title: "Tambah Proyek",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Tambah Proyek" />,
           }}
         />
         <Stack.Screen
           name="collaboration/[id]/list-of-participants"
           options={{
-            title: "Daftar Partisipan",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Daftar Partisipan" />,
           }}
         />
         {/* <Stack.Screen
@@ -147,22 +146,19 @@ export default function UserLayout() {
         <Stack.Screen
           name="collaboration/[id]/edit"
           options={{
-            title: "Edit Proyek",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Edit Proyek" />,
           }}
         />
         <Stack.Screen
           name="collaboration/[id]/create-pacticipants"
           options={{
-            title: "Ajukan Partisipasi",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Ajukan Partisipasi" />,
           }}
         />
         <Stack.Screen
           name="collaboration/[id]/select-of-participants"
           options={{
-            title: "Pilih Partisipan",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Pilih Partisipan" />,
           }}
         />
 
@@ -172,29 +168,25 @@ export default function UserLayout() {
         <Stack.Screen
           name="voting/create"
           options={{
-            title: "Tambah Voting",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Tambah Voting" />,
           }}
         />
         <Stack.Screen
           name="voting/(tabs)"
           options={{
-            title: "Voting",
-            headerLeft: () => <BackButton path="/home" />,
+            header: () => <AppHeader title="Voting" left={<BackButton path="/home" />} />,
           }}
         />
         <Stack.Screen
           name="voting/[id]/edit"
           options={{
-            title: "Edit Voting",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Edit Voting" />,
           }}
         />
         <Stack.Screen
           name="voting/[id]/list-of-contributor"
           options={{
-            title: "Daftar Kontributor",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Daftar Kontributor" />,
           }}
         />
 
@@ -204,8 +196,7 @@ export default function UserLayout() {
         <Stack.Screen
           name="crowdfunding/index"
           options={{
-            title: "Crowdfunding",
-            headerLeft: () => <BackButton path="/home" />,
+            header: () => <AppHeader title="Crowdfunding" left={<BackButton path="/home" />} />,
           }}
         />
 
@@ -215,103 +206,95 @@ export default function UserLayout() {
         <Stack.Screen
           name="investment/(tabs)"
           options={{
-            title: "Investasi",
-            headerLeft: () => <BackButton path="/crowdfunding" />,
+            header: () => <AppHeader title="Investasi" left={<BackButton path="/crowdfunding" />} />,
           }}
         />
         <Stack.Screen
           name="investment/create"
           options={{
-            title: "Tambah Investasi",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Tambah Investasi" />,
           }}
         />
         <Stack.Screen
           name="investment/[id]/index"
           options={{
-            title: "Detail Investasi",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Detail Investasi" />,
           }}
         />
         <Stack.Screen
           name="investment/[id]/edit"
           options={{
-            title: "Edit Investasi",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Edit Investasi" />,
           }}
         />
 
         <Stack.Screen
           name="investment/[id]/edit-prospectus"
           options={{
-            title: "Edit Prospektus",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Edit Prospektus" />,
           }}
         />
 
         <Stack.Screen
           name="investment/[id]/(document)/list-of-document"
           options={{
-            title: "Daftar Dokumen",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Daftar Dokumen" />,
           }}
         />
         <Stack.Screen
           name="investment/[id]/(document)/add-document"
           options={{
-            title: "Tambah Dokumen",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Tambah Dokumen" />,
           }}
         />
         <Stack.Screen
           name="investment/[id]/(document)/edit-document"
           options={{
-            title: "Edit Dokumen",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Edit Dokumen" />,
           }}
         />
 
         <Stack.Screen
           name="investment/[id]/(news)/add-news"
           options={{
-            title: "Tambah Berita",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Tambah Berita" />,
           }}
         />
 
         <Stack.Screen
           name="investment/[id]/investor"
           options={{
-            title: "Investor",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Investor" />,
           }}
         />
 
         <Stack.Screen
           name="investment/[id]/(transaction-flow)/index"
           options={{
-            title: "Pembelian Saham",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Pembelian Saham" />,
           }}
         />
         <Stack.Screen
           name="investment/[id]/(transaction-flow)/select-bank"
           options={{
-            title: "Pilih Bank",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Pilih Bank" />,
           }}
         />
         <Stack.Screen
           name="investment/[id]/(transaction-flow)/invoice"
           options={{
-            title: "Invoice",
-            headerLeft: () => (
-              <Ionicons
-                name="close"
-                size={ICON_SIZE_SMALL}
-                color={MainColor.yellow}
-                onPress={() =>
-                  router.navigate(`/investment/(tabs)/transaction`)
+            header: () => (
+              <AppHeader
+                title="Invoice"
+                left={
+                  <Ionicons
+                    name="close"
+                    size={ICON_SIZE_SMALL}
+                    color={MainColor.yellow}
+                    onPress={() =>
+                      router.navigate(`/investment/(tabs)/transaction`)
+                    }
+                  />
                 }
               />
             ),
@@ -320,14 +303,18 @@ export default function UserLayout() {
         <Stack.Screen
           name="investment/[id]/(transaction-flow)/process"
           options={{
-            title: "Proses",
-            headerLeft: () => (
-              <Ionicons
-                name="close"
-                size={ICON_SIZE_SMALL}
-                color={MainColor.yellow}
-                onPress={() =>
-                  router.navigate(`/investment/(tabs)/transaction`)
+            header: () => (
+              <AppHeader
+                title="Proses"
+                left={
+                  <Ionicons
+                    name="close"
+                    size={ICON_SIZE_SMALL}
+                    color={MainColor.yellow}
+                    onPress={() =>
+                      router.navigate(`/investment/(tabs)/transaction`)
+                    }
+                  />
                 }
               />
             ),
@@ -336,23 +323,20 @@ export default function UserLayout() {
         <Stack.Screen
           name="investment/[id]/(transaction-flow)/success"
           options={{
-            title: "Transaksi Berhasil",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Transaksi Berhasil" />,
           }}
         />
         <Stack.Screen
           name="investment/[id]/(transaction-flow)/failed"
           options={{
-            title: "Transaksi Gagal",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Transaksi Gagal" />,
           }}
         />
 
         <Stack.Screen
           name="investment/[id]/(my-holding)/[id]"
           options={{
-            title: "Detail Saham Saya",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Detail Saham Saya" />,
           }}
         />
         {/* ========== End Investment Section ========= */}
@@ -361,122 +345,111 @@ export default function UserLayout() {
         <Stack.Screen
           name="donation/(tabs)"
           options={{
-            title: "Donasi",
-            headerLeft: () => <BackButton path="/crowdfunding" />,
+            header: () => <AppHeader title="Donasi" left={<BackButton path="/crowdfunding" />} />,
           }}
         />
 
         <Stack.Screen
           name="donation/create"
           options={{
-            title: "Tambah Donasi",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Tambah Donasi" />,
           }}
         />
         <Stack.Screen
           name="donation/create-story"
           options={{
-            title: "Tambah Donasi",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Tambah Donasi" />,
           }}
         />
 
         <Stack.Screen
           name="donation/[id]/edit"
           options={{
-            title: "Edit Donasi",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Edit Donasi" />,
           }}
         />
         <Stack.Screen
           name="donation/[id]/edit-story"
           options={{
-            title: "Edit Donasi",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Edit Donasi" />,
           }}
         />
         <Stack.Screen
           name="donation/[id]/edit-rekening"
           options={{
-            title: "Edit Rekening",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Edit Rekening" />,
           }}
         />
         <Stack.Screen
           name="donation/[id]/detail-story"
           options={{
-            title: "Cerita Penggalang",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Cerita Penggalang" />,
           }}
         />
         <Stack.Screen
           name="donation/[id]/infromation-fundrising"
           options={{
-            title: "Informasi Penggalang Dana",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Informasi Penggalang Dana" />,
           }}
         />
         <Stack.Screen
           name="donation/[id]/list-of-donatur"
           options={{
-            title: "Daftar Donatur",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Daftar Donatur" />,
           }}
         />
         <Stack.Screen
           name="donation/[id]/fund-disbursement"
           options={{
-            title: "Pencairan Dana",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Pencairan Dana" />,
           }}
         />
 
         <Stack.Screen
           name="donation/[id]/(news)/recap-of-news"
           options={{
-            title: "Rekap Kabar",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Rekap Kabar" />,
           }}
         />
         <Stack.Screen
           name="donation/[id]/(news)/add-news"
           options={{
-            title: "Tambah Berita",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Tambah Berita" />,
           }}
         />
         <Stack.Screen
           name="donation/[id]/(news)/[news]/edit-news"
           options={{
-            title: "Edit Berita",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Edit Berita" />,
           }}
         />
 
         <Stack.Screen
           name="donation/[id]/(transaction-flow)/index"
           options={{
-            title: "Donasi",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Donasi" />,
           }}
         />
         <Stack.Screen
           name="donation/[id]/(transaction-flow)/select-bank"
           options={{
-            title: "Pilih Bank",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Pilih Bank" />,
           }}
         />
         <Stack.Screen
           name="donation/[id]/(transaction-flow)/[invoiceId]/invoice"
           options={{
-            title: "Invoice",
-            headerLeft: () => (
-              <Ionicons
-                name="close"
-                size={ICON_SIZE_SMALL}
-                color={MainColor.yellow}
-                onPress={() => router.navigate(`/donation/(tabs)/my-donation`)}
+            header: () => (
+              <AppHeader
+                title="Invoice"
+                left={
+                  <Ionicons
+                    name="close"
+                    size={ICON_SIZE_SMALL}
+                    color={MainColor.yellow}
+                    onPress={() => router.navigate(`/donation/(tabs)/my-donation`)}
+                  />
+                }
               />
             ),
           }}
@@ -484,13 +457,17 @@ export default function UserLayout() {
         <Stack.Screen
           name="donation/[id]/(transaction-flow)/[invoiceId]/process"
           options={{
-            title: "Proses",
-            headerLeft: () => (
-              <Ionicons
-                name="close"
-                size={ICON_SIZE_SMALL}
-                color={MainColor.yellow}
-                onPress={() => router.navigate(`/donation/(tabs)/my-donation`)}
+            header: () => (
+              <AppHeader
+                title="Proses"
+                left={
+                  <Ionicons
+                    name="close"
+                    size={ICON_SIZE_SMALL}
+                    color={MainColor.yellow}
+                    onPress={() => router.navigate(`/donation/(tabs)/my-donation`)}
+                  />
+                }
               />
             ),
           }}
@@ -498,55 +475,51 @@ export default function UserLayout() {
         <Stack.Screen
           name="donation/[id]/(transaction-flow)/[invoiceId]/success"
           options={{
-            title: "Donasi Berhasil",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Donasi Berhasil" />,
           }}
         />
         <Stack.Screen
           name="donation/[id]/(transaction-flow)/[invoiceId]/failed"
           options={{
-            title: "Donasi Gagal",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Donasi Gagal" />,
           }}
         />
 
         {/* ========== End Donation Section ========= */}
 
         {/* ========== Job Section ========= */}
+
+
         <Stack.Screen
           name="job/create"
           options={{
-            title: "Tambah Job",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Tambah Job" />,
           }}
         />
         <Stack.Screen
           name="job/(tabs)"
           options={{
             title: "Job Vacancy",
-            // headerLeft: () => <BackButton path="/home" />,
             // NOTE: headerLeft di pindahkan ke Tabs Layout
+            header: () => <AppHeader title="Job Vacancy" left={<BackButton path="/home" />} />,
           }}
         />
         <Stack.Screen
           name="job/[id]/index"
           options={{
-            title: "Detail Job",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Detail Job" />,
           }}
         />
         <Stack.Screen
           name="job/[id]/edit"
           options={{
-            title: "Edit Job",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Edit Job" />,
           }}
         />
         <Stack.Screen
           name="job/[id]/archive"
           options={{
-            title: "Arsip Job",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Arsip Job" />,
           }}
         />
 
@@ -556,78 +529,67 @@ export default function UserLayout() {
         <Stack.Screen
           name="forum/create"
           options={{
-            title: "Tambah Diskusi",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Tambah Diskusi" />,
           }}
         />
         <Stack.Screen
           name="forum/[id]/edit"
           options={{
-            title: "Edit Diskusi",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Edit Diskusi" />,
           }}
         />
         <Stack.Screen
           name="forum/[id]/forumku"
           options={{
-            title: "Forumku",
-            headerLeft: () => <BackButton icon={"close"} />,
+            header: () => <AppHeader title="Forumku" left={<BackButton icon={"close"} />} />,
           }}
         />
         <Stack.Screen
           name="forum/[id]/index"
           options={{
-            title: "Detail",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Detail" />,
           }}
         />
         <Stack.Screen
           name="forum/[id]/report-commentar"
           options={{
-            title: "Laporkan Komentar",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Laporkan Komentar" />,
           }}
         />
         <Stack.Screen
           name="forum/[id]/other-report-commentar"
           options={{
-            title: "Laporkan Komentar",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Laporkan Komentar" />,
           }}
         />
         <Stack.Screen
           name="forum/[id]/report-posting"
           options={{
-            title: "Laporkan Diskusi",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Laporkan Diskusi" />,
           }}
         />
         <Stack.Screen
           name="forum/[id]/other-report-posting"
           options={{
-            title: "Laporkan Diskusi",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Laporkan Diskusi" />,
           }}
         />
         <Stack.Screen
           name="forum/terms"
           options={{
-            title: "Syarat & Ketentuan Forum",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Syarat & Ketentuan Forum" />,
           }}
         />
         <Stack.Screen
           name="forum/[id]/preview-report-posting"
           options={{
-            title: "Laporan Postingan",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Laporan Postingan" />,
           }}
         />
         <Stack.Screen
           name="forum/[id]/preview-report-comment"
           options={{
-            title: "Laporan Komentar",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Laporan Komentar" />,
           }}
         />
 
@@ -635,29 +597,25 @@ export default function UserLayout() {
         <Stack.Screen
           name="maps/index"
           options={{
-            title: "Maps",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Maps" />,
           }}
         />
         <Stack.Screen
           name="maps/create"
           options={{
-            title: "Tambah Maps",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Tambah Maps" />,
           }}
         />
         <Stack.Screen
           name="maps/[id]/edit"
           options={{
-            title: "Edit Maps",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Edit Maps" />,
           }}
         />
         <Stack.Screen
           name="maps/[id]/custom-pin"
           options={{
-            title: "Custom Pin Maps",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Custom Pin Maps" />,
           }}
         />
 
@@ -665,8 +623,7 @@ export default function UserLayout() {
         <Stack.Screen
           name="marketplace/index"
           options={{
-            title: "Market Place",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Market Place" />,
           }}
         />
       </Stack>

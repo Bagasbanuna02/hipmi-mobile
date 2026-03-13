@@ -6,6 +6,7 @@ import {
   MenuDrawerDynamicGrid,
   ViewWrapper,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconDocument, IconEdit, IconNews } from "@/components/_Icon";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import { MainColor } from "@/constants/color-palet";
@@ -105,14 +106,19 @@ export default function InvestmentDetail() {
     <>
       <Stack.Screen
         options={{
-          title: `Detail ${_.startCase(status as string)}`,
-          headerLeft: () => <BackButton />,
-          headerRight: () =>
-            status === "draft" ? (
-              <DotButton onPress={() => setOpenDrawerDraft(true)} />
-            ) : status === "publish" ? (
-              <DotButton onPress={() => setOpenDrawerPublish(true)} />
-            ) : null,
+          header: () => (
+            <AppHeader
+              title={`Detail ${_.startCase(status as string)}`}
+              left={<BackButton />}
+              right={
+                status === "draft" ? (
+                  <DotButton onPress={() => setOpenDrawerDraft(true)} />
+                ) : status === "publish" ? (
+                  <DotButton onPress={() => setOpenDrawerPublish(true)} />
+                ) : null
+              }
+            />
+          ),
         }}
       />
 

@@ -11,6 +11,7 @@ import {
   TextCustom,
   ViewWrapper,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconEdit } from "@/components/_Icon";
 import { IconTrash } from "@/components/_Icon/IconTrash";
 import { useAuth } from "@/hooks/use-auth";
@@ -57,12 +58,17 @@ export default function DonationNews() {
     <>
       <Stack.Screen
         options={{
-          title: "Detail Kabar",
-          headerLeft: () => <BackButton />,
-          headerRight: () =>
-            user?.id === data?.authorId && (
-              <DotButton onPress={() => setOpenDrawer(true)} />
-            ),
+          header: () => (
+            <AppHeader
+              title="Detail Kabar"
+              left={<BackButton />}
+              right={
+                user?.id === data?.authorId && (
+                  <DotButton onPress={() => setOpenDrawer(true)} />
+                )
+              }
+            />
+          ),
         }}
       />
       <ViewWrapper>

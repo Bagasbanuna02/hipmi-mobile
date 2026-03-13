@@ -1,5 +1,5 @@
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import LeftButtonCustom from "@/components/Button/BackButton";
-import { HeaderStyles } from "@/styles/header-styles";
 import { Stack } from "expo-router";
 
 export default function PortofolioLayout() {
@@ -7,8 +7,9 @@ export default function PortofolioLayout() {
     <>
       <Stack
         screenOptions={{
-          ...HeaderStyles,
-          headerLeft: () => <LeftButtonCustom />,
+          header: () => (
+            <AppHeader title="Portofolio" left={<LeftButtonCustom />} />
+          ),
         }}
       >
         {/* <Stack.Screen name="[id]/index" options={{ title: "Portofolio" }} /> */}

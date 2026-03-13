@@ -1,8 +1,8 @@
 import { BackButton } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import BackgroundNotificationHandler from "@/components/Notification/BackgroundNotificationHandler";
 import NotificationInitializer from "@/components/Notification/NotificationInitializer";
 import { NotificationProvider } from "@/hooks/use-notification-store";
-import { HeaderStyles } from "@/styles/header-styles";
 import { Stack } from "expo-router";
 
 export default function ApplicationLayout() {
@@ -20,7 +20,7 @@ export default function ApplicationLayout() {
 function ApplicationStack() {
   return (
     <>
-      <Stack screenOptions={HeaderStyles}>
+      <Stack>
         <Stack.Screen name="(user)" options={{ headerShown: false }} />
         <Stack.Screen name="admin" options={{ headerShown: false }} />
 
@@ -28,8 +28,7 @@ function ApplicationStack() {
         <Stack.Screen
           name="(image)/take-picture/[id]/index"
           options={{
-            title: "Ambil Gambar",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Ambil Gambar" />,
           }}
         />
 
@@ -37,8 +36,7 @@ function ApplicationStack() {
         <Stack.Screen
           name="(image)/preview-image/[id]/index"
           options={{
-            title: "Preview Gambar",
-            headerLeft: () => <BackButton />,
+            header: () => <AppHeader title="Preview Gambar" />,
           }}
         />
       </Stack>

@@ -10,6 +10,7 @@ import {
   TextCustom,
   ViewWrapper,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconDocument, IconEdit, IconNews } from "@/components/_Icon";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import { MainColor } from "@/constants/color-palet";
@@ -30,13 +31,13 @@ export default function InvestmentDetailHolding() {
   const [openDrawerDraft, setOpenDrawerDraft] = useState(false);
   const [openDrawerPublish, setOpenDrawerPublish] = useState(false);
     const [data, setData] = useState<any>(null);
-  
+
     useFocusEffect(
       useCallback(() => {
         onLoadData();
       }, [id, status])
     );
-  
+
     const onLoadData = async () => {
       try {
         const response = await apiInvestmentGetInvoice({
@@ -44,7 +45,7 @@ export default function InvestmentDetailHolding() {
           authorId: user?.id,
           category: "invoice",
         });
-  
+
         console.log("[DATA]", JSON.stringify(response.data, null, 2));
         setData(response.data);
       } catch (error) {
@@ -76,14 +77,19 @@ export default function InvestmentDetailHolding() {
     <>
       <Stack.Screen
         options={{
-          title: `Detail ${_.startCase(status as string)}`,
-          headerLeft: () => <BackButton />,
-          headerRight: () =>
-            status === "draft" ? (
-              <DotButton onPress={() => setOpenDrawerDraft(true)} />
-            ) : status === "publish" ? (
-              <DotButton onPress={() => setOpenDrawerPublish(true)} />
-            ) : null,
+          header: () => (
+            <AppHeader
+              title={`Detail ${_.startCase(status as string)}`}
+              left={<BackButton />}
+              right={
+                status === "draft" ? (
+                  <DotButton onPress={() => setOpenDrawerDraft(true)} />
+                ) : status === "publish" ? (
+                  <DotButton onPress={() => setOpenDrawerPublish(true)} />
+                ) : null
+              }
+            />
+          ),
         }}
       />
 

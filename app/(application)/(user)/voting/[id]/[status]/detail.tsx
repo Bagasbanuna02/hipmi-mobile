@@ -12,6 +12,7 @@ import {
   TextCustom,
   ViewWrapper,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconArchive, IconContribution, IconEdit } from "@/components/_Icon";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import ReportBox from "@/components/Box/ReportBox";
@@ -103,14 +104,19 @@ export default function VotingDetailStatus() {
     <>
       <Stack.Screen
         options={{
-          title: `Detail`,
-          headerLeft: () => <BackButton />,
-          headerRight: () =>
-            status === "draft" ? (
-              <DotButton onPress={() => setOpenDrawerDraft(true)} />
-            ) : status === "publish" ? (
-              <DotButton onPress={() => setOpenDrawerPublish(true)} />
-            ) : null,
+          header: () => (
+            <AppHeader
+              title="Detail"
+              left={<BackButton />}
+              right={
+                status === "draft" ? (
+                  <DotButton onPress={() => setOpenDrawerDraft(true)} />
+                ) : status === "publish" ? (
+                  <DotButton onPress={() => setOpenDrawerPublish(true)} />
+                ) : null
+              }
+            />
+          ),
         }}
       />
       <ViewWrapper>

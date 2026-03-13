@@ -11,6 +11,7 @@ import {
   StackCustom,
   ViewWrapper,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconArchive, IconContribution } from "@/components/_Icon";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
@@ -142,10 +143,14 @@ export default function VotingDetail() {
     <>
       <Stack.Screen
         options={{
-          title: `Detail Voting`,
-          headerLeft: () => <BackButton />,
-          headerRight: () => (
-            <DotButton onPress={() => setOpenDrawerPublish(true)} />
+          header: () => (
+            <AppHeader
+              title="Detail Voting"
+              left={<BackButton />}
+              right={
+                <DotButton onPress={() => setOpenDrawerPublish(true)} />
+              }
+            />
           ),
         }}
       />

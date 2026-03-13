@@ -1,4 +1,5 @@
 import { BackButton, StackCustom, TextCustom, ViewWrapper } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { router, Stack } from "expo-router";
 
 export default function NotFoundScreen() {
@@ -15,7 +16,7 @@ export default function NotFoundScreen() {
   return (
     <>
       <Stack.Screen
-        options={{ headerShown: true, title: "", headerLeft: () => <BackButton onPress={() => handleBack()} /> }}
+        options={{ header: () => <AppHeader title="" left={<BackButton onPress={() => handleBack()} />} /> }}
       />
       <ViewWrapper>
         <StackCustom

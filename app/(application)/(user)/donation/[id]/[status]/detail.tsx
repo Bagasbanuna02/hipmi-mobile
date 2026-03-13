@@ -7,6 +7,7 @@ import {
   NewWrapper,
   Spacing,
 } from "@/components";
+import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconEdit, IconNews } from "@/components/_Icon";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
 import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
@@ -97,14 +98,19 @@ export default function DonasiDetailStatus() {
     <>
       <Stack.Screen
         options={{
-          title: `Detail ${_.startCase(status as string)}`,
-          headerLeft: () => <BackButton />,
-          headerRight: () =>
-            status === "draft" ? (
-              <DotButton onPress={() => setOpenDrawer(true)} />
-            ) : status === "publish" ? (
-              <DotButton onPress={() => setOpenDrawerPublish(true)} />
-            ) : null,
+          header: () => (
+            <AppHeader
+              title={`Detail ${_.startCase(status as string)}`}
+              left={<BackButton />}
+              right={
+                status === "draft" ? (
+                  <DotButton onPress={() => setOpenDrawer(true)} />
+                ) : status === "publish" ? (
+                  <DotButton onPress={() => setOpenDrawerPublish(true)} />
+                ) : null
+              }
+            />
+          ),
         }}
       />
       <NewWrapper
