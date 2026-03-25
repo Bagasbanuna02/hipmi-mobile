@@ -120,4 +120,9 @@ Buatkan file baru pada "Folder tujuan" dengan nama "Nama file utama" dan ubah na
 
 <!-- END Create Box -->
 
+<!-- Random Prompt -->
+Diskusi pada file screens/Authentication/LoginView.tsx , tentang penggunaan phone number input. Karena tidak berfungsi dengan baik pada versi ios 26 keatas
+
+<!-- END Random Prompt -->
+
 <!-- END Use Prompt Now -->
