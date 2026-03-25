@@ -94,7 +94,7 @@ export const stylesHome = StyleSheet.create({
   jobVacancyHeader: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 16,
+    marginBottom: 20,
   },
   jobVacancyTitle: {
     fontSize: 18,

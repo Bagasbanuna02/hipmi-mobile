@@ -1,4 +1,4 @@
-import { NewWrapper } from "@/components";
+import { NewWrapper, ViewWrapper } from "@/components";
 import ButtonCustom from "@/components/Button/ButtonCustom";
 import ModalReactNative from "@/components/Modal/ModalReactNative";
 import Spacing from "@/components/_ShareComponent/Spacing";
@@ -128,7 +128,7 @@ export default function LoginView() {
   }
 
   return (
-    <NewWrapper
+    <ViewWrapper
       withBackground
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
@@ -205,6 +205,6 @@ export default function LoginView() {
           setLoadingTerm={setLoadingTerm}
         />
       </ModalReactNative>
-    </NewWrapper>
+    </ViewWrapper>
   );
 }

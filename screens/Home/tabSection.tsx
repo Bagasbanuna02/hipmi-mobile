@@ -5,7 +5,6 @@ import { router } from "expo-router";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
-
 const CustomTab = ({ icon, label, isActive, onPress }: ICustomTab) => (
   <TouchableOpacity
     style={[GStyles.tabItem, isActive && GStyles.activeTab]}
@@ -17,7 +16,7 @@ const CustomTab = ({ icon, label, isActive, onPress }: ICustomTab) => (
     >
       <Ionicons
         name={icon as any}
-        size={20}
+        size={18}
         color={isActive ? "#fff" : "#666"}
       />
     </View>
@@ -30,8 +29,8 @@ const CustomTab = ({ icon, label, isActive, onPress }: ICustomTab) => (
 export default function TabSection({ tabs }: { tabs: ITabs[] }) {
   return (
     <>
-      <View style={GStyles.tabBar}>
-        <View style={GStyles.tabContainer}>
+      <View style={GStyles.tabBar} pointerEvents="box-none">
+        <View style={GStyles.tabContainer} pointerEvents="box-none">
           {tabs.map((e) => (
             <CustomTab
               key={e.id}

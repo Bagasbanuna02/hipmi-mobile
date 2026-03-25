@@ -6,13 +6,13 @@ export async function apiUser(id: string) {
 }
 
 export async function apiAllUser({
-  page,
+  page = "1",
   search,
 }: {
   page?: string;
   search?: string;
 }) {
-  const pageQuery = page ? `?page=${page}` : "";
+  const pageQuery = `?page=${page}`;
   const searchQuery = search ? `&search=${search}` : "";
 
   try {

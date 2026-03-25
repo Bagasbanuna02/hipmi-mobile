@@ -19,6 +19,7 @@ import {
   SafeAreaView,
 } from "react-native-safe-area-context";
 import type { ScrollViewProps, FlatListProps } from "react-native";
+import Spacing from "./Spacing";
 
 // --- ✅ Tambahkan refreshControl ke BaseProps ---
 interface BaseProps {
@@ -111,7 +112,6 @@ const NewWrapper = (props: NewWrapperProps) => {
                 return `${String(item.id)}-${index}`;
               })
             }
-          
             refreshControl={refreshControl} // ✅ dari BaseProps
             onEndReached={listProps.onEndReached}
             onEndReachedThreshold={0.5}
@@ -156,15 +156,27 @@ const NewWrapper = (props: NewWrapperProps) => {
         <View style={GStyles.stickyHeader}>{headerComponent}</View>
       )}
 
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
+      <View style={{ flex: 0 }} collapsable={false}>
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          keyboardShouldPersistTaps="handled"
+          refreshControl={refreshControl} // ✅ sekarang valid
+        >
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            {renderContainer(staticProps.children)}
+          </TouchableWithoutFeedback>
+        </ScrollView>
+      </View>
+
+      {/* <ScrollView
+        contentContainerStyle={{ flexGrow: 0 }}
         keyboardShouldPersistTaps="handled"
         refreshControl={refreshControl} // ✅ sekarang valid
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           {renderContainer(staticProps.children)}
         </TouchableWithoutFeedback>
-      </ScrollView>
+      </ScrollView> */}
 
       {footerComponent ? (
         <SafeAreaView

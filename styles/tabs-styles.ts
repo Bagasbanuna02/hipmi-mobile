@@ -11,7 +11,7 @@ export const TabsStyles: BottomTabNavigationOptions = {
   tabBarStyle: Platform.select({
     ios: {
       borderTopWidth: 0,
-      paddingTop: 5,
+      paddingTop: 12,
       height: OS_IOS_HEIGHT,
     },
     android: {

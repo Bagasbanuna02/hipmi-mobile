@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { BasicWrapper, StackCustom, ViewWrapper } from "@/components";
+import { BasicWrapper, NewWrapper, StackCustom, ViewWrapper } from "@/components";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
 import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 import { MainColor } from "@/constants/color-palet";
@@ -148,7 +148,7 @@ export default function Application() {
         }}
       />
 
-      <ViewWrapper
+      <NewWrapper
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -166,18 +166,19 @@ export default function Application() {
               })}
             />
           ) : (
-            <View style={GStyles.tabBar}>
-              <View style={[GStyles.tabContainer, { paddingTop: 10 }]}>
-                {Array.from({ length: 4 }).map((e, index) => (
-                  <CustomSkeleton
-                    key={index}
-                    height={40}
-                    width={40}
-                    radius={100}
-                  />
-                ))}
-              </View>
-            </View>
+            null
+            // <View style={GStyles.tabBar}>
+            //   <View style={[GStyles.tabContainer, { paddingTop: 10 }]}>
+            //     {Array.from({ length: 4 }).map((e, index) => (
+            //       <CustomSkeleton
+            //         key={index}
+            //         height={40}
+            //         width={40}
+            //         radius={100}
+            //       />
+            //     ))}
+            //   </View>
+            // </View>
           )
         }
       >
@@ -201,10 +202,10 @@ export default function Application() {
           {data ? (
             <Home_BottomFeatureSection listData={listData} />
           ) : (
-            <CustomSkeleton height={200} />
+            <CustomSkeleton height={150} />
           )}
         </StackCustom>
-      </ViewWrapper>
+      </NewWrapper>
     </>
   );
 }

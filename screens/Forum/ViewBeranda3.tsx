@@ -18,7 +18,7 @@ import _ from "lodash";
 import { useEffect, useState } from "react";
 import { RefreshControl, TouchableOpacity, View } from "react-native";
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 10;
 
 export default function Forum_ViewBeranda3() {
   const { user } = useAuth();

@@ -159,7 +159,7 @@ export const GStyles = StyleSheet.create({
     transform: [{ scale: 1.05 }],
   },
   iconContainer: {
-    padding: 8,
+    padding: 5,
     borderRadius: 20,
     // marginBottom: 4,
   },

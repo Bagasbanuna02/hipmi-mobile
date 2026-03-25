@@ -33,7 +33,7 @@ import { Text, View } from "react-native";
 import PhoneInput, { ICountry } from "react-native-international-phone-number";
 import { Avatar } from "react-native-paper";
 
-export function Admin_ScreenPortofolioCreate() {
+export function ScreenPortofolioCreate() {
   const { id } = useLocalSearchParams();
   const [selectedCountry, setSelectedCountry] = useState<null | ICountry>(null);
   const [inputValue, setInputValue] = useState<string>("");
@@ -72,7 +72,7 @@ export function Admin_ScreenPortofolioCreate() {
     useCallback(() => {
       onLoadMaster();
       onLoadMasterSubBidangBisnis();
-    }, [])
+    }, []),
   );
 
   const onLoadMaster = async () => {
@@ -97,7 +97,7 @@ export function Admin_ScreenPortofolioCreate() {
 
   const handlerSelectedSubBidang = ({ id }: { id: string }) => {
     const selectedList = subBidangBisnis?.filter(
-      (item) => (item?.masterBidangBisnisId as any) === id
+      (item) => (item?.masterBidangBisnisId as any) === id,
     );
     setSelectedSubBidang(selectedList as any[]);
   };
@@ -168,8 +168,7 @@ export function Admin_ScreenPortofolioCreate() {
               .filter((option: any) => {
                 const selectedValues = listSubBidangSelected.map((s) => s.id);
                 return (
-                  option.id === item.id ||
-                  !selectedValues.includes(option.id)
+                  option.id === item.id || !selectedValues.includes(option.id)
                 );
               })
               .map((e: any) => ({
@@ -188,7 +187,9 @@ export function Admin_ScreenPortofolioCreate() {
         <CenterCustom>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
             <ActionIcon
-              disabled={selectedSubBidang.length === listSubBidangSelected.length}
+              disabled={
+                selectedSubBidang.length === listSubBidangSelected.length
+              }
               onPress={() => {
                 setListSubBidangSelected([
                   ...listSubBidangSelected,
