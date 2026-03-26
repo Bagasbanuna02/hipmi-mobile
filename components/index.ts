@@ -49,6 +49,8 @@ import MapCustom from "./Map/MapCustom";
 import CenterCustom from "./Center/CenterCustom";
 // Clickable
 import ClickableCustom from "./Clickable/ClickableCustom";
+// PhoneInput
+import PhoneInputCustom from "./PhoneInput/PhoneInputCustom";
 // Scroll
 import ScrollableCustom from "./Scroll/ScrollCustom";
 // ShareComponent
@@ -95,6 +97,8 @@ export {
   CheckboxGroup,
   // Clickable
   ClickableCustom,
+  // PhoneInput
+  PhoneInputCustom,
   // Container
   CircleContainer,
   // Divider
