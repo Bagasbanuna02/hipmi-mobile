@@ -1,8 +1,9 @@
-import { NewWrapper, ViewWrapper } from "@/components";
+import { NewWrapper, PhoneInputCustom, ViewWrapper } from "@/components";
 import ButtonCustom from "@/components/Button/ButtonCustom";
 import ModalReactNative from "@/components/Modal/ModalReactNative";
 import Spacing from "@/components/_ShareComponent/Spacing";
 import { MainColor } from "@/constants/color-palet";
+import { DEFAULT_COUNTRY, type CountryData } from "@/constants/countries";
 import { useAuth } from "@/hooks/use-auth";
 import { apiVersion, BASE_URL } from "@/service/api-config";
 import { GStyles } from "@/styles/global-styles";
@@ -10,16 +11,16 @@ import { openBrowser } from "@/utils/openBrower";
 import versionBadge from "@/utils/viersionBadge";
 import { Redirect } from "expo-router";
 import { useEffect, useState } from "react";
-import { RefreshControl, Text, View } from "react-native";
-import PhoneInput, { ICountry } from "react-native-international-phone-number";
+import { KeyboardAvoidingView, Platform, RefreshControl, Text, View } from "react-native";
+import { parsePhoneNumber } from "libphonenumber-js";
 import Toast from "react-native-toast-message";
 import EULASection from "./EULASection";
 
 export default function LoginView() {
   const url = BASE_URL;
   const [version, setVersion] = useState<string>("");
-  const [selectedCountry, setSelectedCountry] = useState<null | ICountry>(null);
-  const [inputValue, setInputValue] = useState<string>("");
+  const [selectedCountry, setSelectedCountry] = useState<CountryData>(DEFAULT_COUNTRY);
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -43,38 +44,40 @@ export default function LoginView() {
   async function handleRefresh() {
     setRefreshing(true);
     await onLoadVersion();
-    setInputValue("");
+    setPhoneNumber("");
+    setSelectedCountry(DEFAULT_COUNTRY);
     setLoading(false);
     setRefreshing(false);
   }
 
-  function handleInputValue(phoneNumber: string) {
-    setInputValue(phoneNumber);
-  }
-
-  function handleSelectedCountry(country: ICountry) {
-    setSelectedCountry(country);
-  }
-
   async function validateData() {
-    if (inputValue.length === 0) {
+    if (phoneNumber.length === 0) {
       return Toast.show({
         type: "error",
         text1: "Masukan nomor anda",
       });
     }
 
-    if (selectedCountry === null) {
-      return Toast.show({
-        type: "error",
-        text1: "Pilih negara",
-      });
-    }
-
-    if (inputValue.length < 9) {
+    if (phoneNumber.length < 9) {
       return Toast.show({
         type: "error",
         text1: "Nomor tidak valid",
+      });
+    }
+
+    // Validate with libphonenumber-js
+    try {
+      const parsedNumber = parsePhoneNumber(phoneNumber, selectedCountry.code);
+      if (!parsedNumber || !parsedNumber.isValid()) {
+        return Toast.show({
+          type: "error",
+          text1: "Nomor tidak valid",
+        });
+      }
+    } catch (error) {
+      return Toast.show({
+        type: "error",
+        text1: "Format nomor tidak valid",
       });
     }
 
@@ -85,8 +88,17 @@ export default function LoginView() {
     const isValid = await validateData();
     if (!isValid) return;
 
-    const callingCode = selectedCountry?.callingCode.replace(/^\+/, "") || "";
-    let fixNumber = inputValue.replace(/\s+/g, "").replace(/^0+/, "");
+    // Format phone number with country code
+    const callingCode = selectedCountry.callingCode;
+    let fixNumber = phoneNumber.replace(/\s+/g, "").replace(/^0+/, "");
+
+    // Remove country code if already present
+    if (fixNumber.startsWith(callingCode)) {
+      fixNumber = fixNumber.substring(callingCode.length);
+    }
+
+    // Remove leading zero
+    fixNumber = fixNumber.replace(/^0+/, "");
 
     const realNumber = callingCode + fixNumber;
 
@@ -128,75 +140,82 @@ export default function LoginView() {
   }
 
   return (
-    <ViewWrapper
-      withBackground
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-      }
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 50}
+      style={{ flex: 1 }}
     >
-      <View style={GStyles.authContainer}>
-        <View>
-          <View style={GStyles.authContainerTitle}>
-            <Text style={GStyles.authSubTitle}>WELCOME TO</Text>
-            <Spacing height={5} />
-            <Text style={GStyles.authTitle}>HIPMI BADUNG APPS</Text>
-            <Spacing height={5} />
+      <ViewWrapper
+        withBackground
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+        }
+      >
+        <View style={[GStyles.authContainer, { paddingBottom: 40 }]}>
+          <View>
+            <View style={GStyles.authContainerTitle}>
+              <Text style={GStyles.authSubTitle}>WELCOME TO</Text>
+              <Spacing height={5} />
+              <Text style={GStyles.authTitle}>HIPMI BADUNG APPS</Text>
+              <Spacing height={5} />
+            </View>
+            <Spacing height={50} />
+            <Text
+              style={{
+                position: "absolute",
+                bottom: 35,
+                right: 50,
+                fontSize: 10,
+                fontWeight: "thin",
+                fontStyle: "italic",
+                color: MainColor.white_gray,
+              }}
+            >
+              {version} | powered by muku.id
+            </Text>
           </View>
-          <Spacing height={50} />
-          <Text
-            style={{
-              position: "absolute",
-              bottom: 35,
-              right: 50,
-              fontSize: 10,
-              fontWeight: "thin",
-              fontStyle: "italic",
-              color: MainColor.white_gray,
-            }}
+
+          <Spacing height={20} />
+
+          <PhoneInputCustom
+            value={phoneNumber}
+            onChangePhoneNumber={setPhoneNumber}
+            selectedCountry={selectedCountry}
+            onChangeCountry={setSelectedCountry}
+            placeholder="Masukkan nomor"
+          />
+
+          <Spacing />
+
+          <ButtonCustom
+            onPress={handleLogin}
+            disabled={loadingTerm}
+            isLoading={loading || loadingTerm}
           >
-            {version} | powered by muku.id
+            Login
+          </ButtonCustom>
+          <Spacing height={50} />
+
+          <Text
+            style={{ ...GStyles.textLabel, textAlign: "center", fontSize: 12 }}
+          >
+            Dengan menggunakan aplikasi ini, Anda telah menyetujui{" "}
+            <Text
+              style={{
+                color: MainColor.yellow,
+                textDecorationLine: "underline",
+              }}
+              onPress={() => {
+                const toUrl = `${url}/terms-of-service.html`;
+                openBrowser(toUrl);
+              }}
+            >
+              Syarat & Ketentuan
+            </Text>{" "}
+            dan seluruh kebijakan privasi yang berlaku.
           </Text>
         </View>
-
-        <PhoneInput
-          value={inputValue}
-          onChangePhoneNumber={handleInputValue}
-          selectedCountry={selectedCountry}
-          onChangeSelectedCountry={handleSelectedCountry}
-          defaultCountry="ID"
-          placeholder="Masukkan nomor"
-        />
-
-        <Spacing />
-
-        <ButtonCustom
-          onPress={handleLogin}
-          disabled={loadingTerm}
-          isLoading={loading || loadingTerm}
-        >
-          Login
-        </ButtonCustom>
-        <Spacing height={50} />
-
-        <Text
-          style={{ ...GStyles.textLabel, textAlign: "center", fontSize: 12 }}
-        >
-          Dengan menggunakan aplikasi ini, Anda telah menyetujui{" "}
-          <Text
-            style={{
-              color: MainColor.yellow,
-              textDecorationLine: "underline",
-            }}
-            onPress={() => {
-              const toUrl = `${url}/terms-of-service.html`;
-              openBrowser(toUrl);
-            }}
-          >
-            Syarat & Ketentuan
-          </Text>{" "}
-          dan seluruh kebijakan privasi yang berlaku.
-        </Text>
-      </View>
+      </ViewWrapper>
 
       <ModalReactNative isVisible={modalVisible}>
         <EULASection
@@ -205,6 +224,6 @@ export default function LoginView() {
           setLoadingTerm={setLoadingTerm}
         />
       </ModalReactNative>
-    </ViewWrapper>
+    </KeyboardAvoidingView>
   );
 }
