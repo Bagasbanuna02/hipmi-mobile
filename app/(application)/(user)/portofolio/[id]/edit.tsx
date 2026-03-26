@@ -5,6 +5,7 @@ import {
   ButtonCustom,
   CenterCustom,
   NewWrapper,
+  PhoneInputCustom,
   SelectCustom,
   Spacing,
   StackCustom,
@@ -15,6 +16,7 @@ import {
 import ListSkeletonComponent from "@/components/_ShareComponent/ListSkeletonComponent";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_XLARGE } from "@/constants/constans-value";
+import { DEFAULT_COUNTRY, type CountryData, COUNTRIES } from "@/constants/countries";
 import {
   apiMasterBidangBisnis,
   apiMasterSubBidangBisnis,
@@ -32,7 +34,6 @@ import { router, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
-import PhoneInput, { ICountry } from "react-native-international-phone-number";
 import { ActivityIndicator } from "react-native-paper";
 import Toast from "react-native-toast-message";
 
@@ -59,8 +60,8 @@ export default function PortofolioEdit() {
   const { id } = useLocalSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState<any>({});
-
-  const [selectedCountry, setSelectedCountry] = useState<null | ICountry>(null);
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [selectedCountry, setSelectedCountry] = useState<CountryData>(DEFAULT_COUNTRY);
   const [bidangBisnis, setBidangBisnis] = useState<
     IMasterBidangBisnis[] | null
   >(null);
@@ -72,12 +73,42 @@ export default function PortofolioEdit() {
     IListSubBidangSelected[]
   >([]);
 
-  function handleInputValue(phoneNumber: string) {
-    setData({ ...data, tlpn: phoneNumber });
+  function handlePhoneChange(phone: string) {
+    setPhoneNumber(phone);
+    
+    // Format phone number for API
+    const callingCode = selectedCountry.callingCode;
+    let fixNumber = phone.replace(/\s+/g, "").replace(/^0+/, "");
+    
+    // Remove country code if already present
+    if (fixNumber.startsWith(callingCode)) {
+      fixNumber = fixNumber.substring(callingCode.length);
+    }
+    
+    // Remove leading zero
+    fixNumber = fixNumber.replace(/^0+/, "");
+    
+    const realNumber = callingCode + fixNumber;
+    setData({ ...data, tlpn: realNumber });
   }
 
-  function handleSelectedCountry(country: ICountry) {
+  function handleCountryChange(country: CountryData) {
     setSelectedCountry(country);
+    
+    // Re-format with new country code
+    const callingCode = country.callingCode;
+    let fixNumber = phoneNumber.replace(/\s+/g, "").replace(/^0+/, "");
+    
+    // Remove country code if already present
+    if (fixNumber.startsWith(callingCode)) {
+      fixNumber = fixNumber.substring(callingCode.length);
+    }
+    
+    // Remove leading zero
+    fixNumber = fixNumber.replace(/^0+/, "");
+    
+    const realNumber = callingCode + fixNumber;
+    setData({ ...data, tlpn: realNumber });
   }
 
   const onLoadMasterBidang = async () => {
@@ -122,8 +153,27 @@ export default function PortofolioEdit() {
     const response = await apiGetOnePortofolio({ id: id });
 
     if (response.success) {
-      const fixNumber = response.data.tlpn.replace("62", "");
-      setData({ ...response.data, tlpn: fixNumber });
+      // Extract phone number without country code for display
+      const fullNumber = response.data.tlpn;
+      let displayNumber = fullNumber;
+      let detectedCountry = DEFAULT_COUNTRY;
+      
+      // Try to detect country from calling code
+      for (const country of COUNTRIES) {
+        if (fullNumber.startsWith(country.callingCode)) {
+          detectedCountry = country;
+          displayNumber = fullNumber.substring(country.callingCode.length);
+          break;
+        }
+      }
+      
+      setSelectedCountry(detectedCountry);
+      
+      // Remove leading zero if present
+      displayNumber = displayNumber.replace(/^0+/, "");
+      
+      setPhoneNumber(displayNumber);
+      setData({ ...response.data, tlpn: displayNumber });
 
       // Cek apakah ada sub bidang bisnis yang terpilih
       const prevSubBidang = response.data.Portofolio_BidangDanSubBidangBisnis;
@@ -244,15 +294,11 @@ export default function PortofolioEdit() {
   }
 
   const handleSubmitUpdate = async () => {
-    const callingCode = selectedCountry?.callingCode.replace(/^\+/, "") || "";
-    let fixNumber = data.tlpn.replace(/\s+/g, "").replace(/^0+/, "");
-    const realNumber = callingCode + fixNumber;
-
     const newData: IFormData = {
       id_Portofolio: data.id_Portofolio,
       namaBisnis: data.namaBisnis,
       alamatKantor: data.alamatKantor,
-      tlpn: realNumber,
+      tlpn: data.tlpn, // Already formatted by PhoneInputCustom
       deskripsi: data.deskripsi,
       masterBidangBisnisId: data.masterBidangBisnisId,
       subBidang: listSubBidangSelected,
@@ -435,12 +481,11 @@ export default function PortofolioEdit() {
               <Text style={{ color: "red" }}> *</Text>
             </View>
             <Spacing height={5} />
-            <PhoneInput
-              value={data.tlpn}
-              onChangePhoneNumber={handleInputValue}
+            <PhoneInputCustom
+              value={phoneNumber}
+              onChangePhoneNumber={handlePhoneChange}
               selectedCountry={selectedCountry}
-              onChangeSelectedCountry={handleSelectedCountry}
-              defaultCountry="ID"
+              onChangeCountry={handleCountryChange}
               placeholder="xxx-xxx-xxx"
             />
           </View>

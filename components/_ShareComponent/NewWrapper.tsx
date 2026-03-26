@@ -160,7 +160,7 @@ const NewWrapper = (props: NewWrapperProps) => {
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
           keyboardShouldPersistTaps="handled"
-          refreshControl={refreshControl} // ✅ sekarang valid
+          refreshControl={refreshControl}
         >
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             {renderContainer(staticProps.children)}
