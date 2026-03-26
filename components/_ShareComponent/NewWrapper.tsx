@@ -84,7 +84,7 @@ const NewWrapper = (props: NewWrapperProps) => {
     return <View style={[GStyles.container, style]}>{content}</View>;
   };
 
-  // 🔹 Mode Dinamis
+  // 🔹 Mode Dinamis (FlatList)
   if ("listData" in props) {
     const listProps = props as ListModeProps;
 
@@ -96,7 +96,7 @@ const NewWrapper = (props: NewWrapperProps) => {
         {headerComponent && (
           <View style={GStyles.stickyHeader}>{headerComponent}</View>
         )}
-        <View style={[GStyles.container, style]}>
+        <View style={[GStyles.container, style, { flex: 1 }]}>
           <FlatList
             data={listProps.listData}
             renderItem={listProps.renderItem}
@@ -108,29 +108,36 @@ const NewWrapper = (props: NewWrapperProps) => {
                   return `fallback-${index}-${JSON.stringify(item)}`;
                 }
 
-                // Gabungkan ID dengan indeks untuk mencegah duplikasi
                 return `${String(item.id)}-${index}`;
               })
             }
-            refreshControl={refreshControl} // ✅ dari BaseProps
+            refreshControl={refreshControl}
             onEndReached={listProps.onEndReached}
             onEndReachedThreshold={0.5}
             ListHeaderComponent={listProps.ListHeaderComponent}
             ListFooterComponent={listProps.ListFooterComponent}
             ListEmptyComponent={listProps.ListEmptyComponent}
-            contentContainerStyle={{ flexGrow: 1 }}
+            contentContainerStyle={{ 
+              flexGrow: 1,
+              paddingBottom: footerComponent && !hideFooter ? OS_HEIGHT : 0 
+            }}
             keyboardShouldPersistTaps="handled"
           />
         </View>
 
-        {footerComponent ? (
-          <SafeAreaView
-            edges={Platform.OS === "ios" ? edgesFooter : ["bottom"]}
-            style={{ backgroundColor: MainColor.darkblue, height: OS_HEIGHT }}
-          >
-            {footerComponent}
-          </SafeAreaView>
-        ) : hideFooter ? null : (
+        {/* Footer dengan position absolute untuk stay di bawah */}
+        {footerComponent && !hideFooter && (
+          <View style={styles.footerContainer}>
+            <SafeAreaView
+              edges={Platform.OS === "ios" ? edgesFooter : ["bottom"]}
+              style={{ backgroundColor: MainColor.darkblue }}
+            >
+              {footerComponent}
+            </SafeAreaView>
+          </View>
+        )}
+
+        {!footerComponent && !hideFooter && (
           <SafeAreaView
             edges={["bottom"]}
             style={{ backgroundColor: MainColor.darkblue }}
@@ -144,7 +151,7 @@ const NewWrapper = (props: NewWrapperProps) => {
     );
   }
 
-  // 🔹 Mode Statis
+  // 🔹 Mode Statis (ScrollView)
   const staticProps = props as StaticModeProps;
 
   return (
@@ -158,7 +165,10 @@ const NewWrapper = (props: NewWrapperProps) => {
 
       <View style={{ flex: 0 }} collapsable={false}>
         <ScrollView
-          contentContainerStyle={{ flexGrow: 1 }}
+          contentContainerStyle={{ 
+            flexGrow: 1,
+            paddingBottom: footerComponent && !hideFooter ? OS_HEIGHT : 0 
+          }}
           keyboardShouldPersistTaps="handled"
           refreshControl={refreshControl}
         >
@@ -168,24 +178,19 @@ const NewWrapper = (props: NewWrapperProps) => {
         </ScrollView>
       </View>
 
-      {/* <ScrollView
-        contentContainerStyle={{ flexGrow: 0 }}
-        keyboardShouldPersistTaps="handled"
-        refreshControl={refreshControl} // ✅ sekarang valid
-      >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          {renderContainer(staticProps.children)}
-        </TouchableWithoutFeedback>
-      </ScrollView> */}
+      {/* Footer dengan position absolute untuk stay di bawah */}
+      {footerComponent && !hideFooter && (
+        <View style={styles.footerContainer}>
+          <SafeAreaView
+            edges={Platform.OS === "ios" ? edgesFooter : ["bottom"]}
+            style={{ backgroundColor: MainColor.darkblue }}
+          >
+            {footerComponent}
+          </SafeAreaView>
+        </View>
+      )}
 
-      {footerComponent ? (
-        <SafeAreaView
-          edges={Platform.OS === "ios" ? edgesFooter : ["bottom"]}
-          style={{ backgroundColor: MainColor.darkblue, height: OS_HEIGHT }}
-        >
-          {footerComponent}
-        </SafeAreaView>
-      ) : hideFooter ? null : (
+      {!footerComponent && !hideFooter && (
         <SafeAreaView
           edges={["bottom"]}
           style={{ backgroundColor: MainColor.darkblue }}
@@ -197,6 +202,17 @@ const NewWrapper = (props: NewWrapperProps) => {
       )}
     </KeyboardAvoidingView>
   );
+};
+
+// Styles untuk footer dengan position absolute
+const styles = {
+  footerContainer: {
+    position: "absolute" as const,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: MainColor.darkblue,
+  },
 };
 
 export default NewWrapper;
