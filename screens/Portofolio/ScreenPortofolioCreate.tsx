@@ -5,6 +5,7 @@ import {
   CenterCustom,
   InformationBox,
   NewWrapper,
+  PhoneInputCustom,
   SelectCustom,
   Spacing,
   StackCustom,
@@ -15,6 +16,7 @@ import {
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_XLARGE } from "@/constants/constans-value";
 import DUMMY_IMAGE from "@/constants/dummy-image-value";
+import { DEFAULT_COUNTRY, type CountryData } from "@/constants/countries";
 import Portofolio_ButtonCreate from "@/screens/Portofolio/ButtonCreatePortofolio";
 import {
   apiMasterBidangBisnis,
@@ -30,13 +32,12 @@ import { useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import { useCallback, useState } from "react";
 import { Text, View } from "react-native";
-import PhoneInput, { ICountry } from "react-native-international-phone-number";
 import { Avatar } from "react-native-paper";
 
 export function ScreenPortofolioCreate() {
   const { id } = useLocalSearchParams();
-  const [selectedCountry, setSelectedCountry] = useState<null | ICountry>(null);
-  const [inputValue, setInputValue] = useState<string>("");
+  const [selectedCountry, setSelectedCountry] = useState<CountryData>(DEFAULT_COUNTRY);
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [data, setData] = useState({
     namaBisnis: "",
     masterBidangBisnisId: "",
@@ -102,16 +103,42 @@ export function ScreenPortofolioCreate() {
     setSelectedSubBidang(selectedList as any[]);
   };
 
-  const handleInputValue = (phoneNumber: string) => {
-    setInputValue(phoneNumber);
-    const callingCode = selectedCountry?.callingCode.replace(/^\+/, "") || "";
-    let fixNumber = inputValue.replace(/\s+/g, "").replace(/^0+/, "");
+  const handlePhoneChange = (phone: string) => {
+    setPhoneNumber(phone);
+    
+    // Format phone number for API
+    const callingCode = selectedCountry.callingCode;
+    let fixNumber = phone.replace(/\s+/g, "").replace(/^0+/, "");
+    
+    // Remove country code if already present
+    if (fixNumber.startsWith(callingCode)) {
+      fixNumber = fixNumber.substring(callingCode.length);
+    }
+    
+    // Remove leading zero
+    fixNumber = fixNumber.replace(/^0+/, "");
+    
     const realNumber = callingCode + fixNumber;
     setData({ ...data, tlpn: realNumber });
   };
 
-  const handleSelectedCountry = (country: ICountry) => {
+  const handleCountryChange = (country: CountryData) => {
     setSelectedCountry(country);
+    
+    // Re-format with new country code
+    const callingCode = country.callingCode;
+    let fixNumber = phoneNumber.replace(/\s+/g, "").replace(/^0+/, "");
+    
+    // Remove country code if already present
+    if (fixNumber.startsWith(callingCode)) {
+      fixNumber = fixNumber.substring(callingCode.length);
+    }
+    
+    // Remove leading zero
+    fixNumber = fixNumber.replace(/^0+/, "");
+    
+    const realNumber = callingCode + fixNumber;
+    setData({ ...data, tlpn: realNumber });
   };
 
   return (
@@ -234,12 +261,11 @@ export function ScreenPortofolioCreate() {
             <Text style={{ color: "red" }}> *</Text>
           </View>
           <Spacing height={5} />
-          <PhoneInput
-            value={inputValue}
-            onChangePhoneNumber={handleInputValue}
+          <PhoneInputCustom
+            value={phoneNumber}
+            onChangePhoneNumber={handlePhoneChange}
             selectedCountry={selectedCountry}
-            onChangeSelectedCountry={handleSelectedCountry}
-            defaultCountry="ID"
+            onChangeCountry={handleCountryChange}
             placeholder="xxx-xxx-xxx"
           />
         </View>

@@ -1,6 +1,5 @@
 import { MainColor } from "@/constants/color-palet";
 import {
-  COUNTRIES,
   DEFAULT_COUNTRY,
   searchCountries,
   type CountryData,
@@ -61,7 +60,6 @@ export default function PhoneInputCustom({
           activeOpacity={0.7}
         >
           <Text style={styles.countryCodeText}>+{selectedCountry.callingCode}</Text>
-          <Text style={styles.dropdownIcon}>⌄</Text>
         </TouchableOpacity>
 
         <View style={styles.divider} />
@@ -73,7 +71,6 @@ export default function PhoneInputCustom({
           value={value}
           onChangeText={handlePhoneChange}
           keyboardType="phone-pad"
-          returnKeyType="done"
           autoComplete="tel"
           importantForAutofill="yes"
           editable={!disabled}
