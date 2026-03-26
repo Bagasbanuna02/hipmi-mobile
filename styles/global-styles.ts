@@ -207,7 +207,7 @@ export const GStyles = StyleSheet.create({
     elevation: 8, // untuk Android
   },
   bottomBarContainer: {
-    paddingHorizontal: 15,
+    paddingHorizontal: 25,
     paddingVertical: 10,
   },
   // =============== BOTTOM BAR =============== //

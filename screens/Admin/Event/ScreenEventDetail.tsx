@@ -128,12 +128,13 @@ export function Admin_ScreenEventDetail() {
       );
     }
 
-    return null;
+    return <Spacing height={100} />;
   }, [status, id]);
 
   return (
     <>
       <NewWrapper
+        hideFooter
         headerComponent={headerComponent}
         // footerComponent={
         //   <View style={{ paddingInline: 8 }}>
