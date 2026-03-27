@@ -133,7 +133,7 @@ const NewWrapper = (props: NewWrapperProps) => {
               style={{ backgroundColor: MainColor.darkblue }}
             >
               {footerComponent}
-            </SafeAreaView>
+            </SafeAreaView>   
           </View>
         )}
 

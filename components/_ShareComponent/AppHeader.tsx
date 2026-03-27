@@ -30,7 +30,7 @@ export default function AppHeader({
       ? isIOS26Plus
         ? insets.top - 10
         : insets.top
-      : 10;
+      : 40;
 
   const paddingBottom = Platform.OS === "ios" ? 8 : 13;
 

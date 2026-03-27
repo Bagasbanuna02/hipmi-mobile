@@ -11,7 +11,13 @@ import { openBrowser } from "@/utils/openBrower";
 import versionBadge from "@/utils/viersionBadge";
 import { Redirect } from "expo-router";
 import { useEffect, useState } from "react";
-import { KeyboardAvoidingView, Platform, RefreshControl, Text, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  RefreshControl,
+  Text,
+  View,
+} from "react-native";
 import { parsePhoneNumber } from "libphonenumber-js";
 import Toast from "react-native-toast-message";
 import EULASection from "./EULASection";
@@ -19,7 +25,8 @@ import EULASection from "./EULASection";
 export default function LoginView() {
   const url = BASE_URL;
   const [version, setVersion] = useState<string>("");
-  const [selectedCountry, setSelectedCountry] = useState<CountryData>(DEFAULT_COUNTRY);
+  const [selectedCountry, setSelectedCountry] =
+    useState<CountryData>(DEFAULT_COUNTRY);
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [refreshing, setRefreshing] = useState<boolean>(false);
@@ -160,19 +167,21 @@ export default function LoginView() {
               <Spacing height={5} />
             </View>
             <Spacing height={50} />
-            <Text
-              style={{
-                position: "absolute",
-                bottom: 35,
-                right: 50,
-                fontSize: 10,
-                fontWeight: "thin",
-                fontStyle: "italic",
-                color: MainColor.white_gray,
-              }}
-            >
-              {version} | powered by muku.id
-            </Text>
+            {version && (
+              <Text
+                style={{
+                  position: "absolute",
+                  bottom: 35,
+                  right: 50,
+                  fontSize: 10,
+                  fontWeight: "thin",
+                  fontStyle: "italic",
+                  color: MainColor.white_gray,
+                }}
+              >
+                powered by muku.id
+              </Text>
+            )}
           </View>
 
           <Spacing height={20} />

@@ -33,7 +33,10 @@ export function EventDetailQRCode({
   const deepLinkURL = `${BASE_URL}/event/${id}/confirmation?userId=${userId}`;
 
   // Toggle antara HTTPS link dan custom scheme
-  const qrValue = useHttpsLink ? httpsLink : deepLinkURL;
+  // const qrValue = useHttpsLink ? httpsLink : deepLinkURL;
+  const qrValue = deepLinkURL;
+
+
 
   return (
     <BaseBox>
@@ -46,7 +49,7 @@ export function EventDetailQRCode({
         {qrValue}
       </TextCustom>
       <Spacing />
-      <StackCustom direction="row" gap="sm">
+      {/* <StackCustom direction="row" gap="sm">
         <ButtonCustom
           onPress={() => setUseHttpsLink(true)}
           backgroundColor={useHttpsLink ? MainColor.yellow : "transparent"}
@@ -69,13 +72,13 @@ export function EventDetailQRCode({
         >
           Custom Scheme
         </ButtonCustom>
-      </StackCustom>
-      <Spacing />
+      </StackCustom> */}
+      {/* <Spacing />
       <TextCustom color="gray" align="center" size={"small"}>
         {useHttpsLink
           ? "✅ Testing Universal Links/App Links (butuh .well-known config)"
           : "🔧 Testing langsung (tanpa domain verification)"}
-      </TextCustom>
+      </TextCustom> */}
     </BaseBox>
   );
 }
