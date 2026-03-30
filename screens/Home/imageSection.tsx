@@ -17,7 +17,7 @@ export default function Home_ImageSection() {
         transition={1000}
         style={{
           width: "100%",
-          height: 120,
+          height: 150,
           borderRadius: 10,
         }}
       />

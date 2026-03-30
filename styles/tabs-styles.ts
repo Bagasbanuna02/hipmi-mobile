@@ -19,7 +19,6 @@ export const TabsStyles: BottomTabNavigationOptions = {
       paddingTop: 5,
       height: OS_ANDROID_HEIGHT,
     },
-    default: {},
   }),
   tabBarBackground: TabBarBackground,
 };

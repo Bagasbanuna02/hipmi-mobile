@@ -115,15 +115,15 @@ export default function UserSearchMainView_V2() {
   });
 
   // 🔁 Refresh otomatis saat kembali ke halaman ini
-  useFocusEffect(
-    useCallback(() => {
-      if (isInitialMount.current) {
-        isInitialMount.current = false;
-        return;
-      }
-      pagination.onRefresh();
-    }, [pagination.onRefresh]),
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     if (isInitialMount.current) {
+  //       isInitialMount.current = false;
+  //       return;
+  //     }
+  //     pagination.onRefresh();
+  //   }, [pagination.onRefresh]),
+  // );
 
   const { ListEmptyComponent, ListFooterComponent } =
     createPaginationComponents({

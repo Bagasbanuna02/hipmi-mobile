@@ -28,7 +28,7 @@ export default function Home_BottomFeatureSection({
             {/* Vacancy Item 1 */}
             {_.isEmpty(listData) ? (
               <CenterCustom style={{ paddingBlock: 50 }}>
-                <TextCustom>Lowongan pekerjaan belum tersedia</TextCustom>
+                <TextCustom color="gray">Lowongan pekerjaan belum tersedia</TextCustom>
               </CenterCustom>
             ) : (
               listData?.map((item: any, index: number) => (
