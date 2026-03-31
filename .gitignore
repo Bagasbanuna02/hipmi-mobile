@@ -81,4 +81,7 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+# secrets
+secrets/
+
 # @end expo-cli

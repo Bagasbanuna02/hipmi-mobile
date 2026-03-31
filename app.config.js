@@ -25,7 +25,7 @@ export default {
   ios: {
     supportsTablet: true,
     bundleIdentifier: "com.anonymous.hipmi-mobile",
-    googleServicesFile: "./ios/HIPMIBadungConnect/GoogleService-Info.plist",
+    googleServicesFile: "./secrets/GoogleService-Info.plist",
     infoPlist: {
       ITSAppUsesNonExemptEncryption: false,
       NSLocationWhenInUseUsageDescription:
@@ -38,7 +38,7 @@ export default {
   },
 
   android: {
-    googleServicesFile: "./google-services.json",
+    googleServicesFile: "./secrets/google-services.json",
     adaptiveIcon: {
       foregroundImage: "./assets/images/splash-icon.png",
       backgroundColor: "#ffffff",
@@ -70,6 +70,7 @@ export default {
   },
 
   plugins: [
+    "./plugins/withCustomConfig",
     "expo-router",
     "expo-web-browser",
     [
