@@ -10,23 +10,41 @@ import {
   Tabs,
   useLocalSearchParams
 } from "expo-router";
+import { View } from "react-native";
+import { MainColor } from "@/constants/color-palet";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Platform } from "react-native";
 
-export default function JobTabsLayout() {
+function JobTabsWrapper() {
+  const insets = useSafeAreaInsets();
+  const paddingBottom = Platform.OS === "android" ? insets.bottom : 0;
   const { from, category } = useLocalSearchParams<{
     from?: string;
     category?: string;
   }>();
 
   return (
-    <>
+    <View style={{ flex: 1, backgroundColor: MainColor.darkblue }}>
       <Tabs
         screenOptions={{
           ...TabsStyles,
+          tabBarStyle: Platform.select({
+            ios: {
+              borderTopWidth: 0,
+              paddingTop: 12,
+              height: 80,
+            },
+            android: {
+              borderTopWidth: 0,
+              paddingTop: 5,
+              height: 70 + paddingBottom,
+            },
+          }),
           header: () => (
             <AppHeader
               title="Job Vacancy"
               left={
-                <BackButtonFromNotification from={from as string} category={category as string} />
+                <BackButtonFromNotification from={from || ""} category={category} />
               }
             />
           ),
@@ -56,6 +74,10 @@ export default function JobTabsLayout() {
           }}
         />
       </Tabs>
-    </>
+    </View>
   );
+}
+
+export default function JobTabsLayout() {
+  return <JobTabsWrapper />;
 }

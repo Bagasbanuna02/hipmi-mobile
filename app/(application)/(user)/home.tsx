@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { BasicWrapper, NewWrapper, StackCustom, ViewWrapper } from "@/components";
+import { BasicWrapper, Spacing, StackCustom, ViewWrapper } from "@/components";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
 import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 import { MainColor } from "@/constants/color-palet";
@@ -8,19 +8,20 @@ import { useAuth } from "@/hooks/use-auth";
 import { useNotificationStore } from "@/hooks/use-notification-store";
 import Home_BottomFeatureSection from "@/screens/Home/bottomFeatureSection";
 import HeaderBell from "@/screens/Home/HeaderBell";
+import HomeTabs from "@/screens/Home/HomeTabs";
 import { stylesHome } from "@/screens/Home/homeViewStyle";
 import Home_ImageSection from "@/screens/Home/imageSection";
-import TabSection from "@/screens/Home/tabSection";
 import { tabsHome } from "@/screens/Home/tabsList";
 import Home_FeatureSection from "@/screens/Home/topFeatureSection";
 import { apiJobGetAll } from "@/service/api-client/api-job";
 import { apiUser } from "@/service/api-client/api-user";
 import { apiVersion } from "@/service/api-config";
-import { GStyles } from "@/styles/global-styles";
 import { Ionicons } from "@expo/vector-icons";
 import { Redirect, router, Stack, useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
-import { RefreshControl, View } from "react-native";
+import { RefreshControl, ScrollView, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Platform } from "react-native";
 
 export default function Application() {
   const { token, user, userData } = useAuth();
@@ -28,6 +29,8 @@ export default function Application() {
   const [refreshing, setRefreshing] = useState(false);
   const { syncUnreadCount } = useNotificationStore();
   const [listData, setListData] = useState<any[] | null>(null);
+  const insets = useSafeAreaInsets();
+  const paddingBottom = Platform.OS === "android" ? insets.bottom : 0;
 
   useFocusEffect(
     useCallback(() => {
@@ -105,15 +108,6 @@ export default function Application() {
     );
   }
 
-  // if (data && data?.masterUserRoleId !== "1") {
-  //   console.log("User is not admin");
-  //   return (
-  //     <BasicWrapper>
-  //       <Redirect href={`/admin/dashboard`} />
-  //     </BasicWrapper>
-  //   );
-  // }
-
   return (
     <>
       <Stack.Screen
@@ -148,64 +142,61 @@ export default function Application() {
         }}
       />
 
-      <NewWrapper
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-            tintColor={MainColor.yellow}
-            colors={[MainColor.yellow]}
-          />
-        }
-        footerComponent={
-          data && data ? (
-            <TabSection
-              tabs={tabsHome({
-                acceptedForumTermsAt: data?.acceptedForumTermsAt,
-                profileId: data?.Profile?.id,
-              })}
+      <View style={{ flex: 1, backgroundColor: MainColor.darkblue }}>
+        <ScrollView
+          style={{ flex: 1 }}
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingInline: 10,
+            paddingBottom: paddingBottom + 80, // Space for tabs + safe area
+          }}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              tintColor={MainColor.yellow}
+              colors={[MainColor.yellow]}
             />
-          ) : (
-            null
-            // <View style={GStyles.tabBar}>
-            //   <View style={[GStyles.tabContainer, { paddingTop: 10 }]}>
-            //     {Array.from({ length: 4 }).map((e, index) => (
-            //       <CustomSkeleton
-            //         key={index}
-            //         height={40}
-            //         width={40}
-            //         radius={100}
-            //       />
-            //     ))}
-            //   </View>
-            // </View>
-          )
-        }
-      >
-        <StackCustom>
-          <Home_ImageSection />
+          }
+          keyboardShouldPersistTaps="handled"
+        >
+          <StackCustom>
+            <Home_ImageSection />
 
-          {data && data ? (
-            <Home_FeatureSection />
-          ) : (
-            <View style={stylesHome.gridContainer}>
-              {Array.from({ length: 4 }).map((item, index) => (
-                <CustomSkeleton
-                  key={index}
-                  style={stylesHome.gridItem}
-                  radius={50}
-                />
-              ))}
-            </View>
-          )}
+            {data && data ? (
+              <Home_FeatureSection />
+            ) : (
+              <View style={stylesHome.gridContainer}>
+                {Array.from({ length: 4 }).map((_, index) => (
+                  <CustomSkeleton
+                    key={index}
+                    style={stylesHome.gridItem}
+                    radius={50}
+                  />
+                ))}
+              </View>
+            )}
 
-          {data ? (
-            <Home_BottomFeatureSection listData={listData} />
-          ) : (
-            <CustomSkeleton height={150} />
-          )}
-        </StackCustom>
-      </NewWrapper>
+            {data ? (
+              <Home_BottomFeatureSection listData={listData} />
+            ) : (
+              <CustomSkeleton height={150} />
+            )}
+          </StackCustom>
+        </ScrollView>
+
+        {/* Home Tabs di bawah */}
+        {data && data ? (
+          <HomeTabs
+            tabs={tabsHome({
+              acceptedForumTermsAt: data?.acceptedForumTermsAt,
+              profileId: data?.Profile?.id,
+            })}
+          />
+        ) : (
+          <View style={{ height: 80 + paddingBottom, backgroundColor: MainColor.darkblue }} />
+        )}
+      </View>
     </>
   );
 }

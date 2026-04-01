@@ -114,7 +114,6 @@ export default function DonationCreateStory() {
 
   return (
     <NewWrapper
-      hideFooter
       footerComponent={
         <>
          <BoxButtonOnFooter>
