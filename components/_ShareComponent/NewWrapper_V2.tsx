@@ -44,6 +44,11 @@ interface BaseProps {
    * Extra padding bottom for content to avoid navigation bar (default: 80)
    */
   contentPaddingBottom?: number;
+  /**
+   * Padding untuk content container (default: 16)
+   * Set to 0 untuk tidak ada padding, atau custom value sesuai kebutuhan
+   */
+  contentPadding?: number;
 }
 
 interface StaticModeProps extends BaseProps {
@@ -78,6 +83,7 @@ export function NewWrapper_V2(props: NewWrapper_V2_Props) {
     enableKeyboardHandling = false,
     keyboardScrollOffset = 100,
     contentPaddingBottom = 80, // Default 80 untuk navigasi device
+    contentPadding = 16, // Default 16 untuk padding konsisten
   } = props;
 
   const assetBackground = require("../../assets/images/main-background.png");
@@ -132,6 +138,7 @@ export function NewWrapper_V2(props: NewWrapper_V2_Props) {
           contentContainerStyle={{
             flexGrow: 1,
             paddingBottom: (footerComponent && !hideFooter ? OS_HEIGHT : 0) + contentPaddingBottom,
+            padding: contentPadding,
           }}
           keyboardShouldPersistTaps="handled"
         />
@@ -180,6 +187,7 @@ export function NewWrapper_V2(props: NewWrapper_V2_Props) {
         contentContainerStyle={{
           flexGrow: 1,
           paddingBottom: (footerComponent && !hideFooter ? OS_HEIGHT : 0) + contentPaddingBottom,
+          padding: contentPadding,
         }}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
