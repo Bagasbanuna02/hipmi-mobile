@@ -2,6 +2,7 @@ import {
   AvatarUsernameAndOtherComponent,
   BoxWithHeaderSection,
   FloatingButton,
+  NewWrapper_V2,
   SearchInput,
   Spacing,
   StackCustom,
@@ -16,7 +17,6 @@ import { router, useFocusEffect } from "expo-router";
 import _ from "lodash";
 import { useState } from "react";
 import { RefreshControl, View } from "react-native";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 
 const PAGE_SIZE = 10;
@@ -74,7 +74,7 @@ export default function Job_ScreenBeranda2() {
   );
 
   return (
-    <NewWrapper
+    <NewWrapper_V2
       hideFooter
       headerComponent={
         <View style={{ paddingTop: 8 }}>
