@@ -5,9 +5,9 @@ import {
   DrawerCustom,
   LoaderCustom,
   MenuDrawerDynamicGrid,
+  NewWrapper_V2,
   Spacing,
   StackCustom,
-  ViewWrapper,
 } from "@/components";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconEdit } from "@/components/_Icon";
@@ -72,7 +72,7 @@ export default function JobDetailStatus() {
           ),
         }}
       />
-      <ViewWrapper>
+      <NewWrapper_V2>
         {isLoadData ? (
           <LoaderCustom />
         ) : (
@@ -83,7 +83,7 @@ export default function JobDetailStatus() {
                 (status === "draft" || status === "reject") && (
                   <ReportBox text={data?.catatan} />
                 )}
-                
+
               <Job_BoxDetailSection data={data} />
               <Job_ButtonStatusSection
                 id={id as string}
@@ -96,7 +96,7 @@ export default function JobDetailStatus() {
             <Spacing />
           </>
         )}
-      </ViewWrapper>
+      </NewWrapper_V2>
 
       <DrawerCustom
         isVisible={openDrawer}
