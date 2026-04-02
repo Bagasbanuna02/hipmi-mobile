@@ -63,6 +63,10 @@ import DummyLandscapeImage from "./_ShareComponent/DummyLandscapeImage";
 import GridComponentView from "./_ShareComponent/GridSectionView";
 import NewWrapper from "./_ShareComponent/NewWrapper";
 import BasicWrapper from "./_ShareComponent/BasicWrapper";
+import { TestWrapper } from "./_ShareComponent/TestWrapper";
+import { FormWrapper } from "./_ShareComponent/FormWrapper";
+import { NewWrapper_V2 } from "./_ShareComponent/NewWrapper_V2";
+
 // Progress
 import ProgressCustom from "./Progress/ProgressCustom";
 // Loader
@@ -127,6 +131,9 @@ export {
   Spacing,
   NewWrapper,
   BasicWrapper,
+  TestWrapper,
+  FormWrapper,
+  NewWrapper_V2,
   // Stack
   StackCustom,
   TabBarBackground,
