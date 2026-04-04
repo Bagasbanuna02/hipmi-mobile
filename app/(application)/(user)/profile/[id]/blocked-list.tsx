@@ -9,7 +9,7 @@ import {
 import ListEmptyComponent from "@/components/_ShareComponent/ListEmptyComponent";
 import ListLoaderFooterComponent from "@/components/_ShareComponent/ListLoaderFooterComponent";
 import ListSkeletonComponent from "@/components/_ShareComponent/ListSkeletonComponent";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
+import { NewWrapper_V2 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
 import { usePaginatedApi } from "@/hooks/use-paginated-api";
@@ -120,7 +120,7 @@ export default function ProfileBlockedList() {
 
   return (
     <>
-      <NewWrapper
+      <NewWrapper_V2
         // headerComponent={renderHeader()}
         listData={listData}
         renderItem={renderItem}

@@ -1,10 +1,10 @@
 import {
-    BaseBox,
-    BoxButtonOnFooter,
-    ButtonCenteredOnly,
-    ButtonCustom,
+  BaseBox,
+  BoxButtonOnFooter,
+  ButtonCenteredOnly,
+  ButtonCustom,
+  NewWrapper_V2,
 } from "@/components";
-import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import API_STRORAGE from "@/constants/base-url-api-strorage";
 import DIRECTORY_ID from "@/constants/directory-id";
 import DUMMY_IMAGE from "@/constants/dummy-image-value";
@@ -127,7 +127,10 @@ export default function UpdateBackgroundProfile() {
   );
 
   return (
-    <ViewWrapper footerComponent={buttonFooter}>
+    <NewWrapper_V2
+      contentPaddingHorizontal={16}
+      footerComponent={buttonFooter}
+    >
       <BaseBox
         style={{ alignItems: "center", justifyContent: "center", height: 250 }}
       >
@@ -144,6 +147,6 @@ export default function UpdateBackgroundProfile() {
       >
         Update
       </ButtonCenteredOnly>
-    </ViewWrapper>
+    </NewWrapper_V2>
   );
 }

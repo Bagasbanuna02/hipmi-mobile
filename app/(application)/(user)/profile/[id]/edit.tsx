@@ -1,15 +1,16 @@
 import {
   ButtonCustom,
+  NewWrapper_V2,
   SelectCustom,
   StackCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
 import BoxButtonOnFooter from "@/components/Box/BoxButtonOnFooter";
 import { apiProfile, apiUpdateProfile } from "@/service/api-client/api-profile";
 import { IProfile } from "@/types/Type-Profile";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
+import { View } from "react-native";
 import Toast from "react-native-toast-message";
 
 export default function ProfileEdit() {
@@ -70,7 +71,9 @@ export default function ProfileEdit() {
   };
 
   return (
-    <ViewWrapper
+    <NewWrapper_V2
+      enableKeyboardHandling
+      keyboardScrollOffset={100}
       footerComponent={
         <BoxButtonOnFooter>
           <ButtonCustom isLoading={isLoading} onPress={handleUpdate}>
@@ -80,45 +83,53 @@ export default function ProfileEdit() {
       }
     >
       <StackCustom gap={"xs"}>
-        <TextInputCustom
-          label="Nama"
-          placeholder="Nama"
-          value={data?.name}
-          onChangeText={(text) => {
-            setData({ ...data, name: text });
-          }}
-          required
-        />
-        <TextInputCustom
-          keyboardType="email-address"
-          label="Email"
-          placeholder="Email"
-          value={data?.email}
-          onChangeText={(text) => {
-            setData({ ...data, email: text });
-          }}
-          required
-        />
-        <TextInputCustom
-          label="Alamat"
-          placeholder="Alamat"
-          value={data?.alamat}
-          onChangeText={(text) => {
-            setData({ ...data, alamat: text });
-          }}
-          required
-        />
-        <SelectCustom
-          required
-          label="Jenis Kelamin"
-          placeholder="Pilih jenis kelamin"
-          data={options}
-          value={data?.jenisKelamin}
-          onChange={(value) => {
-            setData({ ...(data as any), jenisKelamin: value });
-          }}
-        />
+        <View onStartShouldSetResponder={() => true}>
+          <TextInputCustom
+            label="Nama"
+            placeholder="Nama"
+            value={data?.name}
+            onChangeText={(text) => {
+              setData({ ...data, name: text });
+            }}
+            required
+          />
+        </View>
+        <View onStartShouldSetResponder={() => true}>
+          <TextInputCustom
+            keyboardType="email-address"
+            label="Email"
+            placeholder="Email"
+            value={data?.email}
+            onChangeText={(text) => {
+              setData({ ...data, email: text });
+            }}
+            required
+          />
+        </View>
+        <View onStartShouldSetResponder={() => true}>
+          <TextInputCustom
+            label="Alamat"
+            placeholder="Alamat"
+            value={data?.alamat}
+            onChangeText={(text) => {
+              setData({ ...data, alamat: text });
+            }}
+            required
+          />
+        </View>
+        <View onStartShouldSetResponder={() => true}>
+          <SelectCustom
+            required
+            label="Jenis Kelamin"
+            placeholder="Pilih jenis kelamin"
+            data={options}
+            value={data?.jenisKelamin}
+            onChange={(value) => {
+              setData({ ...(data as any), jenisKelamin: value });
+            }}
+          />
+        </View>
       </StackCustom>
-    </ViewWrapper>
+    </NewWrapper_V2>
   );
 }

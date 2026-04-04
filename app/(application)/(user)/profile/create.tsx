@@ -2,11 +2,11 @@ import {
     BaseBox,
     ButtonCenteredOnly,
     ButtonCustom,
+    NewWrapper_V2,
     SelectCustom,
     Spacing,
     StackCustom,
     TextInputCustom,
-    ViewWrapper,
 } from "@/components";
 import BoxButtonOnFooter from "@/components/Box/BoxButtonOnFooter";
 import InformationBox from "@/components/Box/InformationBox";
@@ -155,7 +155,11 @@ export default function CreateProfile() {
   );
 
   return (
-    <ViewWrapper footerComponent={footerComponent}>
+    <NewWrapper_V2
+      enableKeyboardHandling
+      keyboardScrollOffset={100}
+      footerComponent={footerComponent}
+    >
       <StackCustom>
         <InformationBox text="Upload foto profile anda." />
         <View style={{ alignItems: "center" }}>
@@ -204,43 +208,51 @@ export default function CreateProfile() {
         </View>
 
         <Spacing />
-        <TextInputCustom
-          required
-          label="Nama"
-          placeholder="Masukkan nama"
-          value={data.name}
-          onChangeText={(text) => setData({ ...data, name: text })}
-        />
-        <TextInputCustom
-          keyboardType="email-address"
-          required
-          label="Email"
-          placeholder="Masukkan email"
-          value={data.email}
-          onChangeText={(text) => setData({ ...data, email: text })}
-        />
-        <TextInputCustom
-          required
-          label="Alamat"
-          placeholder="Masukkan alamat"
-          value={data.alamat}
-          onChangeText={(text) => setData({ ...data, alamat: text })}
-        />
-        <SelectCustom
-          label="Jenis Kelamin"
-          placeholder="Pilih jenis kelamin"
-          data={[
-            { label: "Laki-laki", value: "laki-laki" },
-            { label: "Perempuan", value: "perempuan" },
-          ]}
-          value={data.jenisKelamin}
-          required
-          onChange={(value) =>
-            setData({ ...(data as any), jenisKelamin: value })
-          }
-        />
+        <View onStartShouldSetResponder={() => true}>
+          <TextInputCustom
+            required
+            label="Nama"
+            placeholder="Masukkan nama"
+            value={data.name}
+            onChangeText={(text) => setData({ ...data, name: text })}
+          />
+        </View>
+        <View onStartShouldSetResponder={() => true}>
+          <TextInputCustom
+            keyboardType="email-address"
+            required
+            label="Email"
+            placeholder="Masukkan email"
+            value={data.email}
+            onChangeText={(text) => setData({ ...data, email: text })}
+          />
+        </View>
+        <View onStartShouldSetResponder={() => true}>
+          <TextInputCustom
+            required
+            label="Alamat"
+            placeholder="Masukkan alamat"
+            value={data.alamat}
+            onChangeText={(text) => setData({ ...data, alamat: text })}
+          />
+        </View>
+        <View onStartShouldSetResponder={() => true}>
+          <SelectCustom
+            label="Jenis Kelamin"
+            placeholder="Pilih jenis kelamin"
+            data={[
+              { label: "Laki-laki", value: "laki-laki" },
+              { label: "Perempuan", value: "perempuan" },
+            ]}
+            value={data.jenisKelamin}
+            required
+            onChange={(value) =>
+              setData({ ...(data as any), jenisKelamin: value })
+            }
+          />
+        </View>
         <Spacing />
       </StackCustom>
-    </ViewWrapper>
+    </NewWrapper_V2>
   );
 }
