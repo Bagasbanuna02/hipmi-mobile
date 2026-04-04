@@ -23,7 +23,7 @@ export default function ProfileLayout() {
         />
         <Stack.Screen
           name="create"
-          options={{ headerBackVisible: false }}
+          options={{ header: () => <AppHeader title="Buat Profil" showBack={false} /> }}
         />
 
         <Stack.Screen

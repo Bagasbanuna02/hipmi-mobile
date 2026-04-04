@@ -21,8 +21,9 @@ export default function UserLayout() {
         <Stack.Screen
           name="waiting-room"
           options={{
-            title: "Waiting Room",
-            headerBackVisible: false,
+            // title: "Waiting Room",
+            // headerBackVisible: false,
+            header: () => <AppHeader title="Waiting Room" showBack={false} />,
           }}
         />
 
