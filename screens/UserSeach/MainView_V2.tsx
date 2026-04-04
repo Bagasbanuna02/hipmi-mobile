@@ -2,7 +2,7 @@ import {
   AvatarComp,
   ClickableCustom,
   Grid,
-  NewWrapper,
+  NewWrapper_V2,
   StackCustom,
   TextCustom,
   TextInputCustom,
@@ -140,7 +140,9 @@ export default function UserSearchMainView_V2() {
     });
 
   return (
-    <NewWrapper
+    <NewWrapper_V2
+      hideFooter
+      contentPaddingHorizontal={16}
       headerComponent={renderHeader(search, setSearch)}
       listData={pagination.listData}
       renderItem={renderItem}

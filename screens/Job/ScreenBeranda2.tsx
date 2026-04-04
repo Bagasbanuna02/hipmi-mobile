@@ -78,7 +78,7 @@ export default function Job_ScreenBeranda2() {
       contentPaddingHorizontal={16}
       hideFooter
       headerComponent={
-        <View style={{ paddingTop: 8 }}>
+        <View >
           <SearchInput
             placeholder="Cari pekerjaan"
             onChangeText={_.debounce((text) => setSearch(text), 500)}
