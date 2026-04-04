@@ -56,6 +56,7 @@ export default function Job_ScreenArchive2() {
 
   return (
     <NewWrapper_V2
+      contentPaddingHorizontal={16}
       listData={pagination.listData}
       renderItem={renderJobItem}
       refreshControl={

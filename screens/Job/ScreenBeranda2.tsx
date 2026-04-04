@@ -75,6 +75,7 @@ export default function Job_ScreenBeranda2() {
 
   return (
     <NewWrapper_V2
+      contentPaddingHorizontal={16}
       hideFooter
       headerComponent={
         <View style={{ paddingTop: 8 }}>

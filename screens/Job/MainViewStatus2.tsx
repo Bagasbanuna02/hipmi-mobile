@@ -87,6 +87,7 @@ export default function Job_MainViewStatus2() {
 
   return (
     <NewWrapper_V2
+      contentPaddingHorizontal={16}
       headerComponent={<View style={{ paddingTop: 8 }}>{scrollComponent}</View>}
       listData={pagination.listData}
       renderItem={renderJobItem}

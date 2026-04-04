@@ -121,6 +121,7 @@ export function Job_ScreenCreate() {
     <NewWrapper_V2
       enableKeyboardHandling
       keyboardScrollOffset={100}
+      contentPaddingHorizontal={16}
       footerComponent={buttonSubmit()}
     >
       <StackCustom gap={"xs"}>

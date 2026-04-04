@@ -45,10 +45,14 @@ interface BaseProps {
    */
   contentPaddingBottom?: number;
   /**
-   * Padding untuk content container (default: 16)
-   * Set to 0 untuk tidak ada padding, atau custom value sesuai kebutuhan
+   * Padding Top untuk content container (default: 8)
    */
-  contentPadding?: number;
+  contentPaddingTop?: number;
+  /**
+   * Padding Horizontal untuk content container (default: 0)
+   * Set ke 16 atau lebih jika butuh spacing di kiri-kanan
+   */
+  contentPaddingHorizontal?: number;
 }
 
 interface StaticModeProps extends BaseProps {
@@ -83,7 +87,8 @@ export function NewWrapper_V2(props: NewWrapper_V2_Props) {
     enableKeyboardHandling = false,
     keyboardScrollOffset = 100,
     contentPaddingBottom = 80, // Default 80 untuk navigasi device
-    contentPadding = 16, // Default 16 untuk padding konsisten
+    contentPaddingTop = 8, // Default 8 untuk spacing atas
+    contentPaddingHorizontal = 0, // Default 0 agar aman untuk layout existing
   } = props;
 
   const assetBackground = require("../../assets/images/main-background.png");
@@ -137,8 +142,9 @@ export function NewWrapper_V2(props: NewWrapper_V2_Props) {
           ListEmptyComponent={listProps.ListEmptyComponent}
           contentContainerStyle={{
             flexGrow: 1,
+            paddingTop: contentPaddingTop,
+            paddingHorizontal: contentPaddingHorizontal,
             paddingBottom: (footerComponent && !hideFooter ? OS_HEIGHT : 0) + contentPaddingBottom,
-            padding: contentPadding,
           }}
           keyboardShouldPersistTaps="handled"
         />
@@ -186,8 +192,9 @@ export function NewWrapper_V2(props: NewWrapper_V2_Props) {
         style={{ flex: 1 }}
         contentContainerStyle={{
           flexGrow: 1,
+          paddingTop: contentPaddingTop,
+          paddingHorizontal: contentPaddingHorizontal,
           paddingBottom: (footerComponent && !hideFooter ? OS_HEIGHT : 0) + contentPaddingBottom,
-          padding: contentPadding,
         }}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}

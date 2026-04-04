@@ -138,6 +138,7 @@ export function Job_ScreenEdit() {
     <NewWrapper_V2
       enableKeyboardHandling
       keyboardScrollOffset={100}
+      contentPaddingHorizontal={16}
       footerComponent={buttonSubmit()}
     >
       {isLoadData ? (
