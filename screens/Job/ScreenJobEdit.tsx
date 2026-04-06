@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   BaseBox,
+  BoxButtonOnFooter,
   ButtonCenteredOnly,
   ButtonCustom,
   DummyLandscapeImage,
@@ -15,10 +16,7 @@ import {
 } from "@/components";
 import DIRECTORY_ID from "@/constants/directory-id";
 import { apiJobGetOne, apiJobUpdateData } from "@/service/api-client/api-job";
-import {
-  deleteFileService,
-  uploadFileService,
-} from "@/service/upload-service";
+import { deleteFileService, uploadFileService } from "@/service/upload-service";
 import pickImage from "@/utils/pickImage";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
@@ -126,10 +124,11 @@ export function Job_ScreenEdit() {
   const buttonSubmit = () => {
     return (
       <>
-        <ButtonCustom isLoading={isLoading} onPress={() => handlerOnUpdate()}>
-          Update
-        </ButtonCustom>
-        <Spacing />
+        <BoxButtonOnFooter>
+          <ButtonCustom isLoading={isLoading} onPress={() => handlerOnUpdate()}>
+            Update
+          </ButtonCustom>
+        </BoxButtonOnFooter>
       </>
     );
   };
