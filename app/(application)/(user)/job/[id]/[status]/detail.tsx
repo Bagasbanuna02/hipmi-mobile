@@ -5,7 +5,7 @@ import {
   DrawerCustom,
   LoaderCustom,
   MenuDrawerDynamicGrid,
-  NewWrapper_V2,
+  PageWrapper,
   Spacing,
   StackCustom,
 } from "@/components";
@@ -72,7 +72,7 @@ export default function JobDetailStatus() {
           ),
         }}
       />
-      <NewWrapper_V2>
+      <PageWrapper>
         {isLoadData ? (
           <LoaderCustom />
         ) : (
@@ -96,7 +96,7 @@ export default function JobDetailStatus() {
             <Spacing />
           </>
         )}
-      </NewWrapper_V2>
+      </PageWrapper>
 
       <DrawerCustom
         isVisible={openDrawer}

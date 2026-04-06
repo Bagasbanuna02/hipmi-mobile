@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { BaseBox, LoaderCustom, TextCustom, ViewWrapper } from "@/components";
+import { BaseBox, LoaderCustom, PageWrapper, TextCustom } from "@/components";
 import { useAuth } from "@/hooks/use-auth";
 import { apiJobGetAll } from "@/service/api-client/api-job";
 import { useFocusEffect } from "expo-router";
@@ -33,7 +33,7 @@ export default function Job_ScreenArchive() {
   };
 
   return (
-    <ViewWrapper hideFooter>
+    <PageWrapper hideFooter>
       {isLoadData ? (
         <LoaderCustom />
       ) : _.isEmpty(listData) ? (
@@ -52,6 +52,6 @@ export default function Job_ScreenArchive() {
           </BaseBox>
         ))
       )}
-    </ViewWrapper>
+    </PageWrapper>
   );
 }

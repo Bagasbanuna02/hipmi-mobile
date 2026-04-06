@@ -65,6 +65,7 @@ import NewWrapper from "./_ShareComponent/NewWrapper";
 import BasicWrapper from "./_ShareComponent/BasicWrapper";
 import { FormWrapper } from "./_ShareComponent/FormWrapper";
 import { NewWrapper_V2 } from "./_ShareComponent/NewWrapper_V2";
+import { PageWrapper } from "./_ShareComponent/PageWrapper";
 
 // Progress
 import ProgressCustom from "./Progress/ProgressCustom";
@@ -132,6 +133,7 @@ export {
   BasicWrapper,
   FormWrapper,
   NewWrapper_V2,
+  PageWrapper,
   // Stack
   StackCustom,
   TabBarBackground,

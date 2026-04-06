@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ButtonCustom, LoaderCustom, Spacing, StackCustom, ViewWrapper } from "@/components";
+import { ButtonCustom, LoaderCustom, PageWrapper, Spacing, StackCustom } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import Job_BoxDetailSection from "@/screens/Job/BoxDetailSection";
@@ -88,7 +88,7 @@ export default function JobDetail() {
   };
 
   return (
-    <ViewWrapper>
+    <PageWrapper>
       {isLoading ? (
         <LoaderCustom />
       ) : (
@@ -101,6 +101,6 @@ export default function JobDetail() {
           <Spacing />
         </>
       )}
-    </ViewWrapper>
+    </PageWrapper>
   );
 }

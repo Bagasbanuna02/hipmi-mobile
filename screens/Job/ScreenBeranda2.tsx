@@ -2,12 +2,11 @@ import {
   AvatarUsernameAndOtherComponent,
   BoxWithHeaderSection,
   FloatingButton,
-  NewWrapper_V2,
+  PageWrapper,
   SearchInput,
   Spacing,
   StackCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
@@ -74,11 +73,11 @@ export default function Job_ScreenBeranda2() {
   );
 
   return (
-    <NewWrapper_V2
+    <PageWrapper
       contentPaddingHorizontal={16}
       hideFooter
       headerComponent={
-        <View >
+        <View>
           <SearchInput
             placeholder="Cari pekerjaan"
             onChangeText={_.debounce((text) => setSearch(text), 500)}

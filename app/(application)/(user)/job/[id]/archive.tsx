@@ -2,9 +2,9 @@
 import {
   ButtonCustom,
   LoaderCustom,
+  PageWrapper,
   Spacing,
   StackCustom,
-  ViewWrapper,
 } from "@/components";
 import Job_BoxDetailSection from "@/screens/Job/BoxDetailSection";
 import { apiJobGetOne, apiJobUpdateData } from "@/service/api-client/api-job";
@@ -71,7 +71,7 @@ export default function JobDetailArchive() {
       {isLoadData ? (
         <LoaderCustom />
       ) : (
-        <ViewWrapper>
+        <PageWrapper>
           <>
             <StackCustom>
               <Job_BoxDetailSection data={data} />
@@ -83,17 +83,10 @@ export default function JobDetailArchive() {
               >
                 Publish kembali
               </ButtonCustom>
-              {/* <Job_ButtonStatusSection
-                id={id as string}
-                status={status as string}
-                isLoading={isLoading}
-                onSetLoading={setIsLoading}
-                isArchive={true}
-              /> */}
             </StackCustom>
             <Spacing />
           </>
-        </ViewWrapper>
+        </PageWrapper>
       )}
     </>
   );

@@ -4,7 +4,7 @@ import {
   ButtonCustom,
   InformationBox,
   LandscapeFrameUploaded,
-  NewWrapper_V2,
+  PageWrapper,
   Spacing,
   StackCustom,
   TextAreaCustom,
@@ -118,7 +118,7 @@ export function Job_ScreenCreate() {
   };
 
   return (
-    <NewWrapper_V2
+    <PageWrapper
       enableKeyboardHandling
       keyboardScrollOffset={100}
       contentPaddingHorizontal={16}
@@ -175,6 +175,6 @@ export function Job_ScreenCreate() {
           />
         </View>
       </StackCustom>
-    </NewWrapper_V2>
+    </PageWrapper>
   );
 }
