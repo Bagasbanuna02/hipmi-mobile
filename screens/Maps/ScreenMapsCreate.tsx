@@ -1,4 +1,3 @@
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import {
   BoxButtonOnFooter,
   ButtonCustom,
@@ -8,6 +7,7 @@ import {
   TextInputCustom,
   LandscapeFrameUploaded,
   ButtonCenteredOnly,
+  NewWrapper_V2,
 } from "@/components";
 import { MapSelectedPlatform } from "@/components/Map/MapSelectedPlatform";
 import DIRECTORY_ID from "@/constants/directory-id";
@@ -18,6 +18,7 @@ import { IFileData } from "@/utils/pickFile";
 import pickFile from "@/utils/pickFile";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
+import { View } from "react-native";
 import { LatLng } from "react-native-maps";
 import Toast from "react-native-toast-message";
 
@@ -142,10 +143,14 @@ export function Maps_ScreenMapsCreate() {
   );
 
   /**
-   * Render screen dengan NewWrapper
+   * Render screen dengan NewWrapper_V2
    */
   return (
-    <NewWrapper footerComponent={buttonFooter}>
+    <NewWrapper_V2
+      enableKeyboardHandling
+      keyboardScrollOffset={100}
+      footerComponent={buttonFooter}
+    >
       <InformationBox text="Tentukan lokasi pin map dengan menekan pada map." />
 
       <BaseBox>
@@ -160,13 +165,15 @@ export function Maps_ScreenMapsCreate() {
         />
       </BaseBox>
 
-      <TextInputCustom
-        required
-        label="Nama Pin"
-        placeholder="Masukkan nama pin maps"
-        value={name}
-        onChangeText={setName}
-      />
+      <View onStartShouldSetResponder={() => true}>
+        <TextInputCustom
+          required
+          label="Nama Pin"
+          placeholder="Masukkan nama pin maps"
+          value={name}
+          onChangeText={setName}
+        />
+      </View>
 
       <Spacing height={50} />
 
@@ -179,7 +186,7 @@ export function Maps_ScreenMapsCreate() {
       </ButtonCenteredOnly>
 
       <Spacing height={50} />
-    </NewWrapper>
+    </NewWrapper_V2>
   );
 }
 

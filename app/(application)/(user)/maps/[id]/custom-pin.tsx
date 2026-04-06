@@ -8,7 +8,7 @@ import {
   MapCustom,
   Spacing,
   StackCustom,
-  ViewWrapper,
+  NewWrapper_V2,
 } from "@/components";
 import CenterCustom from "@/components/Center/CenterCustom";
 import { router, useLocalSearchParams } from "expo-router";
@@ -30,7 +30,11 @@ export default function MapsCustomPin() {
   );
   return (
     <>
-      <ViewWrapper footerComponent={buttonFooter}>
+      <NewWrapper_V2
+        enableKeyboardHandling
+        keyboardScrollOffset={100}
+        footerComponent={buttonFooter}
+      >
         <StackCustom>
           <InformationBox text="Pin map akan secara otomatis menampilkan logo pada porotofolio ini, jika anda ingin melakukan custom silahkan upload logo pin baru anda." />
           <CenterCustom>
@@ -49,7 +53,7 @@ export default function MapsCustomPin() {
           </BaseBox>
           <Spacing />
         </StackCustom>
-      </ViewWrapper>
+      </NewWrapper_V2>
     </>
   );
 }

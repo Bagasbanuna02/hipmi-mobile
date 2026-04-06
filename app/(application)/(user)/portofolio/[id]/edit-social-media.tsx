@@ -1,8 +1,8 @@
 import {
   BoxButtonOnFooter,
   ButtonCustom,
+  NewWrapper_V2,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
 import {
   apiGetOnePortofolio,
@@ -10,6 +10,7 @@ import {
 } from "@/service/api-client/api-portofolio";
 import { useLocalSearchParams, router } from "expo-router";
 import { useEffect, useState } from "react";
+import { View } from "react-native";
 import Toast from "react-native-toast-message";
 
 export default function PortofolioEditSocialMedia() {
@@ -91,38 +92,52 @@ export default function PortofolioEditSocialMedia() {
 
   return (
     <>
-      <ViewWrapper footerComponent={buttonFooter}>
-        <TextInputCustom
-          value={data.tiktok}
-          onChangeText={(value) => setData({ ...data, tiktok: value })}
-          label="Tiktok"
-          placeholder="Masukkan tiktok"
-        />
-        <TextInputCustom
-          value={data.instagram}
-          onChangeText={(value) => setData({ ...data, instagram: value })}
-          label="Instagram"
-          placeholder="Masukkan instagram"
-        />
-        <TextInputCustom
-          value={data.facebook}
-          onChangeText={(value) => setData({ ...data, facebook: value })}
-          label="Facebook"
-          placeholder="Masukkan facebook"
-        />
-        <TextInputCustom
-          value={data.twitter}
-          onChangeText={(value) => setData({ ...data, twitter: value })}
-          label="Twitter"
-          placeholder="Masukkan twitter"
-        />
-        <TextInputCustom
-          value={data.youtube}
-          onChangeText={(value) => setData({ ...data, youtube: value })}
-          label="Youtube"
-          placeholder="Masukkan youtube"
-        />
-      </ViewWrapper>
+      <NewWrapper_V2
+        enableKeyboardHandling
+        keyboardScrollOffset={100}
+        footerComponent={buttonFooter}
+      >
+        <View onStartShouldSetResponder={() => true}>
+          <TextInputCustom
+            value={data.tiktok}
+            onChangeText={(value) => setData({ ...data, tiktok: value })}
+            label="Tiktok"
+            placeholder="Masukkan tiktok"
+          />
+        </View>
+        <View onStartShouldSetResponder={() => true}>
+          <TextInputCustom
+            value={data.instagram}
+            onChangeText={(value) => setData({ ...data, instagram: value })}
+            label="Instagram"
+            placeholder="Masukkan instagram"
+          />
+        </View>
+        <View onStartShouldSetResponder={() => true}>
+          <TextInputCustom
+            value={data.facebook}
+            onChangeText={(value) => setData({ ...data, facebook: value })}
+            label="Facebook"
+            placeholder="Masukkan facebook"
+          />
+        </View>
+        <View onStartShouldSetResponder={() => true}>
+          <TextInputCustom
+            value={data.twitter}
+            onChangeText={(value) => setData({ ...data, twitter: value })}
+            label="Twitter"
+            placeholder="Masukkan twitter"
+          />
+        </View>
+        <View onStartShouldSetResponder={() => true}>
+          <TextInputCustom
+            value={data.youtube}
+            onChangeText={(value) => setData({ ...data, youtube: value })}
+            label="Youtube"
+            placeholder="Masukkan youtube"
+          />
+        </View>
+      </NewWrapper_V2>
     </>
   );
 }

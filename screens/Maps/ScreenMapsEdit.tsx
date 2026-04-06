@@ -7,7 +7,7 @@ import {
   LandscapeFrameUploaded,
   Spacing,
   TextInputCustom,
-  ViewWrapper,
+  NewWrapper_V2,
 } from "@/components";
 import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 import { MapSelectedPlatform } from "@/components/Map/MapSelectedPlatform";
@@ -19,6 +19,7 @@ import { uploadFileService } from "@/service/upload-service";
 import pickFile, { IFileData } from "@/utils/pickFile";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
+import { View } from "react-native";
 import { LatLng } from "react-native-maps";
 import Toast from "react-native-toast-message";
 
@@ -166,7 +167,11 @@ export function Maps_ScreenMapsEdit() {
       : defaultRegion;
 
   return (
-    <ViewWrapper footerComponent={buttonFooter}>
+    <NewWrapper_V2
+      enableKeyboardHandling
+      keyboardScrollOffset={100}
+      footerComponent={buttonFooter}
+    >
       <InformationBox text="Tentukan lokasi pin map dengan menekan pada map." />
 
       {/* <MapSelectedPlatform
@@ -191,13 +196,15 @@ export function Maps_ScreenMapsEdit() {
         />
       )}
 
-      <TextInputCustom
-        required
-        label="Nama Pin"
-        placeholder="Masukkan nama pin maps"
-        value={data?.namePin}
-        onChangeText={(value) => setData({ ...data, namePin: value })}
-      />
+      <View onStartShouldSetResponder={() => true}>
+        <TextInputCustom
+          required
+          label="Nama Pin"
+          placeholder="Masukkan nama pin maps"
+          value={data?.namePin}
+          onChangeText={(value) => setData({ ...data, namePin: value })}
+        />
+      </View>
 
       <Spacing />
 
@@ -223,6 +230,6 @@ export function Maps_ScreenMapsEdit() {
         Upload
       </ButtonCenteredOnly>
       <Spacing height={50} />
-    </ViewWrapper>
+    </NewWrapper_V2>
   );
 }

@@ -4,7 +4,7 @@ import {
   ButtonCenteredOnly,
   CenterCustom,
   InformationBox,
-  NewWrapper,
+  NewWrapper_V2,
   PhoneInputCustom,
   SelectCustom,
   Spacing,
@@ -142,7 +142,9 @@ export function ScreenPortofolioCreate() {
   };
 
   return (
-    <NewWrapper
+    <NewWrapper_V2
+      enableKeyboardHandling
+      keyboardScrollOffset={100}
       footerComponent={
         <Portofolio_ButtonCreate
           id={id as string}
@@ -158,57 +160,62 @@ export function ScreenPortofolioCreate() {
       <StackCustom gap="xs">
         <InformationBox text="Lengkapi data bisnis anda." />
 
-        <TextInputCustom
-          required
-          label="Nama Bisnis"
-          placeholder="Masukkan nama bisnis"
-          onChangeText={(value: any) => setData({ ...data, namaBisnis: value })}
-        />
-
-        <SelectCustom
-          label="Bidang Usaha"
-          required
-          data={bidangBisnis.map((item) => ({
-            label: item.name,
-            value: item.id,
-          }))}
-          value={data.masterBidangBisnisId}
-          onChange={(value) => {
-            const isSameBidang = data.masterBidangBisnisId === value;
-
-            if (!isSameBidang) {
-              setListSubBidangSelected([{ id: "" }]);
-            }
-
-            setData({ ...(data as any), masterBidangBisnisId: value });
-            handlerSelectedSubBidang({ id: value as string });
-          }}
-        />
-
-        {listSubBidangSelected.map((item, index) => (
-          <SelectCustom
-            key={index}
-            disabled={data.masterBidangBisnisId === ""}
-            label="Sub Bidang Usaha"
+        <View onStartShouldSetResponder={() => true}>
+          <TextInputCustom
             required
-            data={_.map(selectedSubBidang as any)
-              .filter((option: any) => {
-                const selectedValues = listSubBidangSelected.map((s) => s.id);
-                return (
-                  option.id === item.id || !selectedValues.includes(option.id)
-                );
-              })
-              .map((e: any) => ({
-                value: e.id,
-                label: e.name,
-              }))}
-            value={item.id || null}
+            label="Nama Bisnis"
+            placeholder="Masukkan nama bisnis"
+            onChangeText={(value: any) => setData({ ...data, namaBisnis: value })}
+          />
+        </View>
+
+        <View onStartShouldSetResponder={() => true}>
+          <SelectCustom
+            label="Bidang Usaha"
+            required
+            data={bidangBisnis.map((item) => ({
+              label: item.name,
+              value: item.id,
+            }))}
+            value={data.masterBidangBisnisId}
             onChange={(value) => {
-              const list = _.clone(listSubBidangSelected);
-              list[index].id = value as any;
-              setListSubBidangSelected(list);
+              const isSameBidang = data.masterBidangBisnisId === value;
+
+              if (!isSameBidang) {
+                setListSubBidangSelected([{ id: "" }]);
+              }
+
+              setData({ ...(data as any), masterBidangBisnisId: value });
+              handlerSelectedSubBidang({ id: value as string });
             }}
           />
+        </View>
+
+        {listSubBidangSelected.map((item, index) => (
+          <View onStartShouldSetResponder={() => true} key={index}>
+            <SelectCustom
+              disabled={data.masterBidangBisnisId === ""}
+              label="Sub Bidang Usaha"
+              required
+              data={_.map(selectedSubBidang as any)
+                .filter((option: any) => {
+                  const selectedValues = listSubBidangSelected.map((s) => s.id);
+                  return (
+                    option.id === item.id || !selectedValues.includes(option.id)
+                  );
+                })
+                .map((e: any) => ({
+                  value: e.id,
+                  label: e.name,
+                }))}
+              value={item.id || null}
+              onChange={(value) => {
+                const list = _.clone(listSubBidangSelected);
+                list[index].id = value as any;
+                setListSubBidangSelected(list);
+              }}
+            />
+          </View>
         ))}
 
         <CenterCustom>
@@ -272,27 +279,31 @@ export function ScreenPortofolioCreate() {
 
         <Spacing />
 
-        <TextInputCustom
-          required
-          label="Alamat Bisnis"
-          placeholder="Masukkan alamat bisnis"
-          onChangeText={(value: any) =>
-            setData({ ...data, alamatKantor: value })
-          }
-        />
+        <View onStartShouldSetResponder={() => true}>
+          <TextInputCustom
+            required
+            label="Alamat Bisnis"
+            placeholder="Masukkan alamat bisnis"
+            onChangeText={(value: any) =>
+              setData({ ...data, alamatKantor: value })
+            }
+          />
+        </View>
 
-        <TextAreaCustom
-          label="Deskripsi Bisnis"
-          placeholder="Masukkan deskripsi bisnis"
-          value={data.deskripsi}
-          onChangeText={(value: any) => setData({ ...data, deskripsi: value })}
-          autosize
-          minRows={2}
-          maxRows={5}
-          required
-          showCount
-          maxLength={1000}
-        />
+        <View onStartShouldSetResponder={() => true}>
+          <TextAreaCustom
+            label="Deskripsi Bisnis"
+            placeholder="Masukkan deskripsi bisnis"
+            value={data.deskripsi}
+            onChangeText={(value: any) => setData({ ...data, deskripsi: value })}
+            autosize
+            minRows={2}
+            maxRows={5}
+            required
+            showCount
+            maxLength={1000}
+          />
+        </View>
 
         <Spacing />
 
@@ -322,46 +333,56 @@ export function ScreenPortofolioCreate() {
 
         <InformationBox text="Isi hanya pada sosial media yang anda miliki." />
 
-        <TextInputCustom
-          label="Tiktok"
-          placeholder="Masukkan username tiktok"
-          onChangeText={(value: any) =>
-            setDataMedsos({ ...dataMedsos, tiktok: value })
-          }
-        />
+        <View onStartShouldSetResponder={() => true}>
+          <TextInputCustom
+            label="Tiktok"
+            placeholder="Masukkan username tiktok"
+            onChangeText={(value: any) =>
+              setDataMedsos({ ...dataMedsos, tiktok: value })
+            }
+          />
+        </View>
 
-        <TextInputCustom
-          label="Facebook"
-          placeholder="Masukkan username facebook"
-          onChangeText={(value: any) =>
-            setDataMedsos({ ...dataMedsos, facebook: value })
-          }
-        />
+        <View onStartShouldSetResponder={() => true}>
+          <TextInputCustom
+            label="Facebook"
+            placeholder="Masukkan username facebook"
+            onChangeText={(value: any) =>
+              setDataMedsos({ ...dataMedsos, facebook: value })
+            }
+          />
+        </View>
 
-        <TextInputCustom
-          label="Instagram"
-          placeholder="Masukkan username instagram"
-          onChangeText={(value: any) =>
-            setDataMedsos({ ...dataMedsos, instagram: value })
-          }
-        />
+        <View onStartShouldSetResponder={() => true}>
+          <TextInputCustom
+            label="Instagram"
+            placeholder="Masukkan username instagram"
+            onChangeText={(value: any) =>
+              setDataMedsos({ ...dataMedsos, instagram: value })
+            }
+          />
+        </View>
 
-        <TextInputCustom
-          label="Twitter"
-          placeholder="Masukkan username twitter"
-          onChangeText={(value: any) =>
-            setDataMedsos({ ...dataMedsos, twitter: value })
-          }
-        />
+        <View onStartShouldSetResponder={() => true}>
+          <TextInputCustom
+            label="Twitter"
+            placeholder="Masukkan username twitter"
+            onChangeText={(value: any) =>
+              setDataMedsos({ ...dataMedsos, twitter: value })
+            }
+          />
+        </View>
 
-        <TextInputCustom
-          label="Youtube"
-          placeholder="Masukkan username youtube"
-          onChangeText={(value: any) =>
-            setDataMedsos({ ...dataMedsos, youtube: value })
-          }
-        />
+        <View onStartShouldSetResponder={() => true}>
+          <TextInputCustom
+            label="Youtube"
+            placeholder="Masukkan username youtube"
+            onChangeText={(value: any) =>
+              setDataMedsos({ ...dataMedsos, youtube: value })
+            }
+          />
+        </View>
       </StackCustom>
-    </NewWrapper>
+    </NewWrapper_V2>
   );
 }

@@ -15,29 +15,47 @@ Migrasi bertahap dari `NewWrapper` ke `NewWrapper_V2` untuk memperbaiki bug keyb
 
 ## 📊 Migration Priority
 
-### **Phase 1: Job Screens** (Week 1) - CURRENT
+### **Phase 1: Job Screens** (Week 1) ✅ COMPLETED
 - [x] `screens/Job/ScreenJobCreate2.tsx` → Already using keyboard handling
-- [ ] `screens/Job/ScreenJobCreate.tsx` → Migrate to NewWrapper_V2
-- [ ] `screens/Job/ScreenJobEdit.tsx` → Migrate to NewWrapper_V2
-- [ ] Delete test files after migration
+- [x] `screens/Job/ScreenJobCreate.tsx` → Migrate to NewWrapper_V2
+- [x] `screens/Job/ScreenJobEdit.tsx` → Migrate to NewWrapper_V2
+- [x] Delete test files after migration
 
-### **Phase 2: Event & Profile Screens** (Week 2)
+### **Phase 2: Profile Screens** (Week 2) ✅ COMPLETED
+- [x] `app/(application)/(user)/profile/create.tsx` → Migrate to NewWrapper_V2
+- [x] `app/(application)/(user)/profile/[id]/edit.tsx` → Migrate to NewWrapper_V2
+- [x] `app/(application)/(user)/profile/[id]/index.tsx` → Migrate to NewWrapper_V2
+- [x] `app/(application)/(user)/profile/[id]/detail-blocked.tsx` → Migrate to NewWrapper_V2
+- [x] `app/(application)/(user)/profile/[id]/blocked-list.tsx` → Migrate to NewWrapper_V2
+- [x] `app/(application)/(user)/profile/[id]/update-photo.tsx` → Migrate to NewWrapper_V2
+- [x] `app/(application)/(user)/profile/[id]/update-background.tsx` → Migrate to NewWrapper_V2
+
+### **Phase 3: Portofolio & Maps Screens** (Week 3) - NEXT
+- [ ] `app/(application)/(user)/portofolio/[id]/create.tsx`
+- [ ] `app/(application)/(user)/portofolio/[id]/edit.tsx`
+- [ ] `app/(application)/(user)/portofolio/[id]/edit-logo.tsx`
+- [ ] `app/(application)/(user)/portofolio/[id]/edit-social-media.tsx`
+- [ ] `app/(application)/(user)/portofolio/[id]/index.tsx`
+- [ ] `app/(application)/(user)/portofolio/[id]/list.tsx`
+- [ ] `screens/Maps/ScreenMapsCreate.tsx`
+- [ ] `screens/Maps/ScreenMapsEdit.tsx`
+- [ ] `app/(application)/(user)/maps/[id]/custom-pin.tsx`
+
+### **Phase 4: Event Screens** (Week 4)
 - [ ] `screens/Event/ScreenEventCreate.tsx`
 - [ ] `screens/Event/ScreenEventEdit.tsx`
-- [ ] `screens/Profile/ScreenProfileCreate.tsx`
-- [ ] `screens/Profile/ScreenProfileEdit.tsx`
 
-### **Phase 3: Other Form Screens** (Week 3)
+### **Phase 5: Other Form Screens** (Week 5)
 - [ ] `screens/Donation/` - All create/edit screens
 - [ ] `screens/Investment/` - All create/edit screens
 - [ ] `screens/Voting/` - All create/edit screens
 
-### **Phase 4: Complex Screens** (Week 4)
+### **Phase 6: Complex Screens** (Week 6)
 - [ ] `screens/Forum/` - Create/edit with rich text
 - [ ] `screens/Collaboration/` - Complex forms
 - [ ] Other complex forms
 
-### **Phase 5: Cleanup** (Week 5)
+### **Phase 7: Cleanup** (Week 7)
 - [ ] Remove old `NewWrapper.tsx` (or deprecate)
 - [ ] Rename `NewWrapper_V2.tsx` → `NewWrapper.tsx`
 - [ ] Update documentation
@@ -214,10 +232,12 @@ import { View } from "react-native";
 | Phase | Screens | Status | Completed Date |
 |-------|---------|--------|----------------|
 | **Phase 1: Job** | 6 screens | ✅ COMPLETED | 2026-04-01 |
-| **Phase 2: Event & Profile** | 4 screens | ⏳ Pending | - |
-| **Phase 3: Forms** | 6-8 screens | ⏳ Pending | - |
-| **Phase 4: Complex** | 4-6 screens | ⏳ Pending | - |
-| **Phase 5: Cleanup** | Cleanup | ⏳ Pending | - |
+| **Phase 2: Profile** | 7 screens | ✅ COMPLETED | 2026-04-04 |
+| **Phase 3: Portofolio & Maps** | 9 screens | ⏳ Pending | - |
+| **Phase 4: Event** | 2 screens | ⏳ Pending | - |
+| **Phase 5: Forms** | 6-8 screens | ⏳ Pending | - |
+| **Phase 6: Complex** | 4-6 screens | ⏳ Pending | - |
+| **Phase 7: Cleanup** | Cleanup | ⏳ Pending | - |
 
 ---
 
@@ -256,30 +276,63 @@ import { View } from "react-native";
 
 ---
 
+## ✅ Phase 2: COMPLETED!
+
+**Migrated Screens:**
+1. ✅ `app/(application)/(user)/profile/create.tsx` - Form with keyboard handling
+2. ✅ `app/(application)/(user)/profile/[id]/edit.tsx` - Form with keyboard handling
+3. ✅ `app/(application)/(user)/profile/[id]/index.tsx` - Profile detail (list, no keyboard handling)
+4. ✅ `app/(application)/(user)/profile/[id]/detail-blocked.tsx` - Blocked detail with keyboard handling
+5. ✅ `app/(application)/(user)/profile/[id]/blocked-list.tsx` - Blocked list (list, no keyboard handling)
+6. ✅ `app/(application)/(user)/profile/[id]/update-photo.tsx` - Photo update screen
+7. ✅ `app/(application)/(user)/profile/[id]/update-background.tsx` - Background update screen
+
+**Changes Applied:**
+- Replaced `ViewWrapper`/`NewWrapper` → `NewWrapper_V2`
+- Added `enableKeyboardHandling` prop to form screens
+- Added `keyboardScrollOffset={100}` to form screens
+- Wrapped all `TextInputCustom`/`SelectCustom` with `<View onStartShouldSetResponder={() => true}>`
+- Fixed keyboard handling issues (footer lift, white area, input cutoff)
+
+**Commits:**
+- `3382c16` - refactor: Migrate Profile screens to NewWrapper_V2
+- `76759cc` - chore: Update layout headers and iOS build config
+
+**Total:** 7 screens migrated, 2 commits pushed to branch `qc/4-apr-26`
+
+---
+
 ## 🚀 Current Status
 
 **Status**: 🟡 IN PROGRESS
-**Current Phase**: Phase 1 - Job Screens
+**Current Phase**: Phase 2 - Profile Screens ✅ COMPLETED
+**Next Phase**: Phase 3 - Portofolio & Maps Screens
 **Started**: 2026-04-01
-**ETA**: 2026-04-07 (Phase 1 complete)
+**Last Updated**: 2026-04-04
+**Overall Progress**: 13/34+ screens completed (38%)
 
 ---
 
 ## 📞 Next Actions
 
 1. **Immediate** (Today):
-   - [ ] Migrate `ScreenJobCreate.tsx`
-   - [ ] Migrate `ScreenJobEdit.tsx`
-   - [ ] Test both screens
+   - [ ] Migrate `app/(application)/(user)/portofolio/[id]/create.tsx`
+   - [ ] Migrate `app/(application)/(user)/portofolio/[id]/edit.tsx`
+   - [ ] Migrate `app/(application)/(user)/portofolio/[id]/edit-logo.tsx`
+   - [ ] Migrate `app/(application)/(user)/portofolio/[id]/edit-social-media.tsx`
+   - [ ] Migrate `screens/Maps/ScreenMapsCreate.tsx`
+   - [ ] Migrate `screens/Maps/ScreenMapsEdit.tsx`
+   - [ ] Migrate `app/(application)/(user)/maps/[id]/custom-pin.tsx`
+   - [ ] Test all Portofolio & Maps screens
 
 2. **This Week**:
-   - [ ] Delete test files
+   - [ ] Complete Phase 3 (Portofolio & Maps screens)
    - [ ] Document any issues
-   - [ ] Prepare Phase 2
+   - [ ] Prepare Phase 4
 
 3. **Next Week**:
-   - [ ] Start Phase 2 (Event & Profile)
-   - [ ] Review Phase 1 results
+   - [ ] Start Phase 4 (Event screens)
+   - [ ] Review Phase 2-3 results
    - [ ] Adjust migration guide if needed
 
 ---
@@ -297,8 +350,13 @@ import { View } from "react-native";
 - `tasks/TASK-004-newwrapper-migration.md` (This file)
 
 **Screens to Migrate:**
-- `screens/Job/ScreenJobCreate.tsx`
-- `screens/Job/ScreenJobEdit.tsx`
+- `app/(application)/(user)/portofolio/[id]/create.tsx` (Phase 3)
+- `app/(application)/(user)/portofolio/[id]/edit.tsx` (Phase 3)
+- `app/(application)/(user)/portofolio/[id]/edit-logo.tsx` (Phase 3)
+- `app/(application)/(user)/portofolio/[id]/edit-social-media.tsx` (Phase 3)
+- `screens/Maps/ScreenMapsCreate.tsx` (Phase 3)
+- `screens/Maps/ScreenMapsEdit.tsx` (Phase 3)
+- `app/(application)/(user)/maps/[id]/custom-pin.tsx` (Phase 3)
 - (More in subsequent phases)
 
 ---
@@ -322,12 +380,23 @@ import { View } from "react-native";
 
 ## ✅ Success Criteria
 
-**Phase 1 Complete when:**
-- [ ] Job Create migrated
-- [ ] Job Edit migrated
-- [ ] Both screens tested on iOS & Android
+**Phase 2 Complete when:** ✅
+- [x] Profile Create migrated
+- [x] Profile Edit migrated
+- [x] Profile detail screens migrated
+- [x] All screens tested
+- [x] Commits pushed to branch
+
+**Phase 3 Complete when:**
+- [ ] Portofolio Create migrated
+- [ ] Portofolio Edit migrated
+- [ ] Portofolio edit-logo migrated
+- [ ] Portofolio edit-social-media migrated
+- [ ] Maps Create migrated
+- [ ] Maps Edit migrated
+- [ ] Maps custom-pin migrated
+- [ ] All Portofolio & Maps screens tested on iOS & Android
 - [ ] No critical bugs
-- [ ] Test files deleted
 - [ ] Documentation updated
 
 **Overall Migration Complete when:**
@@ -339,6 +408,6 @@ import { View } from "react-native";
 
 ---
 
-**Last Updated**: 2026-04-01
+**Last Updated**: 2026-04-04
 **Created by**: AI Assistant
-**Status**: 🟡 IN PROGRESS
+**Status**: 🟡 IN PROGRESS - Phase 2 Complete, Ready for Phase 3 (Portofolio & Maps)
