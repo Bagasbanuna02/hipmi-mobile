@@ -2,9 +2,9 @@
 import {
   BaseBox,
   LoaderCustom,
+  OS_Wrapper,
   ScrollableCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
 import { useAuth } from "@/hooks/use-auth";
 import { dummyMasterStatus } from "@/lib/dummy-data/_master/status";
@@ -64,7 +64,7 @@ export default function Job_MainViewStatus() {
 
   return (
     <>
-      <ViewWrapper headerComponent={scrollComponent} hideFooter>
+      <OS_Wrapper headerComponent={scrollComponent} hideFooter>
         {isLoadList ? (
           <LoaderCustom />
         ) : _.isEmpty(listData) ? (
@@ -85,7 +85,7 @@ export default function Job_MainViewStatus() {
             </BaseBox>
           ))
         )}
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

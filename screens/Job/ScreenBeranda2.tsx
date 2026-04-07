@@ -2,7 +2,7 @@ import {
   AvatarUsernameAndOtherComponent,
   BoxWithHeaderSection,
   FloatingButton,
-  NewWrapper_V2,
+  OS_Wrapper,
   SearchInput,
   Spacing,
   StackCustom,
@@ -74,7 +74,7 @@ export default function Job_ScreenBeranda2() {
   );
 
   return (
-    <NewWrapper_V2
+    <OS_Wrapper
       hideFooter
       headerComponent={
         <View style={{ paddingTop: 8 }}>

@@ -3,11 +3,11 @@ import {
   BoxWithHeaderSection,
   FloatingButton,
   LoaderCustom,
+  OS_Wrapper,
   SearchInput,
   Spacing,
   StackCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
 import { apiJobGetAll } from "@/service/api-client/api-job";
 import { router, useFocusEffect } from "expo-router";
@@ -43,7 +43,7 @@ export default function Job_ScreenBeranda() {
   };
 
   return (
-    <ViewWrapper
+    <OS_Wrapper
       hideFooter
       floatingButton={
         <FloatingButton onPress={() => router.push("/job/create")} />
@@ -78,6 +78,6 @@ export default function Job_ScreenBeranda() {
         ))
       )}
       <Spacing />
-    </ViewWrapper>
+    </OS_Wrapper>
   );
 }

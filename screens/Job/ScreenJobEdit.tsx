@@ -8,7 +8,7 @@ import {
   InformationBox,
   LandscapeFrameUploaded,
   LoaderCustom,
-  NewWrapper_V2,
+  PageWrapper,
   Spacing,
   StackCustom,
   TextAreaCustom,
@@ -134,7 +134,7 @@ export function Job_ScreenEdit() {
   };
 
   return (
-    <NewWrapper_V2
+    <PageWrapper
       enableKeyboardHandling
       keyboardScrollOffset={100}
       footerComponent={buttonSubmit()}
@@ -203,6 +203,6 @@ export function Job_ScreenEdit() {
           {buttonSubmit()}
         </StackCustom>
       )}
-    </NewWrapper_V2>
+    </PageWrapper>
   );
 }

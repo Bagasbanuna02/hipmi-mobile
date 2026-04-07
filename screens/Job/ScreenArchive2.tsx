@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { BaseBox, NewWrapper_V2, TextCustom, ViewWrapper } from "@/components";
+import { BaseBox, OS_Wrapper, TextCustom, ViewWrapper } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { useAuth } from "@/hooks/use-auth";
@@ -55,7 +55,7 @@ export default function Job_ScreenArchive2() {
   );
 
   return (
-    <NewWrapper_V2
+    <OS_Wrapper
       listData={pagination.listData}
       renderItem={renderJobItem}
       refreshControl={

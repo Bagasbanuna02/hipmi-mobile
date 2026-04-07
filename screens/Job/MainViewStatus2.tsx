@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { BaseBox, NewWrapper_V2, ScrollableCustom, TextCustom } from "@/components";
+import { BaseBox, OS_Wrapper, ScrollableCustom, TextCustom } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
@@ -86,7 +86,7 @@ export default function Job_MainViewStatus2() {
   );
 
   return (
-    <NewWrapper_V2
+    <OS_Wrapper
       headerComponent={<View style={{ paddingTop: 8 }}>{scrollComponent}</View>}
       listData={pagination.listData}
       renderItem={renderJobItem}
