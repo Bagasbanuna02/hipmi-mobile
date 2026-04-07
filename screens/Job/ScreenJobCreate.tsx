@@ -4,13 +4,14 @@ import {
   ButtonCustom,
   InformationBox,
   LandscapeFrameUploaded,
-  PageWrapper,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextAreaCustom,
   TextInputCustom,
 } from "@/components";
 import DIRECTORY_ID from "@/constants/directory-id";
+import { PADDING_INLINE } from "@/constants/constans-value";
 import { useAuth } from "@/hooks/use-auth";
 import { apiJobCreate } from "@/service/api-client/api-job";
 import { uploadFileService } from "@/service/upload-service";
@@ -118,9 +119,10 @@ export function Job_ScreenCreate() {
   };
 
   return (
-    <PageWrapper
+    <OS_Wrapper
       enableKeyboardHandling
-      keyboardScrollOffset={100}
+      keyboardScrollOffset={10}
+      contentPadding={PADDING_INLINE}
       footerComponent={buttonSubmit()}
     >
       <StackCustom gap={"xs"}>
@@ -173,7 +175,9 @@ export function Job_ScreenCreate() {
             onChangeText={(value) => setData({ ...data, deskripsi: value })}
           />
         </View>
+
+        
       </StackCustom>
-    </PageWrapper>
+    </OS_Wrapper>
   );
 }

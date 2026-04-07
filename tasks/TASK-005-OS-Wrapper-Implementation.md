@@ -5,25 +5,38 @@ Migrasi dari `NewWrapper` dan `NewWrapper_V2` ke `OS_Wrapper` yang otomatis meny
 
 ## 🎯 Goals
 - ✅ Mengganti penggunaan `NewWrapper` → `OS_Wrapper` di user screens
-- ✅ Mengganti penggunaan `NewWrapper_V2` → `OS_Wrapper` atau `PageWrapper` di form screens
+- ✅ Mengganti penggunaan `NewWrapper_V2` → `OS_Wrapper` di form screens (dengan keyboard handling props)
 - ✅ Memastikan tabs dan UI konsisten di iOS dan Android
 - ✅ Backward compatible (wrapper lama tetap ada)
+- ✅ **SIMPLIFIED**: Satu komponen `OS_Wrapper` untuk semua use cases (tidak ada `PageWrapper` terpisah)
 
 ## 📦 Available Wrappers
 
-### 1. **OS_Wrapper** (Recommended)
+### 1. **OS_Wrapper** (Recommended - Unified API)
 Auto-detect platform dan routing ke wrapper yang sesuai:
 - iOS → `IOSWrapper` (berbasis NewWrapper)
-- Android → `AndroidWrapper` (berbasis NewWrapper_V2)
+- Android → `AndroidWrapper` (berbasis NewWrapper_V2 dengan keyboard handling)
 
-### 2. **PageWrapper** (For Forms)
-Sama seperti OS_Wrapper tapi dengan keyboard handling (Android only):
-- `enableKeyboardHandling` - Auto scroll saat input focus
-- `keyboardScrollOffset` - Offset scroll (default: 100)
-- `contentPaddingBottom` - Extra padding bottom (default: 80)
-- `contentPadding` - Content padding (default: 16)
+**Props:**
+```tsx
+// Base props (kedua platform)
+withBackground?: boolean;
+headerComponent?: React.ReactNode;
+footerComponent?: React.ReactNode;
+floatingButton?: React.ReactNode;
+hideFooter?: boolean;
+edgesFooter?: Edge[];
+style?: ViewStyle;
+refreshControl?: RefreshControl;
 
-### 3. **IOSWrapper** / **AndroidWrapper** (Direct Usage)
+// Keyboard handling (Android only - iOS mengabaikan)
+enableKeyboardHandling?: boolean;      // Default: false
+keyboardScrollOffset?: number;         // Default: 100
+contentPaddingBottom?: number;         // Default: 80
+contentPadding?: number;               // Default: 16
+```
+
+### 2. **IOSWrapper** / **AndroidWrapper** (Direct Usage)
 Untuk kasus khusus yang butuh platform-specific behavior.
 
 ## 📝 Migration Guide
@@ -31,85 +44,103 @@ Untuk kasus khusus yang butuh platform-specific behavior.
 ### Before (Old Way)
 ```tsx
 import NewWrapper from "@/components/_ShareComponent/NewWrapper";
-
 // atau
 import { NewWrapper_V2 } from "@/components/_ShareComponent/NewWrapper_V2";
 ```
 
-### After (New Way)
+### After (New Way - Unified API)
 ```tsx
-import { OS_Wrapper, PageWrapper } from "@/components";
+import { OS_Wrapper } from "@/components";
 
-// Static mode
+// Static mode (simple content)
 <OS_Wrapper>
   <YourContent />
 </OS_Wrapper>
 
-// List mode
+// List mode (with pagination)
 <OS_Wrapper
   listData={data}
   renderItem={({ item }) => <ItemCard item={item} />}
   ListEmptyComponent={<EmptyState />}
+  onEndReached={loadMore}
 />
 
-// Form dengan keyboard handling
-<PageWrapper
+// Form mode (with keyboard handling - Android only)
+<OS_Wrapper
   enableKeyboardHandling
   keyboardScrollOffset={150}
+  contentPaddingBottom={100}
+  footerComponent={<SubmitButton />}
 >
   <FormContent />
-</PageWrapper>
+</OS_Wrapper>
 ```
 
-## 🚀 Implementation Phases
+## 🚀 Implementation Status
 
-### Phase 1: User Screens (Priority: HIGH)
-Files yang perlu di-migrate:
+### ✅ Phase 1: Job Screens - COMPLETED (2026-04-06)
 
-#### 1.1 Home/Beranda
-- [ ] `screens/Beranda/ScreenBeranda.tsx` atau `ScreenBeranda2.tsx`
-  - Ganti `NewWrapper` → `OS_Wrapper`
-  - Test tabs behavior di iOS dan Android
+**Files migrated: 8**
 
-#### 1.2 Profile Screens
+#### Job List Screens (OS_Wrapper):
+- ✅ `screens/Job/ScreenBeranda.tsx` - ViewWrapper → OS_Wrapper
+- ✅ `screens/Job/ScreenBeranda2.tsx` - NewWrapper_V2 → OS_Wrapper
+- ✅ `screens/Job/ScreenArchive.tsx` - ViewWrapper → OS_Wrapper
+- ✅ `screens/Job/ScreenArchive2.tsx` - NewWrapper_V2 → OS_Wrapper
+- ✅ `screens/Job/MainViewStatus.tsx` - ViewWrapper → OS_Wrapper
+- ✅ `screens/Job/MainViewStatus2.tsx` - NewWrapper_V2 → OS_Wrapper
+
+#### Job Form Screens (OS_Wrapper with keyboard handling):
+- ✅ `screens/Job/ScreenJobCreate.tsx` - NewWrapper_V2 → OS_Wrapper + enableKeyboardHandling
+- ✅ `screens/Job/ScreenJobEdit.tsx` - NewWrapper_V2 → OS_Wrapper + enableKeyboardHandling
+
+**Testing Status:**
+- ✅ TypeScript: No errors
+- ✅ Build: Success
+- ✅ iOS Testing: Complete ✅
+- ✅ Android Testing: Complete ✅
+
+**Implementation Notes:**
+- Semua form screens menggunakan `enableKeyboardHandling` untuk keyboard auto-scroll di Android
+- Semua list screens menggunakan pagination dengan `onEndReached`
+- Floating button dan sticky header berfungsi dengan baik
+- Footer component tetap di posisi bawah
+
+### ⏳ Phase 2: Other User Screens (Priority: HIGH)
+
+#### Profile Screens:
 - [ ] `screens/Profile/ScreenProfile.tsx`
-- [ ] `screens/Profile/ScreenProfileEdit.tsx`
-- [ ] `screens/Profile/ScreenProfileCreate.tsx`
+- [ ] `screens/Profile/ScreenProfileEdit.tsx` → pakai `enableKeyboardHandling`
+- [ ] `screens/Profile/ScreenProfileCreate.tsx` → pakai `enableKeyboardHandling`
 
-#### 1.3 Forum/Discussion
+#### Forum/Discussion:
 - [ ] `screens/Forum/ScreenForum.tsx`
 - [ ] `screens/Forum/ScreenForumDetail.tsx`
-- [ ] `screens/Forum/ScreenForumCreate.tsx` → pakai `PageWrapper` (ada form)
+- [ ] `screens/Forum/ScreenForumCreate.tsx` → pakai `enableKeyboardHandling`
 
-#### 1.4 Portfolio
+#### Portfolio:
 - [ ] `screens/Portfolio/ScreenPortfolio.tsx`
-- [ ] `screens/Portfolio/ScreenPortfolioCreate.tsx` → pakai `PageWrapper`
-- [ ] `screens/Portfolio/ScreenPortfolioEdit.tsx` → pakai `PageWrapper`
+- [ ] `screens/Portfolio/ScreenPortfolioCreate.tsx` → pakai `enableKeyboardHandling`
+- [ ] `screens/Portfolio/ScreenPortfolioEdit.tsx` → pakai `enableKeyboardHandling`
 
-### Phase 2: Admin Screens (Priority: MEDIUM)
-Files yang perlu di-migrate:
+### ⏳ Phase 3: Admin Screens (Priority: MEDIUM)
 
-#### 2.1 Event Management
+#### Event Management:
 - [ ] `screens/Admin/Event/ScreenEventList.tsx`
-- [ ] `screens/Admin/Event/ScreenEventCreate.tsx` → pakai `PageWrapper`
-- [ ] `screens/Admin/Event/ScreenEventEdit.tsx` → pakai `PageWrapper`
+- [ ] `screens/Admin/Event/ScreenEventCreate.tsx` → pakai `enableKeyboardHandling`
+- [ ] `screens/Admin/Event/ScreenEventEdit.tsx` → pakai `enableKeyboardHandling`
 
-#### 2.2 Voting Management
+#### Voting Management:
 - [ ] `screens/Admin/Voting/ScreenVotingList.tsx`
-- [ ] `screens/Admin/Voting/ScreenVotingCreate.tsx` → pakai `PageWrapper`
-- [ ] `screens/Admin/Voting/ScreenVotingEdit.tsx` → pakai `PageWrapper`
+- [ ] `screens/Admin/Voting/ScreenVotingCreate.tsx` → pakai `enableKeyboardHandling`
+- [ ] `screens/Admin/Voting/ScreenVotingEdit.tsx` → pakai `enableKeyboardHandling`
 
-#### 2.3 Donation Management
+#### Donation Management:
 - [ ] `screens/Admin/Donation/ScreenDonationList.tsx`
-- [ ] `screens/Admin/Donation/ScreenDonationCreate.tsx` → pakai `PageWrapper`
-- [ ] `screens/Admin/Donation/ScreenDonationEdit.tsx` → pakai `PageWrapper`
+- [ ] `screens/Admin/Donation/ScreenDonationCreate.tsx` → pakai `enableKeyboardHandling`
+- [ ] `screens/Admin/Donation/ScreenDonationEdit.tsx` → pakai `enableKeyboardHandling`
 
-#### 2.4 Job Management
-- [ ] `screens/Job/ScreenJobList.tsx` (jika ada)
-- [ ] `screens/Job/ScreenJobCreate.tsx` → sudah pakai `BoxButtonOnFooter`?
-- [ ] `screens/Job/ScreenJobEdit.tsx` → sudah pakai `BoxButtonOnFooter`?
-
-### Phase 3: Other Screens (Priority: LOW)
+### ⏳ Phase 4: Other Screens (Priority: LOW)
 - [ ] `screens/Investasi/` - Investment screens
 - [ ] `screens/Kolaborasi/` - Collaboration screens
 - [ ] Other user-facing screens
@@ -122,7 +153,7 @@ Setiap screen yang sudah di-migrate, test:
 - [ ] UI tampil sesuai design
 - [ ] Tabs berfungsi dengan baik
 - [ ] ScrollView/FlatList scroll dengan smooth
-- [ ] Keyboard tidak menutupi input (jika pakai PageWrapper)
+- [ ] Keyboard tidak menutupi input (jika pakai `enableKeyboardHandling`)
 - [ ] Footer muncul di posisi yang benar
 - [ ] Pull to refresh berfungsi (jika ada)
 
@@ -130,7 +161,7 @@ Setiap screen yang sudah di-migrate, test:
 - [ ] UI tampil sesuai design
 - [ ] Tabs berfungsi dengan baik
 - [ ] ScrollView/FlatList scroll dengan smooth
-- [ ] Keyboard handling: auto scroll saat input focus (jika pakai PageWrapper)
+- [ ] Keyboard handling: auto scroll saat input focus (jika pakai `enableKeyboardHandling`)
 - [ ] Footer muncul di posisi yang benar (tidak tertutup navigation bar)
 - [ ] Pull to refresh berfungsi (jika ada)
 
@@ -144,11 +175,7 @@ Setiap screen yang sudah di-migrate, test:
 
 ## 📌 Notes
 
-### Kapan pakai OS_Wrapper vs PageWrapper?
-- **OS_Wrapper**: Untuk screen yang hanya menampilkan data (list, detail, dll)
-- **PageWrapper**: Untuk screen yang ada form input (create, edit, login, dll)
-
-### Props yang sering digunakan:
+### Usage Pattern:
 
 #### Untuk List Screen:
 ```tsx
@@ -177,9 +204,9 @@ Setiap screen yang sudah di-migrate, test:
 </OS_Wrapper>
 ```
 
-#### Untuk Form Screen:
+#### Untuk Form Screen (dengan keyboard handling):
 ```tsx
-<PageWrapper
+<OS_Wrapper
   enableKeyboardHandling
   keyboardScrollOffset={150}
   contentPaddingBottom={100}
@@ -190,7 +217,7 @@ Setiap screen yang sudah di-migrate, test:
   }
 >
   <FormContent />
-</PageWrapper>
+</OS_Wrapper>
 ```
 
 ### Migration Pattern:
@@ -217,28 +244,51 @@ import { OS_Wrapper } from "@/components";
 />
 ```
 
+```tsx
+// OLD (Form with keyboard handling)
+import { NewWrapper_V2 } from "@/components/_ShareComponent/NewWrapper_V2";
+
+<NewWrapper_V2
+  enableKeyboardHandling
+  keyboardScrollOffset={150}
+>
+  <FormContent />
+</NewWrapper_V2>
+
+// NEW (Unified API)
+import { OS_Wrapper } from "@/components";
+
+<OS_Wrapper
+  enableKeyboardHandling
+  keyboardScrollOffset={150}
+>
+  <FormContent />
+</OS_Wrapper>
+```
+
 ## 🐛 Troubleshooting
 
 ### Issue: Tabs tidak muncul di Android
 **Solution**: Pastikan tidak ada custom padding yang overriding default behavior. Jika masih bermasalah, cek apakah `contentPadding` atau `contentPaddingBottom` terlalu besar.
 
 ### Issue: Keyboard menutupi input di Android
-**Solution**: Pastikan pakai `PageWrapper` dengan `enableKeyboardHandling={true}`. Adjust `keyboardScrollOffset` jika perlu.
+**Solution**: Pastikan pakai `OS_Wrapper` dengan `enableKeyboardHandling={true}`. Adjust `keyboardScrollOffset` jika perlu.
 
 ### Issue: Footer terlalu jauh dari bottom
 **Solution**: Kurangi `contentPaddingBottom` (default: 80). Untuk list screen tanpa navigation bar overlay, bisa set ke 0.
 
 ### Issue: White space di bottom saat keyboard close (Android)
-**Solution**: Ini sudah di-fix di AndroidWrapper. Pastikan screen pakai OS_Wrapper/PageWrapper, bukan NewWrapper langsung.
+**Solution**: Ini sudah di-fix di AndroidWrapper. Pastikan screen pakai OS_Wrapper, bukan NewWrapper langsung.
 
 ## 📊 Progress Tracking
 
 | Phase | Total Files | Migrated | Testing | Status |
 |-------|-------------|----------|---------|--------|
-| Phase 1 (User) | TBD | 0 | 0 | ⏳ Pending |
-| Phase 2 (Admin) | TBD | 0 | 0 | ⏳ Pending |
-| Phase 3 (Other) | TBD | 0 | 0 | ⏳ Pending |
-| **Total** | **TBD** | **0** | **0** | **0%** |
+| Phase 1 (Job) | 8 | 8 | ✅ Complete | ✅ Complete |
+| Phase 2 (User) | TBD | 0 | 0 | ⏳ Pending |
+| Phase 3 (Admin) | TBD | 0 | 0 | ⏳ Pending |
+| Phase 4 (Other) | TBD | 0 | 0 | ⏳ Pending |
+| **Total** | **8+** | **8** | **8** | **100% (Phase 1)** |
 
 ## 🔄 Rollback Plan
 
@@ -252,4 +302,6 @@ Jika ada issue yang tidak bisa di-fix dalam 1 jam:
 
 **Co-authored-by**: Qwen-Coder <qwen-coder@alibabacloud.com>
 **Created**: 2026-04-06
-**Status**: Ready for Implementation
+**Last Updated**: 2026-04-06
+**Status**: Phase 1 (Job Screens) Complete ✅
+**Next**: Phase 2 - Other User Screens

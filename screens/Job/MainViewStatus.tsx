@@ -12,6 +12,7 @@ import { apiJobGetByStatus } from "@/service/api-client/api-job";
 import { useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import { useCallback, useState } from "react";
+import { PADDING_INLINE } from "@/constants/constans-value";
 
 export default function Job_MainViewStatus() {
   const { user } = useAuth();
@@ -64,7 +65,7 @@ export default function Job_MainViewStatus() {
 
   return (
     <>
-      <OS_Wrapper headerComponent={scrollComponent} hideFooter>
+      <OS_Wrapper headerComponent={scrollComponent} hideFooter contentPadding={PADDING_INLINE}>
         {isLoadList ? (
           <LoaderCustom />
         ) : _.isEmpty(listData) ? (

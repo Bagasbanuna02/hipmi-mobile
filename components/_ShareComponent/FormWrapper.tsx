@@ -29,7 +29,7 @@ export function FormWrapper({
   contentPaddingBottom = 100,
   contentPadding = 16,
 }: FormWrapperProps) {
-  const { scrollViewRef, handleInputFocus } = useKeyboardForm(scrollOffset);
+  const { scrollViewRef, handleScroll } = useKeyboardForm(scrollOffset);
 
   return (
     <KeyboardAvoidingView
@@ -38,6 +38,8 @@ export function FormWrapper({
     >
       <ScrollView
         ref={scrollViewRef}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
         style={{ flex: 1 }}
         contentContainerStyle={{
           flexGrow: 1,

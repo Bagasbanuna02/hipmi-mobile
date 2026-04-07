@@ -1,25 +1,35 @@
 // useKeyboardForm.ts - Hook untuk keyboard handling pada form
-import { Keyboard, ScrollView } from "react-native";
+import { Keyboard, ScrollView, Dimensions } from "react-native";
 import { useState, useEffect, useRef } from "react";
+import React from "react";
 
 export function useKeyboardForm(scrollOffset = 100) {
   const scrollViewRef = useRef<ScrollView>(null);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
-  const [focusedInputY, setFocusedInputY] = useState<number | null>(null);
+  const currentScrollY = useRef(0);
 
   // Listen to keyboard events
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       (e) => {
-        setKeyboardHeight(e.endCoordinates.height);
+        const kbHeight = e.endCoordinates.height;
+        setKeyboardHeight(kbHeight);
+        
+        // Simple: scroll by keyboard height saat keyboard muncul
+        if (scrollViewRef.current) {
+          const targetY = currentScrollY.current + kbHeight - scrollOffset;
+          scrollViewRef.current.scrollTo({
+            y: Math.max(0, targetY),
+            animated: true,
+          });
+        }
       }
     );
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       () => {
         setKeyboardHeight(0);
-        setFocusedInputY(null);
       }
     );
 
@@ -27,41 +37,35 @@ export function useKeyboardForm(scrollOffset = 100) {
       keyboardDidShowListener.remove();
       keyboardDidHideListener.remove();
     };
-  }, []);
+  }, [scrollOffset]);
 
-  // Scroll ke focused input
-  useEffect(() => {
-    if (focusedInputY !== null && keyboardHeight > 0 && scrollViewRef.current) {
-      setTimeout(() => {
-        scrollViewRef.current?.scrollTo({
-          y: Math.max(0, focusedInputY - scrollOffset),
-          animated: true,
-        });
-      }, 100);
-    }
-  }, [focusedInputY, keyboardHeight, scrollOffset]);
-
-  // Handler untuk track focused input position
-  const handleInputFocus = (yPosition: number) => {
-    setFocusedInputY(yPosition);
+  // Track scroll position
+  const handleScroll = (event: any) => {
+    currentScrollY.current = event.nativeEvent.contentOffset.y;
   };
 
-  // Helper untuk create onFocus handler
+  // Dummy handlers (for API compatibility)
   const createFocusHandler = () => {
-    return (e: any) => {
-      e.target?.measure((x: number, y: number, width: number, height: number, pageX: number, pageY: number) => {
-        if (pageY !== null) {
-          handleInputFocus(pageY);
-        }
-      });
-    };
+    return () => {};
   };
+
+  const registerInputFocus = () => {};
 
   return {
     scrollViewRef,
     keyboardHeight,
-    focusedInputY,
-    handleInputFocus,
+    registerInputFocus,
     createFocusHandler,
+    handleScroll,
   };
+}
+
+/**
+ * Dummy helper (no-op, for API compatibility)
+ */
+export function cloneChildrenWithFocusHandler(
+  children: React.ReactNode,
+  _focusHandler: (inputRef: any) => void
+): React.ReactNode {
+  return children;
 }

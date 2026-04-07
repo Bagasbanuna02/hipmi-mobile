@@ -43,10 +43,10 @@ interface ListModeProps extends BaseProps {
   keyExtractor?: FlatListProps<any>["keyExtractor"];
 }
 
-// ========== PageWrapper Props (Android-specific keyboard handling) ==========
-interface PageWrapperBaseProps extends BaseProps {
+// ========== Keyboard Handling Props (Android only) ==========
+interface KeyboardHandlingProps {
   /**
-   * Enable keyboard handling (Android only - NewWrapper_V2)
+   * Enable keyboard handling with auto-scroll (Android only)
    * iOS ignores this prop
    * @default false
    */
@@ -74,81 +74,74 @@ interface PageWrapperBaseProps extends BaseProps {
   contentPadding?: number;
 }
 
-interface PageWrapperStaticProps extends PageWrapperBaseProps {
-  children: React.ReactNode;
-  listData?: never;
-  renderItem?: never;
-}
+// ========== Final Props Types ==========
+type OS_WrapperStaticProps = StaticModeProps & KeyboardHandlingProps;
+type OS_WrapperListProps = ListModeProps & KeyboardHandlingProps;
 
-interface PageWrapperListProps extends PageWrapperBaseProps {
-  children?: never;
-  listData?: any[];
-  renderItem?: FlatListProps<any>["renderItem"];
-  onEndReached?: () => void;
-  ListHeaderComponent?: React.ReactElement | null;
-  ListFooterComponent?: React.ReactElement | null;
-  ListEmptyComponent?: React.ReactElement | null;
-  keyExtractor?: FlatListProps<any>["keyExtractor"];
-}
-
-type OS_WrapperProps = StaticModeProps | ListModeProps;
-type PageWrapperProps = PageWrapperStaticProps | PageWrapperListProps;
+type OS_WrapperProps = OS_WrapperStaticProps | OS_WrapperListProps;
 
 /**
  * OS_Wrapper - Automatically selects iOSWrapper or AndroidWrapper based on platform
  * 
- * @example Static Mode
+ * Features:
+ * - Auto platform detection
+ * - Optional keyboard handling for Android forms
+ * - Unified API for all use cases
+ *
+ * @example Static Mode (Simple Content)
  * ```tsx
  * <OS_Wrapper>
  *   <YourContent />
  * </OS_Wrapper>
  * ```
- * 
- * @example List Mode
+ *
+ * @example List Mode (with pagination)
  * ```tsx
  * <OS_Wrapper
  *   listData={data}
  *   renderItem={({ item }) => <ItemCard item={item} />}
  *   ListEmptyComponent={<EmptyState />}
+ *   onEndReached={loadMore}
  * />
+ * ```
+ *
+ * @example Form Mode (with keyboard handling - Android only)
+ * ```tsx
+ * <OS_Wrapper
+ *   enableKeyboardHandling
+ *   keyboardScrollOffset={150}
+ *   contentPaddingBottom={100}
+ *   footerComponent={<SubmitButton />}
+ * >
+ *   <FormContent />
+ * </OS_Wrapper>
  * ```
  */
 export function OS_Wrapper(props: OS_WrapperProps) {
+  const {
+    enableKeyboardHandling = false,
+    keyboardScrollOffset = 100,
+    contentPaddingBottom = 250,
+    contentPadding = 0,
+    ...wrapperProps
+  } = props;
+
   // iOS uses IOSWrapper (based on NewWrapper)
   if (Platform.OS === "ios") {
-    return <IOSWrapper {...props} />;
+    // Keyboard handling props are ignored on iOS
+    return <IOSWrapper {...(wrapperProps as any)} />;
   }
 
-  // Android uses AndroidWrapper (based on NewWrapper_V2 with keyboard handling)
-  return <AndroidWrapper {...props} />;
-}
-
-/**
- * PageWrapper - OS_Wrapper with keyboard handling support (Android only)
- * Use this for forms with input fields
- * 
- * @example
- * ```tsx
- * <PageWrapper enableKeyboardHandling keyboardScrollOffset={150}>
- *   <FormContent />
- * </PageWrapper>
- * ```
- */
-export function PageWrapper(props: PageWrapperProps) {
-  // iOS: Keyboard handling props are ignored
-  if (Platform.OS === "ios") {
-    const {
-      enableKeyboardHandling: _,
-      keyboardScrollOffset: __1,
-      contentPaddingBottom: __2,
-      contentPadding: __3,
-      ...iosProps
-    } = props;
-    return <IOSWrapper {...iosProps} />;
-  }
-
-  // Android: Keyboard handling props are used
-  return <AndroidWrapper {...props} />;
+  // Android uses AndroidWrapper (with keyboard handling support)
+  return (
+    <AndroidWrapper
+      {...(wrapperProps as any)}
+      enableKeyboardHandling={enableKeyboardHandling}
+      keyboardScrollOffset={keyboardScrollOffset}
+      contentPaddingBottom={contentPaddingBottom}
+      contentPadding={contentPadding}
+    />
+  );
 }
 
 // Re-export individual wrappers for direct usage if needed

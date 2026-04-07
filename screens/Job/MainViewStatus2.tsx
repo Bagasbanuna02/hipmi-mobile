@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { BaseBox, OS_Wrapper, ScrollableCustom, TextCustom } from "@/components";
 import { MainColor } from "@/constants/color-palet";
-import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
+import { PAGINATION_DEFAULT_TAKE, PADDING_INLINE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { useAuth } from "@/hooks/use-auth";
 import { usePagination } from "@/hooks/use-pagination";
@@ -102,6 +102,7 @@ export default function Job_MainViewStatus2() {
       ListEmptyComponent={ListEmptyComponent}
       ListFooterComponent={ListFooterComponent}
       hideFooter
+      contentPadding={PADDING_INLINE}
     />
   );
 }

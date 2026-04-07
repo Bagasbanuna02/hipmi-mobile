@@ -13,6 +13,7 @@ import { apiJobGetAll } from "@/service/api-client/api-job";
 import { router, useFocusEffect } from "expo-router";
 import _ from "lodash";
 import { useCallback, useState } from "react";
+import { PADDING_INLINE } from "@/constants/constans-value";
 
 export default function Job_ScreenBeranda() {
   const [listData, setListData] = useState<any[]>([]);
@@ -45,6 +46,7 @@ export default function Job_ScreenBeranda() {
   return (
     <OS_Wrapper
       hideFooter
+      contentPadding={PADDING_INLINE}
       floatingButton={
         <FloatingButton onPress={() => router.push("/job/create")} />
       }

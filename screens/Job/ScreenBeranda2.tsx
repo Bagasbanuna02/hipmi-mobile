@@ -7,7 +7,6 @@ import {
   Spacing,
   StackCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
@@ -17,7 +16,7 @@ import { router, useFocusEffect } from "expo-router";
 import _ from "lodash";
 import { useState } from "react";
 import { RefreshControl, View } from "react-native";
-import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
+import { PAGINATION_DEFAULT_TAKE, PADDING_INLINE } from "@/constants/constans-value";
 
 const PAGE_SIZE = 10;
 
@@ -76,6 +75,7 @@ export default function Job_ScreenBeranda2() {
   return (
     <OS_Wrapper
       hideFooter
+      contentPadding={PADDING_INLINE}
       headerComponent={
         <View style={{ paddingTop: 8 }}>
           <SearchInput

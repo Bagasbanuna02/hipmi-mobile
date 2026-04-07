@@ -7,7 +7,6 @@ import {
   ImageBackground,
   Keyboard,
   KeyboardAvoidingView,
-  Platform,
   ScrollView,
   FlatList,
   TouchableWithoutFeedback,
@@ -85,16 +84,21 @@ export function AndroidWrapper(props: AndroidWrapperProps) {
     style,
     refreshControl,
     enableKeyboardHandling = false,
-    keyboardScrollOffset = 100,
-    contentPaddingBottom = 80,
-    contentPadding = 16,
+    keyboardScrollOffset,
+    contentPaddingBottom,
+    contentPadding,
   } = props;
+
+  // Default values (should be set by OS_Wrapper, but fallback for direct usage)
+  const finalKeyboardScrollOffset = keyboardScrollOffset ?? 100;
+  const finalContentPaddingBottom = contentPaddingBottom ?? 250;
+  const finalContentPadding = contentPadding ?? 0;
 
   const assetBackground = require("../../assets/images/main-background.png");
 
   // Use keyboard hook if enabled
   const keyboardForm = enableKeyboardHandling
-    ? useKeyboardForm(keyboardScrollOffset)
+    ? useKeyboardForm(finalKeyboardScrollOffset)
     : null;
 
   const renderContainer = (content: React.ReactNode) => {
@@ -119,40 +123,41 @@ export function AndroidWrapper(props: AndroidWrapperProps) {
     const listProps = props as ListModeProps;
 
     return (
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-        style={{ flex: 1, backgroundColor: MainColor.darkblue }}
-      >
-        {headerComponent && (
-          <View style={GStyles.stickyHeader}>{headerComponent}</View>
-        )}
-        <FlatList
-          data={listProps.listData}
-          renderItem={listProps.renderItem}
-          keyExtractor={
-            listProps.keyExtractor ||
-            ((item, index) => `${String(item.id)}-${index}`)
-          }
-          refreshControl={refreshControl}
-          onEndReached={listProps.onEndReached}
-          onEndReachedThreshold={0.5}
-          ListHeaderComponent={listProps.ListHeaderComponent}
-          ListFooterComponent={listProps.ListFooterComponent}
-          ListEmptyComponent={listProps.ListEmptyComponent}
-          contentContainerStyle={{
-            flexGrow: 1,
-            paddingBottom:
-              (footerComponent && !hideFooter ? OS_HEIGHT : 0) +
-              contentPaddingBottom,
-            padding: contentPadding,
-          }}
-          keyboardShouldPersistTaps="handled"
-        />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} style={{ flex: 1 }}>
+        <KeyboardAvoidingView
+          behavior={undefined}
+          style={{ flex: 1, backgroundColor: MainColor.darkblue }}
+        >
+          {headerComponent && (
+            <View style={GStyles.stickyHeader}>{headerComponent}</View>
+          )}
+          <FlatList
+            data={listProps.listData}
+            renderItem={listProps.renderItem}
+            keyExtractor={
+              listProps.keyExtractor ||
+              ((item, index) => `${String(item.id)}-${index}`)
+            }
+            refreshControl={refreshControl}
+            onEndReached={listProps.onEndReached}
+            onEndReachedThreshold={0.5}
+            ListHeaderComponent={listProps.ListHeaderComponent}
+            ListFooterComponent={listProps.ListFooterComponent}
+            ListEmptyComponent={listProps.ListEmptyComponent}
+            contentContainerStyle={{
+              flexGrow: 1,
+              paddingBottom:
+                (footerComponent && !hideFooter ? OS_HEIGHT : 0) +
+                finalContentPaddingBottom,
+              padding: finalContentPadding,
+            }}
+            keyboardShouldPersistTaps="handled"
+          />
 
         {/* Footer - Fixed di bawah dengan width 100% */}
         {footerComponent && !hideFooter && (
           <SafeAreaView
-            edges={Platform.OS === "ios" ? edgesFooter : ["bottom"]}
+            edges={["bottom"]}
             style={{ backgroundColor: MainColor.darkblue, width: "100%" }}
           >
             <View style={{ width: "100%" }}>{footerComponent}</View>
@@ -170,6 +175,7 @@ export function AndroidWrapper(props: AndroidWrapperProps) {
           <View style={GStyles.floatingContainer}>{floatingButton}</View>
         )}
       </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
     );
   }
 
@@ -178,7 +184,7 @@ export function AndroidWrapper(props: AndroidWrapperProps) {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      behavior={undefined}
       style={{ flex: 1, backgroundColor: MainColor.darkblue }}
     >
       {headerComponent && (
@@ -187,13 +193,15 @@ export function AndroidWrapper(props: AndroidWrapperProps) {
 
       <ScrollView
         ref={keyboardForm?.scrollViewRef}
+        onScroll={keyboardForm?.handleScroll}
+        scrollEventThrottle={16}
         style={{ flex: 1 }}
         contentContainerStyle={{
           flexGrow: 1,
           paddingBottom:
             (footerComponent && !hideFooter ? OS_HEIGHT : 0) +
-            contentPaddingBottom,
-          padding: contentPadding,
+            finalContentPaddingBottom,
+          padding: finalContentPadding,
         }}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
@@ -210,8 +218,8 @@ export function AndroidWrapper(props: AndroidWrapperProps) {
           style={{
             backgroundColor: MainColor.darkblue,
             width: "100%",
-            position: Platform.OS === "android" ? "absolute" : undefined,
-            bottom: Platform.OS === "android" ? 0 : undefined,
+            position: "absolute",
+            bottom: 0,
             left: 0,
             right: 0,
           }}

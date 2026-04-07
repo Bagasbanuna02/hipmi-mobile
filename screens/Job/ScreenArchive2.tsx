@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { BaseBox, OS_Wrapper, TextCustom, ViewWrapper } from "@/components";
+import { BaseBox, OS_Wrapper, TextCustom } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { useAuth } from "@/hooks/use-auth";
@@ -9,7 +9,7 @@ import { useFocusEffect } from "expo-router";
 import _ from "lodash";
 import { useState } from "react";
 import { RefreshControl } from "react-native";
-import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
+import { PAGINATION_DEFAULT_TAKE, PADDING_INLINE } from "@/constants/constans-value";
 
 export default function Job_ScreenArchive2() {
   const { user } = useAuth();
@@ -70,6 +70,7 @@ export default function Job_ScreenArchive2() {
       ListEmptyComponent={ListEmptyComponent}
       ListFooterComponent={ListFooterComponent}
       hideFooter
+      contentPadding={PADDING_INLINE}
     />
   );
 }

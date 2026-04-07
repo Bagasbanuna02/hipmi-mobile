@@ -5,15 +5,17 @@ import { IconHome, IconStatus } from "@/components/_Icon";
 import BackButtonFromNotification from "@/components/Button/BackButtonFromNotification";
 import { TabsStyles } from "@/styles/tabs-styles";
 import { Ionicons } from "@expo/vector-icons";
-import {
-  router,
-  Tabs,
-  useLocalSearchParams
-} from "expo-router";
+import { router, Tabs, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 import { MainColor } from "@/constants/color-palet";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Platform } from "react-native";
+import {
+  OS_ANDROID_HEIGHT,
+  OS_ANDROID_PADDING_TOP,
+  OS_IOS_HEIGHT,
+  OS_IOS_PADDING_TOP,
+} from "@/constants/constans-value";
 
 function JobTabsWrapper() {
   const insets = useSafeAreaInsets();
@@ -31,20 +33,23 @@ function JobTabsWrapper() {
           tabBarStyle: Platform.select({
             ios: {
               borderTopWidth: 0,
-              paddingTop: 12,
-              height: 80,
+              paddingTop: OS_IOS_PADDING_TOP,
+              height: OS_IOS_HEIGHT,
             },
             android: {
               borderTopWidth: 0,
-              paddingTop: 5,
-              height: 70 + paddingBottom,
+              paddingTop: OS_ANDROID_PADDING_TOP,
+              height: OS_ANDROID_HEIGHT + paddingBottom,
             },
           }),
           header: () => (
             <AppHeader
               title="Job Vacancy"
               left={
-                <BackButtonFromNotification from={from || ""} category={category} />
+                <BackButtonFromNotification
+                  from={from || ""}
+                  category={category}
+                />
               }
             />
           ),

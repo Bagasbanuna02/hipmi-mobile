@@ -5,7 +5,7 @@ import {
   DrawerCustom,
   LoaderCustom,
   MenuDrawerDynamicGrid,
-  NewWrapper_V2,
+  OS_Wrapper,
   Spacing,
   StackCustom,
 } from "@/components";
@@ -23,6 +23,7 @@ import {
   useLocalSearchParams,
 } from "expo-router";
 import { useCallback, useState } from "react";
+import { PADDING_INLINE } from "@/constants/constans-value";
 
 export default function JobDetailStatus() {
   const { id, status } = useLocalSearchParams();
@@ -72,7 +73,7 @@ export default function JobDetailStatus() {
           ),
         }}
       />
-      <NewWrapper_V2>
+      <OS_Wrapper contentPadding={PADDING_INLINE}>
         {isLoadData ? (
           <LoaderCustom />
         ) : (
@@ -96,7 +97,7 @@ export default function JobDetailStatus() {
             <Spacing />
           </>
         )}
-      </NewWrapper_V2>
+      </OS_Wrapper>
 
       <DrawerCustom
         isVisible={openDrawer}

@@ -7,7 +7,6 @@ import {
   ImageBackground,
   Keyboard,
   KeyboardAvoidingView,
-  Platform,
   ScrollView,
   FlatList,
   TouchableWithoutFeedback,
@@ -89,7 +88,7 @@ const iOSWrapper = (props: iOSWrapperProps) => {
 
     return (
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        behavior="padding"
         style={{ flex: 1, backgroundColor: MainColor.darkblue }}
       >
         {headerComponent && (
@@ -128,7 +127,7 @@ const iOSWrapper = (props: iOSWrapperProps) => {
         {footerComponent && !hideFooter && (
           <View style={styles.footerContainer}>
             <SafeAreaView
-              edges={Platform.OS === "ios" ? edgesFooter : ["bottom"]}
+              edges={edgesFooter}
               style={{ backgroundColor: MainColor.darkblue }}
             >
               {footerComponent}
@@ -155,7 +154,7 @@ const iOSWrapper = (props: iOSWrapperProps) => {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior="padding"
       style={{ flex: 1, backgroundColor: MainColor.darkblue }}
     >
       {headerComponent && (
@@ -181,7 +180,7 @@ const iOSWrapper = (props: iOSWrapperProps) => {
       {footerComponent && !hideFooter && (
         <View style={styles.footerContainer}>
           <SafeAreaView
-            edges={Platform.OS === "ios" ? edgesFooter : ["bottom"]}
+            edges={edgesFooter}
             style={{ backgroundColor: MainColor.darkblue }}
           >
             {footerComponent}

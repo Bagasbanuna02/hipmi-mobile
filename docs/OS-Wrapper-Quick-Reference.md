@@ -2,7 +2,7 @@
 
 ## 📦 Import
 ```tsx
-import { OS_Wrapper, PageWrapper, IOSWrapper, AndroidWrapper } from "@/components";
+import { OS_Wrapper, IOSWrapper, AndroidWrapper } from "@/components";
 ```
 
 ## 🎯 Usage Examples
@@ -35,9 +35,9 @@ import { OS_Wrapper, PageWrapper, IOSWrapper, AndroidWrapper } from "@/component
 </OS_Wrapper>
 ```
 
-### 3. PageWrapper - Form dengan Keyboard Handling
+### 3. OS_Wrapper - Form dengan Keyboard Handling
 ```tsx
-<PageWrapper
+<OS_Wrapper
   enableKeyboardHandling
   keyboardScrollOffset={150}
   contentPaddingBottom={100}
@@ -53,7 +53,7 @@ import { OS_Wrapper, PageWrapper, IOSWrapper, AndroidWrapper } from "@/component
     <TextInputCustom />
     <TextInputCustom />
   </ScrollView>
-</PageWrapper>
+</OS_Wrapper>
 ```
 
 ### 4. Platform-Specific (Rare Cases)
@@ -107,21 +107,21 @@ import { OS_Wrapper, PageWrapper, IOSWrapper, AndroidWrapper } from "@/component
 
 ```diff
 - import { NewWrapper_V2 } from "@/components/_ShareComponent/NewWrapper_V2";
-+ import { PageWrapper } from "@/components";
++ import { OS_Wrapper } from "@/components";
 
 - <NewWrapper_V2 enableKeyboardHandling>
-+ <PageWrapper enableKeyboardHandling>
++ <OS_Wrapper enableKeyboardHandling>
     <FormContent />
   </NewWrapper_V2>
 ```
 
 ## 💡 Tips
 
-1. **Pakai OS_Wrapper** untuk screen biasa (list, detail, dll)
-2. **Pakai PageWrapper** untuk screen dengan form input (create, edit)
+1. **Pakai OS_Wrapper** untuk semua screen (list, detail, form)
+2. **Tambahkan `enableKeyboardHandling`** untuk form dengan input fields
 3. **Jangan mix** wrapper lama dan baru di screen yang sama
 4. **Test di kedua platform** sebelum commit
-5. **Keyboard handling** hanya bekerja di Android dengan PageWrapper
+5. **Keyboard handling** hanya bekerja di Android (iOS mengabaikan props ini)
 
 ## ⚠️ Common Mistakes
 
@@ -134,6 +134,9 @@ import OS_Wrapper from "@/components/_ShareComponent/OS_Wrapper";
 <OS_Wrapper>
   <NewWrapper>{content}</NewWrapper>
 </OS_Wrapper>
+
+// Jangan pakai PageWrapper (sudah tidak ada)
+import { PageWrapper } from "@/components";
 ```
 
 ### ✅ Correct
@@ -141,8 +144,13 @@ import OS_Wrapper from "@/components/_ShareComponent/OS_Wrapper";
 // Import dari @/components
 import { OS_Wrapper } from "@/components";
 
-// Pakai salah satu saja
+// Simple content
 <OS_Wrapper>{content}</OS_Wrapper>
+
+// Form with keyboard handling
+<OS_Wrapper enableKeyboardHandling keyboardScrollOffset={150}>
+  <FormContent />
+</OS_Wrapper>
 ```
 
 ---

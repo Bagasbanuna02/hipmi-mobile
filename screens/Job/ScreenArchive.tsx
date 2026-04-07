@@ -5,6 +5,7 @@ import { apiJobGetAll } from "@/service/api-client/api-job";
 import { useFocusEffect } from "expo-router";
 import _ from "lodash";
 import { useCallback, useState } from "react";
+import { PADDING_INLINE } from "@/constants/constans-value";
 
 export default function Job_ScreenArchive() {
   const { user } = useAuth();
@@ -33,7 +34,7 @@ export default function Job_ScreenArchive() {
   };
 
   return (
-    <OS_Wrapper hideFooter>
+    <OS_Wrapper hideFooter contentPadding={PADDING_INLINE}>
       {isLoadData ? (
         <LoaderCustom />
       ) : _.isEmpty(listData) ? (

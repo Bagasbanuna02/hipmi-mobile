@@ -8,13 +8,14 @@ import {
   InformationBox,
   LandscapeFrameUploaded,
   LoaderCustom,
-  PageWrapper,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextAreaCustom,
   TextInputCustom,
 } from "@/components";
 import DIRECTORY_ID from "@/constants/directory-id";
+import { PADDING_INLINE } from "@/constants/constans-value";
 import { apiJobGetOne, apiJobUpdateData } from "@/service/api-client/api-job";
 import { deleteFileService, uploadFileService } from "@/service/upload-service";
 import pickImage from "@/utils/pickImage";
@@ -134,9 +135,10 @@ export function Job_ScreenEdit() {
   };
 
   return (
-    <PageWrapper
+    <OS_Wrapper
       enableKeyboardHandling
       keyboardScrollOffset={100}
+      contentPadding={PADDING_INLINE}
       footerComponent={buttonSubmit()}
     >
       {isLoadData ? (
@@ -203,6 +205,6 @@ export function Job_ScreenEdit() {
           {buttonSubmit()}
         </StackCustom>
       )}
-    </PageWrapper>
+    </OS_Wrapper>
   );
 }

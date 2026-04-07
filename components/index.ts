@@ -66,7 +66,7 @@ import BasicWrapper from "./_ShareComponent/BasicWrapper";
 import { FormWrapper } from "./_ShareComponent/FormWrapper";
 import { NewWrapper_V2 } from "./_ShareComponent/NewWrapper_V2";
 // OS-Specific Wrappers
-import OS_Wrapper, { PageWrapper, IOSWrapper, AndroidWrapper } from "./_ShareComponent/OS_Wrapper";
+import OS_Wrapper, { IOSWrapper, AndroidWrapper } from "./_ShareComponent/OS_Wrapper";
 
 // Progress
 import ProgressCustom from "./Progress/ProgressCustom";
@@ -136,7 +136,6 @@ export {
   NewWrapper_V2,
   // OS-Specific Wrappers
   OS_Wrapper,
-  PageWrapper,
   IOSWrapper,
   AndroidWrapper,
   // Stack
