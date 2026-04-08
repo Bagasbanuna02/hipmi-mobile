@@ -3,10 +3,10 @@ import {
   BaseBox,
   ButtonCustom,
   CenterCustom,
+  OS_Wrapper,
   StackCustom,
   TextCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
 import { useAuth } from "@/hooks/use-auth";
 import { apiDeleteUser } from "@/service/api-client/api-user";
@@ -68,7 +68,10 @@ export default function DeleteAccount() {
 
   return (
     <>
-      <ViewWrapper>
+      <OS_Wrapper
+        enableKeyboardHandling
+        contentPaddingBottom={250}
+      >
         <StackCustom>
           <BaseBox>
             <StackCustom>
@@ -105,7 +108,7 @@ export default function DeleteAccount() {
             </StackCustom>
           </BaseBox>
         </StackCustom>
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

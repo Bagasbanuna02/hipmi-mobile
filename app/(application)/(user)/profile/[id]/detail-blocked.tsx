@@ -5,7 +5,7 @@ import {
   BoxButtonOnFooter,
   BoxWithHeaderSection,
   ButtonCustom,
-  NewWrapper,
+  OS_Wrapper,
   StackCustom,
   TextCustom,
 } from "@/components";
@@ -46,7 +46,7 @@ export default function ProfileDetailBlocked() {
 
   return (
     <>
-      <NewWrapper
+      <OS_Wrapper
         footerComponent={
           <BoxButtonOnFooter>
             <ButtonCustom
@@ -86,7 +86,7 @@ export default function ProfileDetailBlocked() {
             </TextCustom>
           </StackCustom>
         </BoxWithHeaderSection>
-      </NewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

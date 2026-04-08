@@ -3,8 +3,8 @@ import {
     BoxButtonOnFooter,
     ButtonCenteredOnly,
     ButtonCustom,
+    OS_Wrapper,
 } from "@/components";
-import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import API_STRORAGE from "@/constants/base-url-api-strorage";
 import DIRECTORY_ID from "@/constants/directory-id";
 import DUMMY_IMAGE from "@/constants/dummy-image-value";
@@ -127,7 +127,7 @@ export default function UpdateBackgroundProfile() {
   );
 
   return (
-    <ViewWrapper footerComponent={buttonFooter}>
+    <OS_Wrapper footerComponent={buttonFooter}>
       <BaseBox
         style={{ alignItems: "center", justifyContent: "center", height: 250 }}
       >
@@ -144,6 +144,6 @@ export default function UpdateBackgroundProfile() {
       >
         Update
       </ButtonCenteredOnly>
-    </ViewWrapper>
+    </OS_Wrapper>
   );
 }

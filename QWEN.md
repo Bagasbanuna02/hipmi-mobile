@@ -513,3 +513,30 @@ When using Maplibre MapView on iOS, prevent "Attempt to recycle a mounted view" 
 - [Expo Router Documentation](https://docs.expo.dev/router/introduction/)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
 - [Maplibre React Native](https://github.com/maplibre/maplibre-react-native)
+
+## Qwen Added Memories
+- OS_Wrapper contentPaddingBottom pattern:
+- Default: contentPaddingBottom=100 (untuk list screens)
+- Forms: contentPaddingBottom=250 (HANYA untuk screens yang punya TextInput/TextArea)
+- contentPadding=0 (default, per-screen control)
+- OS_ANDROID_PADDING_TOP=6 (compact tabs)
+- OS_IOS_PADDING_TOP=12
+- PADDING_INLINE=16 (constant)
+
+Contoh:
+```tsx
+// List screen (default 100px)
+<OS_Wrapper listData={data} renderItem={renderItem} />
+
+// Form screen (explicit 250px)
+<OS_Wrapper enableKeyboardHandling contentPaddingBottom={250}>
+  <FormWithTextInput />
+</OS_Wrapper>
+```
+- PADDING_INLINE usage pattern - User preference:
+- PADDING_INLINE (16px) TIDAK selalu diperlukan
+- User remove PADDING_INLINE dari Profile screens karena mempersempit box tampilan
+- Decision: Tambahkan PADDING_INLINE HANYA jika diperlukan per-screen, jangan default
+- User akan review dan tambahkan sendiri jika perlu
+
+Profile screens: PADDING_INLINE dihapus dari edit.tsx dan create.tsx

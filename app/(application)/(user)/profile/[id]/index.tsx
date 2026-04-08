@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { NewWrapper, StackCustom } from "@/components";
+import { OS_Wrapper, StackCustom } from "@/components";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
 import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 import LeftButtonCustom from "@/components/Button/BackButton";
@@ -119,7 +119,7 @@ export default function Profile() {
         }}
       />
       {/* Main View */}
-      <NewWrapper
+      <OS_Wrapper
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -144,7 +144,7 @@ export default function Profile() {
             />
           </>
         )}
-      </NewWrapper>
+      </OS_Wrapper>
 
       {/* Drawer Komponen Eksternal */}
       <DrawerCustom

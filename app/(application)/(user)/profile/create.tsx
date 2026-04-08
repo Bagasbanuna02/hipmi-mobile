@@ -2,16 +2,17 @@ import {
     BaseBox,
     ButtonCenteredOnly,
     ButtonCustom,
+    OS_Wrapper,
     SelectCustom,
     Spacing,
     StackCustom,
     TextInputCustom,
-    ViewWrapper,
 } from "@/components";
 import BoxButtonOnFooter from "@/components/Box/BoxButtonOnFooter";
 import InformationBox from "@/components/Box/InformationBox";
 import DIRECTORY_ID from "@/constants/directory-id";
 import DUMMY_IMAGE from "@/constants/dummy-image-value";
+import { PADDING_INLINE } from "@/constants/constans-value";
 import { useAuth } from "@/hooks/use-auth";
 import { apiCreateProfile } from "@/service/api-client/api-profile";
 import { apiValidationEmail } from "@/service/api-client/api-validation";
@@ -155,7 +156,11 @@ export default function CreateProfile() {
   );
 
   return (
-    <ViewWrapper footerComponent={footerComponent}>
+    <OS_Wrapper
+      enableKeyboardHandling
+      contentPaddingBottom={250}
+      footerComponent={footerComponent}
+    >
       <StackCustom>
         <InformationBox text="Upload foto profile anda." />
         <View style={{ alignItems: "center" }}>
@@ -241,6 +246,6 @@ export default function CreateProfile() {
         />
         <Spacing />
       </StackCustom>
-    </ViewWrapper>
+    </OS_Wrapper>
   );
 }

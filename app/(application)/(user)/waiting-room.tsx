@@ -3,7 +3,7 @@ import {
   BoxButtonOnFooter,
   ButtonCustom,
   InformationBox,
-  NewWrapper,
+  OS_Wrapper,
   StackCustom
 } from "@/components";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
@@ -82,7 +82,7 @@ export default function WaitingRoom() {
 
   return (
     <>
-      <NewWrapper
+      <OS_Wrapper
         footerComponent={logoutButton()}
         refreshControl={
           <RefreshControl refreshing={isLoading} onRefresh={handleCheck} />
@@ -103,7 +103,7 @@ Silakan tunggu beberapa saat. Untuk memperbarui status, tarik layar ke bawah."
             Check
           </ButtonCenteredOnly> */}
         </StackCustom>
-      </NewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

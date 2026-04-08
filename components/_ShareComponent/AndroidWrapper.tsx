@@ -195,6 +195,7 @@ export function AndroidWrapper(props: AndroidWrapperProps) {
         ref={keyboardForm?.scrollViewRef}
         onScroll={keyboardForm?.handleScroll}
         scrollEventThrottle={16}
+        refreshControl={refreshControl}
         style={{ flex: 1 }}
         contentContainerStyle={{
           flexGrow: 1,

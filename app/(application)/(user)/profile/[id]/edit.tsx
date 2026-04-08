@@ -1,11 +1,12 @@
 import {
   ButtonCustom,
+  OS_Wrapper,
   SelectCustom,
   StackCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
 import BoxButtonOnFooter from "@/components/Box/BoxButtonOnFooter";
+import { PADDING_INLINE } from "@/constants/constans-value";
 import { apiProfile, apiUpdateProfile } from "@/service/api-client/api-profile";
 import { IProfile } from "@/types/Type-Profile";
 import { router, useLocalSearchParams } from "expo-router";
@@ -70,7 +71,9 @@ export default function ProfileEdit() {
   };
 
   return (
-    <ViewWrapper
+    <OS_Wrapper
+      enableKeyboardHandling
+      contentPaddingBottom={250}
       footerComponent={
         <BoxButtonOnFooter>
           <ButtonCustom isLoading={isLoading} onPress={handleUpdate}>
@@ -119,6 +122,6 @@ export default function ProfileEdit() {
           }}
         />
       </StackCustom>
-    </ViewWrapper>
+    </OS_Wrapper>
   );
 }
