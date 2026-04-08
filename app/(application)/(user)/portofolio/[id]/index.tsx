@@ -4,6 +4,7 @@ import {
   DrawerCustom,
   DummyLandscapeImage,
   LoaderCustom,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextCustom,
@@ -12,7 +13,6 @@ import AppHeader from "@/components/_ShareComponent/AppHeader";
 import LeftButtonCustom from "@/components/Button/BackButton";
 import GridTwoView from "@/components/_ShareComponent/GridTwoView";
 import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
-import ViewWrapper from "@/components/_ShareComponent/ViewWrapper";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
 import { useAuth } from "@/hooks/use-auth";
@@ -92,7 +92,7 @@ export default function Portofolio() {
           ),
         }}
       />
-      <ViewWrapper>
+      <OS_Wrapper>
         {!data || !profileId ? (
             <StackCustom>
             <CustomSkeleton height={400} />
@@ -125,7 +125,7 @@ export default function Portofolio() {
             <Spacing />
           </StackCustom>
         )}
-      </ViewWrapper>
+      </OS_Wrapper>
 
       {/* Drawer Komponen Eksternal */}
       <DrawerCustom

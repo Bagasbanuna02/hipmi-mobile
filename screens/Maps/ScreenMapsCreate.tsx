@@ -1,4 +1,3 @@
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import {
   BoxButtonOnFooter,
   ButtonCustom,
@@ -8,6 +7,7 @@ import {
   TextInputCustom,
   LandscapeFrameUploaded,
   ButtonCenteredOnly,
+  OS_Wrapper,
 } from "@/components";
 import { MapSelectedPlatform } from "@/components/Map/MapSelectedPlatform";
 import DIRECTORY_ID from "@/constants/directory-id";
@@ -142,10 +142,14 @@ export function Maps_ScreenMapsCreate() {
   );
 
   /**
-   * Render screen dengan NewWrapper
+   * Render screen dengan OS_Wrapper
    */
   return (
-    <NewWrapper footerComponent={buttonFooter}>
+    <OS_Wrapper
+      enableKeyboardHandling
+      contentPaddingBottom={250}
+      footerComponent={buttonFooter}
+    >
       <InformationBox text="Tentukan lokasi pin map dengan menekan pada map." />
 
       <BaseBox>
@@ -179,7 +183,7 @@ export function Maps_ScreenMapsCreate() {
       </ButtonCenteredOnly>
 
       <Spacing height={50} />
-    </NewWrapper>
+    </OS_Wrapper>
   );
 }
 

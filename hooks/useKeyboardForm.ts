@@ -1,12 +1,25 @@
 // useKeyboardForm.ts - Hook untuk keyboard handling pada form
-import { Keyboard, ScrollView, Dimensions } from "react-native";
-import { useState, useEffect, useRef } from "react";
-import React from "react";
+import { Keyboard, ScrollView, Dimensions, findNodeHandle, UIManager } from "react-native";
+import { useState, useEffect, useRef, useCallback } from "react";
 
 export function useKeyboardForm(scrollOffset = 100) {
   const scrollViewRef = useRef<ScrollView>(null);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const currentScrollY = useRef(0);
+  const inputPageY = useRef(0);
+  const screenHeight = Dimensions.get('window').height;
+
+  // Fungsi untuk mengukur posisi absolut input
+  const handleInputFocus = useCallback((target: any) => {
+    const nodeHandle = findNodeHandle(target);
+    if (nodeHandle) {
+      UIManager.measure(nodeHandle, (x, y, width, height, pageX, pageY) => {
+        if (pageY !== undefined && pageY !== null) {
+          inputPageY.current = pageY;
+        }
+      });
+    }
+  }, []);
 
   // Listen to keyboard events
   useEffect(() => {
@@ -16,20 +29,34 @@ export function useKeyboardForm(scrollOffset = 100) {
         const kbHeight = e.endCoordinates.height;
         setKeyboardHeight(kbHeight);
         
-        // Simple: scroll by keyboard height saat keyboard muncul
+        // Conditional scroll: hanya scroll jika input tertutup keyboard
         if (scrollViewRef.current) {
-          const targetY = currentScrollY.current + kbHeight - scrollOffset;
-          scrollViewRef.current.scrollTo({
-            y: Math.max(0, targetY),
-            animated: true,
-          });
+          const touchAbsoluteY = inputPageY.current;
+          
+          // Posisi Y teratas keyboard (dari atas layar)
+          const keyboardTopY = screenHeight - kbHeight;
+          
+          // Jika input ADA DI BAWAH keyboard (tertutup)
+          if (touchAbsoluteY > keyboardTopY) {
+            // Hitung berapa harus scroll agar input terlihat di atas keyboard
+            const scrollBy = touchAbsoluteY - keyboardTopY + scrollOffset;
+            const targetY = currentScrollY.current + scrollBy;
+            
+            scrollViewRef.current.scrollTo({
+              y: Math.max(0, targetY),
+              animated: true,
+            });
+          }
+          // Jika input SUDAH TERLIHAT (di atas keyboard), JANGAN SCROLL
         }
       }
     );
+    
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       () => {
         setKeyboardHeight(0);
+        inputPageY.current = 0;
       }
     );
 
@@ -37,35 +64,74 @@ export function useKeyboardForm(scrollOffset = 100) {
       keyboardDidShowListener.remove();
       keyboardDidHideListener.remove();
     };
-  }, [scrollOffset]);
+  }, [scrollOffset, screenHeight]);
 
   // Track scroll position
   const handleScroll = (event: any) => {
     currentScrollY.current = event.nativeEvent.contentOffset.y;
   };
 
-  // Dummy handlers (for API compatibility)
-  const createFocusHandler = () => {
-    return () => {};
-  };
-
-  const registerInputFocus = () => {};
-
   return {
     scrollViewRef,
     keyboardHeight,
-    registerInputFocus,
-    createFocusHandler,
+    handleInputFocus,
     handleScroll,
   };
 }
 
 /**
- * Dummy helper (no-op, for API compatibility)
+ * Helper untuk inject onFocus handler ke semua TextInput/TextArea children
+ * Menggunakan UI.measure untuk mendapatkan posisi absolut input secara akurat
  */
 export function cloneChildrenWithFocusHandler(
   children: React.ReactNode,
-  _focusHandler: (inputRef: any) => void
+  focusHandler: (target: any) => void
 ): React.ReactNode {
-  return children;
+  if (!children) return children;
+  const React = require("react");
+
+  return React.Children.map(children, (child: any) => {
+    if (!React.isValidElement(child)) return child;
+
+    const childType = child.type;
+    const childProps = child.props as Record<string, any> || {};
+
+    // Check if it's a text input component
+    let isTextInput = false;
+    
+    if (typeof childType === 'string') {
+      isTextInput = childType.toLowerCase().includes('textinput');
+    } else if (childType) {
+      isTextInput = 
+        (childType as any).displayName?.includes('TextInput') ||
+        (childType as any).name?.includes('TextInput') ||
+        (childType as any).displayName?.includes('TextArea') ||
+        (childType as any).name?.includes('TextArea') ||
+        (childType as any).displayName?.includes('PhoneInput') ||
+        (childType as any).name?.includes('PhoneInput') ||
+        (childType as any).displayName?.includes('Select') ||
+        (childType as any).name?.includes('Select');
+    }
+
+    if (isTextInput) {
+      const existingOnFocus = childProps.onFocus;
+      return React.cloneElement(child, {
+        ...childProps,
+        onFocus: (e: any) => {
+          existingOnFocus?.(e);
+          focusHandler(e.target);
+        },
+      } as any);
+    }
+
+    // Recursively clone nested children
+    if (childProps.children) {
+      return React.cloneElement(child, {
+        ...childProps,
+        children: cloneChildrenWithFocusHandler(childProps.children, focusHandler),
+      } as any);
+    }
+
+    return child;
+  });
 }

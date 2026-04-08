@@ -1,8 +1,8 @@
 import {
   BoxButtonOnFooter,
   ButtonCustom,
+  OS_Wrapper,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
 import {
   apiGetOnePortofolio,
@@ -91,7 +91,11 @@ export default function PortofolioEditSocialMedia() {
 
   return (
     <>
-      <ViewWrapper footerComponent={buttonFooter}>
+      <OS_Wrapper
+        enableKeyboardHandling
+        contentPaddingBottom={250}
+        footerComponent={buttonFooter}
+      >
         <TextInputCustom
           value={data.tiktok}
           onChangeText={(value) => setData({ ...data, tiktok: value })}
@@ -122,7 +126,7 @@ export default function PortofolioEditSocialMedia() {
           label="Youtube"
           placeholder="Masukkan youtube"
         />
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

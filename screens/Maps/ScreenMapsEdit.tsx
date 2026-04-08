@@ -7,7 +7,7 @@ import {
   LandscapeFrameUploaded,
   Spacing,
   TextInputCustom,
-  ViewWrapper,
+  OS_Wrapper,
 } from "@/components";
 import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 import { MapSelectedPlatform } from "@/components/Map/MapSelectedPlatform";
@@ -166,7 +166,11 @@ export function Maps_ScreenMapsEdit() {
       : defaultRegion;
 
   return (
-    <ViewWrapper footerComponent={buttonFooter}>
+    <OS_Wrapper
+      enableKeyboardHandling
+      contentPaddingBottom={250}
+      footerComponent={buttonFooter}
+    >
       <InformationBox text="Tentukan lokasi pin map dengan menekan pada map." />
 
       {/* <MapSelectedPlatform
@@ -223,6 +227,6 @@ export function Maps_ScreenMapsEdit() {
         Upload
       </ButtonCenteredOnly>
       <Spacing height={50} />
-    </ViewWrapper>
+    </OS_Wrapper>
   );
 }

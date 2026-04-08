@@ -4,7 +4,7 @@ import {
   BoxButtonOnFooter,
   ButtonCustom,
   CenterCustom,
-  NewWrapper,
+  OS_Wrapper,
   PhoneInputCustom,
   SelectCustom,
   Spacing,
@@ -16,7 +16,11 @@ import {
 import ListSkeletonComponent from "@/components/_ShareComponent/ListSkeletonComponent";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_XLARGE } from "@/constants/constans-value";
-import { DEFAULT_COUNTRY, type CountryData, COUNTRIES } from "@/constants/countries";
+import {
+  DEFAULT_COUNTRY,
+  type CountryData,
+  COUNTRIES,
+} from "@/constants/countries";
 import {
   apiMasterBidangBisnis,
   apiMasterSubBidangBisnis,
@@ -61,7 +65,8 @@ export default function PortofolioEdit() {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState<any>({});
   const [phoneNumber, setPhoneNumber] = useState<string>("");
-  const [selectedCountry, setSelectedCountry] = useState<CountryData>(DEFAULT_COUNTRY);
+  const [selectedCountry, setSelectedCountry] =
+    useState<CountryData>(DEFAULT_COUNTRY);
   const [bidangBisnis, setBidangBisnis] = useState<
     IMasterBidangBisnis[] | null
   >(null);
@@ -75,38 +80,38 @@ export default function PortofolioEdit() {
 
   function handlePhoneChange(phone: string) {
     setPhoneNumber(phone);
-    
+
     // Format phone number for API
     const callingCode = selectedCountry.callingCode;
     let fixNumber = phone.replace(/\s+/g, "").replace(/^0+/, "");
-    
+
     // Remove country code if already present
     if (fixNumber.startsWith(callingCode)) {
       fixNumber = fixNumber.substring(callingCode.length);
     }
-    
+
     // Remove leading zero
     fixNumber = fixNumber.replace(/^0+/, "");
-    
+
     const realNumber = callingCode + fixNumber;
     setData({ ...data, tlpn: realNumber });
   }
 
   function handleCountryChange(country: CountryData) {
     setSelectedCountry(country);
-    
+
     // Re-format with new country code
     const callingCode = country.callingCode;
     let fixNumber = phoneNumber.replace(/\s+/g, "").replace(/^0+/, "");
-    
+
     // Remove country code if already present
     if (fixNumber.startsWith(callingCode)) {
       fixNumber = fixNumber.substring(callingCode.length);
     }
-    
+
     // Remove leading zero
     fixNumber = fixNumber.replace(/^0+/, "");
-    
+
     const realNumber = callingCode + fixNumber;
     setData({ ...data, tlpn: realNumber });
   }
@@ -157,7 +162,7 @@ export default function PortofolioEdit() {
       const fullNumber = response.data.tlpn;
       let displayNumber = fullNumber;
       let detectedCountry = DEFAULT_COUNTRY;
-      
+
       // Try to detect country from calling code
       for (const country of COUNTRIES) {
         if (fullNumber.startsWith(country.callingCode)) {
@@ -166,12 +171,12 @@ export default function PortofolioEdit() {
           break;
         }
       }
-      
+
       setSelectedCountry(detectedCountry);
-      
+
       // Remove leading zero if present
       displayNumber = displayNumber.replace(/^0+/, "");
-      
+
       setPhoneNumber(displayNumber);
       setData({ ...response.data, tlpn: displayNumber });
 
@@ -363,161 +368,159 @@ export default function PortofolioEdit() {
     </BoxButtonOnFooter>
   );
 
-  if (!bidangBisnis || !subBidangBisnis) {
-    return (
-      <>
-        <NewWrapper>
-          <ListSkeletonComponent height={80} />
-        </NewWrapper>
-      </>
-    );
-  }
-
   return (
     <>
-      <NewWrapper footerComponent={buttonUpdate}>
-        <StackCustom gap={"xs"}>
-          <TextInputCustom
-            required
-            label="Nama Bisnis"
-            placeholder="Masukkan nama bisnis"
-            value={data.namaBisnis}
-            onChangeText={(value: any) =>
-              setData({ ...data, namaBisnis: value })
-            }
-          />
-
-          <SelectCustom
-            label="Bidang Usaha"
-            required
-            data={bidangBisnis?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
-            value={data.masterBidangBisnisId}
-            onChange={(value: any) => {
-              handleBidangBisnisChange(value);
-            }}
-          />
-
-          {listSubBidangSelected.map((item, index) => {
-            // Filter data untuk select sub bidang, menghilangkan yang sudah dipilih kecuali untuk item ini sendiri
-            const selectedIds = listSubBidangSelected
-              .filter((_, i) => i !== index)
-              .map((s) => s.MasterSubBidangBisnis?.id)
-              .filter((id) => id); // Filter hanya yang memiliki id (tidak kosong)
-
-            const availableSubBidangOptions = (selectedSubBidang || [])
-              .filter((sub: any) => {
-                // Tampilkan jika ini adalah opsi yang dipilih saat ini atau belum dipilih di sub bidang lainnya
-
-                return (
-                  sub.id === item.MasterSubBidangBisnis?.id ||
-                  !selectedIds.includes(sub.id)
-                );
-              })
-              .map((sub: any) => ({
-                value: sub.id,
-                label: sub.name,
-              }));
-
-            return (
-              <SelectCustom
-                key={index}
-                label="Sub Bidang Usaha"
-                required
-                data={availableSubBidangOptions}
-                value={item.MasterSubBidangBisnis?.id || null}
-                onChange={(value: any) => {
-                  handleSubBidangChange(value, index);
-                }}
-              />
-            );
-          })}
-
-          <CenterCustom>
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
-            >
-              <ActionIcon
-                disabled={
-                  selectedSubBidang.length === listSubBidangSelected.length
-                }
-                onPress={() => {
-                  handleAddSubBidang();
-                }}
-                icon={
-                  <Ionicons
-                    name="add-circle-outline"
-                    size={ICON_SIZE_XLARGE}
-                    color={MainColor.black}
-                  />
-                }
-                size="xl"
-              />
-              <ActionIcon
-                disabled={listSubBidangSelected.length <= 1}
-                onPress={() => {
-                  handleRemoveSubBidang(listSubBidangSelected.length - 1);
-                }}
-                icon={
-                  <Ionicons
-                    name="remove-circle-outline"
-                    size={ICON_SIZE_XLARGE}
-                    color={MainColor.black}
-                  />
-                }
-                size="xl"
-              />
-            </View>
-          </CenterCustom>
-          <Spacing />
-
-          <View>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TextCustom semiBold style={{ color: MainColor.white_gray }}>
-                Nomor Telepon
-              </TextCustom>
-              <Text style={{ color: "red" }}> *</Text>
-            </View>
-            <Spacing height={5} />
-            <PhoneInputCustom
-              value={phoneNumber}
-              onChangePhoneNumber={handlePhoneChange}
-              selectedCountry={selectedCountry}
-              onChangeCountry={handleCountryChange}
-              placeholder="xxx-xxx-xxx"
+      <OS_Wrapper
+        enableKeyboardHandling
+        contentPaddingBottom={250}
+        footerComponent={buttonUpdate}
+      >
+        {!bidangBisnis || !subBidangBisnis ? (
+          <ListSkeletonComponent height={80} />
+        ) : (
+          <StackCustom gap={"xs"}>
+            <TextInputCustom
+              required
+              label="Nama Bisnis"
+              placeholder="Masukkan nama bisnis"
+              value={data.namaBisnis}
+              onChangeText={(value: any) =>
+                setData({ ...data, namaBisnis: value })
+              }
             />
-          </View>
-          <Spacing />
 
-          <TextInputCustom
-            required
-            label="Alamat Bisnis"
-            placeholder="Masukkan alamat bisnis"
-            value={data.alamatKantor}
-            onChangeText={(value: any) =>
-              setData({ ...data, alamatKantor: value })
-            }
-          />
+            <SelectCustom
+              label="Bidang Usaha"
+              required
+              data={bidangBisnis?.map((item) => ({
+                label: item.name,
+                value: item.id,
+              }))}
+              value={data.masterBidangBisnisId}
+              onChange={(value: any) => {
+                handleBidangBisnisChange(value);
+              }}
+            />
 
-          <TextAreaCustom
-            label="Deskripsi Bisnis"
-            placeholder="Masukkan deskripsi bisnis"
-            value={data.deskripsi}
-            onChangeText={(value: any) =>
-              setData({ ...data, deskripsi: value })
-            }
-            autosize
-            minRows={2}
-            maxRows={5}
-            required
-            showCount
-            maxLength={1000}
-          />
-          <Spacing />
-        </StackCustom>
-      </NewWrapper>
+            {listSubBidangSelected.map((item, index) => {
+              // Filter data untuk select sub bidang, menghilangkan yang sudah dipilih kecuali untuk item ini sendiri
+              const selectedIds = listSubBidangSelected
+                .filter((_, i) => i !== index)
+                .map((s) => s.MasterSubBidangBisnis?.id)
+                .filter((id) => id); // Filter hanya yang memiliki id (tidak kosong)
+
+              const availableSubBidangOptions = (selectedSubBidang || [])
+                .filter((sub: any) => {
+                  // Tampilkan jika ini adalah opsi yang dipilih saat ini atau belum dipilih di sub bidang lainnya
+
+                  return (
+                    sub.id === item.MasterSubBidangBisnis?.id ||
+                    !selectedIds.includes(sub.id)
+                  );
+                })
+                .map((sub: any) => ({
+                  value: sub.id,
+                  label: sub.name,
+                }));
+
+              return (
+                <SelectCustom
+                  key={index}
+                  label="Sub Bidang Usaha"
+                  required
+                  data={availableSubBidangOptions}
+                  value={item.MasterSubBidangBisnis?.id || null}
+                  onChange={(value: any) => {
+                    handleSubBidangChange(value, index);
+                  }}
+                />
+              );
+            })}
+
+            <CenterCustom>
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+              >
+                <ActionIcon
+                  disabled={
+                    selectedSubBidang.length === listSubBidangSelected.length
+                  }
+                  onPress={() => {
+                    handleAddSubBidang();
+                  }}
+                  icon={
+                    <Ionicons
+                      name="add-circle-outline"
+                      size={ICON_SIZE_XLARGE}
+                      color={MainColor.black}
+                    />
+                  }
+                  size="xl"
+                />
+                <ActionIcon
+                  disabled={listSubBidangSelected.length <= 1}
+                  onPress={() => {
+                    handleRemoveSubBidang(listSubBidangSelected.length - 1);
+                  }}
+                  icon={
+                    <Ionicons
+                      name="remove-circle-outline"
+                      size={ICON_SIZE_XLARGE}
+                      color={MainColor.black}
+                    />
+                  }
+                  size="xl"
+                />
+              </View>
+            </CenterCustom>
+            <Spacing />
+
+            <View>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TextCustom semiBold style={{ color: MainColor.white_gray }}>
+                  Nomor Telepon
+                </TextCustom>
+                <Text style={{ color: "red" }}> *</Text>
+              </View>
+              <Spacing height={5} />
+              <PhoneInputCustom
+                value={phoneNumber}
+                onChangePhoneNumber={handlePhoneChange}
+                selectedCountry={selectedCountry}
+                onChangeCountry={handleCountryChange}
+                placeholder="xxx-xxx-xxx"
+              />
+            </View>
+            <Spacing />
+
+            <TextInputCustom
+              required
+              label="Alamat Bisnis"
+              placeholder="Masukkan alamat bisnis"
+              value={data.alamatKantor}
+              onChangeText={(value: any) =>
+                setData({ ...data, alamatKantor: value })
+              }
+            />
+
+            <TextAreaCustom
+              label="Deskripsi Bisnis"
+              placeholder="Masukkan deskripsi bisnis"
+              value={data.deskripsi}
+              onChangeText={(value: any) =>
+                setData({ ...data, deskripsi: value })
+              }
+              autosize
+              minRows={2}
+              maxRows={5}
+              required
+              showCount
+              maxLength={1000}
+            />
+            <Spacing />
+          </StackCustom>
+        )}
+      </OS_Wrapper>
     </>
   );
 }

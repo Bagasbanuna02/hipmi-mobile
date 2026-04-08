@@ -3,7 +3,7 @@ import {
     BoxButtonOnFooter,
     ButtonCenteredOnly,
     ButtonCustom,
-    ViewWrapper
+    OS_Wrapper
 } from "@/components";
 import API_STRORAGE from "@/constants/base-url-api-strorage";
 import DIRECTORY_ID from "@/constants/directory-id";
@@ -126,7 +126,7 @@ export default function PortofolioEditLogo() {
 
   return (
     <>
-      <ViewWrapper footerComponent={buttonFooter}>
+      <OS_Wrapper footerComponent={buttonFooter}>
         <BaseBox
           style={{
             alignItems: "center",
@@ -146,7 +146,7 @@ export default function PortofolioEditLogo() {
         >
           Upload
         </ButtonCenteredOnly>
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

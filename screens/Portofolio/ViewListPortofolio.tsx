@@ -1,4 +1,4 @@
-import { NewWrapper, TextCustom } from "@/components";
+import { OS_Wrapper, TextCustom } from "@/components";
 import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 import { MainColor } from "@/constants/color-palet";
 import { usePagination } from "@/hooks/use-pagination";
@@ -52,7 +52,7 @@ export default function ViewListPortofolio() {
   });
 
   return (
-    <NewWrapper
+    <OS_Wrapper
       listData={pagination.listData}
       renderItem={renderItem}
       refreshControl={

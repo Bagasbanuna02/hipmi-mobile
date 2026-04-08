@@ -101,106 +101,102 @@ import { OS_Wrapper } from "@/components";
 - ✅ iOS Testing: Complete ✅
 - ✅ Android Testing: Complete ✅
 
-**Implementation Notes:**
-- **contentPaddingBottom pattern**:
-  - Default: `100` (list screens)
-  - Forms: `250` (screens with TextInput/TextArea)
-  - Override per-screen sesuai kebutuhan
-- **PADDING_INLINE constant**: `16px` untuk konsisten padding horizontal
-- Semua form screens menggunakan `enableKeyboardHandling` untuk keyboard auto-scroll di Android
-- Semua list screens menggunakan pagination dengan `onEndReached`
-- Floating button dan sticky header berfungsi dengan baik
-- Footer component tetap di posisi bawah
-- Tap anywhere untuk dismiss keyboard sudah implementasi
+### ✅ Phase 2: Profile, Waiting Room, Delete Account - COMPLETED (2026-04-08)
 
-### ⏳ Phase 2: Other User Screens (Priority: HIGH)
+**Files migrated: 10**
 
 #### Profile Screens:
-- [ ] `screens/Profile/ScreenProfile.tsx`
-- [ ] `screens/Profile/ScreenProfileEdit.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
-- [ ] `screens/Profile/ScreenProfileCreate.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- ✅ `app/(application)/(user)/profile/[id]/index.tsx` - NewWrapper → OS_Wrapper (list with pull-to-refresh)
+- ✅ `app/(application)/(user)/profile/[id]/edit.tsx` - ViewWrapper → OS_Wrapper (form + enableKeyboardHandling + contentPaddingBottom={250})
+- ✅ `app/(application)/(user)/profile/create.tsx` - ViewWrapper → OS_Wrapper (form + enableKeyboardHandling + contentPaddingBottom={250})
+- ✅ `app/(application)/(user)/profile/[id]/blocked-list.tsx` - NewWrapper → OS_Wrapper (pagination list)
+- ✅ `app/(application)/(user)/profile/[id]/detail-blocked.tsx` - NewWrapper → OS_Wrapper (static with footer)
+- ✅ `app/(application)/(user)/profile/[id]/update-background.tsx` - ViewWrapper → OS_Wrapper (static with footer)
+- ✅ `app/(application)/(user)/profile/[id]/update-photo.tsx` - ViewWrapper → OS_Wrapper (static with footer)
 
-#### Forum/Discussion:
-- [ ] `screens/Forum/ScreenForum.tsx`
-- [ ] `screens/Forum/ScreenForumDetail.tsx`
-- [ ] `screens/Forum/ScreenForumCreate.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
+#### Other Screens:
+- ✅ `app/(application)/(user)/waiting-room.tsx` - NewWrapper → OS_Wrapper (static with refresh + footer)
+- ✅ `app/(application)/(user)/delete-account.tsx` - ViewWrapper → OS_Wrapper (form + enableKeyboardHandling + contentPaddingBottom={250})
 
-#### Portfolio:
-- [ ] `screens/Portfolio/ScreenPortfolio.tsx`
-- [ ] `screens/Portfolio/ScreenPortfolioCreate.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
-- [ ] `screens/Portfolio/ScreenPortfolioEdit.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
+### ✅ Phase 3: Portfolio Screens - COMPLETED (2026-04-08)
 
-### ⏳ Phase 3: Admin Screens (Priority: MEDIUM)
+**Files migrated: 6**
 
-#### Event Management:
+#### Portfolio Screens:
+- ✅ `app/(application)/(user)/portofolio/[id]/index.tsx` - ViewWrapper → OS_Wrapper (detail screen with pull-to-refresh)
+- ✅ `app/(application)/(user)/portofolio/[id]/edit.tsx` - NewWrapper → OS_Wrapper (form + enableKeyboardHandling + contentPaddingBottom={250})
+- ✅ `app/(application)/(user)/portofolio/[id]/edit-logo.tsx` - ViewWrapper → OS_Wrapper (static with footer)
+- ✅ `app/(application)/(user)/portofolio/[id]/edit-social-media.tsx` - ViewWrapper → OS_Wrapper (form + enableKeyboardHandling + contentPaddingBottom={250})
+- ✅ `screens/Portofolio/ViewListPortofolio.tsx` - NewWrapper → OS_Wrapper (pagination list)
+- ✅ `screens/Portofolio/ScreenPortofolioCreate.tsx` - NewWrapper → OS_Wrapper (form + enableKeyboardHandling + contentPaddingBottom={250})
+
+### ✅ Phase 4: Maps Screens - COMPLETED (2026-04-08)
+
+**Files migrated: 2**
+
+#### Maps Screens:
+- ✅ `screens/Maps/ScreenMapsCreate.tsx` - NewWrapper → OS_Wrapper (form + enableKeyboardHandling + contentPaddingBottom={250})
+- ✅ `screens/Maps/ScreenMapsEdit.tsx` - ViewWrapper → OS_Wrapper (form + enableKeyboardHandling + contentPaddingBottom={250})
+
+### ⏳ Phase 5: Event Management (Priority: MEDIUM)
+
 - [ ] `screens/Admin/Event/ScreenEventList.tsx`
 - [ ] `screens/Admin/Event/ScreenEventCreate.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
 - [ ] `screens/Admin/Event/ScreenEventEdit.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
 
-#### Voting Management:
+### ⏳ Phase 6: Voting Management (Priority: MEDIUM)
+
 - [ ] `screens/Admin/Voting/ScreenVotingList.tsx`
 - [ ] `screens/Admin/Voting/ScreenVotingCreate.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
 - [ ] `screens/Admin/Voting/ScreenVotingEdit.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
 
-#### Donation Management:
+### ⏳ Phase 7: Forum/Discussion Screens (Priority: LOW)
+
+- [ ] `screens/Forum/ScreenForum.tsx`
+- [ ] `screens/Forum/ScreenForumDetail.tsx`
+- [ ] `screens/Forum/ScreenForumCreate.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
+
+### ⏳ Phase 8: Donation Management (Priority: LOW)
+
 - [ ] `screens/Admin/Donation/ScreenDonationList.tsx`
 - [ ] `screens/Admin/Donation/ScreenDonationCreate.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
 - [ ] `screens/Admin/Donation/ScreenDonationEdit.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
 
-### ⏳ Phase 4: Other Screens (Priority: LOW)
+### ⏳ Phase 9: Other Screens (Priority: LOW)
 - [ ] `screens/Investasi/` - Investment screens
 - [ ] `screens/Kolaborasi/` - Collaboration screens
 - [ ] Other user-facing screens
 
-## ✅ Testing Checklist
+## 📌 Notes & Patterns
 
-Setiap screen yang sudah di-migrate, test:
+### Spacing Pattern:
+- **Default**: `contentPaddingBottom=100` (list & static screens)
+- **Forms**: `contentPaddingBottom={250}` (HANYA untuk screens dengan TextInput/TextArea)
+- **contentPadding=0** (default, per-screen control jika perlu)
 
-### iOS Testing
-- [ ] UI tampil sesuai design
-- [ ] Tabs berfungsi dengan baik
-- [ ] ScrollView/FlatList scroll dengan smooth
-- [ ] Keyboard tidak menutupi input (jika pakai `enableKeyboardHandling`)
-- [ ] Footer muncul di posisi yang benar
-- [ ] Pull to refresh berfungsi (jika ada)
+### User Preference:
+- **NO PADDING_INLINE by default** - Bisa mempersempit box tampilan
+- User akan review dan tambahkan sendiri jika diperlukan per-screen
 
-### Android Testing
-- [ ] UI tampil sesuai design
-- [ ] Tabs berfungsi dengan baik
-- [ ] ScrollView/FlatList scroll dengan smooth
-- [ ] Keyboard handling: auto scroll saat input focus (jika pakai `enableKeyboardHandling`)
-- [ ] Footer muncul di posisi yang benar (tidak tertutup navigation bar)
-- [ ] Pull to refresh berfungsi (jika ada)
+### Keyboard Handling:
+- `enableKeyboardHandling` → Auto-scroll saat keyboard muncul (Android only)
+- **Bug Fixed (2026-04-08)**: Input di paling atas tidak lagi "terlempar" keluar layar saat keyboard muncul
+- **Solusi**: Menggunakan `UIManager.measure` untuk mendapatkan posisi absolut input (`pageY`), lalu conditional scroll:
+  - Jika input DI ATAS keyboard (terlihat) → **TIDAK SCROLL**
+  - Jika input DI BAWAH keyboard (tertutup) → **Scroll secukupnya**
+- Tap anywhere di luar input → keyboard dismiss (sudah implementasi di kedua mode)
 
-### Common Testing
-- [ ] Background image muncul (jika `withBackground={true}`)
-- [ ] Sticky header berfungsi (jika ada `headerComponent`)
-- [ ] Footer fixed di bottom (jika ada `footerComponent`)
-- [ ] Floating button muncul (jika ada `floatingButton`)
-- [ ] Loading skeleton muncul saat pagination
-- [ ] Empty state muncul saat data kosong
-- [ ] Tap anywhere dismiss keyboard berfungsi
-- [ ] contentPaddingBottom: 100 (list) / 250 (form) sesuai kebutuhan
-
-## 📌 Notes
-
-### Usage Pattern:
+### Migration Pattern:
 
 #### Untuk List Screen:
 ```tsx
 <OS_Wrapper
   listData={pagination.listData}
   renderItem={renderItem}
-  contentPadding={PADDING_INLINE}
   ListEmptyComponent={ListEmptyComponent}
   ListFooterComponent={ListFooterComponent}
   onEndReached={pagination.loadMore}
-  refreshControl={
-    <RefreshControl
-      refreshing={pagination.refreshing}
-      onRefresh={pagination.onRefresh}
-    />
-  }
+  refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
 />
 ```
 
@@ -209,7 +205,7 @@ Setiap screen yang sudah di-migrate, test:
 <OS_Wrapper
   headerComponent={<HeaderSection />}
   footerComponent={<FooterSection />}
-  contentPadding={PADDING_INLINE}
+  refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
 >
   <YourContent />
 </OS_Wrapper>
@@ -220,60 +216,7 @@ Setiap screen yang sudah di-migrate, test:
 <OS_Wrapper
   enableKeyboardHandling
   contentPaddingBottom={250}  // ← HANYA untuk screens dengan TextInput
-  contentPadding={PADDING_INLINE}
-  footerComponent={
-    <BoxButtonOnFooter>
-      <ButtonCustom onPress={handleSubmit}>Submit</ButtonCustom>
-    </BoxButtonOnFooter>
-  }
->
-  <FormContent />
-</OS_Wrapper>
-```
-
-### Migration Pattern:
-
-```tsx
-// OLD
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
-
-<NewWrapper
-  listData={data}
-  renderItem={renderItem}
-  headerComponent={header}
-  footerComponent={footer}
-/>
-
-// NEW
-import { OS_Wrapper } from "@/components";
-import { PADDING_INLINE } from "@/constants/constans-value";
-
-<OS_Wrapper
-  listData={data}
-  renderItem={renderItem}
-  contentPadding={PADDING_INLINE}
-  headerComponent={header}
-  footerComponent={footer}
-/>
-```
-
-```tsx
-// OLD (Form with keyboard handling)
-import { NewWrapper_V2 } from "@/components/_ShareComponent/NewWrapper_V2";
-
-<NewWrapper_V2
-  enableKeyboardHandling
-  keyboardScrollOffset={150}
->
-  <FormContent />
-</NewWrapper_V2>
-
-// NEW (Unified API)
-import { OS_Wrapper } from "@/components";
-
-<OS_Wrapper
-  enableKeyboardHandling
-  contentPaddingBottom={250}  // ← Explicit untuk form screens
+  footerComponent={<SubmitButton />}
 >
   <FormContent />
 </OS_Wrapper>
@@ -287,6 +230,9 @@ import { OS_Wrapper } from "@/components";
 ### Issue: Keyboard menutupi input di Android
 **Solution**: Pastikan pakai `OS_Wrapper` dengan `enableKeyboardHandling={true}` dan `contentPaddingBottom={250}` untuk form screens.
 
+### Issue: Pull-to-refresh tidak berfungsi di static mode
+**Solution**: Sudah diperbaiki! `refreshControl` sekarang di-pass ke ScrollView di AndroidWrapper.
+
 ### Issue: Footer terlalu jauh dari bottom
 **Solution**: Kurangi `contentPaddingBottom` (default: 100 untuk list). Untuk form screens tetap 250.
 
@@ -298,10 +244,15 @@ import { OS_Wrapper } from "@/components";
 | Phase | Total Files | Migrated | Testing | Status |
 |-------|-------------|----------|---------|--------|
 | Phase 1 (Job) | 9 | 9 | ✅ Complete | ✅ Complete |
-| Phase 2 (User) | TBD | 0 | 0 | ⏳ Pending |
-| Phase 3 (Admin) | TBD | 0 | 0 | ⏳ Pending |
-| Phase 4 (Other) | TBD | 0 | 0 | ⏳ Pending |
-| **Total** | **9+** | **9** | **9** | **100% (Phase 1)** |
+| Phase 2 (Profile + Others) | 10 | 10 | ⏳ Pending | ✅ Complete |
+| Phase 3 (Portfolio) | 6 | 6 | ⏳ Pending | ✅ Complete |
+| Phase 4 (Maps) | 2 | 2 | ⏳ Pending | ✅ Complete |
+| Phase 5 (Event) | TBD | 0 | 0 | ⏳ Pending |
+| Phase 6 (Voting) | TBD | 0 | 0 | ⏳ Pending |
+| Phase 7 (Forum) | TBD | 0 | 0 | ⏳ Pending |
+| Phase 8 (Donation) | TBD | 0 | 0 | ⏳ Pending |
+| Phase 9 (Other) | TBD | 0 | 0 | ⏳ Pending |
+| **Total** | **27+** | **27** | **9** | **Phase 1-4 Complete** |
 
 ## 🔄 Rollback Plan
 
@@ -316,5 +267,5 @@ Jika ada issue yang tidak bisa di-fix dalam 1 jam:
 **Co-authored-by**: Qwen-Coder <qwen-coder@alibabacloud.com>
 **Created**: 2026-04-06
 **Last Updated**: 2026-04-08
-**Status**: Phase 1 (Job Screens) Complete ✅
-**Next**: Phase 2 - Other User Screens (Profile, Forum, Portfolio)
+**Status**: Phase 1-4 Complete ✅ (27 files migrated)
+**Next**: Phase 5 - Event Management Screens

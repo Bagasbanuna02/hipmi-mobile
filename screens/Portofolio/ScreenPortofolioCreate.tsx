@@ -4,7 +4,7 @@ import {
   ButtonCenteredOnly,
   CenterCustom,
   InformationBox,
-  NewWrapper,
+  OS_Wrapper,
   PhoneInputCustom,
   SelectCustom,
   Spacing,
@@ -142,7 +142,9 @@ export function ScreenPortofolioCreate() {
   };
 
   return (
-    <NewWrapper
+    <OS_Wrapper
+      enableKeyboardHandling
+      contentPaddingBottom={250}
       footerComponent={
         <Portofolio_ButtonCreate
           id={id as string}
@@ -362,6 +364,6 @@ export function ScreenPortofolioCreate() {
           }
         />
       </StackCustom>
-    </NewWrapper>
+    </OS_Wrapper>
   );
 }

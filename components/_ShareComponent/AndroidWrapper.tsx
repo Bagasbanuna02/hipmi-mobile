@@ -19,7 +19,7 @@ import {
   SafeAreaView,
 } from "react-native-safe-area-context";
 import type { ScrollViewProps, FlatListProps } from "react-native";
-import { useKeyboardForm } from "@/hooks/useKeyboardForm";
+import { useKeyboardForm, cloneChildrenWithFocusHandler } from "@/hooks/useKeyboardForm";
 
 // --- Base Props ---
 interface BaseProps {
@@ -182,11 +182,13 @@ export function AndroidWrapper(props: AndroidWrapperProps) {
   // 🔹 Mode Statis (ScrollView)
   const staticProps = props as StaticModeProps;
 
+  // Inject focus handler jika keyboard handling enabled
+  const childrenWithFocus = enableKeyboardHandling && keyboardForm
+    ? cloneChildrenWithFocusHandler(staticProps.children, keyboardForm.handleInputFocus)
+    : staticProps.children;
+
   return (
-    <KeyboardAvoidingView
-      behavior={undefined}
-      style={{ flex: 1, backgroundColor: MainColor.darkblue }}
-    >
+    <View style={{ flex: 1, backgroundColor: MainColor.darkblue }}>
       {headerComponent && (
         <View style={GStyles.stickyHeader}>{headerComponent}</View>
       )}
@@ -208,7 +210,7 @@ export function AndroidWrapper(props: AndroidWrapperProps) {
         showsVerticalScrollIndicator={false}
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          {renderContainer(staticProps.children)}
+          {renderContainer(childrenWithFocus)}
         </TouchableWithoutFeedback>
       </ScrollView>
 
@@ -239,7 +241,7 @@ export function AndroidWrapper(props: AndroidWrapperProps) {
       {floatingButton && (
         <View style={GStyles.floatingContainer}>{floatingButton}</View>
       )}
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 
