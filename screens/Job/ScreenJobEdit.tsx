@@ -138,7 +138,7 @@ export function Job_ScreenEdit() {
     <OS_Wrapper
       enableKeyboardHandling
       keyboardScrollOffset={100}
-      contentPadding={PADDING_INLINE}
+      contentPaddingBottom={250}
       footerComponent={buttonSubmit()}
     >
       {isLoadData ? (

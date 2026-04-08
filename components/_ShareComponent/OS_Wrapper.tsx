@@ -121,7 +121,7 @@ export function OS_Wrapper(props: OS_WrapperProps) {
   const {
     enableKeyboardHandling = false,
     keyboardScrollOffset = 100,
-    contentPaddingBottom = 250,
+    contentPaddingBottom = 100,
     contentPadding = 0,
     ...wrapperProps
   } = props;

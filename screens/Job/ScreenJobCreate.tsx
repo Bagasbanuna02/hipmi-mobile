@@ -122,7 +122,8 @@ export function Job_ScreenCreate() {
     <OS_Wrapper
       enableKeyboardHandling
       keyboardScrollOffset={10}
-      contentPadding={PADDING_INLINE}
+      // contentPadding={PADDING_INLINE}
+      contentPaddingBottom={250}
       footerComponent={buttonSubmit()}
     >
       <StackCustom gap={"xs"}>

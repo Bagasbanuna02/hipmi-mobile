@@ -73,7 +73,7 @@ export default function JobDetailStatus() {
           ),
         }}
       />
-      <OS_Wrapper contentPadding={PADDING_INLINE}>
+      <OS_Wrapper >
         {isLoadData ? (
           <LoaderCustom />
         ) : (

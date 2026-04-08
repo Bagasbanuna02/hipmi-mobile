@@ -32,7 +32,7 @@ const OS_IOS_HEIGHT = 80
 const OS_HEIGHT = Platform.OS === "ios" ? OS_IOS_HEIGHT : OS_ANDROID_HEIGHT
 
 // OS Padding Top
-const OS_ANDROID_PADDING_TOP = 12
+const OS_ANDROID_PADDING_TOP = 6
 const OS_IOS_PADDING_TOP = 12
 const OS_PADDING_TOP = Platform.OS === "ios" ? OS_IOS_PADDING_TOP : OS_ANDROID_PADDING_TOP
 
