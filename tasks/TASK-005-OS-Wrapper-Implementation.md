@@ -74,19 +74,21 @@ import { OS_Wrapper } from "@/components";
 </OS_Wrapper>
 ```
 
-## 🚀 Implementation Status
+---
 
-### ✅ Phase 1: Job Screens - COMPLETED (2026-04-06 to 2026-04-07)
+# 🔵 USER PHASES (User-Facing Screens)
+
+## ✅ User Phase 1: Job Screens - COMPLETED (2026-04-06 to 2026-04-07)
 
 **Files migrated: 9**
 
 #### Job List Screens (OS_Wrapper):
-- ✅ `screens/Job/ScreenBeranda.tsx` - ViewWrapper → OS_Wrapper + PADDING_INLINE
-- ✅ `screens/Job/ScreenBeranda2.tsx` - NewWrapper_V2 → OS_Wrapper + PADDING_INLINE
-- ✅ `screens/Job/ScreenArchive.tsx` - ViewWrapper → OS_Wrapper + PADDING_INLINE
-- ✅ `screens/Job/ScreenArchive2.tsx` - NewWrapper_V2 → OS_Wrapper + PADDING_INLINE
-- ✅ `screens/Job/MainViewStatus.tsx` - ViewWrapper → OS_Wrapper + PADDING_INLINE
-- ✅ `screens/Job/MainViewStatus2.tsx` - NewWrapper_V2 → OS_Wrapper + PADDING_INLINE
+- ✅ `screens/Job/ScreenBeranda.tsx` - ViewWrapper → OS_Wrapper
+- ✅ `screens/Job/ScreenBeranda2.tsx` - NewWrapper_V2 → OS_Wrapper
+- ✅ `screens/Job/ScreenArchive.tsx` - ViewWrapper → OS_Wrapper
+- ✅ `screens/Job/ScreenArchive2.tsx` - NewWrapper_V2 → OS_Wrapper
+- ✅ `screens/Job/MainViewStatus.tsx` - ViewWrapper → OS_Wrapper
+- ✅ `screens/Job/MainViewStatus2.tsx` - NewWrapper_V2 → OS_Wrapper
 
 #### Job Form Screens (OS_Wrapper with keyboard handling):
 - ✅ `screens/Job/ScreenJobCreate.tsx` - NewWrapper_V2 → OS_Wrapper + enableKeyboardHandling + contentPaddingBottom={250}
@@ -101,7 +103,7 @@ import { OS_Wrapper } from "@/components";
 - ✅ iOS Testing: Complete ✅
 - ✅ Android Testing: Complete ✅
 
-### ✅ Phase 2: Profile, Waiting Room, Delete Account - COMPLETED (2026-04-08)
+## ✅ User Phase 2: Profile, Waiting Room, Delete Account - COMPLETED (2026-04-08)
 
 **Files migrated: 10**
 
@@ -118,7 +120,7 @@ import { OS_Wrapper } from "@/components";
 - ✅ `app/(application)/(user)/waiting-room.tsx` - NewWrapper → OS_Wrapper (static with refresh + footer)
 - ✅ `app/(application)/(user)/delete-account.tsx` - ViewWrapper → OS_Wrapper (form + enableKeyboardHandling + contentPaddingBottom={250})
 
-### ✅ Phase 3: Portfolio Screens - COMPLETED (2026-04-08)
+## ✅ User Phase 3: Portfolio Screens - COMPLETED (2026-04-08)
 
 **Files migrated: 6**
 
@@ -130,7 +132,7 @@ import { OS_Wrapper } from "@/components";
 - ✅ `screens/Portofolio/ViewListPortofolio.tsx` - NewWrapper → OS_Wrapper (pagination list)
 - ✅ `screens/Portofolio/ScreenPortofolioCreate.tsx` - NewWrapper → OS_Wrapper (form + enableKeyboardHandling + contentPaddingBottom={250})
 
-### ✅ Phase 4: Maps Screens - COMPLETED (2026-04-08)
+## ✅ User Phase 4: Maps Screens - COMPLETED (2026-04-08)
 
 **Files migrated: 2**
 
@@ -138,36 +140,155 @@ import { OS_Wrapper } from "@/components";
 - ✅ `screens/Maps/ScreenMapsCreate.tsx` - NewWrapper → OS_Wrapper (form + enableKeyboardHandling + contentPaddingBottom={250})
 - ✅ `screens/Maps/ScreenMapsEdit.tsx` - ViewWrapper → OS_Wrapper (form + enableKeyboardHandling + contentPaddingBottom={250})
 
-### ⏳ Phase 5: Event Management (Priority: MEDIUM)
+## ✅ User Phase 5: Forum Screens - COMPLETED (2026-04-09)
 
-- [ ] `screens/Admin/Event/ScreenEventList.tsx`
-- [ ] `screens/Admin/Event/ScreenEventCreate.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
-- [ ] `screens/Admin/Event/ScreenEventEdit.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
+**Files migrated: 17**
 
-### ⏳ Phase 6: Voting Management (Priority: MEDIUM)
+#### Forum List & Create Screens:
+- ✅ `screens/Forum/ViewBeranda.tsx` - ViewWrapper → OS_Wrapper
+- ✅ `screens/Forum/ViewBeranda2.tsx` - NewWrapper → OS_Wrapper
+- ✅ `screens/Forum/ViewBeranda3.tsx` - NewWrapper → OS_Wrapper (Active)
+- ✅ `screens/Forum/create.tsx` - ViewWrapper → OS_Wrapper (form + enableKeyboardHandling + contentPaddingBottom={250})
+- ✅ `screens/Forum/terms.tsx` - NewWrapper → OS_Wrapper (Terms page)
 
-- [ ] `screens/Admin/Voting/ScreenVotingList.tsx`
-- [ ] `screens/Admin/Voting/ScreenVotingCreate.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
-- [ ] `screens/Admin/Voting/ScreenVotingEdit.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
+#### Forum Detail & Comments Screens:
+- ✅ `screens/Forum/DetailForum.tsx` - NewWrapper → OS_Wrapper
+- ✅ `screens/Forum/DetailForum2.tsx` - NewWrapper → OS_Wrapper (Active + disableFlexGrow fix)
 
-### ⏳ Phase 7: Forum/Discussion Screens (Priority: LOW)
+#### User's Forum ("Forumku") Screens:
+- ✅ `screens/Forum/ViewForumku.tsx` - ViewWrapper → OS_Wrapper
+- ✅ `screens/Forum/ViewForumku2.tsx` - NewWrapper → OS_Wrapper
 
-- [ ] `screens/Forum/ScreenForum.tsx`
-- [ ] `screens/Forum/ScreenForumDetail.tsx`
-- [ ] `screens/Forum/ScreenForumCreate.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
+#### Report & Edit Screens:
+- ✅ `app/(application)/(user)/forum/[id]/edit.tsx` - ViewWrapper → OS_Wrapper (form + enableKeyboardHandling + contentPaddingBottom={250})
+- ✅ `app/(application)/(user)/forum/[id]/report-commentar.tsx` - ViewWrapper → OS_Wrapper (Static report form)
+- ✅ `app/(application)/(user)/forum/[id]/report-posting.tsx` - ViewWrapper → OS_Wrapper (Static report form)
+- ✅ `app/(application)/(user)/forum/[id]/other-report-commentar.tsx` - ViewWrapper → OS_Wrapper (form + enableKeyboardHandling + contentPaddingBottom={250})
+- ✅ `app/(application)/(user)/forum/[id]/other-report-posting.tsx` - ViewWrapper → OS_Wrapper (form + enableKeyboardHandling + contentPaddingBottom={250})
+- ✅ `app/(application)/(user)/forum/[id]/preview-report-comment.tsx` - NewWrapper → OS_Wrapper
+- ✅ `app/(application)/(user)/forum/[id]/preview-report-posting.tsx` - NewWrapper → OS_Wrapper
+- ✅ `app/(application)/(user)/forum/[id]/index.tsx` - Checked (No wrapper to migrate, just imports)
 
-### ⏳ Phase 8: Donation Management (Priority: LOW)
+**Bug Fixes Implemented:**
+- ✅ **Scroll Macet (Ghost Scroll):** Fixed dengan menghapus `KeyboardAvoidingView` & `TouchableWithoutFeedback` di List Mode `AndroidWrapper`.
+- ✅ **Header Besar Terpotong:** Menambahkan props `disableFlexGrow={true}` untuk layar dengan header besar (DetailForum2).
+- ✅ **Keyboard Dismiss:** Menggunakan `keyboardShouldPersistTaps="handled"` agar tap di area kosong menutup keyboard.
 
-- [ ] `screens/Admin/Donation/ScreenDonationList.tsx`
-- [ ] `screens/Admin/Donation/ScreenDonationCreate.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
-- [ ] `screens/Admin/Donation/ScreenDonationEdit.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
+## ⏳ User Phase 6: Event Screens (Priority: HIGH)
 
-### ⏳ Phase 9: Other Screens (Priority: LOW)
-- [ ] `screens/Investasi/` - Investment screens
-- [ ] `screens/Kolaborasi/` - Collaboration screens
-- [ ] Other user-facing screens
+- [ ] `app/(application)/(user)/event/create.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- [ ] `app/(application)/(user)/event/(tabs)/index.tsx`
+- [ ] `app/(application)/(user)/event/[id]/index.tsx` (detail)
+- [ ] `app/(application)/(user)/event/detail/[id].tsx`
 
-## 📌 Notes & Patterns
+## ⏳ User Phase 7: Voting Screens (Priority: HIGH)
+
+- [ ] `app/(application)/(user)/voting/create.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- [ ] `app/(application)/(user)/voting/(tabs)/index.tsx`
+- [ ] `app/(application)/(user)/voting/[id]/index.tsx` (detail)
+
+## ⏳ User Phase 8: Donation Screens (Priority: HIGH)
+
+- [ ] `app/(application)/(user)/donation/create.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- [ ] `app/(application)/(user)/donation/create-story.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- [ ] `app/(application)/(user)/donation/(tabs)/index.tsx`
+- [ ] `app/(application)/(user)/donation/[id]/index.tsx` (detail)
+
+## ⏳ User Phase 9: Investment Screens (Priority: MEDIUM)
+
+- [ ] `app/(application)/(user)/investment/create.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- [ ] `app/(application)/(user)/investment/(tabs)/index.tsx`
+- [ ] `app/(application)/(user)/investment/[id]/index.tsx` (detail)
+
+## ⏳ User Phase 10: Collaboration Screens (Priority: MEDIUM)
+
+- [ ] `app/(application)/(user)/collaboration/create.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- [ ] `app/(application)/(user)/collaboration/(tabs)/index.tsx`
+- [ ] `app/(application)/(user)/collaboration/[id]/index.tsx` (detail)
+
+## ⏳ User Phase 11: Other User Screens (Priority: LOW)
+
+- [ ] `app/(application)/(user)/marketplace/index.tsx`
+- [ ] `app/(application)/(user)/user-search/index.tsx`
+- [ ] `app/(application)/(user)/notifications/` - Notification screens (TBD)
+- [ ] `app/(application)/(user)/crowdfunding/` - Crowdfunding screens (TBD)
+
+---
+
+# 🔴 ADMIN PHASES (Admin-Facing Screens)
+
+## ⏳ Admin Phase 1: Event Management (Priority: HIGH)
+
+- [ ] `app/(application)/admin/event/index.tsx`
+- [ ] `app/(application)/admin/event/type-create.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- [ ] `app/(application)/admin/event/type-update.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- [ ] `app/(application)/admin/event/type-of-event.tsx`
+- [ ] `app/(application)/admin/event/[id]/index.tsx` (detail)
+- [ ] `app/(application)/admin/event/[status]/index.tsx`
+
+## ⏳ Admin Phase 2: Voting Management (Priority: HIGH)
+
+- [ ] `app/(application)/admin/voting/index.tsx`
+- [ ] `app/(application)/admin/voting/history.tsx`
+- [ ] `app/(application)/admin/voting/[id]/index.tsx` (detail)
+- [ ] `app/(application)/admin/voting/[status]/index.tsx`
+
+## ⏳ Admin Phase 3: Donation Management (Priority: HIGH)
+
+- [ ] `app/(application)/admin/donation/index.tsx`
+- [ ] `app/(application)/admin/donation/category.tsx`
+- [ ] `app/(application)/admin/donation/category-create.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- [ ] `app/(application)/admin/donation/category-update.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- [ ] `app/(application)/admin/donation/[id]/index.tsx` (detail)
+- [ ] `app/(application)/admin/donation/[status]/index.tsx`
+
+## ⏳ Admin Phase 4: Forum Admin (Priority: MEDIUM)
+
+- [ ] `app/(application)/admin/forum/index.tsx`
+- [ ] `app/(application)/admin/forum/posting.tsx`
+- [ ] `app/(application)/admin/forum/report-posting.tsx`
+- [ ] `app/(application)/admin/forum/report-comment.tsx`
+- [ ] `app/(application)/admin/forum/[id]/index.tsx` (detail)
+
+## ⏳ Admin Phase 5: Collaboration Admin (Priority: MEDIUM)
+
+- [ ] `app/(application)/admin/collaboration/index.tsx`
+- [ ] `app/(application)/admin/collaboration/group.tsx`
+- [ ] `app/(application)/admin/collaboration/publish.tsx`
+- [ ] `app/(application)/admin/collaboration/reject.tsx`
+- [ ] `app/(application)/admin/collaboration/[id]/index.tsx` (detail)
+
+## ⏳ Admin Phase 6: Job Admin (Priority: MEDIUM)
+
+- [ ] `app/(application)/admin/job/index.tsx`
+- [ ] `app/(application)/admin/job/[id]/index.tsx` (detail)
+- [ ] `app/(application)/admin/job/[status]/index.tsx`
+
+## ⏳ Admin Phase 7: Investment Admin (Priority: LOW)
+
+- [ ] `app/(application)/admin/investment/index.tsx`
+- [ ] `app/(application)/admin/investment/[id]/index.tsx` (detail)
+- [ ] `app/(application)/admin/investment/[status]/index.tsx`
+
+## ⏳ Admin Phase 8: App Information (Priority: LOW)
+
+- [ ] `app/(application)/admin/app-information/index.tsx`
+- [ ] `app/(application)/admin/app-information/business-field/` (TBD files)
+- [ ] `app/(application)/admin/app-information/information-bank/` (TBD files)
+- [ ] `app/(application)/admin/app-information/sticker/` (TBD files)
+
+## ⏳ Admin Phase 9: User Access & Others (Priority: LOW)
+
+- [x] `app/(application)/admin/user-access/index.tsx` - NewWrapper → OS_Wrapper (list with pagination + search)
+- [x] `app/(application)/admin/user-access/[id]/index.tsx` - ViewWrapper → OS_Wrapper (detail with footer button)
+- [ ] `app/(application)/admin/notification/` - Notification admin (TBD)
+- [ ] `app/(application)/admin/super-admin/` - Super admin (TBD)
+- [ ] `app/(application)/admin/dashboard.tsx`
+- [ ] `app/(application)/admin/maps.tsx`
+
+---
+
+# 📌 Notes & Patterns
 
 ### Spacing Pattern:
 - **Default**: `contentPaddingBottom=100` (list & static screens)
@@ -241,18 +362,42 @@ import { OS_Wrapper } from "@/components";
 
 ## 📊 Progress Tracking
 
+### User Phases:
 | Phase | Total Files | Migrated | Testing | Status |
 |-------|-------------|----------|---------|--------|
-| Phase 1 (Job) | 9 | 9 | ✅ Complete | ✅ Complete |
-| Phase 2 (Profile + Others) | 10 | 10 | ⏳ Pending | ✅ Complete |
-| Phase 3 (Portfolio) | 6 | 6 | ⏳ Pending | ✅ Complete |
-| Phase 4 (Maps) | 2 | 2 | ⏳ Pending | ✅ Complete |
-| Phase 5 (Event) | TBD | 0 | 0 | ⏳ Pending |
-| Phase 6 (Voting) | TBD | 0 | 0 | ⏳ Pending |
-| Phase 7 (Forum) | TBD | 0 | 0 | ⏳ Pending |
-| Phase 8 (Donation) | TBD | 0 | 0 | ⏳ Pending |
-| Phase 9 (Other) | TBD | 0 | 0 | ⏳ Pending |
-| **Total** | **27+** | **27** | **9** | **Phase 1-4 Complete** |
+| User Phase 1 (Job) | 9 | 9 | ✅ Complete | ✅ Complete |
+| User Phase 2 (Profile + Others) | 10 | 10 | ✅ Complete | ✅ Complete |
+| User Phase 3 (Portfolio) | 6 | 6 | ⏳ Pending | ✅ Complete |
+| User Phase 4 (Maps) | 2 | 2 | ⏳ Pending | ✅ Complete |
+| User Phase 5 (Forum) | 17 | 17 | ⏳ Pending | ✅ Complete |
+| User Phase 6 (Event) | ~4 | 0 | 0 | ⏳ Pending |
+| User Phase 7 (Voting) | ~3 | 0 | 0 | ⏳ Pending |
+| User Phase 8 (Donation) | ~4 | 0 | 0 | ⏳ Pending |
+| User Phase 9 (Investment) | ~3 | 0 | 0 | ⏳ Pending |
+| User Phase 10 (Collaboration) | ~3 | 0 | 0 | ⏳ Pending |
+| User Phase 11 (Others) | ~4 | 0 | 0 | ⏳ Pending |
+| **User Total** | **~69** | **44** | **9** | **~64% Complete** |
+
+### Admin Phases:
+| Phase | Total Files | Migrated | Testing | Status |
+|-------|-------------|----------|---------|--------|
+| Admin Phase 1 (Event) | ~6 | 0 | 0 | ⏳ Pending |
+| Admin Phase 2 (Voting) | ~4 | 0 | 0 | ⏳ Pending |
+| Admin Phase 3 (Donation) | ~6 | 0 | 0 | ⏳ Pending |
+| Admin Phase 4 (Forum) | ~5 | 0 | 0 | ⏳ Pending |
+| Admin Phase 5 (Collaboration) | ~5 | 0 | 0 | ⏳ Pending |
+| Admin Phase 6 (Job) | ~3 | 0 | 0 | ⏳ Pending |
+| Admin Phase 7 (Investment) | ~3 | 0 | 0 | ⏳ Pending |
+| Admin Phase 8 (App Info) | ~4 | 0 | 0 | ⏳ Pending |
+| Admin Phase 9 (User Access) | ~6 | 2 | 0 | 🔄 In Progress |
+| **Admin Total** | **~42** | **2** | **0** | **5% Complete** |
+
+### Grand Total:
+| Category | Total Files | Migrated | Status |
+|----------|-------------|----------|--------|
+| **User Screens** | ~69 | 44 | ~64% Complete |
+| **Admin Screens** | ~42 | 2 | 5% Complete |
+| **GRAND TOTAL** | **~111** | **46** | **~41% Complete** |
 
 ## 🔄 Rollback Plan
 
@@ -266,6 +411,6 @@ Jika ada issue yang tidak bisa di-fix dalam 1 jam:
 
 **Co-authored-by**: Qwen-Coder <qwen-coder@alibabacloud.com>
 **Created**: 2026-04-06
-**Last Updated**: 2026-04-08
-**Status**: Phase 1-4 Complete ✅ (27 files migrated)
-**Next**: Phase 5 - Event Management Screens
+**Last Updated**: 2026-04-09
+**Status**: User Phase 1-4 Complete ✅ (27 files migrated)
+**Next**: User Phase 5 - Forum Screens

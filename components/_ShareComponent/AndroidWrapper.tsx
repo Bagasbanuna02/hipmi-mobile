@@ -52,6 +52,12 @@ interface BaseProps {
    * @default 16
    */
   contentPadding?: number;
+  /**
+   * Disable flexGrow: 1 in contentContainerStyle
+   * Use this for screens with very large headers to fix scroll issues
+   * @default false
+   */
+  disableFlexGrow?: boolean;
 }
 
 interface StaticModeProps extends BaseProps {
@@ -87,6 +93,7 @@ export function AndroidWrapper(props: AndroidWrapperProps) {
     keyboardScrollOffset,
     contentPaddingBottom,
     contentPadding,
+    disableFlexGrow = false,
   } = props;
 
   // Default values (should be set by OS_Wrapper, but fallback for direct usage)
@@ -123,15 +130,12 @@ export function AndroidWrapper(props: AndroidWrapperProps) {
     const listProps = props as ListModeProps;
 
     return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} style={{ flex: 1 }}>
-        <KeyboardAvoidingView
-          behavior={undefined}
-          style={{ flex: 1, backgroundColor: MainColor.darkblue }}
-        >
-          {headerComponent && (
-            <View style={GStyles.stickyHeader}>{headerComponent}</View>
-          )}
-          <FlatList
+      <View style={{ flex: 1, backgroundColor: MainColor.darkblue }}>
+        {headerComponent && (
+          <View style={GStyles.stickyHeader}>{headerComponent}</View>
+        )}
+        <FlatList
+            style={{ flex: 1 }}
             data={listProps.listData}
             renderItem={listProps.renderItem}
             keyExtractor={
@@ -145,13 +149,16 @@ export function AndroidWrapper(props: AndroidWrapperProps) {
             ListFooterComponent={listProps.ListFooterComponent}
             ListEmptyComponent={listProps.ListEmptyComponent}
             contentContainerStyle={{
-              flexGrow: 1,
+              flexGrow: disableFlexGrow ? 0 : 1,
               paddingBottom:
                 (footerComponent && !hideFooter ? OS_HEIGHT : 0) +
                 finalContentPaddingBottom,
               padding: finalContentPadding,
             }}
             keyboardShouldPersistTaps="handled"
+            removeClippedSubviews={false}
+            stickyHeaderIndices={[]}
+            nestedScrollEnabled={true}
           />
 
         {/* Footer - Fixed di bawah dengan width 100% */}
@@ -174,8 +181,7 @@ export function AndroidWrapper(props: AndroidWrapperProps) {
         {floatingButton && (
           <View style={GStyles.floatingContainer}>{floatingButton}</View>
         )}
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+      </View>
     );
   }
 
@@ -200,7 +206,7 @@ export function AndroidWrapper(props: AndroidWrapperProps) {
         refreshControl={refreshControl}
         style={{ flex: 1 }}
         contentContainerStyle={{
-          flexGrow: 1,
+          flexGrow: disableFlexGrow ? 0 : 1,
           paddingBottom:
             (footerComponent && !hideFooter ? OS_HEIGHT : 0) +
             finalContentPaddingBottom,

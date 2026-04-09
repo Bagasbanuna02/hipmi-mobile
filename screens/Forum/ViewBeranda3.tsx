@@ -2,11 +2,12 @@ import {
   AvatarComp,
   BackButton,
   FloatingButton,
+  OS_Wrapper,
   SearchInput,
 } from "@/components";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { MainColor } from "@/constants/color-palet";
+import { PADDING_INLINE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { useAuth } from "@/hooks/use-auth";
 import { usePagination } from "@/hooks/use-pagination";
@@ -75,12 +76,6 @@ export default function Forum_ViewBeranda3() {
     />
   );
 
-  //   const ListHeaderComponent = (
-  //     <View style={{ paddingVertical: 8, alignItems: "center" }}>
-  //       <TextCustom>Diskusi Terbaru</TextCustom>
-  //     </View>
-  //   );
-
   return (
     <>
       <Stack.Screen
@@ -105,8 +100,9 @@ export default function Forum_ViewBeranda3() {
         }}
       />
 
-      <NewWrapper
+      <OS_Wrapper
         hideFooter
+        contentPadding={PADDING_INLINE}
         headerComponent={
           <View style={{ paddingTop: 8 }}>
             <SearchInput

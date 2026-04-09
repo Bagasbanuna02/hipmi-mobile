@@ -22,6 +22,7 @@ interface BaseProps {
   edgesFooter?: NativeSafeAreaViewProps["edges"];
   style?: StyleProp<ViewStyle>;
   refreshControl?: ScrollViewProps["refreshControl"];
+  disableFlexGrow?: boolean;
 }
 
 // ========== Static Mode Props ==========
@@ -123,13 +124,14 @@ export function OS_Wrapper(props: OS_WrapperProps) {
     keyboardScrollOffset = 100,
     contentPaddingBottom = 100,
     contentPadding = 0,
+    disableFlexGrow = false,
     ...wrapperProps
   } = props;
 
   // iOS uses IOSWrapper (based on NewWrapper)
   if (Platform.OS === "ios") {
     // Keyboard handling props are ignored on iOS
-    return <IOSWrapper {...(wrapperProps as any)} />;
+    return <IOSWrapper {...(wrapperProps as any)} disableFlexGrow={disableFlexGrow} />;
   }
 
   // Android uses AndroidWrapper (with keyboard handling support)
@@ -140,6 +142,7 @@ export function OS_Wrapper(props: OS_WrapperProps) {
       keyboardScrollOffset={keyboardScrollOffset}
       contentPaddingBottom={contentPaddingBottom}
       contentPadding={contentPadding}
+      disableFlexGrow={disableFlexGrow}
     />
   );
 }

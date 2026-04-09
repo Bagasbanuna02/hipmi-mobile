@@ -3,13 +3,13 @@ import {
   BadgeCustom,
   CenterCustom,
   Grid,
+  OS_Wrapper,
   SearchInput,
   StackCustom,
   TextCustom,
 } from "@/components";
 import AdminBasicBox from "@/components/_ShareComponent/Admin/AdminBasicBox";
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { MainColor } from "@/constants/color-palet";
 import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
@@ -101,7 +101,7 @@ export function Admin_ScreenUserAccess() {
   );
 
   return (
-    <NewWrapper
+    <OS_Wrapper
       headerComponent={
         <AdminComp_BoxTitle
           title="User Access"

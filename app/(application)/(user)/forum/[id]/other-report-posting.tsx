@@ -1,8 +1,8 @@
 import {
   BoxButtonOnFooter,
   ButtonCustom,
+  OS_Wrapper,
   TextAreaCustom,
-  ViewWrapper,
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
@@ -61,13 +61,17 @@ export default function ForumOtherReportPosting() {
   );
   return (
     <>
-      <ViewWrapper footerComponent={handleSubmit}>
+      <OS_Wrapper
+        enableKeyboardHandling
+        contentPaddingBottom={250}
+        footerComponent={handleSubmit}
+      >
         <TextAreaCustom
           placeholder="Laporkan Diskusi"
           value={value}
           onChangeText={setValue}
         />
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

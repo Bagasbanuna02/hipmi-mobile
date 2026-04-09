@@ -1,8 +1,8 @@
 import {
   BoxButtonOnFooter,
   ButtonCustom,
+  OS_Wrapper,
   TextAreaCustom,
-  ViewWrapper,
 } from "@/components";
 import AlertWarning from "@/components/Alert/AlertWarning";
 import { useAuth } from "@/hooks/use-auth";
@@ -67,7 +67,11 @@ export default function ForumCreate() {
   );
 
   return (
-    <ViewWrapper footerComponent={buttonFooter}>
+    <OS_Wrapper
+      enableKeyboardHandling
+      contentPaddingBottom={250}
+      footerComponent={buttonFooter}
+    >
       <TextAreaCustom
         placeholder="Ketik diskusi anda..."
         maxLength={1000}
@@ -75,6 +79,6 @@ export default function ForumCreate() {
         value={text}
         onChangeText={setText}
       />
-    </ViewWrapper>
+    </OS_Wrapper>
   );
 }

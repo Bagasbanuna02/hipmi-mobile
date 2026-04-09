@@ -6,11 +6,11 @@ import {
   FloatingButton,
   Grid,
   LoaderCustom,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextCustom,
 } from "@/components";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import NoDataText from "@/components/_ShareComponent/NoDataText";
 import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 import { MainColor } from "@/constants/color-palet";
@@ -24,6 +24,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { RefreshControl, View } from "react-native";
+import { PADDING_INLINE } from "@/constants/constans-value";
 
 export default function View_Forumku2() {
   const { id } = useLocalSearchParams();
@@ -120,7 +121,8 @@ export default function View_Forumku2() {
 
   return (
     <>
-      <NewWrapper
+      <OS_Wrapper
+      contentPadding={PADDING_INLINE}
         floatingButton={
           user?.id === id && (
             <FloatingButton

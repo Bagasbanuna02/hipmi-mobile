@@ -1,6 +1,6 @@
 import {
   BaseBox,
-  NewWrapper,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextCustom,
@@ -41,7 +41,7 @@ export default function ForumPreviewReportComment() {
 
   return (
     <>
-      <NewWrapper>
+      <OS_Wrapper>
         <StackCustom>
           <TextCustom color="red" bold>
             Komentar anda telah melanggar aturan forum ! Admin mengambil
@@ -85,7 +85,7 @@ export default function ForumPreviewReportComment() {
               </BaseBox>
           ))
         )}
-      </NewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

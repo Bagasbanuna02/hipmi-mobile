@@ -2,8 +2,8 @@ import {
   BoxButtonOnFooter,
   ButtonCustom,
   LoaderCustom,
+  OS_Wrapper,
   TextAreaCustom,
-  ViewWrapper,
 } from "@/components";
 import AlertWarning from "@/components/Alert/AlertWarning";
 import { apiForumGetOne, apiForumUpdate } from "@/service/api-client/api-forum";
@@ -88,7 +88,11 @@ export default function ForumEdit() {
   };
 
   return (
-    <ViewWrapper footerComponent={buttonFooter()}>
+    <OS_Wrapper
+      enableKeyboardHandling
+      contentPaddingBottom={250}
+      footerComponent={buttonFooter()}
+    >
       {!loadingGetData ? (
         <TextAreaCustom
           placeholder="Ketik diskusi anda..."
@@ -102,6 +106,6 @@ export default function ForumEdit() {
       ) : (
         <LoaderCustom />
       )}
-    </ViewWrapper>
+    </OS_Wrapper>
   );
 }

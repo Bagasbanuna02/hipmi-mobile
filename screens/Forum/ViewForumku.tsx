@@ -7,9 +7,9 @@ import {
   FloatingButton,
   Grid,
   LoaderCustom,
+  OS_Wrapper,
   StackCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
 import { useAuth } from "@/hooks/use-auth";
 import Forum_BoxDetailSection from "@/screens/Forum/DiscussionBoxSection";
@@ -66,7 +66,7 @@ export default function View_Forumku() {
 
   return (
     <>
-      <ViewWrapper
+      <OS_Wrapper
         floatingButton={
           user?.id === id && (
             <FloatingButton
@@ -121,7 +121,7 @@ export default function View_Forumku() {
             </>
           )}
         </StackCustom>
-      </ViewWrapper>
+      </OS_Wrapper>
 
       {/* Drawer Komponen Eksternal */}
       <DrawerCustom

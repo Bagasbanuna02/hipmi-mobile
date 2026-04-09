@@ -1,7 +1,7 @@
 import {
   BackButton,
   AvatarComp,
-  ViewWrapper,
+  OS_Wrapper,
   SearchInput,
   FloatingButton,
   LoaderCustom,
@@ -71,7 +71,7 @@ export default function Forum_ViewBeranda() {
         }}
       />
 
-      <ViewWrapper
+      <OS_Wrapper
         headerComponent={
           <SearchInput
             placeholder="Cari topik diskusi"
@@ -107,7 +107,7 @@ export default function Forum_ViewBeranda() {
             />
           ))
         )}
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

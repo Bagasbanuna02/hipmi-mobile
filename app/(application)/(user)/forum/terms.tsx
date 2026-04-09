@@ -2,7 +2,7 @@ import {
     BaseBox,
     ButtonCustom,
     CheckboxCustom,
-    NewWrapper,
+    OS_Wrapper,
     StackCustom,
     TextCustom,
 } from "@/components";
@@ -54,7 +54,7 @@ export default function ForumSplash() {
   };
 
   return (
-    <NewWrapper>
+    <OS_Wrapper>
       {/* <TextCustom bold>HIPMI Badung Connect</TextCustom> . */}
 
       <BaseBox>
@@ -162,7 +162,7 @@ export default function ForumSplash() {
           </ButtonCustom>
         </StackCustom>
       </BaseBox>
-    </NewWrapper>
+    </OS_Wrapper>
   );
 }
 

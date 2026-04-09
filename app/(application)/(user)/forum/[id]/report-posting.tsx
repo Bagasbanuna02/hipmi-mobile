@@ -2,9 +2,9 @@ import {
   AlertDefaultSystem,
   ButtonCustom,
   LoaderCustom,
+  OS_Wrapper,
   Spacing,
   StackCustom,
-  ViewWrapper,
 } from "@/components";
 import { AccentColor, MainColor } from "@/constants/color-palet";
 import { useAuth } from "@/hooks/use-auth";
@@ -73,7 +73,7 @@ export default function ForumReportPosting() {
 
   return (
     <>
-      <ViewWrapper>
+      <OS_Wrapper>
         {isLoadingList ? (
           <LoaderCustom />
         ) : (
@@ -114,7 +114,7 @@ export default function ForumReportPosting() {
             <Spacing />
           </StackCustom>
         )}
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

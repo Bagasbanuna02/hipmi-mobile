@@ -3,9 +3,9 @@ import {
     BoxButtonOnFooter,
     ButtonCustom,
     LoaderCustom,
+    OS_Wrapper,
     StackCustom,
     TextCustom,
-    ViewWrapper,
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import GridTwoView from "@/components/_ShareComponent/GridTwoView";
@@ -76,7 +76,7 @@ export default function AdminUserAccessDetail() {
 
   return (
     <>
-      <ViewWrapper
+      <OS_Wrapper
         headerComponent={<AdminBackButtonAntTitle title={`Detail User`} />}
         footerComponent={
           data && (
@@ -108,7 +108,7 @@ export default function AdminUserAccessDetail() {
             ))}
           </StackCustom>
         )}
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

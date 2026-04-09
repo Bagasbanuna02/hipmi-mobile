@@ -3,12 +3,11 @@ import {
   ButtonCustom,
   DrawerCustom,
   LoaderCustom,
-  NewWrapper,
+  OS_Wrapper,
   Spacing,
   TextAreaCustom,
   TextCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
 import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 import AlertWarning from "@/components/Alert/AlertWarning";
@@ -193,7 +192,7 @@ export default function DetailForum() {
 
   return (
     <>
-      <NewWrapper
+      <OS_Wrapper
       // headerComponent={headerComponent()}
       >
         {!data && !listComment ? (
@@ -225,7 +224,7 @@ export default function DetailForum() {
             ))}
           </>
         )}
-      </NewWrapper>
+      </OS_Wrapper>
 
       {/* Posting Drawer */}
       <DrawerCustom

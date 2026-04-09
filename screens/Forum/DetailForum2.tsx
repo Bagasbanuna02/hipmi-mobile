@@ -3,13 +3,12 @@ import {
   ButtonCustom,
   DrawerCustom,
   LoaderCustom,
-  NewWrapper,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextAreaCustom,
   TextCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
 import CustomSkeleton from "@/components/_ShareComponent/SkeletonCustom";
 import AlertWarning from "@/components/Alert/AlertWarning";
@@ -34,6 +33,7 @@ import _ from "lodash";
 import { useCallback, useEffect, useState } from "react";
 import { RefreshControl } from "react-native";
 import ListSkeletonComponent from "@/components/_ShareComponent/ListSkeletonComponent";
+import { PADDING_INLINE } from "@/constants/constans-value";
 
 export default function DetailForum2() {
   const { id } = useLocalSearchParams();
@@ -213,20 +213,6 @@ export default function DetailForum2() {
         }}
       />
   )
-    // !data || !commentPagination.listData ? (
-    //   // <ListSkeletonComponent height={120} />
-    //   <LoaderCustom />
-    // ) : (
-    //   <Forum_CommentarBoxSection
-    //     key={item.id}
-    //     data={item}
-    //     onSetData={(value) => {
-    //       setCommentId(value.setCommentId);
-    //       setOpenDrawerCommentar(value.setOpenDrawer);
-    //       setCommentAuthorId(value.setCommentAuthorId);
-    //     }}
-    //   />
-    // );
 
   // Generate pagination components using helper
   const { ListEmptyComponent, ListFooterComponent } =
@@ -242,8 +228,9 @@ export default function DetailForum2() {
 
   return (
     <>
-      <NewWrapper
-        // headerComponent={}
+      <OS_Wrapper
+        contentPadding={PADDING_INLINE}
+        disableFlexGrow
         listData={commentPagination.listData}
         renderItem={renderCommentItem}
         refreshControl={

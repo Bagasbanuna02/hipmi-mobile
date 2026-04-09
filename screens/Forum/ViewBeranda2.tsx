@@ -6,11 +6,11 @@ import {
   LoaderCustom,
   SearchInput,
   StackCustom,
-  TextCustom, // ← gunakan NewWrapper yang sudah diperbaiki
+  TextCustom,
+  OS_Wrapper,
 } from "@/components";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
 import SkeletonCustom from "@/components/_ShareComponent/SkeletonCustom";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { useAuth } from "@/hooks/use-auth";
 import Forum_BoxDetailSection from "@/screens/Forum/DiscussionBoxSection";
 import { apiForumGetAll } from "@/service/api-client/api-forum";
@@ -172,8 +172,8 @@ export default function Forum_ViewBeranda2() {
         }}
       />
 
-      {/* 🔹 NewWrapper dalam mode list */}
-      <NewWrapper
+      {/* 🔹 OS_Wrapper dalam mode list */}
+      <OS_Wrapper
         // Header global (di atas FlatList, sticky)
         headerComponent={
           <View style={{ paddingHorizontal: 16, paddingTop: 8 }}>
