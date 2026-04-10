@@ -6,7 +6,7 @@ import {
   DotButton,
   DrawerCustom,
   MenuDrawerDynamicGrid,
-  ViewWrapper,
+  OS_Wrapper,
 } from "@/components";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
@@ -122,9 +122,9 @@ export default function EventDetailPublish() {
 
   if (isEventFinished) {
     return (
-      <ViewWrapper>
+      <OS_Wrapper>
         <CustomSkeleton />
-      </ViewWrapper>
+      </OS_Wrapper>
     );
   }
 
@@ -166,7 +166,7 @@ export default function EventDetailPublish() {
           ),
         }}
       />
-      <ViewWrapper>
+      <OS_Wrapper>
         {isLoadingData ? (
           <CustomSkeleton height={400} />
         ) : (
@@ -175,7 +175,7 @@ export default function EventDetailPublish() {
             footerButton={FooterButton()}
           />
         )}
-      </ViewWrapper>
+      </OS_Wrapper>
 
       <DrawerCustom
         isVisible={openDrawer}

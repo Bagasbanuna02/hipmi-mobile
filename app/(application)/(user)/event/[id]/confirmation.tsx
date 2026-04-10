@@ -5,9 +5,9 @@ import {
   ButtonCustom,
   CenterCustom,
   LoaderCustom,
+  OS_Wrapper,
   StackCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { MainColor } from "@/constants/color-palet";
@@ -281,7 +281,7 @@ export default function UserEventConfirmation() {
           ),
         }}
       />
-      <ViewWrapper>{handlerReturn()}</ViewWrapper>
+      <OS_Wrapper>{handlerReturn()}</OS_Wrapper>
     </>
   );
 }

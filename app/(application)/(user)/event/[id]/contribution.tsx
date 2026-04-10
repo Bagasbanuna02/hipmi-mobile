@@ -4,8 +4,8 @@ import {
   DrawerCustom,
   LoaderCustom,
   MenuDrawerDynamicGrid,
+  OS_Wrapper,
   Spacing,
-  ViewWrapper,
 } from "@/components";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
@@ -59,14 +59,14 @@ export default function EventDetailContribution() {
           ),
         }}
       />
-      <ViewWrapper>
+      <OS_Wrapper>
         {isLoadData ? (
           <LoaderCustom />
         ) : (
           <Event_BoxDetailPublishSection data={data} />
         )}
         <Spacing />
-      </ViewWrapper>
+      </OS_Wrapper>
       <DrawerCustom
         isVisible={openDrawer}
         closeDrawer={() => setOpenDrawer(false)}

@@ -1,7 +1,7 @@
 import {
   BoxButtonOnFooter,
   ButtonCustom,
-  NewWrapper,
+  OS_Wrapper,
   SelectCustom,
   Spacing,
   StackCustom,
@@ -112,7 +112,9 @@ export default function EventCreate() {
 
   return (
     <>
-      <NewWrapper
+      <OS_Wrapper
+        enableKeyboardHandling
+        contentPaddingBottom={250}
         footerComponent={<BoxButtonOnFooter>{buttonSubmit}</BoxButtonOnFooter>}
       >
         <StackCustom gap={"xs"}>
@@ -182,7 +184,7 @@ export default function EventCreate() {
             />
           </StackCustom>
         </StackCustom>
-      </NewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

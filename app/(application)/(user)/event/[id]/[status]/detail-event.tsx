@@ -5,10 +5,10 @@ import {
   DrawerCustom,
   Grid,
   MenuDrawerDynamicGrid,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IMenuDrawerItem } from "@/components/_Interface/types";
@@ -95,7 +95,7 @@ export default function EventDetailStatus() {
           ),
         }}
       />
-      <ViewWrapper>
+      <OS_Wrapper>
         <BaseBox>
           <StackCustom>
             <TextCustom bold align="center" size="xlarge">
@@ -118,7 +118,7 @@ export default function EventDetailStatus() {
           status={status as string}
         />
         <Spacing />
-      </ViewWrapper>
+      </OS_Wrapper>
 
       <DrawerCustom
         isVisible={openDrawer}

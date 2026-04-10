@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ButtonCustom, Spacing, TextCustom } from "@/components";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
+import { ButtonCustom, Spacing, TextCustom, OS_Wrapper } from "@/components";
 import { AccentColor, MainColor } from "@/constants/color-palet";
-import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
+import { PAGINATION_DEFAULT_TAKE, PADDING_INLINE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { useAuth } from "@/hooks/use-auth";
 import { usePagination } from "@/hooks/use-pagination";
@@ -100,8 +99,9 @@ export default function Event_ScreenHistory() {
   );
 
   return (
-    <NewWrapper
+    <OS_Wrapper
       headerComponent={headerComponent}
+      contentPadding={PADDING_INLINE}
       listData={pagination.listData}
       renderItem={renderEventItem}
       refreshControl={

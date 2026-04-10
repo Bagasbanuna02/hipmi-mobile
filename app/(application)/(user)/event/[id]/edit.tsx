@@ -3,14 +3,13 @@ import {
   BoxButtonOnFooter,
   ButtonCustom,
   LoaderCustom,
-  NewWrapper,
+  OS_Wrapper,
   SelectCustom,
   Spacing,
   StackCustom,
   TextAreaCustom,
   TextCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
 import ListSkeletonComponent from "@/components/_ShareComponent/ListSkeletonComponent";
 import DateTimePickerCustom from "@/components/DateInput/DateTimePickerCustom";
@@ -186,7 +185,9 @@ export default function EventEdit() {
 
   return (
     <>
-      <NewWrapper
+      <OS_Wrapper
+        enableKeyboardHandling
+        contentPaddingBottom={250}
         footerComponent={
           <BoxButtonOnFooter>
             <ButtonCustom
@@ -283,7 +284,7 @@ export default function EventEdit() {
             />
           </StackCustom>
         )}
-      </NewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

@@ -2,11 +2,11 @@
 import {
     AvatarUsernameAndOtherComponent,
     BadgeCustom,
-    BaseBox
+    BaseBox,
+    OS_Wrapper,
 } from "@/components";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { MainColor } from "@/constants/color-palet";
-import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
+import { PADDING_INLINE, PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { usePagination } from "@/hooks/use-pagination";
 import {
@@ -102,7 +102,8 @@ export default function Event_ScreenListOfParticipants() {
   );
 
   return (
-    <NewWrapper
+    <OS_Wrapper
+      contentPadding={PADDING_INLINE}
       listData={pagination.listData}
       renderItem={renderParticipantItem}
       refreshControl={

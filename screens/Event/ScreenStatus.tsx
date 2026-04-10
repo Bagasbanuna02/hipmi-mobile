@@ -5,9 +5,9 @@ import {
   ScrollableCustom,
   StackCustom,
   TextCustom,
+  OS_Wrapper,
 } from "@/components";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
-import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
+import { PAGINATION_DEFAULT_TAKE, PADDING_INLINE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { useAuth } from "@/hooks/use-auth";
 import { usePagination } from "@/hooks/use-pagination";
@@ -103,8 +103,9 @@ export default function Event_ScreenStatus() {
   );
 
   return (
-    <NewWrapper
+    <OS_Wrapper
       hideFooter
+      contentPadding={PADDING_INLINE}
       headerComponent={<View style={{ paddingTop: 8 }}>{tabsComponent}</View>}
       listData={pagination.listData}
       renderItem={renderEventItem}

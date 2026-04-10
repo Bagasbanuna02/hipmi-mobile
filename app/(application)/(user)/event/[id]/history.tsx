@@ -3,7 +3,7 @@ import {
   DotButton,
   DrawerCustom,
   MenuDrawerDynamicGrid,
-  ViewWrapper,
+  OS_Wrapper,
   Spacing,
 } from "@/components";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
@@ -54,10 +54,10 @@ export default function EventDetailHistory() {
           ),
         }}
       />
-      <ViewWrapper>
+      <OS_Wrapper>
         <Event_BoxDetailPublishSection data={data} />
         <Spacing />
-      </ViewWrapper>
+      </OS_Wrapper>
       <DrawerCustom
         isVisible={openDrawer}
         closeDrawer={() => setOpenDrawer(false)}

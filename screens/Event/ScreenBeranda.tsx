@@ -1,8 +1,7 @@
-import { TextCustom } from "@/components";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
+import { TextCustom, OS_Wrapper } from "@/components";
 import FloatingButton from "@/components/Button/FloatingButton";
 import { MainColor } from "@/constants/color-palet";
-import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
+import { PAGINATION_DEFAULT_TAKE, PADDING_INLINE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { usePagination } from "@/hooks/use-pagination";
 import Event_BoxPublishSection from "@/screens/Event/BoxPublishSection";
@@ -52,7 +51,8 @@ export default function Event_ScreenBeranda() {
 
 
   return (
-    <NewWrapper
+    <OS_Wrapper
+      contentPadding={PADDING_INLINE}
       listData={pagination.listData}
       renderItem={renderEventItem}
       refreshControl={
