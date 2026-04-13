@@ -280,6 +280,56 @@ import { OS_Wrapper } from "@/components";
 
 ---
 
+## ⏳ User Phase 9: Investment Screens - PENDING
+
+**Files to migrate: 24**
+
+#### Investment Tabs Screens (OS_Wrapper - tabs dengan contentPadding={PADDING_INLINE}):
+- [ ] `screens/Invesment/ScreenBursa.tsx` - NewWrapper → OS_Wrapper + `contentPadding={PADDING_INLINE}` (tabs list - index)
+- [ ] `screens/Invesment/ScreenMyHolding.tsx` - NewWrapper → OS_Wrapper + `contentPadding={PADDING_INLINE}` (tabs list - my-holding)
+- [ ] `screens/Invesment/ScreenPortofolio.tsx` - NewWrapper → OS_Wrapper + `contentPadding={PADDING_INLINE}` (tabs list - portofolio)
+- [ ] `screens/Invesment/ScreenTransaction.tsx` - NewWrapper → OS_Wrapper + `contentPadding={PADDING_INLINE}` (tabs list - transaction)
+
+#### Investment List/Document Screens (OS_Wrapper dengan contentPadding={PADDING_INLINE}):
+- [ ] `screens/Invesment/ScreenInvestor.tsx` - NewWrapper → OS_Wrapper + `contentPadding={PADDING_INLINE}` (investor list)
+- [ ] `screens/Invesment/Document/ScreenListDocument.tsx` - NewWrapper → OS_Wrapper + `contentPadding={PADDING_INLINE}` (document list)
+- [ ] `screens/Invesment/Document/ScreenRecapOfDocument.tsx` - NewWrapper → OS_Wrapper + `contentPadding={PADDING_INLINE}` (document recap)
+- [ ] `screens/Invesment/News/ScreenListOfNews.tsx` - NewWrapper → OS_Wrapper + `contentPadding={PADDING_INLINE}` (news list)
+- [ ] `screens/Invesment/News/ScreenRecapOfNews.tsx` - NewWrapper → OS_Wrapper + `contentPadding={PADDING_INLINE}` (news recap)
+
+#### Investment Detail Screens (OS_Wrapper static):
+- [ ] `app/(application)/(user)/investment/[id]/index.tsx` - ViewWrapper → OS_Wrapper (detail main)
+- [ ] `app/(application)/(user)/investment/[id]/[status]/detail.tsx` - ViewWrapper → OS_Wrapper (detail status)
+- [ ] `app/(application)/(user)/investment/[id]/(my-holding)/[id].tsx` - ViewWrapper → OS_Wrapper (holding detail)
+- [ ] `app/(application)/(user)/investment/[id]/edit-prospectus.tsx` - ViewWrapper → OS_Wrapper (file upload)
+- [ ] `app/(application)/(user)/investment/[id]/(news)/[news]/index.tsx` - ViewWrapper → OS_Wrapper (news detail)
+
+#### Investment Form Screens (OS_Wrapper with enableKeyboardHandling):
+- [ ] `app/(application)/(user)/investment/create.tsx` - NewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- [ ] `app/(application)/(user)/investment/[id]/edit.tsx` - NewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- [ ] `app/(application)/(user)/investment/[id]/(document)/add-document.tsx` - ViewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- [ ] `app/(application)/(user)/investment/[id]/(document)/edit-document.tsx` - ViewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- [ ] `app/(application)/(user)/investment/[id]/(news)/add-news.tsx` - ViewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- [ ] `app/(application)/(user)/investment/[id]/(transaction-flow)/index.tsx` - ViewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+
+#### Investment Transaction Flow (OS_Wrapper static/no keyboard):
+- [ ] `screens/Invesment/ScreenInvoice.tsx` - ViewWrapper → OS_Wrapper (invoice display)
+- [ ] `app/(application)/(user)/investment/[id]/(transaction-flow)/process.tsx` - ViewWrapper → OS_Wrapper (status page)
+- [ ] `app/(application)/(user)/investment/[id]/(transaction-flow)/select-bank.tsx` - ViewWrapper → OS_Wrapper (bank selection)
+- [ ] `app/(application)/(user)/investment/[id]/(transaction-flow)/failed.tsx` - ViewWrapper → OS_Wrapper (status failed)
+- [ ] `app/(application)/(user)/investment/[id]/(transaction-flow)/success.tsx` - ViewWrapper → OS_Wrapper (status success)
+
+#### Investment Tabs Layout Height Fix:
+- [ ] `app/(application)/(user)/investment/(tabs)/_layout.tsx` - Hardcode → `OS_IOS_HEIGHT` / `OS_ANDROID_HEIGHT`
+
+**Testing Status:**
+- ⏳ TypeScript: Pending
+- ⏳ Build: Pending
+- ⏳ iOS Testing: Pending
+- ⏳ Android Testing: Pending
+
+---
+
 # 🔴 ADMIN PHASES (Admin-Facing Screens)
 
 ## ✅ Admin Phase 9: User Access - COMPLETED (2026-04-09)
@@ -425,10 +475,10 @@ import { OS_Wrapper } from "@/components";
 | User Phase 6 (Event) | 16 | 16 | ⏳ Pending | ✅ Complete |
 | User Phase 7 (Voting) | 11 | 11 | ✅ No errors | ✅ Complete |
 | User Phase 8 (Donation + Others) | 31 | 31 | ✅ No errors | ✅ Complete |
-| User Phase 9 (Investment) | ~3 | 0 | 0 | ⏳ Pending |
+| User Phase 9 (Investment) | 24 | 0 | 0 | ⏳ Pending |
 | User Phase 10 (Collaboration) | ~3 | 0 | 0 | ⏳ Pending |
 | User Phase 11 (Others) | ~3 | 0 | 0 | ⏳ Pending |
-| **User Total** | **~111** | **102** | **10** | **~92% Complete** |
+| **User Total** | **~132** | **102** | **10** | **~77% Complete** |
 
 ### Admin Phases:
 | Phase | Total Files | Migrated | Testing | Status |
@@ -447,9 +497,9 @@ import { OS_Wrapper } from "@/components";
 ### Grand Total:
 | Category | Total Files | Migrated | Status |
 |----------|-------------|----------|--------|
-| **User Screens** | ~111 | 102 | ~92% Complete |
+| **User Screens** | ~132 | 102 | ~77% Complete |
 | **Admin Screens** | ~31 | 2 | ~6% Complete |
-| **GRAND TOTAL** | **~142** | **104** | **~73% Complete** |
+| **GRAND TOTAL** | **~163** | **104** | **~64% Complete** |
 
 ## 🔄 Rollback Plan
 
@@ -465,4 +515,4 @@ Jika ada issue yang tidak bisa di-fix dalam 1 jam:
 **Created**: 2026-04-06
 **Last Updated**: 2026-04-13
 **Status**: User Phase 1-8 Complete ✅ | Admin Phase 9 Complete ✅ (104 files migrated)
-**Next**: User Phase 9-11 (~6 files) OR Admin Phase 1-3 (HIGH Priority, ~9 files)
+**Next**: User Phase 9 - Investment Screens (24 files)
