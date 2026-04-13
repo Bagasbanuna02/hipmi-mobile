@@ -3,12 +3,13 @@ import {
   BadgeCustom,
   BaseBox,
   Grid,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextCustom,
 } from "@/components";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import NoDataText from "@/components/_ShareComponent/NoDataText";
+import { PADDING_INLINE } from "@/constants/constans-value";
 import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { useAuth } from "@/hooks/use-auth";
@@ -128,7 +129,8 @@ export default function Investment_ScreenTransaction() {
   );
 
   return (
-    <NewWrapper
+    <OS_Wrapper
+      contentPadding={PADDING_INLINE}
       hideFooter
       listData={pagination.listData}
       renderItem={renderTransactionItem}

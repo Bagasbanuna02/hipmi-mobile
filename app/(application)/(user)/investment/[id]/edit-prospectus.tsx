@@ -7,10 +7,10 @@ import {
   CenterCustom,
   InformationBox,
   LoaderCustom,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
 import DIRECTORY_ID from "@/constants/directory-id";
 import {
@@ -116,7 +116,7 @@ export default function InvestmentEditProspectus() {
     </BoxButtonOnFooter>
   );
   return (
-    <ViewWrapper footerComponent={!loadingGet && buttonFooter}>
+    <OS_Wrapper footerComponent={!loadingGet && buttonFooter}>
       <StackCustom gap={"xs"}>
         <InformationBox text="File prospektus wajib untuk diupload, agar calon investor paham dengan prospek investasi yang akan anda jalankan kedepan." />
         <Spacing />
@@ -153,6 +153,6 @@ export default function InvestmentEditProspectus() {
           Upload
         </ButtonCenteredOnly>
       </StackCustom>
-    </ViewWrapper>
+    </OS_Wrapper>
   );
 }

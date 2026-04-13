@@ -4,7 +4,7 @@ import {
   DotButton,
   DrawerCustom,
   MenuDrawerDynamicGrid,
-  ViewWrapper,
+  OS_Wrapper,
 } from "@/components";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconDocument, IconEdit, IconNews } from "@/components/_Icon";
@@ -123,14 +123,14 @@ export default function InvestmentDetailStatus() {
         }}
       />
 
-      <ViewWrapper>
+      <OS_Wrapper>
         <Invesment_DetailDataPublishSection
           status={status as string}
           data={data}
           bottomSection={bottomSection}
           buttonSection={buttonSection}
         />
-      </ViewWrapper>
+      </OS_Wrapper>
 
       {/* ========= Draft Drawer ========= */}
       <DrawerCustom

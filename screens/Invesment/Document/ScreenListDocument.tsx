@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { TextCustom } from "@/components";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
-import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
+import { TextCustom, OS_Wrapper } from "@/components";
+import { PAGINATION_DEFAULT_TAKE, PADDING_INLINE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { usePagination } from "@/hooks/use-pagination";
 import Investment_BoxDetailDocument from "@/screens/Invesment/Document/RecapBoxDetail";
@@ -58,8 +57,9 @@ export default function Investment_ScreenListOfDocument() {
   );
 
   return (
-    <NewWrapper
+    <OS_Wrapper
       hideFooter
+      contentPadding={PADDING_INLINE}
       listData={pagination.listData}
       renderItem={renderDocumentItem}
       refreshControl={

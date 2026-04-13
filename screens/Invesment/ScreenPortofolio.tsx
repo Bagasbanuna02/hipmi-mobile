@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ScrollableCustom, TextCustom } from "@/components";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
+import { OS_Wrapper, ScrollableCustom, TextCustom } from "@/components";
+import { PADDING_INLINE } from "@/constants/constans-value";
 import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { useAuth } from "@/hooks/use-auth";
@@ -83,7 +83,8 @@ export default function Investment_ScreenPortofolio() {
   );
 
   return (
-    <NewWrapper
+    <OS_Wrapper
+      contentPadding={PADDING_INLINE}
       hideFooter
       headerComponent={tabsComponent}
       listData={pagination.listData}

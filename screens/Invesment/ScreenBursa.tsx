@@ -1,8 +1,9 @@
 import {
   FloatingButton,
+  OS_Wrapper,
   TextCustom,
 } from "@/components";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
+import { PADDING_INLINE } from "@/constants/constans-value";
 import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { usePagination } from "@/hooks/use-pagination";
@@ -46,7 +47,8 @@ export default function Investment_ScreenBursa() {
   );
 
   return (
-    <NewWrapper
+    <OS_Wrapper
+      contentPadding={PADDING_INLINE}
       listData={pagination.listData}
       renderItem={renderInvestmentItem}
       refreshControl={

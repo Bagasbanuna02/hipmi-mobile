@@ -6,9 +6,9 @@ import {
   DrawerCustom,
   Grid,
   MenuDrawerDynamicGrid,
+  OS_Wrapper,
   StackCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconDocument, IconEdit, IconNews } from "@/components/_Icon";
@@ -93,7 +93,7 @@ export default function InvestmentDetailHolding() {
         }}
       />
 
-      <ViewWrapper>
+      <OS_Wrapper>
         <BaseBox>
           <StackCustom gap={"xs"}>
             <Grid>
@@ -124,7 +124,7 @@ export default function InvestmentDetailHolding() {
           status={"publish"}
           bottomSection={bottomSection}
         />
-      </ViewWrapper>
+      </OS_Wrapper>
 
       {/* ========= Draft Drawer ========= */}
       <DrawerCustom

@@ -3,12 +3,12 @@ import {
   AvatarUsernameAndOtherComponent,
   BoxWithHeaderSection,
   CenterCustom,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextCustom,
 } from "@/components";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
-import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
+import { PAGINATION_DEFAULT_TAKE, PADDING_INLINE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { usePagination } from "@/hooks/use-pagination";
 import { apiInvestmentGetInvestorById } from "@/service/api-client/api-investment";
@@ -66,8 +66,9 @@ export default function Investment_ScreenInvestor({
     });
 
   return (
-    <NewWrapper
+    <OS_Wrapper
       hideFooter
+      contentPadding={PADDING_INLINE}
       listData={pagination.listData}
       renderItem={renderItem}
       onEndReached={pagination.loadMore}

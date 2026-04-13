@@ -5,11 +5,12 @@ import {
   DrawerCustom,
   LoaderCustom,
   MenuDrawerDynamicGrid,
+  OS_Wrapper,
   TextCustom,
 } from "@/components";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconPlus } from "@/components/_Icon";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
+import { PADDING_INLINE } from "@/constants/constans-value";
 import { usePagination } from "@/hooks/use-pagination";
 import { apiInvestmentGetNews } from "@/service/api-client/api-investment";
 import { router, Stack, useFocusEffect } from "expo-router";
@@ -75,8 +76,9 @@ export default function Investment_ScreenListOfNews({
         }}
       />
 
-      <NewWrapper
+      <OS_Wrapper
         hideFooter
+        contentPadding={PADDING_INLINE}
         listData={pagination.listData}
         renderItem={renderItem}
         onEndReached={pagination.loadMore}

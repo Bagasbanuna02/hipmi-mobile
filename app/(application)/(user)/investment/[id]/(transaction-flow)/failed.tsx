@@ -2,10 +2,10 @@
 import {
   BaseBox,
   Grid,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { apiInvestmentGetInvoice } from "@/service/api-client/api-investment";
@@ -69,7 +69,7 @@ export default function InvestmentFailed() {
   ];
 
   return (
-    <ViewWrapper>
+    <OS_Wrapper>
       <StackCustom>
         <BaseBox>
           <StackCustom>
@@ -110,6 +110,6 @@ export default function InvestmentFailed() {
           </StackCustom>
         </BaseBox>
       </StackCustom>
-    </ViewWrapper>
+    </OS_Wrapper>
   );
 }

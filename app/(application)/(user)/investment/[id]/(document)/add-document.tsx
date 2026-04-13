@@ -5,11 +5,11 @@ import {
   ButtonCustom,
   CenterCustom,
   InformationBox,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import DIRECTORY_ID from "@/constants/directory-id";
@@ -83,9 +83,12 @@ export default function InvestmentAddDocument() {
   );
 
   return (
-    <>
-      <ViewWrapper footerComponent={buttonFooter}>
-        <StackCustom gap={"xs"}>
+    <OS_Wrapper
+      enableKeyboardHandling
+      contentPaddingBottom={250}
+      footerComponent={buttonFooter}
+    >
+      <StackCustom gap={"xs"}>
           <InformationBox text="File dokumen bersifat opsional, jika memang ada file yang bisa membantu meyakinkan investor. Anda bisa mengupload nya." />
           <Spacing />
           <TextInputCustom
@@ -124,7 +127,6 @@ export default function InvestmentAddDocument() {
             Upload
           </ButtonCenteredOnly>
         </StackCustom>
-      </ViewWrapper>
-    </>
+    </OS_Wrapper>
   );
 }

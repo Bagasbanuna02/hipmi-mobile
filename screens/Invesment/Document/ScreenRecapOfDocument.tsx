@@ -4,13 +4,13 @@ import {
   BackButton,
   DotButton,
   DrawerCustom,
-  MenuDrawerDynamicGrid
+  MenuDrawerDynamicGrid,
+  OS_Wrapper,
 } from "@/components";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconEdit } from "@/components/_Icon";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { MainColor } from "@/constants/color-palet";
-import { ICON_SIZE_SMALL, PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
+import { ICON_SIZE_SMALL, PAGINATION_DEFAULT_TAKE, PADDING_INLINE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { usePagination } from "@/hooks/use-pagination";
 import Investment_BoxDetailDocument from "@/screens/Invesment/Document/RecapBoxDetail";
@@ -143,8 +143,9 @@ export default function Investment_ScreenRecapOfDocument() {
         }}
       />
 
-      <NewWrapper
+      <OS_Wrapper
         hideFooter
+        contentPadding={PADDING_INLINE}
         listData={pagination.listData}
         renderItem={renderDocumentItem}
         refreshControl={

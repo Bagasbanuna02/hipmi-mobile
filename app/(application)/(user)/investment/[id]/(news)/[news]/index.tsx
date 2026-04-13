@@ -7,9 +7,9 @@ import {
   DrawerCustom,
   DummyLandscapeImage,
   MenuDrawerDynamicGrid,
+  OS_Wrapper,
   StackCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconTrash } from "@/components/_Icon/IconTrash";
@@ -70,7 +70,7 @@ export default function InvestmentNews() {
           ),
         }}
       />
-      <ViewWrapper>
+      <OS_Wrapper>
         <BaseBox>
           <StackCustom>
             {data && data?.imageId && (
@@ -82,7 +82,7 @@ export default function InvestmentNews() {
             <TextCustom>{(data && data?.deskripsi) || "-"}</TextCustom>
           </StackCustom>
         </BaseBox>
-      </ViewWrapper>
+      </OS_Wrapper>
 
       <DrawerCustom
         isVisible={openDrawer}

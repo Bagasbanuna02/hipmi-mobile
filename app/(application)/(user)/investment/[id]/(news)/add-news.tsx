@@ -3,11 +3,11 @@ import {
   ButtonCustom,
   InformationBox,
   LandscapeFrameUploaded,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextAreaCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
 import DIRECTORY_ID from "@/constants/directory-id";
 import { apiInvestmentCreateNews } from "@/service/api-client/api-investment";
@@ -80,7 +80,10 @@ export default function InvestmentAddNews() {
   };
 
   return (
-    <ViewWrapper>
+    <OS_Wrapper
+      enableKeyboardHandling
+      contentPaddingBottom={250}
+    >
       <StackCustom gap={"xs"}>
         <InformationBox text="Pengunggahan foto ke aplikasi bersifat opsional dan tidak diwajibkan, Anda dapat menyimpan berita tanpa mengunggah foto." />
         <LandscapeFrameUploaded image={image?.uri} />
@@ -123,7 +126,6 @@ export default function InvestmentAddNews() {
           Simpan
         </ButtonCustom>
       </StackCustom>
-      <Spacing />
-    </ViewWrapper>
+    </OS_Wrapper>
   );
 }

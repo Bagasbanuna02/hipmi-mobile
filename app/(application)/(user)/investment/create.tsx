@@ -6,7 +6,7 @@ import {
   CenterCustom,
   InformationBox,
   LandscapeFrameUploaded,
-  NewWrapper,
+  OS_Wrapper,
   SelectCustom,
   Spacing,
   StackCustom,
@@ -185,7 +185,9 @@ export default function InvestmentCreate() {
 
   //   const [coba, setCoba] = useState("");
   return (
-    <NewWrapper
+    <OS_Wrapper
+      enableKeyboardHandling
+      contentPaddingBottom={250}
       footerComponent={
         <BoxButtonOnFooter>
           <ButtonCustom
@@ -373,7 +375,6 @@ export default function InvestmentCreate() {
 
         <Spacing />
       </StackCustom>
-      {/* <Spacing height={50} /> */}
-    </NewWrapper>
+    </OS_Wrapper>
   );
 }

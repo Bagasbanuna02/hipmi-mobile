@@ -6,7 +6,7 @@ import {
   InformationBox,
   LandscapeFrameUploaded,
   LoaderCustom,
-  NewWrapper,
+  OS_Wrapper,
   SelectCustom,
   Spacing,
   StackCustom,
@@ -199,7 +199,9 @@ export default function InvestmentEdit() {
   };
 
   return (
-    <NewWrapper
+    <OS_Wrapper
+      enableKeyboardHandling
+      contentPaddingBottom={250}
       footerComponent={
         <BoxButtonOnFooter>
           <ButtonCustom isLoading={isLoading} onPress={handleSubmitUpdate}>
@@ -350,6 +352,6 @@ export default function InvestmentEdit() {
 
         <Spacing />
       </StackCustom>
-    </NewWrapper>
+    </OS_Wrapper>
   );
 }

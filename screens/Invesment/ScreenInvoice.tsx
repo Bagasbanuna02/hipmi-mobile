@@ -5,10 +5,10 @@ import {
   ButtonCustom,
   Grid,
   InformationBox,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
 import CopyButton from "@/components/Button/CoyButton";
 import { MainColor } from "@/constants/color-palet";
@@ -94,7 +94,7 @@ export default function Investment_ScreenInvoice() {
 
   return (
     <>
-      <ViewWrapper>
+      <OS_Wrapper>
         <StackCustom>
           <InformationBox text="Mohon transfer ke rekening dibawah" />
           <BaseBox>
@@ -224,7 +224,7 @@ export default function Investment_ScreenInvoice() {
           </ButtonCustom>
         </StackCustom>
         <Spacing />
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

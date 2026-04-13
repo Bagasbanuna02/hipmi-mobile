@@ -5,10 +5,10 @@ import {
   ButtonCustom,
   Divider,
   Grid,
+  OS_Wrapper,
   StackCustom,
   TextCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
 import { LOCAL_STORAGE_KEY } from "@/constants/local-storage-key";
 import { apiInvestmentGetOne } from "@/service/api-client/api-investment";
@@ -99,9 +99,12 @@ export default function InvestmentInvest() {
   };
 
   return (
-    <>
-      <ViewWrapper footerComponent={buttonSubmit()}>
-        <BaseBox>
+    <OS_Wrapper
+      enableKeyboardHandling
+      contentPaddingBottom={250}
+      footerComponent={buttonSubmit()}
+    >
+      <BaseBox>
           <StackCustom gap={"xs"}>
             <Grid>
               <Grid.Col span={6}>
@@ -165,7 +168,6 @@ export default function InvestmentInvest() {
             </Grid>
           </StackCustom>
         </BaseBox>
-      </ViewWrapper>
-    </>
+    </OS_Wrapper>
   );
 }
