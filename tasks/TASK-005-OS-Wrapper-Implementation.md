@@ -203,15 +203,15 @@ import { OS_Wrapper } from "@/components";
 **Files migrated: 11**
 
 #### Voting List Screens (OS_Wrapper):
-- ✅ `screens/Voting/ScreenBeranda.tsx` - NewWrapper → OS_Wrapper (tabs list + contentPadding={PADDING_INLINE})
-- ✅ `screens/Voting/ScreenContribution.tsx` - NewWrapper → OS_Wrapper (tabs list + contentPadding={PADDING_INLINE})
-- ✅ `screens/Voting/ScreenHistory.tsx` - NewWrapper → OS_Wrapper (tabs list + contentPadding={PADDING_INLINE})
-- ✅ `screens/Voting/ScreenStatus.tsx` - NewWrapper → OS_Wrapper (tabs list + contentPadding={PADDING_INLINE})
+- ✅ `screens/Voting/ScreenBeranda.tsx` - NewWrapper → OS_Wrapper + `contentPadding={PADDING_INLINE}` (tabs list)
+- ✅ `screens/Voting/ScreenContribution.tsx` - NewWrapper → OS_Wrapper + `contentPadding={PADDING_INLINE}` (tabs list)
+- ✅ `screens/Voting/ScreenHistory.tsx` - NewWrapper → OS_Wrapper + `contentPadding={PADDING_INLINE}` (tabs list)
+- ✅ `screens/Voting/ScreenStatus.tsx` - NewWrapper → OS_Wrapper + `contentPadding={PADDING_INLINE}` (tabs list)
 - ✅ `screens/Voting/ScreenListOfContributor.tsx` - NewWrapper → OS_Wrapper (pagination list)
 
 #### Voting Form Screens (OS_Wrapper with keyboard handling):
-- ✅ `app/(application)/(user)/voting/create.tsx` - NewWrapper → OS_Wrapper + enableKeyboardHandling + contentPaddingBottom={250}
-- ✅ `app/(application)/(user)/voting/[id]/edit.tsx` - NewWrapper → OS_Wrapper + enableKeyboardHandling + contentPaddingBottom={250}
+- ✅ `app/(application)/(user)/voting/create.tsx` - NewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- ✅ `app/(application)/(user)/voting/[id]/edit.tsx` - NewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
 
 #### Voting Detail Screens (OS_Wrapper static):
 - ✅ `app/(application)/(user)/voting/[id]/index.tsx` - ViewWrapper → OS_Wrapper (detail with pull-to-refresh)
