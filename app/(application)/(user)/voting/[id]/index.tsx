@@ -8,8 +8,8 @@ import {
   InformationBox,
   LoaderCustom,
   MenuDrawerDynamicGrid,
+  OS_Wrapper,
   StackCustom,
-  ViewWrapper,
 } from "@/components";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconArchive, IconContribution } from "@/components/_Icon";
@@ -32,6 +32,7 @@ import {
   useLocalSearchParams,
 } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
+import { RefreshControl } from "react-native";
 import Toast from "react-native-toast-message";
 
 export default function VotingDetail() {
@@ -133,9 +134,9 @@ export default function VotingDetail() {
 
   if (isEventFinished) {
     return (
-      <ViewWrapper>
+      <OS_Wrapper>
         <CustomSkeleton />
-      </ViewWrapper>
+      </OS_Wrapper>
     );
   }
 
@@ -155,7 +156,14 @@ export default function VotingDetail() {
         }}
       />
 
-      <ViewWrapper>
+      <OS_Wrapper
+        refreshControl={
+          <RefreshControl
+            refreshing={loadingGetData}
+            onRefresh={handlerLoadData}
+          />
+        }
+      >
         {loadingGetData ? (
           <LoaderCustom />
         ) : (
@@ -182,7 +190,7 @@ export default function VotingDetail() {
             />
           </StackCustom>
         )}
-      </ViewWrapper>
+      </OS_Wrapper>
 
       {/* ========= Publish Drawer ========= */}
       <DrawerCustom

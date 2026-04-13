@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
+import { OS_Wrapper } from "@/components";
+import { PADDING_INLINE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { useAuth } from "@/hooks/use-auth";
 import { usePagination } from "@/hooks/use-pagination";
@@ -52,7 +53,8 @@ export default function Voting_ScreenContribution() {
   );
 
   return (
-    <NewWrapper
+    <OS_Wrapper
+      contentPadding={PADDING_INLINE}
       listData={pagination.listData}
       renderItem={renderItem}
       ListEmptyComponent={ListEmptyComponent}

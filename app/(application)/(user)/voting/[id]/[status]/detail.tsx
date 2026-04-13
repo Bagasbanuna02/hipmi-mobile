@@ -7,10 +7,10 @@ import {
   DrawerCustom,
   LoaderCustom,
   MenuDrawerDynamicGrid,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconArchive, IconContribution, IconEdit } from "@/components/_Icon";
@@ -119,7 +119,7 @@ export default function VotingDetailStatus() {
           ),
         }}
       />
-      <ViewWrapper>
+      <OS_Wrapper>
         {loadingGetData ? (
           <LoaderCustom />
         ) : (
@@ -158,7 +158,7 @@ export default function VotingDetailStatus() {
             <Spacing />
           </>
         )}
-      </ViewWrapper>
+      </OS_Wrapper>
 
       {/* ========= Draft Drawer ========= */}
       <DrawerCustom

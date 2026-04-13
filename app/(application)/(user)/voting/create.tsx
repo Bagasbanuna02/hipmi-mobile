@@ -3,12 +3,11 @@ import {
   BoxButtonOnFooter,
   ButtonCustom,
   CenterCustom,
-  NewWrapper,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextAreaCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
 import DateTimePickerCustom from "@/components/DateInput/DateTimePickerCustom";
 import { MainColor } from "@/constants/color-palet";
@@ -107,7 +106,11 @@ export default function VotingCreate() {
   };
 
   return (
-    <NewWrapper footerComponent={buttonSubmit()}>
+    <OS_Wrapper
+      enableKeyboardHandling
+      contentPaddingBottom={250}
+      footerComponent={buttonSubmit()}
+    >
       <StackCustom gap={"xs"}>
         <TextInputCustom
           label="Judul Voting"
@@ -198,6 +201,6 @@ export default function VotingCreate() {
 
         <Spacing />
       </StackCustom>
-    </NewWrapper>
+    </OS_Wrapper>
   );
 }

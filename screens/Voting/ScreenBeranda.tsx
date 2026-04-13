@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { FloatingButton, SearchInput } from "@/components";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
+import { FloatingButton, OS_Wrapper, SearchInput } from "@/components";
+import { PADDING_INLINE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { useAuth } from "@/hooks/use-auth";
 import { usePagination } from "@/hooks/use-pagination";
@@ -58,7 +58,8 @@ export default function Voting_ScreenBeranda() {
   );
 
   return (
-    <NewWrapper
+    <OS_Wrapper
+      contentPadding={PADDING_INLINE}
       listData={pagination.listData}
       renderItem={renderItem}
       ListEmptyComponent={ListEmptyComponent}

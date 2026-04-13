@@ -5,7 +5,7 @@ import {
   ButtonCustom,
   CenterCustom,
   LoaderCustom,
-  NewWrapper,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextAreaCustom,
@@ -189,7 +189,11 @@ export default function VotingEdit() {
   };
 
   return (
-    <NewWrapper footerComponent={buttonSubmit()}>
+    <OS_Wrapper
+      enableKeyboardHandling
+      contentPaddingBottom={250}
+      footerComponent={buttonSubmit()}
+    >
       {loadingGetData ? (
         <ListSkeletonComponent />
       ) : (
@@ -328,6 +332,6 @@ export default function VotingEdit() {
           <Spacing />
         </StackCustom>
       )}
-    </NewWrapper>
+    </OS_Wrapper>
   );
 }

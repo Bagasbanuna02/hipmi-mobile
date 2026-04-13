@@ -3,10 +3,10 @@ import {
   AvatarUsernameAndOtherComponent,
   BadgeCustom,
   BaseBox,
+  OS_Wrapper,
   Spacing,
   TextCustom,
 } from "@/components";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { usePagination } from "@/hooks/use-pagination";
@@ -62,7 +62,7 @@ export default function Voting_ScreenListOfContributor() {
   );
 
   return (
-    <NewWrapper
+    <OS_Wrapper
       hideFooter
       listData={pagination.listData}
       renderItem={renderContributorItem}
