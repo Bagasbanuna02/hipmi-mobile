@@ -6,9 +6,8 @@ import {
   DotButton,
   DrawerCustom,
   MenuDrawerDynamicGrid,
-  NewWrapper,
+  OS_Wrapper,
   StackCustom,
-  ViewWrapper,
 } from "@/components";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconNews } from "@/components/_Icon";
@@ -104,7 +103,7 @@ export default function DonasiDetailBeranda() {
           ),
         }}
       />
-      <NewWrapper footerComponent={buttonSection}>
+      <OS_Wrapper footerComponent={buttonSection}>
         {!data ? (
           <CustomSkeleton height={400} />
         ) : (
@@ -127,7 +126,7 @@ export default function DonasiDetailBeranda() {
             />
           </StackCustom>
         )}
-      </NewWrapper>
+      </OS_Wrapper>
 
       <DrawerCustom
         isVisible={openDrawer}

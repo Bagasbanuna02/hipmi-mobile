@@ -5,12 +5,12 @@ import {
   InformationBox,
   LandscapeFrameUploaded,
   LoaderCustom,
+  OS_Wrapper,
   SelectCustom,
   Spacing,
   StackCustom,
   TextInputCustom,
 } from "@/components";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import DIRECTORY_ID from "@/constants/directory-id";
 import { apiDonationCreate } from "@/service/api-client/api-donation";
 import { apiMasterDonation } from "@/service/api-client/api-master";
@@ -126,7 +126,9 @@ export default function DonationCreate() {
   };
 
   return (
-    <NewWrapper
+    <OS_Wrapper
+      enableKeyboardHandling
+      contentPaddingBottom={250}
       footerComponent={
         <>
           <BoxButtonOnFooter>
@@ -220,6 +222,6 @@ export default function DonationCreate() {
         )}
       </StackCustom>
       <Spacing />
-    </NewWrapper>
+    </OS_Wrapper>
   );
 }

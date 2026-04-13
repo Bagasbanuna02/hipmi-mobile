@@ -2,7 +2,7 @@ import {
   BaseBox,
   BoxButtonOnFooter,
   ButtonCustom,
-  ViewWrapper,
+  OS_Wrapper,
 } from "@/components";
 import { RadioCustom, RadioGroup } from "@/components/Radio/RadioCustom";
 import { LOCAL_STORAGE_KEY } from "@/constants/local-storage-key";
@@ -91,7 +91,7 @@ export default function DonationSelectBank() {
     );
   };
   return (
-    <ViewWrapper footerComponent={buttonSubmit()}>
+    <OS_Wrapper footerComponent={buttonSubmit()}>
       <RadioGroup value={select} onChange={setSelect}>
         {_.isEmpty(listBank)
           ? []
@@ -101,6 +101,6 @@ export default function DonationSelectBank() {
               </BaseBox>
             ))}
       </RadioGroup>
-    </ViewWrapper>
+    </OS_Wrapper>
   );
 }

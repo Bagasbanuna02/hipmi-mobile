@@ -4,11 +4,13 @@ import {
   BaseBox,
   Grid,
   InformationBox,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextCustom,
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
+import { PADDING_INLINE } from "@/constants/constans-value";
 import { usePagination } from "@/hooks/use-pagination";
 import {
   apiDonationDisbursementOfFundsListById,
@@ -23,7 +25,6 @@ import React, { useState } from "react";
 import { RefreshControl, View } from "react-native";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { Divider } from "react-native-paper";
 
 interface Donation_ScreenFundDisbursementProps {
@@ -155,7 +156,8 @@ export default function Donation_ScreenFundDisbursement({
   );
 
   return (
-    <NewWrapper
+    <OS_Wrapper
+      contentPadding={PADDING_INLINE}
       listData={pagination.listData}
       renderItem={renderItem}
       onEndReached={pagination.loadMore}

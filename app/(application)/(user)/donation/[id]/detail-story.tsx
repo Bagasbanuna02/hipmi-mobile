@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   DummyLandscapeImage,
+  OS_Wrapper,
   StackCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
 import { apiDonationGetOne } from "@/service/api-client/api-donation";
 import { useFocusEffect, useLocalSearchParams } from "expo-router";
@@ -32,12 +32,12 @@ export default function DonationDetailStory() {
     }
   };
   return (
-    <ViewWrapper>
+    <OS_Wrapper>
       <StackCustom>
         <TextCustom>{data?.pembukaan || "-"}</TextCustom>
         <DummyLandscapeImage imageId={data?.imageId} />
         <TextCustom>{data?.cerita || "-"}</TextCustom>
       </StackCustom>
-    </ViewWrapper>
+    </OS_Wrapper>
   );
 }

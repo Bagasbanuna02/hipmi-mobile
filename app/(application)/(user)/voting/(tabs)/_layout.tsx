@@ -6,6 +6,7 @@ import {
 } from "@/components/_Icon";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
 import BackButtonFromNotification from "@/components/Button/BackButtonFromNotification";
+import { OS_ANDROID_HEIGHT, OS_IOS_HEIGHT } from "@/constants/constans-value";
 import { TabsStyles } from "@/styles/tabs-styles";
 import { router, Tabs, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
@@ -30,12 +31,12 @@ function VotingTabsWrapper() {
             ios: {
               borderTopWidth: 0,
               paddingTop: 12,
-              height: 80,
+              height: OS_IOS_HEIGHT,
             },
             android: {
               borderTopWidth: 0,
               paddingTop: 5,
-              height: 70 + paddingBottom,
+              height: OS_ANDROID_HEIGHT + paddingBottom,
             },
           }),
           header: () => (

@@ -5,9 +5,9 @@ import {
   ButtonCustom,
   Grid,
   LoaderCustom,
+  OS_Wrapper,
   Spacing,
   TextCustom,
-  ViewWrapper
 } from "@/components";
 import Donation_BoxPublish from "@/screens/Donation/BoxPublish";
 import { apiDonationFundrising } from "@/service/api-client/api-donation";
@@ -44,7 +44,7 @@ export default function DonationInformationFunrising() {
 
   return (
     <>
-      <ViewWrapper>
+      <OS_Wrapper>
         <BaseBox>
           <Grid>
             <Grid.Col span={6} style={{ justifyContent: "center" }}>
@@ -80,7 +80,7 @@ export default function DonationInformationFunrising() {
             <Donation_BoxPublish key={index} id={item?.id} data={item} />
           ))
         )}
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

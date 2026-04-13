@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  ViewWrapper,
+  OS_Wrapper,
   StackCustom,
   InformationBox,
   TextInputCustom,
@@ -76,7 +76,7 @@ export default function DonationEditRekening() {
   };
 
   return (
-    <ViewWrapper>
+    <OS_Wrapper enableKeyboardHandling contentPaddingBottom={250}>
       <StackCustom gap={"xs"}>
         <InformationBox text="Pastikan Anda mengisi nama bank dan nomor rekening dengan benar. Informasi ini akan membantu admin memverifikasi dan memproses penggalangan dana Anda dengan cepat dan tepat setelah penggalangan dana dipublikasikan." />
         <TextInputCustom
@@ -105,6 +105,6 @@ export default function DonationEditRekening() {
         </ButtonCustom>
       </StackCustom>
       <Spacing />
-    </ViewWrapper>
+    </OS_Wrapper>
   );
 }

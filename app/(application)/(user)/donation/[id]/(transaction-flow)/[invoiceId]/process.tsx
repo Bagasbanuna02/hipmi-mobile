@@ -1,11 +1,11 @@
-import { BaseBox, StackCustom, TextCustom, ViewWrapper } from "@/components";
+import { BaseBox, OS_Wrapper, StackCustom, TextCustom } from "@/components";
 import MoneyTransferAnimation from "@/components/_ShareComponent/MoneyTransferAnimation";
 import { View } from "react-native";
 
 export default function DonationProcess() {
   return (
     <>
-      <ViewWrapper>
+      <OS_Wrapper>
         <BaseBox>
           <StackCustom>
             <TextCustom align="center" bold>
@@ -35,7 +35,7 @@ export default function DonationProcess() {
             </Grid.Col>
           </Grid>
         </BaseBox> */}
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

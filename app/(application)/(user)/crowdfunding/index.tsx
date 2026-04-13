@@ -1,9 +1,9 @@
 import {
   BaseBox,
   Grid,
+  OS_Wrapper,
   StackCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
@@ -25,7 +25,7 @@ export default function Crowdfunding() {
   ];
 
   return (
-    <ViewWrapper>
+    <OS_Wrapper>
       <StackCustom>
         <Image
           source={require("@/assets/images/constants/crowd-hipmi.png")}
@@ -63,6 +63,6 @@ export default function Crowdfunding() {
           </BaseBox>
         ))}
       </StackCustom>
-    </ViewWrapper>
+    </OS_Wrapper>
   );
 }

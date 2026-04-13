@@ -6,12 +6,11 @@ import {
   InformationBox,
   LandscapeFrameUploaded,
   LoaderCustom,
-  NewWrapper,
+  OS_Wrapper,
   SelectCustom,
   Spacing,
   StackCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
 import ListSkeletonComponent from "@/components/_ShareComponent/ListSkeletonComponent";
 import API_IMAGE from "@/constants/api-storage";
@@ -184,7 +183,9 @@ export default function DonationEdit() {
   };
 
   return (
-    <NewWrapper
+    <OS_Wrapper
+      enableKeyboardHandling
+      contentPaddingBottom={250}
       footerComponent={
         <BoxButtonOnFooter>
           <ButtonCustom
@@ -278,6 +279,6 @@ export default function DonationEdit() {
         </StackCustom>
       )}
       <Spacing />
-    </NewWrapper>
+    </OS_Wrapper>
   );
 }

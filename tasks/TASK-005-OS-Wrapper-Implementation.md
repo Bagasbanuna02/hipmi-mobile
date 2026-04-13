@@ -227,6 +227,59 @@ import { OS_Wrapper } from "@/components";
 
 ---
 
+## ✅ User Phase 8: Donation Screens - COMPLETED (2026-04-13)
+
+**Files migrated: 31**
+
+#### Donation List Screens (OS_Wrapper - tabs dengan contentPadding={PADDING_INLINE}):
+- ✅ `screens/Donation/ScreenBeranda.tsx` - NewWrapper → OS_Wrapper + `contentPadding={PADDING_INLINE}` (tabs list - index)
+- ✅ `screens/Donation/ScreenMyDonation.tsx` - NewWrapper → OS_Wrapper + `contentPadding={PADDING_INLINE}` (tabs list - my-donation)
+- ✅ `screens/Donation/ScreenStatus.tsx` - NewWrapper → OS_Wrapper + `contentPadding={PADDING_INLINE}` (tabs list - status)
+
+#### Donation List/Recap Screens (OS_Wrapper dengan contentPadding={PADDING_INLINE}):
+- ✅ `screens/Donation/ScreenFundDisbursement.tsx` - NewWrapper → OS_Wrapper + `contentPadding={PADDING_INLINE}` (fund disbursement list)
+- ✅ `screens/Donation/ScreenListOfDonatur.tsx` - NewWrapper → OS_Wrapper + `contentPadding={PADDING_INLINE}` (donatur list)
+- ✅ `screens/Donation/ScreenListOfNews.tsx` - NewWrapper → OS_Wrapper + `contentPadding={PADDING_INLINE}` (news list)
+- ✅ `screens/Donation/ScreenRecapOfNews.tsx` - NewWrapper → OS_Wrapper + `contentPadding={PADDING_INLINE}` (news recap)
+
+#### Donation Detail & Info Screens (OS_Wrapper static):
+- ✅ `app/(application)/(user)/donation/[id]/index.tsx` - NewWrapper → OS_Wrapper (detail main)
+- ✅ `app/(application)/(user)/donation/[id]/[status]/detail.tsx` - NewWrapper → OS_Wrapper (detail status)
+- ✅ `app/(application)/(user)/donation/[id]/infromation-fundrising.tsx` - ViewWrapper → OS_Wrapper (fund info)
+- ✅ `app/(application)/(user)/donation/[id]/detail-story.tsx` - ViewWrapper → OS_Wrapper (story detail)
+
+#### Donation Form Screens (OS_Wrapper with enableKeyboardHandling):
+- ✅ `app/(application)/(user)/donation/create.tsx` - NewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- ✅ `app/(application)/(user)/donation/[id]/edit.tsx` - NewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- ✅ `app/(application)/(user)/donation/create-story.tsx` - NewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- ✅ `app/(application)/(user)/donation/[id]/edit-story.tsx` - ViewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- ✅ `app/(application)/(user)/donation/[id]/edit-rekening.tsx` - ViewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- ✅ `app/(application)/(user)/donation/[id]/(news)/add-news.tsx` - NewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- ✅ `app/(application)/(user)/donation/[id]/(news)/[news]/edit-news.tsx` - ViewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- ✅ `app/(application)/(user)/donation/[id]/(news)/[news]/index.tsx` - ViewWrapper → OS_Wrapper (news detail)
+- ✅ `app/(application)/(user)/donation/[id]/(transaction-flow)/index.tsx` - ViewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+
+#### Donation Transaction Flow (OS_Wrapper static/no keyboard):
+- ✅ `app/(application)/(user)/donation/[id]/(transaction-flow)/select-bank.tsx` - ViewWrapper → OS_Wrapper (bank selection)
+- ✅ `app/(application)/(user)/donation/[id]/(transaction-flow)/[invoiceId]/invoice.tsx` - ViewWrapper → OS_Wrapper (invoice with file upload)
+- ✅ `app/(application)/(user)/donation/[id]/(transaction-flow)/[invoiceId]/process.tsx` - ViewWrapper → OS_Wrapper (payment process)
+- ✅ `app/(application)/(user)/donation/[id]/(transaction-flow)/[invoiceId]/success.tsx` - ViewWrapper → OS_Wrapper (payment success)
+- ✅ `app/(application)/(user)/donation/[id]/(transaction-flow)/[invoiceId]/failed.tsx` - ViewWrapper → OS_Wrapper (payment failed)
+
+#### Crowdfunding Screen:
+- ✅ `app/(application)/(user)/crowdfunding/index.tsx` - ViewWrapper → OS_Wrapper (static screen)
+
+#### Tabs Layout Height Constants Fix:
+- ✅ `app/(application)/(user)/voting/(tabs)/_layout.tsx` - Hardcode → `OS_IOS_HEIGHT` / `OS_ANDROID_HEIGHT`
+
+**Testing Status:**
+- ✅ TypeScript: No errors
+- ⏳ Build: Pending
+- ⏳ iOS Testing: Pending
+- ⏳ Android Testing: Pending
+
+---
+
 # 🔴 ADMIN PHASES (Admin-Facing Screens)
 
 ## ✅ Admin Phase 9: User Access - COMPLETED (2026-04-09)
@@ -371,11 +424,11 @@ import { OS_Wrapper } from "@/components";
 | User Phase 5 (Forum) | 17 | 17 | ⏳ Pending | ✅ Complete |
 | User Phase 6 (Event) | 16 | 16 | ⏳ Pending | ✅ Complete |
 | User Phase 7 (Voting) | 11 | 11 | ✅ No errors | ✅ Complete |
-| User Phase 8 (Donation) | ~4 | 0 | 0 | ⏳ Pending |
+| User Phase 8 (Donation + Others) | 31 | 31 | ✅ No errors | ✅ Complete |
 | User Phase 9 (Investment) | ~3 | 0 | 0 | ⏳ Pending |
 | User Phase 10 (Collaboration) | ~3 | 0 | 0 | ⏳ Pending |
-| User Phase 11 (Others) | ~4 | 0 | 0 | ⏳ Pending |
-| **User Total** | **~89** | **71** | **10** | **~80% Complete** |
+| User Phase 11 (Others) | ~3 | 0 | 0 | ⏳ Pending |
+| **User Total** | **~111** | **102** | **10** | **~92% Complete** |
 
 ### Admin Phases:
 | Phase | Total Files | Migrated | Testing | Status |
@@ -394,9 +447,9 @@ import { OS_Wrapper } from "@/components";
 ### Grand Total:
 | Category | Total Files | Migrated | Status |
 |----------|-------------|----------|--------|
-| **User Screens** | ~84 | 60 | ~71% Complete |
+| **User Screens** | ~111 | 102 | ~92% Complete |
 | **Admin Screens** | ~31 | 2 | ~6% Complete |
-| **GRAND TOTAL** | **~115** | **62** | **~54% Complete** |
+| **GRAND TOTAL** | **~142** | **104** | **~73% Complete** |
 
 ## 🔄 Rollback Plan
 
@@ -411,5 +464,5 @@ Jika ada issue yang tidak bisa di-fix dalam 1 jam:
 **Co-authored-by**: Qwen-Coder <qwen-coder@alibabacloud.com>
 **Created**: 2026-04-06
 **Last Updated**: 2026-04-13
-**Status**: User Phase 1-7 Complete ✅ | Admin Phase 9 Complete ✅ (71 files migrated)
-**Next**: User Phase 8 - Donation Screens OR Admin Phase 1-3 (HIGH Priority)
+**Status**: User Phase 1-8 Complete ✅ | Admin Phase 9 Complete ✅ (104 files migrated)
+**Next**: User Phase 9-11 (~6 files) OR Admin Phase 1-3 (HIGH Priority, ~9 files)

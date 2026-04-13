@@ -7,9 +7,9 @@ import {
   DrawerCustom,
   DummyLandscapeImage,
   MenuDrawerDynamicGrid,
+  OS_Wrapper,
   StackCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconEdit } from "@/components/_Icon";
@@ -28,6 +28,7 @@ import {
 } from "expo-router";
 import { useCallback, useState } from "react";
 import Toast from "react-native-toast-message";
+import { dateTimeView } from "@/utils/dateTimeView";
 
 export default function DonationNews() {
   const { user } = useAuth();
@@ -71,11 +72,11 @@ export default function DonationNews() {
           ),
         }}
       />
-      <ViewWrapper>
+      <OS_Wrapper>
         <BaseBox>
           <StackCustom>
-            <TextCustom style={{ alignSelf: "flex-end" }}>
-              {formatChatTime(data?.createdAt)}
+            <TextCustom color="gray" size={"small"} style={{ alignSelf: "flex-end" }}>
+              {dateTimeView({date: data?.createdAt})}
             </TextCustom>
 
             {data && data.imageId && (
@@ -89,7 +90,7 @@ export default function DonationNews() {
             <TextCustom>{data?.deskripsi || "-"}</TextCustom>
           </StackCustom>
         </BaseBox>
-      </ViewWrapper>
+      </OS_Wrapper>
 
       <DrawerCustom
         isVisible={openDrawer}

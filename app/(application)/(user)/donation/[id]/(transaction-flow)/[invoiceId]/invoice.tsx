@@ -6,10 +6,10 @@ import {
   ButtonCustom,
   Grid,
   InformationBox,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
 import CopyButton from "@/components/Button/CoyButton";
 import { MainColor } from "@/constants/color-palet";
@@ -101,8 +101,7 @@ export default function DonationInvoice() {
 
   return (
     <>
-      <ViewWrapper
-        hideFooter
+      <OS_Wrapper
         footerComponent={
           <BoxButtonOnFooter>
             <ButtonCustom
@@ -222,7 +221,7 @@ export default function DonationInvoice() {
           </BaseBox>
         </StackCustom>
         <Spacing />
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

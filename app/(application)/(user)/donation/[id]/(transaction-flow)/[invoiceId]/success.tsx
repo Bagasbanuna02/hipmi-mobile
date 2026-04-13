@@ -2,10 +2,10 @@
 import {
   BaseBox,
   Grid,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { apiDonationGetInvoiceById } from "@/service/api-client/api-donation";
@@ -63,7 +63,7 @@ export default function DonationSuccess() {
   ];
 
   return (
-    <ViewWrapper>
+    <OS_Wrapper>
       <StackCustom>
         <BaseBox>
           <StackCustom>
@@ -105,7 +105,7 @@ export default function DonationSuccess() {
           </StackCustom>
         </BaseBox>
       </StackCustom>
-    </ViewWrapper>
+    </OS_Wrapper>
   );
 }
 

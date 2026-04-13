@@ -5,11 +5,11 @@ import {
   ButtonCustom,
   InformationBox,
   LandscapeFrameUploaded,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextAreaCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
 import API_STRORAGE from "@/constants/base-url-api-strorage";
 import DIRECTORY_ID from "@/constants/directory-id";
@@ -105,7 +105,9 @@ export default function DonationEditNews() {
   };
 
   return (
-    <ViewWrapper
+    <OS_Wrapper
+      enableKeyboardHandling
+      contentPaddingBottom={250}
       footerComponent={
         <BoxButtonOnFooter>
           <ButtonCustom
@@ -165,6 +167,6 @@ export default function DonationEditNews() {
         <Spacing />
       </StackCustom>
       <Spacing />
-    </ViewWrapper>
+    </OS_Wrapper>
   );
 }

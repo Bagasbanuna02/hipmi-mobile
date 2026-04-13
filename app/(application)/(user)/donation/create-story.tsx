@@ -10,7 +10,7 @@ import {
   TextAreaCustom,
   TextInputCustom,
 } from "@/components";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
+import OS_Wrapper from "@/components/_ShareComponent/OS_Wrapper";
 import DIRECTORY_ID from "@/constants/directory-id";
 import { useAuth } from "@/hooks/use-auth";
 import {
@@ -113,7 +113,9 @@ export default function DonationCreateStory() {
   };
 
   return (
-    <NewWrapper
+    <OS_Wrapper
+      enableKeyboardHandling
+      contentPaddingBottom={250}
       footerComponent={
         <>
          <BoxButtonOnFooter>
@@ -184,6 +186,6 @@ export default function DonationCreateStory() {
         />
       </StackCustom>
       <Spacing />
-    </NewWrapper>
+    </OS_Wrapper>
   );
 }

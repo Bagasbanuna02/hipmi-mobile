@@ -1,5 +1,5 @@
 import { IconHome, IconStatus } from "@/components/_Icon";
-import { ICON_SIZE_SMALL } from "@/constants/constans-value";
+import { ICON_SIZE_SMALL, OS_ANDROID_HEIGHT, OS_IOS_HEIGHT } from "@/constants/constans-value";
 import { TabsStyles } from "@/styles/tabs-styles";
 import {
     FontAwesome5
@@ -23,12 +23,12 @@ function DonationTabsWrapper() {
             ios: {
               borderTopWidth: 0,
               paddingTop: 12,
-              height: 80,
+              height: OS_IOS_HEIGHT,
             },
             android: {
               borderTopWidth: 0,
               paddingTop: 5,
-              height: 70 + paddingBottom,
+              height: OS_ANDROID_HEIGHT + paddingBottom,
             },
           }),
         }}

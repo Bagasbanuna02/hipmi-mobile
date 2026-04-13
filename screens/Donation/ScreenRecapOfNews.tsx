@@ -4,10 +4,11 @@ import {
   DotButton,
   DrawerCustom,
   MenuDrawerDynamicGrid,
+  OS_Wrapper,
 } from "@/components";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconPlus } from "@/components/_Icon";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
+import { PADDING_INLINE } from "@/constants/constans-value";
 import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { usePagination } from "@/hooks/use-pagination";
@@ -71,7 +72,8 @@ export default function Donation_ScreenRecapOfNews({
           ),
         }}
       />
-      <NewWrapper
+      <OS_Wrapper
+        contentPadding={PADDING_INLINE}
         listData={pagination.listData}
         renderItem={renderItem}
         onEndReached={pagination.loadMore}

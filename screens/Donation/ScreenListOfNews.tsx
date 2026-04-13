@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { BackButton, DrawerCustom, MenuDrawerDynamicGrid } from "@/components";
+import { BackButton, DrawerCustom, MenuDrawerDynamicGrid, OS_Wrapper } from "@/components";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
 import { IconPlus } from "@/components/_Icon";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { MainColor } from "@/constants/color-palet";
+import { PADDING_INLINE } from "@/constants/constans-value";
 import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { usePagination } from "@/hooks/use-pagination";
@@ -61,7 +61,8 @@ export default function Donation_ScreenListOfNews({
           ),
         }}
       />
-      <NewWrapper
+      <OS_Wrapper
+        contentPadding={PADDING_INLINE}
         listData={pagination.listData}
         renderItem={renderItem}
         onEndReached={pagination.loadMore}

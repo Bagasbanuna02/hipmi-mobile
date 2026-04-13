@@ -3,11 +3,13 @@ import {
   BaseBox,
   Grid,
   LoaderCustom,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextCustom,
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
+import { PADDING_INLINE } from "@/constants/constans-value";
 import { usePagination } from "@/hooks/use-pagination";
 import { apiDonationListOfDonaturById } from "@/service/api-client/api-donation";
 import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
@@ -16,7 +18,6 @@ import dayjs from "dayjs";
 import { RefreshControl } from "react-native";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 
 interface Donation_ScreenListOfDonaturProps {
   donationId: string;
@@ -80,7 +81,8 @@ export default function Donation_ScreenListOfDonatur({
     });
 
   return (
-    <NewWrapper
+    <OS_Wrapper
+      contentPadding={PADDING_INLINE}
       hideFooter
       listData={pagination.listData}
       renderItem={renderItem}

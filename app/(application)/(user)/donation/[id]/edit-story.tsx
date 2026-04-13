@@ -4,10 +4,10 @@ import {
   ButtonCustom,
   InformationBox,
   LandscapeFrameUploaded,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextAreaCustom,
-  ViewWrapper,
 } from "@/components";
 import API_IMAGE from "@/constants/api-storage";
 import DIRECTORY_ID from "@/constants/directory-id";
@@ -93,7 +93,7 @@ export default function DonationEditStory() {
   };
 
   return (
-    <ViewWrapper>
+    <OS_Wrapper enableKeyboardHandling contentPaddingBottom={250}>
       <StackCustom gap={"xs"}>
         <InformationBox text="Cerita Anda adalah kunci untuk menginspirasi kebaikan. Jelaskan dengan jujur dan jelas tujuan penggalangan dana ini agar calon donatur memahami dampak positif yang dapat mereka wujudkan melalui kontribusi mereka." />
         <TextAreaCustom
@@ -146,6 +146,6 @@ export default function DonationEditStory() {
         </ButtonCustom>
       </StackCustom>
       <Spacing />
-    </ViewWrapper>
+    </OS_Wrapper>
   );
 }

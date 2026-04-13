@@ -1,7 +1,7 @@
 import FloatingButton from "@/components/Button/FloatingButton";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
+import { OS_Wrapper } from "@/components";
 import { MainColor } from "@/constants/color-palet";
-import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
+import { PADDING_INLINE, PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { usePagination } from "@/hooks/use-pagination";
 import Donation_BoxPublish from "@/screens/Donation/BoxPublish";
@@ -37,7 +37,8 @@ export default function Donation_ScreenBeranda() {
     });
 
   return (
-    <NewWrapper
+    <OS_Wrapper
+      contentPadding={PADDING_INLINE}
       listData={pagination.listData}
       renderItem={({ item }) => (
         <Donation_BoxPublish data={item} id={item.id} />

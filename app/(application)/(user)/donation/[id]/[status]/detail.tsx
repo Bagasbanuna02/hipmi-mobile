@@ -4,7 +4,7 @@ import {
   DotButton,
   DrawerCustom,
   MenuDrawerDynamicGrid,
-  NewWrapper,
+  OS_Wrapper,
   Spacing,
 } from "@/components";
 import AppHeader from "@/components/_ShareComponent/AppHeader";
@@ -113,7 +113,7 @@ export default function DonasiDetailStatus() {
           ),
         }}
       />
-      <NewWrapper
+      <OS_Wrapper
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -156,7 +156,7 @@ export default function DonasiDetailStatus() {
             <Spacing />
           </>
         )}
-      </NewWrapper>
+      </OS_Wrapper>
 
       <DrawerCustom
         isVisible={openDrawer}

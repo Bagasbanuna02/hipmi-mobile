@@ -3,13 +3,13 @@ import {
   BaseBox,
   DummyLandscapeImage,
   Grid,
+  OS_Wrapper,
   StackCustom,
   TextCustom,
 } from "@/components";
 import FloatingButton from "@/components/Button/FloatingButton";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { MainColor } from "@/constants/color-palet";
-import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
+import { PADDING_INLINE, PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { useAuth } from "@/hooks/use-auth";
 import { usePagination } from "@/hooks/use-pagination";
@@ -129,7 +129,8 @@ export default function Donation_ScreenMyDonation() {
   );
 
   return (
-    <NewWrapper
+    <OS_Wrapper
+      contentPadding={PADDING_INLINE}
       listData={pagination.listData}
       renderItem={renderItem}
       onEndReached={pagination.loadMore}

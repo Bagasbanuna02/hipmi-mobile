@@ -4,12 +4,11 @@ import {
   ButtonCustom,
   InformationBox,
   LandscapeFrameUploaded,
-  NewWrapper,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextAreaCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
 import DIRECTORY_ID from "@/constants/directory-id";
 import { apiDonationCreateNews } from "@/service/api-client/api-donation";
@@ -72,7 +71,9 @@ export default function DonationAddNews() {
   };
 
   return (
-    <NewWrapper
+    <OS_Wrapper
+      enableKeyboardHandling
+      contentPaddingBottom={250}
       footerComponent={
         <BoxButtonOnFooter>
           <ButtonCustom
@@ -133,6 +134,6 @@ export default function DonationAddNews() {
 
         <Spacing />
       </StackCustom>
-    </NewWrapper>
+    </OS_Wrapper>
   );
 }

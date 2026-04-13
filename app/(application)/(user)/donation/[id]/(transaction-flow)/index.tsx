@@ -3,9 +3,9 @@ import {
   BoxButtonOnFooter,
   ButtonCustom,
   Grid,
+  OS_Wrapper,
   TextCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
@@ -64,7 +64,7 @@ export default function InvestmentInputDonation() {
   );
   return (
     <>
-      <ViewWrapper footerComponent={bottomComponent}>
+      <OS_Wrapper enableKeyboardHandling contentPaddingBottom={250} footerComponent={bottomComponent}>
         {listData.map((item, i) => (
           <BaseBox key={i} onPress={() => setNominal(item.value)}>
             <Grid>
@@ -98,7 +98,7 @@ export default function InvestmentInputDonation() {
             Minimal donasi Rp. 10.000
           </TextCustom>
         </BaseBox>
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }
