@@ -1,4 +1,4 @@
-import { Spacing, StackCustom, ViewWrapper } from "@/components";
+import { OS_Wrapper, Spacing, StackCustom } from "@/components";
 import { IconArchive } from "@/components/_Icon";
 import {
   IconList,
@@ -65,17 +65,15 @@ export default function AdminVoting() {
   ];
 
   return (
-    <>
-      <ViewWrapper>
-        <AdminTitlePage title="Event" />
-        <Spacing />
+    <OS_Wrapper>
+      <AdminTitlePage title="Event" />
+      <Spacing />
 
-        <StackCustom gap={"xs"}>
-          {listData.map((item, i) => (
-            <AdminComp_BoxDashboard key={i} item={item} />
-          ))}
-        </StackCustom>
-      </ViewWrapper>
-    </>
+      <StackCustom gap={"xs"}>
+        {listData.map((item, i) => (
+          <AdminComp_BoxDashboard key={i} item={item} />
+        ))}
+      </StackCustom>
+    </OS_Wrapper>
   );
 }

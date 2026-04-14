@@ -1,8 +1,8 @@
 import {
   BoxButtonOnFooter,
   ButtonCustom,
+  OS_Wrapper,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import { apiEventCreateTypeOfEvent } from "@/service/api-admin/api-master-admin";
@@ -50,17 +50,17 @@ export default function AdminEventTypeOfEventCreate() {
     </BoxButtonOnFooter>
   );
   return (
-    <>
-      <ViewWrapper
-        headerComponent={<AdminBackButtonAntTitle title="Tambah Tipe Acara" />}
-        footerComponent={buttonSubmit}
-      >
-        <TextInputCustom
-          placeholder="Masukkan Tipe Acara"
-          value={value}
-          onChangeText={setValue}
-        />
-      </ViewWrapper>
-    </>
+    <OS_Wrapper
+      enableKeyboardHandling
+      contentPaddingBottom={250}
+      headerComponent={<AdminBackButtonAntTitle title="Tambah Tipe Acara" />}
+      footerComponent={buttonSubmit}
+    >
+      <TextInputCustom
+        placeholder="Masukkan Tipe Acara"
+        value={value}
+        onChangeText={setValue}
+      />
+    </OS_Wrapper>
   );
 }

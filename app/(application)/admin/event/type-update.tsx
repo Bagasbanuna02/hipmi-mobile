@@ -2,10 +2,10 @@
 import {
   BoxButtonOnFooter,
   ButtonCustom,
+  OS_Wrapper,
   Spacing,
   TextCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import { MainColor } from "@/constants/color-palet";
@@ -89,25 +89,25 @@ export default function AdminEventTypeOfEventUpdate() {
     </BoxButtonOnFooter>
   );
   return (
-    <>
-      <ViewWrapper
-        headerComponent={<AdminBackButtonAntTitle title="Ubah Tipe Acara" />}
-        footerComponent={buttonSubmit}
-      >
-        <TextInputCustom
-          placeholder="Masukkan Tipe Acara"
-          value={data.name}
-          onChangeText={(text) => setData({ ...data, name: text })}
-        />
+    <OS_Wrapper
+      enableKeyboardHandling
+      contentPaddingBottom={250}
+      headerComponent={<AdminBackButtonAntTitle title="Ubah Tipe Acara" />}
+      footerComponent={buttonSubmit}
+    >
+      <TextInputCustom
+        placeholder="Masukkan Tipe Acara"
+        value={data.name}
+        onChangeText={(text) => setData({ ...data, name: text })}
+      />
 
-        <TextCustom>Aktivasi</TextCustom>
-        <Spacing height={10} />
-        <Switch
-          color={MainColor.yellow}
-          value={data.active}
-          onValueChange={(value) => setData({ ...data, active: value })}
-        />
-      </ViewWrapper>
-    </>
+      <TextCustom>Aktivasi</TextCustom>
+      <Spacing height={10} />
+      <Switch
+        color={MainColor.yellow}
+        value={data.active}
+        onValueChange={(value) => setData({ ...data, active: value })}
+      />
+    </OS_Wrapper>
   );
 }

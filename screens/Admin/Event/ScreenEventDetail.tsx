@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ActionIcon, AlertDefaultSystem, Spacing } from "@/components";
+import { ActionIcon, AlertDefaultSystem, OS_Wrapper, Spacing } from "@/components";
 import { IconDot } from "@/components/_Icon/IconComponent";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
 import AdminButtonReview from "@/components/_ShareComponent/Admin/ButtonReview";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import ReportBox from "@/components/Box/ReportBox";
 import { ICON_SIZE_BUTTON } from "@/constants/constans-value";
 import { useAuth } from "@/hooks/use-auth";
@@ -133,7 +132,7 @@ export function Admin_ScreenEventDetail() {
 
   return (
     <>
-      <NewWrapper
+      <OS_Wrapper
         hideFooter
         headerComponent={headerComponent}
         // footerComponent={
@@ -154,7 +153,7 @@ export function Admin_ScreenEventDetail() {
 
         {footerComponent}
         <Spacing />
-      </NewWrapper>
+      </OS_Wrapper>
 
       <EventDetailDrawer
         isVisible={openDrawer}

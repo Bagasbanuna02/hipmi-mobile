@@ -1,10 +1,9 @@
-import { BadgeCustom, TextCustom } from "@/components";
+import { BadgeCustom, OS_Wrapper, TextCustom } from "@/components";
 import AdminActionIconPlus from "@/components/_ShareComponent/Admin/ActionIconPlus";
 import AdminBasicBox from "@/components/_ShareComponent/Admin/AdminBasicBox";
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
 import GridTwoView from "@/components/_ShareComponent/GridTwoView";
 import { GridViewCustomSpan } from "@/components/_ShareComponent/GridViewCustomSpan";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { usePagination } from "@/hooks/use-pagination";
@@ -131,7 +130,7 @@ export function Admin_ScreenEventTypeOfEvent() {
     });
 
   return (
-    <NewWrapper
+    <OS_Wrapper
       listData={pagination.listData}
       renderItem={renderItem}
       keyExtractor={(item: any) => item.id?.toString() || `fallback-${item.id}`}

@@ -346,10 +346,29 @@ import { OS_Wrapper } from "@/components";
 - ✅ `screens/Admin/User-Access/ScreenUserAccess.tsx` - NewWrapper → OS_Wrapper (list with pagination + search)
 - ✅ `app/(application)/admin/user-access/[id]/index.tsx` - ViewWrapper → OS_Wrapper (detail with footer button)
 
-## ⏳ Admin Phase 1: Event Management (Priority: HIGH)
-- [ ] `screens/Admin/Event/ScreenEventList.tsx`
-- [ ] `screens/Admin/Event/ScreenEventCreate.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
-- [ ] `screens/Admin/Event/ScreenEventEdit.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
+## ✅ Admin Phase 1: Event Management - COMPLETED (2026-04-14)
+
+**Files migrated: 8**
+
+#### Admin Event Dashboard & List Screens (OS_Wrapper):
+- ✅ `app/(application)/admin/event/index.tsx` - ViewWrapper → OS_Wrapper (dashboard screen)
+- ✅ `screens/Admin/Event/ScreenEventStatus.tsx` - NewWrapper → OS_Wrapper (list with search + pagination)
+- ✅ `screens/Admin/Event/ScreenEventListOfParticipants.tsx` - NewWrapper → OS_Wrapper (participant list with pagination)
+- ✅ `screens/Admin/Event/ScreenEventDetail.tsx` - NewWrapper → OS_Wrapper (detail screen)
+
+#### Admin Event Form Screens (OS_Wrapper with enableKeyboardHandling):
+- ✅ `app/(application)/admin/event/[id]/reject-input.tsx` - ViewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- ✅ `app/(application)/admin/event/type-create.tsx` - ViewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- ✅ `app/(application)/admin/event/type-update.tsx` - ViewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+
+#### Admin Event Utility Screen:
+- ✅ `app/(application)/admin/event/type-of-event.tsx` - NewWrapper → OS_Wrapper (type list screen)
+
+**Testing Status:**
+- ✅ TypeScript: No errors
+- ⏳ Build: Pending
+- ⏳ iOS Testing: Pending
+- ⏳ Android Testing: Pending
 
 ## ⏳ Admin Phase 2: Voting Management (Priority: HIGH)
 - [ ] `screens/Admin/Voting/ScreenVotingList.tsx`
@@ -506,7 +525,7 @@ import { OS_Wrapper } from "@/components";
 ### Admin Phases:
 | Phase | Total Files | Migrated | Testing | Status |
 |-------|-------------|----------|---------|--------|
-| Admin Phase 1 (Event) | ~3 | 0 | 0 | ⏳ Pending |
+| Admin Phase 1 (Event) | 8 | 8 | ✅ No errors | ✅ Complete |
 | Admin Phase 2 (Voting) | ~3 | 0 | 0 | ⏳ Pending |
 | Admin Phase 3 (Donation) | ~3 | 0 | 0 | ⏳ Pending |
 | Admin Phase 4 (Forum) | ~5 | 0 | 0 | ⏳ Pending |
@@ -515,14 +534,14 @@ import { OS_Wrapper } from "@/components";
 | Admin Phase 7 (Investment) | ~3 | 0 | 0 | ⏳ Pending |
 | Admin Phase 8 (App Info) | ~4 | 0 | 0 | ⏳ Pending |
 | Admin Phase 9 (User Access) | 2 | 2 | 0 | ✅ Complete |
-| **Admin Total** | **~31** | **6** | **0** | **~19% Complete** |
+| **Admin Total** | **~37** | **14** | **0** | **~38% Complete** |
 
 ### Grand Total:
 | Category | Total Files | Migrated | Status |
 |----------|-------------|----------|--------|
 | **User Screens** | ~132 | 126 | ~95% Complete |
-| **Admin Screens** | ~31 | 6 | ~19% Complete |
-| **GRAND TOTAL** | **~167** | **132** | **~79% Complete** |
+| **Admin Screens** | ~37 | 14 | ~38% Complete |
+| **GRAND TOTAL** | **~169** | **140** | **~83% Complete** |
 
 ## 🔄 Rollback Plan
 
@@ -537,6 +556,6 @@ Jika ada issue yang tidak bisa di-fix dalam 1 jam:
 **Co-authored-by**: Qwen-Coder <qwen-coder@alibabacloud.com>
 **Created**: 2026-04-06
 **Last Updated**: 2026-04-14
-**Status**: User Phase 1-9 Complete ✅ | Admin Phase 6 & 9 Complete ✅ (132 files migrated)
-**Current**: Admin Phase 6 Complete ✅
-**Next**: Admin Phase 1-3 (HIGH Priority, ~9 files) OR User Phase 10-11 (~6 files)
+**Status**: User Phase 1-9 Complete ✅ | Admin Phase 1, 6 & 9 Complete ✅ (140 files migrated)
+**Current**: Admin Phase 1 Complete ✅
+**Next**: Admin Phase 2-3 (HIGH Priority, ~6 files) OR User Phase 10-11 (~6 files)

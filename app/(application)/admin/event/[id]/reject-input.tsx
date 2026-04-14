@@ -2,8 +2,8 @@
 import {
   AlertDefaultSystem,
   BoxButtonOnFooter,
+  OS_Wrapper,
   TextAreaCustom,
-  ViewWrapper,
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
@@ -107,20 +107,20 @@ export default function AdminEventRejectInput() {
   );
 
   return (
-    <>
-      <ViewWrapper
-        footerComponent={buttonSubmit}
-        headerComponent={<AdminBackButtonAntTitle title="Penolakan Event" />}
-      >
-        <TextAreaCustom
-          value={data}
-          onChangeText={setData}
-          placeholder="Masukan alasan"
-          required
-          showCount
-          maxLength={1000}
-        />
-      </ViewWrapper>
-    </>
+    <OS_Wrapper
+      enableKeyboardHandling
+      contentPaddingBottom={250}
+      footerComponent={buttonSubmit}
+      headerComponent={<AdminBackButtonAntTitle title="Penolakan Event" />}
+    >
+      <TextAreaCustom
+        value={data}
+        onChangeText={setData}
+        placeholder="Masukan alasan"
+        required
+        showCount
+        maxLength={1000}
+      />
+    </OS_Wrapper>
   );
 }
