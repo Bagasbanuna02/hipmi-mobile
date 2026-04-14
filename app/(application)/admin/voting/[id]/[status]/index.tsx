@@ -5,11 +5,10 @@ import {
   BaseBox,
   CircleContainer,
   Grid,
-  NewWrapper,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
@@ -169,11 +168,10 @@ export default function AdminVotingDetail() {
   };
 
   return (
-    <>
-      <NewWrapper
-        hideFooter
-        headerComponent={<AdminBackButtonAntTitle title={`Detail Data`} />}
-      >
+    <OS_Wrapper
+      hideFooter
+      headerComponent={<AdminBackButtonAntTitle title={`Detail Data`} />}
+    >
         <BaseBox>
           <StackCustom>
             {listData.map((item, i) => (
@@ -253,7 +251,6 @@ export default function AdminVotingDetail() {
           />
         )}
         <Spacing />
-      </NewWrapper>
-    </>
+    </OS_Wrapper>
   );
 }

@@ -370,10 +370,27 @@ import { OS_Wrapper } from "@/components";
 - ⏳ iOS Testing: Pending
 - ⏳ Android Testing: Pending
 
-## ⏳ Admin Phase 2: Voting Management (Priority: HIGH)
-- [ ] `screens/Admin/Voting/ScreenVotingList.tsx`
-- [ ] `screens/Admin/Voting/ScreenVotingCreate.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
-- [ ] `screens/Admin/Voting/ScreenVotingEdit.tsx` → pakai `enableKeyboardHandling` + `contentPaddingBottom={250}`
+## ✅ Admin Phase 2: Voting Management - COMPLETED (2026-04-14)
+
+**Files migrated: 6** (5 migrated + 1 already done)
+
+#### Admin Voting Dashboard & List Screens (OS_Wrapper):
+- ✅ `app/(application)/admin/voting/index.tsx` - ViewWrapper → OS_Wrapper (dashboard screen)
+- ✅ `screens/Admin/Voting/ScreenVotingStatus.tsx` - NewWrapper → OS_Wrapper (list with search + pagination)
+- ✅ `screens/Admin/Voting/ScreenVotingHistory.tsx` - NewWrapper → OS_Wrapper (list with search + pagination)
+- ✅ `app/(application)/admin/voting/[id]/[status]/index.tsx` - NewWrapper → OS_Wrapper (detail screen with hideFooter)
+
+#### Admin Voting Form Screen (OS_Wrapper with enableKeyboardHandling):
+- ✅ `app/(application)/admin/voting/[id]/[status]/reject-input.tsx` - ViewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+
+#### Admin Voting Utility Screen:
+- ✅ `screens/Admin/Voting/ScreenEventTypeOfEvent.tsx` - Already migrated to OS_Wrapper ✅
+
+**Testing Status:**
+- ✅ TypeScript: No errors
+- ⏳ Build: Pending
+- ⏳ iOS Testing: Pending
+- ⏳ Android Testing: Pending
 
 ## ⏳ Admin Phase 3: Donation Management (Priority: HIGH)
 - [ ] `screens/Admin/Donation/ScreenDonationList.tsx`
@@ -526,7 +543,7 @@ import { OS_Wrapper } from "@/components";
 | Phase | Total Files | Migrated | Testing | Status |
 |-------|-------------|----------|---------|--------|
 | Admin Phase 1 (Event) | 8 | 8 | ✅ No errors | ✅ Complete |
-| Admin Phase 2 (Voting) | ~3 | 0 | 0 | ⏳ Pending |
+| Admin Phase 2 (Voting) | 6 | 6 | ✅ No errors | ✅ Complete |
 | Admin Phase 3 (Donation) | ~3 | 0 | 0 | ⏳ Pending |
 | Admin Phase 4 (Forum) | ~5 | 0 | 0 | ⏳ Pending |
 | Admin Phase 5 (Collaboration) | ~5 | 0 | 0 | ⏳ Pending |
@@ -534,14 +551,14 @@ import { OS_Wrapper } from "@/components";
 | Admin Phase 7 (Investment) | ~3 | 0 | 0 | ⏳ Pending |
 | Admin Phase 8 (App Info) | ~4 | 0 | 0 | ⏳ Pending |
 | Admin Phase 9 (User Access) | 2 | 2 | 0 | ✅ Complete |
-| **Admin Total** | **~37** | **14** | **0** | **~38% Complete** |
+| **Admin Total** | **~40** | **20** | **0** | **~50% Complete** |
 
 ### Grand Total:
 | Category | Total Files | Migrated | Status |
 |----------|-------------|----------|--------|
 | **User Screens** | ~132 | 126 | ~95% Complete |
-| **Admin Screens** | ~37 | 14 | ~38% Complete |
-| **GRAND TOTAL** | **~169** | **140** | **~83% Complete** |
+| **Admin Screens** | ~40 | 20 | ~50% Complete |
+| **GRAND TOTAL** | **~172** | **146** | **~85% Complete** |
 
 ## 🔄 Rollback Plan
 
@@ -556,6 +573,6 @@ Jika ada issue yang tidak bisa di-fix dalam 1 jam:
 **Co-authored-by**: Qwen-Coder <qwen-coder@alibabacloud.com>
 **Created**: 2026-04-06
 **Last Updated**: 2026-04-14
-**Status**: User Phase 1-9 Complete ✅ | Admin Phase 1, 6 & 9 Complete ✅ (140 files migrated)
-**Current**: Admin Phase 1 Complete ✅
-**Next**: Admin Phase 2-3 (HIGH Priority, ~6 files) OR User Phase 10-11 (~6 files)
+**Status**: User Phase 1-9 Complete ✅ | Admin Phase 1, 2, 6 & 9 Complete ✅ (146 files migrated)
+**Current**: Admin Phase 2 Complete ✅
+**Next**: Admin Phase 3 (Donation, ~3 files) OR User Phase 10-11 (~6 files)
