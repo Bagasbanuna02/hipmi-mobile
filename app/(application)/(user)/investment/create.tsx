@@ -118,20 +118,7 @@ export default function InvestmentCreate() {
 
     try {
       setIsLoading(true);
-      const responseUploadImage = await uploadFileService({
-        imageUri: image,
-        dirId: DIRECTORY_ID.investasi_image,
-      });
 
-      if (!responseUploadImage.success) {
-        Toast.show({
-          type: "error",
-          text1: "Gagal mengunggah gambar",
-        });
-        return;
-      }
-
-      const imageId = responseUploadImage.data.id;
       const responseUploadPdf = await uploadFileService({
         imageUri: pdf.uri,
         dirId: DIRECTORY_ID.investasi_prospektus,
@@ -144,8 +131,22 @@ export default function InvestmentCreate() {
         });
         return;
       }
-
       const pdfId = responseUploadPdf.data.id;
+
+      const responseUploadImage = await uploadFileService({
+        imageUri: image,
+        dirId: DIRECTORY_ID.investasi_image,
+      });
+
+      if (!responseUploadImage.success) {
+        Toast.show({
+          type: "error",
+          text1: "Gagal mengunggah gambar",
+        });
+        return;
+      }
+      const imageId = responseUploadImage.data.id;
+
       const newData = {
         title: data.title,
         targetDana: data.targetDana,

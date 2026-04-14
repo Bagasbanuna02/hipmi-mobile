@@ -1,6 +1,5 @@
-import { SearchInput } from "@/components";
+import { OS_Wrapper, SearchInput } from "@/components";
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { MainColor } from "@/constants/color-palet";
 import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
@@ -82,7 +81,7 @@ export function Admin_ScreenJobStatus() {
     });
 
   return (
-    <NewWrapper
+    <OS_Wrapper
       listData={pagination.listData}
       renderItem={renderItem}
       keyExtractor={(item: any) => item.id.toString()}

@@ -5,11 +5,10 @@ import {
   BaseBox,
   DummyLandscapeImage,
   Grid,
-  NewWrapper,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
@@ -121,7 +120,7 @@ export default function AdminJobDetailStatus() {
 
   return (
     <>
-      <NewWrapper
+      <OS_Wrapper
         headerComponent={<AdminBackButtonAntTitle title={`Detail Data`} />}
       >
         <BaseBox>
@@ -185,7 +184,7 @@ export default function AdminJobDetailStatus() {
           />
         )}
         <Spacing />
-      </NewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

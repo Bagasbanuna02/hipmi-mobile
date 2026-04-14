@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Spacing, StackCustom, ViewWrapper } from "@/components";
+import { OS_Wrapper, Spacing, StackCustom } from "@/components";
 import {
   IconPublish,
   IconReject,
@@ -42,7 +42,7 @@ export default function AdminJob() {
 
   return (
     <>
-      <ViewWrapper>
+      <OS_Wrapper>
         <AdminTitlePage title="Job Vacancy" />
         <Spacing />
         <StackCustom gap={"xs"}>
@@ -50,7 +50,7 @@ export default function AdminJob() {
             <AdminComp_BoxDashboard key={i} item={item} />
           ))}
         </StackCustom>
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }
