@@ -3,8 +3,8 @@ import {
   AlertDefaultSystem,
   BoxButtonOnFooter,
   TextAreaCustom,
-  ViewWrapper,
 } from "@/components";
+import OS_Wrapper from "@/components/_ShareComponent/OS_Wrapper";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
 import { useAuth } from "@/hooks/use-auth";
@@ -116,7 +116,9 @@ export default function AdminDonationRejectInput() {
 
   return (
     <>
-      <ViewWrapper
+      <OS_Wrapper
+        enableKeyboardHandling
+        contentPaddingBottom={250}
         footerComponent={buttonSubmit}
         headerComponent={<AdminBackButtonAntTitle title="Penolakan Donasi" />}
       >
@@ -128,7 +130,7 @@ export default function AdminDonationRejectInput() {
           showCount
           maxLength={1000}
         />
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

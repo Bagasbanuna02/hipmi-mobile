@@ -3,8 +3,8 @@ import AdminActionIconPlus from "@/components/_ShareComponent/Admin/ActionIconPl
 import AdminBasicBox from "@/components/_ShareComponent/Admin/AdminBasicBox";
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
 import GridTwoView from "@/components/_ShareComponent/GridTwoView";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
-import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
+import OS_Wrapper from "@/components/_ShareComponent/OS_Wrapper";
+import { PAGINATION_DEFAULT_TAKE, PADDING_INLINE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { usePagination } from "@/hooks/use-pagination";
 import { apiAdminMasterDonationCategory } from "@/service/api-admin/api-master-admin";
@@ -86,7 +86,7 @@ export function Admin_ScreenDonationCategory() {
     });
 
   return (
-    <NewWrapper
+    <OS_Wrapper
       listData={pagination.listData}
       renderItem={renderItem}
       keyExtractor={(item: any) => item.id?.toString() || `fallback-${item.id}`}

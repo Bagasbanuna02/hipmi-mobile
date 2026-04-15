@@ -12,9 +12,9 @@ import {
   Spacing,
   StackCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
 import { IconDot, IconList } from "@/components/_Icon/IconComponent";
+import OS_Wrapper from "@/components/_ShareComponent/OS_Wrapper";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
 import AdminButtonReview from "@/components/_ShareComponent/Admin/ButtonReview";
@@ -177,7 +177,7 @@ export default function AdminDonationDetail() {
 
   return (
     <>
-      <ViewWrapper
+      <OS_Wrapper
         headerComponent={
           <AdminBackButtonAntTitle
             title={`Detail Data`}
@@ -314,7 +314,7 @@ export default function AdminDonationDetail() {
             />
           </StackCustom>
         )}
-      </ViewWrapper>
+      </OS_Wrapper>
 
       <DrawerCustom
         isVisible={openDrawer}

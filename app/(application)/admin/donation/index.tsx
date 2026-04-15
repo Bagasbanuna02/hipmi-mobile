@@ -1,4 +1,5 @@
-import { Spacing, StackCustom, ViewWrapper } from "@/components";
+import { Spacing, StackCustom } from "@/components";
+import OS_Wrapper from "@/components/_ShareComponent/OS_Wrapper";
 import {
   IconList,
   IconPublish,
@@ -64,7 +65,7 @@ export default function AdminDonation() {
 
   return (
     <>
-      <ViewWrapper>
+      <OS_Wrapper>
         <AdminTitlePage title="Donasi" />
         <Spacing />
         <StackCustom gap={"xs"}>
@@ -72,7 +73,7 @@ export default function AdminDonation() {
             <AdminComp_BoxDashboard key={i} item={item} />
           ))}
         </StackCustom>
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

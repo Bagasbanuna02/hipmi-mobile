@@ -1,10 +1,11 @@
 import { ActionIcon, SearchInput, TextCustom } from "@/components";
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
 import AdminTableValue from "@/components/_ShareComponent/Admin/TableValue";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
+import OS_Wrapper from "@/components/_ShareComponent/OS_Wrapper";
 import {
   ICON_SIZE_BUTTON,
   PAGINATION_DEFAULT_TAKE,
+  PADDING_INLINE,
 } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { usePagination } from "@/hooks/use-pagination";
@@ -91,7 +92,7 @@ export function Admin_ScreenDonationStatus() {
     });
 
   return (
-    <NewWrapper
+    <OS_Wrapper
       listData={pagination.listData}
       renderItem={renderItem}
       keyExtractor={(item: any) => item.id?.toString() || `fallback-${item.id}`}

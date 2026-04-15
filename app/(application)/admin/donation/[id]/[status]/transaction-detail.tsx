@@ -6,8 +6,8 @@ import {
   ButtonCustom,
   StackCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
+import OS_Wrapper from "@/components/_ShareComponent/OS_Wrapper";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
 import { useAuth } from "@/hooks/use-auth";
@@ -182,7 +182,7 @@ export default function AdminDonasiTransactionDetail() {
 
   return (
     <>
-      <ViewWrapper
+      <OS_Wrapper
         headerComponent={<AdminBackButtonAntTitle title="Detail Transaksi" />}
         footerComponent={buttonAction()}
       >
@@ -197,7 +197,7 @@ export default function AdminDonasiTransactionDetail() {
             ))}
           </StackCustom>
         </BaseBox>
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

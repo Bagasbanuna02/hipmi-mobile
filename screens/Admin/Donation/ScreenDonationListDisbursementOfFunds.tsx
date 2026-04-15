@@ -1,6 +1,6 @@
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
-import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
+import OS_Wrapper from "@/components/_ShareComponent/OS_Wrapper";
+import { PAGINATION_DEFAULT_TAKE, PADDING_INLINE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { usePagination } from "@/hooks/use-pagination";
 import { apiAdminDonationDisbursementOfFundsListById } from "@/service/api-admin/api-admin-donation";
@@ -61,7 +61,7 @@ export function Admin_ScreenDonationListDisbursementOfFunds() {
     });
 
   return (
-    <NewWrapper
+    <OS_Wrapper
       listData={pagination.listData}
       renderItem={renderItem}
       keyExtractor={(item: any) => item.id?.toString() || `fallback-${item.id}`}

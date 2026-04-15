@@ -4,8 +4,8 @@ import {
   ButtonCustom,
   StackCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
+import OS_Wrapper from "@/components/_ShareComponent/OS_Wrapper";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
 import { apiAdminDonationDisbursementOfFundsListById } from "@/service/api-admin/api-admin-donation";
@@ -59,7 +59,7 @@ export default function AdminDonationDetailDisbursementOfFunds() {
   ];
   return (
     <>
-      <ViewWrapper
+      <OS_Wrapper
         headerComponent={
           <AdminBackButtonAntTitle title="Detail Pencairan Dana" />
         }
@@ -83,7 +83,7 @@ export default function AdminDonationDetailDisbursementOfFunds() {
         >
           Cek Bukti Transaksi
         </ButtonCustom>
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

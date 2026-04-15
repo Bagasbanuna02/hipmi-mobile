@@ -4,8 +4,8 @@ import {
   StackCustom,
   TextCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
+import OS_Wrapper from "@/components/_ShareComponent/OS_Wrapper";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import { MainColor } from "@/constants/color-palet";
 import { apiAdminMasterDonationCategoryCreate } from "@/service/api-admin/api-master-admin";
@@ -55,7 +55,9 @@ export default function AdminDonationCategoryCreate() {
   );
   return (
     <>
-      <ViewWrapper
+      <OS_Wrapper
+        enableKeyboardHandling
+        contentPaddingBottom={250}
         headerComponent={<AdminBackButtonAntTitle title="Tambah Kategori" />}
         footerComponent={buttonSubmit}
       >
@@ -76,7 +78,7 @@ export default function AdminDonationCategoryCreate() {
             onValueChange={(value) => setData({ ...data, active: value })}
           />
         </StackCustom>
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

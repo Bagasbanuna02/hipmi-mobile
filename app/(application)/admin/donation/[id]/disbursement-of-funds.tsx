@@ -10,8 +10,8 @@ import {
   TextAreaCustom,
   TextCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
+import OS_Wrapper from "@/components/_ShareComponent/OS_Wrapper";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import DIRECTORY_ID from "@/constants/directory-id";
 import { useAuth } from "@/hooks/use-auth";
@@ -142,7 +142,9 @@ export default function AdminDonationDisbursementOfFunds() {
   );
 
   return (
-    <ViewWrapper
+    <OS_Wrapper
+      enableKeyboardHandling
+      contentPaddingBottom={250}
       headerComponent={<AdminBackButtonAntTitle title="Pencairan Dana" />}
       footerComponent={buttonSubmit}
     >
@@ -228,6 +230,6 @@ export default function AdminDonationDisbursementOfFunds() {
       <Spacing />
       <Image source={image?.uri} style={{ width: "100%", height: 300 }} />
       <Spacing />
-    </ViewWrapper>
+    </OS_Wrapper>
   );
 }
