@@ -1,9 +1,11 @@
-import { SearchInput, StackCustom, TextCustom } from "@/components";
+import { OS_Wrapper, SearchInput, StackCustom, TextCustom } from "@/components";
 import AdminBasicBox from "@/components/_ShareComponent/Admin/AdminBasicBox";
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
 import GridTwoView from "@/components/_ShareComponent/GridTwoView";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
-import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
+import {
+  PADDING_INLINE,
+  PAGINATION_DEFAULT_TAKE,
+} from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { usePagination } from "@/hooks/use-pagination";
 import { apiAdminForum } from "@/service/api-admin/api-admin-forum";
@@ -69,7 +71,6 @@ export function Admin_ScreenForumReportComment() {
     ({ item, index }: { item: any; index: number }) => (
       <AdminBasicBox
         key={index}
-        style={{ marginHorizontal: 5, marginVertical: 5 }}
         onPress={() => {
           router.push(
             `/admin/forum/${item?.Forum_Komentar?.id}/list-report-comment`,
@@ -77,27 +78,25 @@ export function Admin_ScreenForumReportComment() {
         }}
       >
         <StackCustom gap={0}>
-           <GridTwoView
+          <GridTwoView
             spanLeft={5}
             spanRight={7}
             leftItem={<TextCustom>Jumlah Report</TextCustom>}
             rightItem={
-              <TextCustom truncate={2}>
-                {item?.count || "-"}
-              </TextCustom>
+              <TextCustom truncate={2}>{item?.count || "-"}</TextCustom>
             }
           />
 
-            <GridTwoView
-              spanLeft={5}
-              spanRight={7}
-              leftItem={<TextCustom>Komentar</TextCustom>}
-              rightItem={
-                <TextCustom truncate={2}>
-                  {item?.Forum_Komentar?.komentar || "-"}
-                </TextCustom>
-              }
-            />
+          <GridTwoView
+            spanLeft={5}
+            spanRight={7}
+            leftItem={<TextCustom>Komentar</TextCustom>}
+            rightItem={
+              <TextCustom truncate={2}>
+                {item?.Forum_Komentar?.komentar || "-"}
+              </TextCustom>
+            }
+          />
         </StackCustom>
       </AdminBasicBox>
     ),
@@ -119,7 +118,8 @@ export function Admin_ScreenForumReportComment() {
     });
 
   return (
-    <NewWrapper
+    <OS_Wrapper
+      contentPadding={PADDING_INLINE}
       listData={pagination.listData}
       renderItem={renderItem}
       keyExtractor={(item: any) => item.id?.toString() || `fallback-${item.id}`}

@@ -1,13 +1,12 @@
-import {
-  SearchInput, StackCustom,
-  TextCustom
-} from "@/components";
+import { OS_Wrapper, SearchInput, StackCustom, TextCustom } from "@/components";
 import AdminBasicBox from "@/components/_ShareComponent/Admin/AdminBasicBox";
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
 import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { MainColor } from "@/constants/color-palet";
-import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
+import {
+  PADDING_INLINE,
+  PAGINATION_DEFAULT_TAKE,
+} from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { usePagination } from "@/hooks/use-pagination";
 import { apiAdminForum } from "@/service/api-admin/api-admin-forum";
@@ -65,9 +64,8 @@ export function Admin_ScreenForumPosting() {
 
   // Render item untuk daftar posting
   const renderItem = useCallback(
-    ({ item, index }: { item: any; index: number }) => (
+    ({ item }: { item: any }) => (
       <AdminBasicBox
-        style={{ marginHorizontal: 5, marginVertical: 5 }}
         onPress={() => {
           router.push(`/admin/forum/${item.id}`);
         }}
@@ -112,7 +110,9 @@ export function Admin_ScreenForumPosting() {
     });
 
   return (
-    <NewWrapper
+    <OS_Wrapper
+      hideFooter
+      contentPadding={PADDING_INLINE}
       listData={pagination.listData}
       renderItem={renderItem}
       keyExtractor={(item: any) => item.id?.toString() || `fallback-${item.id}`}

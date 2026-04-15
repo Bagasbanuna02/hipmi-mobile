@@ -4,6 +4,7 @@ import {
   AlertDefaultSystem,
   DrawerCustom,
   MenuDrawerDynamicGrid,
+  OS_Wrapper,
   StackCustom,
   TextCustom,
 } from "@/components";
@@ -13,8 +14,8 @@ import AdminBasicBox from "@/components/_ShareComponent/Admin/AdminBasicBox";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
 import GridTwoView from "@/components/_ShareComponent/GridTwoView";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { MainColor } from "@/constants/color-palet";
+import { PADDING_INLINE } from "@/constants/constans-value";
 import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { useAuth } from "@/hooks/use-auth";
@@ -87,7 +88,7 @@ export function Admin_ScreenForumDetailReportComment() {
     ({ item, index }: { item: any; index: number }) => (
       <AdminBasicBox
         key={index}
-        style={{ marginHorizontal: 5, marginVertical: 5 }}
+        // style={{ marginHorizontal: 5, marginVertical: 5 }}
         onPress={() => {
           setOpenDrawerAction(true);
           setSelectedReport({
@@ -180,7 +181,8 @@ export function Admin_ScreenForumDetailReportComment() {
 
   return (
     <>
-      <NewWrapper
+      <OS_Wrapper
+        contentPadding={PADDING_INLINE}
         listData={pagination.listData}
         renderItem={renderItem}
         headerComponent={headerComponent}

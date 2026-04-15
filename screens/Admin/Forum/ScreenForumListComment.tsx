@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { StackCustom, TextCustom } from "@/components";
+import { OS_Wrapper, StackCustom, TextCustom } from "@/components";
 import AdminBasicBox from "@/components/_ShareComponent/Admin/AdminBasicBox";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { MainColor } from "@/constants/color-palet";
+import { PADDING_INLINE } from "@/constants/constans-value";
 import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { useAuth } from "@/hooks/use-auth";
@@ -46,7 +46,7 @@ export function Admin_ScreenForumListComment() {
     ({ item, index }: { item: any; index: number }) => (
       <AdminBasicBox
         key={index}
-        style={{ marginHorizontal: 5, marginVertical: 5 }}
+        // style={{ marginHorizontal: 5, marginVertical: 5 }}
         onPress={() => {
           router.push(`/admin/forum/${item.id}/list-report-comment`);
         }}
@@ -84,7 +84,8 @@ export function Admin_ScreenForumListComment() {
 
   return (
     <>
-      <NewWrapper
+      <OS_Wrapper
+        contentPadding={PADDING_INLINE}
         listData={pagination.listData}
         renderItem={renderItem}
         headerComponent={headerComponent}

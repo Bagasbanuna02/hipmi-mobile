@@ -1,10 +1,12 @@
-import { SearchInput, StackCustom, TextCustom } from "@/components";
+import { OS_Wrapper, SearchInput, StackCustom, TextCustom } from "@/components";
 import AdminBasicBox from "@/components/_ShareComponent/Admin/AdminBasicBox";
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
 import GridTwoView from "@/components/_ShareComponent/GridTwoView";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
 import { MainColor } from "@/constants/color-palet";
-import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
+import {
+  PADDING_INLINE,
+  PAGINATION_DEFAULT_TAKE,
+} from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { usePagination } from "@/hooks/use-pagination";
 import { apiAdminForum } from "@/service/api-admin/api-admin-forum";
@@ -25,7 +27,6 @@ export function Admin_ScreenForumReportPosting() {
       });
 
       if (response.success) {
-
         return { data: response.data };
       } else {
         return { data: [] };
@@ -71,7 +72,6 @@ export function Admin_ScreenForumReportPosting() {
     ({ item, index }: { item: any; index: number }) => (
       <AdminBasicBox
         key={index}
-        style={{ marginHorizontal: 5, marginVertical: 5 }}
         onPress={() => {
           router.push(
             `/admin/forum/${item?.Forum_Posting?.id}/list-report-posting`,
@@ -84,9 +84,7 @@ export function Admin_ScreenForumReportPosting() {
             spanRight={7}
             leftItem={<TextCustom>Jumlah Report</TextCustom>}
             rightItem={
-              <TextCustom truncate={1}>
-                {item?.count|| "-"}
-              </TextCustom>
+              <TextCustom truncate={1}>{item?.count || "-"}</TextCustom>
             }
           />
           <GridTwoView
@@ -120,7 +118,8 @@ export function Admin_ScreenForumReportPosting() {
     });
 
   return (
-    <NewWrapper
+    <OS_Wrapper
+      contentPadding={PADDING_INLINE}
       listData={pagination.listData}
       renderItem={renderItem}
       keyExtractor={(item: any) => item.id?.toString() || `fallback-${item.id}`}
