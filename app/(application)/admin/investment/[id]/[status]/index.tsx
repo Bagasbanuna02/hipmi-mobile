@@ -12,10 +12,10 @@ import {
   Spacing,
   StackCustom,
   TextCustom,
-  ViewWrapper,
 } from "@/components";
 import { IconProspectus } from "@/components/_Icon";
 import { IconDot, IconList } from "@/components/_Icon/IconComponent";
+import OS_Wrapper from "@/components/_ShareComponent/OS_Wrapper";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
 import AdminButtonReview from "@/components/_ShareComponent/Admin/ButtonReview";
@@ -35,6 +35,7 @@ import { formatCurrencyDisplay } from "@/utils/formatCurrencyDisplay";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 import React from "react";
+import { RefreshControl } from "react-native";
 import Toast from "react-native-toast-message";
 
 export default function AdminInvestmentDetail() {
@@ -119,20 +120,28 @@ export default function AdminInvestmentDetail() {
   if (!data) {
     return (
       <>
-        <ViewWrapper>
+        <OS_Wrapper>
           <CustomSkeleton height={200} />
-        </ViewWrapper>
+        </OS_Wrapper>
       </>
     );
   }
 
   return (
     <>
-      <ViewWrapper
+      <OS_Wrapper
         headerComponent={
           <AdminBackButtonAntTitle
             title={`Detail Data`}
             rightComponent={status === "publish" && rightComponent}
+          />
+        }
+        refreshControl={
+          <RefreshControl
+            refreshing={isLoading}
+            onRefresh={onLoadData}
+            tintColor="#E1B525"
+            colors={["#E1B525"]}
           />
         }
       >
@@ -280,7 +289,7 @@ export default function AdminInvestmentDetail() {
             }}
           />
         )}
-      </ViewWrapper>
+      </OS_Wrapper>
 
       <DrawerCustom
         isVisible={openDrawer}

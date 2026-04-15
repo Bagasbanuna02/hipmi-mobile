@@ -1,4 +1,5 @@
-import { StackCustom, TextCustom, ViewWrapper } from "@/components";
+import { StackCustom, TextCustom } from "@/components";
+import OS_Wrapper from "@/components/_ShareComponent/OS_Wrapper";
 import AdminComp_BoxDashboard from "@/components/_ShareComponent/Admin/BoxDashboard";
 import { MainColor } from "@/constants/color-palet";
 import { apiAdminMainDashboardGetAll } from "@/service/api-admin/api-admin-main-dashboard";
@@ -28,7 +29,7 @@ export default function AdminDashboard() {
 
   return (
     <>
-      <ViewWrapper>
+      <OS_Wrapper>
         <StackCustom>
           <TextCustom bold size={30}>
             Main Dashboard
@@ -37,7 +38,7 @@ export default function AdminDashboard() {
             <AdminComp_BoxDashboard key={i} item={item} />
           ))}
         </StackCustom>
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

@@ -6,8 +6,8 @@ import {
     Spacing,
     StackCustom,
     TextCustom,
-    ViewWrapper,
 } from "@/components";
+import OS_Wrapper from "@/components/_ShareComponent/OS_Wrapper";
 import GridTwoView from "@/components/_ShareComponent/GridTwoView";
 import { MapMarker, MapsV2Custom } from "@/components/Map/MapsV2Custom";
 import { ICON_SIZE_SMALL } from "@/constants/constans-value";
@@ -76,9 +76,9 @@ export default function AdminMaps() {
 
   return (
     <>
-      <ViewWrapper style={{ paddingInline: 0, paddingBlock: 0 }}>
+      <OS_Wrapper style={{ paddingInline: 0, paddingBlock: 0 }}>
         <MapsV2Custom markers={markers} />
-      </ViewWrapper>
+      </OS_Wrapper>
 
       <DrawerCustom
         isVisible={openDrawer}

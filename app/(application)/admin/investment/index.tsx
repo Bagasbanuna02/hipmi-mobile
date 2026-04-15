@@ -1,4 +1,5 @@
-import { Spacing, StackCustom, ViewWrapper } from "@/components";
+import { Spacing, StackCustom } from "@/components";
+import OS_Wrapper from "@/components/_ShareComponent/OS_Wrapper";
 import {
   IconPublish,
   IconReject,
@@ -54,7 +55,7 @@ export default function AdminInvestment() {
 
   return (
     <>
-      <ViewWrapper>
+      <OS_Wrapper>
         <AdminTitlePage title="Investasi" />
         <Spacing />
         <StackCustom gap={"xs"}>
@@ -62,7 +63,7 @@ export default function AdminInvestment() {
             <AdminComp_BoxDashboard key={i} item={item} />
           ))}
         </StackCustom>
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

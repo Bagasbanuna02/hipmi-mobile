@@ -7,9 +7,9 @@ import {
     Spacing,
     StackCustom,
     TextCustom,
-    ViewWrapper,
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
+import OS_Wrapper from "@/components/_ShareComponent/OS_Wrapper";
 import { GridSpan_4_8 } from "@/components/_ShareComponent/GridSpan_4_8";
 import GridTwoView from "@/components/_ShareComponent/GridTwoView";
 import { MainColor } from "@/constants/color-palet";
@@ -225,11 +225,11 @@ export default function AdminInvestmentTransactionDetail() {
 
   return (
     <>
-      <ViewWrapper
+      <OS_Wrapper
         headerComponent={
           <AdminBackButtonAntTitle title="Detail Transaksi Investor" />
         }
-        // footerComponent={buttonAction()}
+        footerComponent={buttonAction()}
       >
         <BaseBox>
           <StackCustom>
@@ -244,7 +244,7 @@ export default function AdminInvestmentTransactionDetail() {
         </BaseBox>
         <Spacing />
         {buttonAction()}
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

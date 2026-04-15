@@ -1268,3 +1268,4 @@ Contoh:
 
 Profile screens: PADDING_INLINE dihapus dari edit.tsx dan create.tsx
 - User ingin mengecek semua user layout tabs setelah perubahan height layout tabs donation di constants. Pattern yang perlu dicek: semua tabs screens harus pakai contentPadding={PADDING_INLINE} untuk konsistensi layout.
+- User meminta semua feedback/respons diberikan dalam bahasa Indonesia

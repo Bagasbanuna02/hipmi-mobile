@@ -3,10 +3,10 @@ import {
   AlertDefaultSystem,
   BoxButtonOnFooter,
   TextAreaCustom,
-  ViewWrapper,
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import AdminButtonReject from "@/components/_ShareComponent/Admin/ButtonReject";
+import OS_Wrapper from "@/components/_ShareComponent/OS_Wrapper";
 import { useAuth } from "@/hooks/use-auth";
 import {
   apiAdminInvestasiUpdateByStatus,
@@ -118,7 +118,9 @@ export default function AdminInvestmentRejectInput() {
 
   return (
     <>
-      <ViewWrapper
+      <OS_Wrapper
+        enableKeyboardHandling
+        contentPaddingBottom={250}
         footerComponent={buttonSubmit}
         headerComponent={
           <AdminBackButtonAntTitle title="Penolakan Investasi" />
@@ -132,7 +134,7 @@ export default function AdminInvestmentRejectInput() {
           showCount
           maxLength={1000}
         />
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }
