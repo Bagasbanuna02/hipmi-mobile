@@ -4,10 +4,10 @@ import {
   ButtonCustom,
   CenterCustom,
   Grid,
+  OS_Wrapper,
   StackCustom,
   TextCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import { MainColor } from "@/constants/color-palet";
@@ -92,7 +92,7 @@ export default function AdminAppInformation_BankDetail() {
   );
   return (
     <>
-      <ViewWrapper footerComponent={buttonSubmit}>
+      <OS_Wrapper enableKeyboardHandling contentPaddingBottom={250} footerComponent={buttonSubmit}>
         <StackCustom>
           <AdminBackButtonAntTitle title="Update Bank" />
 
@@ -140,7 +140,7 @@ export default function AdminAppInformation_BankDetail() {
             />
           </StackCustom>
         </StackCustom>
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

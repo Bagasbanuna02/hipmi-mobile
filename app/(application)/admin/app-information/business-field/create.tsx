@@ -4,10 +4,10 @@ import {
   ButtonCustom,
   CenterCustom,
   Grid,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import { MainColor } from "@/constants/color-palet";
@@ -101,7 +101,7 @@ export default function AdminAppInformation_BusinessFieldCreate() {
   );
   return (
     <>
-      <ViewWrapper footerComponent={buttonSubmit}>
+      <OS_Wrapper enableKeyboardHandling contentPaddingBottom={250} footerComponent={buttonSubmit}>
         <StackCustom gap={"xs"}>
           <AdminBackButtonAntTitle title="Tambah Bidang Bisnis" />
 
@@ -167,7 +167,7 @@ export default function AdminAppInformation_BusinessFieldCreate() {
             </View>
           </CenterCustom>
         </StackCustom>
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

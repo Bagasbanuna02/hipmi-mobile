@@ -3,7 +3,7 @@ import {
   BadgeCustom,
   BaseBox,
   CenterCustom,
-  NewWrapper,
+  OS_Wrapper,
   Spacing,
   StackCustom,
   TextCustom,
@@ -13,6 +13,7 @@ import { GridSpan_NewComponent } from "@/components/_ShareComponent/GridSpan_New
 import { MainColor } from "@/constants/color-palet";
 import {
   ICON_SIZE_SMALL,
+  PADDING_INLINE,
   PAGINATION_DEFAULT_TAKE,
 } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
@@ -160,7 +161,8 @@ export function Admin_ScreenBusinessFieldDetail() {
 
   return (
     <>
-      <NewWrapper
+      <OS_Wrapper
+        contentPadding={PADDING_INLINE}
         listData={pagination.listData}
         onEndReached={pagination.loadMore}
         ListEmptyComponent={ListEmptyComponent}

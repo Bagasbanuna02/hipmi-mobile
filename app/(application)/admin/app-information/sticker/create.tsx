@@ -5,11 +5,11 @@ import {
     CheckboxCustom,
     CheckboxGroup,
     LandscapeFrameUploaded,
+    OS_Wrapper,
     SelectCustom,
     Spacing,
     StackCustom,
-    TextCustom,
-    ViewWrapper
+    TextCustom
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import { dummyMasterEmotions } from "@/lib/dummy-data/_master/emotions";
@@ -32,7 +32,7 @@ export default function AdminAppInformation_StickerCreate() {
     );
   return (
     <>
-      <ViewWrapper footerComponent={buttonSubmit}>
+      <OS_Wrapper footerComponent={buttonSubmit}>
         <StackCustom>
           <AdminBackButtonAntTitle title="Tambah Stiker" />
 
@@ -78,7 +78,7 @@ export default function AdminAppInformation_StickerCreate() {
           </StackCustom>
         </StackCustom>
         <Spacing/>
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

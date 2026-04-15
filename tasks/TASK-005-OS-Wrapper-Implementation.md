@@ -438,11 +438,32 @@ import { OS_Wrapper } from "@/components";
 - [ ] `screens/Admin/Investment/ScreenInvestmentDetail.tsx`
 - [ ] `screens/Admin/Investment/ScreenInvestmentStatus.tsx`
 
-## ⏳ Admin Phase 8: App Information (Priority: LOW)
-- [ ] `screens/Admin/App-Information/ScreenAppInfoList.tsx`
-- [ ] `screens/Admin/App-Information/ScreenBusinessField.tsx`
-- [ ] `screens/Admin/App-Information/ScreenInformationBank.tsx`
-- [ ] `screens/Admin/App-Information/ScreenSticker.tsx`
+## ⏳ Admin Phase 8: App Information - PENDING
+
+**Files to migrate: 11**
+
+#### Admin App Information List Screens (OS_Wrapper):
+- [ ] `screens/Admin/App-Information/ScreenAppInformation.tsx` - NewWrapper → OS_Wrapper (main list with category tabs + pagination)
+- [ ] `screens/Admin/App-Information/ScreenBusinessFieldDetail.tsx` - NewWrapper → OS_Wrapper (detail with sub-bidang list + pagination)
+
+#### Admin Business Field Form Screens (OS_Wrapper with enableKeyboardHandling):
+- [ ] `app/(application)/admin/app-information/business-field/create.tsx` - ViewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- [ ] `app/(application)/admin/app-information/business-field/[id]/bidang-update.tsx` - ViewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- [ ] `app/(application)/admin/app-information/business-field/[id]/sub-bidang-update.tsx` - ViewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+
+#### Admin Information Bank Form Screens (OS_Wrapper with enableKeyboardHandling):
+- [ ] `app/(application)/admin/app-information/information-bank/create.tsx` - ViewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+- [ ] `app/(application)/admin/app-information/information-bank/[id]/index.tsx` - ViewWrapper → OS_Wrapper + `enableKeyboardHandling` + `contentPaddingBottom={250}`
+
+#### Admin Sticker Form Screens (OS_Wrapper static, no keyboard handling):
+- [ ] `app/(application)/admin/app-information/sticker/create.tsx` - ViewWrapper → OS_Wrapper (SelectCustom + CheckboxGroup only)
+- [ ] `app/(application)/admin/app-information/sticker/[id]/index.tsx` - ViewWrapper → OS_Wrapper (SelectCustom + CheckboxGroup only)
+
+**Testing Status:**
+- ⏳ TypeScript: Pending
+- ⏳ Build: Pending
+- ⏳ iOS Testing: Pending
+- ⏳ Android Testing: Pending
 
 ---
 

@@ -1,9 +1,9 @@
 import {
   BoxButtonOnFooter,
   ButtonCustom,
+  OS_Wrapper,
   StackCustom,
   TextInputCustom,
-  ViewWrapper,
 } from "@/components";
 import AdminBackButtonAntTitle from "@/components/_ShareComponent/Admin/BackButtonAntTitle";
 import { apiAdminMasterBankCreate } from "@/service/api-admin/api-master-admin";
@@ -52,7 +52,7 @@ export default function AdminAppInformation_BankCreate() {
   );
   return (
     <>
-      <ViewWrapper footerComponent={buttonSubmit}>
+      <OS_Wrapper enableKeyboardHandling contentPaddingBottom={250} footerComponent={buttonSubmit}>
         <StackCustom>
           <AdminBackButtonAntTitle title="Tambah Daftar Bank" />
 
@@ -83,7 +83,7 @@ export default function AdminAppInformation_BankCreate() {
             />
           </StackCustom>
         </StackCustom>
-      </ViewWrapper>
+      </OS_Wrapper>
     </>
   );
 }

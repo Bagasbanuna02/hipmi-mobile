@@ -1,7 +1,7 @@
 import { ScrollableCustom, StackCustom } from "@/components";
 import AdminActionIconPlus from "@/components/_ShareComponent/Admin/ActionIconPlus";
 import AdminComp_BoxTitle from "@/components/_ShareComponent/Admin/BoxTitlePage";
-import NewWrapper from "@/components/_ShareComponent/NewWrapper";
+import OS_Wrapper from "@/components/_ShareComponent/OS_Wrapper";
 import { MainColor } from "@/constants/color-palet";
 import { PAGINATION_DEFAULT_TAKE } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
@@ -108,7 +108,7 @@ export function Admin_ScreenAppInformation() {
   };
 
   return (
-    <NewWrapper
+    <OS_Wrapper
       headerComponent={scrollComponent}
       // ListHeaderComponent={
 
