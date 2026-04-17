@@ -2,23 +2,23 @@ import {
   AvatarComp,
   ClickableCustom,
   Grid,
-  NewWrapper,
+  OS_Wrapper,
   StackCustom,
   TextCustom,
-  TextInputCustom,
+  TextInputCustom
 } from "@/components";
 import { MainColor } from "@/constants/color-palet";
 import {
   ICON_SIZE_SMALL,
+  PADDING_INLINE,
   PAGINATION_DEFAULT_TAKE,
 } from "@/constants/constans-value";
 import { createPaginationComponents } from "@/helpers/paginationHelpers";
 import { usePagination } from "@/hooks/use-pagination";
 import { apiAllUser } from "@/service/api-client/api-user";
 import { Ionicons } from "@expo/vector-icons";
-import { router, useFocusEffect } from "expo-router";
-import _ from "lodash";
-import { useCallback, useRef, useState } from "react";
+import { router } from "expo-router";
+import { useRef, useState } from "react";
 import { RefreshControl, View } from "react-native";
 
 const PAGE_SIZE = PAGINATION_DEFAULT_TAKE;
@@ -140,7 +140,8 @@ export default function UserSearchMainView_V2() {
     });
 
   return (
-    <NewWrapper
+    <OS_Wrapper
+      contentPadding={PADDING_INLINE}
       headerComponent={renderHeader(search, setSearch)}
       listData={pagination.listData}
       renderItem={renderItem}
